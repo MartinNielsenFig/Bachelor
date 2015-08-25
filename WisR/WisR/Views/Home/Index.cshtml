@@ -53,14 +53,14 @@
         //map.addOverlay(marker);
         map.setZoom(15);
         map.panTo(latLng);
-        $("#accuracy").html('Præcision: ' + position.coords.accuracy+' meter');
+        $("#accuracy").html('Precision: ' + position.coords.accuracy+' meters');
 
         //Get address from location
 
         geocoder.geocode({ 'location': latLng }, function (results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
                 if (results[1]) {
-                    $("#address").html('Du er her: ' + results[1].formatted_address);
+                    $("#address").html('You are here: ' + results[1].formatted_address);
 
                 } else {
                     window.alert('No results found');
