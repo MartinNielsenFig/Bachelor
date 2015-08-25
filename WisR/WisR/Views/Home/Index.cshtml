@@ -1,31 +1,95 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+<body onload="initialize()">
+    <div class="jumbotron">
+        <h1>ASP.NET</h1>
+        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
+        <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+    </div>
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Getting started</h2>
+            <p>
+                ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
+                enables a clean separation of concerns and gives you full control over markup
+                for enjoyable, agile development.
+            </p>
+            <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <div id="address"></div>
+            <div id="accuracy"></div>
+            <div id="map_canvas" style="height:300px; border: 1px solid #000;"></div>
+        </div>
+        <div class="col-md-4">
+            <h2>Web Hosting</h2>
+            <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+            <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+        </div>
+    </div>
+</body>
+@*Code for geolocation*@
+<script src="http://maps.googleapis.com/maps/api/js?sensor=false&key=AIzaSyDGUkernNPkypdfcFhlIOs5Bt-8c5MUPYo" type="text/javascript"></script>
+<script>
+    var map;
+    var marker;
+    var positionId;
+    var currentLocation;
+    var geocoder = new google.maps.Geocoder();
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+    function moveMap(position) {
+
+        var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        //Remove previous marker
+        if (marker != null) {
+            marker.setMap(null);
+        }
+        marker = new google.maps.Marker({
+            position: latLng
+        });
+        marker.setMap(map);
+        //map.addOverlay(marker);
+        map.setZoom(15);
+        map.panTo(latLng);
+        $("#accuracy").html('Præcision: ' + position.coords.accuracy+' meter');
+
+        //Get address from location
+
+        geocoder.geocode({ 'location': latLng }, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                if (results[1]) {
+                    $("#address").html('Du er her: ' + results[1].formatted_address);
+
+                } else {
+                    window.alert('No results found');
+                }
+            } else {
+                window.alert('Geocoder failed due to: ' + status);
+            }
+        });
+
+    }
+
+    function handleError(error) { alert(error.message); }
+
+    function initialize() {
+
+        var mapOptions = {
+            disableDefaultUI: true
+        }
+        var positionOptions = {
+            enableHighAccuracy: true
+        };
+
+        map = new google.maps.Map(document.getElementById("map_canvas"),mapOptions);
+
+            positionId = navigator.geolocation.watchPosition(moveMap, handleError, positionOptions);
+            google.maps.event.addDomListener(window, "resize", function () {
+                var center = map.getCenter();
+                google.maps.event.trigger(map, "resize");
+                map.setCenter(center);
+            });
+    }
+</script>
