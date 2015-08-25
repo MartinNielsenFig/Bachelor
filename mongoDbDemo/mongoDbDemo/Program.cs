@@ -19,9 +19,11 @@ namespace mongoDbDemo
             var collection = db.GetCollection<Person>("people");
 
             //Insert one
-            //var p1 = new Person { Name = "Anders", Age = 2, Profession = "IKT", Height = 2000 };
-            //await collection.InsertOneAsync(p1);
-            //Console.WriteLine("Finished saving");
+            var gun1 = new Gun { Name = "AK47", Loaded = true, RegNumber = "3037NBC", Rounds = 27, Size = 2.4 };
+            var gun2 = new Gun { Name = "AK47", Loaded = false, RegNumber = "3037NBC", Rounds = 27, Size = 2.4 };
+            var p1 = new Person { Name = "Kastestjerne", Age = 2, Profession = "IKT", Height = 2000, Guns = new List<Gun> { gun1, gun2 } };
+            await collection.InsertOneAsync(p1);
+            Console.WriteLine("Finished saving");
 
             //Read
             var youngPeople = collection.Find(x => x.Age < 25).ToListAsync();
@@ -33,6 +35,13 @@ namespace mongoDbDemo
                 Console.WriteLine(p.Name);
             }
 
+            //how many guns anders?
+            var gunAnders = collection.Find(x => x.Guns.Count > 0).ToListAsync();
+            await gunAnders;
+            foreach (var p in gunAnders.Result.ToList())
+            {
+                Console.WriteLine(p.Name + "has a gun");
+            }
             //
             var peter = collection.Find(x => x.Id == ObjectId.Parse("5547a8dd472e113340cb8ea5")).SingleAsync();
             await peter;
@@ -44,7 +53,7 @@ namespace mongoDbDemo
                 collection.UpdateManyAsync(x => true,
                     Builders<Person>.Update.Set(x => x.Cpr, "000000-0000"));
             Console.WriteLine("Updating default CPR where empty finished");
-            
+
             //Print all
             var allPeople = collection.Find(x => true).ToListAsync();
             await allPeople;
@@ -66,19 +75,31 @@ namespace mongoDbDemo
         }
     }
 
+    public class Gun
+    {
+        [MongoDB.Bson.Serialization.Attributes.BsonId]
+        public ObjectId Id { get; set; }
+        public string Name { get; set; }
+        public int Rounds { get; set; }
+        public string RegNumber { get; set; }
+        public double Size { get; set; }
+        public bool Loaded { get; set; }
+    }
+
     public class Person
     {
+        [MongoDB.Bson.Serialization.Attributes.BsonId]
         public ObjectId Id { get; set; }
         public string Name { get; set; }
         public int Age { get; set; }
         public string Profession { get; set; }
         public double? Height { get; set; }
         public string Cpr { get; set; }
+        public List<Gun> Guns { get; set; }
 
         public override string ToString()
         {
             return Name + " " + Age + " " + Profession;
         }
     }
-
 }
