@@ -69,6 +69,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
@@ -219,10 +220,17 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\QuestionController.cs" />
+    <Compile Include="Controllers\RoomController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DomainModel\Answer.cs" />
     <Compile Include="DomainModel\Coordinate.cs" />
+    <Compile Include="DomainModel\IQuestionRepository.cs" />
+    <Compile Include="DomainModel\IRoomRepository.cs" />
+    <Compile Include="DomainModel\IUserRepository.cs" />
     <Compile Include="DomainModel\Question.cs" />
+    <Compile Include="DomainModel\QuestionRepository.cs" />
     <Compile Include="DomainModel\QuestionType.cs" />
     <Compile Include="DomainModel\ResponseOption.cs" />
     <Compile Include="DomainModel\Room.cs" />
@@ -295,6 +303,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Question\" />
+    <Folder Include="Views\Room\" />
+    <Folder Include="Views\User\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

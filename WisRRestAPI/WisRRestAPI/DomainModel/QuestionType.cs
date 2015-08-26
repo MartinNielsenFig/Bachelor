@@ -2,7 +2,7 @@
 {
     public enum QuestionType
     {
-        Bolean,
+        Boolean,
         MultipleChoice,
         Textuel,
         BrainStorming
