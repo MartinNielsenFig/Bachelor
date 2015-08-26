@@ -234,7 +234,9 @@
     <Compile Include="DomainModel\QuestionType.cs" />
     <Compile Include="DomainModel\ResponseOption.cs" />
     <Compile Include="DomainModel\Room.cs" />
+    <Compile Include="DomainModel\RoomRepository.cs" />
     <Compile Include="DomainModel\User.cs" />
+    <Compile Include="DomainModel\UserRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

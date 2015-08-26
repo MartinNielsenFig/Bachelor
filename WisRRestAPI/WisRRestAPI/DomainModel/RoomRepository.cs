@@ -47,7 +47,7 @@ namespace WisRRestAPI.DomainModel
 
         public Task<Room> UpdateRoom(string id, Room item)
         {
-            var task = _database.GetCollection<Room>("question").FindOneAndReplaceAsync(x => x.Id == id, item);
+            var task = _database.GetCollection<Room>("room").FindOneAndReplaceAsync(x => x.Id == id, item);
             return task;
         }
     }
