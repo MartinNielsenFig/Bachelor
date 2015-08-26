@@ -8,7 +8,7 @@ namespace WisR.DomainModels
     public class Question
     {
         [BsonId]
-        public string id { get; set; }
+        public string Id { get; set; }
         public QuestionType QuestionType { get; set; }
         public string QuestionText { get; set; }
         public List<ResponseOption> ResponseOptions { get; set; }
@@ -20,7 +20,7 @@ namespace WisR.DomainModels
 
         public Question()
         {
-            id = "sdg";
+            Id = "sdg";
             QuestionType=QuestionType.BrainStorming;
             QuestionText = "Questiontexterino";
             ResponseOptions= new List<ResponseOption>(){ new ResponseOption(),new ResponseOption()};
