@@ -12,15 +12,9 @@ namespace WisRRestAPI.DomainModel
     public class RoomRepository:IRoomRepository
     {
         private readonly IMongoDatabase _database;
-        public RoomRepository(string connection)
+        public RoomRepository(IdbHandler dbHandler)
         {
-            if (string.IsNullOrWhiteSpace(connection))
-            {
-                connection = ConfigurationManager.AppSettings["mongoString"];
-            }
-
-            var client = new MongoClient(connection);
-            _database = client.GetDatabase("bachelor");
+            _database = dbHandler.getDb();
         }
         public Task<List<Room>> GetAllRooms()
         {

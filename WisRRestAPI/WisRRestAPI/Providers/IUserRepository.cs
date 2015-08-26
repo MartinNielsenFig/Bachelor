@@ -8,7 +8,7 @@ using WisR.DomainModels;
 
 namespace WisRRestAPI.DomainModel
 {
-    interface IUserRepository
+    public interface IUserRepository
     {
         Task<List<User>> GetAllUsers();
         Task<User> GetUser(string id);

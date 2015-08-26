@@ -15,31 +15,31 @@ namespace WisRRestAPI.Controllers
 {
     public class QuestionController : Controller
     {
-        private readonly IQuestionRepository _QR;
+        private readonly IQuestionRepository _qr;
         private readonly JavaScriptSerializer _jsSerializer;
-        public QuestionController()
+        public QuestionController(IQuestionRepository qr)
         {
-            _QR = new QuestionRepository("");
+            _qr = qr;
             _jsSerializer=new JavaScriptSerializer();
         }
 
         [System.Web.Mvc.HttpGet]
         public string GetAll()
         {
-            var questions = _QR.GetAllQuestions();
+            var questions = _qr.GetAllQuestions();
             return _jsSerializer.Serialize(questions.Result);
         }
 
         [System.Web.Mvc.HttpPost]
         public void CreateQuestion(string question)
         {
-                _QR.AddQuestion(_jsSerializer.Deserialize<Question>(question));
+                _qr.AddQuestion(_jsSerializer.Deserialize<Question>(question));
         }
 
         [System.Web.Mvc.HttpGet]
         public string GetById(string id)
         {
-            var item = _QR.GetQuestion(id);
+            var item = _qr.GetQuestion(id);
             if (item == null)
             {
                 return "Not found";
@@ -50,7 +50,7 @@ namespace WisRRestAPI.Controllers
         [System.Web.Mvc.HttpDelete]
         public string DeleteQuestion(string id)
         {
-            var result = _QR.RemoveQuestion(id).Result;
+            var result = _qr.RemoveQuestion(id).Result;
             if (result.DeletedCount==1)
             {
                 return "Question was deleted";

@@ -10,15 +10,9 @@ namespace WisRRestAPI.DomainModel
     {
         private readonly IMongoDatabase _database;
 
-        public QuestionRepository(string connection)
+        public QuestionRepository(IdbHandler dbHandler)
         {
-            if (string.IsNullOrWhiteSpace(connection))
-            {
-                connection = ConfigurationManager.AppSettings["mongoString"];
-            }
-
-            var client = new MongoClient(connection);
-            _database = client.GetDatabase("bachelor");
+            _database = dbHandler.getDb();
         }
 
         public Task<List<Question>> GetAllQuestions()

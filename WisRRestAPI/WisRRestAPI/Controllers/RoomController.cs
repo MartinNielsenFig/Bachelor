@@ -11,31 +11,31 @@ namespace WisRRestAPI.Controllers
 {
     public class RoomController : Controller
     {
-        private readonly IRoomRepository _RR;
+        private readonly IRoomRepository _rr;
         private readonly JavaScriptSerializer _jsSerializer;
-        public RoomController()
+        public RoomController(IRoomRepository rr)
         {
-            _RR = new RoomRepository("");
+            _rr = rr;
             _jsSerializer = new JavaScriptSerializer();
         }
 
         [System.Web.Mvc.HttpGet]
         public string GetAll()
         {
-            var Rooms = _RR.GetAllRooms();
+            var Rooms = _rr.GetAllRooms();
             return _jsSerializer.Serialize(Rooms.Result);
         }
 
         [System.Web.Mvc.HttpPost]
         public void CreateRoom(string Room)
         {
-            _RR.AddRoom(_jsSerializer.Deserialize<Room>(Room));
+            _rr.AddRoom(_jsSerializer.Deserialize<Room>(Room));
         }
 
         [System.Web.Mvc.HttpGet]
         public string GetById(string id)
         {
-            var item = _RR.GetRoom(id);
+            var item = _rr.GetRoom(id);
             if (item == null)
             {
                 return "Not found";
@@ -46,7 +46,7 @@ namespace WisRRestAPI.Controllers
         [System.Web.Mvc.HttpDelete]
         public string DeleteRoom(string id)
         {
-            var result = _RR.RemoveRoom(id).Result;
+            var result = _rr.RemoveRoom(id).Result;
             if (result.DeletedCount == 1)
             {
                 return "Room was deleted";

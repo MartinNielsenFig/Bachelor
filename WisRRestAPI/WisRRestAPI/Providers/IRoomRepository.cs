@@ -8,7 +8,7 @@ using WisR.DomainModels;
 
 namespace WisRRestAPI.DomainModel
 {
-    interface IRoomRepository
+    public interface IRoomRepository
     {
         Task<List<Room>> GetAllRooms();
         Task<Room> GetRoom(string id);

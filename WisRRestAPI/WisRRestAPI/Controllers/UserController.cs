@@ -11,31 +11,31 @@ namespace WisRRestAPI.Controllers
 {
     public class UserController : Controller
     {
-        private readonly IUserRepository _UR;
+        private readonly IUserRepository _ur;
         private readonly JavaScriptSerializer _jsSerializer;
-        public UserController()
+        public UserController(IUserRepository ur)
         {
-            _UR = new UserRepository("");
+            _ur = ur;
             _jsSerializer = new JavaScriptSerializer();
         }
 
         [System.Web.Mvc.HttpGet]
         public string GetAll()
         {
-            var Users = _UR.GetAllUsers();
+            var Users = _ur.GetAllUsers();
             return _jsSerializer.Serialize(Users.Result);
         }
 
         [System.Web.Mvc.HttpPost]
         public void CreateUser(string User)
         {
-            _UR.AddUser(_jsSerializer.Deserialize<User>(User));
+            _ur.AddUser(_jsSerializer.Deserialize<User>(User));
         }
 
         [System.Web.Mvc.HttpGet]
         public string GetById(string id)
         {
-            var item = _UR.GetUser(id);
+            var item = _ur.GetUser(id);
             if (item == null)
             {
                 return "Not found";
@@ -46,7 +46,7 @@ namespace WisRRestAPI.Controllers
         [System.Web.Mvc.HttpDelete]
         public string DeleteUser(string id)
         {
-            var result = _UR.RemoveUser(id).Result;
+            var result = _ur.RemoveUser(id).Result;
             if (result.DeletedCount == 1)
             {
                 return "User was deleted";

@@ -12,15 +12,9 @@ namespace WisRRestAPI.DomainModel
     public class UserRepository:IUserRepository
     {
         private readonly IMongoDatabase _database;
-        public UserRepository(string connection)
+        public UserRepository(IdbHandler dbHandler)
         {
-            if (string.IsNullOrWhiteSpace(connection))
-            {
-                connection = ConfigurationManager.AppSettings["mongoString"];
-            }
-
-            var client = new MongoClient(connection);
-            _database = client.GetDatabase("bachelor");
+            _database = dbHandler.getDb();
         }
         public Task<List<User>> GetAllUsers()
         {

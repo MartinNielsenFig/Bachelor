@@ -61,6 +61,18 @@
       <HintPath>..\packages\MongoDB.Driver.Core.2.0.1\lib\net45\MongoDB.Driver.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="SimpleInjector, Version=3.0.1.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.3.0.1\lib\net45\SimpleInjector.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SimpleInjector.Integration.Web, Version=3.0.1.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.Integration.Web.3.0.1\lib\net40\SimpleInjector.Integration.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SimpleInjector.Integration.Web.Mvc, Version=3.0.2.0, Culture=neutral, PublicKeyToken=984cb50dea722e99, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleInjector.Integration.Web.Mvc.3.0.2\lib\net40\SimpleInjector.Integration.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -226,17 +238,19 @@
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DomainModel\Answer.cs" />
     <Compile Include="DomainModel\Coordinate.cs" />
-    <Compile Include="DomainModel\IQuestionRepository.cs" />
-    <Compile Include="DomainModel\IRoomRepository.cs" />
-    <Compile Include="DomainModel\IUserRepository.cs" />
+    <Compile Include="Providers\dbHandler.cs" />
+    <Compile Include="Providers\IdbHandler.cs" />
+    <Compile Include="Providers\IQuestionRepository.cs" />
+    <Compile Include="Providers\IRoomRepository.cs" />
+    <Compile Include="Providers\IUserRepository.cs" />
     <Compile Include="DomainModel\Question.cs" />
-    <Compile Include="DomainModel\QuestionRepository.cs" />
+    <Compile Include="Providers\QuestionRepository.cs" />
     <Compile Include="DomainModel\QuestionType.cs" />
     <Compile Include="DomainModel\ResponseOption.cs" />
     <Compile Include="DomainModel\Room.cs" />
-    <Compile Include="DomainModel\RoomRepository.cs" />
+    <Compile Include="Providers\RoomRepository.cs" />
     <Compile Include="DomainModel\User.cs" />
-    <Compile Include="DomainModel\UserRepository.cs" />
+    <Compile Include="Providers\UserRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
