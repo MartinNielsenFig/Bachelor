@@ -235,3 +235,5 @@ xcuserdata
 *.xccheckout
 *.moved-aside
 *.xcuserstate
+
+wiserIos/.DS_Store
