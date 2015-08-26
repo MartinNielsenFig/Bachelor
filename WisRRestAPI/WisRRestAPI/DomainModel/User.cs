@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace WisR.DomainModels
 {
     public class User
     {
-        public ObjectId Oid { get; set; }
+        [BsonId]
+        public string Oid { get; set; }
         public int FacebookId { get; set; }
         public List<ObjectId> ConnectedRooms { get; set; }
         public string LDAPUserName { get; set; }
