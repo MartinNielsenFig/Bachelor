@@ -1,0 +1,428 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CB2EF9C31B8DE7260098871B /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2EF9C21B8DE7260098871B /* Room.swift */; };
+		CB3C37721B8DBF5000897344 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3C37711B8DBF5000897344 /* AppDelegate.swift */; };
+		CB3C37741B8DBF5000897344 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3C37731B8DBF5000897344 /* ViewController.swift */; };
+		CB3C37771B8DBF5000897344 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB3C37751B8DBF5000897344 /* Main.storyboard */; };
+		CB3C37791B8DBF5000897344 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB3C37781B8DBF5000897344 /* Assets.xcassets */; };
+		CB3C377C1B8DBF5000897344 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB3C377A1B8DBF5000897344 /* LaunchScreen.storyboard */; };
+		CB3C37871B8DBF5000897344 /* wiserIosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3C37861B8DBF5000897344 /* wiserIosTests.swift */; };
+		CB3C37921B8DE1F000897344 /* RoomTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3C37911B8DE1F000897344 /* RoomTableViewController.swift */; };
+		CBA4372C1B8DEA8E00EF3E01 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBA4372B1B8DEA8E00EF3E01 /* CoreLocation.framework */; };
+		CBA4372E1B8DF1F300EF3E01 /* CreateRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA4372D1B8DF1F300EF3E01 /* CreateRoomViewController.swift */; };
+		CBA437301B8DF5A500EF3E01 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBA4372F1B8DF5A500EF3E01 /* MapKit.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CB3C37831B8DBF5000897344 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CB3C37661B8DBF5000897344 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CB3C376D1B8DBF5000897344;
+			remoteInfo = wiserIos;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		CB2EF9C21B8DE7260098871B /* Room.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
+		CB3C376E1B8DBF5000897344 /* wiserIos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = wiserIos.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CB3C37711B8DBF5000897344 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		CB3C37731B8DBF5000897344 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		CB3C37761B8DBF5000897344 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		CB3C37781B8DBF5000897344 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		CB3C377B1B8DBF5000897344 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		CB3C377D1B8DBF5000897344 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CB3C37821B8DBF5000897344 /* wiserIosTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = wiserIosTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CB3C37861B8DBF5000897344 /* wiserIosTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = wiserIosTests.swift; sourceTree = "<group>"; };
+		CB3C37881B8DBF5000897344 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CB3C37911B8DE1F000897344 /* RoomTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomTableViewController.swift; sourceTree = "<group>"; };
+		CBA4372B1B8DEA8E00EF3E01 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		CBA4372D1B8DF1F300EF3E01 /* CreateRoomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateRoomViewController.swift; sourceTree = "<group>"; };
+		CBA4372F1B8DF5A500EF3E01 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CB3C376B1B8DBF5000897344 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CBA437301B8DF5A500EF3E01 /* MapKit.framework in Frameworks */,
+				CBA4372C1B8DEA8E00EF3E01 /* CoreLocation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CB3C377F1B8DBF5000897344 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		CB3C37651B8DBF5000897344 = {
+			isa = PBXGroup;
+			children = (
+				CBA4372F1B8DF5A500EF3E01 /* MapKit.framework */,
+				CBA4372B1B8DEA8E00EF3E01 /* CoreLocation.framework */,
+				CB3C37701B8DBF5000897344 /* wiserIos */,
+				CB3C37851B8DBF5000897344 /* wiserIosTests */,
+				CB3C376F1B8DBF5000897344 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		CB3C376F1B8DBF5000897344 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CB3C376E1B8DBF5000897344 /* wiserIos.app */,
+				CB3C37821B8DBF5000897344 /* wiserIosTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CB3C37701B8DBF5000897344 /* wiserIos */ = {
+			isa = PBXGroup;
+			children = (
+				CB3C37711B8DBF5000897344 /* AppDelegate.swift */,
+				CB3C37731B8DBF5000897344 /* ViewController.swift */,
+				CB3C37751B8DBF5000897344 /* Main.storyboard */,
+				CB3C37781B8DBF5000897344 /* Assets.xcassets */,
+				CB3C377A1B8DBF5000897344 /* LaunchScreen.storyboard */,
+				CB3C377D1B8DBF5000897344 /* Info.plist */,
+				CB3C37911B8DE1F000897344 /* RoomTableViewController.swift */,
+				CB2EF9C21B8DE7260098871B /* Room.swift */,
+				CBA4372D1B8DF1F300EF3E01 /* CreateRoomViewController.swift */,
+			);
+			path = wiserIos;
+			sourceTree = "<group>";
+		};
+		CB3C37851B8DBF5000897344 /* wiserIosTests */ = {
+			isa = PBXGroup;
+			children = (
+				CB3C37861B8DBF5000897344 /* wiserIosTests.swift */,
+				CB3C37881B8DBF5000897344 /* Info.plist */,
+			);
+			path = wiserIosTests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		CB3C376D1B8DBF5000897344 /* wiserIos */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CB3C378B1B8DBF5000897344 /* Build configuration list for PBXNativeTarget "wiserIos" */;
+			buildPhases = (
+				CB3C376A1B8DBF5000897344 /* Sources */,
+				CB3C376B1B8DBF5000897344 /* Frameworks */,
+				CB3C376C1B8DBF5000897344 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = wiserIos;
+			productName = wiserIos;
+			productReference = CB3C376E1B8DBF5000897344 /* wiserIos.app */;
+			productType = "com.apple.product-type.application";
+		};
+		CB3C37811B8DBF5000897344 /* wiserIosTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CB3C378E1B8DBF5000897344 /* Build configuration list for PBXNativeTarget "wiserIosTests" */;
+			buildPhases = (
+				CB3C377E1B8DBF5000897344 /* Sources */,
+				CB3C377F1B8DBF5000897344 /* Frameworks */,
+				CB3C37801B8DBF5000897344 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CB3C37841B8DBF5000897344 /* PBXTargetDependency */,
+			);
+			name = wiserIosTests;
+			productName = wiserIosTests;
+			productReference = CB3C37821B8DBF5000897344 /* wiserIosTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CB3C37661B8DBF5000897344 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0700;
+				ORGANIZATIONNAME = "Peter Helstrup Jensen";
+				TargetAttributes = {
+					CB3C376D1B8DBF5000897344 = {
+						CreatedOnToolsVersion = 7.0;
+						DevelopmentTeam = 8AEF7L787E;
+					};
+					CB3C37811B8DBF5000897344 = {
+						CreatedOnToolsVersion = 7.0;
+						DevelopmentTeam = 8AEF7L787E;
+						TestTargetID = CB3C376D1B8DBF5000897344;
+					};
+				};
+			};
+			buildConfigurationList = CB3C37691B8DBF5000897344 /* Build configuration list for PBXProject "wiserIos" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = CB3C37651B8DBF5000897344;
+			productRefGroup = CB3C376F1B8DBF5000897344 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CB3C376D1B8DBF5000897344 /* wiserIos */,
+				CB3C37811B8DBF5000897344 /* wiserIosTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CB3C376C1B8DBF5000897344 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CB3C377C1B8DBF5000897344 /* LaunchScreen.storyboard in Resources */,
+				CB3C37791B8DBF5000897344 /* Assets.xcassets in Resources */,
+				CB3C37771B8DBF5000897344 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CB3C37801B8DBF5000897344 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CB3C376A1B8DBF5000897344 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CB3C37921B8DE1F000897344 /* RoomTableViewController.swift in Sources */,
+				CB3C37741B8DBF5000897344 /* ViewController.swift in Sources */,
+				CB2EF9C31B8DE7260098871B /* Room.swift in Sources */,
+				CB3C37721B8DBF5000897344 /* AppDelegate.swift in Sources */,
+				CBA4372E1B8DF1F300EF3E01 /* CreateRoomViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CB3C377E1B8DBF5000897344 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CB3C37871B8DBF5000897344 /* wiserIosTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CB3C37841B8DBF5000897344 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CB3C376D1B8DBF5000897344 /* wiserIos */;
+			targetProxy = CB3C37831B8DBF5000897344 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		CB3C37751B8DBF5000897344 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CB3C37761B8DBF5000897344 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		CB3C377A1B8DBF5000897344 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CB3C377B1B8DBF5000897344 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		CB3C37891B8DBF5000897344 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		CB3C378A1B8DBF5000897344 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		CB3C378C1B8DBF5000897344 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = wiserIos/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = peheje.wiserIos;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		CB3C378D1B8DBF5000897344 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = wiserIos/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = peheje.wiserIos;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		CB3C378F1B8DBF5000897344 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = wiserIosTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = peheje.wiserIosTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/wiserIos.app/wiserIos";
+			};
+			name = Debug;
+		};
+		CB3C37901B8DBF5000897344 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = wiserIosTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = peheje.wiserIosTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/wiserIos.app/wiserIos";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CB3C37691B8DBF5000897344 /* Build configuration list for PBXProject "wiserIos" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CB3C37891B8DBF5000897344 /* Debug */,
+				CB3C378A1B8DBF5000897344 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CB3C378B1B8DBF5000897344 /* Build configuration list for PBXNativeTarget "wiserIos" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CB3C378C1B8DBF5000897344 /* Debug */,
+				CB3C378D1B8DBF5000897344 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CB3C378E1B8DBF5000897344 /* Build configuration list for PBXNativeTarget "wiserIosTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CB3C378F1B8DBF5000897344 /* Debug */,
+				CB3C37901B8DBF5000897344 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = CB3C37661B8DBF5000897344 /* Project object */;
+}
