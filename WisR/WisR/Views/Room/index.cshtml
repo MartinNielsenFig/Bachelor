@@ -1,0 +1,155 @@
+﻿
+@{
+    ViewBag.Title = "index";
+}
+
+<h2>Robotteknologi</h2>
+
+<div class="col-md-8">
+    <table id="hostQuestionsTable" class="table table-responsive table-bordered">
+        <tr>
+            <th>
+                Host questions
+            </th>
+            <th>
+                #Answers
+            </th>
+            <th>
+                Upvotes
+            </th>
+            <th>
+                Downvotes
+            </th>
+        </tr>
+        <tr>
+            <td>Has anyone really been far even as decided to use, even go want to do look more like?</td>
+            <td>17</td>
+            <td>103</td>
+            <td>17</td>
+        </tr>
+        <tr>
+            <td>Do you even lift?</td>
+            <td>8</td>
+            <td>23</td>
+            <td>19</td>
+        </tr>
+    </table>
+    <table id="userQuestionsTable" class="table table-responsive table-bordered">
+        <tr>
+            <th>
+                User questions
+            </th>
+            <th>
+                #Answers
+            </th>
+            <th>
+                Upvotes
+            </th>
+            <th>
+                Downvotes
+            </th>
+        </tr>
+        <tr>
+            <td>Why does Martin act like a noob?</td>
+            <td>17</td>
+            <td>400</td>
+            <td>7</td>
+        </tr>
+        <tr>
+            <td>Where is pluto?</td>
+            <td>8</td>
+            <td>7</td>
+            <td>107</td>
+        </tr>
+    </table>
+    <button class="btn btn-primary" onclick="$('#myModalCreate').modal('toggle')">Create Question</button>
+</div>
+@* Chat code found at: http://bootsnipp.com/snippets/featured/chat *@
+<div class="col-md-4">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <div class="container" style="overflow-y: auto;max-height:300px">
+        
+        <div class="row">
+            <div class="message-wrap col-lg-8">
+                <div class="msg-wrap">
+                   <div class="media msg">
+                        <div class="media-body">
+                            <small class="pull-right time"><i class="fa fa-clock-o"></i> 12:10am</small>
+
+                            <h5 class="media-heading">Naimish Sakhpara</h5>
+                            <small class="col-lg-10">Arnab Goswami: "Some people close to Congress Party and close to the government had a #secret #meeting in a farmhouse in Maharashtra in which Anna Hazare send some representatives and they had a meeting in the discussed how to go about this all fast and how eventually this will end."</small>
+                        </div>
+                    </div>
+                    <div class="media msg">
+                        <div class="media-body">
+                            <small class="pull-right time"><i class="fa fa-clock-o"></i> 12:10am</small>
+
+                            <h5 class="media-heading">Naimish Sakhpara</h5>
+                            <small class="col-lg-10">Arnab Goswami: "Some people close to Congress Party and close to the government had a #secret #meeting in a farmhouse in Maharashtra in which Anna Hazare send some representatives and they had a meeting in the discussed how to go about this all fast and how eventually this will end."</small>
+                        </div>
+                    </div>
+
+                    <div class="media msg">
+                       <div class="media-body">
+                            <small class="pull-right time"><i class="fa fa-clock-o"></i> 12:10am</small>
+                            <h5 class="media-heading">Naimish Sakhpara</h5>
+
+                            <small class="col-lg-10">Arnab Goswami: "Some people close to Congress Party and close to the government had a #secret #meeting in a farmhouse in Maharashtra in which Anna Hazare send some representatives and they had a meeting in the discussed how to go about this all fast and how eventually this will end."</small>
+                        </div>
+                    </div>
+
+                </div>
+
+                
+            </div>
+        </div>
+    </div>
+    <div class="send-wrap ">
+
+        <textarea class="form-control send-message" rows="3" placeholder="Write a reply..."></textarea>
+
+
+    </div>
+    <div class="btn-panel">
+        <a href="" class=" col-lg-3 btn   send-message-btn " role="button"><i class="fa fa-cloud-upload"></i> Add Files</a>
+        <a href="" class=" col-lg-4 text-right btn   send-message-btn pull-right" role="button"><i class="fa fa-plus"></i> Send Message</a>
+    </div>
+
+
+</div>
+
+<!-- Modal -->                                                                                                          <!--Stops modal from closing-->
+<div class="modal fade" id="myModalCreate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="true">
+    <div class="modal-dialog center">
+        <div class="modal-content modal-heigh">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="row"><label class="col-md-6">Question text:</label> <input type="text" class="col-md-6"/>
+                    </div>
+                    <div class="row"><label class="col-md-6">Unique tag</label> <input class="col-md-6" type="text"/>
+                    </div>
+                    <div class="row"><label class="col-md-6">Password</label> <input class="col-md-6" type="password"/>
+                    </div>
+                    <div class="row"><label class="col-md-6">Radius</label> <input class="col-md-6" type="range" max="3" min="1"/>
+                    </div>
+                    <div class="row"><label class="col-md-6">Use location</label> <input class="col-md-6" type="checkbox"/>
+                    </div>
+                    <div class="row"><label class="col-md-6">Has chat</label> <input class="col-md-6" type="checkbox"/>
+                    </div>
+                    <div class="row"><label class="col-md-6">Allow anonymous users?</label> <input class="col-md-6" type="checkbox"/>
+                    </div>
+                    <div class="row"><label class="col-md-6">Can users ask questions?</label> <input class="col-md-6" type="checkbox"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <button id="ModalCreateRoomButton" type="submit" class="btn btn-md center-block" data-dismiss="modal">Create room</button>
+                    <button id="ModalCancelButton" type="submit" class="btn btn-md center-block" data-dismiss="modal">Cancel</button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<!--Modal end-->

@@ -1,11 +1,4 @@
-﻿$(document).ready(function () {
-    //toggleLocation();
-});
-
-
-
-
-//Code for geolocation
+﻿//Code for geolocation
 var map;
 var initialLoad = true;
 var marker;
@@ -20,7 +13,8 @@ function moveMap(position) {
         marker.setMap(null);
     }
     marker = new google.maps.Marker({
-        position: latLng
+        position: latLng,
+        animation: google.maps.Animation.BOUNCE
     });
     marker.setMap(map);
     //map.addOverlay(marker);
@@ -29,10 +23,7 @@ function moveMap(position) {
     $("#accuracy").html('Precision: ' + position.coords.accuracy + ' meters');
 
     //Hide map on first load
-    /*if (initialLoad) {
-        toggleLocation();
-        initialLoad = false;
-    }*/
+    
     
     //Get address from location
     geocoder.geocode({ 'location': latLng }, function (results, status) {
@@ -75,9 +66,9 @@ function initializeGeolocation() {
 
 function toggleLocation() {
     $("#googlemaps").toggle();
-    initializeGeolocation();
-    /*var center = map.getCenter();
-    google.maps.event.trigger(map, "resize");
-    map.setCenter(center);*/
+    if (initialLoad) {
+        initializeGeolocation();
+        initialLoad = false;
+    }
 
 }

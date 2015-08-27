@@ -1,51 +1,87 @@
-﻿@{
+﻿@using WisR.Controllers
+@{
     ViewBag.Title = "Home Page";
 }
 <body>
-<div class="jumbotron">
-    <h1>WisR</h1>
-    <p class="lead">Voting made easier</p>
-</div>
+    <div class="jumbotron">
+        <h1>WisR</h1>
+        <p class="lead">Voting made easier</p>
+    </div>
 
-<div class="row">
-    <div class="col-md-4">
-    </div>
-    <div class="col-md-4">
-        <div id="rooms">
-            <div id="roomText" class="text-center">
-                Rooms based on <a onClick="toggleLocation();" style="cursor: pointer; cursor: hand;">your location</a>
-            </div>
-            <div id="googlemaps" hidden>
-                <div id="address"></div>
-                <div id="accuracy"></div>
-                <div id="map_canvas" style="height: 300px; border: 1px solid #000;"></div>
-            </div>
-            <table id="roomTable" class="table table-responsive table-bordered">
-                <tr>
-                    <th>
-                        Room name
-                    </th>
-                    <th>
-                        #Users
-                    </th>
-                </tr>
-                <tr>
-                    <td>Robotteknologi</td>
-                    <td>17</td>
-                </tr>
-                <tr>
-                    <td>GUI</td>
-                    <td>8</td>
-                </tr>
-            </table>
-            <div id="buttonsDiv" class="text-center">
-                <button>Connect</button>
-                <button>Create</button>
-            </div>
+    <div class="row">
+        <div class="col-md-4">
         </div>
-        
+        <div class="col-md-4">
+            <div id="rooms">
+                <div id="roomText" class="text-center">
+                    Rooms based on <a onClick="toggleLocation();" style="cursor: pointer; cursor: hand;">your location</a>
+                </div>
+                <div id="googlemaps" hidden>
+                    <div id="address"></div>
+                    <div id="accuracy"></div>
+                    <div id="map_canvas" style="height: 300px; border: 1px solid #000;"></div>
+                </div>
+                <table id="roomTable" class="table table-responsive table-bordered">
+                    <tr>
+                        <th>
+                            Room name
+                        </th>
+                        <th>
+                            #Users
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>Robotteknologi</td>
+                        <td>17</td>
+                    </tr>
+                    <tr>
+                        <td>GUI</td>
+                        <td>8</td>
+                    </tr>
+                </table>
+                <div id="buttonsDiv" class="text-center">
+                    @Html.ActionLink("Connect","Index",new {Controller="Room"},new { @class = "btn btn-primary"})
+                    <button class="btn btn-primary" onclick="$('#myModalCreate').modal('toggle')">Create</button>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-4">
+        </div>
     </div>
-    <div class="col-md-4">
+</body>
+<!-- Modal -->                                                                                                          <!--Stops modal from closing-->
+<div class="modal fade" id="myModalCreate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="true">
+    <div class="modal-dialog center">
+        <div class="modal-content modal-heigh">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="row"><label class="col-md-6">Room name:</label> <input type="text" class="col-md-6"/>
+                    </div>
+                    <div class="row"><label class="col-md-6">Unique tag</label> <input class="col-md-6" type="text"/>
+                    </div>
+                    <div class="row"><label class="col-md-6">Password</label> <input class="col-md-6" type="password"/>
+                    </div>
+                    <div class="row"><label class="col-md-6">Radius</label> <input class="col-md-6" type="range" max="3" min="1"/>
+                    </div>
+                    <div class="row"><label class="col-md-6">Use location</label> <input class="col-md-6" type="checkbox"/>
+                    </div>
+                    <div class="row"><label class="col-md-6">Has chat</label> <input class="col-md-6" type="checkbox"/>
+                    </div>
+                    <div class="row"><label class="col-md-6">Allow anonymous users?</label> <input class="col-md-6" type="checkbox"/>
+                    </div>
+                    <div class="row"><label class="col-md-6">Can users ask questions?</label> <input class="col-md-6"type="checkbox"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <button id="ModalCreateRoomButton" type="submit" class="btn btn-md center-block" data-dismiss="modal">Create room</button>
+                    <button id="ModalCancelButton" type="submit" class="btn btn-md center-block" data-dismiss="modal">Cancel</button>
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
 </div>
-</body>
+<!--Modal end-->
