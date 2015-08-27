@@ -21,6 +21,7 @@
 		CB9FF7CE1B8F2916003A193B /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9FF7CD1B8F2916003A193B /* Question.swift */; };
 		CB9FF7D01B8F2A78003A193B /* ResponseOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9FF7CF1B8F2A78003A193B /* ResponseOption.swift */; };
 		CB9FF7D21B8F2B70003A193B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9FF7D11B8F2B70003A193B /* User.swift */; };
+		CB9FF80F1B8F4408003A193B /* JSONSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9FF80E1B8F4408003A193B /* JSONSerializer.swift */; };
 		CBA4372C1B8DEA8E00EF3E01 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBA4372B1B8DEA8E00EF3E01 /* CoreLocation.framework */; };
 		CBA4372E1B8DF1F300EF3E01 /* CreateRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA4372D1B8DF1F300EF3E01 /* CreateRoomViewController.swift */; };
 		CBA437301B8DF5A500EF3E01 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBA4372F1B8DF5A500EF3E01 /* MapKit.framework */; };
@@ -55,6 +56,7 @@
 		CB9FF7CD1B8F2916003A193B /* Question.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
 		CB9FF7CF1B8F2A78003A193B /* ResponseOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseOption.swift; sourceTree = "<group>"; };
 		CB9FF7D11B8F2B70003A193B /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		CB9FF80E1B8F4408003A193B /* JSONSerializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONSerializer.swift; sourceTree = "<group>"; };
 		CBA4372B1B8DEA8E00EF3E01 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		CBA4372D1B8DF1F300EF3E01 /* CreateRoomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateRoomViewController.swift; sourceTree = "<group>"; };
 		CBA4372F1B8DF5A500EF3E01 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -130,6 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				CB9FF7C51B8F1401003A193B /* HTTPHandler.swift */,
+				CB9FF80E1B8F4408003A193B /* JSONSerializer.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -256,6 +259,7 @@
 				CB9FF7CE1B8F2916003A193B /* Question.swift in Sources */,
 				CB2EF9C31B8DE7260098871B /* Room.swift in Sources */,
 				CB3C37721B8DBF5000897344 /* AppDelegate.swift in Sources */,
+				CB9FF80F1B8F4408003A193B /* JSONSerializer.swift in Sources */,
 				CB9FF7C61B8F1401003A193B /* HTTPHandler.swift in Sources */,
 				CBA4372E1B8DF1F300EF3E01 /* CreateRoomViewController.swift in Sources */,
 				CB9FF7CC1B8F28B4003A193B /* Answer.swift in Sources */,
@@ -389,6 +393,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = wiserIos/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -402,6 +407,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = wiserIos/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

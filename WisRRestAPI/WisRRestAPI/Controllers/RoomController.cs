@@ -29,6 +29,20 @@ namespace WisRRestAPI.Controllers
         [System.Web.Mvc.HttpPost]
         public void CreateRoom(string Room)
         {
+            var str = Request.InputStream;
+            var strLen = Convert.ToInt32(str.Length);
+            byte[] strArr = new byte[strLen];
+            var strRead = str.Read(strArr, 0, strLen);
+            var strContent = "";
+            for (var counter = 0; counter < strLen, counter++)
+            {
+                strContent += strArr[counter].ToString();
+            }
+
+            var formData = Request; // Request
+            var lol = Request.InputStream;
+            var nvc = Request.Form;
+
             _rr.AddRoom(_jsSerializer.Deserialize<Room>(Room));
         }
 
