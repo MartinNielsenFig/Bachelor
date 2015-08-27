@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		CB2EF9C31B8DE7260098871B /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2EF9C21B8DE7260098871B /* Room.swift */; };
+		CB2FC2DE1B8F93BC00CD8B28 /* JSONSerializerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2FC2DD1B8F93BC00CD8B28 /* JSONSerializerTests.swift */; };
 		CB3C37721B8DBF5000897344 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3C37711B8DBF5000897344 /* AppDelegate.swift */; };
 		CB3C37741B8DBF5000897344 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3C37731B8DBF5000897344 /* ViewController.swift */; };
 		CB3C37771B8DBF5000897344 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB3C37751B8DBF5000897344 /* Main.storyboard */; };
@@ -39,6 +40,7 @@
 
 /* Begin PBXFileReference section */
 		CB2EF9C21B8DE7260098871B /* Room.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
+		CB2FC2DD1B8F93BC00CD8B28 /* JSONSerializerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONSerializerTests.swift; sourceTree = "<group>"; };
 		CB3C376E1B8DBF5000897344 /* wiserIos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = wiserIos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB3C37711B8DBF5000897344 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CB3C37731B8DBF5000897344 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 			children = (
 				CB3C37861B8DBF5000897344 /* wiserIosTests.swift */,
 				CB3C37881B8DBF5000897344 /* Info.plist */,
+				CB2FC2DD1B8F93BC00CD8B28 /* JSONSerializerTests.swift */,
 			);
 			path = wiserIosTests;
 			sourceTree = "<group>";
@@ -272,6 +275,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CB3C37871B8DBF5000897344 /* wiserIosTests.swift in Sources */,
+				CB2FC2DE1B8F93BC00CD8B28 /* JSONSerializerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

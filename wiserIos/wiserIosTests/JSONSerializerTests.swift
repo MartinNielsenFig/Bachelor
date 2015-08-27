@@ -1,16 +1,16 @@
 //
-//  wiserIosTests.swift
-//  wiserIosTests
+//  JSONSerializerTests.swift
+//  wiserIos
 //
-//  Created by Peter Helstrup Jensen on 26/08/2015.
+//  Created by Peter Helstrup Jensen on 27/08/2015.
 //  Copyright © 2015 Peter Helstrup Jensen. All rights reserved.
 //
 
 import XCTest
 @testable import wiserIos
 
-class wiserIosTests: XCTestCase {
-    
+class JSONSerializerTests: XCTestCase {
+
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -20,19 +20,6 @@ class wiserIosTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
-    
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock {
-            // Put the code you want to measure the time of here.
-        }
-    }
-    
     
     //JSONSerializer tests
     func stringCompareHelper(actual: String, _ expected: String) {
@@ -87,6 +74,23 @@ class wiserIosTests: XCTestCase {
         stringCompareHelper(json, expected)
     }
     
+    func test_int_5() {
+        //Arrange
+        class TestClass {
+            var weight = 5
+        }
+        
+        let m = TestClass()
+        
+        //Act
+        let json = JSONSerializer.toJson(m)
+        
+        //Assert
+        let expected = "{\"weight\": 5}"
+        stringCompareHelper(json, expected)
+    }
+    
+    
     func test_double_2dot1() {
         //Arrange
         class TestClass {
@@ -100,6 +104,38 @@ class wiserIosTests: XCTestCase {
         
         //Assert
         let expected = "{\"weight\": 2.1}"
+        stringCompareHelper(json, expected)
+    }
+    
+    func test_optionalInt_4() {
+        //Arrange
+        class TestClass {
+            var weight: Int? = 4
+        }
+        
+        let m = TestClass()
+        
+        //Act
+        let json = JSONSerializer.toJson(m)
+        
+        //Assert
+        let expected = "{\"weight\": 4}"
+        stringCompareHelper(json, expected)
+    }
+    
+    func test_optionalInt_null() {
+        //Arrange
+        class TestClass {
+            var weight: Int? = nil
+        }
+        
+        let m = TestClass()
+        
+        //Act
+        let json = JSONSerializer.toJson(m)
+        
+        //Assert
+        let expected = "{\"weight\": null}"
         stringCompareHelper(json, expected)
     }
     
@@ -247,6 +283,22 @@ class wiserIosTests: XCTestCase {
         stringCompareHelper(json, expected)
     }
     
+    func test_optionalStringArray_helloNilCat() {
+        //Arrange
+        class TestClass {
+            var array: [String?] = ["hello", nil, "cat"]
+        }
+        
+        let m = TestClass()
+        
+        //Act
+        let json = JSONSerializer.toJson(m)
+        
+        //Assert
+        let expected = "{\"array\": [\"hello\", null, \"cat\"]}"
+        stringCompareHelper(json, expected)
+    }
+    
     func test_object_recursive() {
         //Arrange
         class Child {
@@ -270,5 +322,5 @@ class wiserIosTests: XCTestCase {
         stringCompareHelper(json, expected)
     }
 
-    
+
 }

@@ -79,7 +79,6 @@ public class JSONSerializer {
             else if let array = value as? NSArray {
                 handledValue += "["
                 for (index, value) in array.enumerate() {
-                    
                     handledValue += "\(value)"
                     handledValue += (index < array.count-1 ? ", " : "")
                 }
