@@ -11,7 +11,8 @@ import UIKit
 class RoomTableViewController: UITableViewController {
 
     //Properties
-    var rooms = [Room(name: "Shannon", radius: 15), Room(name: "Edison", radius: 20), Room(name: "Peter Bøgh", radius: 32)]
+    var rooms = [Room(createdById: "me", radius: 10, tag: "petersCrib"),
+                Room(createdById: "you", radius: 20, tag: "noobPlace")]
     
     
     //Lifecycle
@@ -51,7 +52,7 @@ class RoomTableViewController: UITableViewController {
         let cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: nil)
         let room = rooms[indexPath.row]
         
-        cell.textLabel?.text = room.name
+        cell.textLabel?.text = room.tag
         cell.detailTextLabel?.text = "\(room.radius) meters away"
         
         return cell

@@ -30,6 +30,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         
         //Map delegation for pin behaviour
         mapView.delegate = self
+        
+        
+        let httpTest = HttpHandler()
+        print(httpTest.testStackoverflow())
     }
 
     override func didReceiveMemoryWarning() {

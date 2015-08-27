@@ -9,11 +9,23 @@
 import Foundation
 
 class Room {
-    var name: String
-    var radius: Int
     
-    init(name: String, radius: Int) {
-        self.name = name
+    var id: String?
+    var createdById: String
+    //var location: Coordinate
+    var radius: Int
+    var tag: String
+    //Has default:
+    var hasPassword: Bool = false
+    var encryptedPassword: String?
+    var hasChat: Bool = true
+    var usersCanAsk: Bool = false
+    var allowAnonymous: Bool = true
+    
+    
+    init(createdById: String, radius: Int, tag: String) {
+        self.createdById = createdById
         self.radius = radius
+        self.tag = tag
     }
 }
