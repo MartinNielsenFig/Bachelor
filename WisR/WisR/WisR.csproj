@@ -177,6 +177,9 @@
     <Compile Include="..\..\WisRRestAPI\WisRRestAPI\DomainModel\Answer.cs">
       <Link>DomainModels\Answer.cs</Link>
     </Compile>
+    <Compile Include="..\..\WisRRestAPI\WisRRestAPI\DomainModel\ChatMessage.cs">
+      <Link>DomainModels\ChatMessage.cs</Link>
+    </Compile>
     <Compile Include="..\..\WisRRestAPI\WisRRestAPI\DomainModel\Coordinate.cs">
       <Link>DomainModels\Coordinate.cs</Link>
     </Compile>

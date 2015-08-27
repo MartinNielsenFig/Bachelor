@@ -237,6 +237,7 @@
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DomainModel\Answer.cs" />
+    <Compile Include="DomainModel\ChatMessage.cs" />
     <Compile Include="DomainModel\Coordinate.cs" />
     <Compile Include="Providers\dbHandler.cs" />
     <Compile Include="Providers\IdbHandler.cs" />
