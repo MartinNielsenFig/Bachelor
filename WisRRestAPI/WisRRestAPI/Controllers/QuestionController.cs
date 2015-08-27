@@ -20,7 +20,7 @@ namespace WisRRestAPI.Controllers
         public QuestionController(IQuestionRepository qr)
         {
             _qr = qr;
-            _jsSerializer=new JavaScriptSerializer();
+            _jsSerializer = new JavaScriptSerializer();
         }
 
         [System.Web.Mvc.HttpGet]
@@ -33,7 +33,7 @@ namespace WisRRestAPI.Controllers
         [System.Web.Mvc.HttpPost]
         public void CreateQuestion(string question)
         {
-                _qr.AddQuestion(_jsSerializer.Deserialize<Question>(question));
+            _qr.AddQuestion(_jsSerializer.Deserialize<Question>(question));
         }
 
         [System.Web.Mvc.HttpGet]
@@ -51,7 +51,7 @@ namespace WisRRestAPI.Controllers
         public string DeleteQuestion(string id)
         {
             var result = _qr.RemoveQuestion(id).Result;
-            if (result.DeletedCount==1)
+            if (result.DeletedCount == 1)
             {
                 return "Question was deleted";
             }
