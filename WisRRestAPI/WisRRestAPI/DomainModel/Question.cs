@@ -16,7 +16,7 @@ namespace WisR.DomainModels
         public List<Answer> Result { get; set; }
         public int UpVotes { get; set; }
         public int DownVotes { get; set; }
-        public string CreatedBy { get; set; }
+        public string CreatedById { get; set; }
 
         public Question()
         {
