@@ -16,6 +16,6 @@ namespace WisR.DomainModels
         public string LDAPUserName { get; set; }
         public string DisplayName { get; set; }
         public string Email { get; set; }
-        public string Encrypted { get; set; }
+        public string EncryptedPassword { get; set; }
     }
 }
