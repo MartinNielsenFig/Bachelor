@@ -8,7 +8,7 @@ namespace WisR.DomainModels
     {
         [BsonId]
         public string Id { get; set; }
-        public User CreatedBy { get; set; }
+        public string CreatedById { get; set; }
         public Coordinate Location { get; set; }
         public int Radius { get; set; }
         public string Tag { get; set; }
