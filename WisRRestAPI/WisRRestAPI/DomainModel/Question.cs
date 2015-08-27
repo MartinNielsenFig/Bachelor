@@ -28,7 +28,7 @@ namespace WisR.DomainModels
             Result=new List<Answer>() {new Answer(),new Answer()};
             UpVotes = 10;
             DownVotes = 2;
-            CreatedBy = "Martins mor";
+            CreatedById = "Martins mor";
         }
     }
 }

@@ -174,6 +174,27 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\WisRRestAPI\WisRRestAPI\DomainModel\Answer.cs">
+      <Link>DomainModels\Answer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\WisRRestAPI\WisRRestAPI\DomainModel\Coordinate.cs">
+      <Link>DomainModels\Coordinate.cs</Link>
+    </Compile>
+    <Compile Include="..\..\WisRRestAPI\WisRRestAPI\DomainModel\Question.cs">
+      <Link>DomainModels\Question.cs</Link>
+    </Compile>
+    <Compile Include="..\..\WisRRestAPI\WisRRestAPI\DomainModel\QuestionType.cs">
+      <Link>DomainModels\QuestionType.cs</Link>
+    </Compile>
+    <Compile Include="..\..\WisRRestAPI\WisRRestAPI\DomainModel\ResponseOption.cs">
+      <Link>DomainModels\ResponseOption.cs</Link>
+    </Compile>
+    <Compile Include="..\..\WisRRestAPI\WisRRestAPI\DomainModel\Room.cs">
+      <Link>DomainModels\Room.cs</Link>
+    </Compile>
+    <Compile Include="..\..\WisRRestAPI\WisRRestAPI\DomainModel\User.cs">
+      <Link>DomainModels\User.cs</Link>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -182,27 +203,6 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="DomainModels\Answer.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="DomainModels\Coordinate.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="DomainModels\Question.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="DomainModels\QuestionType.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="DomainModels\ResponseOption.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="DomainModels\Room.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
-    <Compile Include="DomainModels\User.cs">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
