@@ -90,7 +90,7 @@ public class JSONSerializer {
             else if property.displayStyle == Mirror.DisplayStyle.Optional {
                 let str = String(value)
                 if str != "nil" {
-                    handledValue = String(str).substringWithRange(Range<String.Index>(start: advance(str.startIndex, 9), end: advance(str.endIndex, -1)))
+                    handledValue = String(str).substringWithRange(Range<String.Index>(start: str.startIndex.advancedBy(9), end: str.endIndex.advancedBy(-1)))
                 }
                 else {
                     handledValue = "null"

@@ -11,6 +11,7 @@ import Foundation
 class HttpHandler {
     
     let mainUrl = "http://192.168.225.132:1337"
+    //let mainUrl = "http://wisrrestapi.azurewebsites.net/"
     
     //http://stackoverflow.com/questions/25341858/perform-post-request-in-ios-swift
 
