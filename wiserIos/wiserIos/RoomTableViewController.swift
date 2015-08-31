@@ -46,10 +46,11 @@ class RoomTableViewController: UITableViewController {
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        //let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
-
-        //Let's use a predefined one
-        let cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: nil)
+        
+        //We're using a predefined one with subtitles, see in Storyboard
+        let cellIdentifier = "SubtitleCell"
+        let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath)
+        
         let room = rooms[indexPath.row]
         
         cell.textLabel?.text = room.tag
@@ -94,14 +95,23 @@ class RoomTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        
+        print("nice")
+
+        
+        if segue.identifier == "SelectRoom" {
+            if let roomTag = sender as? UITableViewCell {
+                print(roomTag)
+            }
+        }
     }
-    */
+    
 
 }

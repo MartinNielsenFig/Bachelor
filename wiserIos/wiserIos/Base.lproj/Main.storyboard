@@ -8,7 +8,7 @@
         <!--Choose Role-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="wiserIos" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Choose Role" id="BYZ-38-t0r" customClass="ChooseRoleViewController" customModule="wiserIos" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -33,7 +33,7 @@
                                         <animations/>
                                         <state key="normal" title="Join Room"/>
                                         <connections>
-                                            <segue destination="C4H-el-owm" kind="show" identifier="JoinRoom" id="NMW-XF-820"/>
+                                            <segue destination="C4H-el-owm" kind="show" identifier="SelectRoom" id="g9T-Lu-mcY"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -65,10 +65,11 @@
             </objects>
             <point key="canvasLocation" x="1010" y="-457"/>
         </scene>
-        <!--Create Room View Controller-->
+        <!--Create Room-->
         <scene sceneID="bPy-wn-8Bf">
             <objects>
-                <viewController id="eRm-8b-kFF" customClass="CreateRoomViewController" customModule="wiserIos" customModuleProvider="target" sceneMemberID="viewController">
+                <placeholder placeholderIdentifier="IBFirstResponder" id="c5c-Dg-d4e" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController title="Create Room" id="eRm-8b-kFF" customClass="CreateRoomViewController" customModule="wiserIos" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="p8y-w6-FXa"/>
                         <viewControllerLayoutGuide type="bottom" id="Mc0-SE-Lc1"/>
@@ -84,7 +85,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="560" height="21"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="diV-SY-es7">
@@ -117,29 +118,87 @@
                         <outlet property="roomNameInput" destination="diV-SY-es7" id="8Te-oj-gHG"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="c5c-Dg-d4e" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1744" y="-790"/>
         </scene>
-        <!--Room Table View Controller-->
+        <!--Sådan Tomas-->
+        <scene sceneID="mTK-Ku-d4h">
+            <objects>
+                <viewController title="Sådan Tomas" id="k1K-52-xuR" customClass="RoomViewController" customModule="wiserIos" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Ms1-Yg-5wQ"/>
+                        <viewControllerLayoutGuide type="bottom" id="R92-6R-ctM"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="l0p-N2-G0O">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="SÅDAN TOMASSSSS" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="aCX-SX-aeJ">
+                                <rect key="frame" x="180" y="236" width="240" height="128"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="Tlh-OW-CFH"/>
+                                </constraints>
+                                <color key="textColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="aCX-SX-aeJ" firstAttribute="centerX" secondItem="l0p-N2-G0O" secondAttribute="centerX" id="Ogk-Yb-oyB"/>
+                            <constraint firstItem="aCX-SX-aeJ" firstAttribute="top" secondItem="Ms1-Yg-5wQ" secondAttribute="bottom" constant="172" id="PNM-Kf-1F0"/>
+                            <constraint firstItem="aCX-SX-aeJ" firstAttribute="centerY" secondItem="l0p-N2-G0O" secondAttribute="centerY" id="dCj-mt-Iak"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="72X-XE-qRN"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eow-27-ofZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2512" y="-98"/>
+        </scene>
+        <!--Rooms-->
         <scene sceneID="DFv-wp-ugX">
             <objects>
-                <tableViewController id="C4H-el-owm" customClass="RoomTableViewController" customModule="wiserIos" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController title="Rooms" id="C4H-el-owm" customClass="RoomTableViewController" customModule="wiserIos" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="DLQ-U5-91o">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="StandardCell" id="UAs-uy-Rnt">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SubtitleCell" textLabel="XIb-Ds-DyA" detailTextLabel="DE0-LC-cvC" style="IBUITableViewCellStyleSubtitle" id="UAs-uy-Rnt">
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UAs-uy-Rnt" id="xds-uT-0oa">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="XIb-Ds-DyA">
+                                            <rect key="frame" x="15" y="6" width="31.5" height="19.5"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <animations/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="DE0-LC-cvC">
+                                            <rect key="frame" x="15" y="25.5" width="40.5" height="13.5"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <animations/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
                                     <animations/>
                                 </tableViewCellContentView>
                                 <animations/>
+                                <accessibility key="accessibilityConfiguration" identifier="SubtitleCell"/>
+                                <connections>
+                                    <segue destination="k1K-52-xuR" kind="show" id="ifs-Gg-Oto"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -147,10 +206,11 @@
                             <outlet property="delegate" destination="C4H-el-owm" id="MT2-rL-cUe"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" id="PbR-qH-Gpt"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XBP-1G-VZl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1744" y="-86"/>
+            <point key="canvasLocation" x="1744" y="-98"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="M5o-0i-xGh">
@@ -169,7 +229,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sHQ-hg-wTw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="338" y="-457"/>
+            <point key="canvasLocation" x="190" y="-457"/>
         </scene>
     </scenes>
 </document>
