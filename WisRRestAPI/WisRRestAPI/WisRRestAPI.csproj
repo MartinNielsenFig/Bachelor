@@ -248,7 +248,6 @@
     <Compile Include="Providers\IRoomRepository.cs" />
     <Compile Include="Providers\IUserRepository.cs" />
     <Compile Include="Providers\QuestionRepository.cs" />
-    <Compile Include="DomainModel\QuestionType.cs" />
     <Compile Include="DomainModel\ResponseOption.cs" />
     <Compile Include="DomainModel\Room.cs" />
     <Compile Include="Providers\RoomRepository.cs" />
