@@ -11,14 +11,14 @@ import Foundation
 class Coordinate {
     var latitude: Double
     var longitude: Double
-    var accuracy: Int
+    var accuracyMeters: Int
     var formattedAddress: String
     var timeStamp: String
     
-    init(latitude: Double, longitude: Double, accuracy: Int, formattedAddress: String, timeStamp: String) {
+    init(latitude: Double, longitude: Double, accuracyMeters: Int, formattedAddress: String, timeStamp: String) {
         self.latitude = latitude
         self.longitude = longitude
-        self.accuracy = accuracy
+        self.accuracyMeters = accuracyMeters
         self.formattedAddress = formattedAddress
         self.timeStamp = timeStamp
     }

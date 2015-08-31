@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 namespace WisR.DomainModels
 {
@@ -6,7 +6,7 @@ namespace WisR.DomainModels
     {
         public Double Latitude { get; set; }
         public Double Longitude { get; set; }
-        public int Accuracy { get; set; }
+        public int AccuracyMeters { get; set; }
         public string FormattedAddress { get; set; }
         public string TimeStamp { get; set; }
     }
