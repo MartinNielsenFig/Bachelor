@@ -187,8 +187,8 @@
     <Compile Include="..\..\WisRRestAPI\WisRRestAPI\DomainModel\Coordinate.cs">
       <Link>DomainModels\Coordinate.cs</Link>
     </Compile>
-    <Compile Include="..\..\WisRRestAPI\WisRRestAPI\DomainModel\Question.cs">
-      <Link>DomainModels\Question.cs</Link>
+    <Compile Include="..\..\WisRRestAPI\WisRRestAPI\DomainModel\IQuestion.cs">
+      <Link>DomainModels\IQuestion.cs</Link>
     </Compile>
     <Compile Include="..\..\WisRRestAPI\WisRRestAPI\DomainModel\ResponseOption.cs">
       <Link>DomainModels\ResponseOption.cs</Link>
@@ -253,8 +253,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
