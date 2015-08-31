@@ -7,9 +7,10 @@ namespace WisR.DomainModels
 {
     public class BooleanQuestion : Question
     {
+        public override ObjectId Id { get; set; }
+
         public override string CreatedById { get; set; }
         public override int Downvote { get; set; }
-        public override ObjectId Id { get; set; }
         public override string Img { get; set; }
         public override string QuestionText { get; set; } = "much bool";
         public override List<ResponseOption> ResponseOptions { get; set; }

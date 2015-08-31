@@ -8,28 +8,27 @@
 
 import Foundation
 
-enum QuestionType {
-    case Boolean
-    case MultipleChoice
-    case Textuel
-    case BrainStorming
-}
-
 class Question {
     
     var id: String?
-    var questionType: QuestionType
-    var questionText: String
-    var responseOptions: [ResponseOption]?
-    var img: String?
-    var result: [Answer]?
+    var createdById: String
     var upvotes: Int = 0
     var downvotes: Int = 0
-    var createdById: String
+    var img: String?
+    var questionText: String
+    var responseOptions: [ResponseOption]?
+    var result: [Answer]?
     
-    init(questionType: QuestionType, questionText: String, createdById: String) {
-        self.questionType = questionType
+    init(questionText: String, createdById: String) {
         self.questionText = questionText
         self.createdById = createdById
     }
+}
+
+class BooleanQuestion: Question {
+    var manyBool: String = "swiftenCreated"
+}
+
+class TextualQeustion: Question {
+    var specificText = "swiftenCreated"
 }

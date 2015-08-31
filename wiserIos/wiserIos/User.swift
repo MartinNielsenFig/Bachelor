@@ -12,7 +12,7 @@ class User {
     
     var id: String?
     var facebookId: Int?
-    var connectedRooms: [Int]?
+    var connectedRoomIds: [Int]?
     var ldapUserName: String?
     var displayName: String
     var email: String?

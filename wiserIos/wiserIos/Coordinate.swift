@@ -13,13 +13,13 @@ class Coordinate {
     var longitude: Double
     var accuracyMeters: Int
     var formattedAddress: String
-    var timeStamp: String
+    var timestamp: String
     
-    init(latitude: Double, longitude: Double, accuracyMeters: Int, formattedAddress: String, timeStamp: String) {
+    init(latitude: Double, longitude: Double, accuracyMeters: Int, formattedAddress: String, timestamp: String) {
         self.latitude = latitude
         self.longitude = longitude
         self.accuracyMeters = accuracyMeters
         self.formattedAddress = formattedAddress
-        self.timeStamp = timeStamp
+        self.timestamp = timestamp
     }
 }

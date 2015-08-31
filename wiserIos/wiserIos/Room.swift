@@ -11,17 +11,17 @@ import Foundation
 class Room {
     
     var id: String?
+    var name: String?
     var createdById: String
     var location: Coordinate?
     var radius: Int
     var tag: String
-    var name: String?
-    //Has default:
     var hasPassword: Bool = false
     var encryptedPassword: String?
     var hasChat: Bool = true
     var usersCanAsk: Bool = false
     var allowAnonymous: Bool = true
+    var chatlog: [ChatMessage]?
     
     
     init(createdById: String, radius: Int, tag: String) {

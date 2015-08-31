@@ -1,14 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity.Core.Objects;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
-using MongoDB.Bson;
-using MongoDB.Driver;
 using WisR.DomainModels;
 using WisRRestAPI.DomainModel;
 

@@ -35,7 +35,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         let httpTest = HttpHandler()
         //print(httpTest.testStackoverflow())
         
-        let question = Question(questionType: QuestionType.Boolean, questionText: "Er jeg cool?", createdById: "PeterAdmin")
+        let question = Question(questionText: "Er jeg cool?", createdById: "PeterAdmin")
         let qJson = JSONSerializer.toJson(question)
         print(qJson)
         httpTest.testCreateRoom(qJson)

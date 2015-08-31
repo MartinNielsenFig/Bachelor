@@ -9,8 +9,7 @@ namespace WisR.DomainModels
 {
     public class User
     {
-        [BsonId]
-        public string Id { get; set; }
+        public ObjectId Id { get; set; }
         public int FacebookId { get; set; }
         public List<ObjectId> ConnectedRoomIds { get; set; }
         public string LDAPUserName { get; set; }
