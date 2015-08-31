@@ -25,10 +25,18 @@ class Question {
     }
 }
 
-class BooleanQuestion: Question {
+class BooleanQuestion {
+    var id: String?
+    var createdById: String = "nooba"
+    var upvotes: Int = 0
+    var downvotes: Int = 0
+    var img: String?
+    var questionText: String = "dooga"
+    var responseOptions: [ResponseOption]?
+    var result: [Answer]?
     var manyBool: String = "swiftenCreated"
 }
 
-class TextualQeustion: Question {
+class TextualQuestion: Question {
     var specificText = "swiftenCreated"
 }

@@ -34,10 +34,13 @@ namespace WisRRestAPI.Controllers
         }
 
         [System.Web.Mvc.HttpPost]
-        public void CreateQuestion(string question)
+        public void CreateQuestion(string question, string type)
         {
             _rabbitHandler.publishString("CreateQuestion",question);
-            //Todo _qr.AddQuestion(_jsSerializer.Deserialize<IQuestion>(question));
+            string typeString = "WisR.DomainModels." + type;
+            Type questionType = Type.GetType(typeString);
+            var q = _jsSerializer.Deserialize(question, questionType);
+            _qr.AddQuestionObject(q);
         }
 
         [System.Web.Mvc.HttpGet]

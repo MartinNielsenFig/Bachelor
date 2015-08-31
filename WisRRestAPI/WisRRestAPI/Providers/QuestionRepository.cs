@@ -28,6 +28,11 @@ namespace WisRRestAPI.DomainModel
             return question;
         }
 
+        public void AddQuestionObject(object item)
+        {
+            _database.GetCollection<object>("question").InsertOneAsync(item);
+        }
+
         public void AddQuestion(IQuestion item)
         {
             _database.GetCollection<IQuestion>("question").InsertOneAsync(item);

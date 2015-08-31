@@ -68,7 +68,6 @@
         <!--Create Room-->
         <scene sceneID="bPy-wn-8Bf">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="c5c-Dg-d4e" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController title="Create Room" id="eRm-8b-kFF" customClass="CreateRoomViewController" customModule="wiserIos" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="p8y-w6-FXa"/>
@@ -134,6 +133,7 @@
                         <outlet property="roomNameInput" destination="diV-SY-es7" id="8Te-oj-gHG"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="c5c-Dg-d4e" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1744" y="-790"/>
         </scene>
