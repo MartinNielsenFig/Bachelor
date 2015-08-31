@@ -23,8 +23,8 @@ class Question {
     var responseOptions: [ResponseOption]?
     var img: String?
     var result: [Answer]?
-    var upVotes: Int = 0
-    var downVotes: Int = 0
+    var upvotes: Int = 0
+    var downvotes: Int = 0
     var createdById: String
     
     init(questionType: QuestionType, questionText: String, createdById: String) {
