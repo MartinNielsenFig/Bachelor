@@ -37,7 +37,7 @@ namespace WisRRestAPI.Controllers
         public void CreateQuestion(string question)
         {
             _rabbitHandler.publishString("CreateQuestion",question);
-            _qr.AddQuestion(_jsSerializer.Deserialize<Question>(question));
+            //Todo _qr.AddQuestion(_jsSerializer.Deserialize<IQuestion>(question));
         }
 
         [System.Web.Mvc.HttpGet]
@@ -57,7 +57,7 @@ namespace WisRRestAPI.Controllers
             var result = _qr.RemoveQuestion(id).Result;
             if (result.DeletedCount == 1)
             {
-                return "Question was deleted";
+                return "IQuestion was deleted";
             }
             return "Couldn't find question to delete";
         }

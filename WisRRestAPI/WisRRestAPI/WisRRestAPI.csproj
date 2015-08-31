@@ -244,7 +244,7 @@
     <Compile Include="DomainModel\ChatMessage.cs" />
     <Compile Include="DomainModel\Coordinate.cs" />
     <Compile Include="DomainModel\BooleanQuestion.cs" />
-    <Compile Include="DomainModel\Question.cs" />
+    <Compile Include="DomainModel\IQuestion.cs" />
     <Compile Include="DomainModel\TextualQuestion.cs" />
     <Compile Include="Providers\dbHandler.cs" />
     <Compile Include="Providers\IdbHandler.cs" />

@@ -3,7 +3,7 @@ using MongoDB.Bson;
 
 namespace WisR.DomainModels
 {
-    public abstract class Question
+    public abstract class IQuestion
     {
         public abstract ObjectId Id { get; set; }
         public abstract string CreatedById { get; set; }

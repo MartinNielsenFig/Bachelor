@@ -5,7 +5,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace WisR.DomainModels
 {
-    public class BooleanQuestion : Question
+    public class BooleanQuestion : IQuestion
     {
         public override ObjectId Id { get; set; }
         public override string CreatedById { get; set; }

@@ -20,6 +20,11 @@ namespace WisRRestAPI.Providers
             factory.Uri = ConfigurationManager.AppSettings["rabbitMqHost"];
             _conn = factory.CreateConnection();
             _model = _conn.CreateModel();
+            _model.QueueDeclare(queue: "Wisr",
+                                 durable: false,
+                                 exclusive: false,
+                                 autoDelete: false,
+                                 arguments: null);
         }
 
         public IConnection getConn()

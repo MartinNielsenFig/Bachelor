@@ -27,8 +27,8 @@
         </p>
 
 
-        <form action="localhost:1337/Question/CreateQuestion" method="POST"><input type="hidden" name="question" value="@ViewBag.q"/>
+        <form action="localhost:1337/IQuestion/CreateIQuestion" method="POST"><input type="hidden" name="question" value="@ViewBag.q"/>
         <button type="submit">dsfdf</button></form>
-        @Html.ActionLink("press","CreateQuestion", new { controller = "QuestionController", Question = new BooleanQuestion()})
+        @Html.ActionLink("press","CreateIQuestion", new { controller = "IQuestionController", Question = new BooleanQuestion()})
     </div>
 </div>

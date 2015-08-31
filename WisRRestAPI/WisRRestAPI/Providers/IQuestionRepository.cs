@@ -11,10 +11,10 @@ namespace WisRRestAPI.DomainModel
 {
     public interface IQuestionRepository
     {
-        Task<List<Question>> GetAllQuestions();
-        Task<Question> GetQuestion(string id);
-        void AddQuestion(Question item);
+        Task<List<IQuestion>> GetAllQuestions();
+        Task<IQuestion> GetQuestion(string id);
+        void AddQuestion(IQuestion item);
         Task<DeleteResult> RemoveQuestion(string id);
-        Task<Question> UpdateQuestion(string id, Question item);
+        Task<IQuestion> UpdateQuestion(string id, IQuestion item);
     }
 }
