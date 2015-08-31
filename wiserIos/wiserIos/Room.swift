@@ -12,9 +12,10 @@ class Room {
     
     var id: String?
     var createdById: String
-    //var location: Coordinate
+    var location: Coordinate?
     var radius: Int
     var tag: String
+    var name: String?
     //Has default:
     var hasPassword: Bool = false
     var encryptedPassword: String?

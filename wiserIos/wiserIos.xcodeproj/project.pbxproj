@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		CB2EF9C31B8DE7260098871B /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2EF9C21B8DE7260098871B /* Room.swift */; };
+		CB2FC2DE1B8F93BC00CD8B28 /* JSONSerializerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2FC2DD1B8F93BC00CD8B28 /* JSONSerializerTests.swift */; };
 		CB3C37721B8DBF5000897344 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3C37711B8DBF5000897344 /* AppDelegate.swift */; };
 		CB3C37741B8DBF5000897344 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3C37731B8DBF5000897344 /* ViewController.swift */; };
 		CB3C37771B8DBF5000897344 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB3C37751B8DBF5000897344 /* Main.storyboard */; };
@@ -21,6 +22,7 @@
 		CB9FF7CE1B8F2916003A193B /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9FF7CD1B8F2916003A193B /* Question.swift */; };
 		CB9FF7D01B8F2A78003A193B /* ResponseOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9FF7CF1B8F2A78003A193B /* ResponseOption.swift */; };
 		CB9FF7D21B8F2B70003A193B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9FF7D11B8F2B70003A193B /* User.swift */; };
+		CB9FF80F1B8F4408003A193B /* JSONSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9FF80E1B8F4408003A193B /* JSONSerializer.swift */; };
 		CBA4372C1B8DEA8E00EF3E01 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBA4372B1B8DEA8E00EF3E01 /* CoreLocation.framework */; };
 		CBA4372E1B8DF1F300EF3E01 /* CreateRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA4372D1B8DF1F300EF3E01 /* CreateRoomViewController.swift */; };
 		CBA437301B8DF5A500EF3E01 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBA4372F1B8DF5A500EF3E01 /* MapKit.framework */; };
@@ -38,6 +40,7 @@
 
 /* Begin PBXFileReference section */
 		CB2EF9C21B8DE7260098871B /* Room.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
+		CB2FC2DD1B8F93BC00CD8B28 /* JSONSerializerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONSerializerTests.swift; sourceTree = "<group>"; };
 		CB3C376E1B8DBF5000897344 /* wiserIos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = wiserIos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB3C37711B8DBF5000897344 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CB3C37731B8DBF5000897344 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -55,6 +58,7 @@
 		CB9FF7CD1B8F2916003A193B /* Question.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
 		CB9FF7CF1B8F2A78003A193B /* ResponseOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseOption.swift; sourceTree = "<group>"; };
 		CB9FF7D11B8F2B70003A193B /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		CB9FF80E1B8F4408003A193B /* JSONSerializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONSerializer.swift; sourceTree = "<group>"; };
 		CBA4372B1B8DEA8E00EF3E01 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		CBA4372D1B8DF1F300EF3E01 /* CreateRoomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateRoomViewController.swift; sourceTree = "<group>"; };
 		CBA4372F1B8DF5A500EF3E01 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -122,6 +126,7 @@
 			children = (
 				CB3C37861B8DBF5000897344 /* wiserIosTests.swift */,
 				CB3C37881B8DBF5000897344 /* Info.plist */,
+				CB2FC2DD1B8F93BC00CD8B28 /* JSONSerializerTests.swift */,
 			);
 			path = wiserIosTests;
 			sourceTree = "<group>";
@@ -130,6 +135,7 @@
 			isa = PBXGroup;
 			children = (
 				CB9FF7C51B8F1401003A193B /* HTTPHandler.swift */,
+				CB9FF80E1B8F4408003A193B /* JSONSerializer.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -256,6 +262,7 @@
 				CB9FF7CE1B8F2916003A193B /* Question.swift in Sources */,
 				CB2EF9C31B8DE7260098871B /* Room.swift in Sources */,
 				CB3C37721B8DBF5000897344 /* AppDelegate.swift in Sources */,
+				CB9FF80F1B8F4408003A193B /* JSONSerializer.swift in Sources */,
 				CB9FF7C61B8F1401003A193B /* HTTPHandler.swift in Sources */,
 				CBA4372E1B8DF1F300EF3E01 /* CreateRoomViewController.swift in Sources */,
 				CB9FF7CC1B8F28B4003A193B /* Answer.swift in Sources */,
@@ -268,6 +275,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CB3C37871B8DBF5000897344 /* wiserIosTests.swift in Sources */,
+				CB2FC2DE1B8F93BC00CD8B28 /* JSONSerializerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -389,6 +397,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = wiserIos/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -402,6 +411,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = wiserIos/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

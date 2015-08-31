@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Coordiante {
+class Coordinate {
     var latitude: Double
     var longitude: Double
     var accuracy: Int
