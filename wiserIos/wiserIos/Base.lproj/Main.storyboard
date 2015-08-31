@@ -79,7 +79,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ROU-1c-inC">
-                                <rect key="frame" x="20" y="126" width="560" height="81"/>
+                                <rect key="frame" x="20" y="126" width="560" height="129"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Room Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nvw-sa-OSA">
                                         <rect key="frame" x="0.0" y="0.0" width="560" height="21"/>
@@ -102,6 +102,22 @@
                                             <action selector="createRoom:" destination="eRm-8b-kFF" eventType="touchUpInside" id="ZyP-dc-rDU"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Room Size" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S6V-j3-m0s">
+                                        <rect key="frame" x="0.0" y="81" width="560" height="21"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <segmentedControl opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="DAw-iF-u5f">
+                                        <rect key="frame" x="0.0" y="101" width="560" height="29"/>
+                                        <animations/>
+                                        <segments>
+                                            <segment title="10 meters"/>
+                                            <segment title="20 meters"/>
+                                            <segment title="40 meters"/>
+                                        </segments>
+                                    </segmentedControl>
                                 </subviews>
                                 <animations/>
                             </stackView>
