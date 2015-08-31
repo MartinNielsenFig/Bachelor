@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using WisR.DomainModels;
 
@@ -24,7 +25,7 @@ namespace WisRRestAPI.DomainModel
 
         public Task<Room> GetRoom(string id)
         {
-            var room = _database.GetCollection<Room>("room").Find(x => x.Id == id).SingleAsync();
+            var room = _database.GetCollection<Room>("room").Find(x => x.Id == ObjectId.Parse(id)).SingleAsync();
             return room;
         }
 
@@ -35,13 +36,13 @@ namespace WisRRestAPI.DomainModel
 
         public Task<DeleteResult> RemoveRoom(string id)
         {
-            var task = _database.GetCollection<Room>("room").DeleteOneAsync(x => x.Id == id);
+            var task = _database.GetCollection<Room>("room").DeleteOneAsync(x => x.Id == ObjectId.Parse(id));
             return task;
         }
 
         public Task<Room> UpdateRoom(string id, Room item)
         {
-            var task = _database.GetCollection<Room>("room").FindOneAndReplaceAsync(x => x.Id == id, item);
+            var task = _database.GetCollection<Room>("room").FindOneAndReplaceAsync(x => x.Id == ObjectId.Parse(id), item);
             return task;
         }
     }

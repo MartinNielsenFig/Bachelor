@@ -8,7 +8,6 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
-using MongoDB.Bson;
 using WisR.DomainModels;
 using WisRRestAPI.DomainModel;
 using WisRRestAPI.Providers;
@@ -61,6 +60,17 @@ namespace WisRRestAPI.Controllers
                 return "Question was deleted";
             }
             return "Couldn't find question to delete";
+        }
+
+        public void MakeQuestion()
+        {
+            //Insert different interface implementations
+            var q0 = new BooleanQuestion();
+            var q1 = new TextualQuestion();
+
+            _qr.AddQuestion(q0);
+            _qr.AddQuestion(q1);
+            Console.WriteLine("Finished saving");
         }
     }
 }

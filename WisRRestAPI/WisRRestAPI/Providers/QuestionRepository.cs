@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Configuration;
 using System.Threading.Tasks;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using WisR.DomainModels;
 
 namespace WisRRestAPI.DomainModel
 {
-    public class QuestionRepository:IQuestionRepository
+    public class QuestionRepository : IQuestionRepository
     {
         private readonly IMongoDatabase _database;
 
@@ -17,13 +18,13 @@ namespace WisRRestAPI.DomainModel
 
         public Task<List<Question>> GetAllQuestions()
         {
-            var questions = _database.GetCollection<Question>("question").Find(_=>true).ToListAsync();
+            var questions = _database.GetCollection<Question>("question").Find(_ => true).ToListAsync();
             return questions;
         }
 
         public Task<Question> GetQuestion(string id)
         {
-            var question = _database.GetCollection<Question>("question").Find(x => x.Id==id).SingleAsync();
+            var question = _database.GetCollection<Question>("question").Find(x => x.Id == ObjectId.Parse(id)).SingleAsync();
             return question;
         }
 
@@ -34,14 +35,14 @@ namespace WisRRestAPI.DomainModel
 
         public Task<DeleteResult> RemoveQuestion(string id)
         {
-            var task=_database.GetCollection<Question>("question").DeleteOneAsync(x => x.Id == id);
+            var task = _database.GetCollection<Question>("question").DeleteOneAsync(x => x.Id == ObjectId.Parse(id));
             return task;
 
         }
 
         public Task<Question> UpdateQuestion(string id, Question item)
         {
-            var task = _database.GetCollection<Question>("question").FindOneAndReplaceAsync(x=>x.Id==id,item);
+            var task = _database.GetCollection<Question>("question").FindOneAndReplaceAsync(x => x.Id == ObjectId.Parse(id), item);
             return task;
         }
     }

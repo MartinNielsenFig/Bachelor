@@ -7,10 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CB0218201B9462C400DFC9DD /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB02181F1B9462C400DFC9DD /* ChatMessage.swift */; settings = {ASSET_TAGS = (); }; };
+		CB0218261B947BDD00DFC9DD /* RoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0218251B947BDD00DFC9DD /* RoomViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		CB2EF9C31B8DE7260098871B /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2EF9C21B8DE7260098871B /* Room.swift */; };
 		CB2FC2DE1B8F93BC00CD8B28 /* JSONSerializerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2FC2DD1B8F93BC00CD8B28 /* JSONSerializerTests.swift */; };
 		CB3C37721B8DBF5000897344 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3C37711B8DBF5000897344 /* AppDelegate.swift */; };
-		CB3C37741B8DBF5000897344 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3C37731B8DBF5000897344 /* ViewController.swift */; };
+		CB3C37741B8DBF5000897344 /* ChooseRoleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3C37731B8DBF5000897344 /* ChooseRoleViewController.swift */; };
 		CB3C37771B8DBF5000897344 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB3C37751B8DBF5000897344 /* Main.storyboard */; };
 		CB3C37791B8DBF5000897344 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB3C37781B8DBF5000897344 /* Assets.xcassets */; };
 		CB3C377C1B8DBF5000897344 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB3C377A1B8DBF5000897344 /* LaunchScreen.storyboard */; };
@@ -39,11 +41,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CB02181F1B9462C400DFC9DD /* ChatMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
+		CB0218251B947BDD00DFC9DD /* RoomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomViewController.swift; sourceTree = "<group>"; };
 		CB2EF9C21B8DE7260098871B /* Room.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
 		CB2FC2DD1B8F93BC00CD8B28 /* JSONSerializerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONSerializerTests.swift; sourceTree = "<group>"; };
 		CB3C376E1B8DBF5000897344 /* wiserIos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = wiserIos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB3C37711B8DBF5000897344 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		CB3C37731B8DBF5000897344 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		CB3C37731B8DBF5000897344 /* ChooseRoleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseRoleViewController.swift; sourceTree = "<group>"; };
 		CB3C37761B8DBF5000897344 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CB3C37781B8DBF5000897344 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CB3C377B1B8DBF5000897344 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -84,6 +88,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CB0218221B947B9E00DFC9DD /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				CB3C37731B8DBF5000897344 /* ChooseRoleViewController.swift */,
+				CB3C37911B8DE1F000897344 /* RoomTableViewController.swift */,
+				CBA4372D1B8DF1F300EF3E01 /* CreateRoomViewController.swift */,
+				CB0218251B947BDD00DFC9DD /* RoomViewController.swift */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
 		CB3C37651B8DBF5000897344 = {
 			isa = PBXGroup;
 			children = (
@@ -107,16 +122,14 @@
 		CB3C37701B8DBF5000897344 /* wiserIos */ = {
 			isa = PBXGroup;
 			children = (
+				CB0218221B947B9E00DFC9DD /* ViewControllers */,
 				CB9FF7C81B8F1864003A193B /* Models */,
 				CB9FF7C71B8F1859003A193B /* Helpers */,
 				CB3C37711B8DBF5000897344 /* AppDelegate.swift */,
-				CB3C37731B8DBF5000897344 /* ViewController.swift */,
 				CB3C37751B8DBF5000897344 /* Main.storyboard */,
 				CB3C37781B8DBF5000897344 /* Assets.xcassets */,
 				CB3C377A1B8DBF5000897344 /* LaunchScreen.storyboard */,
 				CB3C377D1B8DBF5000897344 /* Info.plist */,
-				CB3C37911B8DE1F000897344 /* RoomTableViewController.swift */,
-				CBA4372D1B8DF1F300EF3E01 /* CreateRoomViewController.swift */,
 			);
 			path = wiserIos;
 			sourceTree = "<group>";
@@ -149,6 +162,7 @@
 				CB9FF7CD1B8F2916003A193B /* Question.swift */,
 				CB9FF7CF1B8F2A78003A193B /* ResponseOption.swift */,
 				CB9FF7D11B8F2B70003A193B /* User.swift */,
+				CB02181F1B9462C400DFC9DD /* ChatMessage.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -257,12 +271,14 @@
 			files = (
 				CB9FF7CA1B8F27EC003A193B /* Coordinate.swift in Sources */,
 				CB3C37921B8DE1F000897344 /* RoomTableViewController.swift in Sources */,
-				CB3C37741B8DBF5000897344 /* ViewController.swift in Sources */,
+				CB0218201B9462C400DFC9DD /* ChatMessage.swift in Sources */,
+				CB3C37741B8DBF5000897344 /* ChooseRoleViewController.swift in Sources */,
 				CB9FF7D01B8F2A78003A193B /* ResponseOption.swift in Sources */,
 				CB9FF7CE1B8F2916003A193B /* Question.swift in Sources */,
 				CB2EF9C31B8DE7260098871B /* Room.swift in Sources */,
 				CB3C37721B8DBF5000897344 /* AppDelegate.swift in Sources */,
 				CB9FF80F1B8F4408003A193B /* JSONSerializer.swift in Sources */,
+				CB0218261B947BDD00DFC9DD /* RoomViewController.swift in Sources */,
 				CB9FF7C61B8F1401003A193B /* HTTPHandler.swift in Sources */,
 				CBA4372E1B8DF1F300EF3E01 /* CreateRoomViewController.swift in Sources */,
 				CB9FF7CC1B8F28B4003A193B /* Answer.swift in Sources */,

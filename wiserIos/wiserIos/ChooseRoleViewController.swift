@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  ChooseRoleViewController.swift
 //  wiserIos
 //
 //  Created by Peter Helstrup Jensen on 26/08/2015.
@@ -10,7 +10,7 @@ import UIKit
 import CoreLocation
 import MapKit
 
-class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
+class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
 
     //Properties
     @IBOutlet var mapView: MKMapView!
@@ -31,11 +31,9 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         //Map delegation for pin behaviour
         mapView.delegate = self
         
-        
         let httpTest = HttpHandler()
-        //print(httpTest.testStackoverflow())
         
-        let question = Question(questionType: QuestionType.Boolean, questionText: "Er jeg cool?", createdById: "PeterAdmin")
+        let question = Question(questionText: "Er jeg cool?", createdById: "PeterAdmin")
         let qJson = JSONSerializer.toJson(question)
         print(qJson)
         httpTest.testCreateRoom(qJson)

@@ -8,8 +8,7 @@ namespace WisR.DomainModels
 {
     public class Room
     {
-        [BsonId]
-        public string Id { get; set; }
+        public ObjectId Id { get; set; }
         public string Name { get; set; }
         public string CreatedById { get; set; }
         public Coordinate Location { get; set; }
