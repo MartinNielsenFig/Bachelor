@@ -14,6 +14,7 @@ namespace WisRRestAPI.DomainModel
         Task<List<IQuestion>> GetAllQuestions();
         Task<IQuestion> GetQuestion(string id);
         void AddQuestion(IQuestion item);
+        void AddQuestionObject(object item);
         Task<DeleteResult> RemoveQuestion(string id);
         Task<IQuestion> UpdateQuestion(string id, IQuestion item);
     }
