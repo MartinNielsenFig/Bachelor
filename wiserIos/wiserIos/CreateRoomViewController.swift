@@ -20,8 +20,6 @@ class CreateRoomViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.navigationItem.title = "Create Room"
     }
 
     override func didReceiveMemoryWarning() {
