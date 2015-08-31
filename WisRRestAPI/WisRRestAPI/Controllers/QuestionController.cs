@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
@@ -10,6 +11,7 @@ using System.Web.Script.Serialization;
 using MongoDB.Bson;
 using WisR.DomainModels;
 using WisRRestAPI.DomainModel;
+using WisRRestAPI.Providers;
 
 namespace WisRRestAPI.Controllers
 {
@@ -17,10 +19,12 @@ namespace WisRRestAPI.Controllers
     {
         private readonly IQuestionRepository _qr;
         private readonly JavaScriptSerializer _jsSerializer;
-        public QuestionController(IQuestionRepository qr)
+        private readonly IrabbitHandler _rabbitHandler;
+        public QuestionController(IQuestionRepository qr, IrabbitHandler rabbitHandler)
         {
             _qr = qr;
             _jsSerializer = new JavaScriptSerializer();
+            _rabbitHandler = rabbitHandler;
         }
 
         [System.Web.Mvc.HttpGet]
@@ -33,6 +37,7 @@ namespace WisRRestAPI.Controllers
         [System.Web.Mvc.HttpPost]
         public void CreateQuestion(string question)
         {
+            _rabbitHandler.publishString("CreateQuestion",question);
             _qr.AddQuestion(_jsSerializer.Deserialize<Question>(question));
         }
 
