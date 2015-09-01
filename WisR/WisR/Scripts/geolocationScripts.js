@@ -12,7 +12,7 @@ navigator.geolocation.getCurrentPosition(function(position) {
 
 
 function moveMap(position) {
-    currentLocation = position;
+    //currentLocation = position;
     var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
     //Remove previous marker
     if (marker != null) {

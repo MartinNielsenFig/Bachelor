@@ -12,7 +12,7 @@ app.controller("HomeController", ['$scope', '$http', function ($scope, $http) {
   then(function (response) {
 
       //Use response to send to REST API
-      $http.post('http://localhost:1337/Room/CreateRoom', { Room: "" + response.data }).
+      $http.post('http://localhost:1337/Room/CreateRoom', { Room: JSON.stringify(response.data) }).
   then(function (response) {
 
   }, function (response) {
