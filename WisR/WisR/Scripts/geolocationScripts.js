@@ -6,7 +6,13 @@ var positionId;
 var currentLocation;
 var geocoder = new google.maps.Geocoder();
 
+navigator.geolocation.getCurrentPosition(function(position) {
+    currentLocation = position;
+});
+
+
 function moveMap(position) {
+    currentLocation = position;
     var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
     //Remove previous marker
     if (marker != null) {
