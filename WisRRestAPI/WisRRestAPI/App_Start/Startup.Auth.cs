@@ -64,6 +64,8 @@ namespace WisRRestAPI
             //    ClientId = "",
             //    ClientSecret = ""
             //});
+
+            //This is to enable cross-platform communication
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
         }
     }
