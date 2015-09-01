@@ -16,15 +16,15 @@ namespace WisRRestAPI.DomainModel
             _database = dbHandler.getDb();
         }
 
-        public Task<List<IQuestion>> GetAllQuestions()
+        public Task<List<Question>> GetAllQuestions()
         {
-            var questions = _database.GetCollection<IQuestion>("question").Find(_ => true).ToListAsync();
+            var questions = _database.GetCollection<Question>("question").Find(_ => true).ToListAsync();
             return questions;
         }
 
-        public Task<IQuestion> GetQuestion(string id)
+        public Task<Question> GetQuestion(string id)
         {
-            var question = _database.GetCollection<IQuestion>("question").Find(x => x.Id == ObjectId.Parse(id)).SingleAsync();
+            var question = _database.GetCollection<Question>("question").Find(x => x.Id == ObjectId.Parse(id)).SingleAsync();
             return question;
         }
 
@@ -33,21 +33,21 @@ namespace WisRRestAPI.DomainModel
             _database.GetCollection<object>("question").InsertOneAsync(item);
         }
 
-        public void AddQuestion(IQuestion item)
+        public void AddQuestion(Question item)
         {
-            _database.GetCollection<IQuestion>("question").InsertOneAsync(item);
+            _database.GetCollection<Question>("question").InsertOneAsync(item);
         }
 
         public Task<DeleteResult> RemoveQuestion(string id)
         {
-            var task = _database.GetCollection<IQuestion>("question").DeleteOneAsync(x => x.Id == ObjectId.Parse(id));
+            var task = _database.GetCollection<Question>("question").DeleteOneAsync(x => x.Id == ObjectId.Parse(id));
             return task;
 
         }
 
-        public Task<IQuestion> UpdateQuestion(string id, IQuestion item)
+        public Task<Question> UpdateQuestion(string id, Question item)
         {
-            var task = _database.GetCollection<IQuestion>("question").FindOneAndReplaceAsync(x => x.Id == ObjectId.Parse(id), item);
+            var task = _database.GetCollection<Question>("question").FindOneAndReplaceAsync(x => x.Id == ObjectId.Parse(id), item);
             return task;
         }
     }

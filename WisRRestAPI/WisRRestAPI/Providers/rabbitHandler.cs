@@ -39,6 +39,7 @@ namespace WisRRestAPI.Providers
 
         public void publishString(string routingKey,string stringToPublish)
         {
+            if (stringToPublish == null) return;
             var body = Encoding.UTF8.GetBytes(stringToPublish);
 
             _model.BasicPublish(exchange: "",
