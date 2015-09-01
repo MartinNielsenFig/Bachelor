@@ -1,6 +1,4 @@
-﻿var app = angular.module("wisrApp", []);
-
-app.controller("RoomController", ['$scope', '$http', function ($scope, $http) {
+﻿app.controller("RoomController", ['$scope', '$http', function ($scope, $http) {
     $scope.QuestionText = "Enter question";
     $scope.QuestionType = "TextualQuestion";
     $scope.ResponseOptions = "Add response options";
