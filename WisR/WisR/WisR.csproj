@@ -184,6 +184,9 @@
     <Compile Include="..\..\WisRRestAPI\WisRRestAPI\DomainModel\Answer.cs">
       <Link>DomainModels\Answer.cs</Link>
     </Compile>
+    <Compile Include="..\..\WisRRestAPI\WisRRestAPI\DomainModel\BooleanQuestion.cs">
+      <Link>DomainModels\BooleanQuestion.cs</Link>
+    </Compile>
     <Compile Include="..\..\WisRRestAPI\WisRRestAPI\DomainModel\ChatMessage.cs">
       <Link>DomainModels\ChatMessage.cs</Link>
     </Compile>
@@ -198,6 +201,9 @@
     </Compile>
     <Compile Include="..\..\WisRRestAPI\WisRRestAPI\DomainModel\Room.cs">
       <Link>DomainModels\Room.cs</Link>
+    </Compile>
+    <Compile Include="..\..\WisRRestAPI\WisRRestAPI\DomainModel\TextualQuestion.cs">
+      <Link>DomainModels\TextualQuestion.cs</Link>
     </Compile>
     <Compile Include="..\..\WisRRestAPI\WisRRestAPI\DomainModel\User.cs">
       <Link>DomainModels\User.cs</Link>
@@ -253,6 +259,7 @@
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\AngularHomeScripts.js" />
+    <Content Include="Scripts\AngularRoomScripts.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Properties\PublishProfiles\WisR - FTP.pubxml" />
