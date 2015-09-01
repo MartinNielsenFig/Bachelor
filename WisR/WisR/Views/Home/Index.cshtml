@@ -24,16 +24,47 @@
                 <table id="roomTable" class="table table-responsive table-bordered">
                     <tr>
                         <th>
-                            {{title}}
+                            Name
                         </th>
                         <th>
-                            #Users
+                            CreatedById
+                        </th>
+                        <th>
+                            Radius
+                        </th>
+                        <th>
+                            Tag
+                        </th>
+                        <th>
+                            HasPassword
+                        </th>
+                        <th>
+                            EncryptedPassword
+                        </th>
+                        <th>
+                            HasChat
+                        </th>
+                        <th>
+                            UsersCanAsk
+                        </th>
+                        <th>
+                            AllowAnonymous
                         </th>
                     </tr>
-                    
+                    <tr ng-repeat="room in Rooms">
+                        <td>{{room.Name}}</td>
+                        <td>{{room.CreatedById}}</td>
+                        <td>{{room.Radius}}</td>
+                        <td>{{room.Tag}}</td>
+                        <td>{{room.HasPassword}}</td>
+                        <td>{{room.EncryptedPassword}}</td>
+                        <td>{{room.HasChat}}</td>
+                        <td>{{room.UsersCanAsk}}</td>
+                        <td>{{room.AllowAnonymous}}</td>
+                    </tr>
                 </table>
                 <div id="buttonsDiv" class="text-center">
-                    @Html.ActionLink("Connect","Index",new {Controller="Room"},new { @class = "btn btn-primary"})
+                    @Html.ActionLink("Connect", "Index", new { Controller = "Room" }, new { @class = "btn btn-primary" })
                     <button class="btn btn-primary" onclick="$('#myModalCreate').modal('toggle')">Create</button>
                 </div>
             </div>
@@ -49,21 +80,29 @@
         <div class="modal-content modal-heigh">
             <div class="modal-body">
                 <div class="row">
-                    <div class="row"><label class="col-md-6">Room name:</label> <input ng-model="RoomName" type="text" class="col-md-6"/>
+                    <div class="row">
+                        <label class="col-md-6">Room name:</label> <input ng-model="RoomName" type="text" class="col-md-6" />
                     </div>
-                    <div class="row"><label class="col-md-6">Unique tag</label> <input ng-model="UniqueTag" class="col-md-6" type="text"/>
+                    <div class="row">
+                        <label class="col-md-6">Unique tag</label> <input ng-model="UniqueTag" class="col-md-6" type="text" />
                     </div>
-                    <div class="row"><label class="col-md-6">Password</label> <input ng-model="Password" class="col-md-6" type="password"/>
+                    <div class="row">
+                        <label class="col-md-6">Password</label> <input ng-model="Password" class="col-md-6" type="password" />
                     </div>
-                    <div class="row"><label class="col-md-6">Radius</label> <input ng-model="Radius" class="col-md-6" type="range" max="3" min="1"/>
+                    <div class="row">
+                        <label class="col-md-6">Radius</label> <input ng-model="Radius" class="col-md-6" type="range" max="3" min="1" />
                     </div>
-                    <div class="row"><label class="col-md-6">Use location</label> <input ng-model="UseLocation" class="col-md-6" type="checkbox"/>
+                    <div class="row">
+                        <label class="col-md-6">Use location</label> <input ng-model="UseLocation" class="col-md-6" type="checkbox" />
                     </div>
-                    <div class="row"><label class="col-md-6">Has chat</label> <input ng-model="HasChat" class="col-md-6" type="checkbox"/>
+                    <div class="row">
+                        <label class="col-md-6">Has chat</label> <input ng-model="HasChat" class="col-md-6" type="checkbox" />
                     </div>
-                    <div class="row"><label class="col-md-6">Allow anonymous users?</label> <input ng-model="AllowAnonymous" class="col-md-6" type="checkbox"/>
+                    <div class="row">
+                        <label class="col-md-6">Allow anonymous users?</label> <input ng-model="AllowAnonymous" class="col-md-6" type="checkbox" />
                     </div>
-                    <div class="row"><label class="col-md-6">Can users ask questions?</label> <input ng-model="UserCanAsk" class="col-md-6"type="checkbox"/>
+                    <div class="row">
+                        <label class="col-md-6">Can users ask questions?</label> <input ng-model="UserCanAsk" class="col-md-6" type="checkbox" />
                     </div>
                 </div>
                 <div class="row">
