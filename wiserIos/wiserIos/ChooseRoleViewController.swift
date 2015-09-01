@@ -33,11 +33,13 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
         
         let httpTest = HttpHandler()
         
-        //let question = Question(questionText: "Er jeg cool?", createdById: "PeterAdmin")
         let question = BooleanQuestion()
+        question.QuestionText = "ushtest1"
+        question._id = nil
+        
         let qJson = JSONSerializer.toJson(question)
         print(qJson)
-        httpTest.testCreateRoom(qJson)
+        httpTest.createQuestion("doge", question: qJson, type: "BooleanQuestion")
     }
 
     override func didReceiveMemoryWarning() {

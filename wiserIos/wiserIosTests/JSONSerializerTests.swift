@@ -321,6 +321,12 @@ class JSONSerializerTests: XCTestCase {
         let expected = "{\"child\": {\"name\": \"Vitamin\", \"amount\": 4.2, \"intArray\": [1, 5, 9], \"stringArray\": [\"nutrients\", \"are\", \"important\"]}}"
         stringCompareHelper(json, expected)
     }
+    
+    func test_inheritance_included() {
+        XCTAssert(false)
+    }
+
+    
 
 
 }

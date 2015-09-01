@@ -9,11 +9,11 @@
 import Foundation
 
 class ResponseOption {
-    var value: String
-    var weight: Int
+    var Value: String
+    var Weight: Int
     
     init(value: String, weight: Int) {
-        self.value = value
-        self.weight = weight
+        self.Value = value
+        self.Weight = weight
     }
 }

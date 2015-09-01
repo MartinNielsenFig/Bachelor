@@ -10,33 +10,33 @@ import Foundation
 
 class Question {
     
-    var id: String?
-    var createdById: String
-    var upvotes: Int = 0
-    var downvotes: Int = 0
-    var img: String?
-    var questionText: String
-    var responseOptions: [ResponseOption]?
-    var result: [Answer]?
+    var _id: String?
+    var CreatedById: String
+    var Upvotes: Int = 0
+    var Downvotes: Int = 0
+    var Img: String?
+    var QuestionText: String
+    var ResponseOptions: [ResponseOption]?
+    var Result: [Answer]?
     
     init(questionText: String, createdById: String) {
-        self.questionText = questionText
-        self.createdById = createdById
+        self.QuestionText = questionText
+        self.CreatedById = createdById
     }
 }
 
 class BooleanQuestion {
-    var id: String?
-    var createdById: String = "nooba"
-    var upvotes: Int = 0
-    var downvotes: Int = 0
-    var img: String?
-    var questionText: String = "dooga"
-    var responseOptions: [ResponseOption]?
-    var result: [Answer]?
-    var manyBool: String = "swiftenCreated"
+    var _id: String?
+    var CreatedById: String = "nooba"
+    var Upvotes: Int = 0
+    var Downvotes: Int = 0
+    var Img: String? = "base64"
+    var QuestionText: String = "dooga"
+    var ResponseOptions: [ResponseOption]?
+    var Result: [Answer]?
+    var ManyBool: String = "swiftenCreated"
 }
 
 class TextualQuestion: Question {
-    var specificText = "swiftenCreated"
+    var SpecificText = "swiftenCreated"
 }

@@ -9,11 +9,11 @@
 import Foundation
 
 class Answer {
-    var value: String
-    var userId: String
+    var Value: String
+    var UserId: String
     
     init(value: String, userId: String) {
-        self.value = value
-        self.userId = userId
+        self.Value = value
+        self.UserId = userId
     }
 }

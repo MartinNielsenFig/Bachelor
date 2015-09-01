@@ -51,8 +51,8 @@ class RoomTableViewController: UITableViewController {
         
         let room = rooms[indexPath.row]
         
-        cell.textLabel?.text = room.tag
-        cell.detailTextLabel?.text = "\(room.radius) meters away"
+        cell.textLabel?.text = room.Tag
+        cell.detailTextLabel?.text = "\(room.Radius) meters away"
         
         return cell
     }
@@ -101,15 +101,10 @@ class RoomTableViewController: UITableViewController {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         
-        print("nice")
-
-        
         if segue.identifier == "SelectRoom" {
             if let roomTag = sender as? UITableViewCell {
                 print(roomTag)
             }
         }
     }
-    
-
 }

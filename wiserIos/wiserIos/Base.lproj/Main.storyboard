@@ -33,7 +33,7 @@
                                         <animations/>
                                         <state key="normal" title="Join Room"/>
                                         <connections>
-                                            <segue destination="C4H-el-owm" kind="show" identifier="SelectRoom" id="g9T-Lu-mcY"/>
+                                            <segue destination="C4H-el-owm" kind="show" identifier="" id="g9T-Lu-mcY"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -213,7 +213,7 @@
                                 <animations/>
                                 <accessibility key="accessibilityConfiguration" identifier="SubtitleCell"/>
                                 <connections>
-                                    <segue destination="k1K-52-xuR" kind="show" id="ifs-Gg-Oto"/>
+                                    <segue destination="k1K-52-xuR" kind="show" identifier="SelectRoom" id="ifs-Gg-Oto"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

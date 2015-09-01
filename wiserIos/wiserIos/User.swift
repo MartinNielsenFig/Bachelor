@@ -10,15 +10,15 @@ import Foundation
 
 class User {
     
-    var id: String?
-    var facebookId: Int?
-    var connectedRoomIds: [Int]?
-    var ldapUserName: String?
-    var displayName: String
-    var email: String?
-    var encryptedPassword: String?
+    var _id: String?
+    var FacebookId: Int?
+    var ConnectedRoomIds: [Int]?
+    var LDAPUserName: String?
+    var DisplayName: String
+    var Email: String?
+    var EncryptedPassword: String?
     
     init(displayName: String) {
-        self.displayName = displayName
+        self.DisplayName = displayName
     }
 }

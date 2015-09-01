@@ -10,23 +10,23 @@ import Foundation
 
 class Room {
     
-    var id: String?
-    var name: String?
-    var createdById: String
-    var location: Coordinate?
-    var radius: Int
-    var tag: String
-    var hasPassword: Bool = false
-    var encryptedPassword: String?
-    var hasChat: Bool = true
-    var usersCanAsk: Bool = false
-    var allowAnonymous: Bool = true
-    var chatlog: [ChatMessage]?
+    var _id: String?
+    var Name: String?
+    var CreatedById: String
+    var Location: Coordinate?
+    var Radius: Int
+    var Tag: String
+    var HasPassword: Bool = false
+    var EncryptedPassword: String?
+    var HasChat: Bool = true
+    var UsersCanAsk: Bool = false
+    var AllowAnonymous: Bool = true
+    var Chatlog: [ChatMessage]?
     
     
     init(createdById: String, radius: Int, tag: String) {
-        self.createdById = createdById
-        self.radius = radius
-        self.tag = tag
+        self.CreatedById = createdById
+        self.Radius = radius
+        self.Tag = tag
     }
 }
