@@ -12,7 +12,7 @@ namespace WisR
                         "~/Scripts/googleApi.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js", "~/Scripts/geolocationScripts.js"));
+                        "~/Scripts/jquery-{version}.js", "~/Scripts/geolocationScripts.js","~/Scripts/angular.js","~/Scripts/AngularHomeScripts.js"));
             
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));

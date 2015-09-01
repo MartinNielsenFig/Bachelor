@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Home Page";
 }
-<body>
+<body ng-controller="HomeController">
     <div class="jumbotron">
         <h1>WisR</h1>
         <p class="lead">Voting made easier</p>
@@ -24,7 +24,7 @@
                 <table id="roomTable" class="table table-responsive table-bordered">
                     <tr>
                         <th>
-                            Room name
+                            {{title}}
                         </th>
                         <th>
                             #Users
@@ -56,11 +56,11 @@
         <div class="modal-content modal-heigh">
             <div class="modal-body">
                 <div class="row">
-                    <div class="row"><label class="col-md-6">Room name:</label> <input type="text" class="col-md-6"/>
+                    <div class="row"><label class="col-md-6">Room name:</label> <input ng-model="RoomName" type="text" class="col-md-6"/>
                     </div>
-                    <div class="row"><label class="col-md-6">Unique tag</label> <input class="col-md-6" type="text"/>
+                    <div class="row"><label class="col-md-6">Unique tag</label> <input ng-model="UniqueTag" class="col-md-6" type="text"/>
                     </div>
-                    <div class="row"><label class="col-md-6">Password</label> <input class="col-md-6" type="password"/>
+                    <div class="row"><label class="col-md-6">Password</label> <input ng-model="RoomName" class="col-md-6" type="password"/>
                     </div>
                     <div class="row"><label class="col-md-6">Radius</label> <input class="col-md-6" type="range" max="3" min="1"/>
                     </div>
@@ -74,7 +74,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <button id="ModalCreateRoomButton" type="submit" class="btn btn-md center-block" data-dismiss="modal">Create room</button>
+                    <button id="ModalCreateRoomButton" type="submit" class="btn btn-md center-block" data-dismiss="modal" ng-click="postRoom()">Create room</button>
                     <button id="ModalCancelButton" type="submit" class="btn btn-md center-block" data-dismiss="modal">Cancel</button>
                 </div>
 
