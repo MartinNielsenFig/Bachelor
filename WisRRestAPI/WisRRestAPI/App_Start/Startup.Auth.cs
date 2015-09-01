@@ -64,6 +64,7 @@ namespace WisRRestAPI
             //    ClientId = "",
             //    ClientSecret = ""
             //});
+            app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
         }
     }
 }

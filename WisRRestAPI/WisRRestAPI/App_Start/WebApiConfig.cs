@@ -13,9 +13,7 @@ namespace WisRRestAPI
     {
         public static void Register(HttpConfiguration config)
         {
-            //enable cors
-            var cors = new EnableCorsAttribute("*", "*", "*");
-            config.EnableCors(cors);
+            
             // Web API configuration and services
             // Configure Web API to use only bearer token authentication.
             config.SuppressDefaultHostAuthentication();
@@ -29,6 +27,7 @@ namespace WisRRestAPI
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
+            config.EnableCors(new EnableCorsAttribute("*", "*", "GET, POST, OPTIONS, PUT, DELETE"));
         }
     }
 }
