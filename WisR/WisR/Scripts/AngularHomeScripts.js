@@ -44,7 +44,7 @@ app.controller("HomeController", ['$scope', '$http', '$location', '$window', 'co
             //Use response to send to REST API
             $http.post(configs.restHostName+'/Room/CreateRoom', { Room: JSON.stringify(response.data) }).
             then(function (response) {
-                    changeViewToRoom();
+                changeViewToRoom();
                 });
         });
     }
