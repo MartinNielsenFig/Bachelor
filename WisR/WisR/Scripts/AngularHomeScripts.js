@@ -22,8 +22,8 @@ app.controller("HomeController", ['$scope', '$http', '$location', '$window', 'co
 
  
     var changeViewToRoom = function () {
-        var url = 'http://localhost:7331/Room';
-        $window.Location.hfref= url;
+        var url = $("#RedirectTo").val();
+        location.href = url;
     }
 
     $scope.postRoom = function () {
@@ -46,7 +46,6 @@ app.controller("HomeController", ['$scope', '$http', '$location', '$window', 'co
             then(function (response) {
                     changeViewToRoom();
                 });
-
         });
     }
 
