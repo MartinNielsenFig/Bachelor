@@ -28,7 +28,6 @@ namespace WisRRestAPI.Controllers
             var Rooms = _rr.GetAllRooms();
             return _jsSerializer.Serialize(Rooms.Result);
         }
-        [EnableCors("http://localhost:7331",null,"*","*")]
         [System.Web.Mvc.HttpPost]
         public void CreateRoom(string Room)
         {

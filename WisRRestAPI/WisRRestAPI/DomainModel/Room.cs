@@ -9,6 +9,7 @@ namespace WisR.DomainModels
     public class Room
     {
         public ObjectId Id { get; set; }
+        public string roomId { get; set; }
         public string Name { get; set; }
         public string CreatedById { get; set; }
         public Coordinate Location { get; set; }

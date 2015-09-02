@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.tomas.wisrandroid.Helpers.ActivityLayoutHelper;
 import com.example.tomas.wisrandroid.R;
 
 public class AskQuestionActivity extends ActionBarActivity {
@@ -13,6 +14,8 @@ public class AskQuestionActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ask_question);
+
+        ActivityLayoutHelper.HideLayout(getWindow(), getSupportActionBar());
     }
 
     @Override

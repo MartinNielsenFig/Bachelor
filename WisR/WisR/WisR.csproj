@@ -18,7 +18,10 @@
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>
+    </IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -44,6 +47,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Facebook, Version=6.0.10.0, Culture=neutral, PublicKeyToken=58cb4f2111d1e6de, processorArchitecture=MSIL">
+      <HintPath>..\packages\Facebook.7.0.6\lib\net45\Facebook.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
@@ -181,6 +188,9 @@
     <Compile Include="..\..\WisRRestAPI\WisRRestAPI\DomainModel\Answer.cs">
       <Link>DomainModels\Answer.cs</Link>
     </Compile>
+    <Compile Include="..\..\WisRRestAPI\WisRRestAPI\DomainModel\BooleanQuestion.cs">
+      <Link>DomainModels\BooleanQuestion.cs</Link>
+    </Compile>
     <Compile Include="..\..\WisRRestAPI\WisRRestAPI\DomainModel\ChatMessage.cs">
       <Link>DomainModels\ChatMessage.cs</Link>
     </Compile>
@@ -196,6 +206,9 @@
     <Compile Include="..\..\WisRRestAPI\WisRRestAPI\DomainModel\Room.cs">
       <Link>DomainModels\Room.cs</Link>
     </Compile>
+    <Compile Include="..\..\WisRRestAPI\WisRRestAPI\DomainModel\TextualQuestion.cs">
+      <Link>DomainModels\TextualQuestion.cs</Link>
+    </Compile>
     <Compile Include="..\..\WisRRestAPI\WisRRestAPI\DomainModel\User.cs">
       <Link>DomainModels\User.cs</Link>
     </Compile>
@@ -206,6 +219,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RoomController.cs" />
     <Compile Include="Global.asax.cs">
@@ -250,10 +264,12 @@
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\AngularHomeScripts.js" />
+    <Content Include="Scripts\AngularRoomScripts.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Properties\PublishProfiles\WisR - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\WisR - Web Deploy.pubxml" />
+    <Content Include="Scripts\Config.js" />
     <Content Include="Scripts\errors.json" />
     <Content Include="Scripts\angular.min.js.map" />
     <Content Include="Scripts\angular-touch.min.js.map" />

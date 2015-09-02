@@ -29,6 +29,7 @@ namespace WisRRestAPI.Controllers {
         [System.Web.Mvc.HttpGet]
         public string GetAll() {
             var questions = _qr.GetAllQuestions();
+
             return _jsSerializer.Serialize(questions.Result);
         }
 
@@ -54,8 +55,13 @@ namespace WisRRestAPI.Controllers {
             try {
                 b = BsonSerializer.Deserialize(question, questionType);
                 q = (Question)b;
+<<<<<<< HEAD
             } catch (Exception) {
                 return "Could not deserialize the JSON string: " + question;
+=======
+            } catch (Exception e) {
+                return new HttpStatusCodeResult(604, "Could not deserialize the JSON string: " + question +e.StackTrace);
+>>>>>>> origin/master
             }
             if (q.Id != null) {
                 return "New question should have id of null";

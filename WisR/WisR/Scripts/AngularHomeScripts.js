@@ -4,16 +4,51 @@ app.config(['$httpProvider', function ($httpProvider) {
     delete $httpProvider.defaults.headers.common["X-Requested-With"];
 }]);
 
-app.controller("HomeController", ['$scope', '$http', function ($scope, $http) {
-    $scope.title = 'Martin sucks';
-    $scope.postRoom = function () {
-        $http.post('http://localhost:1337/Room/CreateRoom', { Room: "" + $scope.RoomName}).
-  then(function (response) {
+app.controller("HomeController", ['$scope', '$http', '$location', '$window', 'configs', function ($scope, $http, $location,$window, configs) {
+    var getRooms = function() {
+        $http.get(configs.restHostName+'/Room/GetAll').then(function(response) {
+            $scope.Rooms = response.data;
+        });
+    };
+    getRooms();
+    $scope.title = 'Room name';
+    $scope.RoomName = "";
+    $scope.Radius = 2;
+    $scope.UniqueTag = "";
+    $scope.Password = "";
+    $scope.HasChat = true;
+    $scope.UserCanAsk = true;
+    $scope.AllowAnonymous = true;
 
-  }, function (response) {
-
-  });
+ 
+    var changeViewToRoom = function () {
+        var url = $("#RedirectTo").val();
+        location.href = url;
     }
+
+    $scope.postRoom = function () {
+        //Make get request for json object conversion
+        $http.post('/Home/toJsonRoom',
+        {
+            RoomName: $scope.RoomName,
+            CreatedBy: $scope.CreatedBy,
+            location: null,
+            radius: $scope.Radius,
+            tag: $scope.UniqueTag,
+            password: $scope.Password,
+            hasChat: $scope.HasChat,
+            userCanAsk: $scope.UserCanAsk,
+            allowAnonymous: $scope.AllowAnonymous
+        }).
+        then(function (response) {
+            //Use response to send to REST API
+            $http.post(configs.restHostName+'/Room/CreateRoom', { Room: JSON.stringify(response.data) }).
+            then(function (response) {
+                changeViewToRoom();
+                });
+        });
+    }
+
 
 
 }])
