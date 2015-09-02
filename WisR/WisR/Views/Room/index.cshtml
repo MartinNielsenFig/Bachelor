@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "index";
 }
 <body ng-controller="RoomController">
@@ -20,14 +19,13 @@
                 <th>
                     Downvotes
                 </th>
+            <tr ng-repeat="question in Questions">
+                <td>{{question.QuestionText}}</td>
+                <td>{{question.CreatedById}}</td>
+                <td>{{question.Upvotes}}</td>
+                <td>{{question.Downvotes}}</td>
+                <td>{{question.Img}}</td>
             </tr>
-            <tr>
-                <td>Has anyone really been far even as decided to use, even go want to do look more like?</td>
-                <td>17</td>
-                <td>103</td>
-                <td>17</td>
-            </tr>
-            <tr>
                 <td>Do you even lift?</td>
                 <td>8</td>
                 <td>23</td>
@@ -67,7 +65,7 @@
     @* Chat code found at: http://bootsnipp.com/snippets/featured/chat *@
     <div class="col-md-4">
         <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-        <div class="container" style="overflow-y: auto;max-height:300px">
+        <div class="container" style="overflow-y: auto; max-height: 300px">
 
             <div class="row">
                 <div class="message-wrap col-lg-8">
@@ -118,7 +116,7 @@
 
     </div>
 
-    <!-- Modal -->                                                                                                          <!--Stops modal from closing-->
+    <!-- Modal --> <!--Stops modal from closing-->
     <div class="modal fade" id="myModalCreate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="true" data-keyboard="true">
         <div class="modal-dialog center">
             <div class="modal-content modal-heigh">
@@ -148,5 +146,8 @@
 
         </div>
     </div>
-    <!--Modal end-->
+<!--Modal end-->
+    <script type="text/javascript">
+    var MyRoomIdFromViewBag = '@ViewBag.roomId';
+    </script>
 </body>

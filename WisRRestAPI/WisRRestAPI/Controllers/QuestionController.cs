@@ -54,8 +54,8 @@ namespace WisRRestAPI.Controllers {
             try {
                 b = BsonSerializer.Deserialize(question, questionType);
                 q = (Question)b;
-            } catch (Exception) {
-                return new HttpStatusCodeResult(604, "Could not deserialize the JSON string: " + question);
+            } catch (Exception e) {
+                return new HttpStatusCodeResult(604, "Could not deserialize the JSON string: " + question +e.StackTrace);
             }
             if (q.Id != null) {
                 return new HttpStatusCodeResult(605, "New question should have id of null");

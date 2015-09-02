@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Bson;
@@ -49,7 +50,7 @@ namespace WisR.Controllers
             room.HasChat = hasChat;
             room.UsersCanAsk = userCanAsk;
             room.AllowAnonymous = allowAnonymous;
-            return new JavaScriptSerializer().Serialize(room);
+            return room.ToJson();
         }
     }
 }
