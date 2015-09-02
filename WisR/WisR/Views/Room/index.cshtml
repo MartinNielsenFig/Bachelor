@@ -8,10 +8,10 @@
         <table id="hostQuestionsTable" class="table table-responsive table-bordered">
             <tr>
                 <th>
-                    Host questions
+                    Question text
                 </th>
                 <th>
-                    #Answers
+                    Created by
                 </th>
                 <th>
                     Upvotes
@@ -19,18 +19,15 @@
                 <th>
                     Downvotes
                 </th>
+                <th>
+                    Image
+                </th>
             <tr ng-repeat="question in Questions">
                 <td>{{question.QuestionText}}</td>
                 <td>{{question.CreatedById}}</td>
                 <td>{{question.Upvotes}}</td>
                 <td>{{question.Downvotes}}</td>
                 <td>{{question.Img}}</td>
-            </tr>
-                <td>Do you even lift?</td>
-                <td>8</td>
-                <td>23</td>
-                <td>19</td>
-            </tr>
         </table>
         <table id="userQuestionsTable" class="table table-responsive table-bordered">
             <tr>
@@ -146,8 +143,8 @@
 
         </div>
     </div>
-<!--Modal end-->
+    <!--Modal end-->
     <script type="text/javascript">
-    var MyRoomIdFromViewBag = '@ViewBag.roomId';
+        var MyRoomIdFromViewBag = '@ViewBag.roomId';
     </script>
 </body>
