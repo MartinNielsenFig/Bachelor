@@ -34,11 +34,11 @@ namespace WisRRestAPI.Controllers {
 
 
         [System.Web.Mvc.HttpPost]
-        public HttpStatusCodeResult CreateQuestion(string roomId, string question, string type) {
+        public string CreateQuestion(string roomId, string question, string type) {
             try {
                 _rabbitHandler.publishString("CreateQuestion", question);
             } catch (Exception) {
-                return new HttpStatusCodeResult(602, "Could not publish to rabbitMQ");
+                return "Could not publish to rabbitMQ";
             }
 
             Type questionType;
@@ -46,7 +46,7 @@ namespace WisRRestAPI.Controllers {
                 string typeString = "WisR.DomainModels." + type;
                 questionType = Type.GetType(typeString);
             } catch (Exception) {
-                return new HttpStatusCodeResult(603, "Could not determine type from string: " + type);
+                return "Could not determine type from string: " + type;
             }
 
             object b;
@@ -55,14 +55,14 @@ namespace WisRRestAPI.Controllers {
                 b = BsonSerializer.Deserialize(question, questionType);
                 q = (Question)b;
             } catch (Exception) {
-                return new HttpStatusCodeResult(604, "Could not deserialize the JSON string: " + question);
+                return "Could not deserialize the JSON string: " + question;
             }
             if (q.Id != null) {
-                return new HttpStatusCodeResult(605, "New question should have id of null");
+                return "New question should have id of null";
             } else {
                 q.Id = ObjectId.GenerateNewId();
                 _qr.AddQuestionObject(b);
-                return new HttpStatusCodeResult(200, "Question saved");
+                return "Question saved with id: " + q.Id;
             }
         }
 
