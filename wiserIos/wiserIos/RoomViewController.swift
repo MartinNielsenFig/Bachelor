@@ -8,9 +8,7 @@
 
 import UIKit
 
-class RoomViewController: UIViewController {
+class RoomViewController: UITableViewController {
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    }
+
 }
