@@ -4,9 +4,9 @@ app.config(['$httpProvider', function ($httpProvider) {
     delete $httpProvider.defaults.headers.common["X-Requested-With"];
 }]);
 
-app.controller("HomeController", ['$scope', '$http', '$location', function ($scope, $http, $location) {
+app.controller("HomeController", ['$scope', '$http', '$location', 'configs', function ($scope, $http, $location,configs) {
     var getRooms = function() {
-        $http.get('http://localhost:1337/Room/GetAll').then(function(response) {
+        $http.get(configs.restHostName+'/Room/GetAll').then(function(response) {
             $scope.Rooms = response.data;
         });
     };
@@ -42,7 +42,7 @@ app.controller("HomeController", ['$scope', '$http', '$location', function ($sco
         }).
         then(function (response) {
             //Use response to send to REST API
-            $http.post('http://localhost:1337/Room/CreateRoom', { Room: JSON.stringify(response.data) }).
+            $http.post(configs.restHostName+'/Room/CreateRoom', { Room: JSON.stringify(response.data) }).
             then(function (response) {
                     //changeViewToRoom();
                 });

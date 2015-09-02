@@ -9,7 +9,7 @@
   then(function (response) {
 
       //Use response to send to REST API
-      $http.post('http://localhost:1337/Question/CreateQuestion', { roomId: 10, question: JSON.stringify(response.data), type: $scope.QuestionType }).
+      $http.post(configs.restHostName + '/Question/CreateQuestion', { roomId: 10, question: JSON.stringify(response.data), type: $scope.QuestionType }).
   then(function (response) {
 
   }, function (response) {
