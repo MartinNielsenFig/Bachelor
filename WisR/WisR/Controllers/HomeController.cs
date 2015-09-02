@@ -50,7 +50,7 @@ namespace WisR.Controllers
             room.HasChat = hasChat;
             room.UsersCanAsk = userCanAsk;
             room.AllowAnonymous = allowAnonymous;
-            return room.ToJson();
+            return new JavaScriptSerializer().Serialize(room);
         }
     }
 }

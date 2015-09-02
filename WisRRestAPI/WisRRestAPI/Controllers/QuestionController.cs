@@ -29,6 +29,7 @@ namespace WisRRestAPI.Controllers {
         [System.Web.Mvc.HttpGet]
         public string GetAll() {
             var questions = _qr.GetAllQuestions();
+
             return _jsSerializer.Serialize(questions.Result);
         }
 

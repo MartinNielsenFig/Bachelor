@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace WisR.DomainModels
 {
+    [BsonKnownTypes(typeof(BooleanQuestion), typeof(TextualQuestion))]
     public abstract class Question
     {
         public abstract ObjectId? Id { get; set; }
