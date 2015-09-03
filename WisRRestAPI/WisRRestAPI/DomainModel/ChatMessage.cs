@@ -8,7 +8,7 @@ namespace WisRRestAPI.DomainModel
 {
     public class ChatMessage
     {
-        public ObjectId? Id { get; set; }
+        public ObjectId Id { get; set; }
         public string ByUserId { get; set; }
         public string RoomId { get; set; }
         public string Value { get; set; }

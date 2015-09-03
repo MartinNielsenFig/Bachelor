@@ -146,12 +146,12 @@
         </div>
         <div class="send-wrap ">
 
-            <textarea class="form-control send-message" rows="3" placeholder="Write a reply..."></textarea>
+            <textarea ng-model="textAreaModel" class="form-control send-message" rows="3" placeholder="Write a reply..."></textarea>
 
 
         </div>
         <div class="btn-panel">
-            <button class="btn btn-primary" ng-click="">Send message</button>
+            <button class="btn btn-primary" ng-click="postChatMessage(textAreaModel)">Send message</button>
         </div>
 
 
