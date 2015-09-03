@@ -5,61 +5,63 @@
     <h2>Robotteknologi</h2>
     <div id="questionTables" ng-show="!SpecificQuestionShown">
         <div class="col-md-8">
+            <h4>Host questions</h4>
             <table id="hostQuestionsTable" class="table table-hover table-responsive table-bordered">
                 <thead>
-                    <tr>
-                        <th>
-                            Question text
-                        </th>
-                        <th>
-                            Created by
-                        </th>
-                        <th>
-                            Upvotes
-                        </th>
-                        <th>
-                            Downvotes
-                        </th>
-                        <th>
-                            Image
-                        </th>
+                <tr>
+                <th>
+                    Question text
+                </th>
+                <th>
+                    Created by
+                </th>
+                <th>
+                    Upvotes
+                </th>
+                <th>
+                    Downvotes
+                </th>
+                <th>
+                    Image
+                </th>
                 </thead>
                 <tbody>
-                    <tr style="cursor: pointer" ng-repeat="question in Questions" ng-click="ShowSpecificQuestion(question)">
-                        <td>{{question.QuestionText}}</td>
-                        <td>{{question.CreatedById}}</td>
-                        <td>{{question.Upvotes}}</td>
-                        <td>{{question.Downvotes}}</td>
-                        <td>{{question.Img}}</td>
+                <tr style="cursor: pointer" ng-repeat="question in Questions" ng-click="ShowSpecificQuestion(question)">
+                <td>{{question.QuestionText}}</td>
+                <td>{{question.CreatedById}}</td>
+                <td>{{question.Upvotes}}</td>
+                <td>{{question.Downvotes}}</td>
+                <td>{{question.Img}}</td>
                 </tbody>
             </table>
+            <h4>User questions</h4>
             <table id="userQuestionsTable" class="table table-hover table-responsive table-bordered">
+                <thead>
                 <tr>
-                    <th>
-                        User questions
-                    </th>
-                    <th>
-                        #Answers
-                    </th>
-                    <th>
-                        Upvotes
-                    </th>
-                    <th>
-                        Downvotes
-                    </th>
-                </tr>
-                <tr>
-                    <td>Why does Martin act like a noob?</td>
-                    <td>17</td>
-                    <td>400</td>
-                    <td>7</td>
-                </tr>
-                <tr>
-                    <td>Where is pluto?</td>
-                    <td>8</td>
-                    <td>7</td>
-                    <td>107</td>
-                </tr>
+                <th>
+                    Question text
+                </th>
+                <th>
+                    Created by
+                </th>
+                <th>
+                    Upvotes
+                </th>
+                <th>
+                    Downvotes
+                </th>
+                <th>
+                    Image
+                </th>
+                </thead>
+                <tbody>
+                <tr style="cursor: pointer" ng-repeat="question in Questions" ng-click="ShowSpecificQuestion(question)">
+                <td>{{question.QuestionText}}</td>
+                <td>{{question.CreatedById}}</td>
+                <td>{{question.Upvotes}}</td>
+                <td>{{question.Downvotes}}</td>
+                <td>{{question.Img}}</td>
+                </tbody>
             </table>
             <button class="btn btn-primary" onclick="$('#myModalCreate').modal('toggle')">Create Question</button>
         </div>
@@ -93,6 +95,12 @@
                 </tr>
 
             </table>
+            <form>
+                <div ng-repeat="responseOption in SpecificQuestion.ResponseOptions">
+                    <label>{{responseOption.Value}}</label>
+                    <input type="radio"/>
+                </div>
+            </form>
             <button class="btn btn-primary">Submit</button><button style="float:right" class="btn btn-primary" ng-click="ToggleShowQuestionTables()">Back to questions</button>
         </div>
     </div>

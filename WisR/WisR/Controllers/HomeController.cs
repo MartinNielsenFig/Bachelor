@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Dynamic;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -8,7 +7,6 @@ using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
-using MongoDB.Driver;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Bson;
 using WisR.DomainModels;
@@ -36,13 +34,12 @@ namespace WisR.Controllers
             return View();
         }
 
-        public string toJsonRoom(string RoomName,string CreatedBy,object location, int radius, string tag,string password,bool hasChat,bool userCanAsk,bool allowAnonymous)
+        public string toJsonRoom(string RoomName,string CreatedBy,object[] location, int radius, string tag,string password,bool hasChat,bool userCanAsk,bool allowAnonymous)
         {
             var room = new Room();
             room.Name = RoomName;
             room.CreatedById = CreatedBy;
-           // room.Location.Timestamp = location.timestamp;
-            //room.Location.Timestamp = location.GetType().GetProperty("timestamp").GetValue(location).ToString();
+            //room.Location = location;
             room.Radius = radius;
             room.Tag = tag;
             if (password != null)

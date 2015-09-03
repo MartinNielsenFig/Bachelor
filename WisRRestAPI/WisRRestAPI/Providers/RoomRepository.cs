@@ -29,9 +29,11 @@ namespace WisRRestAPI.DomainModel
             return room;
         }
 
-        public void AddRoom(Room item)
+        public string AddRoom(Room item)
         {
-            _database.GetCollection<Room>("room").InsertOneAsync(item);
+            _database.GetCollection<Room>("room").InsertOneAsync(item).Wait();
+            return item.Id.ToString();
+
         }
 
         public Task<DeleteResult> RemoveRoom(string id)
