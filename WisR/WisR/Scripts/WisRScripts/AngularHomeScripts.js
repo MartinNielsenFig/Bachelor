@@ -32,7 +32,7 @@ app.controller("HomeController", ['$scope', '$http', '$location', '$window', 'co
         {
             RoomName: $scope.RoomName,
             CreatedBy: $scope.CreatedBy,
-            location: null,
+            location: window.currentLocation,
             radius: $scope.Radius,
             tag: $scope.UniqueTag,
             password: $scope.Password,

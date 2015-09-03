@@ -3,11 +3,10 @@ var map;
 var initialLoad = true;
 var marker;
 var positionId;
-var currentLocation;
 var geocoder = new google.maps.Geocoder();
 
 navigator.geolocation.getCurrentPosition(function(position) {
-    currentLocation = position;
+    window.currentLocation = position;
 });
 
 
