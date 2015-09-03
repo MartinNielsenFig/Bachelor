@@ -269,7 +269,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Properties\PublishProfiles\WisR - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\WisR - Web Deploy.pubxml" />
-    <Content Include="Scripts\Config.js" />
+    <Content Include="Scripts\WisRScripts\Config.js" />
     <Content Include="Scripts\errors.json" />
     <Content Include="Scripts\angular.min.js.map" />
     <Content Include="Scripts\angular-touch.min.js.map" />
