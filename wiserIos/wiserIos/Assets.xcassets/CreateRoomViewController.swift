@@ -8,37 +8,37 @@
 
 import UIKit
 
-class CreateRoomViewController: UITableViewController {
+class CreateRoomViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     //Fields
     var enablePwSwitch: UISwitch? = nil
     var pwInputCell: TextInputCell? = nil
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 8
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        if indexPath.row == 1 {
+        if indexPath.row == 0 {
             let cellIdentifier = "TextInputCell"
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! TextInputCell
             cell.label.text = "Room name"
             return cell
         }
             
-        else if indexPath.row == 2 {
+        else if indexPath.row == 1 {
             let cellIdentifier = "TextInputCell"
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! TextInputCell
             cell.label.text = "Room tag"
             return cell
         }
         
-        else if indexPath.row == 3 {
+        else if indexPath.row == 2 {
             let cellIdentifier = "BooleanInputCell"
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! BooleanInputCell
             
@@ -50,7 +50,7 @@ class CreateRoomViewController: UITableViewController {
             return cell
         }
         
-        else if indexPath.row == 4 {
+        else if indexPath.row == 3 {
             
             let cellIdentifier = "TextInputCell"
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! TextInputCell
@@ -72,7 +72,7 @@ class CreateRoomViewController: UITableViewController {
             
         }
             
-        else if indexPath.row == 5 {
+        else if indexPath.row == 4 {
             let cellIdentifier = "SegmentedInputCell"
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! SegmentedInputCell
             cell.label.text = "Room radius"
@@ -80,21 +80,21 @@ class CreateRoomViewController: UITableViewController {
 
         }
             
-        else if indexPath.row == 6 {
+        else if indexPath.row == 5 {
             let cellIdentifier = "BooleanInputCell"
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! BooleanInputCell
             cell.label.text = "Enable chat"
             return cell
         }
         
-        else if indexPath.row == 7 {
+        else if indexPath.row == 6 {
             let cellIdentifier = "BooleanInputCell"
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! BooleanInputCell
             cell.label.text = "Enable anonymous"
             return cell
         }
         
-        else if indexPath.row == 8 {
+        else if indexPath.row == 7 {
             let cellIdentifier = "BooleanInputCell"
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! BooleanInputCell
             cell.label.text = "Enable user questions"
