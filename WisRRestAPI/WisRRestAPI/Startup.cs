@@ -23,6 +23,7 @@ namespace WisRRestAPI
             var container = new Container();
             container.Register<IdbHandler, dbHandler>(Lifestyle.Singleton);
             container.Register<IRoomRepository, RoomRepository>(Lifestyle.Singleton);
+            container.Register<IChatRepository, ChatRepository>(Lifestyle.Singleton);
             container.Register<IQuestionRepository, QuestionRepository>(Lifestyle.Singleton);
             container.Register<IUserRepository, UserRepository>(Lifestyle.Singleton);
             container.Register<IrabbitHandler, rabbitHandler>(Lifestyle.Singleton);

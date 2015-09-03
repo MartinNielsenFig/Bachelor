@@ -247,6 +247,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ChatController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
     <Compile Include="Controllers\RoomController.cs" />
@@ -258,7 +259,9 @@
     <Compile Include="DomainModel\BooleanQuestion.cs" />
     <Compile Include="DomainModel\IQuestion.cs" />
     <Compile Include="DomainModel\TextualQuestion.cs" />
+    <Compile Include="Providers\ChatRepository.cs" />
     <Compile Include="Providers\dbHandler.cs" />
+    <Compile Include="Providers\IChatRepository.cs" />
     <Compile Include="Providers\IdbHandler.cs" />
     <Compile Include="Providers\IQuestionRepository.cs" />
     <Compile Include="Providers\IrabbitHandler.cs" />
@@ -342,6 +345,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Chat\" />
     <Folder Include="Views\Question\" />
     <Folder Include="Views\Room\" />
     <Folder Include="Views\User\" />
