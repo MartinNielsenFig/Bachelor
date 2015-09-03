@@ -27,9 +27,9 @@ namespace WisRRestAPI.Controllers
         }
 
         [System.Web.Mvc.HttpPost]
-        public void CreateUser(string User)
+        public string CreateUser(string User)
         {
-            _ur.AddUser(_jsSerializer.Deserialize<User>(User));
+            return _ur.AddUser(_jsSerializer.Deserialize<User>(User));
         }
 
         [System.Web.Mvc.HttpGet]

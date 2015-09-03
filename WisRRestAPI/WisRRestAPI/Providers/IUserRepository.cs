@@ -12,7 +12,7 @@ namespace WisRRestAPI.DomainModel
     {
         Task<List<User>> GetAllUsers();
         Task<User> GetUser(string id);
-        void AddUser(User item);
+        string AddUser(User item);
         Task<DeleteResult> RemoveUser(string id);
         Task<User> UpdateUser(string id, User item);
     }

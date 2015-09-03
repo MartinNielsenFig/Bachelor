@@ -31,6 +31,7 @@ namespace WisRRestAPI.DomainModel
         public void AddQuestionObject(object item)
         {
             _database.GetCollection<object>("question").InsertOneAsync(item);
+
         }
 
         public void AddQuestion(Question item)
