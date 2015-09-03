@@ -21,8 +21,9 @@ app.controller("HomeController", ['$scope', '$http', '$location', '$window', 'co
     $scope.AllowAnonymous = true;
     $scope.UseLocation = true;
  
-    var changeViewToRoom = function () {
-        var url = $("#RedirectTo").val();
+    var changeViewToRoom = function (roomId) {
+        $scope.RoomId = roomId;
+        var url = $("#RedirectTo").val()+"?RoomId="+$scope.RoomId;
         location.href = url;
     }
 
@@ -49,7 +50,7 @@ app.controller("HomeController", ['$scope', '$http', '$location', '$window', 'co
             //Use response to send to REST API
             $http.post(configs.restHostName+'/Room/CreateRoom', { Room: JSON.stringify(response.data) }).
             then(function (response) {
-                changeViewToRoom();
+                changeViewToRoom(response.data);
                 });
         });
     }

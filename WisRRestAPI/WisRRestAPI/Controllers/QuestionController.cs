@@ -35,7 +35,7 @@ namespace WisRRestAPI.Controllers {
 
 
         [System.Web.Mvc.HttpPost]
-        public string CreateQuestion(string roomId, string question, string type) {
+        public string CreateQuestion(string question, string type) {
             try {
                 _rabbitHandler.publishString("CreateQuestion", question);
             } catch (Exception) {

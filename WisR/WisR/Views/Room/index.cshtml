@@ -26,7 +26,7 @@
                 </th>
                 </thead>
                 <tbody>
-                <tr style="cursor: pointer" ng-repeat="question in Questions" ng-click="ShowSpecificQuestion(question)">
+                <tr style="cursor: pointer" ng-repeat="question in Questions|filter: { RoomId: '@ViewBag.roomId' } " ng-click="ShowSpecificQuestion(question)">
                 <td>{{question.QuestionText}}</td>
                 <td>{{question.CreatedById}}</td>
                 <td>{{question.Upvotes}}</td>
@@ -55,7 +55,7 @@
                 </th>
                 </thead>
                 <tbody>
-                <tr style="cursor: pointer" ng-repeat="question in Questions" ng-click="ShowSpecificQuestion(question)">
+                <tr style="cursor: pointer" ng-repeat="question in Questions|filter: { RoomId: '@ViewBag.roomId' } " ng-click="ShowSpecificQuestion(question)">
                 <td>{{question.QuestionText}}</td>
                 <td>{{question.CreatedById}}</td>
                 <td>{{question.Upvotes}}</td>

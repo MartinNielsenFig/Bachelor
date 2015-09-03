@@ -25,11 +25,11 @@
     //Function for creating a question
     $scope.postQuestion = function () {
         //Make get request for json object conversion
-        $http.post('/Room/toJsonQuestion', { CreatedBy: null, Downvotes: 0, Image: $scope.Picture, Upvotes: 0, QuestionText: $scope.QuestionText }).
+        $http.post('/Room/toJsonQuestion', { CreatedBy: null,RoomId:MyRoomIdFromViewBag, Downvotes: 0, Image: $scope.Picture, Upvotes: 0, QuestionText: $scope.QuestionText }).
   then(function (response) {
 
       //Use response to send to REST API
-      $http.post(configs.restHostName + '/Question/CreateQuestion', { roomId: MyRoomIdFromViewBag, question: JSON.stringify(response.data), type: $scope.QuestionType }).
+      $http.post(configs.restHostName + '/Question/CreateQuestion', {question: JSON.stringify(response.data), type: $scope.QuestionType }).
   then(function (response) {
 
   }, function (response) {

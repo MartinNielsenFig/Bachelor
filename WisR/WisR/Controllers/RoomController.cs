@@ -19,10 +19,11 @@ namespace WisR.Controllers
             ViewBag.roomId = roomId;
             return View();
         }
-        public string toJsonQuestion(string CreatedBy, int Downvotes, string Image, int Upvotes, string QuestionText)
+        public string toJsonQuestion(string CreatedBy,string RoomId, int Downvotes, string Image, int Upvotes, string QuestionText)
         {
             var question = new TextualQuestion();
             question.CreatedById = "test";
+            question.RoomId = RoomId;
             question.Downvotes = Downvotes;
             question.Img = Image;
             question.Upvotes = Upvotes;
