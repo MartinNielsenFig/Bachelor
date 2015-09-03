@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		CB0218201B9462C400DFC9DD /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB02181F1B9462C400DFC9DD /* ChatMessage.swift */; settings = {ASSET_TAGS = (); }; };
 		CB0218261B947BDD00DFC9DD /* RoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0218251B947BDD00DFC9DD /* RoomViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		CB1FBA001B983C3A00B1FCF8 /* BooleanInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1FB9FF1B983C3A00B1FCF8 /* BooleanInputCell.swift */; settings = {ASSET_TAGS = (); }; };
 		CB2EF9C31B8DE7260098871B /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2EF9C21B8DE7260098871B /* Room.swift */; };
 		CB2FC2DE1B8F93BC00CD8B28 /* JSONSerializerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2FC2DD1B8F93BC00CD8B28 /* JSONSerializerTests.swift */; };
 		CB3C37721B8DBF5000897344 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3C37711B8DBF5000897344 /* AppDelegate.swift */; };
@@ -45,6 +46,7 @@
 /* Begin PBXFileReference section */
 		CB02181F1B9462C400DFC9DD /* ChatMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
 		CB0218251B947BDD00DFC9DD /* RoomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomViewController.swift; sourceTree = "<group>"; };
+		CB1FB9FF1B983C3A00B1FCF8 /* BooleanInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BooleanInputCell.swift; sourceTree = "<group>"; };
 		CB2EF9C21B8DE7260098871B /* Room.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
 		CB2FC2DD1B8F93BC00CD8B28 /* JSONSerializerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONSerializerTests.swift; sourceTree = "<group>"; };
 		CB3C376E1B8DBF5000897344 /* wiserIos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = wiserIos.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -126,6 +128,7 @@
 		CB3C37701B8DBF5000897344 /* wiserIos */ = {
 			isa = PBXGroup;
 			children = (
+				CB57059B1B98342700A4E17C /* Cell */,
 				CB0218221B947B9E00DFC9DD /* ViewControllers */,
 				CB9FF7C81B8F1864003A193B /* Models */,
 				CB9FF7C71B8F1859003A193B /* Helpers */,
@@ -134,8 +137,6 @@
 				CB3C37781B8DBF5000897344 /* Assets.xcassets */,
 				CB3C377A1B8DBF5000897344 /* LaunchScreen.storyboard */,
 				CB3C377D1B8DBF5000897344 /* Info.plist */,
-				CB50FD8D1B9708E40003C078 /* TextInputCell.swift */,
-				CBB60B301B97253A0007A47B /* SegmentedInputCell.swift */,
 			);
 			path = wiserIos;
 			sourceTree = "<group>";
@@ -148,6 +149,16 @@
 				CB2FC2DD1B8F93BC00CD8B28 /* JSONSerializerTests.swift */,
 			);
 			path = wiserIosTests;
+			sourceTree = "<group>";
+		};
+		CB57059B1B98342700A4E17C /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				CB50FD8D1B9708E40003C078 /* TextInputCell.swift */,
+				CBB60B301B97253A0007A47B /* SegmentedInputCell.swift */,
+				CB1FB9FF1B983C3A00B1FCF8 /* BooleanInputCell.swift */,
+			);
+			name = Cell;
 			sourceTree = "<group>";
 		};
 		CB9FF7C71B8F1859003A193B /* Helpers */ = {
@@ -291,6 +302,7 @@
 				CB9FF7CC1B8F28B4003A193B /* Answer.swift in Sources */,
 				CB9FF7D21B8F2B70003A193B /* User.swift in Sources */,
 				CBB60B311B97253A0007A47B /* SegmentedInputCell.swift in Sources */,
+				CB1FBA001B983C3A00B1FCF8 /* BooleanInputCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,7 +10,7 @@ import UIKit
 
 class SegmentedInputCell: UITableViewCell {
 
-    @IBOutlet weak var label: UIView!
+    @IBOutlet weak var label: UILabel!
     @IBOutlet weak var segment: UISegmentedControl!
     
     
