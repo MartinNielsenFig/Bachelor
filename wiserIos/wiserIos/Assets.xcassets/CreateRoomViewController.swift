@@ -14,6 +14,12 @@ class CreateRoomViewController: UIViewController, UITableViewDelegate, UITableVi
     var enablePwSwitch: UISwitch? = nil
     var pwInputCell: TextInputCell? = nil
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: Selector("addRoomButtonPressed:"))
+    }
+    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
@@ -106,10 +112,17 @@ class CreateRoomViewController: UIViewController, UITableViewDelegate, UITableVi
     }
     
     
-    //Handle change to switch
+    //Handle selector events
+    
+    //Password switch
     func enablePwSwitchChanged(uiSwitch: UISwitch) {
-        print("state changed")
+        print("password switch pressed")
         pwInputCell?.inputField.enabled = uiSwitch.on
+    }
+    
+    //Add room
+    func addRoomButtonPressed(button: UIBarButtonItem) {
+        print("add room button pressed")
     }
     
     
