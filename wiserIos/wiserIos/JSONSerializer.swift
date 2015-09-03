@@ -12,6 +12,21 @@ import Foundation
 
 public class JSONSerializer {
     
+    //http://stackoverflow.com/questions/30480672/how-to-convert-a-json-string-to-a-dictionary
+    public static func toDictionary(jsonString: String) -> [String : AnyObject]? {
+        var dictionary: [String : AnyObject]? = nil
+        
+        if let data = jsonString.dataUsingEncoding(NSUTF8StringEncoding) {
+            do {
+                dictionary = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions()) as? [String:AnyObject]
+            }
+            catch let error as NSError {
+                print(error)
+            }
+        }
+        return dictionary
+    }
+    
     public static func toJson(object: Any) -> String {
         var json = "{"
         let mirror = Mirror(reflecting: object)

@@ -35,8 +35,9 @@ class HttpHandler {
                 
                 //init rooms here
                 var rooms = [Room]()
-                let r1 = Room()
-                r1.Name = "Test of callbackroom \(dataString)"
+                
+                let	 t = JSONSerializer.toDictionary(dataString)
+                
                 rooms.append(Room())
                 completionHandler(rooms: &rooms)
             }
