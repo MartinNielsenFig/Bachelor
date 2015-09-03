@@ -3,37 +3,42 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:id="@+id/mainActivityRelativeLayout">
 
     <TextView
         android:id="@+id/mainActivityTextView"
-        android:text="@string/hello_world"
-        android:layout_width="wrap_content"
+        android:text="@string/mainActivity_header"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        />
+        android:gravity="center"/>
     <LinearLayout
         android:id="@+id/mainActivityGrid"
         android:layout_width="fill_parent"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         android:gravity="center"
+        android:layout_gravity="center"
         android:orientation="horizontal"
-        android:layout_alignBottom="@+id/mainActivityTextView">
+        android:layout_below="@+id/mainActivityTextView"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="true">
         <Button
+            android:id="@+id/button_create_room"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="start"/>
+            android:layout_gravity="center"
+            android:text="@string/button_create_room"/>
         <Button
+            android:id="@+id/button_find_room"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"/>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"/>
+            android:layout_gravity="center"
+            android:text="@string/button_enter_room"/>
 
     </LinearLayout>
 
