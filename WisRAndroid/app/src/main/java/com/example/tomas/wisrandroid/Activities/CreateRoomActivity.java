@@ -1,5 +1,6 @@
 package com.example.tomas.wisrandroid.Activities;
 
+import android.location.GpsStatus;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,9 +17,15 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.tomas.wisrandroid.Helpers.ActivityLayoutHelper;
+import com.example.tomas.wisrandroid.Helpers.HttpHelper;
+import com.example.tomas.wisrandroid.Model.BooleanQuestion;
+import com.example.tomas.wisrandroid.Model.Question;
 import com.example.tomas.wisrandroid.Model.Room;
 import com.example.tomas.wisrandroid.R;
 import com.google.gson.Gson;
+
+import org.json.JSONObject;
+import org.json.JSONStringer;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -38,35 +45,55 @@ public class CreateRoomActivity extends ActionBarActivity {
         setContentView(R.layout.activity_create_room);
         ActivityLayoutHelper.HideLayout(getWindow(), getSupportActionBar());
 
-        final TextView mTextView= (TextView) findViewById(R.id.create_room_textview);
+        final TextView mTextView = (TextView) findViewById(R.id.create_room_textview);
 
         mTestKnap = (Button)findViewById(R.id.test_knap);
         mTestKnap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                // Instantiate the RequestQueue.
-                RequestQueue queue = Volley.newRequestQueue(CreateRoomActivity.this);
-                String url ="http://10.0.2.2:1337/Room/CreateRoom/";
+                Map<String,String> mParams = new HashMap<String, String>();
 
-                // Request a string response from the provided URL.
-                StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
-                        new Response.Listener<String>() {
+                Question mQuestion = new BooleanQuestion("bent");
+                mQuestion.set_CreatedById("Tomas");
+                mQuestion.set_Downvotes(5);
+                mQuestion.set_Id(null);
+                mQuestion.set_Img("base64");
+                mQuestion.set_Upvotes(5);
+                mQuestion.set_QuestionText("SoQuestion");
+                Gson gson = new Gson();
 
-                            @Override
-                            public void onResponse(String response) {
-                                // Display the first 500 characters of the response string.
-                                mTextView.setText("Response is: "+ response.substring(0,500));
-                            }
-                        }, new Response.ErrorListener() {
+                String json = gson.toJson(mQuestion);
 
+                mTextView.setText(json);
+
+                mParams.put("question", json);
+                mParams.put("roomId", "doge" );
+                mParams.put("type","BooleanQuestion");
+
+                Response.Listener<JSONObject> mListener = new Response.Listener<JSONObject>() {
                     @Override
-                    public void onErrorResponse(VolleyError error) {
-                        mTextView.setText("That didn't work!");
+                    public void onResponse(JSONObject jsonObject) {
+                        mTextView.setText(jsonObject.toString());
                     }
-                });
-                // Add the request to the RequestQueue.
-                queue.add(stringRequest);
+                };
+
+                Response.ErrorListener mErrorListener = new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError volleyError) {
+                        mTextView.setText( String.valueOf(volleyError.networkResponse.statusCode));
+                    }
+                };
+
+                RequestQueue requestQueue = Volley.newRequestQueue(CreateRoomActivity.this);
+                HttpHelper jsObjRequest = new HttpHelper(Request.Method.POST, "http://10.0.2.2:1337/Question/CreateQuestion", mParams, mListener , mErrorListener);
+
+                try {
+                    requestQueue.add(jsObjRequest);
+                }
+                catch (Exception e){
+
+                }
 
             }
         });

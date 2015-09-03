@@ -3,21 +3,21 @@ package com.example.tomas.wisrandroid.Model;
 public class Answer {
 
     //Fields
-    private String _value;
-    private String _userId;
+    private String Value;
+    private String UserId;
 
     //Constructors
     public Answer(){}
-    public Answer(String _value, String _userId)
+    public Answer(String Value, String UserId)
     {
-        this._value = _value;
-        this._userId = _userId;
+        this.Value = Value;
+        this.UserId = UserId;
     }
 
     //Properties
-    public String get_value(){return this._value;}
-    public void set_value(String _value) { this._value = _value;}
+    public String get_Value(){return this.Value;}
+    public void set_Value(String Value) { this.Value = Value;}
 
-    public String get_userId(){return this._userId;}
-    public void set_userId(String _userId) { this._userId = _userId;}
+    public String get_UserId(){return this.UserId;}
+    public void set_UserId(String UserId) { this.UserId = UserId;}
 }

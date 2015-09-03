@@ -55,7 +55,7 @@ namespace WisRRestAPI.Controllers {
             try {
                 b = BsonSerializer.Deserialize(question, questionType);
                 q = (Question)b;
-            } catch (Exception) {
+            } catch (Exception e) {
                 return "Could not deserialize the JSON string: " + question;
             }
             if (q.Id != null) {
