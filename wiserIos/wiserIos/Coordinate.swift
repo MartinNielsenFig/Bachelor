@@ -9,17 +9,9 @@
 import Foundation
 
 class Coordinate {
-    var Latitude: Double
-    var Longitude: Double
-    var AccuracyMeters: Int
-    var FormattedAddress: String
-    var Timestamp: String
-    
-    init(latitude: Double, longitude: Double, accuracyMeters: Int, formattedAddress: String, timestamp: String) {
-        self.Latitude = latitude
-        self.Longitude = longitude
-        self.AccuracyMeters = accuracyMeters
-        self.FormattedAddress = formattedAddress
-        self.Timestamp = timestamp
-    }
+    var Latitude: Double?
+    var Longitude: Double?
+    var AccuracyMeters: Int?
+    var FormattedAddress: String?
+    var Timestamp: String?
 }

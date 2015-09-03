@@ -11,8 +11,10 @@ import UIKit
 class RoomTableViewController: UITableViewController {
 
     //Properties
-    var rooms = [Room(createdById: "me", radius: 10, tag: "petersCrib"),
-                Room(createdById: "you", radius: 20, tag: "noobPlace")]
+    let r1 = Room()
+    let r2 = Room()
+    
+    var rooms = [Room(), Room()]
     
     
     //Lifecycle

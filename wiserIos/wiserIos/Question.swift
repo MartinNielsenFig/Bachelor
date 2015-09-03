@@ -11,6 +11,7 @@ import Foundation
 class Question {
     
     var _id: String?
+    var RoomId: String?
     var CreatedById: String
     var Upvotes: Int = 0
     var Downvotes: Int = 0

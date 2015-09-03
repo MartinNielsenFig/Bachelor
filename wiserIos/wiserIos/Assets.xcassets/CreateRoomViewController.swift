@@ -10,9 +10,17 @@ import UIKit
 
 class CreateRoomViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
-    //Fields
-    var enablePwSwitch: UISwitch? = nil
+    //Properties
+    var roomNameInputCell: TextInputCell? = nil
+    var roomTagInputCell: TextInputCell? = nil
+    var pwSwitchCell: BooleanInputCell? = nil
     var pwInputCell: TextInputCell? = nil
+    var radiusInputCell: SegmentedInputCell? = nil
+    var chatInputCell: BooleanInputCell? = nil
+    var anonymousInputCell: BooleanInputCell? = nil
+    var userQuestionInputCell: BooleanInputCell? = nil
+    
+    var room = Room()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +42,7 @@ class CreateRoomViewController: UIViewController, UITableViewDelegate, UITableVi
             let cellIdentifier = "TextInputCell"
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! TextInputCell
             cell.label.text = "Room name"
+            roomNameInputCell = cell
             return cell
         }
             
@@ -41,6 +50,7 @@ class CreateRoomViewController: UIViewController, UITableViewDelegate, UITableVi
             let cellIdentifier = "TextInputCell"
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! TextInputCell
             cell.label.text = "Room tag"
+            roomTagInputCell = cell
             return cell
         }
         
@@ -48,11 +58,12 @@ class CreateRoomViewController: UIViewController, UITableViewDelegate, UITableVi
             let cellIdentifier = "BooleanInputCell"
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! BooleanInputCell
             
-            //Save as field and add a delegate function to this viewcontroller with name stateChanged
-            enablePwSwitch = cell.uiSwitch
-            enablePwSwitch?.addTarget(self, action: Selector("enablePwSwitchChanged:"), forControlEvents: UIControlEvents.ValueChanged)
-            
             cell.label.text = "Enable password"
+            pwSwitchCell = cell
+            
+            //Save as field and add a delegate function to this viewcontroller with name enablePwSwitchChanged
+            pwSwitchCell?.uiSwitch.addTarget(self, action: Selector("enablePwSwitchChanged:"), forControlEvents: UIControlEvents.ValueChanged)
+            
             return cell
         }
         
@@ -65,7 +76,7 @@ class CreateRoomViewController: UIViewController, UITableViewDelegate, UITableVi
             
             pwInputCell = cell
             
-            if let uiSwitch = enablePwSwitch {
+            if let uiSwitch = pwSwitchCell?.uiSwitch {
                 if !uiSwitch.on {
                     cell.inputField.enabled = false
                 }
@@ -82,6 +93,7 @@ class CreateRoomViewController: UIViewController, UITableViewDelegate, UITableVi
             let cellIdentifier = "SegmentedInputCell"
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! SegmentedInputCell
             cell.label.text = "Room radius"
+            radiusInputCell = cell
             return cell
 
         }
@@ -90,6 +102,7 @@ class CreateRoomViewController: UIViewController, UITableViewDelegate, UITableVi
             let cellIdentifier = "BooleanInputCell"
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! BooleanInputCell
             cell.label.text = "Enable chat"
+            chatInputCell = cell
             return cell
         }
         
@@ -97,6 +110,7 @@ class CreateRoomViewController: UIViewController, UITableViewDelegate, UITableVi
             let cellIdentifier = "BooleanInputCell"
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! BooleanInputCell
             cell.label.text = "Enable anonymous"
+            anonymousInputCell = cell
             return cell
         }
         
@@ -104,9 +118,9 @@ class CreateRoomViewController: UIViewController, UITableViewDelegate, UITableVi
             let cellIdentifier = "BooleanInputCell"
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! BooleanInputCell
             cell.label.text = "Enable user questions"
+            userQuestionInputCell = cell
             return cell
         }
-        
         
         return UITableViewCell()
     }
@@ -123,17 +137,27 @@ class CreateRoomViewController: UIViewController, UITableViewDelegate, UITableVi
     //Add room
     func addRoomButtonPressed(button: UIBarButtonItem) {
         print("add room button pressed")
+        
+        room.Name = roomNameInputCell?.inputField.text
+        room.AllowAnonymous = (anonymousInputCell?.uiSwitch.on)!
+        room.CreatedById = "id not implemented on iOS"
+        room.HasChat = (chatInputCell?.uiSwitch.on)!
+        room.HasPassword = (pwSwitchCell?.uiSwitch.on)!
+        room.Location.Latitude = 1.0
+        room.Location.Longitude = 1.0
+        room.Location.AccuracyMeters = 1
+        
+        let seg = radiusInputCell?.segment
+        let metersStr = seg?.titleForSegmentAtIndex((seg?.selectedSegmentIndex)!)
+        if metersStr != nil {
+            let meters = StringExtractor.highestNumberInString(metersStr!)
+            room.Radius = meters
+        }
+        
+        room.Tag = roomTagInputCell?.inputField.text
+        room.UsersCanAsk = (userQuestionInputCell?.uiSwitch.on)!
+        room.EncryptedPassword = pwInputCell?.inputField.text
+        
+        HttpHandler.createRoom(JSONSerializer.toJson(room))
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }
