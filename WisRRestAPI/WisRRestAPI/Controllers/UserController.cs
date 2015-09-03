@@ -29,7 +29,18 @@ namespace WisRRestAPI.Controllers
         [System.Web.Mvc.HttpPost]
         public string CreateUser(string User)
         {
-            return _ur.AddUser(_jsSerializer.Deserialize<User>(User));
+            var userToAdd = _jsSerializer.Deserialize<User>(User);
+            //Add more for other systems than facebook
+            var user = _ur.GetAllUsers().Result.Where(x => x.FacebookId == userToAdd.FacebookId);
+            if (user.Count() == 0)
+            {
+                return _ur.AddUser(_jsSerializer.Deserialize<User>(User));
+            }
+            else
+            {
+                return user.First().Id.ToString();
+            }
+            
         }
 
         [System.Web.Mvc.HttpGet]

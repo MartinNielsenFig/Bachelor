@@ -26,6 +26,7 @@ namespace Web.Controllers
 
                 scope = "email" // Add other permissions as needed)
             });
+           
 
             Response.Redirect(loginUrl.AbsoluteUri);
         }

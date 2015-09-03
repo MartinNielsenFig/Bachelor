@@ -3,13 +3,18 @@ app.config(['$httpProvider', function ($httpProvider) {
     $httpProvider.defaults.useXDomain = true;
     delete $httpProvider.defaults.headers.common["X-Requested-With"];
 }]);
-
+app.controller("UserController", ['$scope', function($scope) {
+    var createUser= function() {
+      
+    };
+    }]);
 app.controller("HomeController", ['$scope', '$http', '$location', '$window', 'configs', function ($scope, $http, $location,$window, configs) {
     var getRooms = function() {
         $http.get(configs.restHostName+'/Room/GetAll').then(function(response) {
             $scope.Rooms = response.data;
         });
     };
+
     getRooms();
     $scope.title = 'Room name';
     $scope.RoomName = "";
@@ -32,7 +37,7 @@ app.controller("HomeController", ['$scope', '$http', '$location', '$window', 'co
         $http.post('/Home/toJsonRoom',
         {
             RoomName: $scope.RoomName,
-            CreatedBy: $scope.CreatedBy,
+            CreatedBy: window.userId,
             locationTimestamp:window.currentLocation.timestamp,
             locationLatitude:window.currentLocation.coords.latitude,
             locationLongitude:window.currentLocation.coords.longitude,

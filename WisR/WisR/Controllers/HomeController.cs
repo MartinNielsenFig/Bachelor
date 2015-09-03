@@ -57,5 +57,16 @@ namespace WisR.Controllers
             room.UseLocation = useLocation;
             return new JavaScriptSerializer().Serialize(room);
         }
+        public string toJsonUser(string encryptedPassword, string facebookId, string lDAPUserName, string displayName, string email)
+        {
+            var user = new User();
+            user.FacebookId = facebookId;
+            user.LDAPUserName = lDAPUserName;
+            user.DisplayName = displayName;
+            user.Email = email;
+            user.EncryptedPassword = encryptedPassword;
+           
+            return new JavaScriptSerializer().Serialize(user);
+        }
     }
 }
