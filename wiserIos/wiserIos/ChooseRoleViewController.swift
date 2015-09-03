@@ -31,15 +31,16 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
         //Map delegation for pin behaviour
         mapView.delegate = self
         
-        let httpTest = HttpHandler()
         
+        //Question text 
+        /*
         let question = BooleanQuestion()
         question.QuestionText = "ushtest1"
         question._id = nil
-        
         let qJson = JSONSerializer.toJson(question)
         print(qJson)
-        httpTest.createQuestion("doge", question: qJson, type: "BooleanQuestion")
+        HttpHandler.createQuestion("doge", question: qJson, type: "BooleanQuestion")
+        */
     }
 
     override func didReceiveMemoryWarning() {

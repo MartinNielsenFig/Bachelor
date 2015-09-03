@@ -8,6 +8,7 @@ using MongoDB.Bson;
 using MongoDB.Bson.IO;
 using MongoDB.Bson.Serialization;
 using WisR.DomainModels;
+using WisRRestAPI.DomainModel;
 
 namespace WisR.Controllers
 {
@@ -31,9 +32,16 @@ namespace WisR.Controllers
             question.ResponseOptions=new List<ResponseOption>();
             question.Result=new List<Answer>();
 
-
-
             return question.ToJson(); ;
+        }
+        public string toJsonChatMessage(string userId,string roomId,string text)
+        {
+            var chatMessage = new ChatMessage();
+            chatMessage.ByUserId = userId;
+            chatMessage.RoomId = roomId;
+            chatMessage.Value = text;
+            chatMessage.Timestamp = (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds.ToString();
+            return new JavaScriptSerializer().Serialize(chatMessage);
         }
     }
 

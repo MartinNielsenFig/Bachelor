@@ -10,61 +10,52 @@ using System.Web.Script.Serialization;
 using WisR.DomainModels;
 using WisRRestAPI.DomainModel;
 
-namespace WisRRestAPI.Controllers
-{
-    public class RoomController : Controller
-    {
+namespace WisRRestAPI.Controllers {
+    public class RoomController : Controller {
         private readonly IRoomRepository _rr;
         private readonly JavaScriptSerializer _jsSerializer;
-        public RoomController(IRoomRepository rr)
-        {
+        public RoomController(IRoomRepository rr) {
             _rr = rr;
             _jsSerializer = new JavaScriptSerializer();
         }
 
         [System.Web.Mvc.HttpGet]
-        public string GetAll()
-        {
+        public string GetAll() {
             var Rooms = _rr.GetAllRooms();
             return _jsSerializer.Serialize(Rooms.Result);
         }
         [System.Web.Mvc.HttpPost]
-        public string CreateRoom(string Room)
-        {
-            var str = Request.InputStream;
-            var strLen = Convert.ToInt32(str.Length);
-            byte[] strArr = new byte[strLen];
-            var strRead = str.Read(strArr, 0, strLen);
-            var strContent = "";
-            for (var counter = 0; counter < strLen; counter++)
-            {
-                strContent += strArr[counter].ToString();
+        public string CreateRoom(string Room) {
+            Room room;
+            try {
+                room = _jsSerializer.Deserialize<Room>(Room);
+            } catch (Exception) {
+                return "Could not deserialize room with json: " + Room;
             }
 
-            var formData = Request; // Request
-            var lol = Request.InputStream;
-            var nvc = Request.Form;
+            string roomId;
+            try {
+                roomId = _rr.AddRoom(room);
+            } catch (Exception) {
+                return "Could not add room";
+            }
 
-            return _rr.AddRoom(_jsSerializer.Deserialize<Room>(Room));
+            return roomId;
         }
 
         [System.Web.Mvc.HttpGet]
-        public string GetById(string id)
-        {
+        public string GetById(string id) {
             var item = _rr.GetRoom(id);
-            if (item == null)
-            {
+            if (item == null) {
                 return "Not found";
             }
 
             return _jsSerializer.Serialize(item);
         }
         [System.Web.Mvc.HttpDelete]
-        public string DeleteRoom(string id)
-        {
+        public string DeleteRoom(string id) {
             var result = _rr.RemoveRoom(id).Result;
-            if (result.DeletedCount == 1)
-            {
+            if (result.DeletedCount == 1) {
                 return "Room was deleted";
             }
             return "Couldn't find Room to delete";

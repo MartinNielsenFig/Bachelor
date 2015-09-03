@@ -18,32 +18,32 @@ public class TextualQuestion extends Question{
 
     //Overrides
     @Override
-    public String get_id() { return super.get_id();}
+    public String get_Id() { return super.get_Id();}
     @Override
-    public void set_id(String _id) { super.set_id(_id);}
+    public void set_Id(String _id) { super.set_Id(_id);}
 
     @Override
-    public String get_questionText() { return super.get_questionText();}
+    public String get_QuestionText() { return super.get_QuestionText();}
     @Override
-    public void set_questionText(String _questionText) { super.set_questionText(_questionText);}
+    public void set_QuestionText(String _questionText) { super.set_QuestionText(_questionText);}
 
     @Override
-    public String get_img() { return super.get_img();}
+    public String get_Img() { return super.get_Img();}
     @Override
-    public void set_img(String _img) { super.set_img(_img);}
+    public void set_Img(String _img) { super.set_Img(_img);}
 
     @Override
-    public int get_upvotes() { return super.get_upvotes();}
+    public int get_Upvotes() { return super.get_Upvotes();}
     @Override
-    public void set_upvotes(int _upvotes) { super.set_upvotes(_upvotes);}
+    public void set_Upvotes(int _upvotes) { super.set_Upvotes(_upvotes);}
 
     @Override
-    public int get_downvotes() { return super.get_downvotes(); }
+    public int get_Downvotes() { return super.get_Downvotes(); }
     @Override
-    public void set_downvotes(int _downvotes) { super.set_downvotes(_downvotes);}
+    public void set_Downvotes(int _downvotes) { super.set_Downvotes(_downvotes);}
 
     @Override
-    public String get_createdById() { return super.get_createdById();}
+    public String get_CreatedById() { return super.get_CreatedById();}
     @Override
-    public void set_createdById(String _createdById) { super.set_createdById(_createdById);}
+    public void set_CreatedById(String _createdById) { super.set_CreatedById(_createdById);}
 }

@@ -107,7 +107,7 @@
     @* Chat code found at: http://bootsnipp.com/snippets/featured/chat *@
     <div class="col-md-4">
         <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-        <div class="container" style="overflow-y: auto; max-height: 300px">
+        <div class="container" style="overflow-y: auto; max-height: 500px">
 
             <div class="row">
                 <div class="message-wrap col-lg-8">
@@ -146,13 +146,12 @@
         </div>
         <div class="send-wrap ">
 
-            <textarea class="form-control send-message" rows="3" placeholder="Write a reply..."></textarea>
+            <textarea ng-model="textAreaModel" class="form-control send-message" rows="3" placeholder="Write a reply..."></textarea>
 
 
         </div>
         <div class="btn-panel">
-            <a href="" class=" col-lg-3 btn   send-message-btn " role="button"><i class="fa fa-cloud-upload"></i> Add Files</a>
-            <a href="" class=" col-lg-4 text-right btn   send-message-btn pull-right" role="button"><i class="fa fa-plus"></i> Send Message</a>
+            <button class="btn btn-primary" ng-click="postChatMessage(textAreaModel)">Send message</button>
         </div>
 
 

@@ -5,63 +5,63 @@ import android.renderscript.Allocation;
 public class Room {
 
     //Fields
-    private String _id;
-    private String _name;
-    private String _createdById;
-    private int _radius;
-    private String _tag;
-    private boolean _hasPassword;
-    private String _encryptedPassword;
-    private boolean _hasChat;
-    private boolean _usersCanAsk;
-    private boolean _allowAnonymous;
+    private String Id;
+    private String Name;
+    private String CreatedById;
+    private int Radius;
+    private String Tag;
+    private boolean HasPassword;
+    private String EncryptedPassword;
+    private boolean HasChat;
+    private boolean UsersCanAsk;
+    private boolean AllowAnonymous;
 
     //Constructors
     public Room(){}
-    public Room(String _id, String _name, String _createdById, int _radius, String _tag,
-                boolean _hasPassword, String _encryptedPassword, boolean _hasChat, boolean _usersCanAsk,
-                boolean _allowAnonymous)
+    public Room(String Id, String Name, String CreatedById, int Radius, String Tag,
+                boolean HasPassword, String EncryptedPassword, boolean HasChat, boolean UsersCanAsk,
+                boolean AllowAnonymous)
     {
-        this._id = _id;
-        this._name = _name;
-        this._createdById = _createdById;
-        this._radius = _radius;
-        this._tag = _tag;
-        this._hasPassword = _hasPassword;
-        this._encryptedPassword = _encryptedPassword;
-        this._hasChat = _hasChat;
-        this._usersCanAsk = _usersCanAsk;
-        this._allowAnonymous = _allowAnonymous;
+        this.Id = Id;
+        this.Name = Name;
+        this.CreatedById = CreatedById;
+        this.Radius = Radius;
+        this.Tag = Tag;
+        this.HasPassword = HasPassword;
+        this.EncryptedPassword = EncryptedPassword;
+        this.HasChat = HasChat;
+        this.UsersCanAsk = UsersCanAsk;
+        this.AllowAnonymous = AllowAnonymous;
     }
 
     //Properties
-    public String get_id(){return this._id;}
-    public void set_id(String _id) {this._id = _id;}
+    public String get_Id(){return this.Id;}
+    public void set_Id(String Id) {this.Id = Id;}
 
-    public String get_name(){return this._name;}
-    public void set_name(String _name) {this._name = _name;}
+    public String get_Name(){return this.Name;}
+    public void set_Name(String Name) {this.Name = Name;}
 
-    public String get_createdById(){return this._createdById;}
-    public void set_createdById(String _createdById) {this._createdById = _createdById;}
+    public String get_CreatedById(){return this.CreatedById;}
+    public void set_CreatedById(String CreatedById) {this.CreatedById = CreatedById;}
 
-    public int get_radius(){return this._radius;}
-    public void set_radius(int _radius) {this._radius = _radius;}
+    public int get_Radius(){return this.Radius;}
+    public void set_Radius(int Radius) {this.Radius = Radius;}
 
-    public String get_tag(){return this._tag;}
-    public void set_tag(String _tag) {this._tag = _tag;}
+    public String get_Tag(){return this.Tag;}
+    public void set_Tag(String Tag) {this.Tag = Tag;}
 
-    public boolean get_hasPassword(){return this._hasPassword;}
-    public void set_hasPassword(boolean _hasPassword) {this._hasPassword = _hasPassword;}
+    public boolean get_HasPassword(){return this.HasPassword;}
+    public void set_HasPassword(boolean HasPassword) {this.HasPassword = HasPassword;}
 
-    public String get_encryptedPassword(){return this._encryptedPassword;}
-    public void set_encryptedPassword(String _encryptedPassword) {this._encryptedPassword = _encryptedPassword;}
+    public String get_EncryptedPassword(){return this.EncryptedPassword;}
+    public void set_EncryptedPassword(String EncryptedPassword) {this.EncryptedPassword = EncryptedPassword;}
 
-    public boolean get_hasChat(){return this._hasChat;}
-    public void set_hasChat(boolean _hasChat) {this._hasChat = _hasChat;}
+    public boolean get_HasChat(){return this.HasChat;}
+    public void set_HasChat(boolean _hasChat) {this.HasChat = HasChat;}
 
-    public boolean get_usersCanAsk(){return this._usersCanAsk;}
-    public void set_usersCanAsk(boolean _usersCanAsk) {this._usersCanAsk = _usersCanAsk;}
+    public boolean get_UsersCanAsk(){return this.UsersCanAsk;}
+    public void set_UsersCanAsk(boolean UsersCanAsk) {this.UsersCanAsk = UsersCanAsk;}
 
-    public boolean get_allowAnonymous(){return this._allowAnonymous;}
-    public void set_allowAnonymous(boolean _allowAnonymous) {this._allowAnonymous = _allowAnonymous;}
+    public boolean get_AllowAnonymous(){return this.AllowAnonymous;}
+    public void set_AllowAnonymous(boolean AllowAnonymous) {this.AllowAnonymous = AllowAnonymous;}
 }

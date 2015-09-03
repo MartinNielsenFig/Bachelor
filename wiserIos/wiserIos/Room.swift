@@ -12,10 +12,10 @@ class Room {
     
     var _id: String?
     var Name: String?
-    var CreatedById: String
-    var Location: Coordinate?
-    var Radius: Int
-    var Tag: String
+    var CreatedById: String?
+    var Location = Coordinate()
+    var Radius: Int?
+    var Tag: String?
     var HasPassword: Bool = false
     var EncryptedPassword: String?
     var HasChat: Bool = true
@@ -24,9 +24,7 @@ class Room {
     var Chatlog: [ChatMessage]?
     
     
-    init(createdById: String, radius: Int, tag: String) {
-        self.CreatedById = createdById
-        self.Radius = radius
-        self.Tag = tag
+    init() {
+
     }
 }

@@ -5,27 +5,27 @@ import java.util.List;
 public class User {
 
     //Fields
-    private String _id;
-    private int _facebookId;
-    private List<String> _connectedRooms;
+    private String Id;
+    private int FacebookId;
+    private List<String> ConnectedRooms;
 
     //Constructors
     public User(){}
-    public User(String _id, int _facebookId, List<String> _connectedRooms)
+    public User(String Id, int FacebookId, List<String> ConnectedRooms)
     {
-        this._id = _id;
-        this._facebookId = _facebookId;
-        this._connectedRooms = _connectedRooms;
+        this.Id = Id;
+        this.FacebookId = FacebookId;
+        this.ConnectedRooms = ConnectedRooms;
     }
 
     //Properties
-    public String get_id() { return _id; }
-    public void set_id(String _id) {this._id = _id;}
+    public String get_Id() { return Id; }
+    public void set_Id(String _id) {this.Id = Id;}
 
-    public int get_facebookId() {return _facebookId;}
-    public void set_facebookId(int _facebookId){this._facebookId = _facebookId;}
+    public int get_FacebookId() {return FacebookId;}
+    public void set_FacebookId(int _facebookId){this.FacebookId = FacebookId;}
 
-    public List<String> get__connectedRooms() {return _connectedRooms;}
-    public void set__connectedRooms(List<String> _connectedRooms){this._connectedRooms = _connectedRooms;}
+    public List<String> get_ConnectedRooms() {return ConnectedRooms;}
+    public void set_ConnectedRooms(List<String> ConnectedRooms){this.ConnectedRooms = ConnectedRooms;}
 
 }
