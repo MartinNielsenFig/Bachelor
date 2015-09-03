@@ -15,6 +15,35 @@ class HttpHandler {
     
     //http://stackoverflow.com/questions/25341858/perform-post-request-in-ios-swift
     
+    static func getRooms(completionHandler: (inout rooms: [Room]) -> Void) {
+        let session = NSURLSession.sharedSession()
+        let url = NSURL(string: mainUrl)!.URLByAppendingPathComponent("Room/GetAll")
+        let request = NSMutableURLRequest(URL: url)
+        request.HTTPMethod = "GET"
+        //request.setValue("text/plain", forHTTPHeaderField: "Content-Type")
+        
+        let task = session.dataTaskWithRequest(request) {
+            data, response, error in
+            
+            // handle fundamental network errors (e.g. no connectivity)
+            print("data \(data)")
+            print("reponse \(response)")
+            print("error \(error)")
+            if data != nil {
+                let dataString = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
+                print("dataString \(dataString)")
+                
+                //init rooms here
+                var rooms = [Room]()
+                let r1 = Room()
+                r1.Name = "Test of callbackroom \(dataString)"
+                rooms.append(Room())
+                completionHandler(rooms: &rooms)
+            }
+        }
+        task.resume()
+    }
+    
     static func createRoom(room: String) {
         let session = NSURLSession.sharedSession()
         let url = NSURL(string: mainUrl)!.URLByAppendingPathComponent("Room/CreateRoom")
