@@ -43,9 +43,9 @@ namespace WisRRestAPI.Controllers {
             return roomId;
         }
 
-        [System.Web.Mvc.HttpGet]
+        [System.Web.Mvc.HttpPost]
         public string GetById(string id) {
-            var item = _rr.GetRoom(id);
+            var item = _rr.GetRoom(id).Result;
             if (item == null) {
                 return "Not found";
             }

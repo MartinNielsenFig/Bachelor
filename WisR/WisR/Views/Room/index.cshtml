@@ -2,7 +2,7 @@
     ViewBag.Title = "index";
 }
 <body ng-controller="RoomController">
-    <h2>Robotteknologi</h2>
+    <h2>{{CurrentRoom.Name}}</h2>
     <div id="questionTables" ng-show="!SpecificQuestionShown">
         <div class="col-md-8">
             <h4>Host questions</h4>
@@ -26,7 +26,7 @@
                 </th>
                 </thead>
                 <tbody>
-                <tr style="cursor: pointer" ng-repeat="question in Questions|filter: { RoomId: '@ViewBag.roomId' } " ng-click="ShowSpecificQuestion(question)">
+                <tr style="cursor: pointer" ng-repeat="question in Questions|filter: { RoomId: '@ViewBag.roomId',CreatedById: CurrentRoom.CreatedById } " ng-click="ShowSpecificQuestion(question)">
                 <td>{{question.QuestionText}}</td>
                 <td>{{question.CreatedById}}</td>
                 <td>{{question.Upvotes}}</td>
@@ -55,7 +55,7 @@
                 </th>
                 </thead>
                 <tbody>
-                <tr style="cursor: pointer" ng-repeat="question in Questions|filter: { RoomId: '@ViewBag.roomId' } " ng-click="ShowSpecificQuestion(question)">
+                <tr style="cursor: pointer" ng-repeat="question in Questions|filter: { RoomId: '@ViewBag.roomId',CreatedById: '!'+CurrentRoom.CreatedById  } " ng-click="ShowSpecificQuestion(question)">
                 <td>{{question.QuestionText}}</td>
                 <td>{{question.CreatedById}}</td>
                 <td>{{question.Upvotes}}</td>
