@@ -57,7 +57,6 @@ namespace WisRRestAPI.Controllers {
                 q = (Question)b;
             } catch (Exception) {
                 return "Could not deserialize the JSON string: " + question;
-
             }
             if (q.Id != null) {
                 return "New question should have id of null";

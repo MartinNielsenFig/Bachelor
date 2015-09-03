@@ -11,23 +11,43 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 
 import com.example.tomas.wisrandroid.Helpers.ActivityLayoutHelper;
 import com.example.tomas.wisrandroid.R;
 
+import java.util.EventListener;
+
 
 public class MainActivity extends ActionBarActivity {
+
+    Button mCreateRoomButton = null;
+    Button mSelectRoomButton = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ActivityLayoutHelper.HideLayout(getWindow(), getSupportActionBar());
 
-        ActivityLayoutHelper.HideLayout(getWindow(),getSupportActionBar());
+        mCreateRoomButton = (Button) findViewById(R.id.button_create_room);
+        mCreateRoomButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mIntent = new Intent(MainActivity.this, CreateRoomActivity.class);
+                startActivity(mIntent);
+            }
+        });
 
+        mSelectRoomButton = (Button) findViewById(R.id.button_find_room);
+        mSelectRoomButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mIntent = new Intent(MainActivity.this, SelectRoomActivity.class);
+                startActivity(mIntent);
+            }
+        });
 
-        Intent mIntent = new Intent(this, AnswerQuestionActivity.class);
-        startActivity(mIntent);
     }
 
     @Override

@@ -7,4 +7,7 @@
     <string name="title_activity_select_room">SelectRoomActivity</string>
     <string name="title_activity_ask_question">AskQuestionActivity</string>
     <string name="title_activity_answer_question">AnswerQuestionActivity</string>
+    <string name="button_enter_room">Enter Room</string>
+    <string name="button_create_room">Create Room</string>
+    <string name="mainActivity_header">WisR your voting app</string>
 </resources>
