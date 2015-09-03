@@ -29,7 +29,7 @@ namespace WisRRestAPI.Controllers
             return _jsSerializer.Serialize(Rooms.Result);
         }
         [System.Web.Mvc.HttpPost]
-        public void CreateRoom(string Room)
+        public string CreateRoom(string Room)
         {
             var str = Request.InputStream;
             var strLen = Convert.ToInt32(str.Length);
@@ -45,7 +45,7 @@ namespace WisRRestAPI.Controllers
             var lol = Request.InputStream;
             var nvc = Request.Form;
 
-            _rr.AddRoom(_jsSerializer.Deserialize<Room>(Room));
+            return _rr.AddRoom(_jsSerializer.Deserialize<Room>(Room));
         }
 
         [System.Web.Mvc.HttpGet]

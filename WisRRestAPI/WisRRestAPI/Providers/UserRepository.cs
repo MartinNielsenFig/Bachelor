@@ -29,9 +29,10 @@ namespace WisRRestAPI.DomainModel
             return User;
         }
 
-        public void AddUser(User item)
+        public string AddUser(User item)
         {
-            _database.GetCollection<User>("User").InsertOneAsync(item);
+            _database.GetCollection<User>("User").InsertOneAsync(item).Wait();
+            return item.Id.ToString();
         }
 
         public Task<DeleteResult> RemoveUser(string id)
