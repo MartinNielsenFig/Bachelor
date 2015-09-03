@@ -36,13 +36,16 @@ namespace WisR.Controllers
             return View();
         }
 
-        public string toJsonRoom(string RoomName,string CreatedBy,object location, int radius, string tag,string password,bool hasChat,bool userCanAsk,bool allowAnonymous)
+        public string toJsonRoom(string RoomName, string CreatedBy, int radius, string tag, string password, bool hasChat, bool userCanAsk, bool allowAnonymous, bool useLocation, string locationTimestamp, double locationLatitude, double locationLongitude, int locationAccuracyMeters, string locationFormattedAddress)
         {
             var room = new Room();
             room.Name = RoomName;
             room.CreatedById = CreatedBy;
-           // room.Location.Timestamp = location.timestamp;
-            //room.Location.Timestamp = location.GetType().GetProperty("timestamp").GetValue(location).ToString();
+            room.Location.Timestamp = locationTimestamp;
+            room.Location.Latitude = locationLatitude;
+            room.Location.Longitude = locationLongitude;
+            room.Location.AccuracyMeters = locationAccuracyMeters;
+            room.Location.FormattedAddress = locationFormattedAddress;
             room.Radius = radius;
             room.Tag = tag;
             if (password != null)
@@ -53,6 +56,7 @@ namespace WisR.Controllers
             room.HasChat = hasChat;
             room.UsersCanAsk = userCanAsk;
             room.AllowAnonymous = allowAnonymous;
+            room.UseLocation = useLocation;
             return new JavaScriptSerializer().Serialize(room);
         }
     }

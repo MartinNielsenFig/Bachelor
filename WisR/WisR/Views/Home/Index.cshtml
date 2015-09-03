@@ -48,6 +48,24 @@
                         <th>
                             AllowAnonymous
                         </th>
+                        <th>
+                            UseLocation
+                        </th>
+                        <th>
+                            locationTimestamp
+                        </th>
+                        <th>
+                            locationLatitude
+                        </th>
+                        <th>
+                            locationLongitude
+                        </th>
+                        <th>
+                            locationAccuracyMeters
+                        </th>
+                        <th>
+                            locationFormattedAddress
+                        </th>
                     </tr>
                     <tr ng-repeat="room in Rooms">
                         <td>{{room.Name}}</td>
@@ -59,6 +77,12 @@
                         <td>{{room.HasChat}}</td>
                         <td>{{room.UsersCanAsk}}</td>
                         <td>{{room.AllowAnonymous}}</td>
+                        <td>{{room.UseLocation}}</td>
+                        <td>{{room.Location.Timestamp}}</td>
+                        <td>{{room.Location.Latitude}}</td>
+                        <td>{{room.Location.Longitude}}</td>
+                        <td>{{room.Location.AccuracyMeters}}</td>
+                        <td>{{room.Location.FormattedAddress}}</td>
                     </tr>
                 </table>
                 <div id="buttonsDiv" class="text-center">

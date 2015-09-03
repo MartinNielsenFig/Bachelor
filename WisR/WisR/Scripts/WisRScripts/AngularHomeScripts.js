@@ -19,7 +19,7 @@ app.controller("HomeController", ['$scope', '$http', '$location', '$window', 'co
     $scope.HasChat = true;
     $scope.UserCanAsk = true;
     $scope.AllowAnonymous = true;
-
+    $scope.UseLocation = true;
  
     var changeViewToRoom = function () {
         var url = $("#RedirectTo").val();
@@ -32,13 +32,18 @@ app.controller("HomeController", ['$scope', '$http', '$location', '$window', 'co
         {
             RoomName: $scope.RoomName,
             CreatedBy: $scope.CreatedBy,
-            location: window.currentLocation,
+            locationTimestamp:window.currentLocation.timestamp,
+            locationLatitude:window.currentLocation.coords.latitude,
+            locationLongitude:window.currentLocation.coords.longitude,
+            locationAccuracyMeters: window.currentLocation.coords.accuracy,
+            locationFormattedAddress: window.currentAddress,
             radius: $scope.Radius,
             tag: $scope.UniqueTag,
             password: $scope.Password,
             hasChat: $scope.HasChat,
             userCanAsk: $scope.UserCanAsk,
-            allowAnonymous: $scope.AllowAnonymous
+            allowAnonymous: $scope.AllowAnonymous,
+            useLocation: $scope.UseLocation
         }).
         then(function (response) {
             //Use response to send to REST API

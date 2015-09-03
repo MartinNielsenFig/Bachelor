@@ -8,8 +8,13 @@ namespace WisR.DomainModels
 {
     public class Room
     {
+        public Room()
+        {
+            Location = new Coordinate();
+            ChatLog = new List<ChatMessage>();
+        }
         public ObjectId Id { get; set; }
-        public string roomId { get; set; }
+        public string RoomId { get; set; }
         public string Name { get; set; }
         public string CreatedById { get; set; }
         public Coordinate Location { get; set; }
@@ -21,5 +26,6 @@ namespace WisR.DomainModels
         public bool UsersCanAsk { get; set; }
         public bool AllowAnonymous { get; set; }
         public List<ChatMessage> ChatLog { get; set; }
+        public bool UseLocation { get; set; }
     }
 }
