@@ -22,6 +22,8 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
+            </div>
+           <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav col-lg-12">
                     <li>@Html.ActionLink("WisR", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })</li>
                     @if (Session["accessToken"] != null)
@@ -37,7 +39,7 @@
 
                                 <img class="pull-left" src="http://graph.facebook.com/@facebookId/picture?type=square" alt="FacebookBillede"/>
 
-                                <p class="pull-left">
+                                <p class="pull-left" style="color: #999999; padding: 15px 15px 15px 15px">
                                     @result.name
                                 </p>
                             </div>
