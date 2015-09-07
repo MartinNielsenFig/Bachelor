@@ -30,17 +30,6 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
         
         //Map delegation for pin behaviour
         mapView.delegate = self
-        
-        
-        //Question text 
-        /*
-        let question = BooleanQuestion()
-        question.QuestionText = "ushtest1"
-        question._id = nil
-        let qJson = JSONSerializer.toJson(question)
-        print(qJson)
-        HttpHandler.createQuestion("doge", question: qJson, type: "BooleanQuestion")
-        */
     }
 
     override func didReceiveMemoryWarning() {
@@ -50,15 +39,6 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
     //MKMapViewDelegate
     //http://stackoverflow.com/questions/24523702/stuck-on-using-mkpinannotationview-within-swift-and-mapkit/24532551#24532551
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
-        if let newestAnnotation = mapView.annotations.first {
-            mapView.removeAnnotations(mapView.annotations)
-            mapView.addAnnotation(newestAnnotation)
-        }
-        
-        if annotation is MKUserLocation {
-            return nil
-        }
-        
         let reuseId = "pin"
         var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId) as? MKPinAnnotationView
         if pinView == nil {
@@ -71,35 +51,43 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
             pinView!.annotation = annotation
         }
         
+        
+        locationManager.stopUpdatingLocation()
         return pinView
+    }
+    
+    func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
+        if overlay is MKCircle {
+            let circle = MKCircleRenderer(overlay: overlay)
+            circle.strokeColor = UIColor.blueColor()
+            circle.fillColor = UIColor(red: 0, green: 0, blue: 255, alpha: 0.1)
+            circle.lineWidth = 1
+            return circle
+        } else {
+            return MKOverlayRenderer()
+        }
     }
     
     //CLLocationManagerDelegate
     let locationManager = CLLocationManager()
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        print("did update location")
+        
         if let location = manager.location {
             let coordinate = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
             mapView.region = MKCoordinateRegionMakeWithDistance(coordinate, 1000, 1000)
             
+            let circle = MKCircle(centerCoordinate: location.coordinate, radius: location.horizontalAccuracy as CLLocationDistance)
+            self.mapView.addOverlay(circle)
+            
+            print(location.horizontalAccuracy)
+            print(location.verticalAccuracy)
+            
             let annotation = MKPointAnnotation()
             annotation.coordinate = coordinate
-            
             mapView.addAnnotation(annotation)
         }
-        var pm = [CLPlacemark]()
-        CLGeocoder().reverseGeocodeLocation(locations[0], completionHandler: {
-            (placemarks, error) in
-                if (error != nil) {
-                    print("reverse geodcode fail: \(error!.localizedDescription)")
-                }
-            if placemarks != nil {
-                pm = placemarks as [CLPlacemark]!
-            }
-        })
-        if pm.count <= 0 { return }
-        print(pm[0].country)
-        print(pm[0].postalCode)
     }
     
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {

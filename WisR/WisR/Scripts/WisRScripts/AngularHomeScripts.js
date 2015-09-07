@@ -7,7 +7,8 @@ app.controller("UserController", ['$scope', function ($scope) {
     var createUser = function () {
       
     };
-    }]);
+}]);
+
 app.filter('roomsNear', function () {
     return function (rooms) {
         if (rooms != undefined) {
