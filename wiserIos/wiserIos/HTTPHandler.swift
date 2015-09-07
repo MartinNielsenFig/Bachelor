@@ -10,8 +10,8 @@ import Foundation
 
 class HttpHandler {
     
-    //static let mainUrl = "http://192.168.225.151:1337"
-    static let mainUrl = "http://wisrrestapi.aceipse.dk/"
+    static let mainUrl = "http://192.168.225.151:1337"
+    //static let mainUrl = "http://wisrrestapi.aceipse.dk/"
     
     //http://stackoverflow.com/questions/25341858/perform-post-request-in-ios-swift
     
@@ -37,9 +37,12 @@ class HttpHandler {
                 //init rooms here
                 var rooms = [Room]()
                 
-                let	t = JSONSerializer.toDictionary(nsDataString!)
+                let	t = JSONSerializer.toArray(dataString)
                 
-                rooms.append(Room())
+                for val in t! {
+                    rooms.append(Room(jsonDictionary: val as! NSDictionary))
+                }
+                
                 completionHandler(rooms: &rooms)
             }
         }

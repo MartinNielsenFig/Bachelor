@@ -24,7 +24,9 @@ class Room {
     var Chatlog: [ChatMessage]?
     
     
-    init() {
-
+    convenience init(jsonDictionary: NSDictionary) {
+        self.init()
+        
+        self._id = jsonDictionary["_id"] as! String?
     }
 }
