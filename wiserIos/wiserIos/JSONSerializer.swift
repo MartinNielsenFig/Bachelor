@@ -31,7 +31,7 @@ public class JSONSerializer {
                 any = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers)
             }
             catch let error as NSError {
-                print(error)
+                NSLog(String(error))
             }
         }
         return any

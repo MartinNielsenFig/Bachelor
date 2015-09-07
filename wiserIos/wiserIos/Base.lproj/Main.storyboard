@@ -26,7 +26,7 @@
                                         <animations/>
                                         <state key="normal" title="Create Room"/>
                                         <connections>
-                                            <segue destination="4Nu-Oe-NI9" kind="show" id="mRN-Wr-APX"/>
+                                            <segue destination="4Nu-Oe-NI9" kind="show" identifier="CreateRoom" id="mRN-Wr-APX"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zXc-jJ-l7g">
