@@ -8,13 +8,15 @@ app.controller("UserController", ['$scope', function($scope) {
       
     };
     }]);
-app.controller("HomeController", ['$scope', '$http', '$location', '$window', 'configs', function ($scope, $http, $location,$window, configs) {
+app.controller("HomeController", ['$scope', '$http', '$location', '$window', 'configs', function ($scope, $http, $location, $window, configs) {
     var getRooms = function() {
         $http.get(configs.restHostName+'/Room/GetAll').then(function(response) {
             $scope.Rooms = response.data;
+            $scope.userId = window.userId;
         });
     };
-
+    
+   
     getRooms();
     $scope.title = 'Room name';
     $scope.RoomName = "";

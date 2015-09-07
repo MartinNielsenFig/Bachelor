@@ -87,7 +87,7 @@
                 </table>
                 <div id="buttonsDiv" class="text-center">
                     @Html.ActionLink("Connect", "Index", new { Controller = "Room" }, new { @class = "btn btn-primary" })
-                    <button class="btn btn-primary" onclick="$('#myModalCreate').modal('toggle')">Create</button>
+                    <button id="createRoomButton" class="btn btn-primary" disabled onclick="$('#myModalCreate').modal('toggle')">Create</button>
                 </div>
             </div>
 
