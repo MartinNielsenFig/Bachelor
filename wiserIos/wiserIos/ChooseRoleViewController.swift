@@ -51,8 +51,21 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
             pinView!.annotation = annotation
         }
         
+        
         locationManager.stopUpdatingLocation()
         return pinView
+    }
+    
+    func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
+        if overlay is MKCircle {
+            let circle = MKCircleRenderer(overlay: overlay)
+            circle.strokeColor = UIColor.blueColor()
+            circle.fillColor = UIColor(red: 0, green: 0, blue: 255, alpha: 0.1)
+            circle.lineWidth = 1
+            return circle
+        } else {
+            return MKOverlayRenderer()
+        }
     }
     
     //CLLocationManagerDelegate
@@ -64,6 +77,12 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
         if let location = manager.location {
             let coordinate = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
             mapView.region = MKCoordinateRegionMakeWithDistance(coordinate, 1000, 1000)
+            
+            let circle = MKCircle(centerCoordinate: location.coordinate, radius: location.horizontalAccuracy as CLLocationDistance)
+            self.mapView.addOverlay(circle)
+            
+            print(location.horizontalAccuracy)
+            print(location.verticalAccuracy)
             
             let annotation = MKPointAnnotation()
             annotation.coordinate = coordinate
