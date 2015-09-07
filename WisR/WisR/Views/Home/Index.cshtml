@@ -19,55 +19,57 @@
                     <div id="accuracy"></div>
                     <div id="map_canvas" style="height: 300px; border: 1px solid #000;"></div>
                 </div>
-                <table id="roomTable" class="table table-responsive table-bordered">
-                    <tr>
-                        <th>
-                            Name
-                        </th>
-                        <th>
-                            CreatedById
-                        </th>
-                        <th>
-                            Radius
-                        </th>
-                        <th>
-                            Tag
-                        </th>
-                        <th>
-                            HasPassword
-                        </th>
-                        <th>
-                            EncryptedPassword
-                        </th>
-                        <th>
-                            HasChat
-                        </th>
-                        <th>
-                            UsersCanAsk
-                        </th>
-                        <th>
-                            AllowAnonymous
-                        </th>
-                        <th>
-                            UseLocation
-                        </th>
-                        <th>
-                            locationTimestamp
-                        </th>
-                        <th>
-                            locationLatitude
-                        </th>
-                        <th>
-                            locationLongitude
-                        </th>
-                        <th>
-                            locationAccuracyMeters
-                        </th>
-                        <th>
-                            locationFormattedAddress
-                        </th>
-                    </tr>
-                    <tr ng-repeat="room in Rooms">
+                <table id="roomTable" class="table table-responsive table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                Name
+                            </th>
+                            <th>
+                                CreatedById
+                            </th>
+                            <th>
+                                Radius
+                            </th>
+                            <th>
+                                Tag
+                            </th>
+                            <th>
+                                HasPassword
+                            </th>
+                            <th>
+                                EncryptedPassword
+                            </th>
+                            <th>
+                                HasChat
+                            </th>
+                            <th>
+                                UsersCanAsk
+                            </th>
+                            <th>
+                                AllowAnonymous
+                            </th>
+                            <th>
+                                UseLocation
+                            </th>
+                            <th>
+                                locationTimestamp
+                            </th>
+                            <th>
+                                locationLatitude
+                            </th>
+                            <th>
+                                locationLongitude
+                            </th>
+                            <th>
+                                locationAccuracyMeters
+                            </th>
+                            <th>
+                                locationFormattedAddress
+                            </th>
+                        </tr>
+                    </thead>
+                    <tr style="cursor: pointer" ng-repeat="room in Rooms" ng-click="changeViewToRoom(room._id)">
                         <td>{{room.Name}}</td>
                         <td>{{room.CreatedById}}</td>
                         <td>{{room.Radius}}</td>
