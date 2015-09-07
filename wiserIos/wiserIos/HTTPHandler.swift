@@ -10,8 +10,8 @@ import Foundation
 
 class HttpHandler {
     
-    static let mainUrl = "http://192.168.225.153:1337"
-    //static let mainUrl = "http://wisrrestapi.aceipse.dk/"
+    //static let mainUrl = "http://192.168.225.153:1337"
+    static let mainUrl = "http://wisrrestapi.aceipse.dk/"
     
     //http://stackoverflow.com/questions/25341858/perform-post-request-in-ios-swift
     

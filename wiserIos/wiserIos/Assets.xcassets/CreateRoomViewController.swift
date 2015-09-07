@@ -8,8 +8,8 @@
 
 import UIKit
 
-class CreateRoomViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-
+class CreateRoomViewController: UITableViewController {
+    
     //Properties
     var roomNameInputCell: TextInputCell? = nil
     var roomTagInputCell: TextInputCell? = nil
@@ -28,15 +28,15 @@ class CreateRoomViewController: UIViewController, UITableViewDelegate, UITableVi
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: Selector("addRoomButtonPressed:"))
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 8
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         if indexPath.row == 0 {
             let cellIdentifier = "TextInputCell"
@@ -53,7 +53,7 @@ class CreateRoomViewController: UIViewController, UITableViewDelegate, UITableVi
             roomTagInputCell = cell
             return cell
         }
-        
+            
         else if indexPath.row == 2 {
             let cellIdentifier = "BooleanInputCell"
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! BooleanInputCell
@@ -66,7 +66,7 @@ class CreateRoomViewController: UIViewController, UITableViewDelegate, UITableVi
             
             return cell
         }
-        
+            
         else if indexPath.row == 3 {
             
             let cellIdentifier = "TextInputCell"
@@ -95,7 +95,7 @@ class CreateRoomViewController: UIViewController, UITableViewDelegate, UITableVi
             cell.label.text = "Room radius"
             radiusInputCell = cell
             return cell
-
+            
         }
             
         else if indexPath.row == 5 {
@@ -105,7 +105,7 @@ class CreateRoomViewController: UIViewController, UITableViewDelegate, UITableVi
             chatInputCell = cell
             return cell
         }
-        
+            
         else if indexPath.row == 6 {
             let cellIdentifier = "BooleanInputCell"
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! BooleanInputCell
@@ -113,7 +113,7 @@ class CreateRoomViewController: UIViewController, UITableViewDelegate, UITableVi
             anonymousInputCell = cell
             return cell
         }
-        
+            
         else if indexPath.row == 7 {
             let cellIdentifier = "BooleanInputCell"
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! BooleanInputCell
