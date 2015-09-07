@@ -323,7 +323,50 @@ class JSONSerializerTests: XCTestCase {
     }
     
     func test_inheritance_included() {
-        XCTAssert(false)
+        //Arrange
+        class Animal {
+            var weight: Double = 2.5
+            var age: Int = 2
+            var name: String? = "An animal"
+        }
+        class Cat: Animal {
+            var fur: Bool = true
+        }
+        
+        
+        let m = Cat()
+        
+        //Act
+        let json = JSONSerializer.toJson(m)
+        
+        //Assert
+        let expected = "{\"fur\": true, \"weight\": 2.5, \"age\": 2, \"name\": \"An animal\"}"
+        stringCompareHelper(json, expected)
+    }
+    
+    func test_moreInheritance_included() {
+        //Arrange
+        class Object {
+            var id: Int = 182371823
+        }
+        class Animal: Object {
+            var weight: Double = 2.5
+            var age: Int = 2
+            var name: String? = "An animal"
+        }
+        class Cat: Animal {
+            var fur: Bool = true
+        }
+        
+        
+        let m = Cat()
+        
+        //Act
+        let json = JSONSerializer.toJson(m)
+        
+        //Assert
+        let expected = "{\"fur\": true, \"weight\": 2.5, \"age\": 2, \"name\": \"An animal\", \"id\": 182371823}"
+        stringCompareHelper(json, expected)
     }
 
     

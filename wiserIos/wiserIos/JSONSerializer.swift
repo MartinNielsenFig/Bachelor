@@ -40,11 +40,22 @@ public class JSONSerializer {
     public static func toJson(object: Any) -> String {
         var json = "{"
         let mirror = Mirror(reflecting: object)
+        
+        var children = [(label: String?, value: Any)]()
         let mirrorChildrenCollection = AnyRandomAccessCollection(mirror.children)!
-        let size = mirror.children.count
+        children += mirrorChildrenCollection
+        
+        var currentMirror: Mirror = mirror
+        while let superclassChildren = currentMirror.superclassMirror()?.children {
+            let randomCollection = AnyRandomAccessCollection(superclassChildren)!
+            children += randomCollection
+            currentMirror = currentMirror.superclassMirror()!
+        }
+
+        let size = children.count
         
         var index = 0
-        for (optionalPropertyName, value) in mirrorChildrenCollection {
+        for (optionalPropertyName, value) in children {
             
             let propertyName = optionalPropertyName!
             let property = Mirror(reflecting: value)
