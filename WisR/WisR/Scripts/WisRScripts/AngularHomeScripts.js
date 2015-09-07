@@ -17,7 +17,7 @@ app.filter('roomsNear', function () {
               
                 var temp = (getDistanceFromLatLonInKm(room.Location.Latitude, room.Location.Longitude, window.currentLocation.coords.latitude, window.currentLocation.coords.longitude)*1000);
 
-                if (temp <= (room.Radius + room.Location.AccuracyMeters)) {
+                if (temp <= (room.Radius + room.Location.AccuracyMeters + window.currentLocation.coords.accuracy)) {
                     filtered.push(room);
                 }
             }
@@ -36,7 +36,7 @@ app.controller("HomeController", ['$scope', '$http', '$location', '$window', 'co
     };
     getRooms();
     $scope.RoomName = "";
-    $scope.Radius = 2;
+    $scope.Radius = 50;
     $scope.UniqueTag = "";
     $scope.Password = "";
     $scope.HasChat = true;
