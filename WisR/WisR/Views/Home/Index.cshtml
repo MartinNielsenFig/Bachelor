@@ -85,9 +85,10 @@
                         <td>{{room.Location.FormattedAddress}}</td>
                     </tr>
                 </table>
+                <input ng-model="uniqueRoomTag" type="text" placeholder="Enter unique key"/>
                 <div id="buttonsDiv" class="text-center">
-                    @Html.ActionLink("Connect", "Index", new { Controller = "Room" }, new { @class = "btn btn-primary" })
-                    <button id="createRoomButton" class="btn btn-primary" disabled onclick="$('#myModalCreate').modal('toggle')">Create</button>
+                    <button id="connectRoomButton" class="btn btn-primary" ng-click="connectWithUniqueTag()">Connect</button>
+                    <button id="createRoomButton" class="btn btn-primary" onclick="$('#myModalCreate').modal('toggle')">Create</button>
                 </div>
             </div>
 
