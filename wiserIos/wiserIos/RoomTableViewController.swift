@@ -11,11 +11,7 @@ import UIKit
 class RoomTableViewController: UITableViewController {
 
     //Properties
-    let r1 = Room()
-    let r2 = Room()
-    
-    var rooms = [Room(), Room()]
-    
+    var rooms = [Room]()
     
     //Lifecycle
     override func viewDidLoad() {
@@ -24,9 +20,10 @@ class RoomTableViewController: UITableViewController {
         //var rooms = [Room]()
         HttpHandler.getRooms(
             {
-                rooms in
+                newRooms in
                 print("callback completed: ")
-                print(rooms)
+                self.rooms += newRooms
+                self.tableView.reloadData()
             }
         )
     }
@@ -57,7 +54,7 @@ class RoomTableViewController: UITableViewController {
         let room = rooms[indexPath.row]
         
         cell.textLabel?.text = room.Tag
-        cell.detailTextLabel?.text = "\(room.Radius) meters away"
+        cell.detailTextLabel?.text = "\(room.Radius!) meters away"
         
         return cell
     }
