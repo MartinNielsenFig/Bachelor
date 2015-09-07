@@ -36,11 +36,10 @@ class HttpHandler {
                 
                 //init rooms here
                 var rooms = [Room]()
+                let	roomsJson = JSONSerializer.toArray(dataString)
                 
-                let	t = JSONSerializer.toArray(dataString)
-                
-                for val in t! {
-                    rooms.append(Room(jsonDictionary: val as! NSDictionary))
+                for room in roomsJson! {
+                    rooms.append(Room(jsonDictionary: room as! NSDictionary))
                 }
                 
                 completionHandler(rooms: &rooms)

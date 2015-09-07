@@ -62,7 +62,7 @@
                                         $http.post(configs.restHostName + '/User/CreateUser', { User: JSON.stringify(response.data) }).
                                             then(function (response) {
                                                 window.userId = response.data;
-                                                $('#createRoomButton').disabled = false;
+                                                $('#createRoomButton').prop("disabled",false);
                                             });
                                     });
                                 }]);
@@ -73,7 +73,18 @@
                     }
                     else
                     {
+
                         <li class="pull-right">
+                            <script>
+                                $(document).ready(function() {
+                                    $("#createRoomButton").popover({placement: 'bottom', html: true });
+                                    $("#createRoomButtonDiv").hover(function () {
+                                        if ( $('#createRoomButton').prop("disabled")) {
+                                            $("#createRoomButton").popover('toggle');
+                                        }
+                                    });});
+                                
+                            </script>
                             @Html.ActionLink("Log in", "LogIn", "Login")
                         </li>
                     }

@@ -21,55 +21,55 @@
                 </div>
                 <table id="roomTable" class="table table-responsive table-bordered table-hover">
                     <thead>
-                        <tr>
-                            <th>
-                                Name
-                            </th>
-                            <th>
-                                CreatedById
-                            </th>
-                            <th>
-                                Radius
-                            </th>
-                            <th>
-                                Tag
-                            </th>
-                            <th>
-                                HasPassword
-                            </th>
-                            <th>
-                                EncryptedPassword
-                            </th>
-                            <th>
-                                HasChat
-                            </th>
-                            <th>
-                                UsersCanAsk
-                            </th>
-                            <th>
-                                AllowAnonymous
-                            </th>
-                            <th>
-                                UseLocation
-                            </th>
-                            <th>
-                                locationTimestamp
-                            </th>
-                            <th>
-                                locationLatitude
-                            </th>
-                            <th>
-                                locationLongitude
-                            </th>
-                            <th>
-                                locationAccuracyMeters
-                            </th>
-                            <th>
-                                locationFormattedAddress
-                            </th>
-                        </tr>
+                    <tr>
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            CreatedById
+                        </th>
+                        <th>
+                            Radius
+                        </th>
+                        <th>
+                            Tag
+                        </th>
+                        <th>
+                            HasPassword
+                        </th>
+                        <th>
+                            EncryptedPassword
+                        </th>
+                        <th>
+                            HasChat
+                        </th>
+                        <th>
+                            UsersCanAsk
+                        </th>
+                        <th>
+                            AllowAnonymous
+                        </th>
+                        <th>
+                            UseLocation
+                        </th>
+                        <th>
+                            locationTimestamp
+                        </th>
+                        <th>
+                            locationLatitude
+                        </th>
+                        <th>
+                            locationLongitude
+                        </th>
+                        <th>
+                            locationAccuracyMeters
+                        </th>
+                        <th>
+                            locationFormattedAddress
+                        </th>
+                    </tr>
                     </thead>
-                    <tr style="cursor: pointer" ng-repeat="room in Rooms" ng-click="changeViewToRoom(room._id)">
+                    <tr style="cursor: pointer" ng-repeat="room in Rooms| roomsNear" ng-click="changeViewToRoom(room._id)">
                         <td>{{room.Name}}</td>
                         <td>{{room.CreatedById}}</td>
                         <td>{{room.Radius}}</td>
@@ -88,9 +88,13 @@
                     </tr>
                 </table>
                 <input ng-model="uniqueRoomTag" type="text" placeholder="Enter unique key"/>
-                <div id="buttonsDiv" class="text-center">
-                    <button id="connectRoomButton" class="btn btn-primary" ng-click="connectWithUniqueTag()">Connect</button>
-                    <button id="createRoomButton" class="btn btn-primary" onclick="$('#myModalCreate').modal('toggle')">Create</button>
+                <div id="buttonsDiv" class="text-center row">
+                    <div class="left col-md-4">
+                        @Html.ActionLink("Connect", "Index", new {Controller = "Room"}, new {@class = "btn btn-primary"})
+                    </div>
+                    <div id="createRoomButtonDiv" class="left col-md-4">
+                        <button id="createRoomButton" data-content="Log in to enable" rel="popover" class="btn btn-primary" disabled onclick="$('#myModalCreate').modal('toggle')">Create</button>
+                    </div>
                 </div>
             </div>
 
@@ -113,7 +117,7 @@
                         <label class="col-md-6">Password</label> <input ng-model="Password" class="col-md-6" type="password" />
                     </div>
                     <div class="row">
-                        <label class="col-md-6">Radius</label> <input ng-model="Radius" class="col-md-6" type="range" max="3" min="1" />
+                        <label class="col-md-6">Radius</label> <input ng-model="Radius" class="col-md-6" type="range" max="200" min="0" />
                     </div>
                     <div class="row">
                         <label class="col-md-6">Use location</label> <input ng-model="UseLocation" class="col-md-6" type="checkbox" />
