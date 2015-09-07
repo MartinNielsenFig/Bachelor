@@ -5,7 +5,7 @@
 <head>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGUkernNPkypdfcFhlIOs5Bt-8c5MUPYo">
     </script>
-    <meta charset="utf-8"/>
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
@@ -49,7 +49,7 @@
                         <li class="pull-right">
                             @Html.ActionLink("Log out", "Logout", "Login")
                             <script>
-                               
+
                                 app.controller("UserController", ['$scope', '$http', '$location', '$window', 'configs', function ($scope, $http, $location, $window, configs) {
                                     $http.post(configs.baseHostName+'/Home/toJsonUser', {
                                         facebookId: @result.id,
@@ -82,8 +82,9 @@
                                         if ( $('#createRoomButton').prop("disabled")) {
                                             $("#createRoomButton").popover('toggle');
                                         }
-                                    });});
-                                
+                                    });
+                                });
+
                             </script>
                             @Html.ActionLink("Log in", "LogIn", "Login")
                         </li>
