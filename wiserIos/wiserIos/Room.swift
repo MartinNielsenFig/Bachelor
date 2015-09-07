@@ -21,7 +21,7 @@ class Room {
     var HasChat: Bool = true
     var UsersCanAsk: Bool = false
     var AllowAnonymous: Bool = true
-    var Chatlog: [ChatMessage]?
+    var UseLocation: Bool = true
     
     
     convenience init(jsonDictionary: NSDictionary) {

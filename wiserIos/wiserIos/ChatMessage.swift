@@ -9,7 +9,9 @@
 import Foundation
 
 class ChatMessage {
+    var _id: String?
     var ByUserId: String = ""
+    var RoomId: String = ""
     var Value: String = ""
-    var Date: String = ""
+    var Timestamp: String = ""
 }
