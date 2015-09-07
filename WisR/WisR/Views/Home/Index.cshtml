@@ -67,7 +67,7 @@
                             locationFormattedAddress
                         </th>
                     </tr>
-                    <tr ng-repeat="room in Rooms">
+                    <tr ng-repeat="room in Rooms| roomsNear">
                         <td>{{room.Name}}</td>
                         <td>{{room.CreatedById}}</td>
                         <td>{{room.Radius}}</td>
@@ -85,9 +85,13 @@
                         <td>{{room.Location.FormattedAddress}}</td>
                     </tr>
                 </table>
-                <div id="buttonsDiv" class="text-center">
-                    @Html.ActionLink("Connect", "Index", new { Controller = "Room" }, new { @class = "btn btn-primary" })
-                    <button id="createRoomButton" class="btn btn-primary" disabled onclick="$('#myModalCreate').modal('toggle')">Create</button>
+                <div id="buttonsDiv" class="row" >
+                    <div class="left col-md-4">
+                        @Html.ActionLink("Connect", "Index", new { Controller = "Room" }, new { @class = "btn btn-primary" })
+                    </div>
+                    <div id="createRoomButtonDiv" class="left col-md-4">
+                        <button id="createRoomButton" data-content="Log in to enable" rel="popover" class="btn btn-primary" disabled onclick="$('#myModalCreate').modal('toggle')">Create</button>
+                    </div>
                 </div>
             </div>
 
@@ -110,7 +114,7 @@
                         <label class="col-md-6">Password</label> <input ng-model="Password" class="col-md-6" type="password" />
                     </div>
                     <div class="row">
-                        <label class="col-md-6">Radius</label> <input ng-model="Radius" class="col-md-6" type="range" max="3" min="1" />
+                        <label class="col-md-6">Radius</label> <input ng-model="Radius" class="col-md-6" type="range" max="200" min="0" />
                     </div>
                     <div class="row">
                         <label class="col-md-6">Use location</label> <input ng-model="UseLocation" class="col-md-6" type="checkbox" />
