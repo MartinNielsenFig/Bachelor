@@ -17,7 +17,7 @@ app.filter('roomsNear', function () {
               
                 var temp = (getDistanceFromLatLonInKm(room.Location.Latitude, room.Location.Longitude, window.currentLocation.coords.latitude, window.currentLocation.coords.longitude)*1000);
 
-                if (temp <= (room.Radius+room.locationAccuracyMeters)) {
+                if (temp <= (room.Radius + room.Location.AccuracyMeters)) {
                     filtered.push(room);
                 }
             }
