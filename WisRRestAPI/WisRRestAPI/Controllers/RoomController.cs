@@ -54,6 +54,26 @@ namespace WisRRestAPI.Controllers {
 
             return item.ToJson();
         }
+        [System.Web.Mvc.HttpPost]
+        public string GetByUniqueTag(string tag)
+        {
+            Room item;
+            try
+            {
+                item= _rr.GetRoomByTag(tag).Result;
+            }
+            catch (Exception e)
+            {
+                return e.Message;
+            }
+            
+            if (item == null)
+            {
+                return "Not found";
+            }
+
+            return item.ToJson();
+        }
         [System.Web.Mvc.HttpDelete]
         public string DeleteRoom(string id) {
             var result = _rr.RemoveRoom(id).Result;

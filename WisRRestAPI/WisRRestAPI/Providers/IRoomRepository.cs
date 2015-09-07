@@ -12,6 +12,7 @@ namespace WisRRestAPI.DomainModel
     {
         Task<List<Room>> GetAllRooms();
         Task<Room> GetRoom(string id);
+        Task<Room> GetRoomByTag(string tag);
         string AddRoom(Room item);
         Task<DeleteResult> RemoveRoom(string id);
         Task<Room> UpdateRoom(string id, Room item);

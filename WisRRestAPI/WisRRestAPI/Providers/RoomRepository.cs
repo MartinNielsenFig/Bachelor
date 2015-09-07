@@ -29,6 +29,12 @@ namespace WisRRestAPI.DomainModel
             return room;
         }
 
+        public Task<Room> GetRoomByTag(string tag)
+        {
+            var room = _database.GetCollection<Room>("room").Find(x => x.Tag == tag).SingleAsync();
+            return room;
+        }
+
         public string AddRoom(Room item)
         {
             _database.GetCollection<Room>("room").InsertOneAsync(item).Wait();

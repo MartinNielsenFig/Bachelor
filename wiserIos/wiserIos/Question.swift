@@ -19,6 +19,8 @@ class Question {
     var QuestionText: String
     var ResponseOptions: [ResponseOption]?
     var Result: [Answer]?
+    var CreationTimestamp: String?
+    var ExpireTimestamp: String?
     
     init(questionText: String, createdById: String) {
         self.QuestionText = questionText

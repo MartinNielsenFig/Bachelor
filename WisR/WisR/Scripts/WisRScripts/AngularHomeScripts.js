@@ -49,6 +49,19 @@ app.controller("HomeController", ['$scope', '$http', '$location', '$window', 'co
         var url = $("#RedirectTo").val() + "?RoomId=" + $scope.RoomId;
         location.href = url;
     }
+    $scope.connectWithUniqueTag=function() {
+        $http.post(configs.restHostName + '/Room/GetByUniqueTag', { tag: $scope.uniqueRoomTag }).then(function(response) {
+            //TODO verification of response
+            if (response.data._id != undefined) {
+                changeViewToRoom(response.data._id);
+            } else {
+                alert("No room with the tag: "+$scope.uniqueRoomTag);
+            }
+                
+            
+            
+        });
+    }
 
     $scope.postRoom = function () {
         //Make get request for json object conversion
