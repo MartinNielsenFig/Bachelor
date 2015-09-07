@@ -10,7 +10,7 @@ import Foundation
 
 class HttpHandler {
     
-    static let mainUrl = "http://192.168.225.151:1337"
+    static let mainUrl = "http://192.168.225.153:1337"
     //static let mainUrl = "http://wisrrestapi.aceipse.dk/"
     
     //http://stackoverflow.com/questions/25341858/perform-post-request-in-ios-swift
@@ -20,7 +20,6 @@ class HttpHandler {
         let url = NSURL(string: mainUrl)!.URLByAppendingPathComponent("Room/GetAll")
         let request = NSMutableURLRequest(URL: url)
         request.HTTPMethod = "GET"
-        //request.setValue("text/plain", forHTTPHeaderField: "Content-Type")
         
         let task = session.dataTaskWithRequest(request) {
             data, response, error in
@@ -29,6 +28,7 @@ class HttpHandler {
             print("data \(data)")
             print("reponse \(response)")
             print("error \(error)")
+            
             if data != nil {
                 let nsDataString = NSString(data: data!, encoding: NSUTF8StringEncoding)
                 let dataString = nsDataString as! String
@@ -53,7 +53,6 @@ class HttpHandler {
         let url = NSURL(string: mainUrl)!.URLByAppendingPathComponent("Room/CreateRoom")
         let request = NSMutableURLRequest(URL: url)
         request.HTTPMethod = "POST"
-        //request.setValue("text/plain", forHTTPHeaderField: "Content-Type")
         
         let body = "room=\(room)"
         request.HTTPBody = body.dataUsingEncoding(NSUTF8StringEncoding)
@@ -79,7 +78,6 @@ class HttpHandler {
         let url = NSURL(string: mainUrl)!.URLByAppendingPathComponent("Question/CreateQuestion")
         let request = NSMutableURLRequest(URL: url)
         request.HTTPMethod = "POST"
-        //request.setValue("text/plain", forHTTPHeaderField: "Content-Type")
         
         let body = "roomId=\(room)&question=\(question)&type=\(type)"
         request.HTTPBody = body.dataUsingEncoding(NSUTF8StringEncoding)
