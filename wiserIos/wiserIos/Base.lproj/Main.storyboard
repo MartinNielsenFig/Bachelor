@@ -250,6 +250,49 @@
                                             <outlet property="uiSwitch" destination="C4E-uw-sqG" id="gh0-WG-UO1"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TextArrowInput" id="zGH-HC-UNh" customClass="BooleanInputCell" customModule="wiserIos" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="212" width="600" height="40"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zGH-HC-UNh" id="Qwd-oi-Igf">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="39.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GtA-Pt-xYQ">
+                                                    <rect key="frame" x="8" y="5" width="584" height="34"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="1" placeholderIntrinsicHeight="31" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mVB-3K-ZxE">
+                                                            <rect key="frame" x="0.0" y="0.0" width="535" height="34"/>
+                                                            <animations/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uu6-V3-YPw">
+                                                            <rect key="frame" x="535" y="0.0" width="49" height="34"/>
+                                                            <animations/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="49" id="SDf-W0-jhY"/>
+                                                            </constraints>
+                                                        </button>
+                                                    </subviews>
+                                                    <animations/>
+                                                    <constraints>
+                                                        <constraint firstItem="mVB-3K-ZxE" firstAttribute="trailing" secondItem="Uu6-V3-YPw" secondAttribute="leading" id="6N1-GD-lkN"/>
+                                                    </constraints>
+                                                </stackView>
+                                            </subviews>
+                                            <animations/>
+                                            <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="GtA-Pt-xYQ" secondAttribute="trailing" id="aVs-DS-SqF"/>
+                                                <constraint firstItem="GtA-Pt-xYQ" firstAttribute="leading" secondItem="Qwd-oi-Igf" secondAttribute="leadingMargin" id="gcP-nH-Y4l"/>
+                                                <constraint firstItem="GtA-Pt-xYQ" firstAttribute="centerY" secondItem="Qwd-oi-Igf" secondAttribute="centerY" id="qbM-Pp-eEU"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <animations/>
+                                        <connections>
+                                            <outlet property="label" destination="mVB-3K-ZxE" id="FJ8-0G-EYg"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="DBY-44-ewh" id="rhr-0V-Ndi"/>

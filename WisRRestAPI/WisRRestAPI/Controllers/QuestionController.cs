@@ -30,7 +30,7 @@ namespace WisRRestAPI.Controllers {
         public string GetAll() {
             var questions = _qr.GetAllQuestions();
 
-            return _jsSerializer.Serialize(questions.Result);
+            return questions.Result.ToJson();
         }
 
 
@@ -38,7 +38,7 @@ namespace WisRRestAPI.Controllers {
         public string CreateQuestion(string question, string type) {
             try {
                 _rabbitHandler.publishString("CreateQuestion", question);
-            } catch (Exception) {
+            } catch (Exception e) {
                 return "Could not publish to rabbitMQ";
             }
 
@@ -60,8 +60,9 @@ namespace WisRRestAPI.Controllers {
             }
             if (q.Id != null) {
                 return "New question should have id of null";
-            } else {
-                q.Id = ObjectId.GenerateNewId();
+            } else
+            {
+                q.Id = ObjectId.GenerateNewId(DateTime.Now).ToString();
                 _qr.AddQuestionObject(b);
                 return "Question saved with id: " + q.Id;
             }
@@ -74,7 +75,7 @@ namespace WisRRestAPI.Controllers {
                 return "Not found";
             }
 
-            return _jsSerializer.Serialize(item);
+            return item.ToJson();
         }
         [System.Web.Mvc.HttpDelete]
         public string DeleteQuestion(string id) {

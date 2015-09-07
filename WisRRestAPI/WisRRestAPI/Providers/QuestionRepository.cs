@@ -24,7 +24,7 @@ namespace WisRRestAPI.DomainModel
 
         public Task<Question> GetQuestion(string id)
         {
-            var question = _database.GetCollection<Question>("question").Find(x => x.Id == ObjectId.Parse(id)).SingleAsync();
+            var question = _database.GetCollection<Question>("question").Find(x => x.Id ==id).SingleAsync();
             return question;
         }
 
@@ -41,14 +41,14 @@ namespace WisRRestAPI.DomainModel
 
         public Task<DeleteResult> RemoveQuestion(string id)
         {
-            var task = _database.GetCollection<Question>("question").DeleteOneAsync(x => x.Id == ObjectId.Parse(id));
+            var task = _database.GetCollection<Question>("question").DeleteOneAsync(x => x.Id == id);
             return task;
 
         }
 
         public Task<Question> UpdateQuestion(string id, Question item)
         {
-            var task = _database.GetCollection<Question>("question").FindOneAndReplaceAsync(x => x.Id == ObjectId.Parse(id), item);
+            var task = _database.GetCollection<Question>("question").FindOneAndReplaceAsync(x => x.Id == id, item);
             return task;
         }
     }

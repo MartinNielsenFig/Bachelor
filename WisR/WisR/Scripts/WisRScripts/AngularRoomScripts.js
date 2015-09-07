@@ -1,12 +1,23 @@
 ﻿app.controller("RoomController", [
     '$scope', '$http', 'configs', function($scope, $http, configs) {
 
+        //Get all questions
         var getQuestions = function() {
             $http.get(configs.restHostName + '/Question/GetAll').then(function(response) {
                 $scope.Questions = response.data;
             });
         };
         getQuestions();
+
+        //Get information about this specific room
+        //Get all questions
+        var getRoom = function () {
+            $http.post(configs.restHostName + '/Room/GetById',{id:MyRoomIdFromViewBag}).then(function (response) {
+                $scope.CurrentRoom = response.data;
+            });
+        };
+        getRoom();
+
         $scope.SpecificQuestionShown = false;
         $scope.QuestionText = "Enter question";
         $scope.QuestionType = "TextualQuestion";
@@ -26,7 +37,7 @@
         //Function for creating a question
         $scope.postQuestion = function() {
             //Make get request for json object conversion
-            $http.post('/Room/toJsonQuestion', { CreatedBy: null, RoomId: MyRoomIdFromViewBag, Downvotes: 0, Image: $scope.Picture, Upvotes: 0, QuestionText: $scope.QuestionText }).
+            $http.post('/Room/toJsonQuestion', { CreatedBy: window.userId, RoomId: MyRoomIdFromViewBag, Downvotes: 0, Image: $scope.Picture, Upvotes: 0, QuestionText: $scope.QuestionText }).
                 then(function(response) {
                     //Use response to send to REST API
                     $http.post(configs.restHostName + '/Question/CreateQuestion', { question: JSON.stringify(response.data), type: $scope.QuestionType });

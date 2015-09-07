@@ -13,8 +13,8 @@ namespace WisR.DomainModels
             Location = new Coordinate();
             ChatLog = new List<ChatMessage>();
         }
-        public ObjectId Id { get; set; }
-        public string RoomId { get; set; }
+        [BsonId]
+        public string Id { get; set; }
         public string Name { get; set; }
         public string CreatedById { get; set; }
         public Coordinate Location { get; set; }

@@ -23,7 +23,7 @@ namespace WisR.Controllers
         public string toJsonQuestion(string CreatedBy,string RoomId, int Downvotes, string Image, int Upvotes, string QuestionText)
         {
             var question = new TextualQuestion();
-            question.CreatedById = "test";
+            question.CreatedById = CreatedBy;
             question.RoomId = RoomId;
             question.Downvotes = Downvotes;
             question.Img = Image;
@@ -41,7 +41,7 @@ namespace WisR.Controllers
             chatMessage.RoomId = roomId;
             chatMessage.Value = text;
             chatMessage.Timestamp = (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds.ToString();
-            return new JavaScriptSerializer().Serialize(chatMessage);
+            return chatMessage.ToJson();
         }
     }
 
