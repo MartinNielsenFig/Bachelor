@@ -87,7 +87,8 @@
                         <td>{{room.Location.FormattedAddress}}</td>
                     </tr>
                 </table>
-                <input ng-model="uniqueRoomTag" type="text" placeholder="Enter unique key"/>
+                <form ng-submit="connectWithUniqueTag()"><input ng-model="uniqueRoomTag" type="text" placeholder="Enter unique key" /></form>
+             
                 <div id="buttonsDiv" class="text-center row">
                     <div class="left col-md-4">
                         <button id="connectRoomButton" class="btn btn-primary" ng-click="connectWithUniqueTag()">Connect</button>
