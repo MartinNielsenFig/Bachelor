@@ -17,5 +17,7 @@ namespace WisR.DomainModels
         public abstract string QuestionText { get; set; }
         public abstract List<ResponseOption> ResponseOptions { get; set; }
         public abstract List<Answer> Result { get; set; }
+        public abstract string CreationTimestamp { get; set; }
+        public abstract string ExpireTimestamp { get; set; }
     }
 }
