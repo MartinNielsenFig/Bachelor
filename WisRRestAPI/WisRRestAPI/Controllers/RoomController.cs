@@ -57,7 +57,16 @@ namespace WisRRestAPI.Controllers {
         [System.Web.Mvc.HttpPost]
         public string GetByUniqueTag(string tag)
         {
-            var item = _rr.GetRoomByTag(tag).Result;
+            Room item;
+            try
+            {
+                item= _rr.GetRoomByTag(tag).Result;
+            }
+            catch (Exception e)
+            {
+                return e.Message;
+            }
+            
             if (item == null)
             {
                 return "Not found";

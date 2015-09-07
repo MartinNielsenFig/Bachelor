@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using Microsoft.Ajax.Utilities;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using Newtonsoft.Json;
@@ -46,7 +47,7 @@ namespace WisR.Controllers
             room.Location.FormattedAddress = locationFormattedAddress;
             room.Radius = radius;
             room.Tag = tag;
-            if (password != null)
+            if (!password.IsNullOrWhiteSpace())
             {
                 room.EncryptedPassword = password;
                 room.HasPassword = true;
