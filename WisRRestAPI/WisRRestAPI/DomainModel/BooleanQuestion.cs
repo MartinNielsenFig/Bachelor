@@ -15,6 +15,8 @@ namespace WisR.DomainModels
         public override string QuestionText { get; set; } = "much bool";
         public override List<ResponseOption> ResponseOptions { get; set; }
         public override List<Answer> Result { get; set; }
+        public override string CreationTimestamp { get; set; }
+        public override string ExpireTimestamp { get; set; }
         public override int Upvotes { get; set; }
 
         public string ManyBool { get; set; } = "good tomas";
