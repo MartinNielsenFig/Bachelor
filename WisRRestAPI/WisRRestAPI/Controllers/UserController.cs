@@ -31,10 +31,11 @@ namespace WisRRestAPI.Controllers
         {
             var userToAdd = BsonSerializer.Deserialize<User>(User);
             //Add more for other systems than facebook
-            var user = _ur.GetAllUsers().Result.Where(x => x.FacebookId == userToAdd.FacebookId);
+            var  user = _ur.GetAllUsers().Result.Where(x => x.FacebookId == userToAdd.FacebookId);
             if (user.Count() == 0)
             {
-                return _ur.AddUser(BsonSerializer.Deserialize<User>(User));
+                userToAdd.Id = ObjectId.GenerateNewId(DateTime.Now).ToString();
+                return _ur.AddUser(userToAdd);
             }
             else
             {

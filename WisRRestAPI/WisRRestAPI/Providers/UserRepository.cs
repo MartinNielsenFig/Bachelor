@@ -32,7 +32,7 @@ namespace WisRRestAPI.DomainModel
         public string AddUser(User item)
         {
             _database.GetCollection<User>("User").InsertOneAsync(item).Wait();
-            return item.Id.ToString();
+            return item.Id;
         }
 
         public Task<DeleteResult> RemoveUser(string id)
