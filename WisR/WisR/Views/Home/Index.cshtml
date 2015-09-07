@@ -90,7 +90,7 @@
                 <input ng-model="uniqueRoomTag" type="text" placeholder="Enter unique key"/>
                 <div id="buttonsDiv" class="text-center row">
                     <div class="left col-md-4">
-                        @Html.ActionLink("Connect", "Index", new {Controller = "Room"}, new {@class = "btn btn-primary"})
+                        <button id="connectRoomButton" class="btn btn-primary" ng-click="connectWithUniqueTag()">Connect</button>
                     </div>
                     <div id="createRoomButtonDiv" class="left col-md-4">
                         <button id="createRoomButton" data-content="Log in to enable" rel="popover" class="btn btn-primary" disabled onclick="$('#myModalCreate').modal('toggle')">Create</button>
