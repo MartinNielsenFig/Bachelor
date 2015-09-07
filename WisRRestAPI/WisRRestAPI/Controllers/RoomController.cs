@@ -7,36 +7,38 @@ using System.Web;
 using System.Web.Http.Cors;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
 using WisR.DomainModels;
 using WisRRestAPI.DomainModel;
 
 namespace WisRRestAPI.Controllers {
     public class RoomController : Controller {
         private readonly IRoomRepository _rr;
-        private readonly JavaScriptSerializer _jsSerializer;
         public RoomController(IRoomRepository rr) {
             _rr = rr;
-            _jsSerializer = new JavaScriptSerializer();
         }
 
         [System.Web.Mvc.HttpGet]
         public string GetAll() {
             var Rooms = _rr.GetAllRooms();
-            return _jsSerializer.Serialize(Rooms.Result);
+            return Rooms.Result.ToJson();
         }
         [System.Web.Mvc.HttpPost]
         public string CreateRoom(string Room) {
             Room room;
             try {
-                room = _jsSerializer.Deserialize<Room>(Room);
-            } catch (Exception) {
+                room = BsonSerializer.Deserialize<Room>(Room);
+            } catch (Exception e) {
                 return "Could not deserialize room with json: " + Room;
             }
+            //assign ID to room
+            room.Id = ObjectId.GenerateNewId(DateTime.Now).ToString();
 
             string roomId;
             try {
                 roomId = _rr.AddRoom(room);
-            } catch (Exception) {
+            } catch (Exception e) {
                 return "Could not add room";
             }
 
@@ -50,7 +52,7 @@ namespace WisRRestAPI.Controllers {
                 return "Not found";
             }
 
-            return _jsSerializer.Serialize(item);
+            return item.ToJson();
         }
         [System.Web.Mvc.HttpDelete]
         public string DeleteRoom(string id) {

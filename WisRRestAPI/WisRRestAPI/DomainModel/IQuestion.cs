@@ -7,7 +7,8 @@ namespace WisR.DomainModels
     [BsonKnownTypes(typeof(BooleanQuestion), typeof(TextualQuestion))]
     public abstract class Question
     {
-        public abstract ObjectId? Id { get; set; }
+        [BsonId]
+        public abstract string Id { get; set; }
         public abstract string RoomId { get; set; }
         public abstract string CreatedById { get; set; }
         public abstract int Upvotes { get; set; }

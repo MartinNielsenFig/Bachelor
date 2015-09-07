@@ -55,7 +55,7 @@ namespace WisR.Controllers
             room.UsersCanAsk = userCanAsk;
             room.AllowAnonymous = allowAnonymous;
             room.UseLocation = useLocation;
-            return new JavaScriptSerializer().Serialize(room);
+            return room.ToJson();
         }
         public string toJsonUser(string encryptedPassword, string facebookId, string lDAPUserName, string displayName, string email)
         {
@@ -66,7 +66,7 @@ namespace WisR.Controllers
             user.Email = email;
             user.EncryptedPassword = encryptedPassword;
            
-            return new JavaScriptSerializer().Serialize(user);
+            return user.ToJson();
         }
     }
 }

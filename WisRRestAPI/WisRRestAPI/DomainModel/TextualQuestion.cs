@@ -6,7 +6,7 @@ namespace WisR.DomainModels
 {
     public class TextualQuestion : Question
     {
-        public override ObjectId? Id { get; set; }
+        public override string Id { get; set; }
         public override string RoomId { get; set; }
         public override string CreatedById { get; set; }
         public override int Downvotes { get; set; }

@@ -23,7 +23,7 @@ namespace WisRRestAPI.Providers
         public Task<ChatMessage> GetChatMessage(string id)
         {
             var chatMessage =
-                _database.GetCollection<ChatMessage>("chatmessage").Find(x => x.Id == ObjectId.Parse(id)).SingleAsync();
+                _database.GetCollection<ChatMessage>("chatmessage").Find(x => x.Id == id).SingleAsync();
             return chatMessage;
         }
 
@@ -35,13 +35,13 @@ namespace WisRRestAPI.Providers
 
         public Task<DeleteResult> RemoveChatMessage(string id)
         {
-            var task = _database.GetCollection<ChatMessage>("chatmessage").DeleteOneAsync(x => x.Id == ObjectId.Parse(id));
+            var task = _database.GetCollection<ChatMessage>("chatmessage").DeleteOneAsync(x => x.Id == id);
             return task;
         }
 
         public Task<ChatMessage> UpdateChatMessage(string id, ChatMessage item)
         {
-            var task = _database.GetCollection<ChatMessage>("chatmessage").FindOneAndReplaceAsync(x => x.Id == ObjectId.Parse(id), item);
+            var task = _database.GetCollection<ChatMessage>("chatmessage").FindOneAndReplaceAsync(x => x.Id == id, item);
             return task;
         }
     }

@@ -25,7 +25,7 @@ namespace WisRRestAPI.DomainModel
 
         public Task<User> GetUser(string id)
         {
-            var User = _database.GetCollection<User>("User").Find(x => x.Id == ObjectId.Parse(id)).SingleAsync();
+            var User = _database.GetCollection<User>("User").Find(x => x.Id == id).SingleAsync();
             return User;
         }
 
@@ -37,13 +37,13 @@ namespace WisRRestAPI.DomainModel
 
         public Task<DeleteResult> RemoveUser(string id)
         {
-            var task = _database.GetCollection<User>("User").DeleteOneAsync(x => x.Id == ObjectId.Parse(id));
+            var task = _database.GetCollection<User>("User").DeleteOneAsync(x => x.Id == id);
             return task;
         }
 
         public Task<User> UpdateUser(string id, User item)
         {
-            var task = _database.GetCollection<User>("user").FindOneAndReplaceAsync(x => x.Id == ObjectId.Parse(id), item);
+            var task = _database.GetCollection<User>("user").FindOneAndReplaceAsync(x => x.Id == id, item);
             return task;
         }
     }

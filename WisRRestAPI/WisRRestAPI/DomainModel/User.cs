@@ -11,11 +11,12 @@ namespace WisR.DomainModels
     {
         public User()
         {
-            ConnectedRoomIds = new List<ObjectId>();
+            ConnectedRoomIds = new List<string>();
         }
-        public ObjectId Id { get; set; }
+        [BsonId]
+        public string Id { get; set; }
         public string FacebookId { get; set; }
-        public List<ObjectId> ConnectedRoomIds { get; set; }
+        public List<string> ConnectedRoomIds { get; set; }
         public string LDAPUserName { get; set; }
         public string DisplayName { get; set; }
         public string Email { get; set; }

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
 using WisR.DomainModels;
 using WisRRestAPI.DomainModel;
 
@@ -12,33 +14,31 @@ namespace WisRRestAPI.Controllers
     public class UserController : Controller
     {
         private readonly IUserRepository _ur;
-        private readonly JavaScriptSerializer _jsSerializer;
         public UserController(IUserRepository ur)
         {
             _ur = ur;
-            _jsSerializer = new JavaScriptSerializer();
         }
 
         [System.Web.Mvc.HttpGet]
         public string GetAll()
         {
             var Users = _ur.GetAllUsers();
-            return _jsSerializer.Serialize(Users.Result);
+            return Users.Result.ToJson();
         }
 
         [System.Web.Mvc.HttpPost]
         public string CreateUser(string User)
         {
-            var userToAdd = _jsSerializer.Deserialize<User>(User);
+            var userToAdd = BsonSerializer.Deserialize<User>(User);
             //Add more for other systems than facebook
             var user = _ur.GetAllUsers().Result.Where(x => x.FacebookId == userToAdd.FacebookId);
             if (user.Count() == 0)
             {
-                return _ur.AddUser(_jsSerializer.Deserialize<User>(User));
+                return _ur.AddUser(BsonSerializer.Deserialize<User>(User));
             }
             else
             {
-                return user.First().Id.ToString();
+                return user.First().Id;
             }
             
         }
@@ -52,7 +52,7 @@ namespace WisRRestAPI.Controllers
                 return "Not found";
             }
 
-            return _jsSerializer.Serialize(item);
+            return item.ToJson();
         }
         [System.Web.Mvc.HttpDelete]
         public string DeleteUser(string id)
