@@ -12,26 +12,25 @@
                 <div id="roomText" class="text-center">
                     <h2><small>Rooms based on <a onClick="toggleLocation();" style="cursor: pointer">your location</a></small></h2>
                 </div>
-                <div ng-hide="roomsLoaded" class="container col-md-offset-5">
+                <div ng-hide="roomsLoaded" class="container text-center">
                   <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span><label id="loadingLabel" class="">Loading location...</label>
                 </div>
                 <div id="googlemaps" hidden>
                     <div id="address"></div>
                     <div id="accuracy"></div>
-                    <div id="map_canvas" style="height: 300px; border: 1px solid #000;"></div>
+                    <div id="map_canvas" style="height: 300px"></div>
                 </div>
-                <div style="height:300px;overflow:auto">
+                <div style="height:300px; overflow: auto">
                     <table id="roomTable" class="table table-responsive table-hover">
                         <tr class="col-md-12" style="cursor: pointer" ng-repeat="room in Rooms| roomsNear" ng-click="changeViewToRoom(room._id)">
-                            <td class="col-md-12">{{room.Name}}</td>
-                            <td ng-show="!room.HasPassword" class="col-md-4"></td>
-                            <td ng-show="!room.HasChat" class="col-md-4"></td>
-                            <td ng-show="!room.UsersCanAsk" class="col-md-4"></td>
-                            <td ng-show="!room.AllowAnonymous" class="col-md-4"></td>
-                            <td ng-show="room.HasPassword" class="col-md-4"><span title="Password Protected" class="glyphicon glyphicon-lock right"></span></td>
-                            <td ng-show="room.HasChat" class="col-md-4"><span title="Chat enabled" class="glyphicon glyphicon-comment right"></span></td>
-                            <td ng-show="room.UsersCanAsk" class="col-md-4"><span title="Users can ask questions" class="glyphicon glyphicon-question-sign right"></span></td>
-                            <td ng-show="room.AllowAnonymous" class="col-md-4"><span title="Anonymous users allowed" class="glyphicon glyphicon-eye-close"></span></td>
+                            <td class="col-md-11">{{room.Name}}</td>
+                            <td class="col-md-1 text-right">
+                            <span ng-show="room.HasPassword" title="Password Protected" class="glyphicon glyphicon-lock right"></span>
+                            <span ng-show="room.HasChat"title="Chat enabled" class="glyphicon glyphicon-comment right"></span>
+                            <span ng-show="room.UsersCanAsk" title="Users can ask questions" class="glyphicon glyphicon-question-sign right"></span>
+                            <span ng-show="room.AllowAnonymous" title="Anonymous users allowed" class="glyphicon glyphicon-eye-close"></span>
+                            </td>
+                            
                         </tr>
                     </table>
                 </div>
