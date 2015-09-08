@@ -44,6 +44,24 @@ app.controller("HomeController", ['$scope', '$http', '$location', '$window', 'co
     $scope.AllowAnonymous = true;
     $scope.UseLocation = true;
 
+    //Calls and get the currentlocation, and after that gets the rooms
+    navigator.geolocation.getCurrentPosition(function (position) {
+        window.currentLocation = position;
+        getRooms();
+        var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        geocoder.geocode({ 'location': latLng }, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                if (results[1]) {
+                    window.currentAddress = results[1].formatted_address;
+                } else {
+                    window.alert('No results found');
+                }
+            } else {
+                window.alert('Geocoder failed due to: ' + status);
+            }
+        });
+    });
+
     $scope.changeViewToRoom = function (roomId) {
         $scope.RoomId = roomId;
         var url = $("#RedirectTo").val() + "?RoomId=" + $scope.RoomId;

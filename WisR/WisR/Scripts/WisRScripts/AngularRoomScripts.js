@@ -2,23 +2,23 @@
     '$scope', '$http', 'configs', '$window', function ($scope, $http, configs, $window) {
 
         //Button init function
-        var initButton=function() {           
-                $("#createQuestionButton").popover({ placement: 'bottom', html: true });
-                $("#createQuestionDiv").hover(function () {
-                    if ($('#createQuestionButton').prop("disabled")) {
-                        $("#createQuestionButton").popover('toggle');
-                    }
-                });
+        var initButton = function () {
+            $("#createQuestionButton").popover({ placement: 'bottom', html: true });
+            $("#createQuestionDiv").hover(function () {
+                if ($('#createQuestionButton').prop("disabled")) {
+                    $("#createQuestionButton").popover('toggle');
+                }
+            });
         }
         initButton();
         //watch the window.userId variable
         $scope.$watch(
                 function () {
                     return $window.userId;
-                 }, function (n, o) {
-                $scope.userId = n;
-            }
-);
+                }, function (n, o) {
+                    $scope.userId = n;
+                }
+        );
 
         //Get all questions
         var getQuestions = function () {
