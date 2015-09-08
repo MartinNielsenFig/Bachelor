@@ -21,7 +21,7 @@
                 </div>
                 
                 <table id="roomTable" class="table table-responsive table-hover">
-                    <tr class="col-md-12" style="cursor: pointer" ng-repeat="room in Rooms| roomsNear" ng-click="changeViewToRoom(room._id)">
+                    <tr class="col-md-12" style="cursor: pointer" ng-repeat="room in Rooms| roomsNear:this" ng-click="changeViewToRoom(room._id)">
                         <td class="col-md-12">{{room.Name}}</td>
                         <td ng-show="!room.HasPassword" class="col-md-4"></td>
                         <td ng-show="!room.HasChat" class="col-md-4"></td>

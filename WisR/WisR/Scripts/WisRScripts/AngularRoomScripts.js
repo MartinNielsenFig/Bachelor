@@ -38,6 +38,9 @@
         getRoom();
         $scope.userIsHost = false;
         $scope.SpecificQuestionShown = false;
+        $scope.QuestionTypes = [{ name: 'Boolean Question', val: 'BooleanQuestion' }, { name: 'Textual Question', val: 'TextualQuestion' }];
+
+        $scope.ResponseOptions = [{ id:0, val: undefined }, { id: 1, val: undefined }];
         /*
         Added placeholders instead
         $scope.QuestionText = "Enter question";
@@ -48,8 +51,8 @@
         //function for showing a specific question
         $scope.ShowSpecificQuestion = function (question) {
             $scope.ToggleShowQuestionTables();
-            $scope.SpecificQuestion = question;
-        }
+            $scope.SpecificQuestion = question; 
+        } 
         $scope.ToggleShowQuestionTables = function () {
             $scope.SpecificQuestionShown = !$scope.SpecificQuestionShown;
         }

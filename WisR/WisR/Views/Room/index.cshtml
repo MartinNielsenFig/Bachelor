@@ -175,13 +175,19 @@
                                 <label class="col-md-6">Question text:</label> <input ng-model="QuestionText" type="text" class="col-md-6" placeholder="Enter Question text" />
                             </div>
                             <div class="row">
-                                <label class="col-md-6">Question type:</label> <input ng-model="QuestionType" class="col-md-6" type="text" placeholder="Enter Question type" />
+                                <label class="col-md-6">Question type:</label>
+                                <select class="col-md-6" ng-model="QuestionType" ng-options="Type.name for Type in QuestionTypes">
+                                    <option value=""disabled selected> Choose type </option>
+                                </select>
+                            </div>
+                            <div ng-show="QuestionType != undefined && QuestionType.val != 'TextualQuestion'" class="row">
+                                <label class="col-md-6">Response options:</label>
+                                <div  ng-repeat="option in ResponseOptions">
+                                    <input ng-model="ResponseOptions[option.id].val" class="col-md-6" type="text" placeholder="Add response options" />
+                                </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-6">Response options:</label> <input ng-model="ResponseOptions" class="col-md-6" type="password" placeholder="Add response options" />
-                            </div>
-                            <div class="row">
-                                <label class="col-md-6">Picture</label> <input ng-model="Picture" class="col-md-6" value="Browse" type="button" max="3" min="1"/>
+                                <label class="col-md-6">Picture</label> <input ng-model="Picture" class="col-md-6" value="Browse" type="button" max="3" min="1" />
                             </div>
                         </div>
                         <div class="row">

@@ -10,16 +10,17 @@ app.controller("UserController", ['$scope', function ($scope) {
 }]);
 
 app.filter('roomsNear', function () {
-    return function (rooms) {
-        if (rooms != undefined && window.currentLocation != undefined) {
+    return function (rooms, scope) {
+        if (rooms != undefined && scope.currentLocation != undefined) {
             var filtered = [];
             for (var i = 0; i < rooms.length; i++) {
                 var room = rooms[i];
+                if (room.UseLocation === true) {
+                    var temp = (getDistanceFromLatLonInKm(room.Location.Latitude, room.Location.Longitude, scope.currentLocation.coords.latitude, scope.currentLocation.coords.longitude) * 1000);
 
-                var temp = (getDistanceFromLatLonInKm(room.Location.Latitude, room.Location.Longitude, window.currentLocation.coords.latitude, window.currentLocation.coords.longitude) * 1000);
-
-                if (temp <= (room.Radius + room.Location.AccuracyMeters + window.currentLocation.coords.accuracy)) {
-                    filtered.push(room);
+                    if (temp <= (room.Radius + room.Location.AccuracyMeters + scope.currentLocation.coords.accuracy)) {
+                        filtered.push(room);
+                    }
                 }
             }
             return filtered;
@@ -31,8 +32,8 @@ app.controller("HomeController", ['$scope', '$http', '$location', '$window', 'co
         $http.get(configs.restHostName + '/Room/GetAll').then(function (response) {
             $scope.Rooms = response.data;
             $scope.userId = window.userId;
-            $scope.locationLatitude = window.currentLocation.coords.latitude;
-            $scope.locationLongitude = window.currentLocation.coords.longitude;
+            $scope.locationLatitude = $scope.currentLocation.coords.latitude;
+            $scope.locationLongitude = $scope.currentLocation.coords.longitude;
         });
     };
     $scope.RoomName = "";
@@ -46,13 +47,13 @@ app.controller("HomeController", ['$scope', '$http', '$location', '$window', 'co
 
     //Calls and get the currentlocation, and after that gets the rooms
     navigator.geolocation.getCurrentPosition(function (position) {
-        window.currentLocation = position;
+        $scope.currentLocation = position;
         getRooms();
         var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
         geocoder.geocode({ 'location': latLng }, function (results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
                 if (results[1]) {
-                    window.currentAddress = results[1].formatted_address;
+                    $scope.currentAddress = results[1].formatted_address;
                 } else {
                     window.alert('No results found');
                 }
@@ -87,11 +88,11 @@ app.controller("HomeController", ['$scope', '$http', '$location', '$window', 'co
         {
             RoomName: $scope.RoomName,
             CreatedBy: window.userId,
-            locationTimestamp: window.currentLocation.timestamp,
-            locationLatitude: window.currentLocation.coords.latitude,
-            locationLongitude: window.currentLocation.coords.longitude,
-            locationAccuracyMeters: window.currentLocation.coords.accuracy,
-            locationFormattedAddress: window.currentAddress,
+            locationTimestamp: $scope.currentLocation.timestamp,
+            locationLatitude: $scope.currentLocation.coords.latitude,
+            locationLongitude: $scope.currentLocation.coords.longitude,
+            locationAccuracyMeters: $scope.currentLocation.coords.accuracy,
+            locationFormattedAddress: $scope.currentAddress,
             radius: $scope.Radius,
             tag: $scope.UniqueTag,
             password: $scope.Password,
