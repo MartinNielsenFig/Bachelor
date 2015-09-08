@@ -13,9 +13,8 @@ import FBSDKLoginKit
 class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     
     var previousNavigationController: UINavigationController? = nil
-    
+
     override func viewDidLoad() {
-        
         //Login button
         let loginBtn = FBSDKLoginButton()
         loginBtn.center = self.view.center
