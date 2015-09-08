@@ -62,6 +62,7 @@
                                         $http.post(configs.restHostName + '/User/CreateUser', { User: JSON.stringify(response.data) }).
                                             then(function (response) {
                                                 window.userId = response.data;
+                                              
                                                 $('#createRoomButton').prop("disabled",false);
                                             });
                                     });
@@ -99,7 +100,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - Martin Fig & Nikolaj Holden</p>
         </footer>
     </div>
 

@@ -4,24 +4,25 @@ var initialLoad = true;
 var marker;
 var positionId;
 var geocoder = new google.maps.Geocoder();
+$(document).ready(function () {
 
-navigator.geolocation.getCurrentPosition(function(position) {
-    window.currentLocation = position;
+    navigator.geolocation.getCurrentPosition(function (position) {
+        window.currentLocation = position;
 
-    var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-    geocoder.geocode({ 'location': latLng }, function (results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
-            if (results[1]) {
-                window.currentAddress = results[1].formatted_address;
+        var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        geocoder.geocode({ 'location': latLng }, function (results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                if (results[1]) {
+                    window.currentAddress = results[1].formatted_address;
+                } else {
+                    window.alert('No results found');
+                }
             } else {
-                window.alert('No results found');
+                window.alert('Geocoder failed due to: ' + status);
             }
-        } else {
-            window.alert('Geocoder failed due to: ' + status);
-        }
+        });
     });
 });
-
 
 function moveMap(position) {
     //currentLocation = position;
@@ -41,8 +42,8 @@ function moveMap(position) {
     $("#accuracy").html('Precision: ' + position.coords.accuracy + ' meters');
 
     //Hide map on first load
-    
-    
+
+
     //Get address from location
     geocoder.geocode({ 'location': latLng }, function (results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
