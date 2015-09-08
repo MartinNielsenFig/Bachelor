@@ -33,6 +33,7 @@ app.controller("HomeController", ['$scope', '$http', '$location', '$window', 'co
             $scope.userId = window.userId;
             $scope.locationLatitude = window.currentLocation.coords.latitude;
             $scope.locationLongitude = window.currentLocation.coords.longitude;
+            $scope.roomsLoaded = true;
         });
     };
     $scope.RoomName = "";
@@ -47,6 +48,7 @@ app.controller("HomeController", ['$scope', '$http', '$location', '$window', 'co
     //Calls and get the currentlocation, and after that gets the rooms
     navigator.geolocation.getCurrentPosition(function (position) {
         window.currentLocation = position;
+        $("#loadingLabel").text('Loading rooms...');
         getRooms();
         var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
         geocoder.geocode({ 'location': latLng }, function (results, status) {

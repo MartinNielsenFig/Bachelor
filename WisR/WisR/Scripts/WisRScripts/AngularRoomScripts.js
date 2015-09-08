@@ -38,13 +38,12 @@
         getRoom();
         $scope.userIsHost = false;
         $scope.SpecificQuestionShown = false;
-        /*
-        Added placeholders instead
+        
         $scope.QuestionText = "Enter question";
         $scope.QuestionType = "TextualQuestion";
         $scope.ResponseOptions = "Add response options";
         $scope.Picture = "Add a picture";
-        */
+        
         //function for showing a specific question
         $scope.ShowSpecificQuestion = function (question) {
             $scope.ToggleShowQuestionTables();
