@@ -68,7 +68,7 @@
                     </table>
                 </div>
                 <div class="col-md-3" id="createQuestionDiv">
-                    <button id="createQuestionButton" ng-disabled="userId!=CurrentRoom.CreatedById&&!CurrentRoom.UsersCanAsk" data-content="User questions disabled" rel="popover" class="btn btn-primary" onclick="$('#myModalCreate').modal('toggle')">Create Question</button>
+                    <button id="createQuestionButton" ng-disabled="userId!=CurrentRoom.CreatedById&&!CurrentRoom.UsersCanAsk" title="{{ userId!=CurrentRoom.CreatedById&&!CurrentRoom.UsersCanAsk ? 'User Questions are disabled' : ''}}" style="pointer-events: auto;" class="btn btn-primary" onclick="$('#myModalCreate').modal('toggle')">Create Question</button>
                 </div>
             </div>
 

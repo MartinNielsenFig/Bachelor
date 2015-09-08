@@ -3,16 +3,14 @@
     ViewBag.Title = "Home Page";
 }
 <body ng-controller="HomeController">
-    <div class="jumbotron">
-        <h1>WisR</h1>
-        <p class="lead">Voting made easier</p>
+    <div class="jumbotron" style="background-color: transparent">
     </div>
 
     <div class="row">
         <div class="col-md-12">
             <div id="rooms">
                 <div id="roomText" class="text-center">
-                    Rooms based on <a onClick="toggleLocation();" style="cursor: pointer">your location</a>
+                    <h2><small>Rooms based on <a onClick="toggleLocation();" style="cursor: pointer">your location</a></small></h2>
                 </div>
                 <div ng-hide="roomsLoaded" class="container col-md-offset-5">
                   <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span><label id="loadingLabel" class="">Loading location...</label>
@@ -22,34 +20,35 @@
                     <div id="accuracy"></div>
                     <div id="map_canvas" style="height: 300px; border: 1px solid #000;"></div>
                 </div>
-                
-                <table id="roomTable" class="table table-responsive table-hover">
-                    <tr class="col-md-12" style="cursor: pointer" ng-repeat="room in Rooms| roomsNear" ng-click="changeViewToRoom(room._id)">
-                        <td class="col-md-12">{{room.Name}}</td>
-                        <td ng-show="!room.HasPassword" class="col-md-4"></td>
-                        <td ng-show="!room.HasChat" class="col-md-4"></td>
-                        <td ng-show="!room.UsersCanAsk" class="col-md-4"></td>
-                        <td ng-show="!room.AllowAnonymous" class="col-md-4"></td>
-                        <td ng-show="room.HasPassword" class="col-md-4"><span title="Password Protected"  class="glyphicon glyphicon-lock right"></span></td>
-                        <td ng-show="room.HasChat" class="col-md-4"><span title="Chat enabled" class="glyphicon glyphicon-comment right"></span></td>
-                        <td ng-show="room.UsersCanAsk" class="col-md-4"><span title="Users can ask questions" class="glyphicon glyphicon-question-sign right"></span></td>
-                        <td ng-show="room.AllowAnonymous" class="col-md-4"><span title="Anonymous users allowed" class="glyphicon glyphicon-eye-close"></span></td>
-                    </tr>
-                </table>
+                <div style="height:300px;overflow:auto">
+                    <table id="roomTable" class="table table-responsive table-hover">
+                        <tr class="col-md-12" style="cursor: pointer" ng-repeat="room in Rooms| roomsNear" ng-click="changeViewToRoom(room._id)">
+                            <td class="col-md-12">{{room.Name}}</td>
+                            <td ng-show="!room.HasPassword" class="col-md-4"></td>
+                            <td ng-show="!room.HasChat" class="col-md-4"></td>
+                            <td ng-show="!room.UsersCanAsk" class="col-md-4"></td>
+                            <td ng-show="!room.AllowAnonymous" class="col-md-4"></td>
+                            <td ng-show="room.HasPassword" class="col-md-4"><span title="Password Protected" class="glyphicon glyphicon-lock right"></span></td>
+                            <td ng-show="room.HasChat" class="col-md-4"><span title="Chat enabled" class="glyphicon glyphicon-comment right"></span></td>
+                            <td ng-show="room.UsersCanAsk" class="col-md-4"><span title="Users can ask questions" class="glyphicon glyphicon-question-sign right"></span></td>
+                            <td ng-show="room.AllowAnonymous" class="col-md-4"><span title="Anonymous users allowed" class="glyphicon glyphicon-eye-close"></span></td>
+                        </tr>
+                    </table>
+                </div>
                 <div class="row">
-                    <div class="col-md-4 col-md-offset-5 row">
+                    <div class="text-center">
                         <form ng-submit="connectWithUniqueTag()"><input ng-model="uniqueRoomTag" type="text" placeholder="Enter unique key" /></form>
                     </div>
                 </div>
                 
                 <div class="row">
-                    <div id="buttonsDiv">
-                        <div class="col-md-offset-5 col-md-1">
+                    <div id="buttonsDiv" class="text-center">
+                        <div style="display:inline">
                             <button id="connectRoomButton" class="btn btn-primary" ng-click="connectWithUniqueTag()">Connect</button>
                         </div>
-                        <div id="createRoomButtonDiv" class="col-md-3">
-                            <button id="createRoomButton" data-content="Login to enable" rel="popover" class="btn btn-primary" disabled onclick="$('#myModalCreate').modal('toggle')">Create</button>
-                        </div>
+                        <span id="createRoomButtonDiv">
+                            <button id="createRoomButton" title="Login to enable" class="btn btn-primary" style="pointer-events: auto;" disabled onclick="$('#myModalCreate').modal('toggle')">Create</button>
+                        </span>
                     </div>
                 </div>
             </div>
