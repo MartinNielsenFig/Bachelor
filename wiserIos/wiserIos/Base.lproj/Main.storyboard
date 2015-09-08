@@ -26,7 +26,7 @@
                                         <animations/>
                                         <state key="normal" title="Create Room"/>
                                         <connections>
-                                            <segue destination="4Nu-Oe-NI9" kind="show" identifier="CreateRoom" id="mRN-Wr-APX"/>
+                                            <segue destination="hcQ-8x-btj" kind="show" id="IyK-S6-FSX"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zXc-jJ-l7g">
@@ -65,6 +65,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1010" y="-457"/>
+        </scene>
+        <!--Login-->
+        <scene sceneID="PTs-yD-EBC">
+            <objects>
+                <viewController title="Login" id="hcQ-8x-btj" customClass="LoginViewController" customModule="wiserIos" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="M5B-c8-jLD"/>
+                        <viewControllerLayoutGuide type="bottom" id="zEW-Tt-GXM"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="iAn-mS-Evj" customClass="LoginViewController">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="UW9-Au-2Fb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1744" y="-837"/>
         </scene>
         <!--Sådan Tomas-->
         <scene sceneID="mTK-Ku-d4h">
@@ -114,7 +133,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TextInputCell" rowHeight="40" id="5Rv-TR-dGt" customClass="TextInputCell" customModule="wiserIos" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="92" width="600" height="40"/>
+                                <rect key="frame" x="0.0" y="28" width="600" height="40"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5Rv-TR-dGt" id="bar-YK-LNS">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="39.5"/>
@@ -157,7 +176,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SegmentedInputCell" id="5WQ-tG-r8G" customClass="SegmentedInputCell" customModule="wiserIos" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="132" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="68" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5WQ-tG-r8G" id="ll6-Nl-Q99">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
@@ -203,7 +222,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BooleanInputCell" id="ZCB-GH-sbl" customClass="BooleanInputCell" customModule="wiserIos" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="176" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="112" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZCB-GH-sbl" id="FRb-l7-oaG">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
@@ -244,7 +263,7 @@
                                 </connections>
                             </tableViewCell>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TextArrowInput" id="fvv-8t-4tV" customClass="BooleanInputCell" customModule="wiserIos" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="220" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="156" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fvv-8t-4tV" id="QUh-Hd-G3A">
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
@@ -295,7 +314,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ON3-ey-VAx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1744" y="-881"/>
+            <point key="canvasLocation" x="2512" y="-837"/>
         </scene>
         <!--Rooms-->
         <scene sceneID="DFv-wp-ugX">

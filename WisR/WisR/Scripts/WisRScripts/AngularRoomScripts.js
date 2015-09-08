@@ -3,22 +3,22 @@
 
         //Button init function
         var initButton = function () {
-            $("#createQuestionButton").popover({ placement: 'bottom', html: true });
-            $("#createQuestionDiv").hover(function () {
-                if ($('#createQuestionButton').prop("disabled")) {
-                    $("#createQuestionButton").popover('toggle');
-                }
-            });
+                $("#createQuestionButton").popover({ placement: 'bottom', html: true });
+                $("#createQuestionDiv").hover(function () {
+                    if ($("#createQuestionButton").prop("disabled")) {
+                        $("#createQuestionButton").popover("toggle");
+                    }
+                });
         }
         initButton();
         //watch the window.userId variable
         $scope.$watch(
                 function () {
                     return $window.userId;
-                }, function (n, o) {
-                    $scope.userId = n;
-                }
-        );
+                 }, function (n, o) {
+                $scope.userId = n;
+            }
+);
 
         //Get all questions
         var getQuestions = function () {
@@ -38,11 +38,13 @@
         getRoom();
         $scope.userIsHost = false;
         $scope.SpecificQuestionShown = false;
+        /*
+        Added placeholders instead
         $scope.QuestionText = "Enter question";
         $scope.QuestionType = "TextualQuestion";
         $scope.ResponseOptions = "Add response options";
         $scope.Picture = "Add a picture";
-
+        */
         //function for showing a specific question
         $scope.ShowSpecificQuestion = function (question) {
             $scope.ToggleShowQuestionTables();
