@@ -40,37 +40,37 @@
                     <h4>User questions</h4>
                     <table id="userQuestionsTable" class="table table-hover table-responsive table-bordered">
                         <thead>
-                        <tr>
-                        <th>
-                            Question text
-                        </th>
-                        <th>
-                            Created by
-                        </th>
-                        <th>
-                            Upvotes
-                        </th>
-                        <th>
-                            Downvotes
-                        </th>
-                        <th>
-                            Image
-                        </th>
+                            <tr>
+                                <th>
+                                    Question text
+                                </th>
+                                <th>
+                                    Created by
+                                </th>
+                                <th>
+                                    Upvotes
+                                </th>
+                                <th>
+                                    Downvotes
+                                </th>
+                                <th>
+                                    Image
+                                </th>
                         </thead>
                         <tbody>
-                        <tr style="cursor: pointer" ng-repeat="question in Questions|filter: { RoomId: '@ViewBag.roomId',CreatedById: '!'+CurrentRoom.CreatedById  } " ng-click="ShowSpecificQuestion(question)">
-                        <td>{{question.QuestionText}}</td>
-                        <td>{{question.CreatedById}}</td>
-                        <td>{{question.Upvotes}}</td>
-                        <td>{{question.Downvotes}}</td>
-                        <td>{{question.Img}}</td>
+                            <tr style="cursor: pointer" ng-repeat="question in Questions|filter: { RoomId: '@ViewBag.roomId',CreatedById: '!'+CurrentRoom.CreatedById  } " ng-click="ShowSpecificQuestion(question)">
+                                <td>{{question.QuestionText}}</td>
+                                <td>{{question.CreatedById}}</td>
+                                <td>{{question.Upvotes}}</td>
+                                <td>{{question.Downvotes}}</td>
+                                <td>{{question.Img}}</td>
                         </tbody>
                     </table>
                 </div>
                 <div class="col-md-3" id="createQuestionDiv">
                     <button id="createQuestionButton" ng-disabled="userId!=CurrentRoom.CreatedById&&!CurrentRoom.UsersCanAsk" data-content="User questions disabled" rel="popover" class="btn btn-primary" onclick="$('#myModalCreate').modal('toggle')">Create Question</button>
                 </div>
-                </div>
+            </div>
 
         </div>
         <div id="specificQuestion" ng-show="SpecificQuestionShown">
@@ -169,25 +169,26 @@
         <div class="modal-dialog center">
             <div class="modal-content modal-heigh">
                 <div class="modal-body">
-                    <div class="row">
+                    <form>
                         <div class="row">
-                            <label class="col-md-6">Question text:</label> <input ng-model="QuestionText" type="text" class="col-md-6" />
+                            <div class="row">
+                                <label class="col-md-6">Question text:</label> <input ng-model="QuestionText" type="text" class="col-md-6" placeholder="Enter Question text" />
+                            </div>
+                            <div class="row">
+                                <label class="col-md-6">Question type:</label> <input ng-model="QuestionType" class="col-md-6" type="text" placeholder="Enter Question type" />
+                            </div>
+                            <div class="row">
+                                <label class="col-md-6">Response options:</label> <input ng-model="ResponseOptions" class="col-md-6" type="password" placeholder="Add response options" />
+                            </div>
+                            <div class="row">
+                                <label class="col-md-6">Picture</label> <input ng-model="Picture" class="col-md-6" value="Browse" type="button" max="3" min="1"/>
+                            </div>
                         </div>
                         <div class="row">
-                            <label class="col-md-6">Question type:</label> <input ng-model="QuestionType" class="col-md-6" type="text" />
+                            <button id="ModalCreateQuestionButton" type="submit" class="btn btn-md center-block" ng-click="postQuestion()" data-dismiss="modal">Create question</button>
+                            <button id="ModalCancelButton" type="button" class="btn btn-md center-block" data-dismiss="modal">Cancel</button>
                         </div>
-                        <div class="row">
-                            <label class="col-md-6">Response options:</label> <input ng-model="ResponseOptions" class="col-md-6" type="password" />
-                        </div>
-                        <div class="row">
-                            <label class="col-md-6">Picture</label> <input ng-model="Picture" class="col-md-6" value="Browse" type="button" max="3" min="1" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <button id="ModalCreateQuestionButton" type="submit" class="btn btn-md center-block" ng-click="postQuestion()" data-dismiss="modal">Create question</button>
-                        <button id="ModalCancelButton" type="submit" class="btn btn-md center-block" data-dismiss="modal">Cancel</button>
-                    </div>
-
+                    </form>
                 </div>
 
             </div>

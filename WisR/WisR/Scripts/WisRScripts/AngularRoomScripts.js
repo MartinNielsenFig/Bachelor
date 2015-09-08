@@ -5,8 +5,8 @@
         var initButton=function() {           
                 $("#createQuestionButton").popover({ placement: 'bottom', html: true });
                 $("#createQuestionDiv").hover(function () {
-                    if ($('#createQuestionButton').prop("disabled")) {
-                        $("#createQuestionButton").popover('toggle');
+                    if ($("#createQuestionButton").prop("disabled")) {
+                        $("#createQuestionButton").popover("toggle");
                     }
                 });
         }
@@ -38,11 +38,13 @@
         getRoom();
         $scope.userIsHost = false;
         $scope.SpecificQuestionShown = false;
+        /*
+        Added placeholders instead
         $scope.QuestionText = "Enter question";
         $scope.QuestionType = "TextualQuestion";
         $scope.ResponseOptions = "Add response options";
         $scope.Picture = "Add a picture";
-
+        */
         //function for showing a specific question
         $scope.ShowSpecificQuestion = function (question) {
             $scope.ToggleShowQuestionTables();
