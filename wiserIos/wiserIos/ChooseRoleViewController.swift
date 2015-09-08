@@ -109,6 +109,12 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
             let annotation = MKPointAnnotation()
             annotation.coordinate = coordinate
             
+            //Save to singleton
+            CurrentUser.sharedInstance.location.Latitude = location.coordinate.latitude
+            CurrentUser.sharedInstance.location.Longitude = location.coordinate.longitude
+            let meters = sqrt(pow((location.horizontalAccuracy), 2) + pow((location.verticalAccuracy), 2))
+            CurrentUser.sharedInstance.location.AccuracyMeters = Int(meters)
+            
             locationManager.stopUpdatingLocation()
             mapView.addAnnotation(annotation)
         }

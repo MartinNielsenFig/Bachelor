@@ -21,7 +21,7 @@ class Room {
     var HasChat: Bool?
     var UsersCanAsk: Bool?
     var AllowAnonymous: Bool?
-    var UseLocation: Bool?
+    var UseLocation: Bool = true
     
     convenience init(jsonDictionary: NSDictionary) {
         self.init()
@@ -46,6 +46,6 @@ class Room {
         self.HasChat = jsonDictionary["HasChat"] as? Bool
         self.UsersCanAsk = jsonDictionary["UsersCanAsk"] as? Bool
         self.AllowAnonymous = jsonDictionary["AllowAnonymous"] as? Bool
-        self.UseLocation = jsonDictionary["UseLocation"] as? Bool
+        self.UseLocation = jsonDictionary["UseLocation"] as! Bool
     }
 }

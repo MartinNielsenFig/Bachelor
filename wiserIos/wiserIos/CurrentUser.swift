@@ -9,5 +9,7 @@
 import Foundation
 
 class CurrentUser: User {
+    var location = Coordinate()
+    
     static let sharedInstance = CurrentUser()
 }
