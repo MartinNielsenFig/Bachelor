@@ -20,23 +20,24 @@
                     <div id="accuracy"></div>
                     <div id="map_canvas" style="height: 300px"></div>
                 </div>
-                <div style="height:300px; overflow: auto">
+                <div style="height: 300px; overflow: auto">
                     <table id="roomTable" class="table table-responsive table-hover">
                         <tr class="col-md-12" style="cursor: pointer" ng-repeat="room in Rooms| roomsNear" ng-click="changeViewToRoom(room._id)">
                             <td class="col-md-11">{{room.Name}}</td>
                             <td class="col-md-1 text-right">
-                            <span ng-show="room.HasPassword" title="Password Protected" class="glyphicon glyphicon-lock right"></span>
-                            <span ng-show="room.HasChat"title="Chat enabled" class="glyphicon glyphicon-comment right"></span>
-                            <span ng-show="room.UsersCanAsk" title="Users can ask questions" class="glyphicon glyphicon-question-sign right"></span>
-                            <span ng-show="room.AllowAnonymous" title="Anonymous users allowed" class="glyphicon glyphicon-eye-close"></span>
+                                <span ng-show="room.HasPassword" title="Password Protected" class="glyphicon glyphicon-lock right"></span>
+                                <span ng-show="room.HasChat"title="Chat enabled" class="glyphicon glyphicon-comment right"></span>
+                                <span ng-show="room.UsersCanAsk" title="Users can ask questions" class="glyphicon glyphicon-question-sign right"></span>
+                                <span ng-show="room.AllowAnonymous" title="Anonymous users allowed" class="glyphicon glyphicon-eye-close"></span>
                             </td>
-                            
+
                         </tr>
                     </table>
                 </div>
+                <br/>
                 <div class="row">
-                    <div class="text-center">
-                        <form ng-submit="connectWithUniqueTag()"><input ng-model="uniqueRoomTag" type="text" placeholder="Enter unique key" /></form>
+                    <div>
+                        <form ng-submit="connectWithUniqueTag()"><input class="form-control" style="margin: 0 auto" ng-model="uniqueRoomTag" type="text" placeholder="Enter unique key" /></form>
                     </div>
                 </div>
                 
