@@ -25,14 +25,14 @@ class HttpHandler {
             data, response, error in
             
             // handle fundamental network errors (e.g. no connectivity)
-            print("data \(data)")
-            print("reponse \(response)")
-            print("error \(error)")
+            NSLog("data \(data)")
+            NSLog("reponse \(response)")
+            NSLog("error \(error)")
             
             if data != nil {
                 let nsDataString = NSString(data: data!, encoding: NSUTF8StringEncoding)
                 let dataString = nsDataString as! String
-                print("dataString \(dataString)")
+                NSLog("dataString \(dataString)")
                 
                 //init rooms here
                 var rooms = [Room]()
@@ -61,12 +61,12 @@ class HttpHandler {
             data, response, error in
             
             // handle fundamental network errors (e.g. no connectivity)
-            print("data \(data)")
-            print("reponse \(response)")
-            print("error \(error)")
+            NSLog("data \(data)")
+            NSLog("reponse \(response)")
+            NSLog("error \(error)")
             if data != nil {
                 let dataString = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
-                print("dataString \(dataString)")
+                NSLog("dataString \(dataString)")
             }
             
         }
@@ -86,12 +86,12 @@ class HttpHandler {
             data, response, error in
             
             // handle fundamental network errors (e.g. no connectivity)
-            print("data \(data)")
-            print("reponse \(response)")
-            print("error \(error)")
+            NSLog("data \(data)")
+            NSLog("reponse \(response)")
+            NSLog("error \(error)")
             if data != nil {
                 let dataString = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
-                print("dataString \(dataString)")
+                NSLog("dataString \(dataString)")
             }
         
         }

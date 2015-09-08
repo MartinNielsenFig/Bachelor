@@ -21,7 +21,7 @@ class RoomTableViewController: UITableViewController {
         HttpHandler.getRooms(
             {
                 newRooms in
-                print("callback completed: ")
+                NSLog("callback completed: ")
                 self.rooms += newRooms
                 self.tableView.reloadData()
             }
@@ -105,7 +105,7 @@ class RoomTableViewController: UITableViewController {
         
         if segue.identifier == "SelectRoom" {
             if let roomTag = sender as? UITableViewCell {
-                print(roomTag)
+                NSLog(String(roomTag))
             }
         }
     }

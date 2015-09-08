@@ -14,7 +14,8 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
 
     //Properties
     @IBOutlet var mapView: MKMapView!
-    
+    var location = CLLocation()
+
     //Actions
     
     //Methods
@@ -51,8 +52,6 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
             pinView!.annotation = annotation
         }
         
-        
-        locationManager.stopUpdatingLocation()
         return pinView
     }
     
@@ -72,28 +71,40 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
     let locationManager = CLLocationManager()
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        print("did update location")
+        NSLog("did update location")
         
         if let location = manager.location {
+            self.location = location
+            
             let coordinate = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
             mapView.region = MKCoordinateRegionMakeWithDistance(coordinate, 1000, 1000)
             
             let circle = MKCircle(centerCoordinate: location.coordinate, radius: location.horizontalAccuracy as CLLocationDistance)
             self.mapView.addOverlay(circle)
             
-            print(location.horizontalAccuracy)
-            print(location.verticalAccuracy)
+            NSLog(String(location.horizontalAccuracy))
+            NSLog(String(location.verticalAccuracy))
             
             let annotation = MKPointAnnotation()
             annotation.coordinate = coordinate
+            
+            locationManager.stopUpdatingLocation()
             mapView.addAnnotation(annotation)
         }
     }
     
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
-        print("Error while updating location \(error.localizedDescription)")
+        NSLog("Error while updating location \(error.localizedDescription)")
     }
     
-
+    //Segue
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "CreateRoom" {
+            
+            let createRoomViewController = segue.destinationViewController as! CreateRoomViewController
+            
+            createRoomViewController.userLocation = location
+        }
+    }
 }
 
