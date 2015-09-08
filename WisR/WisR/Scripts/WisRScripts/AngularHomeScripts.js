@@ -5,18 +5,18 @@ app.config(['$httpProvider', function ($httpProvider) {
 }]);
 app.controller("UserController", ['$scope', function ($scope) {
     var createUser = function () {
-      
+
     };
 }]);
 
 app.filter('roomsNear', function () {
     return function (rooms) {
-        if (rooms != undefined) {
+        if (rooms != undefined && window.currentLocation != undefined) {
             var filtered = [];
             for (var i = 0; i < rooms.length; i++) {
                 var room = rooms[i];
-              
-                var temp = (getDistanceFromLatLonInKm(room.Location.Latitude, room.Location.Longitude, window.currentLocation.coords.latitude, window.currentLocation.coords.longitude)*1000);
+
+                var temp = (getDistanceFromLatLonInKm(room.Location.Latitude, room.Location.Longitude, window.currentLocation.coords.latitude, window.currentLocation.coords.longitude) * 1000);
 
                 if (temp <= (room.Radius + room.Location.AccuracyMeters + window.currentLocation.coords.accuracy)) {
                     filtered.push(room);
@@ -35,7 +35,6 @@ app.controller("HomeController", ['$scope', '$http', '$location', '$window', 'co
             $scope.locationLongitude = window.currentLocation.coords.longitude;
         });
     };
-    getRooms();
     $scope.RoomName = "";
     $scope.Radius = 50;
     $scope.UniqueTag = "";
@@ -44,23 +43,23 @@ app.controller("HomeController", ['$scope', '$http', '$location', '$window', 'co
     $scope.UserCanAsk = true;
     $scope.AllowAnonymous = true;
     $scope.UseLocation = true;
- 
+
     $scope.changeViewToRoom = function (roomId) {
         $scope.RoomId = roomId;
         var url = $("#RedirectTo").val() + "?RoomId=" + $scope.RoomId;
         location.href = url;
     }
-    $scope.connectWithUniqueTag=function() {
-        $http.post(configs.restHostName + '/Room/GetByUniqueTag', { tag: $scope.uniqueRoomTag }).then(function(response) {
+    $scope.connectWithUniqueTag = function () {
+        $http.post(configs.restHostName + '/Room/GetByUniqueTag', { tag: $scope.uniqueRoomTag }).then(function (response) {
             //TODO verification of response
             if (response.data._id != undefined) {
                 $scope.changeViewToRoom(response.data._id);
             } else {
-                alert("No room with the tag: "+$scope.uniqueRoomTag);
+                alert("No room with the tag: " + $scope.uniqueRoomTag);
             }
-                
-            
-            
+
+
+
         });
     }
 
@@ -88,7 +87,7 @@ app.controller("HomeController", ['$scope', '$http', '$location', '$window', 'co
             $http.post(configs.restHostName + '/Room/CreateRoom', { Room: JSON.stringify(response.data) }).
             then(function (response) {
                 $scope.changeViewToRoom(response.data);
-                });
+            });
         });
     }
 

@@ -19,13 +19,18 @@
                     <div id="accuracy"></div>
                     <div id="map_canvas" style="height: 300px; border: 1px solid #000;"></div>
                 </div>
+                
                 <table id="roomTable" class="table table-responsive table-hover">
-                    <tr style="cursor: pointer" ng-repeat="room in Rooms| roomsNear" ng-click="changeViewToRoom(room._id)">
+                    <tr class="col-md-12" style="cursor: pointer" ng-repeat="room in Rooms| roomsNear" ng-click="changeViewToRoom(room._id)">
                         <td class="col-md-12">{{room.Name}}</td>
-                        <td class="col-md-4"><span title="Password Protected" ng-show="room.HasPassword" class="glyphicon glyphicon-lock right"></span></td>
-                        <td class="col-md-4"><span title="Chat enabled"ng-show="room.HasChat" class="glyphicon glyphicon-comment right"></span></td>
-                        <td class="col-md-4"><span title="Users can ask questions"ng-show="room.UsersCanAsk" class="glyphicon glyphicon-question-sign right"></span></td>
-                        <td class="col-md-4"><span title="Anonymous users allowed"ng-show="room.AllowAnonymous" class="glyphicon glyphicon-eye-close"></span></td>
+                        <td ng-show="!room.HasPassword" class="col-md-4"></td>
+                        <td ng-show="!room.HasChat" class="col-md-4"></td>
+                        <td ng-show="!room.UsersCanAsk" class="col-md-4"></td>
+                        <td ng-show="!room.AllowAnonymous" class="col-md-4"></td>
+                        <td ng-show="room.HasPassword" class="col-md-4"><span title="Password Protected"  class="glyphicon glyphicon-lock right"></span></td>
+                        <td ng-show="room.HasChat" class="col-md-4"><span title="Chat enabled" class="glyphicon glyphicon-comment right"></span></td>
+                        <td ng-show="room.UsersCanAsk" class="col-md-4"><span title="Users can ask questions" class="glyphicon glyphicon-question-sign right"></span></td>
+                        <td ng-show="room.AllowAnonymous" class="col-md-4"><span title="Anonymous users allowed" class="glyphicon glyphicon-eye-close"></span></td>
                     </tr>
                 </table>
                 <div class="row">
