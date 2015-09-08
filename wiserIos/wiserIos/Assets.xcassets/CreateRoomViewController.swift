@@ -23,13 +23,15 @@ class CreateRoomViewController: UITableViewController {
     
     var room = Room()
     
+    
+    
     //Get's initialized in prepareForSegue from Choose Role
     var userLocation: CLLocation? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: Selector("addRoomButtonPressed:"))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addRoomButtonPressed:")
     }
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {

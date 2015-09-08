@@ -44,6 +44,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FBSDKAppEvents.activateApp()
         
+        if FBSDKAccessToken.currentAccessToken() != nil {
+            FacebookHelper.requestCurrentUserInformation()
+        }
+        else {
+            CurrentUser.sharedInstance.FacebookId = nil
+        }
+        
     }
 
     func applicationWillTerminate(application: UIApplication) {

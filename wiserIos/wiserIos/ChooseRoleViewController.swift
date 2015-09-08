@@ -9,6 +9,8 @@
 import UIKit
 import CoreLocation
 import MapKit
+import FBSDKCoreKit
+import FBSDKLoginKit
 
 class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
 
@@ -17,9 +19,16 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
     var location = CLLocation()
 
     //Actions
+    @IBAction func clickCreateRoomBtn(sender: AnyObject) {
+        if CurrentUser.sharedInstance.FacebookId != nil {
+            performSegueWithIdentifier("CreateRoom", sender: sender)
+        }
+        else {
+            performSegueWithIdentifier("Login", sender: sender)
+        }
+    }
     
     //Methods
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -31,6 +40,18 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
         
         //Map delegation for pin behaviour
         mapView.delegate = self
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        
+        //Log off btn
+        if CurrentUser.sharedInstance.FacebookId != nil {
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Log out", style: UIBarButtonItemStyle.Plain, target: self, action: "logOffFacebook")
+            //self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Cancel, target: self, action: "logOffFacebook")
+        }
+        
+        
+        super.viewDidAppear(animated)
     }
 
     override func didReceiveMemoryWarning() {
@@ -100,11 +121,19 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
     //Segue
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "CreateRoom" {
-            
             let createRoomViewController = segue.destinationViewController as! CreateRoomViewController
-            
             createRoomViewController.userLocation = location
         }
+        else if segue.identifier == "Login" {
+            let loginRoomViewController = segue.destinationViewController as! LoginViewController
+            loginRoomViewController.previousNavigationController = self.navigationController
+        }
+    }
+    
+    //Facebook
+    func logOffFacebook() {
+        FacebookHelper.logOff()
+        self.navigationItem.rightBarButtonItem = nil
     }
 }
 
