@@ -11,14 +11,10 @@ import Foundation
 class User {
     
     var _id: String?
-    var FacebookId: Int?
+    var FacebookId: String?
     var ConnectedRoomIds: [Int]?
     var LDAPUserName: String?
-    var DisplayName: String
+    var DisplayName: String?
     var Email: String?
     var EncryptedPassword: String?
-    
-    init(displayName: String) {
-        self.DisplayName = displayName
-    }
 }

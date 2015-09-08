@@ -64,6 +64,7 @@
                                                 window.userId = response.data;
                                               
                                                 $('#createRoomButton').prop("disabled",false);
+                                                $('#createRoomButton').prop("title",'');
                                             });
                                     });
                                 }]);
@@ -76,16 +77,6 @@
                     {
 
                         <li class="pull-right">
-                            <script>
-                                $(document).ready(function() {
-                                    $("#createRoomButton").popover({placement: 'bottom', html: true });
-                                    $("#createRoomButtonDiv").hover(function () {
-                                        if ( $('#createRoomButton').prop("disabled")) {
-                                            $("#createRoomButton").popover('toggle');
-                                        }
-                                    });
-                                });
-                            </script>
                             @Html.ActionLink("Log in", "LogIn", "Login")
                         </li>
                     }

@@ -1,16 +1,7 @@
 ﻿app.controller("RoomController", [
     '$scope', '$http', 'configs', '$window', function ($scope, $http, configs, $window) {
 
-        //Button init function
-        var initButton = function () {
-                $("#createQuestionButton").popover({ placement: 'bottom', html: true });
-                $("#createQuestionDiv").hover(function () {
-                    if ($("#createQuestionButton").prop("disabled")) {
-                        $("#createQuestionButton").popover("toggle");
-                    }
-                });
-        }
-        initButton();
+        
         //watch the window.userId variable
         $scope.$watch(
                 function () {
@@ -41,18 +32,14 @@
         $scope.QuestionTypes = [{ name: 'Boolean Question', val: 'BooleanQuestion' }, { name: 'Textual Question', val: 'TextualQuestion' }];
 
         $scope.ResponseOptions = [{ id:0, val: undefined }, { id: 1, val: undefined }];
-        /*
-        Added placeholders instead
-        $scope.QuestionText = "Enter question";
-        $scope.QuestionType = "TextualQuestion";
-        $scope.ResponseOptions = "Add response options";
-        $scope.Picture = "Add a picture";
-        */
+       
+        
+        
         //function for showing a specific question
         $scope.ShowSpecificQuestion = function (question) {
             $scope.ToggleShowQuestionTables();
-            $scope.SpecificQuestion = question; 
-        } 
+            $scope.SpecificQuestion = question;
+        }
         $scope.ToggleShowQuestionTables = function () {
             $scope.SpecificQuestionShown = !$scope.SpecificQuestionShown;
         }

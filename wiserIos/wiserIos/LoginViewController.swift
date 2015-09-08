@@ -12,15 +12,15 @@ import FBSDKLoginKit
 
 class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     
+    var previousNavigationController: UINavigationController? = nil
+
     override func viewDidLoad() {
-        
         //Login button
         let loginBtn = FBSDKLoginButton()
         loginBtn.center = self.view.center
         loginBtn.readPermissions = ["public_profile", "email", "user_friends"]
         loginBtn.delegate = self
         self.view.addSubview(loginBtn)
-        
     }
     
     //FBSDKLoginButtonDelegate
@@ -28,17 +28,8 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         print("Facebook login")
         print(result.grantedPermissions)
         
-        //http://stackoverflow.com/questions/30049450/get-fbsdkloginmanagerloginresults-email-and-name
-        
-        let fbRequest = FBSDKGraphRequest(graphPath: "me", parameters: nil)
-        fbRequest.startWithCompletionHandler {
-            (connection: FBSDKGraphRequestConnection!, result: AnyObject!, error: NSError!) -> Void in
-            if error == nil {
-                print("User Info : \(result)")
-            } else {
-                print("Error Getting Info \(error)");
-            }
-        }
+        FacebookHelper.requestCurrentUserInformation()
+        previousNavigationController?.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
