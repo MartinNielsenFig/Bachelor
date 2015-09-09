@@ -18,7 +18,5 @@ namespace WisR.DomainModels
         public override string CreationTimestamp { get; set; }
         public override string ExpireTimestamp { get; set; }
         public override int Upvotes { get; set; }
-
-        public string ManyBool { get; set; } = "good tomas";
     }
 }
