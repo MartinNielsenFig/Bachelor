@@ -28,7 +28,7 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
         }
     }
     
-    //Methods
+    //Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -43,13 +43,10 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
     }
     
     override func viewDidAppear(animated: Bool) {
-        
         //Log off btn
         if CurrentUser.sharedInstance.FacebookId != nil {
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Log out", style: UIBarButtonItemStyle.Plain, target: self, action: "logOffFacebook")
-            //self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Cancel, target: self, action: "logOffFacebook")
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Log out", style: .Plain, target: self, action: "logOffFacebook")
         }
-        
         
         super.viewDidAppear(animated)
     }
@@ -79,7 +76,7 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
     func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
         if overlay is MKCircle {
             let circle = MKCircleRenderer(overlay: overlay)
-            circle.strokeColor = UIColor.blueColor()
+            circle.strokeColor = .blueColor()
             circle.fillColor = UIColor(red: 0, green: 0, blue: 255, alpha: 0.1)
             circle.lineWidth = 1
             return circle
@@ -93,6 +90,7 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         NSLog("did update location")
+        locationManager.stopUpdatingLocation()
         
         if let location = manager.location {
             self.location = location
@@ -101,7 +99,7 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
             mapView.region = MKCoordinateRegionMakeWithDistance(coordinate, 1000, 1000)
             
             let circle = MKCircle(centerCoordinate: location.coordinate, radius: location.horizontalAccuracy as CLLocationDistance)
-            self.mapView.addOverlay(circle)
+            mapView.addOverlay(circle)
             
             NSLog(String(location.horizontalAccuracy))
             NSLog(String(location.verticalAccuracy))
@@ -109,13 +107,12 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
             let annotation = MKPointAnnotation()
             annotation.coordinate = coordinate
             
-            //Save to singleton
+            //Save position to singleton
             CurrentUser.sharedInstance.location.Latitude = location.coordinate.latitude
             CurrentUser.sharedInstance.location.Longitude = location.coordinate.longitude
-            let meters = sqrt(pow((location.horizontalAccuracy), 2) + pow((location.verticalAccuracy), 2))
+            let meters = sqrt(pow((location.horizontalAccuracy), 2) + pow((location.verticalAccuracy), 2))  //todo fix
             CurrentUser.sharedInstance.location.AccuracyMeters = Int(meters)
             
-            locationManager.stopUpdatingLocation()
             mapView.addAnnotation(annotation)
         }
     }
@@ -131,15 +128,28 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
             createRoomViewController.userLocation = location
         }
         else if segue.identifier == "Login" {
-            let loginRoomViewController = segue.destinationViewController as! LoginViewController
+            let loginRoomViewController = segue.destinationViewController as! LogonViewController
             loginRoomViewController.previousNavigationController = self.navigationController
+            loginRoomViewController.previousViewController = self
         }
     }
     
     //Facebook
     func logOffFacebook() {
-        FacebookHelper.logOff()
-        self.navigationItem.rightBarButtonItem = nil
+        
+        //http://stackoverflow.com/questions/24022479/how-would-i-create-a-uialertview-in-swift
+        let alert = UIAlertController(title: "Confirm logout", message: "Confirm logging out", preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { action in
+            print("cancelled logging off Facebook")
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Logout", style: .Default, handler: { action in
+            print("confirmed logging off Facebook")
+            FacebookHelper.logOff()
+            self.navigationItem.rightBarButtonItem = nil
+        }))
+        
+        self.presentViewController(alert, animated: true, completion: nil)
     }
 }
 

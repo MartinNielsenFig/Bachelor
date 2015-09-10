@@ -34,13 +34,19 @@
         getQuestions();
 
         //Get information about this specific room
-        //Get all questions
+        //Get room info
         var getRoom = function () {
             $http.post(configs.restHostName + '/Room/GetById', { id: MyRoomIdFromViewBag }).then(function (response) {
                 $scope.CurrentRoom = response.data;
             });
         };
         getRoom();
+        var getChatMessages = function() {
+            $http.post(configs.restHostName + '/Chat/GetAllByRoomId', { roomId: MyRoomIdFromViewBag }).then(function (response) {
+                $scope.ChatMessages = response.data;
+            });
+        };
+        getChatMessages();
         $scope.userIsHost = false;
         $scope.SpecificQuestionShown = false;
         $scope.QuestionTypes = [{ name: 'Boolean Question', val: 'BooleanQuestion' }, { name: 'Textual Question', val: 'TextualQuestion' }];

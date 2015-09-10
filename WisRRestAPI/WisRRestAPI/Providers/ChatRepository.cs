@@ -20,6 +20,12 @@ namespace WisRRestAPI.Providers
             return chatMessages;
         }
 
+        public Task<List<ChatMessage>> GetAllChatMessagesByRoomId(string roomId)
+        {
+            var chatMessages = _database.GetCollection<ChatMessage>("chatmessage").Find(x => x.RoomId==roomId).ToListAsync();
+            return chatMessages;
+        }
+
         public Task<ChatMessage> GetChatMessage(string id)
         {
             var chatMessage =

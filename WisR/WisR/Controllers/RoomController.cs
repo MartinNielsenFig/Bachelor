@@ -10,6 +10,7 @@ using MongoDB.Bson.Serialization;
 using Newtonsoft.Json.Linq;
 using WisR.DomainModels;
 using WisRRestAPI.DomainModel;
+using WisRRestAPI.Providers;
 
 namespace WisR.Controllers
 {

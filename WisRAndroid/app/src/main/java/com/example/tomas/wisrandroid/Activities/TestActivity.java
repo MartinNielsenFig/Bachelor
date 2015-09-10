@@ -1,27 +1,26 @@
 package com.example.tomas.wisrandroid.Activities;
 
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.example.tomas.wisrandroid.Helpers.ActivityLayoutHelper;
 import com.example.tomas.wisrandroid.R;
 
-public class AnswerQuestionActivity extends ActionBarActivity {
+public class TestActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_answer_question);
-
-        ActivityLayoutHelper.HideLayout(getWindow(), getSupportActionBar());
+        setContentView(R.layout.activity_test);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_answer_question, menu);
+        getMenuInflater().inflate(R.menu.menu_test, menu);
         return true;
     }
 

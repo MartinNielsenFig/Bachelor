@@ -4,43 +4,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".MainActivity"
-    android:id="@+id/mainActivityRelativeLayout">
+    android:id="@+id/mainActivityRelativeLayout"
+    android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/mainActivityTextView"
-        android:text="@string/mainActivity_header"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"/>
     <LinearLayout
-        android:id="@+id/mainActivityGrid"
+        android:gravity="center_horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:orientation="horizontal"
-        android:layout_below="@+id/mainActivityTextView"
-        android:layout_centerInParent="true"
-        android:layout_centerVertical="true">
-        <Button
-            android:id="@+id/button_create_room"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/button_create_room"/>
-        <Button
-            android:id="@+id/button_find_room"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/button_enter_room"/>
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+    <Button
+        android:id="@+id/button_create_room"
+        android:layout_marginRight="10dp"
+        style="?android:attr/buttonBarStyle"
+        android:text="Create Room"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent" />
+
+    <Button
+        android:id="@+id/button_find_room"
+        android:layout_marginLeft="10dp"
+        style="?android:attr/buttonBarStyle"
+        android:text="Find Room"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent" />
 
     </LinearLayout>
-
 
 </RelativeLayout>

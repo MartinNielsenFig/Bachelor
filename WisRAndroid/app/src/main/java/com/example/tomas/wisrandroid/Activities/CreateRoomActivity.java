@@ -19,9 +19,12 @@ import com.android.volley.toolbox.Volley;
 import com.example.tomas.wisrandroid.Helpers.ActivityLayoutHelper;
 import com.example.tomas.wisrandroid.Helpers.HttpHelper;
 import com.example.tomas.wisrandroid.Model.BooleanQuestion;
+import com.example.tomas.wisrandroid.Model.ChatMessage;
 import com.example.tomas.wisrandroid.Model.Question;
 import com.example.tomas.wisrandroid.Model.Room;
 import com.example.tomas.wisrandroid.R;
+import com.facebook.Profile;
+import com.facebook.ProfileTracker;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
@@ -29,7 +32,9 @@ import org.json.JSONStringer;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -37,7 +42,6 @@ import javax.net.ssl.HttpsURLConnection;
 public class CreateRoomActivity extends ActionBarActivity {
 
     Button mTestKnap;
-    ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,24 +56,34 @@ public class CreateRoomActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
 
+
                 Map<String,String> mParams = new HashMap<String, String>();
 
-                Question mQuestion = new BooleanQuestion("bent");
-                mQuestion.set_CreatedById("Tomas");
-                mQuestion.set_Downvotes(5);
-                mQuestion.set_Id(null);
-                mQuestion.set_Img("base64");
-                mQuestion.set_Upvotes(5);
-                mQuestion.set_QuestionText("SoQuestion");
+                ArrayList<ChatMessage> mList = new ArrayList<ChatMessage>();
+                mList.add(new ChatMessage("Tomas","Super feee","03-09-2015"));
+                mList.add(new ChatMessage("Tomas","Super feee igen","03-09-2015"));
+
+                Room mRoom = new Room();
+                mRoom.set_CreatedById("Tomas");
+                mRoom.set_AllowAnonymous(false);
+                //mRoom.set_ChatLog(mList);
+                mRoom.set_EncryptedPassword("password");
+                mRoom.set_HasChat(false);
+                mRoom.set_HasPassword(false);
+                mRoom.set_Id(null);
+                mRoom.set_Radius(10);
+                mRoom.set_Name("ViggoBent");
+                mRoom.set_Tag("TAG");
+                mRoom.set_UseLocation(false);
+                mRoom.set_UsersCanAsk(false);
+
                 Gson gson = new Gson();
 
-                String json = gson.toJson(mQuestion);
+                String json = gson.toJson(mRoom);
 
                 mTextView.setText(json);
 
-                mParams.put("question", json);
-                mParams.put("roomId", "doge" );
-                mParams.put("type","BooleanQuestion");
+                mParams.put("Room", json);
 
                 Response.Listener<JSONObject> mListener = new Response.Listener<JSONObject>() {
                     @Override
@@ -86,7 +100,7 @@ public class CreateRoomActivity extends ActionBarActivity {
                 };
 
                 RequestQueue requestQueue = Volley.newRequestQueue(CreateRoomActivity.this);
-                HttpHelper jsObjRequest = new HttpHelper(Request.Method.POST, "http://10.0.2.2:1337/Question/CreateQuestion", mParams, mListener , mErrorListener);
+                HttpHelper jsObjRequest = new HttpHelper(Request.Method.POST, "http://10.0.2.2:1337/Room/CreateRoom", mParams, mListener , mErrorListener);
 
                 try {
                     requestQueue.add(jsObjRequest);
