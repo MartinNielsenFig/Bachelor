@@ -1,12 +1,22 @@
 ﻿var app = angular.module("wisrApp", []);
+
+//Function that returns true if room should be added to table
+var shouldBeAdded=function(room,scope) {
+    if (room.UseLocation === true) {
+        var temp = (getDistanceFromLatLonInKm(room.Location.Latitude, room.Location.Longitude, scope.currentLocation.coords.latitude, scope.currentLocation.coords.longitude) * 1000);
+
+        if (temp <= (room.Radius + room.Location.AccuracyMeters + scope.currentLocation.coords.accuracy)) {
+            return true;
+        }
+    }
+    return false;
+}
+
 app.config(['$httpProvider', function ($httpProvider) {
     $httpProvider.defaults.useXDomain = true;
     delete $httpProvider.defaults.headers.common["X-Requested-With"];
 }]);
 app.controller("UserController", ['$scope', function ($scope) {
-    var createUser = function () {
-
-    };
 }]);
 
 app.filter('roomsNear', function () {
@@ -15,19 +25,27 @@ app.filter('roomsNear', function () {
             var filtered = [];
             for (var i = 0; i < rooms.length; i++) {
                 var room = rooms[i];
-                if (room.UseLocation === true) {
-                    var temp = (getDistanceFromLatLonInKm(room.Location.Latitude, room.Location.Longitude, scope.currentLocation.coords.latitude, scope.currentLocation.coords.longitude) * 1000);
-
-                    if (temp <= (room.Radius + room.Location.AccuracyMeters + scope.currentLocation.coords.accuracy)) {
+                if (shouldBeAdded(room, scope))
                     filtered.push(room);
-                }
-            }
             }
             return filtered;
         }
     };
 });
 app.controller("HomeController", ['$scope', '$http', '$location', '$window', 'configs', function ($scope, $http, $location, $window, configs) {
+    //SignalR initiation
+    $(function () {
+        // Declare a proxy to reference the hub. 
+        var hub = $.connection.roomCreationHub;
+        // Create a function that the hub can call to broadcast messages.
+        hub.client.broadcastRoom = function (roomToAdd) {
+            $scope.Rooms.push(JSON.parse(roomToAdd));
+            $scope.$apply();
+        };
+        $.connection.hub.start();
+    });
+
+    //Function to get all rooms when loading page
     var getRooms = function () {
         $http.get(configs.restHostName + '/Room/GetAll').then(function (response) {
             $scope.Rooms = response.data;
@@ -37,6 +55,7 @@ app.controller("HomeController", ['$scope', '$http', '$location', '$window', 'co
             $scope.roomsLoaded = true;
         });
     };
+    //Declare default values
     $scope.RoomName = "";
     $scope.Radius = 50;
     $scope.UniqueTag = "";

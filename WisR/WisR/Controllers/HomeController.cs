@@ -11,13 +11,22 @@ using MongoDB.Bson.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Bson;
 using WisR.DomainModels;
+using WisRRestAPI.Providers;
 
 namespace WisR.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        private IrabbitHandler _rabbitHandler;
+
+        public HomeController(IrabbitHandler rabbitHandler)
         {
+            _rabbitHandler = rabbitHandler;
+            _rabbitHandler.subscribe("CreateRoom");
+        }
+
+        public ActionResult Index()
+        {      
             return View();
         }
 

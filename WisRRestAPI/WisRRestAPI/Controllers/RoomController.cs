@@ -11,12 +11,16 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using WisR.DomainModels;
 using WisRRestAPI.DomainModel;
+using WisRRestAPI.Providers;
 
 namespace WisRRestAPI.Controllers {
     public class RoomController : Controller {
         private readonly IRoomRepository _rr;
-        public RoomController(IRoomRepository rr) {
+        private IrabbitHandler _rabbitHandler;
+
+        public RoomController(IRoomRepository rr, IrabbitHandler rabbitHandler) {
             _rr = rr;
+            _rabbitHandler = rabbitHandler;
         }
 
         [System.Web.Mvc.HttpGet]
@@ -40,6 +44,15 @@ namespace WisRRestAPI.Controllers {
                 roomId = _rr.AddRoom(room);
             } catch (Exception e) {
                 return "Could not add room";
+            }
+            //Publish to rabbitMQ after, because we need the id
+            try
+            {
+                _rabbitHandler.publishString("CreateRoom", room.ToJson());
+            }
+            catch (Exception e)
+            {
+                return "Could not publish to rabbitMQ";
             }
 
             return roomId;

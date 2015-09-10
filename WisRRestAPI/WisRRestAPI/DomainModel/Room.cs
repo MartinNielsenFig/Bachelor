@@ -11,10 +11,6 @@ namespace WisR.DomainModels
         public Room()
         {
             Location = new Coordinate();
-<<<<<<< HEAD
-            //ChatLog = new List<ChatMessage>();
-=======
->>>>>>> origin/master
         }
         [BsonId]
         public string Id { get; set; }
@@ -28,10 +24,6 @@ namespace WisR.DomainModels
         public bool HasChat { get; set; }
         public bool UsersCanAsk { get; set; }
         public bool AllowAnonymous { get; set; }
-<<<<<<< HEAD
-        //public List<ChatMessage> ChatLog { get; set; }
-=======
->>>>>>> origin/master
         public bool UseLocation { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
 
 namespace WisRRestAPI.Providers
 {
@@ -7,5 +8,7 @@ namespace WisRRestAPI.Providers
         IConnection getConn();
         IModel getModel();
         void publishString(string routingKey,string value);
+        void subscribe(string routingKey);
+        void handle(object messageModel, BasicDeliverEventArgs ea);
     }
 }

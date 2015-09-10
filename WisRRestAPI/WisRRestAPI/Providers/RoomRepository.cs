@@ -38,7 +38,7 @@ namespace WisRRestAPI.DomainModel
         public string AddRoom(Room item)
         {
             _database.GetCollection<Room>("room").InsertOneAsync(item).Wait();
-            return item.Id.ToString();
+            return item.Id;
 
         }
 

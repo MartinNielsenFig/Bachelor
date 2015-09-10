@@ -9,6 +9,7 @@ using MongoDB.Bson.IO;
 using MongoDB.Bson.Serialization;
 using WisR.DomainModels;
 using WisRRestAPI.DomainModel;
+using WisRRestAPI.Providers;
 
 namespace WisR.Controllers
 {
