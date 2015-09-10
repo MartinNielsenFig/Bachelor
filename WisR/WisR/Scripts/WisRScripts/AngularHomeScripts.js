@@ -1,4 +1,4 @@
-﻿var app = angular.module("wisrApp", []);
+﻿var app = angular.module("wisrApp", ['naif.base64']);
 app.config(['$httpProvider', function ($httpProvider) {
     $httpProvider.defaults.useXDomain = true;
     delete $httpProvider.defaults.headers.common["X-Requested-With"];
@@ -8,6 +8,7 @@ app.controller("UserController", ['$scope', function ($scope) {
 
     };
 }]);
+
 
 app.filter('roomsNear', function () {
     return function (rooms, scope) {
@@ -27,7 +28,7 @@ app.filter('roomsNear', function () {
         }
     };
 });
-app.controller("HomeController", ['$scope', '$http', '$location', '$window', 'configs', function ($scope, $http, $location, $window, configs) {
+app.controller("HomeController", ['$scope', '$http', '$location', '$window', 'configs', '$parse', function ($scope, $http, $location, $window, configs) {
     var getRooms = function () {
         $http.get(configs.restHostName + '/Room/GetAll').then(function (response) {
             $scope.Rooms = response.data;
@@ -37,6 +38,8 @@ app.controller("HomeController", ['$scope', '$http', '$location', '$window', 'co
             $scope.roomsLoaded = true;
         });
     };
+
+    
     $scope.RoomName = "";
     $scope.Radius = 50;
     $scope.UniqueTag = "";
@@ -134,6 +137,4 @@ function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
 function deg2rad(deg) {
     return deg * (Math.PI / 180)
 }
-function calcDistance(p1, p2) {
-    return (google.maps.geometry.spherical.computeDistanceBetween(p1, p2) / 1000).toFixed(2);
-}
+

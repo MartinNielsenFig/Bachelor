@@ -7,6 +7,7 @@ using System.Web.Script.Serialization;
 using MongoDB.Bson;
 using MongoDB.Bson.IO;
 using MongoDB.Bson.Serialization;
+using Newtonsoft.Json.Linq;
 using WisR.DomainModels;
 using WisRRestAPI.DomainModel;
 
@@ -20,17 +21,28 @@ namespace WisR.Controllers
             ViewBag.roomId = roomId;
             return View();
         }
-        public string toJsonQuestion(string CreatedBy,string RoomId, int Downvotes, string Image, int Upvotes, string QuestionText)
+        public string toJsonQuestion(string CreatedBy,string RoomId, int Downvotes, string Image, int Upvotes, string QuestionText, string ResponseOptions, string CreationTimestamp, string ExpireTimestamp, string QuetionsType)
         {
-            var question = new TextualQuestion();
+          
+            var question = new BooleanQuestion();
+
+            var tempList = new List<ResponseOption>();
+
+            foreach (var response in ResponseOptions.Split(','))
+            {
+                tempList.Add(new ResponseOption() {Value = response});
+            }
+
             question.CreatedById = CreatedBy;
             question.RoomId = RoomId;
             question.Downvotes = Downvotes;
             question.Img = Image;
             question.Upvotes = Upvotes;
             question.QuestionText = QuestionText;
-            question.ResponseOptions=new List<ResponseOption>();
+            question.ResponseOptions = tempList;
+            question.CreationTimestamp = CreationTimestamp;
             question.Result=new List<Answer>();
+            question.ExpireTimestamp=ExpireTimestamp;
 
             return question.ToJson(); ;
         }

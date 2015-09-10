@@ -1,7 +1,6 @@
 ﻿app.controller("RoomController", [
     '$scope', '$http', 'configs', '$window', function ($scope, $http, configs, $window) {
 
-        
         //watch the window.userId variable
         $scope.$watch(
                 function () {
@@ -9,6 +8,21 @@
                  }, function (n, o) {
                 $scope.userId = n;
             }
+);
+        //watch the questionImage.filesize variable
+        $scope.$watch(
+                function () {
+                    return $scope.questionImage;
+                }, function (n, o) {
+                if (n != undefined) {
+                    if (n.filesize > 1049000) {
+                        alert("File is too big");
+                        $scope.questionImage.base64 = "R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==";
+                    }
+
+                }
+               
+                }
 );
 
         //Get all questions
@@ -46,11 +60,21 @@
 
         //Function for creating a question
         $scope.postQuestion = function () {
+
+            var newResponses = "";
+            for (var i = 0; i < $scope.ResponseOptions.length; i++) {
+                if (i != $scope.ResponseOptions.length-1) {
+                    newResponses = newResponses + $scope.ResponseOptions[i].val + ',';
+                } else {
+                    newResponses = newResponses + $scope.ResponseOptions[i].val;
+                }
+                
+            }
             //Make get request for json object conversion
-            $http.post('/Room/toJsonQuestion', { CreatedBy: $window.userId, RoomId: MyRoomIdFromViewBag, Downvotes: 0, Image: $scope.Picture, Upvotes: 0, QuestionText: $scope.QuestionText }).
+            $http.post('/Room/toJsonQuestion', { CreatedBy: $window.userId, RoomId: MyRoomIdFromViewBag, Downvotes: 0, Image: $scope.questionImage.base64, Upvotes: 0, QuestionText: $scope.QuestionText, ResponseOptions: newResponses, CreationTimestamp: Date.now(), ExpireTimestamp: $scope.ExpirationTime, QuetionsType: $scope.QuestionType }).
                 then(function (response) {
                     //Use response to send to REST API
-                    $http.post(configs.restHostName + '/Question/CreateQuestion', { question: JSON.stringify(response.data), type: $scope.QuestionType });
+                    $http.post(configs.restHostName + '/Question/CreateQuestion', { question: JSON.stringify(response.data), type: $scope.QuestionType.val });
                 });
         }
 
@@ -68,3 +92,4 @@
         }
     }
 ]);
+

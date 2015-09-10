@@ -98,7 +98,7 @@
                         <td>{{SpecificQuestion.CreatedById}}</td>
                         <td>{{SpecificQuestion.Upvotes}}</td>
                         <td>{{SpecificQuestion.Downvotes}}</td>
-                        <td>{{SpecificQuestion.Img}}</td>
+                        <td><img ng-src="data:image/png;base64,{{SpecificQuestion.Img}}" style="max-width: 100px; max-height: 100px" /></td>
                     </tr>
 
                 </table>
@@ -187,7 +187,8 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-6">Picture</label> <input ng-model="Picture" class="col-md-6" value="Browse" type="button" max="3" min="1"/>
+                                <label class="col-md-6">Picture</label><input type='file' ng-model='questionImage' base-sixty-four-input class="text-center">
+                                <img ng-src="data:image/png;base64,{{questionImage.base64}}" style="max-width: 100px; max-height: 100px" />
                             </div>
                             <div class="row">
                                 <label class="col-md-6">Expiration time</label> <input ng-model="ExpirationTime" class="col-md-6" type="number"/>
