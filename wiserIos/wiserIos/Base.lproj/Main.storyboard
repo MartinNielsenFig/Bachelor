@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8187.4" systemVersion="15A278b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="yxR-EF-Thn">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="15A282a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="yxR-EF-Thn">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8151.3"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
@@ -71,16 +71,34 @@
         <!--Login-->
         <scene sceneID="PTs-yD-EBC">
             <objects>
-                <viewController title="Login" id="hcQ-8x-btj" customClass="LoginViewController" customModule="wiserIos" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Login" id="hcQ-8x-btj" customClass="LogonViewController" customModule="wiserIos" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="M5B-c8-jLD"/>
                         <viewControllerLayoutGuide type="bottom" id="zEW-Tt-GXM"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="iAn-mS-Evj" customClass="LoginViewController">
+                    <view key="view" contentMode="scaleToFill" id="iAn-mS-Evj">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="el8-jx-tDm">
+                                <rect key="frame" x="20" y="20" width="90" height="30"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="90" id="A4p-Wm-gVB"/>
+                                    <constraint firstAttribute="height" constant="30" id="yqY-x6-uHA"/>
+                                </constraints>
+                                <state key="normal" title="Cancel logon"/>
+                                <connections>
+                                    <action selector="cancelLogonBtn" destination="hcQ-8x-btj" eventType="touchUpInside" id="HaG-m3-Uye"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="el8-jx-tDm" firstAttribute="top" secondItem="M5B-c8-jLD" secondAttribute="bottom" id="fTx-F6-knr"/>
+                            <constraint firstItem="el8-jx-tDm" firstAttribute="leading" secondItem="iAn-mS-Evj" secondAttribute="leadingMargin" id="sxv-k4-Efk"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UW9-Au-2Fb" userLabel="First Responder" sceneMemberID="firstResponder"/>

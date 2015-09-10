@@ -24,6 +24,7 @@ class RoomTableViewController: UITableViewController {
                 NSLog("callback completed: ")
                 
                 self.rooms += self.filterRoomsByLocation(newRooms, metersRadius: 100)
+                //self.rooms.sort({room1, room2 in }) //todo sort
                 self.tableView.reloadData()
             }
         )
@@ -61,7 +62,6 @@ class RoomTableViewController: UITableViewController {
         let dLat = degreesToRadians(lat2-lat1)
         let dLong = degreesToRadians(long2-long1)
         
-        
         let a = sin(dLat/2)*sin(dLat/2) + cos(degreesToRadians(lat1))*cos(degreesToRadians(lat2)) * sin(dLong/2)*sin(dLong/2)
         let c = 2*atan2(sqrt(a), sqrt(1-a))
         let d = r*c
@@ -98,7 +98,12 @@ class RoomTableViewController: UITableViewController {
         let room = rooms[indexPath.row]
         
         cell.textLabel?.text = room.Tag
-        cell.detailTextLabel?.text = "\(room.Radius!) meters away"
+        
+        if let cLong = CurrentUser.sharedInstance.location.Longitude, cLat = CurrentUser.sharedInstance.location.Latitude, rLong = room.Location.Longitude, rLat = room.Location.Latitude {
+            
+            let distance = Int(distanceBetweenTwoCoordinatesMeters(cLat, cLong, rLat, rLong))
+            cell.detailTextLabel?.text = "\(distance) meters away"
+        }
         
         return cell
     }

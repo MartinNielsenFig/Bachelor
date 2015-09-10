@@ -22,7 +22,6 @@
 		CB3C37921B8DE1F000897344 /* RoomTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3C37911B8DE1F000897344 /* RoomTableViewController.swift */; };
 		CB50FD8E1B9708E40003C078 /* TextInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB50FD8D1B9708E40003C078 /* TextInputCell.swift */; settings = {ASSET_TAGS = (); }; };
 		CB847E831B9EC11900D1C230 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB847E821B9EC11900D1C230 /* FBSDKCoreKit.framework */; settings = {ASSET_TAGS = (); }; };
-		CB847E891B9EC49100D1C230 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB847E881B9EC49100D1C230 /* LoginViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		CB8480281B9ECFBC00D1C230 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB8480261B9ECFBC00D1C230 /* FBSDKCoreKit.framework */; settings = {ASSET_TAGS = (); }; };
 		CB8480291B9ECFBC00D1C230 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB8480271B9ECFBC00D1C230 /* FBSDKLoginKit.framework */; settings = {ASSET_TAGS = (); }; };
 		CB84802B1B9EDB5400D1C230 /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB84802A1B9EDB5400D1C230 /* CurrentUser.swift */; settings = {ASSET_TAGS = (); }; };
@@ -36,6 +35,7 @@
 		CB9FF80F1B8F4408003A193B /* JSONSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9FF80E1B8F4408003A193B /* JSONSerializer.swift */; };
 		CBA4372C1B8DEA8E00EF3E01 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBA4372B1B8DEA8E00EF3E01 /* CoreLocation.framework */; };
 		CBA437301B8DF5A500EF3E01 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBA4372F1B8DF5A500EF3E01 /* MapKit.framework */; };
+		CBB4D7D71BA189EC001C531D /* LogonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB4D7D61BA189EC001C531D /* LogonViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		CBB60B2F1B9718EC0007A47B /* CreateRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB60B2E1B9718EC0007A47B /* CreateRoomViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		CBB60B311B97253A0007A47B /* SegmentedInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB60B301B97253A0007A47B /* SegmentedInputCell.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
@@ -70,7 +70,6 @@
 		CB3C37911B8DE1F000897344 /* RoomTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomTableViewController.swift; sourceTree = "<group>"; };
 		CB50FD8D1B9708E40003C078 /* TextInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextInputCell.swift; sourceTree = "<group>"; };
 		CB847E821B9EC11900D1C230 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = "/Users/PHJ/Documents/FacebookSDKs-iOS-20150817/FBSDKCoreKit.framework"; sourceTree = "<absolute>"; };
-		CB847E881B9EC49100D1C230 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		CB8480261B9ECFBC00D1C230 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = "../../../../../../../Documents/FacebookSDKs-iOS-20150817/FBSDKCoreKit.framework"; sourceTree = "<group>"; };
 		CB8480271B9ECFBC00D1C230 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = "../../../../../../../Documents/FacebookSDKs-iOS-20150817/FBSDKLoginKit.framework"; sourceTree = "<group>"; };
 		CB84802A1B9EDB5400D1C230 /* CurrentUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentUser.swift; sourceTree = "<group>"; };
@@ -84,6 +83,7 @@
 		CB9FF80E1B8F4408003A193B /* JSONSerializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONSerializer.swift; sourceTree = "<group>"; };
 		CBA4372B1B8DEA8E00EF3E01 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		CBA4372F1B8DF5A500EF3E01 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		CBB4D7D61BA189EC001C531D /* LogonViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogonViewController.swift; sourceTree = "<group>"; };
 		CBB60B2E1B9718EC0007A47B /* CreateRoomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreateRoomViewController.swift; path = Assets.xcassets/CreateRoomViewController.swift; sourceTree = "<group>"; };
 		CBB60B301B97253A0007A47B /* SegmentedInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedInputCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -118,7 +118,7 @@
 				CB3C37911B8DE1F000897344 /* RoomTableViewController.swift */,
 				CB0218251B947BDD00DFC9DD /* RoomViewController.swift */,
 				CBB60B2E1B9718EC0007A47B /* CreateRoomViewController.swift */,
-				CB847E881B9EC49100D1C230 /* LoginViewController.swift */,
+				CBB4D7D61BA189EC001C531D /* LogonViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -318,6 +318,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CBB4D7D71BA189EC001C531D /* LogonViewController.swift in Sources */,
 				CB9FF7CA1B8F27EC003A193B /* Coordinate.swift in Sources */,
 				CB3C37921B8DE1F000897344 /* RoomTableViewController.swift in Sources */,
 				CB0218201B9462C400DFC9DD /* ChatMessage.swift in Sources */,
@@ -332,7 +333,6 @@
 				CB0218261B947BDD00DFC9DD /* RoomViewController.swift in Sources */,
 				CB50FD8E1B9708E40003C078 /* TextInputCell.swift in Sources */,
 				CB9FF7C61B8F1401003A193B /* HTTPHandler.swift in Sources */,
-				CB847E891B9EC49100D1C230 /* LoginViewController.swift in Sources */,
 				CB9FF7CC1B8F28B4003A193B /* Answer.swift in Sources */,
 				CB9FF7D21B8F2B70003A193B /* User.swift in Sources */,
 				CBB60B311B97253A0007A47B /* SegmentedInputCell.swift in Sources */,
