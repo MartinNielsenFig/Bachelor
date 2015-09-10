@@ -8,7 +8,16 @@
 
 import UIKit
 
-class RoomViewController: UITableViewController {
+class RoomViewController: UIViewController {
     
+    //Passed from previous viewcontroller
+    var room: Room? = nil
 
+    
+    @IBOutlet weak var roomName: UITextView!
+    
+    override func viewDidLoad() {
+        print(room)
+        roomName.text = room?.Name
+    }
 }

@@ -117,7 +117,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="SÅDAN TOMASSSSS" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="aCX-SX-aeJ">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Placeholder" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="aCX-SX-aeJ">
                                 <rect key="frame" x="180" y="236" width="240" height="128"/>
                                 <animations/>
                                 <constraints>
@@ -137,6 +137,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="72X-XE-qRN"/>
+                    <connections>
+                        <outlet property="roomName" destination="aCX-SX-aeJ" id="kHd-Uk-xgV"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eow-27-ofZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

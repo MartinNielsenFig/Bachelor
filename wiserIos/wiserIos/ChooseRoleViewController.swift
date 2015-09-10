@@ -45,7 +45,7 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
     override func viewDidAppear(animated: Bool) {
         //Log off btn
         if CurrentUser.sharedInstance.FacebookId != nil {
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Log out", style: UIBarButtonItemStyle.Plain, target: self, action: "logOffFacebook")
+            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Log out", style: .Plain, target: self, action: "logOffFacebook")
         }
         
         super.viewDidAppear(animated)
@@ -76,7 +76,7 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
     func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer {
         if overlay is MKCircle {
             let circle = MKCircleRenderer(overlay: overlay)
-            circle.strokeColor = UIColor.blueColor()
+            circle.strokeColor = .blueColor()
             circle.fillColor = UIColor(red: 0, green: 0, blue: 255, alpha: 0.1)
             circle.lineWidth = 1
             return circle
@@ -130,6 +130,7 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
         else if segue.identifier == "Login" {
             let loginRoomViewController = segue.destinationViewController as! LogonViewController
             loginRoomViewController.previousNavigationController = self.navigationController
+            loginRoomViewController.previousViewController = self
         }
     }
     

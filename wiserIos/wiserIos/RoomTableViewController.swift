@@ -80,14 +80,12 @@ class RoomTableViewController: UITableViewController {
     // MARK: - Table view data source
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
         return 1
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return rooms.count
     }
-    
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
@@ -97,7 +95,7 @@ class RoomTableViewController: UITableViewController {
         
         let room = rooms[indexPath.row]
         
-        cell.textLabel?.text = room.Tag
+        cell.textLabel?.text = room.Name
         
         if let cLong = CurrentUser.sharedInstance.location.Longitude, cLat = CurrentUser.sharedInstance.location.Latitude, rLong = room.Location.Longitude, rLat = room.Location.Latitude {
             
@@ -109,43 +107,7 @@ class RoomTableViewController: UITableViewController {
     }
     
     
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-    // Return false if you do not want the specified item to be editable.
-    return true
-    }
-    */
-    
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-    if editingStyle == .Delete {
-    // Delete the row from the data source
-    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-    } else if editingStyle == .Insert {
-    // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }
-    }
-    */
-    
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-    
-    }
-    */
-    
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-    // Return false if you do not want the item to be re-orderable.
-    return true
-    }
-    */
-    
-    
-    // MARK: - Navigation
+    // Navigation
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -153,8 +115,15 @@ class RoomTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
         
         if segue.identifier == "SelectRoom" {
-            if let roomTag = sender as? UITableViewCell {
-                NSLog(String(roomTag))
+            if let selectedCell = sender as? UITableViewCell {
+                NSLog(String(selectedCell))
+                
+                let roomViewController = segue.destinationViewController as! RoomViewController
+                let index = tableView.indexPathForCell(selectedCell)!
+                let selectedRoom = rooms[index.row]
+                
+                
+                roomViewController.room = selectedRoom
             }
         }
     }

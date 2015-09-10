@@ -13,6 +13,7 @@ import FBSDKLoginKit
 class LogonViewController: UIViewController, FBSDKLoginButtonDelegate {
     
     var previousNavigationController: UINavigationController? = nil
+    var previousViewController: UIViewController? = nil
     
     @IBAction func cancelLogonBtn() {
         previousNavigationController?.dismissViewControllerAnimated(true, completion: nil)
@@ -34,11 +35,12 @@ class LogonViewController: UIViewController, FBSDKLoginButtonDelegate {
         if let granted = result.grantedPermissions {
             NSLog(String(granted))
             FacebookHelper.requestCurrentUserInformation()
+            previousNavigationController?.dismissViewControllerAnimated(true, completion: nil)
+            previousViewController?.performSegueWithIdentifier("CreateRoom", sender: previousViewController)
         } else {
             NSLog("Could not log onto Facebook")
+            previousNavigationController?.dismissViewControllerAnimated(true, completion: nil)
         }
-        
-        previousNavigationController?.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
