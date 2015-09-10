@@ -10,4 +10,11 @@
     <string name="button_enter_room">Enter Room</string>
     <string name="button_create_room">Create Room</string>
     <string name="mainActivity_header">WisR your voting app</string>
+    <string name="facebook_app_id">389473737909264</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_test">TestActivity</string>
+    <string name="title_activity_start">StartActivity</string>
+    <string name="title_activity_login">LoginActivity</string>
 </resources>

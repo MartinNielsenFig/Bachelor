@@ -25,7 +25,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AskQuestionActivity extends ActionBarActivity {
+public class QuestionActivity extends ActionBarActivity {
 
     Button mButton;
     TextView mTextView;
@@ -33,8 +33,10 @@ public class AskQuestionActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ask_question);
+        setContentView(R.layout.activity_question);
         ActivityLayoutHelper.HideLayout(getWindow(), getSupportActionBar());
+
+
 
         mTextView = (TextView) findViewById(R.id.textview_ask_question);
 
@@ -76,7 +78,7 @@ public class AskQuestionActivity extends ActionBarActivity {
                     }
                 };
 
-                RequestQueue requestQueue = Volley.newRequestQueue(AskQuestionActivity.this);
+                RequestQueue requestQueue = Volley.newRequestQueue(QuestionActivity.this);
                 HttpHelper jsObjRequest = new HttpHelper(Request.Method.POST, "http://10.0.2.2:1337/Question/CreateQuestion", mParams, mListener , mErrorListener);
 
                 try {
@@ -93,7 +95,7 @@ public class AskQuestionActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_ask_question, menu);
+        getMenuInflater().inflate(R.menu.menu_question, menu);
         return true;
     }
 
