@@ -1,5 +1,7 @@
 package com.example.tomas.wisrandroid.Model;
 
+import java.util.List;
+
 public class BooleanQuestion extends Question {
 
     //Fields
@@ -47,4 +49,18 @@ public class BooleanQuestion extends Question {
     @Override
     public void set_CreatedById(String _createdById) { super.set_CreatedById(_createdById);}
 
+    @Override
+    public String get_RoomId() { return super.get_RoomId();}
+    @Override
+    public void set_RoomId(String RoomId) { super.set_RoomId(RoomId);}
+
+    @Override
+    public List<ResponseOption> get_ResponseOptions() {return super.get_ResponseOptions();}
+    @Override
+    public void set_ResponseOptions(List<ResponseOption> ResponseOptions) {super.set_ResponseOptions(ResponseOptions);}
+
+    @Override
+    public List<Answer> get_Result() {return super.get_Result();}
+    @Override
+    public void set_Result(List<Answer> Result) {super.set_Result(Result);}
 }

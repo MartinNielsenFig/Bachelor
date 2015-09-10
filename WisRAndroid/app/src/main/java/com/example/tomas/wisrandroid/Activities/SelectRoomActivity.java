@@ -14,8 +14,8 @@ public class SelectRoomActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_room);
-
         ActivityLayoutHelper.HideLayout(getWindow(), getSupportActionBar());
+
     }
 
     @Override
