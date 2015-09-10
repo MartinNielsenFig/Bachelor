@@ -39,6 +39,10 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
             return questionsViewController
         }
         else if index == 1 {
+            let questionListViewController = storyboard?.instantiateViewControllerWithIdentifier("QuestionListViewController") as! QuestionListViewController
+            return questionListViewController
+        }
+        else if index == 2 {
             let chatViewController = storyboard?.instantiateViewControllerWithIdentifier("ChatViewController") as! ChatViewController
             return chatViewController
         }

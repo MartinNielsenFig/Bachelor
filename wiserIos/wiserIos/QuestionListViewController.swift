@@ -1,5 +1,5 @@
 //
-//  ChatViewController.swift
+//  QuestionListViewController.swift
 //  wiserIos
 //
 //  Created by Peter Helstrup Jensen on 10/09/2015.
@@ -8,11 +8,15 @@
 
 import UIKit
 
-class ChatViewController: UIViewController, Paged {
-    let pageIndex = 2
-    @IBOutlet weak var chatTextField: UITextView!
+class QuestionListViewController: UIViewController, Paged {
 
+    //Gets instantiated
+    var roomId: String? = nil
+    
+    let pageIndex = 1
+    
     override func viewDidLoad() {
-        chatTextField.text! += "hello"
+        
     }
+    
 }
