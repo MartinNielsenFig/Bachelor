@@ -45,7 +45,7 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
     override func viewDidAppear(animated: Bool) {
         //Log off btn
         if CurrentUser.sharedInstance.FacebookId != nil {
-            self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Log out", style: .Plain, target: self, action: "logOffFacebook")
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Log out", style: .Plain, target: self, action: "logOffFacebook")
         }
         
         super.viewDidAppear(animated)
@@ -99,7 +99,7 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
             mapView.region = MKCoordinateRegionMakeWithDistance(coordinate, 1000, 1000)
             
             let circle = MKCircle(centerCoordinate: location.coordinate, radius: location.horizontalAccuracy as CLLocationDistance)
-            self.mapView.addOverlay(circle)
+            mapView.addOverlay(circle)
             
             NSLog(String(location.horizontalAccuracy))
             NSLog(String(location.verticalAccuracy))

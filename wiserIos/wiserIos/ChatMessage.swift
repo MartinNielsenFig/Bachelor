@@ -19,5 +19,9 @@ class ChatMessage {
         self.init()
         
         _id = jsonDictionary["_id"] as? String
+        ByUserId = jsonDictionary["ByUserId"] as? String
+        RoomId = jsonDictionary["RoomId"] as? String
+        Value = jsonDictionary["Value"] as? String
+        Timestamp = jsonDictionary["Timestamp"] as? String
     }
 }
