@@ -21,6 +21,7 @@
 		CB50FD8E1B9708E40003C078 /* TextInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB50FD8D1B9708E40003C078 /* TextInputCell.swift */; settings = {ASSET_TAGS = (); }; };
 		CB6BC6241BA1AE92001C303B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB3C37751B8DBF5000897344 /* Main.storyboard */; settings = {ASSET_TAGS = (); }; };
 		CB6BC6261BA1B2ED001C303B /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6BC6251BA1B2ED001C303B /* ChatViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		CB6BC6281BA1C05A001C303B /* QuestionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6BC6271BA1C05A001C303B /* QuestionListViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		CB847E831B9EC11900D1C230 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB847E821B9EC11900D1C230 /* FBSDKCoreKit.framework */; settings = {ASSET_TAGS = (); }; };
 		CB8480281B9ECFBC00D1C230 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB8480261B9ECFBC00D1C230 /* FBSDKCoreKit.framework */; settings = {ASSET_TAGS = (); }; };
 		CB8480291B9ECFBC00D1C230 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB8480271B9ECFBC00D1C230 /* FBSDKLoginKit.framework */; settings = {ASSET_TAGS = (); }; };
@@ -72,6 +73,7 @@
 		CB3C37911B8DE1F000897344 /* RoomTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomTableViewController.swift; sourceTree = "<group>"; };
 		CB50FD8D1B9708E40003C078 /* TextInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextInputCell.swift; sourceTree = "<group>"; };
 		CB6BC6251BA1B2ED001C303B /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		CB6BC6271BA1C05A001C303B /* QuestionListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionListViewController.swift; sourceTree = "<group>"; };
 		CB847E821B9EC11900D1C230 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = "/Users/PHJ/Documents/FacebookSDKs-iOS-20150817/FBSDKCoreKit.framework"; sourceTree = "<absolute>"; };
 		CB8480261B9ECFBC00D1C230 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = "../../../../../../../Documents/FacebookSDKs-iOS-20150817/FBSDKCoreKit.framework"; sourceTree = "<group>"; };
 		CB8480271B9ECFBC00D1C230 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = "../../../../../../../Documents/FacebookSDKs-iOS-20150817/FBSDKLoginKit.framework"; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 				CBB4D7D81BA1A567001C531D /* RoomPageViewController.swift */,
 				CBB4D7DA1BA1A664001C531D /* QuestionViewController.swift */,
 				CB6BC6251BA1B2ED001C303B /* ChatViewController.swift */,
+				CB6BC6271BA1C05A001C303B /* QuestionListViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -331,6 +334,7 @@
 				CB9FF7CA1B8F27EC003A193B /* Coordinate.swift in Sources */,
 				CBB4D7D91BA1A567001C531D /* RoomPageViewController.swift in Sources */,
 				CB3C37921B8DE1F000897344 /* RoomTableViewController.swift in Sources */,
+				CB6BC6281BA1C05A001C303B /* QuestionListViewController.swift in Sources */,
 				CB0218201B9462C400DFC9DD /* ChatMessage.swift in Sources */,
 				CB3C37741B8DBF5000897344 /* ChooseRoleViewController.swift in Sources */,
 				CB9FF7D01B8F2A78003A193B /* ResponseOption.swift in Sources */,
