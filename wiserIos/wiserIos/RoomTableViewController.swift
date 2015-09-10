@@ -118,7 +118,7 @@ class RoomTableViewController: UITableViewController {
             if let selectedCell = sender as? UITableViewCell {
                 NSLog(String(selectedCell))
                 
-                let roomViewController = segue.destinationViewController as! RoomViewController
+                let roomViewController = segue.destinationViewController as! RoomPageViewController
                 let index = tableView.indexPathForCell(selectedCell)!
                 let selectedRoom = rooms[index.row]
                 

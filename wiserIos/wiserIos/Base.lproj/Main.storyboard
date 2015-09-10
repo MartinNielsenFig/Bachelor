@@ -105,45 +105,95 @@
             </objects>
             <point key="canvasLocation" x="1730" y="-1089"/>
         </scene>
-        <!--Sådan Tomas-->
-        <scene sceneID="mTK-Ku-d4h">
+        <!--Room Page View Controller-->
+        <scene sceneID="irQ-IB-hn6">
             <objects>
-                <viewController title="Sådan Tomas" id="k1K-52-xuR" customClass="RoomViewController" customModule="wiserIos" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="FJI-Ne-eCo" customClass="RoomPageViewController" customModule="wiserIos" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Ms1-Yg-5wQ"/>
-                        <viewControllerLayoutGuide type="bottom" id="R92-6R-ctM"/>
+                        <viewControllerLayoutGuide type="top" id="QGi-UD-yDR"/>
+                        <viewControllerLayoutGuide type="bottom" id="aUv-hq-eU0"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="l0p-N2-G0O">
+                    <view key="view" contentMode="scaleToFill" id="cP7-Eg-OUc">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zAg-Ga-XDy" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3064" y="-98"/>
+        </scene>
+        <!--Question-->
+        <scene sceneID="qG4-wY-BTX">
+            <objects>
+                <viewController storyboardIdentifier="QuestionViewController" id="ock-zx-gTK" userLabel="Question" customClass="QuestionViewController" customModule="wiserIos" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="g42-K3-9dc"/>
+                        <viewControllerLayoutGuide type="bottom" id="EGY-Xl-mqb"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Gl5-rZ-I7q">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Placeholder" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="aCX-SX-aeJ">
-                                <rect key="frame" x="180" y="236" width="240" height="128"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AEy-f9-Q9z">
+                                <rect key="frame" x="20" y="20" width="560" height="21"/>
                                 <animations/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="240" id="Tlh-OW-CFH"/>
-                                </constraints>
-                                <color key="textColor" red="0.0" green="0.50196081400000003" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="40"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="AEy-f9-Q9z" firstAttribute="leading" secondItem="Gl5-rZ-I7q" secondAttribute="leadingMargin" id="4gB-MN-mdI"/>
+                            <constraint firstItem="AEy-f9-Q9z" firstAttribute="trailing" secondItem="Gl5-rZ-I7q" secondAttribute="trailingMargin" id="8Lc-zP-1vp"/>
+                            <constraint firstItem="AEy-f9-Q9z" firstAttribute="top" secondItem="g42-K3-9dc" secondAttribute="bottom" id="9ta-ju-BMI"/>
+                            <constraint firstItem="EGY-Xl-mqb" firstAttribute="top" secondItem="AEy-f9-Q9z" secondAttribute="bottom" constant="559" id="c5e-N5-xD9"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="roomName" destination="AEy-f9-Q9z" id="DGV-uU-8nx"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7vm-I6-Bgi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3774" y="-472"/>
+        </scene>
+        <!--Chat View Controller-->
+        <scene sceneID="HDc-aC-Y8j">
+            <objects>
+                <viewController storyboardIdentifier="ChatViewController" id="S09-zX-dsu" customClass="ChatViewController" customModule="wiserIos" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="bfz-BL-xC3"/>
+                        <viewControllerLayoutGuide type="bottom" id="qqE-mb-BOe"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="PK4-cB-CkL">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Xd5-5D-5iF">
+                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
+                                <animations/>
+                                <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="aCX-SX-aeJ" firstAttribute="centerX" secondItem="l0p-N2-G0O" secondAttribute="centerX" id="Ogk-Yb-oyB"/>
-                            <constraint firstItem="aCX-SX-aeJ" firstAttribute="top" secondItem="Ms1-Yg-5wQ" secondAttribute="bottom" constant="172" id="PNM-Kf-1F0"/>
-                            <constraint firstItem="aCX-SX-aeJ" firstAttribute="centerY" secondItem="l0p-N2-G0O" secondAttribute="centerY" id="dCj-mt-Iak"/>
+                            <constraint firstItem="Xd5-5D-5iF" firstAttribute="leading" secondItem="PK4-cB-CkL" secondAttribute="leading" id="Ucn-yA-tjv"/>
+                            <constraint firstItem="Xd5-5D-5iF" firstAttribute="bottom" secondItem="qqE-mb-BOe" secondAttribute="top" id="a0y-kt-tOg"/>
+                            <constraint firstAttribute="trailing" secondItem="Xd5-5D-5iF" secondAttribute="trailing" id="fhC-CT-ijO"/>
+                            <constraint firstItem="Xd5-5D-5iF" firstAttribute="top" secondItem="bfz-BL-xC3" secondAttribute="bottom" id="pr4-98-Gt1"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="72X-XE-qRN"/>
-                    <connections>
-                        <outlet property="roomName" destination="aCX-SX-aeJ" id="kHd-Uk-xgV"/>
-                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="eow-27-ofZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dVp-MZ-uGI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2512" y="-98"/>
+            <point key="canvasLocation" x="3774" y="206"/>
         </scene>
         <!--Create Room-->
         <scene sceneID="hs5-2f-uvz">
@@ -378,7 +428,7 @@
                                 <animations/>
                                 <accessibility key="accessibilityConfiguration" identifier="SubtitleCell"/>
                                 <connections>
-                                    <segue destination="k1K-52-xuR" kind="show" identifier="SelectRoom" id="ifs-Gg-Oto"/>
+                                    <segue destination="FJI-Ne-eCo" kind="show" identifier="SelectRoom" id="5nO-ee-P5e"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
