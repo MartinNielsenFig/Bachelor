@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
 using WisR.DomainModels;
 using WisRRestAPI.DomainModel;
 using WisRRestAPI.Providers;
@@ -24,13 +26,31 @@ namespace WisRRestAPI.Controllers
         public string GetAll()
         {
             var ChatMessages = _cr.GetAllChatMessages();
-            return _jsSerializer.Serialize(ChatMessages.Result);
+            return ChatMessages.Result.ToJson();
         }
+        [System.Web.Mvc.HttpPost]
+        public string GetAllByRoomId(string roomId)
+        {
+            var ChatMessages = _cr.GetAllChatMessagesByRoomId(roomId);
+            return ChatMessages.Result.ToJson();
+        }
+
 
         [System.Web.Mvc.HttpPost]
         public string CreateChatMessage(string ChatMessage)
         {
-            return _cr.AddChatMessage(_jsSerializer.Deserialize<ChatMessage>(ChatMessage));
+            ChatMessage chatMsg;
+            try
+            {
+                chatMsg = BsonSerializer.Deserialize<ChatMessage>(ChatMessage);
+            }
+            catch (Exception e)
+            {
+                return "Could not deserialize chatMessage with json: " + ChatMessage;
+            }
+            //assign ID to room
+            chatMsg.Id = ObjectId.GenerateNewId(DateTime.Now).ToString();
+            return _cr.AddChatMessage(chatMsg);
         }
 
         [System.Web.Mvc.HttpGet]
@@ -42,7 +62,7 @@ namespace WisRRestAPI.Controllers
                 return "Not found";
             }
 
-            return _jsSerializer.Serialize(item);
+            return item.ToJson();
         }
         [System.Web.Mvc.HttpDelete]
         public string DeleteChatMessage(string id)

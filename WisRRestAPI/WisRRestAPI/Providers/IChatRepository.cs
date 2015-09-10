@@ -10,6 +10,7 @@ namespace WisRRestAPI.Providers
     public interface IChatRepository
     {
         Task<List<ChatMessage>> GetAllChatMessages();
+        Task<List<ChatMessage>> GetAllChatMessagesByRoomId(string roomId);
         Task<ChatMessage> GetChatMessage(string id);
         string AddChatMessage(ChatMessage item);
         Task<DeleteResult> RemoveChatMessage(string id);
