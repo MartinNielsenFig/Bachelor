@@ -8,19 +8,19 @@
 
 /* Begin PBXBuildFile section */
 		CB0218201B9462C400DFC9DD /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB02181F1B9462C400DFC9DD /* ChatMessage.swift */; settings = {ASSET_TAGS = (); }; };
-		CB0218261B947BDD00DFC9DD /* RoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0218251B947BDD00DFC9DD /* RoomViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		CB1FBA001B983C3A00B1FCF8 /* BooleanInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1FB9FF1B983C3A00B1FCF8 /* BooleanInputCell.swift */; settings = {ASSET_TAGS = (); }; };
 		CB2EF9C31B8DE7260098871B /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2EF9C21B8DE7260098871B /* Room.swift */; };
 		CB2FC2DE1B8F93BC00CD8B28 /* JSONSerializerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2FC2DD1B8F93BC00CD8B28 /* JSONSerializerTests.swift */; };
 		CB39A97B1B986B7F0014F818 /* StringExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB39A97A1B986B7F0014F818 /* StringExtractor.swift */; settings = {ASSET_TAGS = (); }; };
 		CB3C37721B8DBF5000897344 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3C37711B8DBF5000897344 /* AppDelegate.swift */; };
 		CB3C37741B8DBF5000897344 /* ChooseRoleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3C37731B8DBF5000897344 /* ChooseRoleViewController.swift */; };
-		CB3C37771B8DBF5000897344 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB3C37751B8DBF5000897344 /* Main.storyboard */; };
 		CB3C37791B8DBF5000897344 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB3C37781B8DBF5000897344 /* Assets.xcassets */; };
 		CB3C377C1B8DBF5000897344 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB3C377A1B8DBF5000897344 /* LaunchScreen.storyboard */; };
 		CB3C37871B8DBF5000897344 /* wiserIosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3C37861B8DBF5000897344 /* wiserIosTests.swift */; };
 		CB3C37921B8DE1F000897344 /* RoomTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3C37911B8DE1F000897344 /* RoomTableViewController.swift */; };
 		CB50FD8E1B9708E40003C078 /* TextInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB50FD8D1B9708E40003C078 /* TextInputCell.swift */; settings = {ASSET_TAGS = (); }; };
+		CB6BC6241BA1AE92001C303B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB3C37751B8DBF5000897344 /* Main.storyboard */; settings = {ASSET_TAGS = (); }; };
+		CB6BC6261BA1B2ED001C303B /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6BC6251BA1B2ED001C303B /* ChatViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		CB847E831B9EC11900D1C230 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB847E821B9EC11900D1C230 /* FBSDKCoreKit.framework */; settings = {ASSET_TAGS = (); }; };
 		CB8480281B9ECFBC00D1C230 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB8480261B9ECFBC00D1C230 /* FBSDKCoreKit.framework */; settings = {ASSET_TAGS = (); }; };
 		CB8480291B9ECFBC00D1C230 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB8480271B9ECFBC00D1C230 /* FBSDKLoginKit.framework */; settings = {ASSET_TAGS = (); }; };
@@ -36,6 +36,9 @@
 		CBA4372C1B8DEA8E00EF3E01 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBA4372B1B8DEA8E00EF3E01 /* CoreLocation.framework */; };
 		CBA437301B8DF5A500EF3E01 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBA4372F1B8DF5A500EF3E01 /* MapKit.framework */; };
 		CBB4D7D71BA189EC001C531D /* LogonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB4D7D61BA189EC001C531D /* LogonViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		CBB4D7D91BA1A567001C531D /* RoomPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB4D7D81BA1A567001C531D /* RoomPageViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		CBB4D7DB1BA1A664001C531D /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB4D7DA1BA1A664001C531D /* QuestionViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		CBB4D7DD1BA1A887001C531D /* Paged.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB4D7DC1BA1A887001C531D /* Paged.swift */; settings = {ASSET_TAGS = (); }; };
 		CBB60B2F1B9718EC0007A47B /* CreateRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB60B2E1B9718EC0007A47B /* CreateRoomViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		CBB60B311B97253A0007A47B /* SegmentedInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB60B301B97253A0007A47B /* SegmentedInputCell.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
@@ -52,7 +55,6 @@
 
 /* Begin PBXFileReference section */
 		CB02181F1B9462C400DFC9DD /* ChatMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
-		CB0218251B947BDD00DFC9DD /* RoomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomViewController.swift; sourceTree = "<group>"; };
 		CB1FB9FF1B983C3A00B1FCF8 /* BooleanInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BooleanInputCell.swift; sourceTree = "<group>"; };
 		CB2EF9C21B8DE7260098871B /* Room.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
 		CB2FC2DD1B8F93BC00CD8B28 /* JSONSerializerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONSerializerTests.swift; sourceTree = "<group>"; };
@@ -69,6 +71,7 @@
 		CB3C37881B8DBF5000897344 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CB3C37911B8DE1F000897344 /* RoomTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomTableViewController.swift; sourceTree = "<group>"; };
 		CB50FD8D1B9708E40003C078 /* TextInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextInputCell.swift; sourceTree = "<group>"; };
+		CB6BC6251BA1B2ED001C303B /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		CB847E821B9EC11900D1C230 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = "/Users/PHJ/Documents/FacebookSDKs-iOS-20150817/FBSDKCoreKit.framework"; sourceTree = "<absolute>"; };
 		CB8480261B9ECFBC00D1C230 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = "../../../../../../../Documents/FacebookSDKs-iOS-20150817/FBSDKCoreKit.framework"; sourceTree = "<group>"; };
 		CB8480271B9ECFBC00D1C230 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = "../../../../../../../Documents/FacebookSDKs-iOS-20150817/FBSDKLoginKit.framework"; sourceTree = "<group>"; };
@@ -84,6 +87,9 @@
 		CBA4372B1B8DEA8E00EF3E01 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		CBA4372F1B8DF5A500EF3E01 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		CBB4D7D61BA189EC001C531D /* LogonViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogonViewController.swift; sourceTree = "<group>"; };
+		CBB4D7D81BA1A567001C531D /* RoomPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomPageViewController.swift; sourceTree = "<group>"; };
+		CBB4D7DA1BA1A664001C531D /* QuestionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionViewController.swift; sourceTree = "<group>"; };
+		CBB4D7DC1BA1A887001C531D /* Paged.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Paged.swift; sourceTree = "<group>"; };
 		CBB60B2E1B9718EC0007A47B /* CreateRoomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreateRoomViewController.swift; path = Assets.xcassets/CreateRoomViewController.swift; sourceTree = "<group>"; };
 		CBB60B301B97253A0007A47B /* SegmentedInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedInputCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -116,9 +122,11 @@
 			children = (
 				CB3C37731B8DBF5000897344 /* ChooseRoleViewController.swift */,
 				CB3C37911B8DE1F000897344 /* RoomTableViewController.swift */,
-				CB0218251B947BDD00DFC9DD /* RoomViewController.swift */,
 				CBB60B2E1B9718EC0007A47B /* CreateRoomViewController.swift */,
 				CBB4D7D61BA189EC001C531D /* LogonViewController.swift */,
+				CBB4D7D81BA1A567001C531D /* RoomPageViewController.swift */,
+				CBB4D7DA1BA1A664001C531D /* QuestionViewController.swift */,
+				CB6BC6251BA1B2ED001C303B /* ChatViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -155,6 +163,7 @@
 				CB3C377A1B8DBF5000897344 /* LaunchScreen.storyboard */,
 				CB3C377D1B8DBF5000897344 /* Info.plist */,
 				CB84802A1B9EDB5400D1C230 /* CurrentUser.swift */,
+				CBB4D7DC1BA1A887001C531D /* Paged.swift */,
 			);
 			path = wiserIos;
 			sourceTree = "<group>";
@@ -298,9 +307,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB6BC6241BA1AE92001C303B /* Main.storyboard in Resources */,
 				CB3C377C1B8DBF5000897344 /* LaunchScreen.storyboard in Resources */,
 				CB3C37791B8DBF5000897344 /* Assets.xcassets in Resources */,
-				CB3C37771B8DBF5000897344 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -320,17 +329,20 @@
 			files = (
 				CBB4D7D71BA189EC001C531D /* LogonViewController.swift in Sources */,
 				CB9FF7CA1B8F27EC003A193B /* Coordinate.swift in Sources */,
+				CBB4D7D91BA1A567001C531D /* RoomPageViewController.swift in Sources */,
 				CB3C37921B8DE1F000897344 /* RoomTableViewController.swift in Sources */,
 				CB0218201B9462C400DFC9DD /* ChatMessage.swift in Sources */,
 				CB3C37741B8DBF5000897344 /* ChooseRoleViewController.swift in Sources */,
 				CB9FF7D01B8F2A78003A193B /* ResponseOption.swift in Sources */,
 				CB9FF7CE1B8F2916003A193B /* Question.swift in Sources */,
+				CBB4D7DD1BA1A887001C531D /* Paged.swift in Sources */,
 				CB2EF9C31B8DE7260098871B /* Room.swift in Sources */,
+				CB6BC6261BA1B2ED001C303B /* ChatViewController.swift in Sources */,
 				CB3C37721B8DBF5000897344 /* AppDelegate.swift in Sources */,
+				CBB4D7DB1BA1A664001C531D /* QuestionViewController.swift in Sources */,
 				CB9FF80F1B8F4408003A193B /* JSONSerializer.swift in Sources */,
 				CBB60B2F1B9718EC0007A47B /* CreateRoomViewController.swift in Sources */,
 				CB84802B1B9EDB5400D1C230 /* CurrentUser.swift in Sources */,
-				CB0218261B947BDD00DFC9DD /* RoomViewController.swift in Sources */,
 				CB50FD8E1B9708E40003C078 /* TextInputCell.swift in Sources */,
 				CB9FF7C61B8F1401003A193B /* HTTPHandler.swift in Sources */,
 				CB9FF7CC1B8F28B4003A193B /* Answer.swift in Sources */,

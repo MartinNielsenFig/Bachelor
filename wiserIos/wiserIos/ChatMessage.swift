@@ -10,8 +10,14 @@ import Foundation
 
 class ChatMessage {
     var _id: String?
-    var ByUserId: String = ""
-    var RoomId: String = ""
-    var Value: String = ""
-    var Timestamp: String = ""
+    var ByUserId: String?
+    var RoomId: String?
+    var Value: String?
+    var Timestamp: String?
+    
+    convenience init(jsonDictionary: NSDictionary) {
+        self.init()
+        
+        _id = jsonDictionary["_id"] as? String
+    }
 }
