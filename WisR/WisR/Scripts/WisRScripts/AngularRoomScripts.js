@@ -100,7 +100,7 @@ app.controller("RoomController", [
 
         $scope.GetUsernameById=function(userId) {
             var result = $.grep($scope.ActiveUsers, function (e) { return e._id == userId; });
-            if (result == undefined)
+            if (userId == undefined)
                 return "Undefined name";
             return result[0].DisplayName;
         }
@@ -114,10 +114,43 @@ app.controller("RoomController", [
         $scope.ToggleShowQuestionTables = function () {
             $scope.SpecificQuestionShown = !$scope.SpecificQuestionShown;
         }
-        $scope.AddAnswer = function() {
+
+        $scope.getPercentage = function () {
+            if ($scope.SpecificQuestion != undefined) {
+                 return (Date.now()/(($scope.SpecificQuestion.ExpireTimestamp * 1000 * 60) + $scope.SpecificQuestion.CreationTimestamp))*100;
+            }
+           return 0;
+        }
+        //adds answer to specificQuestion
+        $scope.AddAnswer = function () {
             $scope.SpecificQuestion.Result.push($scope.answerChoosen);
            
+            var newResponses = "";
+            for (var i = 0; i < $scope.SpecificQuestion.ResponseOptions.length; i++) {
+                if (i != $scope.SpecificQuestion.ResponseOptions.length - 1) {
+                    newResponses = newResponses + $scope.SpecificQuestion.ResponseOptions[i].Value + ',';
+                } else {
+                    newResponses = newResponses + $scope.SpecificQuestion.ResponseOptions[i].Value;
+                }
         } 
+
+            var newResults = "";
+            for (var i = 0; i < $scope.SpecificQuestion.Result.length; i++) {
+                if (i != $scope.SpecificQuestion.Result.length - 1) {
+                    newResults = newResults + $scope.SpecificQuestion.Result[i].Value + "-" + $window.userId + ',';
+                } else {
+                    newResults = newResults + $scope.SpecificQuestion.Result[i].Value+"-" + $window.userId;
+                }
+            }
+
+            //Make get request for json object conversion
+            $http.post('/Room/toJsonQuestion', {CreatedBy: $scope.SpecificQuestion.CreatedById, RoomId: $scope.SpecificQuestion.RoomId, Downvotes: $scope.SpecificQuestion.Downvotes, Image: $scope.SpecificQuestion.Img, Upvotes: $scope.SpecificQuestion.Upvotes, QuestionText: $scope.SpecificQuestion.QuestionText, ResponseOptions: newResponses, CreationTimestamp: $scope.SpecificQuestion.CreationTimestamp, ExpireTimestamp: $scope.SpecificQuestion.ExpireTimestamp, QuestionResult: newResults, QuetionsType: $scope.SpecificQuestion._t
+            }).
+                then(function (response) {
+                    //Use response to send to REST API
+                    $http.post(configs.restHostName + '/Question/UpdateQuestion', { question: JSON.stringify(response.data), type: $scope.SpecificQuestion._t, id: $scope.SpecificQuestion._id });
+                });
+        }
         //Function for creating a question
         $scope.postQuestion = function () {
 
@@ -131,7 +164,7 @@ app.controller("RoomController", [
 
             }
             //Make get request for json object conversion
-            $http.post('/Room/toJsonQuestion', { CreatedBy: $window.userId, RoomId: MyRoomIdFromViewBag, Downvotes: 0, Image: $scope.questionImage.base64, Upvotes: 0, QuestionText: $scope.QuestionText, ResponseOptions: newResponses, CreationTimestamp: Date.now(), ExpireTimestamp: $scope.ExpirationTime, QuetionsType: $scope.QuestionType }).
+            $http.post('/Room/toJsonQuestion', { CreatedBy: $window.userId, RoomId: MyRoomIdFromViewBag, Downvotes: 0, Image: $scope.questionImage.base64, Upvotes: 0, QuestionText: $scope.QuestionText, ResponseOptions: newResponses, ExpireTime: $scope.ExpirationTime, QuetionsType: $scope.QuestionType }).
                 then(function (response) {
                     //Use response to send to REST API
                     $http.post(configs.restHostName + '/Question/CreateQuestion', { question: JSON.stringify(response.data), type: $scope.QuestionType.val });

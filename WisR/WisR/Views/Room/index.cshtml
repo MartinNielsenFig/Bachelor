@@ -102,6 +102,10 @@
                     </tr>
 
                 </table>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="{{getPercentage()}}" aria-valuemin="0" aria-valuemax="100" ng-style="{width : ( getPercentage() + '%' ) }">
+                    </div>
+                </div>
                 <form>
                     <div ng-repeat="responseOption in SpecificQuestion.ResponseOptions">
                         <label>
@@ -157,30 +161,30 @@
             <div class="modal-content modal-heigh">
                 <div class="modal-body">
                     <form>
-                            <div class="row">
-                                <label class="col-md-6">Question text:</label> <input ng-model="QuestionText" type="text" class="col-md-6" placeholder="Enter Question text" />
-                            </div>
-                            <div class="row">
-                                <label class="col-md-6">Question type:</label>
-                                <select class="col-md-6" ng-model="QuestionType" ng-options="Type.name for Type in QuestionTypes">
-                                    <option value="" disabled selected> Choose type </option>
-                                </select>
-                            </div>
-                            <div ng-show="QuestionType != undefined && QuestionType.val != 'TextualQuestion'" class="row">
-                                <label class="col-md-6">Response options:</label>
-                                <div class="pull-right col-md-6">
-                                    <div ng-repeat="option in ResponseOptions">
-                                        <input ng-model="ResponseOptions[option.id].val" class="col-md-12" type="text" placeholder="Add response options" />
-                                    </div>
+                        <div class="row">
+                            <label class="col-md-6">Question text:</label> <input ng-model="QuestionText" type="text" class="col-md-6" placeholder="Enter Question text" />
+                        </div>
+                        <div class="row">
+                            <label class="col-md-6">Question type:</label>
+                            <select class="col-md-6" ng-model="QuestionType" ng-options="Type.name for Type in QuestionTypes">
+                                <option value="" disabled selected> Choose type </option>
+                            </select>
+                        </div>
+                        <div ng-show="QuestionType != undefined && QuestionType.val != 'TextualQuestion'" class="row">
+                            <label class="col-md-6">Response options:</label>
+                            <div class="pull-right col-md-6">
+                                <div ng-repeat="option in ResponseOptions">
+                                    <input ng-model="ResponseOptions[option.id].val" class="col-md-12" type="text" placeholder="Add response options" />
                                 </div>
                             </div>
-                            <div class="row">
-                                <label class="col-md-6">Picture</label><input type='file' ng-model='questionImage' base-sixty-four-input class="text-center">
-                                <img ng-src="data:image/png;base64,{{questionImage.base64}}" style="max-width: 100px; max-height: 100px" />
-                            </div>
-                            <div class="row">
-                                <label class="col-md-6">Expiration time</label> <input ng-model="ExpirationTime" class="col-md-6" type="number" />
-                            </div>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-6">Picture</label><input type='file' ng-model='questionImage' base-sixty-four-input class="text-center">
+                            <img ng-src="data:image/png;base64,{{questionImage.base64}}" style="max-width: 100px; max-height: 100px" />
+                        </div>
+                        <div class="row">
+                            <label class="col-md-6">Expiration time</label> <input ng-model="ExpirationTime" class="col-md-6" type="number" />
+                        </div>
                         <div class="row">
                             <button id="ModalCreateQuestionButton" type="submit" class="btn btn-md center-block" ng-click="postQuestion()" data-dismiss="modal">Create question</button>
                             <button id="ModalCancelButton" type="button" class="btn btn-md center-block" data-dismiss="modal">Cancel</button>
