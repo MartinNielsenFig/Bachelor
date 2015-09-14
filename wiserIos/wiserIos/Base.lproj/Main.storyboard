@@ -150,18 +150,18 @@
                                 <rect key="frame" x="20" y="80" width="560" height="520"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Question text" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iGH-Ed-X4N">
-                                        <rect key="frame" x="0.0" y="0.0" width="560" height="24"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="560" height="21"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F1H-bP-e2z">
-                                        <rect key="frame" x="0.0" y="32" width="560" height="231"/>
+                                        <rect key="frame" x="0.0" y="29" width="560" height="263"/>
                                         <animations/>
                                     </imageView>
                                     <pickerView contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KDW-Y0-aTM">
-                                        <rect key="frame" x="0.0" y="271" width="560" height="250"/>
+                                        <rect key="frame" x="0.0" y="300" width="560" height="221"/>
                                         <animations/>
                                     </pickerView>
                                 </subviews>
@@ -182,6 +182,7 @@
                     </view>
                     <connections>
                         <outlet property="answerPicker" destination="KDW-Y0-aTM" id="Me2-kK-pNK"/>
+                        <outlet property="questionImage" destination="F1H-bP-e2z" id="t5M-yA-TVw"/>
                         <outlet property="roomName" destination="AEy-f9-Q9z" id="DGV-uU-8nx"/>
                     </connections>
                 </viewController>
@@ -205,6 +206,28 @@
                                 <rect key="frame" x="20" y="105" width="560" height="475"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="QuestionCell" textLabel="R7H-Mg-BCa" style="IBUITableViewCellStyleDefault" id="RnM-TQ-xgY">
+                                        <rect key="frame" x="0.0" y="28" width="560" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="RnM-TQ-xgY" id="neJ-V4-BKJ">
+                                            <rect key="frame" x="0.0" y="0.0" width="560" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="R7H-Mg-BCa">
+                                                    <rect key="frame" x="15" y="0.0" width="530" height="43.5"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <animations/>
+                                        </tableViewCellContentView>
+                                        <animations/>
+                                    </tableViewCell>
+                                </prototypes>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Room Questions" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FVA-hj-XGh">
                                 <rect key="frame" x="237" y="28" width="126" height="21"/>
@@ -228,6 +251,9 @@
                             <constraint firstItem="9NE-cc-uit" firstAttribute="trailing" secondItem="b5Q-4e-LEE" secondAttribute="trailingMargin" id="yGZ-is-R4s"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="questionsTableView" destination="9NE-cc-uit" id="28s-w2-iQD"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PdT-pg-CAA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

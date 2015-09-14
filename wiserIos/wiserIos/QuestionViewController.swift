@@ -13,16 +13,27 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     //Paged
     let pageIndex = 0
 
+    var questions: [Question]?
+    var room: Room?
+    
     @IBOutlet weak var roomName: UILabel!
     @IBOutlet weak var answerPicker: UIPickerView!
+    @IBOutlet weak var questionImage: UIImageView!
     
-    var currentQuestion: Question? = nil
     var pickerData = ["doge", "cate", "marsvin"]
     
     override func viewDidLoad() {
         answerPicker.delegate = self
         answerPicker.dataSource = self
-        
+    }
+    
+    //Called when the room has loaded
+    func roomLoaded() {
+        if let b64Img = (self.parentViewController as! RoomPageViewController).questions[0].Img {
+            let imageData = NSData(base64EncodedString: b64Img, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
+            let image = UIImage(data: imageData!)
+            questionImage.image = image
+        }
     }
     
     //UIPickerViewDelegate

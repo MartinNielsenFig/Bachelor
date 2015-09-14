@@ -22,8 +22,7 @@ class Question {
     var CreationTimestamp: String?
     var ExpireTimestamp: String?
     
-    convenience init(jsonDictionary: NSDictionary) {
-        self.init()
+    init(jsonDictionary: NSDictionary) {
         
         self._id = jsonDictionary["_id"] as? String
         self.RoomId = jsonDictionary["RoomId"] as? String
@@ -58,22 +57,21 @@ class Question {
         self.CreationTimestamp = jsonDictionary["CreationTimestamp"] as? String
         self.ExpireTimestamp = jsonDictionary["ExpireTimestamp"] as? String
     }
-    
-    
 }
 
-class BooleanQuestion {
-    var _id: String?
-    var CreatedById: String = "nooba"
-    var Upvotes: Int = 0
-    var Downvotes: Int = 0
-    var Img: String? = "base64"
-    var QuestionText: String = "dooga"
-    var ResponseOptions: [ResponseOption]?
-    var Result: [Answer]?
-    var ManyBool: String = "swiftenCreated"
+class BooleanQuestion: Question {
+    var ManyBool: String? = "swiftenCreated"
+    override init(jsonDictionary: NSDictionary) {
+        super.init(jsonDictionary: jsonDictionary)
+        self.ManyBool = jsonDictionary["ManyBool"] as? String
+    }
 }
 
 class TextualQuestion: Question {
-    var SpecificText = "swiftenCreated"
+    var SpecificText: String? = "swiftenCreated"
+    
+    override init(jsonDictionary: NSDictionary) {
+        super.init(jsonDictionary: jsonDictionary)
+        self.SpecificText = jsonDictionary["SpecificText"] as? String
+    }
 }
