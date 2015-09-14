@@ -16,7 +16,7 @@ class HttpHandler {
     //http://stackoverflow.com/questions/25341858/perform-post-request-in-ios-swift
     
     //If room is is nil, get's all questions
-    static func getQuestions(completionHandler: (inout questions: [Question]) -> Void, roomId: String?) {
+    static func getQuestions(roomId: String?, completionHandler: (inout questions: [Question]) -> Void) {
         let session = NSURLSession.sharedSession()
         
         var url: NSURL

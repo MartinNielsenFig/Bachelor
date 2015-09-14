@@ -17,10 +17,9 @@ class RoomTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //var rooms = [Room]()
         HttpHandler.getRooms(
             {
-                newRooms in
+                (inout newRooms: [Room]) in
                 NSLog("callback completed: ")
                 
                 self.rooms += self.filterRoomsByLocation(newRooms, metersRadius: 1000)

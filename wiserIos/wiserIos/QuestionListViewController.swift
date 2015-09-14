@@ -8,20 +8,43 @@
 
 import UIKit
 
-class QuestionListViewController: UIViewController, Paged {
+class QuestionListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, Paged {
     
-    //Gets instantiated
-    var room: Room? = nil
+    //Gets instantiated by RoomPageViewController
+    var questions: [Question]?
+    var room: Room?
     
     let pageIndex = 1
+    @IBOutlet weak var questionsTableView: UITableView!
+    
+    func questionsDidLoad() {
+        self.questions = (self.parentViewController as! RoomPageViewController).questions
+        self.questionsTableView.reloadData()
+    }
     
     override func viewDidLoad() {
-        HttpHandler.getQuestions(
-            {
-                newQuestions in
-                for q in newQuestions {
-                    print(q)
-                }
-            }, roomId: room?._id)
+        
+        questionsTableView.delegate = self
+        questionsTableView.dataSource = self
     }
+    
+    //UITableViewDelegate
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return questions!.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cellIdentifier = "QuestionCell"
+        let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath)
+        
+        let question = questions![indexPath.row]
+        
+        cell.textLabel?.text = question.QuestionText
+        return cell
+    }
+    
 }
