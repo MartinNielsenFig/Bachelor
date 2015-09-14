@@ -44,10 +44,14 @@ namespace WisRRestAPI.Controllers
             
         }
 
-        [System.Web.Mvc.HttpGet]
+        [System.Web.Mvc.HttpPost]
         public string GetById(string id)
         {
-            var item = _ur.GetUser(id);
+            if (id == null)
+            {
+                return "No user with null as id";
+            }
+            var item = _ur.GetUser(id).Result;
             if (item == null)
             {
                 return "Not found";

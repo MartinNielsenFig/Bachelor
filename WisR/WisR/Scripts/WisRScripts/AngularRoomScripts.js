@@ -4,7 +4,7 @@ app.directive('ngEnter', function () {
     return function (scope, element, attrs) {
         element.bind("keydown", function (e) {
             //Check that enter key is hit and that shift key is not(shift to add row to message)
-            if (e.which === 13&& !window.event.shiftKey) {
+            if (e.which === 13 && !window.event.shiftKey) {
                 scope.$apply(function () {
                     scope.$eval(attrs.ngEnter, { 'e': e });
                 });
@@ -13,6 +13,15 @@ app.directive('ngEnter', function () {
         });
     };
 });
+
+app.filter('userFilter', function () {
+    return function (userId, scope) {
+        var username = scope.getUserNameById(userId);
+        return username.then();
+    };
+});
+
+
 
 app.controller("RoomController", [
     '$scope', '$http', 'configs', '$window', function ($scope, $http, configs, $window) {
@@ -42,23 +51,23 @@ app.controller("RoomController", [
         $scope.$watch(
                 function () {
                     return $window.userId;
-                 }, function (n, o) {
-                $scope.userId = n;
-            }
+                }, function (n, o) {
+                    $scope.userId = n;
+                }
 );
         //watch the questionImage.filesize variable
         $scope.$watch(
                 function () {
                     return $scope.questionImage;
                 }, function (n, o) {
-                if (n != undefined) {
-                    if (n.filesize > 1049000) {
-                        alert("File is too big");
-                        $scope.questionImage.base64 = "R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==";
+                    if (n != undefined) {
+                        if (n.filesize > 1049000) {
+                            alert("File is too big");
+                            $scope.questionImage.base64 = "R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==";
+                        }
+
                     }
 
-                }
-               
                 }
 );
 
@@ -78,7 +87,7 @@ app.controller("RoomController", [
             });
         };
         getRoom();
-        var getChatMessages = function() {
+        var getChatMessages = function () {
             $http.post(configs.restHostName + '/Chat/GetAllByRoomId', { roomId: MyRoomIdFromViewBag }).then(function (response) {
                 $scope.ChatMessages = response.data;
             });
@@ -87,11 +96,24 @@ app.controller("RoomController", [
         $scope.userIsHost = false;
         $scope.SpecificQuestionShown = false;
         $scope.QuestionTypes = [{ name: 'Boolean Question', val: 'BooleanQuestion' }, { name: 'Textual Question', val: 'TextualQuestion' }];
+        $scope.ActiveUsers = [];
 
-        $scope.ResponseOptions = [{ id:0, val: undefined }, { id: 1, val: undefined }];
-       
-        
-        
+        $scope.ResponseOptions = [{ id: 0, val: undefined }, { id: 1, val: undefined }];
+        //Function for retrieving userName by an id
+        $scope.getUserNameById = function (userId) {
+            if ($scope.ActiveUsers.length!=0)
+                var result = $.grep($scope.ActiveUsers, function (e) { return e.id == userId; });
+            if (result == undefined) {
+                return $http.post(configs.restHostName + '/User/GetById', { id: userId }).then(function (response) {
+                    $scope.ActiveUsers.push(response.data);
+                    return response.userName;
+                });
+
+            }
+        }
+
+
+
         //function for showing a specific question
         $scope.ShowSpecificQuestion = function (question) {
             $scope.ToggleShowQuestionTables();
@@ -106,12 +128,12 @@ app.controller("RoomController", [
 
             var newResponses = "";
             for (var i = 0; i < $scope.ResponseOptions.length; i++) {
-                if (i != $scope.ResponseOptions.length-1) {
+                if (i != $scope.ResponseOptions.length - 1) {
                     newResponses = newResponses + $scope.ResponseOptions[i].val + ',';
                 } else {
                     newResponses = newResponses + $scope.ResponseOptions[i].val;
                 }
-                
+
             }
             //Make get request for json object conversion
             $http.post('/Room/toJsonQuestion', { CreatedBy: $window.userId, RoomId: MyRoomIdFromViewBag, Downvotes: 0, Image: $scope.questionImage.base64, Upvotes: 0, QuestionText: $scope.QuestionText, ResponseOptions: newResponses, CreationTimestamp: Date.now(), ExpireTimestamp: $scope.ExpirationTime, QuetionsType: $scope.QuestionType }).
