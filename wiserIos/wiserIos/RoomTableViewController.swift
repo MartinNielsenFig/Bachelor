@@ -17,7 +17,6 @@ class RoomTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //var rooms = [Room]()
         HttpHandler.getRooms(
             {
                 newRooms in
