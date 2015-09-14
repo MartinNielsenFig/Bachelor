@@ -30,7 +30,7 @@
                     <tbody>
                         <tr style="cursor: pointer" ng-repeat="question in Questions|filter: { RoomId: '@ViewBag.roomId',CreatedById: CurrentRoom.CreatedById } " ng-click="ShowSpecificQuestion(question)">
                             <td>{{question.QuestionText}}</td>
-                            <td>{{question.CreatedById}}</td>
+                            <td>{{GetUsernameById(question.CreatedById)}}</td>
                             <td>{{question.Upvotes}}<span class="glyphicon glyphicon-thumbs-up"></span></td>
                             <td>{{question.Downvotes}}<span class="glyphicon glyphicon-thumbs-down"></span></td>
                             <td><img ng-src="data:image/png;base64,{{question.Img}}" style="max-width: 100px; max-height: 100px" /></td>
@@ -60,7 +60,7 @@
                         <tbody>
                             <tr style="cursor: pointer" ng-repeat="question in Questions|filter: { RoomId: '@ViewBag.roomId',CreatedById: '!'+CurrentRoom.CreatedById  } " ng-click="ShowSpecificQuestion(question)">
                                 <td>{{question.QuestionText}}</td>
-                                <td>{{question.CreatedById}}</td>
+                                <td>{{GetUsernameById(question.CreatedById)}}</td>
                                 <td>{{question.Upvotes}}<span class="glyphicon glyphicon-thumbs-up"></span></td>
                                 <td>{{question.Downvotes}}<span class="glyphicon glyphicon-thumbs-down"></span></td>
                                 <td><img ng-src="data:image/png;base64,{{question.Img}}" style="max-width: 100px; max-height: 100px" /></td>
@@ -95,7 +95,7 @@
                     </tr>
                     <tr>
                         <td>{{SpecificQuestion.QuestionText}}</td>
-                        <td>{{SpecificQuestion.CreatedById}}</td>
+                        <td>{{GetUsernameById(SpecificQuestion.CreatedById)}}</td>
                         <td>{{SpecificQuestion.Upvotes}}<span class="glyphicon glyphicon-thumbs-up"></span></td>
                         <td>{{SpecificQuestion.Downvotes}}<span class="glyphicon glyphicon-thumbs-down"></span></td>
                         <td><img ng-src="data:image/png;base64,{{SpecificQuestion.Img}}" style="max-width: 100px; max-height: 100px" /></td>
@@ -123,7 +123,7 @@
                             <div ng-repeat="chatMessage in ChatMessages" class="media msg">
                                 <div class="media-body">
                                     <small class="pull-right time"><i class="fa fa-clock-o"></i> {{chatMessage.Timestamp*1000| date:'HH:mm:ss dd/MM-yyyy'}}</small>
-                                    <h5 class="media-heading">{{chatMessage.ByUserId|userFilter:this}}</h5>
+                                    <h5 class="media-heading">{{GetUsernameById(chatMessage.ByUserId)}}</h5>
                                     <small class="col-lg-10">{{chatMessage.Value}}</small>
                                 </div>
                             </div>

@@ -14,15 +14,6 @@ app.directive('ngEnter', function () {
     };
 });
 
-app.filter('userFilter', function () {
-    return function (userId, scope) {
-        var username = scope.getUserNameById(userId);
-        return username.then();
-    };
-});
-
-
-
 app.controller("RoomController", [
     '$scope', '$http', 'configs', '$window', function ($scope, $http, configs, $window) {
         //Connect to SignalR hub and wait for chat messages
@@ -100,18 +91,19 @@ app.controller("RoomController", [
 
         $scope.ResponseOptions = [{ id: 0, val: undefined }, { id: 1, val: undefined }];
         //Function for retrieving userName by an id
-        $scope.getUserNameById = function (userId) {
-            if ($scope.ActiveUsers.length!=0)
-                var result = $.grep($scope.ActiveUsers, function (e) { return e.id == userId; });
-            if (result == undefined) {
-                return $http.post(configs.restHostName + '/User/GetById', { id: userId }).then(function (response) {
-                    $scope.ActiveUsers.push(response.data);
-                    return response.userName;
+        var getAllUsers = function () {
+                $http.get(configs.restHostName + '/User/GetAll').then(function(result) {
+                    $scope.ActiveUsers = result.data;
                 });
-
-            }
         }
+        getAllUsers();
 
+        $scope.GetUsernameById=function(userId) {
+            var result = $.grep($scope.ActiveUsers, function (e) { return e._id == userId; });
+            if (result == undefined)
+                return "Undefined name";
+            return result[0].DisplayName;
+        }
 
 
         //function for showing a specific question

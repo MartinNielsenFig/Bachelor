@@ -22,13 +22,14 @@ namespace WisRRestAPI.Providers
         public rabbitHandler()
         {
             ConnectionFactory factory = new ConnectionFactory();
+            factory.RequestedHeartbeat = 30;
             //factory.Protocol = Protocols.FromEnvironment();
             factory.Uri = ConfigurationManager.AppSettings["rabbitMqHost"];
             _conn = factory.CreateConnection();
             _model = _conn.CreateModel();
             _model.QueueDeclare(queue: "Wisr",
-                                 durable: false,
-                                 exclusive: false,
+                                 durable: true,
+                                 exclusive:false,
                                  autoDelete: false,
                                  arguments: null);
             routingKeyList = new List<string>();
@@ -70,7 +71,7 @@ namespace WisRRestAPI.Providers
             _consumer =new EventingBasicConsumer(_model);
             _consumer.Received += handle;
             _model.QueueBind("Wisr","exchangeFromVisualStudio",routingKey);
-            _model.BasicConsume("Wisr", true, _consumer);
+            _model.BasicConsume("Wisr",false, _consumer);
             isSubscribed = true;
             routingKeyList.Add(routingKey);
         }
@@ -95,6 +96,7 @@ namespace WisRRestAPI.Providers
                     chatHub.Send(message);
                     break;
             }
+            _model.BasicAck(ea.DeliveryTag,false);
 
         }
     }
