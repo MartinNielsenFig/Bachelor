@@ -31,9 +31,9 @@
                         <tr style="cursor: pointer" ng-repeat="question in Questions|filter: { RoomId: '@ViewBag.roomId',CreatedById: CurrentRoom.CreatedById } " ng-click="ShowSpecificQuestion(question)">
                             <td>{{question.QuestionText}}</td>
                             <td>{{question.CreatedById}}</td>
-                            <td>{{question.Upvotes}}</td>
-                            <td>{{question.Downvotes}}</td>
-                            <td>{{question.Img}}</td>
+                            <td>{{question.Upvotes}}<span class="glyphicon glyphicon-thumbs-up"></span></td>
+                            <td>{{question.Downvotes}}<span class="glyphicon glyphicon-thumbs-down"></span></td>
+                            <td><img ng-src="data:image/png;base64,{{question.Img}}" style="max-width: 100px; max-height: 100px" /></td>
                     </tbody>
                 </table>
                 <div ng-show="CurrentRoom.UsersCanAsk">
@@ -61,9 +61,9 @@
                             <tr style="cursor: pointer" ng-repeat="question in Questions|filter: { RoomId: '@ViewBag.roomId',CreatedById: '!'+CurrentRoom.CreatedById  } " ng-click="ShowSpecificQuestion(question)">
                                 <td>{{question.QuestionText}}</td>
                                 <td>{{question.CreatedById}}</td>
-                                <td>{{question.Upvotes}}</td>
-                                <td>{{question.Downvotes}}</td>
-                                <td>{{question.Img}}</td>
+                                <td>{{question.Upvotes}}<span class="glyphicon glyphicon-thumbs-up"></span></td>
+                                <td>{{question.Downvotes}}<span class="glyphicon glyphicon-thumbs-down"></span></td>
+                                <td><img ng-src="data:image/png;base64,{{question.Img}}" style="max-width: 100px; max-height: 100px" /></td>
                         </tbody>
                     </table>
                 </div>
@@ -96,8 +96,8 @@
                     <tr>
                         <td>{{SpecificQuestion.QuestionText}}</td>
                         <td>{{SpecificQuestion.CreatedById}}</td>
-                        <td>{{SpecificQuestion.Upvotes}}</td>
-                        <td>{{SpecificQuestion.Downvotes}}</td>
+                        <td>{{SpecificQuestion.Upvotes}}<span class="glyphicon glyphicon-thumbs-up"></span></td>
+                        <td>{{SpecificQuestion.Downvotes}}<span class="glyphicon glyphicon-thumbs-down"></span></td>
                         <td><img ng-src="data:image/png;base64,{{SpecificQuestion.Img}}" style="max-width: 100px; max-height: 100px" /></td>
                     </tr>
 
@@ -126,7 +126,7 @@
                                     <h5 class="media-heading">{{chatMessage.ByUserId}}</h5>
                                     <small class="col-lg-10">{{chatMessage.Value}}</small>
                                 </div>
-                            </div>                        
+                            </div>
 
                         </div>
 
@@ -160,12 +160,12 @@
                             <div class="row">
                                 <label class="col-md-6">Question type:</label>
                                 <select class="col-md-6" ng-model="QuestionType" ng-options="Type.name for Type in QuestionTypes">
-                                    <option value=""disabled selected> Choose type </option>
+                                    <option value="" disabled selected> Choose type </option>
                                 </select>
                             </div>
                             <div ng-show="QuestionType != undefined && QuestionType.val != 'TextualQuestion'" class="row">
                                 <label class="col-md-6">Response options:</label>
-                                <div  ng-repeat="option in ResponseOptions">
+                                <div ng-repeat="option in ResponseOptions">
                                     <input ng-model="ResponseOptions[option.id].val" class="col-md-6" type="text" placeholder="Add response options" />
                                 </div>
                             </div>
@@ -174,7 +174,7 @@
                                 <img ng-src="data:image/png;base64,{{questionImage.base64}}" style="max-width: 100px; max-height: 100px" />
                             </div>
                             <div class="row">
-                                <label class="col-md-6">Expiration time</label> <input ng-model="ExpirationTime" class="col-md-6" type="number"/>
+                                <label class="col-md-6">Expiration time</label> <input ng-model="ExpirationTime" class="col-md-6" type="number" />
                             </div>
                         </div>
                         <div class="row">

@@ -1,0 +1,6 @@
+RabbitMQ
+Dependency injection
+Problemer med access-allow-origin(chrome + azure problemer)
+SignalR
+AngularJS
+RestAPI
