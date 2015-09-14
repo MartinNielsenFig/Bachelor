@@ -10,6 +10,5 @@ import Foundation
 
 protocol Paged {
     var pageIndex: Int { get }
-    var questions: [Question]? { get }
-    var room: Room? { get }
+    var roomId: String { get }
 }

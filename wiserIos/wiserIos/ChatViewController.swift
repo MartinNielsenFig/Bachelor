@@ -10,10 +10,9 @@ import UIKit
 
 class ChatViewController: UIViewController, Paged {
     let pageIndex = 2
-    @IBOutlet weak var chatTextField: UITextView!
+    var roomId = String()
 
-    var questions: [Question]?
-    var room: Room?
+    @IBOutlet weak var chatTextField: UITextView!
     
     override func viewDidLoad() {
         chatTextField.text! += "hello"

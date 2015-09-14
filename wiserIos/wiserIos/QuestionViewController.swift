@@ -12,9 +12,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     
     //Paged
     let pageIndex = 0
-
-    var questions: [Question]?
-    var room: Room?
+    var roomId = String()
     
     @IBOutlet weak var roomName: UILabel!
     @IBOutlet weak var answerPicker: UIPickerView!
@@ -27,14 +25,14 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         answerPicker.dataSource = self
     }
     
-    //Called when the room has loaded
-    func roomLoaded() {
+    //TODO
+    /*func loadImage() {
         if let b64Img = (self.parentViewController as! RoomPageViewController).questions[0].Img {
             let imageData = NSData(base64EncodedString: b64Img, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
             let image = UIImage(data: imageData!)
             questionImage.image = image
         }
-    }
+    }*/
     
     //UIPickerViewDelegate
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
