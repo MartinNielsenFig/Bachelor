@@ -125,7 +125,7 @@
                         <div class="msg-wrap">
                             <div ng-repeat="chatMessage in ChatMessages" class="media msg">
                                 <div class="media-body">
-                                    <small class="pull-right time"><i class="fa fa-clock-o"></i> {{chatMessage.Timestamp*1000| date:'HH:mm:ss dd/MM-yyyy'}}</small>
+                                    <small class="pull-right time"><i class="fa fa-clock-o"></i> {{chatMessage.Timestamp*1| date:'HH:mm:ss dd/MM-yyyy'}}</small>
                                     <h5 class="media-heading">{{GetUsernameById(chatMessage.ByUserId)}}</h5>
                                     <small class="col-lg-10">{{chatMessage.Value}}</small>
                                 </div>
