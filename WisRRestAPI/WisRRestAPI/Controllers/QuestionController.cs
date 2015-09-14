@@ -15,19 +15,23 @@ using WisR.DomainModels;
 using WisRRestAPI.DomainModel;
 using WisRRestAPI.Providers;
 
-namespace WisRRestAPI.Controllers {
-    public class QuestionController : Controller {
+namespace WisRRestAPI.Controllers
+{
+    public class QuestionController : Controller
+    {
         private readonly IQuestionRepository _qr;
         private readonly JavaScriptSerializer _jsSerializer;
         private readonly IrabbitHandler _rabbitHandler;
-        public QuestionController(IQuestionRepository qr, IrabbitHandler rabbitHandler) {
+        public QuestionController(IQuestionRepository qr, IrabbitHandler rabbitHandler)
+        {
             _qr = qr;
             _jsSerializer = new JavaScriptSerializer();
             _rabbitHandler = rabbitHandler;
         }
 
         [System.Web.Mvc.HttpGet]
-        public string GetAll() {
+        public string GetAll()
+        {
             var questions = _qr.GetAllQuestions();
 
             return questions.Result.ToJson();
@@ -35,24 +39,32 @@ namespace WisRRestAPI.Controllers {
 
 
         [System.Web.Mvc.HttpPost]
-        public string CreateQuestion(string question, string type) {
+        public string CreateQuestion(string question, string type)
+        {
             Type questionType;
-            try {
+            try
+            {
                 string typeString = "WisR.DomainModels." + type;
                 questionType = Type.GetType(typeString);
-            } catch (Exception) {
+            }
+            catch (Exception)
+            {
                 return "Could not determine type from string: " + type;
             }
 
             object b;
             Question q;
-            try {
+            try
+            {
                 b = BsonSerializer.Deserialize(question, questionType);
                 q = (Question)b;
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 return "Could not deserialize the JSON string: " + question;
             }
-            if (q.Id != null) {
+            if (q.Id != null)
+            {
                 return "New question should have id of null";
             }
             try
@@ -64,37 +76,51 @@ namespace WisRRestAPI.Controllers {
                 return "Could not publish to rabbitMQ";
             }
             q.Id = ObjectId.GenerateNewId(DateTime.Now).ToString();
-                _qr.AddQuestionObject(b);
-                return "Question saved with id: " + q.Id;
+            //q.CreationTimestamp = DateTime.UtcNow.
+            _qr.AddQuestionObject(b);
+            return "Question saved with id: " + q.Id;
+
+        }
+        [System.Web.Mvc.HttpPost]
+        public void UpdateQuestion(string question, string type, string id)
+        {
+            Type questionType;
+
+            string typeString = "WisR.DomainModels." + type;
+            questionType = Type.GetType(typeString);
             
+            object b;
+            Question q;
+
+            b = BsonSerializer.Deserialize(question, questionType);
+            q = (Question)b;
+            q.Id = id;
+            _qr.UpdateQuestion(id, q);
         }
 
         [System.Web.Mvc.HttpGet]
-        public string GetById(string id) {
+        public string GetById(string id)
+        {
             var item = _qr.GetQuestion(id);
-            if (item == null) {
+            if (item == null)
+            {
                 return "Not found";
             }
 
             return item.ToJson();
         }
         [System.Web.Mvc.HttpDelete]
-        public string DeleteQuestion(string id) {
+        public string DeleteQuestion(string id)
+        {
             var result = _qr.RemoveQuestion(id).Result;
-            if (result.DeletedCount == 1) {
+            if (result.DeletedCount == 1)
+            {
                 return "IQuestion was deleted";
             }
             return "Couldn't find question to delete";
         }
 
-        public void MakeQuestion() {
-            //Insert different interface implementations
-            var q0 = new BooleanQuestion();
-            var q1 = new TextualQuestion();
-
-            _qr.AddQuestion(q0);
-            _qr.AddQuestion(q1);
-            Console.WriteLine("Finished saving");
-        }
+       
     }
+   
 }

@@ -30,17 +30,27 @@ namespace WisR.Controllers
             ViewBag.roomId = roomId;
             return View();
         }
-        public string toJsonQuestion(string CreatedBy,string RoomId, int Downvotes, string Image, int Upvotes, string QuestionText, string ResponseOptions, string CreationTimestamp, string ExpireTimestamp, string QuetionsType)
+        public string toJsonQuestion(string CreatedBy, string RoomId, int Downvotes, string Image, int Upvotes, string QuestionText, string ResponseOptions, string QuestionResult, string CreationTimestamp, string ExpireTimestamp, string QuetionsType)
         {
-          
+
             var question = new BooleanQuestion();
 
             var tempList = new List<ResponseOption>();
 
             foreach (var response in ResponseOptions.Split(','))
             {
-                tempList.Add(new ResponseOption() {Value = response});
+                tempList.Add(new ResponseOption() { Value = response });
             }
+            var tempListResult = new List<Answer>();
+            if (QuestionResult != null)
+            {
+                foreach (var result in QuestionResult.Split(','))
+                {
+                    var tempResult = result.Split('-');
+                    tempListResult.Add(new Answer(){ Value = tempResult[0],UserId = tempResult[1]});
+                }
+            }
+
 
             question.CreatedById = CreatedBy;
             question.RoomId = RoomId;
@@ -50,12 +60,12 @@ namespace WisR.Controllers
             question.QuestionText = QuestionText;
             question.ResponseOptions = tempList;
             question.CreationTimestamp = CreationTimestamp;
-            question.Result=new List<Answer>();
-            question.ExpireTimestamp=ExpireTimestamp;
+            question.Result = tempListResult;
+            question.ExpireTimestamp = ExpireTimestamp;
 
             return question.ToJson(); ;
         }
-        public string toJsonChatMessage(string userId,string roomId,string text)
+        public string toJsonChatMessage(string userId, string roomId, string text)
         {
             var chatMessage = new ChatMessage();
             chatMessage.ByUserId = userId;
