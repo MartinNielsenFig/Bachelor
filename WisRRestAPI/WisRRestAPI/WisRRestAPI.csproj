@@ -220,6 +220,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\WisR\WisR\Hubs\ChatHub.cs">
+      <Link>Hubs\ChatHub.cs</Link>
+    </Compile>
+    <Compile Include="..\..\WisR\WisR\Hubs\QuestionHub.cs">
+      <Link>Hubs\QuestionHub.cs</Link>
+    </Compile>
     <Compile Include="..\..\WisR\WisR\Hubs\RoomCreationHub.cs">
       <Link>Hubs\RoomCreationHub.cs</Link>
     </Compile>

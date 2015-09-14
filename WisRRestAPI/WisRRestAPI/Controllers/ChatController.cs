@@ -16,10 +16,13 @@ namespace WisRRestAPI.Controllers
     {
         private readonly IChatRepository _cr;
         private readonly JavaScriptSerializer _jsSerializer;
-        public ChatController(IChatRepository cr)
+        private IrabbitHandler _rabbitHandler;
+
+        public ChatController(IChatRepository cr, IrabbitHandler rabbitHandler)
         {
             _cr = cr;
             _jsSerializer = new JavaScriptSerializer();
+            _rabbitHandler = rabbitHandler;
         }
 
         [System.Web.Mvc.HttpGet]
@@ -50,6 +53,14 @@ namespace WisRRestAPI.Controllers
             }
             //assign ID to room
             chatMsg.Id = ObjectId.GenerateNewId(DateTime.Now).ToString();
+            try
+            {
+                _rabbitHandler.publishString("CreateChatMessage", chatMsg.ToJson());
+            }
+            catch (Exception e)
+            {
+                return "Could not publish to rabbitMQ";
+            }
             return _cr.AddChatMessage(chatMsg);
         }
 

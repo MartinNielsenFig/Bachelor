@@ -255,6 +255,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Hubs\ChatHub.cs" />
+    <Compile Include="Hubs\QuestionHub.cs" />
     <Compile Include="Hubs\RoomCreationHub.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -300,6 +302,7 @@
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\jquery.signalR-2.2.0.js" />
     <Content Include="Scripts\jquery.signalR-2.2.0.min.js" />
+    <Content Include="Scripts\scrollglue.js" />
     <Content Include="Scripts\WisRScripts\AngularHomeScripts.js" />
     <Content Include="Scripts\WisRScripts\AngularRoomScripts.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -308,6 +311,9 @@
     <Content Include="Content\fonts\fontawesome-webfont.woff" />
     <Content Include="Content\fonts\fontawesome-webfont.ttf" />
     <Content Include="Content\fonts\fontawesome-webfont.eot" />
+    <None Include=".bin\bower.cmd" />
+    <None Include=".bin\git.cmd" />
+    <None Include=".bin\node.cmd" />
     <None Include="Properties\PublishProfiles\WisR - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\WisR - Web Deploy.pubxml" />
     <Content Include="Scripts\WisRScripts\Config.js" />

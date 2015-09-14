@@ -9,37 +9,7 @@
             <div class="col-md-8">
                 <h4>Host questions</h4>
                 <table id="hostQuestionsTable" class="table table-hover table-responsive table-bordered">
-                    <thead>
-                        <tr>
-                            <th>
-                                Question text
-                            </th>
-                            <th>
-                                Created by
-                            </th>
-                            <th>
-                                Upvotes
-                            </th>
-                            <th>
-                                Downvotes
-                            </th>
-                            <th>
-                                Image
-                            </th>
-                    </thead>
-                    <tbody>
-                        <tr style="cursor: pointer" ng-repeat="question in Questions|filter: { RoomId: '@ViewBag.roomId',CreatedById: CurrentRoom.CreatedById } " ng-click="ShowSpecificQuestion(question)">
-                            <td>{{question.QuestionText}}</td>
-                            <td>{{question.CreatedById}}</td>
-                            <td>{{question.Upvotes}}<span class="glyphicon glyphicon-thumbs-up"></span></td>
-                            <td>{{question.Downvotes}}<span class="glyphicon glyphicon-thumbs-down"></span></td>
-                            <td><img ng-src="data:image/png;base64,{{question.Img}}" style="max-width: 100px; max-height: 100px" /></td>
-                    </tbody>
-                </table>
-                <div ng-show="CurrentRoom.UsersCanAsk">
-                    <h4>User questions</h4>
-                    <table id="userQuestionsTable" class="table table-hover table-responsive table-bordered">
-                        <thead>
+                    @*<thead>
                             <tr>
                                 <th>
                                     Question text
@@ -56,7 +26,37 @@
                                 <th>
                                     Image
                                 </th>
-                        </thead>
+                        </thead>*@
+                    <tbody>
+                        <tr style="cursor: pointer" ng-repeat="question in Questions|filter: { RoomId: '@ViewBag.roomId',CreatedById: CurrentRoom.CreatedById } " ng-click="ShowSpecificQuestion(question)">
+                            <td>{{question.QuestionText}}</td>
+                            <td>{{question.CreatedById}}</td>
+                            <td>{{question.Upvotes}}<span class="glyphicon glyphicon-thumbs-up"></span></td>
+                            <td>{{question.Downvotes}}<span class="glyphicon glyphicon-thumbs-down"></span></td>
+                            <td><img ng-src="data:image/png;base64,{{question.Img}}" style="max-width: 100px; max-height: 100px" /></td>
+                    </tbody>
+                </table>
+                <div ng-show="CurrentRoom.UsersCanAsk">
+                    <h4>User questions</h4>
+                    <table id="userQuestionsTable" class="table table-hover table-responsive table-bordered">
+                        @*<thead>
+                                <tr>
+                                    <th>
+                                        Question text
+                                    </th>
+                                    <th>
+                                        Created by
+                                    </th>
+                                    <th>
+                                        Upvotes
+                                    </th>
+                                    <th>
+                                        Downvotes
+                                    </th>
+                                    <th>
+                                        Image
+                                    </th>
+                            </thead>*@
                         <tbody>
                             <tr style="cursor: pointer" ng-repeat="question in Questions|filter: { RoomId: '@ViewBag.roomId',CreatedById: '!'+CurrentRoom.CreatedById  } " ng-click="ShowSpecificQuestion(question)">
                                 <td>{{question.QuestionText}}</td>
@@ -114,19 +114,19 @@
                 </form>
             </div>
         </div>
-        @* Chat code found at: http://bootsnipp.com/snippets/featured/chat *@
+        @* Chat template found at: http://bootsnipp.com/snippets/featured/chat *@
         <div class="col-md-4" ng-show="CurrentRoom.HasChat">
             <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
-            <div class="container" style="overflow-y: auto; max-height: 500px">
+            @*Scroll glue keeps scroll bar at same location, found at: https://github.com/Luegg/angularjs-scroll-glue*@
+            <div class="container fa-border" style="overflow-x: hidden;overflow-y: auto; max-height: 500px; min-height: 500px" scroll-glue>
 
                 <div class="row">
                     <div class="message-wrap col-lg-8">
                         <div class="msg-wrap">
                             <div ng-repeat="chatMessage in ChatMessages" class="media msg">
                                 <div class="media-body">
-                                    <small class="pull-right time"><i class="fa fa-clock-o"></i> {{chatMessage.Timestamp}}</small>
-
-                                    <h5 class="media-heading">{{chatMessage.ByUserId}}</h5>
+                                    <small class="pull-right time"><i class="fa fa-clock-o"></i> {{chatMessage.Timestamp*1000| date:'HH:mm:ss dd/MM-yyyy'}}</small>
+                                    <h5 class="media-heading">{{chatMessage.ByUserId|userFilter:this}}</h5>
                                     <small class="col-lg-10">{{chatMessage.Value}}</small>
                                 </div>
                             </div>
@@ -137,14 +137,15 @@
                     </div>
                 </div>
             </div>
+
             <div class="send-wrap ">
 
-                <textarea ng-model="textAreaModel" class="form-control send-message" rows="3" placeholder="Write a reply..."></textarea>
+                <textarea ng-enter="postChatMessage(textAreaModel)" ng-model="textAreaModel" class="form-control send-message" rows="3" placeholder="Write a reply..."></textarea>
 
 
             </div>
             <div class="btn-panel">
-                <button class="btn btn-primary" ng-click="postChatMessage(textAreaModel)">Send message</button>
+                <button type="submit" class="btn btn-primary" ng-click="postChatMessage(textAreaModel)">Send message</button>
             </div>
         </div>
 
