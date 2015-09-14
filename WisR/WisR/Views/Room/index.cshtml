@@ -98,21 +98,24 @@
                         <td>{{SpecificQuestion.CreatedById}}</td>
                         <td>{{SpecificQuestion.Upvotes}}<span class="glyphicon glyphicon-thumbs-up"></span></td>
                         <td>{{SpecificQuestion.Downvotes}}<span class="glyphicon glyphicon-thumbs-down"></span></td>
-                        <td><img ng-src="data:image/png;base64,{{SpecificQuestion.Img}}" style="max-width: 100px; max-height: 100px" /></td>
+                        <td><img ng-src="data:image/png;base64,{{SpecificQuestion.Img}}" style="max-width: 100px; max-height: 100px"/></td>
                     </tr>
 
                 </table>
-                <form>
-                    <div ng-repeat="responseOption in SpecificQuestion.ResponseOptions">
-                        <label>
-                            <input type="radio" ng-model="$parent.answerChoosen" ng-value="{{responseOption}}">
-                            {{responseOption.Value}}
-                        </label>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="{{getPercentage()}}" aria-valuemin="0" aria-valuemax="100" ng-style="{width : ( getPercentage() + '%' ) }">
                     </div>
+                </div>
+                    <form>
+                        <div ng-repeat="responseOption in SpecificQuestion.ResponseOptions">
+                            <label>
+                                <input type="radio" ng-model="$parent.answerChoosen" ng-value="{{responseOption}}">
+                                {{responseOption.Value}}
+                            </label>
+                        </div>
 
-                    <button class="btn btn-primary" ng-click="AddAnswer()">Submit</button><button style="float: right" class="btn btn-primary" ng-click="ToggleShowQuestionTables()">Back to questions</button>
-                </form>
-            </div>
+                        <button class="btn btn-primary" ng-click="AddAnswer()">Submit</button><button style="float: right" class="btn btn-primary" ng-click="ToggleShowQuestionTables()">Back to questions</button>
+                    </form>
         </div>
         @* Chat template found at: http://bootsnipp.com/snippets/featured/chat *@
         <div class="col-md-4" ng-show="CurrentRoom.HasChat">
