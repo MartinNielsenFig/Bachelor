@@ -24,7 +24,7 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
         //Set initial page
         let startVC = viewControllerAtIndex(0)!
         pageViewController.setViewControllers([startVC], direction: .Forward, animated: true, completion: nil)
-        pageViewController.view.frame = CGRect(x: 0, y: 30, width: view.frame.size.width, height: view.frame.size.height - 60)
+        pageViewController.view.frame = CGRect(x: 0, y: 30, width: view.frame.size.width, height: view.frame.size.height - 30)
         
         //Add it to the current viewcontroller
         addChildViewController(pageViewController)
@@ -35,11 +35,18 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     
     func viewControllerAtIndex(index: Int) -> UIViewController? {
         if index == 0 {
-            let questionsViewController = storyboard?.instantiateViewControllerWithIdentifier("QuestionViewController") as! QuestionViewController
-            return questionsViewController
+            let currentQuestionViewController = storyboard?.instantiateViewControllerWithIdentifier("QuestionViewController") as! QuestionViewController
+            //Get current question from room
+            let id = room?._id
+            
+            //Give it to currentQuestionViewController
+            
+            
+            return currentQuestionViewController
         }
         else if index == 1 {
             let questionListViewController = storyboard?.instantiateViewControllerWithIdentifier("QuestionListViewController") as! QuestionListViewController
+            questionListViewController.room = self.room
             return questionListViewController
         }
         else if index == 2 {

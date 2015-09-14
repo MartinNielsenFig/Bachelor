@@ -9,14 +9,19 @@
 import UIKit
 
 class QuestionListViewController: UIViewController, Paged {
-
+    
     //Gets instantiated
-    var roomId: String? = nil
+    var room: Room? = nil
     
     let pageIndex = 1
     
     override func viewDidLoad() {
-        
+        HttpHandler.getQuestions(
+            {
+                newQuestions in
+                for q in newQuestions {
+                    print(q)
+                }
+            }, roomId: room?._id)
     }
-    
 }
