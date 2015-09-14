@@ -90,8 +90,9 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         NSLog("did update location")
-        locationManager.stopUpdatingLocation()
         
+        //locationManager.stopUpdatingLocation()
+
         if let location = manager.location {
             self.location = location
             
@@ -110,6 +111,7 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
             //Save position to singleton
             CurrentUser.sharedInstance.location.Latitude = location.coordinate.latitude
             CurrentUser.sharedInstance.location.Longitude = location.coordinate.longitude
+
             let meters = sqrt(pow((location.horizontalAccuracy), 2) + pow((location.verticalAccuracy), 2))  //todo fix
             CurrentUser.sharedInstance.location.AccuracyMeters = Int(meters)
             

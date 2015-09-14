@@ -10,7 +10,7 @@ import Foundation
 
 class HttpHandler {
     
-    static let mainUrl = "http://192.168.198.128:1337"
+    static let mainUrl = "http://10.211.55.8:1337/"
     //static let mainUrl = "http://wisrrestapi.aceipse.dk/"
     
     //http://stackoverflow.com/questions/25341858/perform-post-request-in-ios-swift
@@ -18,11 +18,14 @@ class HttpHandler {
     //If room is is nil, get's all questions
     static func getQuestions(completionHandler: (inout questions: [Question]) -> Void, roomId: String?) {
         let session = NSURLSession.sharedSession()
-        var url = NSURL(string: mainUrl)!
-        url = roomId != nil ?
-            url.URLByAppendingPathComponent("Question/GetQuestionsForRoom&\(roomId)") :
-            url.URLByAppendingPathComponent("Question/GetAll")
-            
+        
+        var url: NSURL
+        if roomId != nil {
+            url = NSURL(string: mainUrl + "Question/GetQuestionsForRoom?roomId=\(roomId!)")!
+        } else {
+            url = NSURL(string: mainUrl + "Question/GetAll")!
+        }
+        
         let request = NSMutableURLRequest(URL: url)
         request.HTTPMethod = "GET"
         

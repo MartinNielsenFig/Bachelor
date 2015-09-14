@@ -23,7 +23,7 @@ class RoomTableViewController: UITableViewController {
                 newRooms in
                 NSLog("callback completed: ")
                 
-                self.rooms += self.filterRoomsByLocation(newRooms, metersRadius: 100)
+                self.rooms += self.filterRoomsByLocation(newRooms, metersRadius: 1000)
                 //self.rooms.sort({room1, room2 in }) //todo sort
                 
                 dispatch_async(dispatch_get_main_queue(), {

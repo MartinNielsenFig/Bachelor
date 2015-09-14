@@ -33,6 +33,7 @@ namespace WisRRestAPI.Controllers {
             return questions.Result.ToJson();
         }
 
+        [System.Web.Mvc.HttpGet]
         public string GetQuestionsForRoom(string roomId) {
             var qList = _qr.GetQuestionsForRoom(roomId);
             return qList.Result.ToJson();

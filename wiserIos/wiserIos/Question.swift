@@ -34,21 +34,31 @@ class Question {
         self.QuestionText = jsonDictionary["QuestionText"] as? String
         
         //Response
-        if let rOpt = jsonDictionary["ResponseOptions"] {
-            if let rOptArray = JSONSerializer.toArray(rOpt as! String) {
-                for opt in rOptArray {
-                    var ro = ResponseOption(value: "", weight: 1)
-                        
-                    self.ResponseOptions += [ro]
-                }
+        if let responseArray = jsonDictionary["ResponseOptions"] as? NSArray {
+            for opt in responseArray {
+                let value = opt["Value"] as? String
+                let weight = opt["Weight"] as? Int
+                
+                let ro = ResponseOption(value: value ?? "default", weight: weight ?? 1)
+                self.ResponseOptions += [ro]
             }
         }
+        
         //Answer
+        if let resultArray = jsonDictionary["Result"] as? NSArray {
+            for ans in resultArray {
+                let value = ans["Value"] as? String
+                let userId = ans["UserId"] as? String
+                
+                let a = Answer(value: value ?? "none", userId: userId ?? "none")
+                self.Result += [a]
+            }
+        }
         
         self.CreationTimestamp = jsonDictionary["CreationTimestamp"] as? String
         self.ExpireTimestamp = jsonDictionary["ExpireTimestamp"] as? String
     }
-
+    
     
 }
 
