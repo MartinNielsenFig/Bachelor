@@ -47,7 +47,8 @@ class RoomTableViewController: UITableViewController {
                     if let rLong = room.Location.Longitude, rLat = room.Location.Latitude {
                         
                         //todo add room accuracy as well
-                        let distance = distanceBetweenTwoCoordinatesMeters(cLat, cLong, rLat, rLong) + currentAccuracyMeters
+                        let roomAccuracy = Double(room.Location.AccuracyMeters ?? 0)
+                        let distance = distanceBetweenTwoCoordinatesMeters(cLat, cLong, rLat, rLong) + currentAccuracyMeters + roomAccuracy
                         if distance < metersRadius {
                             filteredRooms += [room]
                         }
