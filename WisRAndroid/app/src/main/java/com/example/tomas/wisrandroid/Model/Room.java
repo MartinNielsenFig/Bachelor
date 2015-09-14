@@ -17,14 +17,13 @@ public class Room {
     private boolean HasChat;
     private boolean UsersCanAsk;
     private boolean AllowAnonymous;
-    private List<ChatMessage> ChatLog;
     private boolean UseLocation;
 
     //Constructors
     public Room(){}
     public Room(String Id, String Name, String CreatedById, int Radius, String Tag,
                 boolean HasPassword, String EncryptedPassword, boolean HasChat, boolean UsersCanAsk,
-                boolean AllowAnonymous, List<ChatMessage> ChatLog,boolean UseLocation)
+                boolean AllowAnonymous, boolean UseLocation)
     {
         this.Id = Id;
         this.Name = Name;
@@ -36,7 +35,6 @@ public class Room {
         this.HasChat = HasChat;
         this.UsersCanAsk = UsersCanAsk;
         this.AllowAnonymous = AllowAnonymous;
-        this.ChatLog = ChatLog;
         this.UseLocation = UseLocation;
     }
 
@@ -70,9 +68,6 @@ public class Room {
 
     public boolean get_AllowAnonymous(){return this.AllowAnonymous;}
     public void set_AllowAnonymous(boolean AllowAnonymous) {this.AllowAnonymous = AllowAnonymous;}
-
-    public List<ChatMessage> get_ChatLog() {return this.ChatLog;}
-    public void set_ChatLog(List<ChatMessage> ChatLog) {this.ChatLog = ChatLog;}
 
     public boolean get_UseLocation(){return this.UseLocation;}
     public void set_UseLocation(boolean UseLocation) {this.UseLocation = UseLocation;}

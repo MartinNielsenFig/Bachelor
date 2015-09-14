@@ -2,6 +2,7 @@ package com.example.tomas.wisrandroid.Activities;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,7 +26,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class QuestionActivity extends ActionBarActivity {
+public class QuestionActivity extends AppCompatActivity {
 
     Button mButton;
     TextView mTextView;

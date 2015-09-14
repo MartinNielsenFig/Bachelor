@@ -8,6 +8,11 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
 
     <application
         android:allowBackup="true"
@@ -36,14 +41,6 @@
             android:label="@string/title_activity_ask_question" >
         </activity>
         <activity
-            android:name=".Activities.TestActivity"
-            android:label="@string/title_activity_test" >
-        </activity>
-        <activity
-            android:name=".Activities.StartActivity"
-            android:label="@string/title_activity_start" >
-        </activity>
-        <activity
             android:name=".Activities.LoginActivity"
             android:label="@string/title_activity_login" >
         </activity>
@@ -58,8 +55,17 @@
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyARppD8GQoHtyRozVZqJ_0EMqhgbzaulEE" />
 
-
+        <activity
+            android:name=".Activities.MapsActivity"
+            android:label="@string/title_activity_maps" >
+        </activity>
     </application>
 
 </manifest>
