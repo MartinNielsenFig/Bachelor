@@ -10,10 +10,51 @@ import Foundation
 
 class HttpHandler {
     
-    //static let mainUrl = "http://192.168.225.153:1337"
-    static let mainUrl = "http://wisrrestapi.aceipse.dk/"
+    static let mainUrl = "http://10.211.55.8:1337/"
+    //static let mainUrl = "http://wisrrestapi.aceipse.dk/"
     
     //http://stackoverflow.com/questions/25341858/perform-post-request-in-ios-swift
+    
+    //If room is is nil, get's all questions
+    static func getQuestions(completionHandler: (inout questions: [Question]) -> Void, roomId: String?) {
+        let session = NSURLSession.sharedSession()
+        
+        var url: NSURL
+        if roomId != nil {
+            url = NSURL(string: mainUrl + "Question/GetQuestionsForRoom?roomId=\(roomId!)")!
+        } else {
+            url = NSURL(string: mainUrl + "Question/GetAll")!
+        }
+        
+        let request = NSMutableURLRequest(URL: url)
+        request.HTTPMethod = "GET"
+        
+        let task = session.dataTaskWithRequest(request) {
+            data, response, error in
+            
+            // handle fundamental network errors (e.g. no connectivity)
+            NSLog("data \(data)")
+            NSLog("reponse \(response)")
+            NSLog("error \(error)")
+            
+            if data != nil {
+                let nsDataString = NSString(data: data!, encoding: NSUTF8StringEncoding)
+                let dataString = nsDataString as! String
+                NSLog("dataString \(dataString)")
+                
+                //init rooms here
+                var questionArray = [Question]()
+                let	questionJson = JSONSerializer.toArray(dataString)
+                
+                for question in questionJson! {
+                    questionArray.append(Question(jsonDictionary: question as! NSDictionary))
+                }
+                
+                completionHandler(questions: &questionArray)
+            }
+        }
+        task.resume()
+    }
     
     static func getRooms(completionHandler: (inout rooms: [Room]) -> Void) {
         let session = NSURLSession.sharedSession()

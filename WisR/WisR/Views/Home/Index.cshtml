@@ -62,7 +62,7 @@
         <div class="modal-content modal-heigh">
             <div class="modal-body">
                 <form>
-                    <div class="row">
+                    
                         <div class="row">
                             <label class="col-md-6">Room name:</label> <input ng-model="RoomName" type="text" class="col-md-6" />
                         </div>
@@ -87,8 +87,6 @@
                         <div class="row">
                             <label class="col-md-6">Can users ask questions?</label> <input ng-model="UserCanAsk" class="col-md-6" type="checkbox" />
                         </div>
-                    </div>
-
                     <div class="row">
                         <button id="ModalCreateRoomButton" type="submit" class="btn btn-md center-block" data-dismiss="modal" ng-click="postRoom()">Create room</button>
                         @Html.Hidden("RedirectTo", Url.Action("Index", "Room"))

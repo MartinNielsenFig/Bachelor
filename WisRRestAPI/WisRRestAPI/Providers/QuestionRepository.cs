@@ -28,6 +28,11 @@ namespace WisRRestAPI.DomainModel
             return question;
         }
 
+        public Task<List<Question>> GetQuestionsForRoom(string roomId) {
+            var qList = _database.GetCollection<Question>("question").Find(x => x.RoomId == roomId).ToListAsync();
+            return qList;
+        }
+
         public void AddQuestionObject(object item)
         {
             _database.GetCollection<object>("question").InsertOneAsync(item);

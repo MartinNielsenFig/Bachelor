@@ -114,7 +114,10 @@ app.controller("RoomController", [
         $scope.ToggleShowQuestionTables = function () {
             $scope.SpecificQuestionShown = !$scope.SpecificQuestionShown;
         }
-
+        $scope.AddAnswer = function() {
+            $scope.SpecificQuestion.Result.push($scope.answerChoosen);
+           
+        } 
         //Function for creating a question
         $scope.postQuestion = function () {
 
