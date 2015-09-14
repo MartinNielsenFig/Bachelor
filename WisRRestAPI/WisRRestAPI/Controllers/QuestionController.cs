@@ -37,6 +37,11 @@ namespace WisRRestAPI.Controllers
             return questions.Result.ToJson();
         }
 
+        [System.Web.Mvc.HttpGet]
+        public string GetQuestionsForRoom(string roomId) {
+            var qList = _qr.GetQuestionsForRoom(roomId);
+            return qList.Result.ToJson();
+        }
 
         [System.Web.Mvc.HttpPost]
         public string CreateQuestion(string question, string type)
@@ -109,6 +114,8 @@ namespace WisRRestAPI.Controllers
 
             return item.ToJson();
         }
+
+
         [System.Web.Mvc.HttpDelete]
         public string DeleteQuestion(string id)
         {
