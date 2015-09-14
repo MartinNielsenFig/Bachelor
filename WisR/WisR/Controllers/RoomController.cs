@@ -16,6 +16,14 @@ namespace WisR.Controllers
 {
     public class RoomController : Controller
     {
+        private IrabbitHandler _rabbitHandler;
+
+        public RoomController(IrabbitHandler rabbitHandler)
+        {
+            _rabbitHandler = rabbitHandler;
+            _rabbitHandler.subscribe("CreateChatMessage");
+            _rabbitHandler.subscribe("CreateQuestion");
+        }
         // GET: Room
         public ActionResult Index(string roomId)
         {

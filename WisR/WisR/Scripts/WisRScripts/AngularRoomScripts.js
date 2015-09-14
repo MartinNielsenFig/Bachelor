@@ -1,6 +1,43 @@
-﻿app.controller("RoomController", [
-    '$scope', '$http', 'configs', '$window', function ($scope, $http, configs, $window) {
+﻿//Directive for capturing enter key in angular
+//Found at: http://stackoverflow.com/questions/28851893/angularjs-textaera-enter-key-submit-form-with-autocomplete
+app.directive('ngEnter', function () {
+    return function (scope, element, attrs) {
+        element.bind("keydown", function (e) {
+            //Check that enter key is hit and that shift key is not(shift to add row to message)
+            if (e.which === 13&& !window.event.shiftKey) {
+                scope.$apply(function () {
+                    scope.$eval(attrs.ngEnter, { 'e': e });
+                });
+                e.preventDefault();
+            }
+        });
+    };
+});
 
+app.controller("RoomController", [
+    '$scope', '$http', 'configs', '$window', function ($scope, $http, configs, $window) {
+        //Connect to SignalR hub and wait for chat messages
+        $(function () {
+            // Declare a proxy to reference the hub. 
+            var hub = $.connection.chatHub;
+            // Create a function that the hub can call to broadcast messages.
+            hub.client.broadcastChatMessage = function (chatMessageToAdd) {
+                $scope.ChatMessages.push(JSON.parse(chatMessageToAdd));
+                $scope.$apply();
+            };
+            $.connection.hub.start();
+        });
+        //Do the same for newly added questions
+        $(function () {
+            // Declare a proxy to reference the hub. 
+            var hub = $.connection.questionHub;
+            // Create a function that the hub can call to broadcast messages.
+            hub.client.broadcastQuestion = function (questionToAdd) {
+                $scope.Questions.push(JSON.parse(questionToAdd));
+                $scope.$apply();
+            };
+            $.connection.hub.start();
+        });
         //watch the window.userId variable
         $scope.$watch(
                 function () {

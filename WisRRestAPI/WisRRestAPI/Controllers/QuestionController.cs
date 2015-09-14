@@ -36,12 +36,6 @@ namespace WisRRestAPI.Controllers {
 
         [System.Web.Mvc.HttpPost]
         public string CreateQuestion(string question, string type) {
-            try {
-                _rabbitHandler.publishString("CreateQuestion", question);
-            } catch (Exception e) {
-                return "Could not publish to rabbitMQ";
-            }
-
             Type questionType;
             try {
                 string typeString = "WisR.DomainModels." + type;
@@ -60,12 +54,19 @@ namespace WisRRestAPI.Controllers {
             }
             if (q.Id != null) {
                 return "New question should have id of null";
-            } else
+            }
+            try
             {
-                q.Id = ObjectId.GenerateNewId(DateTime.Now).ToString();
+                _rabbitHandler.publishString("CreateQuestion", q.ToJson());
+            }
+            catch (Exception e)
+            {
+                return "Could not publish to rabbitMQ";
+            }
+            q.Id = ObjectId.GenerateNewId(DateTime.Now).ToString();
                 _qr.AddQuestionObject(b);
                 return "Question saved with id: " + q.Id;
-            }
+            
         }
 
         [System.Web.Mvc.HttpGet]
