@@ -104,11 +104,14 @@
                 </table>
                 <form>
                     <div ng-repeat="responseOption in SpecificQuestion.ResponseOptions">
-                        <label>{{responseOption.Value}}</label>
-                        <input type="radio" />
+                        <label>
+                            <input type="radio" ng-model="$parent.answerChoosen" ng-value="{{responseOption}}">
+                            {{responseOption.Value}}
+                        </label>
                     </div>
+
+                    <button class="btn btn-primary" ng-click="AddAnswer()">Submit</button><button style="float: right" class="btn btn-primary" ng-click="ToggleShowQuestionTables()">Back to questions</button>
                 </form>
-                <button class="btn btn-primary">Submit</button><button style="float:right" class="btn btn-primary" ng-click="ToggleShowQuestionTables()">Back to questions</button>
             </div>
         </div>
         @* Chat code found at: http://bootsnipp.com/snippets/featured/chat *@
@@ -153,7 +156,6 @@
             <div class="modal-content modal-heigh">
                 <div class="modal-body">
                     <form>
-                        <div class="row">
                             <div class="row">
                                 <label class="col-md-6">Question text:</label> <input ng-model="QuestionText" type="text" class="col-md-6" placeholder="Enter Question text" />
                             </div>
@@ -165,8 +167,10 @@
                             </div>
                             <div ng-show="QuestionType != undefined && QuestionType.val != 'TextualQuestion'" class="row">
                                 <label class="col-md-6">Response options:</label>
-                                <div ng-repeat="option in ResponseOptions">
-                                    <input ng-model="ResponseOptions[option.id].val" class="col-md-6" type="text" placeholder="Add response options" />
+                                <div class="pull-right col-md-6">
+                                    <div ng-repeat="option in ResponseOptions">
+                                        <input ng-model="ResponseOptions[option.id].val" class="col-md-12" type="text" placeholder="Add response options" />
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
@@ -176,7 +180,6 @@
                             <div class="row">
                                 <label class="col-md-6">Expiration time</label> <input ng-model="ExpirationTime" class="col-md-6" type="number" />
                             </div>
-                        </div>
                         <div class="row">
                             <button id="ModalCreateQuestionButton" type="submit" class="btn btn-md center-block" ng-click="postQuestion()" data-dismiss="modal">Create question</button>
                             <button id="ModalCancelButton" type="button" class="btn btn-md center-block" data-dismiss="modal">Cancel</button>
