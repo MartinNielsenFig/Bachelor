@@ -19,7 +19,7 @@ class RoomTableViewController: UITableViewController {
         
         HttpHandler.getRooms(
             {
-                newRooms in
+                (inout newRooms: [Room]) in
                 NSLog("callback completed: ")
                 
                 self.rooms += self.filterRoomsByLocation(newRooms, metersRadius: 1000)
