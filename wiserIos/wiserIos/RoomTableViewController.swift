@@ -25,7 +25,10 @@ class RoomTableViewController: UITableViewController {
                 
                 self.rooms += self.filterRoomsByLocation(newRooms, metersRadius: 100)
                 //self.rooms.sort({room1, room2 in }) //todo sort
-                self.tableView.reloadData()
+                
+                dispatch_async(dispatch_get_main_queue(), {
+                    self.tableView.reloadData()
+                })
             }
         )
     }
