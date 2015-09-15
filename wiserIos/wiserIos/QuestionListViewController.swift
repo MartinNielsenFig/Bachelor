@@ -26,23 +26,24 @@ class QuestionListViewController: UIViewController, UITableViewDataSource, UITab
         questions += [loadingQuestion]
         
         //Load questions for room
-        HttpHandler.getQuestions(roomId, completionHandler: { (inout newQuestions: [Question]) -> Void in
+        //"Swift Trailing Closure" syntax
+        HttpHandler.getQuestions(roomId!) { (questions) -> Void in
             self.questions.removeAll()
             
-            if newQuestions.count <= 0 {
+            if questions.count <= 0 {
                 let q = Question()
                 q.QuestionText = "No questions for room"
                 q.CreatedById = "system"
                 self.questions += [q]
             }
             else {
-                self.questions += newQuestions
+                self.questions += questions
             }
             
             dispatch_async(dispatch_get_main_queue(), {
                 self.questionsTableView.reloadData()
             })
-        })
+        }
     }
     
     //UITableViewDelegate

@@ -17,18 +17,14 @@ class RoomTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        HttpHandler.getRooms(
-            {
-                (inout newRooms: [Room]) in
-                
-                self.rooms += self.filterRoomsByLocation(newRooms, metersRadius: 1000)
-                //self.rooms.sort({room1, room2 in }) //todo sort
-                
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.tableView.reloadData()
-                })
-            }
-        )
+        HttpHandler.getRooms { (rooms) -> Void in
+            self.rooms += self.filterRoomsByLocation(rooms, metersRadius: 1000)
+            //self.rooms.sort({room1, room2 in }) //todo sort
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                self.tableView.reloadData()
+            })
+        }
     }
     
     func filterRoomsByLocation(rooms: [Room], metersRadius: Double) -> [Room] {

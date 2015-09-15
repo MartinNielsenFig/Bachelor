@@ -17,8 +17,8 @@ class ChatViewController: UIViewController, Paged {
     
     override func viewDidLoad() {
         
-        HttpHandler.getChatMessages(roomId!) { (inout messages: [ChatMessage]) -> Void in
-            
+        
+        HttpHandler.getChatMessages(roomId!) { (messages) -> Void in
             for m in messages {
                 let line = DateTimeHelper.getTimeStringFromEpochString(m.Timestamp) + " " + m.Value! + "\n"
                 self.chat += line
@@ -28,6 +28,5 @@ class ChatViewController: UIViewController, Paged {
                 self.chatTextField.text = self.chat
             })
         }
-        
     }
 }
