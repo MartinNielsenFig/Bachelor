@@ -17,11 +17,10 @@ class ChatViewController: UIViewController, Paged {
     
     override func viewDidLoad() {
         
-        
         HttpHandler.getChatMessages(roomId!) { (messages) -> Void in
             for m in messages {
                 let line = DateTimeHelper.getTimeStringFromEpochString(m.Timestamp) + " " + m.Value! + "\n"
-                self.chat += line
+                self.chat += String(line)
             }
             
             dispatch_async(dispatch_get_main_queue(), {

@@ -15,13 +15,13 @@ class DateTimeHelper {
         var sec = Float()
         if let timestampUnknownSeperator = secSince1970 {
             let timestampDot = timestampUnknownSeperator.stringByReplacingOccurrencesOfString(",", withString: ".")
-            sec = Float(timestampDot)!
+            sec = Float(timestampDot)!/1000
         }
         
         let timeInterval = NSTimeInterval(sec)
         let date = NSDate(timeIntervalSince1970: timeInterval)
         let formatter = NSDateFormatter()
-        formatter.dateFormat = "hh:mm"
+        formatter.dateFormat = "HH:mm:ss"
         let dateString = formatter.stringFromDate(date)
         
         return dateString
