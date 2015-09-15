@@ -120,9 +120,12 @@
         </div>
         @* Chat template found at: http://bootsnipp.com/snippets/featured/chat *@
         <div class="col-md-4" ng-show="CurrentRoom.HasChat">
+            <br/>
+            <br/>
+            
             <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
             @*Scroll glue keeps scroll bar at same location, found at: https://github.com/Luegg/angularjs-scroll-glue*@
-            <div class="container fa-border" style="overflow-x: hidden;overflow-y: auto; max-height: 500px; min-height: 500px" scroll-glue>
+            <div class="container fa-border" style="overflow-x: hidden; overflow-y: auto; max-height: 500px; min-height: 500px" scroll-glue>
 
                 <div class="row">
                     <div class="message-wrap col-lg-8">
@@ -141,8 +144,8 @@
                     </div>
                 </div>
             </div>
-
-            <div class="send-wrap ">
+            <br/>
+            <div class="send-wrap">
 
                 <textarea ng-enter="postChatMessage(textAreaModel)" ng-model="textAreaModel" class="form-control send-message" rows="3" placeholder="Write a reply..."></textarea>
 
