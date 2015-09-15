@@ -136,7 +136,6 @@ class CreateRoomViewController: UITableViewController {
     
     //Password switch
     func enablePwSwitchChanged(uiSwitch: UISwitch) {
-        NSLog("password switch pressed")
         pwInputCell?.inputField.enabled = uiSwitch.on
     }
     

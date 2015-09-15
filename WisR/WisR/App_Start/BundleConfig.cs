@@ -23,7 +23,9 @@ namespace WisR
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js",
-                      "~/Scripts/scrollglue.js"));
+                      "~/Scripts/scrollglue.js",
+                      "~/Scripts/d3/d3.min.js",
+                      "~/Scripts/d3/d3pie.min.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",

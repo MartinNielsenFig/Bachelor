@@ -30,7 +30,7 @@ class LogonViewController: UIViewController, FBSDKLoginButtonDelegate {
     
     //FBSDKLoginButtonDelegate
     func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
-        print("Facebook login")
+        NSLog("Facebook login")
         
         if let granted = result.grantedPermissions {
             NSLog(String(granted))
@@ -44,6 +44,6 @@ class LogonViewController: UIViewController, FBSDKLoginButtonDelegate {
     }
     
     func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
-        print("Facebook log off")
+        NSLog("Facebook log off")
     }
 }

@@ -13,7 +13,7 @@ import FBSDKLoginKit
 class FacebookHelper {
     
     static func logOff() {
-        print("begin log off facebook")
+        NSLog("begin log off facebook")
         let fbManager = FBSDKLoginManager()
         fbManager.logOut()
         FBSDKAccessToken.setCurrentAccessToken(nil)
@@ -26,7 +26,7 @@ class FacebookHelper {
         fbRequest.startWithCompletionHandler {
             (connection: FBSDKGraphRequestConnection!, result: AnyObject!, error: NSError!) -> Void in
             if error == nil {
-                print("User Info : \(result)")
+                NSLog("User Info : \(result)")
                 let fbId = result["id"]
                 let name = result["name"]
                 
@@ -34,7 +34,7 @@ class FacebookHelper {
                 CurrentUser.sharedInstance.DisplayName = name as? String
                 
             } else {
-                print("Error Getting Info \(error)");
+                NSLog("Error Getting Info \(error)");
             }
         }
     }

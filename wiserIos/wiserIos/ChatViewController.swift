@@ -10,7 +10,7 @@ import UIKit
 
 class ChatViewController: UIViewController, Paged {
     let pageIndex = 2
-    var roomId = String()
+    var roomId: String?
 
     @IBOutlet weak var chatTextField: UITextView!
     

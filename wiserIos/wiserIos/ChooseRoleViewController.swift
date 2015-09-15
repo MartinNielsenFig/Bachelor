@@ -36,6 +36,7 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
+        locationManager.distanceFilter = 10
         locationManager.startUpdatingLocation()
         
         //Map delegation for pin behaviour
@@ -49,10 +50,6 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
         }
         
         super.viewDidAppear(animated)
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
     }
     
     //MKMapViewDelegate
@@ -87,35 +84,36 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
     
     //CLLocationManagerDelegate
     let locationManager = CLLocationManager()
+    var bestAccuracy = Double.init(Int.max)
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        NSLog("did update location")
+        NSLog("didUpdateLocations")
         
         //locationManager.stopUpdatingLocation()
 
         if let location = manager.location {
-            self.location = location
-            
-            let coordinate = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-            mapView.region = MKCoordinateRegionMakeWithDistance(coordinate, 1000, 1000)
-            
-            let circle = MKCircle(centerCoordinate: location.coordinate, radius: location.horizontalAccuracy as CLLocationDistance)
-            mapView.addOverlay(circle)
-            
-            NSLog(String(location.horizontalAccuracy))
-            NSLog(String(location.verticalAccuracy))
-            
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = coordinate
-            
-            //Save position to singleton
-            CurrentUser.sharedInstance.location.Latitude = location.coordinate.latitude
-            CurrentUser.sharedInstance.location.Longitude = location.coordinate.longitude
-
-            let meters = sqrt(pow((location.horizontalAccuracy), 2) + pow((location.verticalAccuracy), 2))  //todo fix
-            CurrentUser.sharedInstance.location.AccuracyMeters = Int(meters)
-            
-            mapView.addAnnotation(annotation)
+            let currentAccuracy = location.horizontalAccuracy
+            if currentAccuracy < bestAccuracy {
+                
+                //Save position to singleton
+                self.location = location
+                CurrentUser.sharedInstance.location.Latitude = location.coordinate.latitude
+                CurrentUser.sharedInstance.location.Longitude = location.coordinate.longitude
+                CurrentUser.sharedInstance.location.AccuracyMeters = Int(currentAccuracy)
+                
+                //Replace marker
+                let coordinate = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+                mapView.region = MKCoordinateRegionMakeWithDistance(coordinate, 1000, 1000)
+                
+                let circle = MKCircle(centerCoordinate: location.coordinate, radius: location.horizontalAccuracy as CLLocationDistance)
+                mapView.addOverlay(circle)
+                
+                let annotation = MKPointAnnotation()
+                annotation.coordinate = coordinate
+                mapView.addAnnotation(annotation)
+                
+                bestAccuracy = currentAccuracy
+            }
         }
     }
     
@@ -142,11 +140,11 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
         //http://stackoverflow.com/questions/24022479/how-would-i-create-a-uialertview-in-swift
         let alert = UIAlertController(title: "Confirm logout", message: "Confirm logging out", preferredStyle: .Alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { action in
-            print("cancelled logging off Facebook")
+            NSLog("cancelled logging off Facebook")
         }))
         
         alert.addAction(UIAlertAction(title: "Logout", style: .Default, handler: { action in
-            print("confirmed logging off Facebook")
+            NSLog("confirmed logging off Facebook")
             FacebookHelper.logOff()
             self.navigationItem.rightBarButtonItem = nil
         }))

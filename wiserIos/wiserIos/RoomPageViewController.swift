@@ -15,6 +15,7 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     
     var pageViewController: UIPageViewController!
     let pageCount = 3
+    var currentPage = 0
     
     //https://www.veasoftware.com/tutorials/2015/4/2/uipageviewcontroller-in-swift-xcode-62-ios-82-tutorial
     override func viewDidLoad() {
@@ -34,21 +35,21 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
         pageViewController.didMoveToParentViewController(self)
     }
     
-    
     func viewControllerAtIndex(index: Int) -> UIViewController? {
+        currentPage = index
         if index == 0 {
-            let currentQuestionViewController = storyboard?.instantiateViewControllerWithIdentifier("QuestionViewController") as! QuestionViewController
-            currentQuestionViewController.roomId = (self.room?._id)!
-            return currentQuestionViewController
+            let questionListViewController = storyboard?.instantiateViewControllerWithIdentifier("QuestionListViewController") as! QuestionListViewController
+            questionListViewController.roomId = self.room?._id
+            return questionListViewController
         }
         else if index == 1 {
-            let questionListViewController = storyboard?.instantiateViewControllerWithIdentifier("QuestionListViewController") as! QuestionListViewController
-            questionListViewController.roomId = (self.room?._id)!
-            return questionListViewController
+            let currentQuestionViewController = storyboard?.instantiateViewControllerWithIdentifier("QuestionViewController") as! QuestionViewController
+            currentQuestionViewController.roomId = self.room?._id
+            return currentQuestionViewController
         }
         else if index == 2 {
             let chatViewController = storyboard?.instantiateViewControllerWithIdentifier("ChatViewController") as! ChatViewController
-            chatViewController.roomId = (self.room?._id)!
+            chatViewController.roomId = self.room?._id
             return chatViewController
         }
         
@@ -81,6 +82,6 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     }
     
     func presentationIndexForPageViewController(pageViewController: UIPageViewController) -> Int {
-        return 0
+        return currentPage
     }
 }
