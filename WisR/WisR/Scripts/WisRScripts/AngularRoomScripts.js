@@ -116,6 +116,9 @@ app.controller("RoomController", [
             for (i = 0; i < labels.length; i++) {
                 data.push({ "label": labels[i], "value":values[i] });
             }
+            $scope.labels = labels;
+            $scope.data = values;
+            $scope.chartOptions = { legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>" };
             //If the pie is allready made, just update the data
             if ($scope.pie != undefined) {
                 $scope.pie.updateProp("data.content", data);
