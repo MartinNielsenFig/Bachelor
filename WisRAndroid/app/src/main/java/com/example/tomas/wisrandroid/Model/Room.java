@@ -22,8 +22,8 @@ public class Room {
     //Constructors
     public Room(){}
     public Room(String Id, String Name, String CreatedById, int Radius, String Tag,
-                boolean HasPassword, String EncryptedPassword, boolean HasChat, boolean UsersCanAsk,
-                boolean AllowAnonymous, boolean UseLocation)
+                boolean HasPassword, String EncryptedPassword, boolean HasChat,
+                boolean UsersCanAsk, boolean AllowAnonymous, boolean UseLocation)
     {
         this.Id = Id;
         this.Name = Name;

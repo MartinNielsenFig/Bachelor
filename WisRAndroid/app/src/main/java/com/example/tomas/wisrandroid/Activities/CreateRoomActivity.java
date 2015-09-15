@@ -9,7 +9,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RadioGroup;
+import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -42,7 +46,26 @@ import javax.net.ssl.HttpsURLConnection;
 
 public class CreateRoomActivity extends AppCompatActivity {
 
-    Button mTestKnap;
+    // Buttons
+    private Button mCreateRoomButton;
+
+    // Inputs
+    private EditText mRoomNameEditText;
+    private EditText mRoomTagEditText;
+    private EditText mPasswordEditText;
+
+    // Switches
+    private Switch mEnablePasswordSwitch;
+    private Switch mEnableChatSwitch;
+    private Switch mEnableAnonymousSwitch;
+    private Switch mEnableUserQuestionSwitch;
+
+    // ToggleButtons with RadioGroup
+    private RadioGroup mRadiusRadioGroup;
+    private ToggleButton mFirstRadiusToggleButton;
+    private ToggleButton mSecondRadiusToggleButton;
+    private ToggleButton mThirdRadiusToggleButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,13 +73,80 @@ public class CreateRoomActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_room);
         ActivityLayoutHelper.HideLayout(getWindow(), getSupportActionBar());
 
-        final TextView mTextView = (TextView) findViewById(R.id.create_room_textview);
+        // Edit Text Logic
+        mRoomNameEditText = (EditText) findViewById(R.id.room_name_edittext);
+        mRoomTagEditText = (EditText) findViewById(R.id.room_tag_edittext);
+        mPasswordEditText = (EditText) findViewById(R.id.room_password_edittext);
 
-        mTestKnap = (Button)findViewById(R.id.test_knap);
-        mTestKnap.setOnClickListener(new View.OnClickListener() {
+        // Switch Logic
+        mEnablePasswordSwitch = (Switch) findViewById(R.id.room_enable_password_switch);
+        mEnablePasswordSwitch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mEnablePasswordSwitch.isChecked())
+                {
+                    mPasswordEditText.setEnabled(true);
+                }else {
+                    mPasswordEditText.setEnabled(false);
+                }
+            }
+        });
+        mEnableChatSwitch = (Switch) findViewById(R.id.room_enable_chat_switch);
+        mEnableAnonymousSwitch = (Switch) findViewById(R.id.room_anonymous_switch);
+        mEnableUserQuestionSwitch = (Switch) findViewById(R.id.room_enable_userquestions_switch);
+
+        // Toggle Button Logic
+        mFirstRadiusToggleButton = (ToggleButton) findViewById(R.id.first_radius_button);
+        mFirstRadiusToggleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mFirstRadiusToggleButton.isChecked())
+                {
+                    if(mSecondRadiusToggleButton.isChecked() || mThirdRadiusToggleButton.isChecked())
+                    {
+                        mSecondRadiusToggleButton.setChecked(false);
+                        mThirdRadiusToggleButton.setChecked(false);
+                    }
+                }
+
+            }
+        });
+        mSecondRadiusToggleButton = (ToggleButton) findViewById(R.id.second_radius_button);
+        mSecondRadiusToggleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mSecondRadiusToggleButton.isChecked())
+                {
+                    if(mFirstRadiusToggleButton.isChecked() || mThirdRadiusToggleButton.isChecked())
+                    {
+                        mFirstRadiusToggleButton.setChecked(false);
+                        mThirdRadiusToggleButton.setChecked(false);
+                    }
+                }
+            }
+        });
+        mThirdRadiusToggleButton = (ToggleButton) findViewById(R.id.third_radius_button);
+        mThirdRadiusToggleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mThirdRadiusToggleButton.isChecked())
+                {
+                    if(mFirstRadiusToggleButton.isChecked() || mSecondRadiusToggleButton.isChecked())
+                    {
+                        mFirstRadiusToggleButton.setChecked(false);
+                        mSecondRadiusToggleButton.setChecked(false);
+                    }
+                }
+            }
+        });
+
+        mCreateRoomButton = (Button)findViewById(R.id.create_room_button);
+        mCreateRoomButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+
+                final TextView mTextView = (TextView) findViewById(R.id.room_name_textview);
 
                 Map<String,String> mParams = new HashMap<String, String>();
 

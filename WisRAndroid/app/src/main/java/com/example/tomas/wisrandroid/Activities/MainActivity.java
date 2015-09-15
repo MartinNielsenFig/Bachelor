@@ -22,6 +22,7 @@ import com.example.tomas.wisrandroid.Model.MyUser;
 import com.example.tomas.wisrandroid.R;
 import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
+import com.facebook.login.LoginManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
@@ -35,8 +36,9 @@ public class MainActivity extends FragmentActivity implements GoogleApiClient.Co
     private GoogleApiClient mGoogleApiClient;
     private Location mLastLocation;
 
-    Button mCreateRoomButton = null;
-    Button mSelectRoomButton = null;
+    private Button mCreateRoomButton = null;
+    private Button mSelectRoomButton = null;
+    private Button mLogoutButton = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,17 +66,11 @@ public class MainActivity extends FragmentActivity implements GoogleApiClient.Co
             public void onClick(View v) {
                 Bundle mBundle = new Bundle();
 
-                if (AccessToken.getCurrentAccessToken().getUserId() != null) {
+                if (AccessToken.getCurrentAccessToken() != null) {
                     MyUser.getMyuser().set_FacebookId(AccessToken.getCurrentAccessToken().getUserId());
-
-                }
-
-                if (MyUser.getMyuser().get_FacebookId() != null) {
-                    Toast.makeText(getApplicationContext(), AccessToken.getCurrentAccessToken().getUserId(), Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), AccessToken.getCurrentAccessToken().getUserId(), Toast.LENGTH_LONG).show();
                     Intent mCreateRoomIntent = new Intent(MainActivity.this, CreateRoomActivity.class);
                     startActivity(mCreateRoomIntent);
-
-
                 } else {
                     Intent mIntent = new Intent(MainActivity.this, LoginActivity.class);
                     mIntent.putExtra("Bundle", mBundle);
@@ -94,6 +90,15 @@ public class MainActivity extends FragmentActivity implements GoogleApiClient.Co
             }
         });
 
+        mLogoutButton = (Button) findViewById(R.id.button_logout);
+        mLogoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LoginManager.getInstance().logOut();
+                mLogoutButton.setEnabled(false);
+            }
+        });
+
     }
 
     @Override
@@ -103,12 +108,26 @@ public class MainActivity extends FragmentActivity implements GoogleApiClient.Co
         Toast.makeText(this,"viggo", Toast.LENGTH_LONG).show();
         if(AccessToken.getCurrentAccessToken() != null)
             Toast.makeText(this,AccessToken.getCurrentAccessToken().getUserId(),Toast.LENGTH_LONG).show();
+
+        if(AccessToken.getCurrentAccessToken() == null)
+        {
+            mLogoutButton.setEnabled(false);
+        }else {
+            mLogoutButton.setEnabled(true);
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         setUpMapIfNeeded();
+
+        if(AccessToken.getCurrentAccessToken() == null)
+        {
+            mLogoutButton.setEnabled(false);
+        }else {
+            mLogoutButton.setEnabled(true);
+        }
 
 
     }

@@ -1,28 +1,249 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.example.tomas.wisrandroid.Activities.CreateRoomActivity">
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.tomas.wisrandroid.Activities.CreateRoomActivity"
+    android:orientation="vertical"
+    android:scrollbarAlwaysDrawVerticalTrack="true">
 
-    <TextView
+    <LinearLayout
+        android:layout_margin="5dp"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:weightSum="10">
 
+        <TextView
+            android:id="@+id/room_name_textview"
+            android:text="@string/room_name_textview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"/>
 
+        <EditText
+            android:id="@+id/room_name_edittext"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Wanted room name"
+            android:layout_weight="6"/>
 
-    <TextView
-        android:id="@+id/create_room_textview"
-        android:text="@string/hello_world"
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_margin="5dp"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <TextView
+            android:id="@+id/room_tag_textview"
+            android:text="@string/room_tag_textview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"/>
+
+        <EditText
+            android:id="@+id/room_tag_edittext"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Wanted unique tag"
+            android:layout_weight="6"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_margin="5dp"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <TextView
+            android:layout_gravity="center_vertical"
+            android:id="@+id/room_password_enable_textview"
+            android:text="@string/room_password_enable_textview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"/>
+
+        <Switch
+
+            android:layout_gravity="center"
+            android:id="@+id/room_enable_password_switch"
+            android:textOn="Enabled"
+            android:textOff="Disabled"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="6"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_margin="5dp"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <TextView
+            android:id="@+id/room_password_textview"
+            android:text="@string/room_password_textview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"/>
+
+        <EditText
+            android:id="@+id/room_password_edittext"
+            android:enabled="false"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Wanted password"
+            android:layout_weight="6"
+            android:inputType="textPassword"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_margin="5dp"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <TextView
+            android:layout_gravity="center_vertical"
+            android:id="@+id/room_radius_textview"
+            android:text="@string/room_radius_textview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"/>
+
+        <RadioGroup
+            android:orientation="horizontal"
+            android:id="@+id/room_radius_tabhost"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="6">
+            <ToggleButton
+                android:id="@+id/first_radius_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"/>
+            <ToggleButton
+                android:id="@+id/second_radius_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"/>
+            <ToggleButton
+                android:id="@+id/third_radius_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"/>
+        </RadioGroup>
+
+    </LinearLayout>
+    <!-- Chat -->
+    <LinearLayout
+        android:layout_margin="5dp"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <TextView
+            android:layout_gravity="center_vertical"
+            android:id="@+id/room_chat_enable_textview"
+            android:text="@string/room_enable_chat_textview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"/>
+
+        <Switch
+
+            android:layout_gravity="center"
+            android:id="@+id/room_enable_chat_switch"
+            android:textOn="Enabled"
+            android:textOff="Disabled"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="6"/>
+
+    </LinearLayout>
+    <!-- Anonymous -->
+    <LinearLayout
+        android:layout_margin="5dp"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <TextView
+            android:layout_gravity="center_vertical"
+            android:id="@+id/room_anonymous_enable_textview"
+            android:text="@string/room_anonymous_enable_textview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"/>
+
+        <Switch
+
+            android:layout_gravity="center"
+            android:id="@+id/room_anonymous_switch"
+            android:textOn="Enabled"
+            android:textOff="Disabled"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="6"/>
+
+    </LinearLayout>
+    <!-- User Questions -->
+    <LinearLayout
+        android:layout_margin="5dp"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <TextView
+            android:layout_gravity="center_vertical"
+            android:id="@+id/room_userquestion_enable_textview"
+            android:text="Enable User Questions"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"/>
+
+        <Switch
+
+            android:layout_gravity="center"
+            android:id="@+id/room_enable_userquestions_switch"
+            android:textOn="Enabled"
+            android:textOff="Disabled"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="6"/>
+
+    </LinearLayout>
+    <!--<TextView-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="fill_parent" />-->
+
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
     <Button
-        android:layout_below="@id/create_room_textview"
-        android:id="@+id/test_knap"
-        android:text="Test Knap"
+        android:id="@+id/create_room_button"
+        android:text="@string/create_room_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+    </RelativeLayout>
 
-</RelativeLayout>
+
+</LinearLayout>
+</ScrollView>
