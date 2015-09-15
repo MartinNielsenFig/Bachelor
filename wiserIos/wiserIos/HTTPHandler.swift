@@ -105,6 +105,7 @@ class HttpHandler {
             NSLog("data \(data)")
             NSLog("reponse \(response)")
             NSLog("error \(error)")
+            
             if data != nil {
                 let dataString = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
                 NSLog("dataString \(dataString)")

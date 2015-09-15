@@ -20,7 +20,6 @@ class RoomTableViewController: UITableViewController {
         HttpHandler.getRooms(
             {
                 (inout newRooms: [Room]) in
-                NSLog("callback completed: ")
                 
                 self.rooms += self.filterRoomsByLocation(newRooms, metersRadius: 1000)
                 //self.rooms.sort({room1, room2 in }) //todo sort
