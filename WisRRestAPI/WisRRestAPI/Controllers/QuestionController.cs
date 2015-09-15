@@ -104,6 +104,26 @@ namespace WisRRestAPI.Controllers
             _qr.UpdateQuestion(id, q);
         }
 
+        [System.Web.Mvc.HttpPost]
+        public void UpdateQuestionResponse(string question, string type, string id)
+        {
+            Type questionType;
+
+            string typeString = "WisR.DomainModels." + type;
+            questionType = Type.GetType(typeString);
+
+            object b;
+            Question q;
+
+            b = BsonSerializer.Deserialize(question, questionType);
+            q = (Question)b;
+            if (Convert.ToDouble(q.ExpireTimestamp) > (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalMilliseconds)
+            {
+                q.Id = id;
+                _qr.UpdateQuestion(id, q);
+            }
+        }
+
         [System.Web.Mvc.HttpGet]
         public string GetById(string id)
         {

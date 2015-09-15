@@ -114,15 +114,31 @@ app.controller("RoomController", [
         $scope.ToggleShowQuestionTables = function () {
             $scope.SpecificQuestionShown = !$scope.SpecificQuestionShown;
         }
+
+        
+
         //Get precentage for loading bar
         $scope.getPercentage = function () {
             if ($scope.SpecificQuestion != undefined) {
-                var nominater = Date.now() - parseInt($scope.SpecificQuestion.CreationTimestamp);
-                var denominater =  parseInt($scope.SpecificQuestion.ExpireTimestamp) -  parseInt($scope.SpecificQuestion.CreationTimestamp);
-                return (nominater/denominater)*100;
+                $scope.timerOverflow = false;
+                $scope.$apply(function () {
+                    var nominater = Date.now() - parseInt($scope.SpecificQuestion.CreationTimestamp);
+                    var denominater = parseInt($scope.SpecificQuestion.ExpireTimestamp) - parseInt($scope.SpecificQuestion.CreationTimestamp);
+                    $scope.precentage = (nominater / denominater) * 100;
+                    var timeLeftInmSec = parseInt($scope.SpecificQuestion.ExpireTimestamp) - Date.now();
+                    var hours = (parseInt(timeLeftInmSec / 3600000) + "").length == 1 ? "0" + parseInt(timeLeftInmSec / 3600000) : parseInt(timeLeftInmSec / 3600000);
+                    var min = (parseInt((timeLeftInmSec % 3600000) / 60000) + "").length == 1 ? "0" + parseInt((timeLeftInmSec % 3600000) / 60000) : parseInt((timeLeftInmSec % 3600000) / 60000);
+                    var sec = (parseInt(((timeLeftInmSec % 3600000) % 60000) / 1000) + "").length == 1 ? "0" + parseInt(((timeLeftInmSec % 3600000) % 60000) / 1000) : parseInt(((timeLeftInmSec % 3600000) % 60000) / 1000);
+                    $scope.timeLeft = (hours + ":" + min + ":" + sec).indexOf("-") >-1 ? "The time has run out!" : hours + ":" + min + ":" + sec;
+                    if ($scope.precentage>100) {
+                        $scope.timerOverflow = true;
+                    }
+                }
+                )
             }
-           return 0;
         }
+
+        setInterval($scope.getPercentage, 1000);
         //adds answer to specificQuestion
         $scope.AddAnswer = function () {
             $scope.SpecificQuestion.Result.push($scope.answerChoosen);
@@ -150,7 +166,7 @@ app.controller("RoomController", [
             }).
                 then(function (response) {
                     //Use response to send to REST API
-                    $http.post(configs.restHostName + '/Question/UpdateQuestion', { question: JSON.stringify(response.data), type: $scope.SpecificQuestion._t, id: $scope.SpecificQuestion._id });
+                    $http.post(configs.restHostName + '/Question/UpdateQuestionResponse', { question: JSON.stringify(response.data), type: $scope.SpecificQuestion._t, id: $scope.SpecificQuestion._id });
                 });
         }
         //Function for creating a question
@@ -166,7 +182,7 @@ app.controller("RoomController", [
 
             }
             //Make get request for json object conversion
-            $http.post('/Room/toJsonQuestion', { CreatedBy: $window.userId, RoomId: MyRoomIdFromViewBag, Downvotes: 0, Image: $scope.questionImage.base64, Upvotes: 0, QuestionText: $scope.QuestionText, ResponseOptions: newResponses, ExpireTimestamp: $scope.ExpirationTime, QuetionsType: $scope.QuestionType }).
+            $http.post('/Room/toJsonQuestion', { CreatedBy: $window.userId, RoomId: MyRoomIdFromViewBag, Downvotes: 0, Image: $scope.questionImage != undefined ? $scope.questionImage.base64 : "R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==", Upvotes: 0, QuestionText: $scope.QuestionText, ResponseOptions: newResponses, ExpireTimestamp: $scope.ExpirationTime, QuetionsType: $scope.QuestionType }).
                 then(function (response) {
                     //Use response to send to REST API
                     $http.post(configs.restHostName + '/Question/CreateQuestion', { question: JSON.stringify(response.data), type: $scope.QuestionType.val });
