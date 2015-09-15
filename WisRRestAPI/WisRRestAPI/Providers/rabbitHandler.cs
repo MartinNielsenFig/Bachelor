@@ -27,11 +27,15 @@ namespace WisRRestAPI.Providers
             factory.Uri = ConfigurationManager.AppSettings["rabbitMqHost"];
             _conn = factory.CreateConnection();
             _model = _conn.CreateModel();
-            _model.QueueDeclare(queue: "Wisr",
-                                 durable: true,
-                                 exclusive:false,
-                                 autoDelete: false,
-                                 arguments: null);
+            lock (_model)
+            {
+                _model.QueueDeclare(queue: "Wisr",
+                                     durable: true,
+                                     exclusive: false,
+                                     autoDelete: false,
+                                     arguments: null);
+            }
+            
             routingKeyList = new List<string>();
         }
 
@@ -49,21 +53,25 @@ namespace WisRRestAPI.Providers
         {
             if (stringToPublish == null) return;
             var body = Encoding.UTF8.GetBytes(stringToPublish);
-
-            _model.BasicPublish(exchange: "exchangeFromVisualStudio",
+            lock(_model)
+            {
+                _model.BasicPublish(exchange: "exchangeFromVisualStudio",
                                  routingKey: routingKey,
                                  basicProperties: null,
                                  body: body);
+            }
+            
         }
 
         public void subscribe(string routingKey)
-        {                
-            _consumer =new EventingBasicConsumer(_model);
-            _consumer.Received += handle;
-            _model.QueueBind("Wisr","exchangeFromVisualStudio",routingKey);
-            _model.BasicConsume("Wisr",false, _consumer);
-            isSubscribed = true;
-            routingKeyList.Add(routingKey);
+        {
+            lock (_model)
+            {
+                _consumer = new EventingBasicConsumer(_model);
+                _consumer.Received += handle;
+                _model.QueueBind("Wisr", "exchangeFromVisualStudio", routingKey);
+                _model.BasicConsume("Wisr", false, _consumer);
+            }                
         }
 
         public void handle(object messageModel, BasicDeliverEventArgs ea)
@@ -86,7 +94,11 @@ namespace WisRRestAPI.Providers
                     chatHub.Send(message);
                     break;
             }
-            _model.BasicAck(ea.DeliveryTag,false);
+            lock (_model)
+            {
+                _model.BasicAck(ea.DeliveryTag, false);
+            }
+            
 
         }
     }
