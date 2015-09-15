@@ -1,4 +1,4 @@
-﻿var app = angular.module("wisrApp", ['naif.base64', 'luegg.directives']);
+﻿var app = angular.module("wisrApp", ['naif.base64', 'luegg.directives', 'chart.js']);
 
 //Function that returns true if room should be added to table
 var shouldBeAdded=function(room,scope) {

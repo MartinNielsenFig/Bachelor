@@ -117,10 +117,10 @@
                         </label>
                     </div>
 
-                    <button class="btn btn-primary" ng-click="AddAnswer()"  ng-disabled="timerOverflow">Submit</button><button style="float: right" class="btn btn-primary" ng-click="ToggleShowQuestionTables()">Back to questions</button>
+                    <button class="btn btn-primary" ng-click="AddAnswer()"  ng-disabled="timerOverflow || answerChoosen == undefined">Submit</button><button style="float: right" class="btn btn-primary" ng-click="ToggleShowQuestionTables()">Back to questions</button>
                 </form>
                 <div id="resultchart"></div>
-
+                <canvas id="pie" class="chart chart-pie" chart-legend="true"chart-data="data" chart-labels="labels"></canvas>
             </div>
         </div>
         @* Chat template found at: http://bootsnipp.com/snippets/featured/chat *@

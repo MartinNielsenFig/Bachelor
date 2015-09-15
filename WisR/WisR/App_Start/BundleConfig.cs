@@ -10,7 +10,7 @@ namespace WisR
         {
 
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js", "~/Scripts/WisRScripts/geolocationScripts.js", "~/Scripts/jquery.signalR-2.2.0.js", "~/Scripts/angular.js", "~/Scripts/angular-base64-upload.js", "~/Scripts/WisRScripts/AngularHomeScripts.js", "~/Scripts/WisRScripts/AngularRoomScripts.js", "~/Scripts/WisRScripts/Config.js"));
+                        "~/Scripts/jquery-{version}.js", "~/Scripts/WisRScripts/geolocationScripts.js", "~/Scripts/jquery.signalR-2.2.0.js", "~/Scripts/angular.js", "~/Scripts/Chart.js", "~/Scripts/angular-chart.js", "~/Scripts/angular-base64-upload.js", "~/Scripts/WisRScripts/AngularHomeScripts.js", "~/Scripts/WisRScripts/AngularRoomScripts.js", "~/Scripts/WisRScripts/Config.js"));
             
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
@@ -29,7 +29,8 @@ namespace WisR
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css",
+                      "~/Content/angular-chart.css"));
         }
     }
 }
