@@ -92,13 +92,103 @@ app.controller("RoomController", [
         $scope.ResponseOptions = [{ id: 0, val: undefined }, { id: 1, val: undefined }];
         //Function for retrieving userName by an id
         var getAllUsers = function () {
-                $http.get(configs.restHostName + '/User/GetAll').then(function(result) {
-                    $scope.ActiveUsers = result.data;
-                });
+            $http.get(configs.restHostName + '/User/GetAll').then(function (result) {
+                $scope.ActiveUsers = result.data;
+            });
         }
         getAllUsers();
 
-        $scope.GetUsernameById=function(userId) {
+        //Function for creating result chart with d3js
+        $scope.createPieChart = function () {
+
+            var labels = [];
+            var values = [];
+            for (i = 0; i < $scope.SpecificQuestion.Result.length; i++) {
+                var response = $scope.SpecificQuestion.Result[i];
+                if (labels.indexOf(response.Value)!=-1) {
+                    values[labels.indexOf(response.Value)]++;
+                } else {
+                    labels.push(response.Value);
+                    values.push(1);
+                }
+            }
+            var data = [];
+            for (i = 0; i < labels.length; i++) {
+                data.push({ "label": labels[i], "value":values[i] });
+            }
+            //If the pie is allready made, just update the data
+            if ($scope.pie != undefined) {
+                $scope.pie.updateProp("data.content", data);
+                return;
+            }
+
+            $scope.pie = new d3pie("resultchart", {
+                "header": {
+                    "title": {
+                        "text": "Results",
+                        "fontSize": 24,
+                        "font": "open sans"
+                    },
+                },
+                "footer": {
+                    "color": "#999999",
+                    "fontSize": 10,
+                    "font": "open sans",
+                    "location": "bottom-left"
+                },
+                "size": {
+                    "canvasWidth": 590,
+                    "pieOuterRadius": "90%"
+                },
+                "data": {
+                    "sortOrder": "value-desc",
+                    "content": data
+                },
+                "labels": {
+                    "outer": {
+                        "pieDistance": 32
+                    },
+                    "inner": {
+                        "hideWhenLessThanPercentage": 3
+                    },
+                    "mainLabel": {
+                        "fontSize": 11
+                    },
+                    "percentage": {
+                        "color": "#ffffff",
+                        "decimalPlaces": 0
+                    },
+                    "value": {
+                        "color": "#adadad",
+                        "fontSize": 11
+                    },
+                    "lines": {
+                        "enabled": true
+                    },
+                    "truncation": {
+                        "enabled": true
+                    }
+                },
+                "effects": {
+                    "pullOutSegmentOnClick": {
+                        "effect": "linear",
+                        "speed": 400,
+                        "size": 8
+                    },
+                    load: {
+                        "speed": 200
+                    }
+                },
+                "misc": {
+                    "gradient": {
+                        "enabled": true,
+                        "percentage": 100
+                    }
+                }
+            });
+        }
+
+        $scope.GetUsernameById = function (userId) {
             var result = $.grep($scope.ActiveUsers, function (e) { return e._id == userId; });
             if (userId == undefined)
                 return "Undefined name";
@@ -110,6 +200,7 @@ app.controller("RoomController", [
         $scope.ShowSpecificQuestion = function (question) {
             $scope.ToggleShowQuestionTables();
             $scope.SpecificQuestion = question;
+            $scope.createPieChart();
         }
         $scope.ToggleShowQuestionTables = function () {
             $scope.SpecificQuestionShown = !$scope.SpecificQuestionShown;
@@ -118,15 +209,15 @@ app.controller("RoomController", [
         $scope.getPercentage = function () {
             if ($scope.SpecificQuestion != undefined) {
                 var nominater = Date.now() - parseInt($scope.SpecificQuestion.CreationTimestamp);
-                var denominater =  parseInt($scope.SpecificQuestion.ExpireTimestamp) -  parseInt($scope.SpecificQuestion.CreationTimestamp);
-                return (nominater/denominater)*100;
+                var denominater = parseInt($scope.SpecificQuestion.ExpireTimestamp) - parseInt($scope.SpecificQuestion.CreationTimestamp);
+                return (nominater / denominater) * 100;
             }
-           return 0;
+            return 0;
         }
         //adds answer to specificQuestion
         $scope.AddAnswer = function () {
             $scope.SpecificQuestion.Result.push($scope.answerChoosen);
-           
+
             var newResponses = "";
             for (var i = 0; i < $scope.SpecificQuestion.ResponseOptions.length; i++) {
                 if (i != $scope.SpecificQuestion.ResponseOptions.length - 1) {
@@ -134,19 +225,20 @@ app.controller("RoomController", [
                 } else {
                     newResponses = newResponses + $scope.SpecificQuestion.ResponseOptions[i].Value;
                 }
-        } 
+            }
 
             var newResults = "";
             for (var i = 0; i < $scope.SpecificQuestion.Result.length; i++) {
                 if (i != $scope.SpecificQuestion.Result.length - 1) {
                     newResults = newResults + $scope.SpecificQuestion.Result[i].Value + "-" + $window.userId + ',';
                 } else {
-                    newResults = newResults + $scope.SpecificQuestion.Result[i].Value+"-" + $window.userId;
+                    newResults = newResults + $scope.SpecificQuestion.Result[i].Value + "-" + $window.userId;
                 }
             }
 
             //Make get request for json object conversion
-            $http.post('/Room/toJsonQuestion', {CreatedBy: $scope.SpecificQuestion.CreatedById, RoomId: $scope.SpecificQuestion.RoomId, Downvotes: $scope.SpecificQuestion.Downvotes, Image: $scope.SpecificQuestion.Img, Upvotes: $scope.SpecificQuestion.Upvotes, QuestionText: $scope.SpecificQuestion.QuestionText, ResponseOptions: newResponses, CreationTimestamp: $scope.SpecificQuestion.CreationTimestamp, ExpireTimestamp: $scope.SpecificQuestion.ExpireTimestamp, QuestionResult: newResults, QuetionsType: $scope.SpecificQuestion._t
+            $http.post('/Room/toJsonQuestion', {
+                CreatedBy: $scope.SpecificQuestion.CreatedById, RoomId: $scope.SpecificQuestion.RoomId, Downvotes: $scope.SpecificQuestion.Downvotes, Image: $scope.SpecificQuestion.Img, Upvotes: $scope.SpecificQuestion.Upvotes, QuestionText: $scope.SpecificQuestion.QuestionText, ResponseOptions: newResponses, CreationTimestamp: $scope.SpecificQuestion.CreationTimestamp, ExpireTimestamp: $scope.SpecificQuestion.ExpireTimestamp, QuestionResult: newResults, QuetionsType: $scope.SpecificQuestion._t
             }).
                 then(function (response) {
                     //Use response to send to REST API

@@ -5,7 +5,6 @@
 <body ng-controller="HomeController">
     <div class="jumbotron" style="background-color: transparent">
     </div>
-
     <div class="row">
         <div class="col-md-12">
             <div id="rooms">
@@ -13,7 +12,7 @@
                     <h2><small>Rooms based on <a onClick="toggleLocation();" style="cursor: pointer">your location</a></small></h2>
                 </div>
                 <div ng-hide="roomsLoaded" class="container text-center">
-                  <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span><label id="loadingLabel" class="">Loading location...</label>
+                    <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span><label id="loadingLabel" class="">Loading location...</label>
                 </div>
                 <div id="googlemaps" hidden>
                     <div id="address"></div>
@@ -21,26 +20,26 @@
                     <div id="map_canvas" style="height: 300px"></div>
                 </div>
                 <div style="height: 300px; overflow: auto">
-                <table id="roomTable" class="table table-responsive table-hover">
+                    <table id="roomTable" class="table table-responsive table-hover">
                         <tr class="col-md-12" style="cursor: pointer" ng-repeat="room in Rooms| roomsNear: this" ng-click="changeViewToRoom(room._id)">
                             <td class="col-md-11">{{room.Name}}</td>
                             <td class="col-md-1 text-right">
                                 <span ng-show="room.HasPassword" title="Password Protected" class="glyphicon glyphicon-lock right"></span>
-                                <span ng-show="room.HasChat"title="Chat enabled" class="glyphicon glyphicon-comment right"></span>
+                                <span ng-show="room.HasChat" title="Chat enabled" class="glyphicon glyphicon-comment right"></span>
                                 <span ng-show="room.UsersCanAsk" title="Users can ask questions" class="glyphicon glyphicon-question-sign right"></span>
                                 <span ng-show="room.AllowAnonymous" title="Anonymous users allowed" class="glyphicon glyphicon-eye-close"></span>
                             </td>
 
-                    </tr>
-                </table>
+                        </tr>
+                    </table>
                 </div>
-                <br/>
+                <br />
                 <div class="row">
                     <div>
                         <form ng-submit="connectWithUniqueTag()"><input class="form-control" style="margin: 0 auto" ng-model="uniqueRoomTag" type="text" placeholder="Enter unique tag" /></form>
                     </div>
                 </div>
-                
+
                 <div class="row">
                     <div id="buttonsDiv" class="text-center">
                         <div style="display:inline">
@@ -62,31 +61,31 @@
         <div class="modal-content modal-heigh">
             <div class="modal-body">
                 <form>
-                    
-                        <div class="row">
-                            <label class="col-md-6">Room name:</label> <input ng-model="RoomName" type="text" class="col-md-6" />
-                        </div>
-                        <div class="row">
-                            <label class="col-md-6">Unique tag</label> <input ng-model="UniqueTag" class="col-md-6" type="text" />
-                        </div>
-                        <div class="row">
-                            <label class="col-md-6">Password</label> <input ng-model="Password" class="col-md-6" type="password" />
-                        </div>
-                        <div class="row">
-                            <label class="col-md-6">Radius</label> <input ng-model="Radius" class="col-md-6" type="range" max="100" step="50" min="0" />
-                        </div>
-                        <div class="row">
-                            <label class="col-md-6">Use location</label> <input ng-model="UseLocation" class="col-md-6" type="checkbox" />
-                        </div>
-                        <div class="row">
-                            <label class="col-md-6">Has chat</label> <input ng-model="HasChat" class="col-md-6" type="checkbox" />
-                        </div>
-                        <div class="row">
-                            <label class="col-md-6">Allow anonymous users?</label> <input ng-model="AllowAnonymous" class="col-md-6" type="checkbox" />
-                        </div>
-                        <div class="row">
-                            <label class="col-md-6">Can users ask questions?</label> <input ng-model="UserCanAsk" class="col-md-6" type="checkbox" />
-                        </div>
+
+                    <div class="row">
+                        <label class="col-md-6">Room name:</label> <input ng-model="RoomName" type="text" class="col-md-6" />
+                    </div>
+                    <div class="row">
+                        <label class="col-md-6">Unique tag</label> <input ng-model="UniqueTag" class="col-md-6" type="text" />
+                    </div>
+                    <div class="row">
+                        <label class="col-md-6">Password</label> <input ng-model="Password" class="col-md-6" type="password" />
+                    </div>
+                    <div class="row">
+                        <label class="col-md-6">Radius</label> <input ng-model="Radius" class="col-md-6" type="range" max="100" step="50" min="0" />
+                    </div>
+                    <div class="row">
+                        <label class="col-md-6">Use location</label> <input ng-model="UseLocation" class="col-md-6" type="checkbox" />
+                    </div>
+                    <div class="row">
+                        <label class="col-md-6">Has chat</label> <input ng-model="HasChat" class="col-md-6" type="checkbox" />
+                    </div>
+                    <div class="row">
+                        <label class="col-md-6">Allow anonymous users?</label> <input ng-model="AllowAnonymous" class="col-md-6" type="checkbox" />
+                    </div>
+                    <div class="row">
+                        <label class="col-md-6">Can users ask questions?</label> <input ng-model="UserCanAsk" class="col-md-6" type="checkbox" />
+                    </div>
                     <div class="row">
                         <button id="ModalCreateRoomButton" type="submit" class="btn btn-md center-block" data-dismiss="modal" ng-click="postRoom()">Create room</button>
                         @Html.Hidden("RedirectTo", Url.Action("Index", "Room"))
