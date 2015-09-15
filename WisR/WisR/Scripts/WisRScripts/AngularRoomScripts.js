@@ -36,8 +36,31 @@ app.controller("RoomController", [
                 $scope.Questions.push(JSON.parse(questionToAdd));
                 $scope.$apply();
             };
+            hub.client.broadcastUpdateQuestion = function (questionToUpdate) {
+                var updateTemp = JSON.parse(questionToUpdate);
+                var index=findWithAttr($scope.Questions, "_id", updateTemp._id);
+                $scope.Questions[index] = updateTemp;
+                //If this is the specific question that changed update it with new values
+                if ($scope.SpecificQuestion != undefined) {
+                    var indexOfSpecificQuestion = findWithAttr($scope.Questions, "_id", $scope.SpecificQuestion._id);
+                    $scope.SpecificQuestion = $scope.Questions[indexOfSpecificQuestion];
+                    //Redraw the result chart
+                    $scope.createPieChart()
+                }
+                
+                $scope.$apply();
+            };
             $.connection.hub.start();
         });
+
+        //Helper function to find index of object in array
+        function findWithAttr(array, attr, value) {
+            for (var i = 0; i < array.length; i += 1) {
+                if (array[i][attr] === value) {
+                    return i;
+                }
+            }
+        }
         //watch the window.userId variable
         $scope.$watch(
                 function () {
@@ -179,7 +202,7 @@ app.controller("RoomController", [
                         "size": 8
                     },
                     load: {
-                        "speed": 200
+                        effect:"none"
                     }
                 },
                 "misc": {

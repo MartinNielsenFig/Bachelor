@@ -17,7 +17,8 @@ namespace WisRRestAPI.Providers
         private IModel _model;
         private bool isSubscribed;
         private EventingBasicConsumer _consumer;
-        private List<string> routingKeyList; 
+        private List<string> routingKeyList;
+        private string _queuename;
 
         public rabbitHandler()
         {
@@ -27,12 +28,13 @@ namespace WisRRestAPI.Providers
             factory.Uri = ConfigurationManager.AppSettings["rabbitMqHost"];
             _conn = factory.CreateConnection();
             _model = _conn.CreateModel();
+            _queuename = "Wisr " + DateTime.Now.Ticks;
             lock (_model)
             {
-                _model.QueueDeclare(queue: "Wisr",
+                _model.QueueDeclare(queue: _queuename,
                                      durable: true,
                                      exclusive: false,
-                                     autoDelete: false,
+                                     autoDelete: true,
                                      arguments: null);
             }
             
@@ -55,7 +57,7 @@ namespace WisRRestAPI.Providers
             var body = Encoding.UTF8.GetBytes(stringToPublish);
             lock(_model)
             {
-                _model.BasicPublish(exchange: "exchangeFromVisualStudio",
+                _model.BasicPublish(exchange: "WisrExchange",
                                  routingKey: routingKey,
                                  basicProperties: null,
                                  body: body);
@@ -65,13 +67,16 @@ namespace WisRRestAPI.Providers
 
         public void subscribe(string routingKey)
         {
+            if (isSubscribed)
+                return;
             lock (_model)
             {
                 _consumer = new EventingBasicConsumer(_model);
                 _consumer.Received += handle;
-                _model.QueueBind("Wisr", "exchangeFromVisualStudio", routingKey);
-                _model.BasicConsume("Wisr", false, _consumer);
-            }                
+                _model.QueueBind(_queuename, "WisrExchange", routingKey);
+                _model.BasicConsume(_queuename, false, _consumer);
+            }
+            isSubscribed = true;
         }
 
         public void handle(object messageModel, BasicDeliverEventArgs ea)
@@ -89,10 +94,15 @@ namespace WisRRestAPI.Providers
                     var questionHub = new QuestionHub();
                     questionHub.Send(message);
                     break;
+                case "UpdateQuestion":
+                    var updateQuestionHub = new QuestionHub();
+                    updateQuestionHub.Update(message);
+                    break;
                 case "CreateChatMessage":
                     var chatHub=new ChatHub();
                     chatHub.Send(message);
                     break;
+                
             }
             lock (_model)
             {
