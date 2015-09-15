@@ -92,8 +92,10 @@ class HttpHandler {
         let request = NSMutableURLRequest(URL: url)
         request.HTTPMethod = "GET"
         
+        let started = NSDate()
         let task = session.dataTaskWithRequest(request) {
             data, response, error in
+            NSLog("time for \(__FUNCTION__) http call \(NSDate().timeIntervalSinceDate(started))")
             
             // handle fundamental network errors (e.g. no connectivity)
             //NSLog("data \(data)")
@@ -122,8 +124,11 @@ class HttpHandler {
         let request = NSMutableURLRequest(URL: url)
         request.HTTPMethod = "GET"
         
+        let started = NSDate()
         let task = session.dataTaskWithRequest(request) {
             data, response, error in
+            NSLog("time for \(__FUNCTION__) http call \(NSDate().timeIntervalSinceDate(started))")
+
             
             // handle fundamental network errors (e.g. no connectivity)
             //NSLog("data \(data)")

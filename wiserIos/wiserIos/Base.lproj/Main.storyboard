@@ -270,35 +270,53 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Xd5-5D-5iF">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Xd5-5D-5iF">
                                 <rect key="frame" x="20" y="57" width="560" height="432"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Chat" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pj9-Zg-Hi1">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Chat" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pj9-Zg-Hi1">
                                 <rect key="frame" x="282" y="28" width="37" height="21"/>
                                 <animations/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="37" id="CqJ-eS-TLO"/>
-                                    <constraint firstAttribute="height" constant="21" id="NoF-1P-mQo"/>
-                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="1a6-JL-R3s">
+                                <rect key="frame" x="20" y="497" width="560" height="30"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="v7O-hI-MgI">
+                                        <rect key="frame" x="0.0" y="0.0" width="504" height="30"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f1h-3g-chR">
+                                        <rect key="frame" x="524" y="0.0" width="36" height="30"/>
+                                        <animations/>
+                                        <state key="normal" title="Send"/>
+                                    </button>
+                                </subviews>
+                                <animations/>
+                            </stackView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="qqE-mb-BOe" firstAttribute="top" secondItem="Xd5-5D-5iF" secondAttribute="bottom" constant="111" id="2ir-Ua-x1D"/>
-                            <constraint firstItem="Xd5-5D-5iF" firstAttribute="top" secondItem="Pj9-Zg-Hi1" secondAttribute="bottom" constant="8" id="5ig-IL-uVl"/>
                             <constraint firstItem="Xd5-5D-5iF" firstAttribute="trailing" secondItem="PK4-cB-CkL" secondAttribute="trailingMargin" id="Gmq-2y-W1P"/>
-                            <constraint firstItem="Pj9-Zg-Hi1" firstAttribute="top" secondItem="bfz-BL-xC3" secondAttribute="bottom" constant="8" symbolic="YES" id="Hr7-bU-BmQ"/>
+                            <constraint firstItem="Xd5-5D-5iF" firstAttribute="top" secondItem="Pj9-Zg-Hi1" secondAttribute="bottom" constant="8" symbolic="YES" id="bwU-Kr-vGs"/>
+                            <constraint firstItem="Pj9-Zg-Hi1" firstAttribute="centerX" secondItem="Xd5-5D-5iF" secondAttribute="centerX" id="hd0-tB-VyR"/>
+                            <constraint firstItem="1a6-JL-R3s" firstAttribute="top" secondItem="Xd5-5D-5iF" secondAttribute="bottom" constant="8" symbolic="YES" id="kgH-or-dZj"/>
+                            <constraint firstItem="1a6-JL-R3s" firstAttribute="leading" secondItem="Xd5-5D-5iF" secondAttribute="leading" id="mWM-K2-Iac"/>
                             <constraint firstItem="Xd5-5D-5iF" firstAttribute="leading" secondItem="PK4-cB-CkL" secondAttribute="leadingMargin" id="nrE-L6-C0O"/>
+                            <constraint firstItem="Pj9-Zg-Hi1" firstAttribute="top" secondItem="bfz-BL-xC3" secondAttribute="bottom" constant="8" symbolic="YES" id="oHA-hx-Ewo"/>
+                            <constraint firstItem="1a6-JL-R3s" firstAttribute="trailing" secondItem="Xd5-5D-5iF" secondAttribute="trailing" id="pvb-2a-KdK"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="chatMessageInput" destination="v7O-hI-MgI" id="zfw-65-Go3"/>
                         <outlet property="chatTextField" destination="Xd5-5D-5iF" id="vRp-Ds-zb5"/>
                     </connections>
                 </viewController>

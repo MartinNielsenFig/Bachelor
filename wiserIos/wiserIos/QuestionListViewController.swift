@@ -12,7 +12,13 @@ class QuestionListViewController: UIViewController, UITableViewDataSource, UITab
     
     let pageIndex = 0
     var roomId: String?
-    var questions = [Question]()
+    var questions = [Question]() {
+        didSet {
+            dispatch_async(dispatch_get_main_queue()) { () -> Void in
+                self.questionsTableView.reloadData()
+            }
+        }
+    }
     
     @IBOutlet weak var questionsTableView: UITableView!
     
@@ -39,10 +45,6 @@ class QuestionListViewController: UIViewController, UITableViewDataSource, UITab
             else {
                 self.questions += questions
             }
-            
-            dispatch_async(dispatch_get_main_queue(), {
-                self.questionsTableView.reloadData()
-            })
         }
     }
     
