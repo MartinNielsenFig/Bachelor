@@ -101,7 +101,7 @@ namespace WisRRestAPI.Controllers
             b = BsonSerializer.Deserialize(question, questionType);
             q = (Question)b;
             q.Id = id;
-            _qr.UpdateQuestion(id, q);
+            _qr.UpdateQuestion(id, q);            
         }
 
         [System.Web.Mvc.HttpPost]
@@ -121,7 +121,15 @@ namespace WisRRestAPI.Controllers
             {
                 q.Id = id;
                 _qr.UpdateQuestion(id, q);
+                try
+                {
+                    _rabbitHandler.publishString("UpdateQuestion", q.ToJson());
+                }
+                catch (Exception e)
+                {
+                }
             }
+
         }
 
         [System.Web.Mvc.HttpGet]

@@ -55,7 +55,7 @@ namespace WisRRestAPI.Providers
             var body = Encoding.UTF8.GetBytes(stringToPublish);
             lock(_model)
             {
-                _model.BasicPublish(exchange: "exchangeFromVisualStudio",
+                _model.BasicPublish(exchange: "WisrExchange",
                                  routingKey: routingKey,
                                  basicProperties: null,
                                  body: body);
@@ -69,7 +69,7 @@ namespace WisRRestAPI.Providers
             {
                 _consumer = new EventingBasicConsumer(_model);
                 _consumer.Received += handle;
-                _model.QueueBind("Wisr", "exchangeFromVisualStudio", routingKey);
+                _model.QueueBind("Wisr", "WisrExchange", routingKey);
                 _model.BasicConsume("Wisr", false, _consumer);
             }                
         }
@@ -89,10 +89,15 @@ namespace WisRRestAPI.Providers
                     var questionHub = new QuestionHub();
                     questionHub.Send(message);
                     break;
+                case "UpdateQuestion":
+                    var updateQuestionHub = new QuestionHub();
+                    updateQuestionHub.Update(message);
+                    break;
                 case "CreateChatMessage":
                     var chatHub=new ChatHub();
                     chatHub.Send(message);
                     break;
+                
             }
             lock (_model)
             {
