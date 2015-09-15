@@ -15,6 +15,38 @@ class HttpHandler {
     
     //http://stackoverflow.com/questions/25341858/perform-post-request-in-ios-swift
     
+    //Creates an user on MongoDB from User with facebook ID, then returns MongoDB ID.
+    //If user already exists, returns MongoDB ID.
+    static func createUser(userJson: String, completionHandler: (inout mongoDbId: String) -> Void) {
+        let session = NSURLSession.sharedSession()
+        let url = NSURL(string: mainUrl)!.URLByAppendingPathComponent("User/CreateUser")
+        let request = NSMutableURLRequest(URL: url)
+        request.HTTPMethod = "POST"
+        
+        let body = "User=\(userJson)"
+        request.HTTPBody = body.dataUsingEncoding(NSUTF8StringEncoding)
+        
+        let task = session.dataTaskWithRequest(request) {
+            data, response, error in
+            
+            // handle fundamental network errors (e.g. no connectivity)
+            //NSLog("data \(data)")
+            NSLog("reponse \(response)")
+            NSLog("error \(error)")
+            
+            if data != nil {
+                let nsDataString = NSString(data: data!, encoding: NSUTF8StringEncoding)
+                let dataString = nsDataString as! String
+                NSLog("dataString \(dataString)")
+                
+                //init rooms here
+                var mongoId = dataString
+                completionHandler(mongoDbId: &mongoId)
+            }
+        }
+        task.resume()
+    }
+    
     //If room is is nil, get's all questions
     static func getQuestions(roomId: String?, completionHandler: (inout questions: [Question]) -> Void) {
         let session = NSURLSession.sharedSession()

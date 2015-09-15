@@ -20,7 +20,7 @@ class FacebookHelper {
         CurrentUser.sharedInstance.FacebookId = nil
     }
     
-    static func requestCurrentUserInformation() {
+    static func requestCurrentUserInformation(createUser createUser: Bool) {
         //http://stackoverflow.com/questions/30049450/get-fbsdkloginmanagerloginresults-email-and-name
         let fbRequest = FBSDKGraphRequest(graphPath: "me", parameters: nil)
         fbRequest.startWithCompletionHandler {
@@ -32,6 +32,17 @@ class FacebookHelper {
                 
                 CurrentUser.sharedInstance.FacebookId = fbId as? String
                 CurrentUser.sharedInstance.DisplayName = name as? String
+                let user = User()
+                user.FacebookId = CurrentUser.sharedInstance.FacebookId
+                user.DisplayName = CurrentUser.sharedInstance.DisplayName
+                
+                let userJson = JSONSerializer.toJson(user)
+                
+                if createUser {
+                    HttpHandler.createUser(userJson, completionHandler: {(inout mongoDBId: String) in
+                        CurrentUser.sharedInstance._id = mongoDBId
+                    })
+                }
                 
             } else {
                 NSLog("Error Getting Info \(error)");

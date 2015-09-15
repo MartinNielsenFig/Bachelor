@@ -26,6 +26,8 @@ namespace WisRRestAPI.Controllers
             return Users.Result.ToJson();
         }
 
+        //Creates an user on MongoDB from User with facebook ID, then returns MongoDB ID.
+        //If user already exists, returns MongoDB ID.
         [System.Web.Mvc.HttpPost]
         public string CreateUser(string User)
         {

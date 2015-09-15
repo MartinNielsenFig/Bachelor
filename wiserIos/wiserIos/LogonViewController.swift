@@ -34,7 +34,7 @@ class LogonViewController: UIViewController, FBSDKLoginButtonDelegate {
         
         if let granted = result.grantedPermissions {
             NSLog(String(granted))
-            FacebookHelper.requestCurrentUserInformation()
+            FacebookHelper.requestCurrentUserInformation(createUser: true)
             previousNavigationController?.dismissViewControllerAnimated(true, completion: nil)
             previousViewController?.performSegueWithIdentifier("CreateRoom", sender: previousViewController)
         } else {

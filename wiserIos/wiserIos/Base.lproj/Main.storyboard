@@ -18,10 +18,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" alignment="center" spacing="48" translatesAutoresizingMaskIntoConstraints="NO" id="XQN-qy-J8p">
-                                <rect key="frame" x="256" y="162" width="89" height="108"/>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="1Bg-Rj-sGb">
+                                <rect key="frame" x="20" y="319" width="560" height="261"/>
+                                <animations/>
+                            </mapView>
+                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" axis="vertical" alignment="center" spacing="48" translatesAutoresizingMaskIntoConstraints="NO" id="XQN-qy-J8p">
+                                <rect key="frame" x="256" y="72" width="89" height="108"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IaR-K2-F17">
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IaR-K2-F17">
                                         <rect key="frame" x="0.0" y="0.0" width="89" height="30"/>
                                         <animations/>
                                         <state key="normal" title="Create Room"/>
@@ -29,7 +33,7 @@
                                             <action selector="clickCreateRoomBtn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8Wu-Ut-xNU"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zXc-jJ-l7g">
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zXc-jJ-l7g">
                                         <rect key="frame" x="9" y="78" width="72" height="30"/>
                                         <animations/>
                                         <state key="normal" title="Join Room"/>
@@ -40,21 +44,14 @@
                                 </subviews>
                                 <animations/>
                             </stackView>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="1Bg-Rj-sGb">
-                                <rect key="frame" x="180" y="336" width="240" height="128"/>
-                                <animations/>
-                            </mapView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="1Bg-Rj-sGb" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="Krt-NT-OH1"/>
-                            <constraint firstItem="XQN-qy-J8p" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="OAX-ru-zUQ"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="1Bg-Rj-sGb" secondAttribute="trailing" id="Wmh-gJ-aOE"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="1Bg-Rj-sGb" secondAttribute="bottom" constant="20" id="Z7c-gc-rDq"/>
-                            <constraint firstItem="1Bg-Rj-sGb" firstAttribute="top" secondItem="XQN-qy-J8p" secondAttribute="bottom" constant="50" id="bxY-Gj-3t6"/>
-                            <constraint firstItem="1Bg-Rj-sGb" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="cfg-BH-Mi1"/>
-                            <constraint firstItem="XQN-qy-J8p" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="97" id="nN6-pH-Gsz"/>
+                            <constraint firstItem="1Bg-Rj-sGb" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="Ni1-Rk-G6I"/>
+                            <constraint firstItem="1Bg-Rj-sGb" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="fYD-wi-7NQ"/>
+                            <constraint firstItem="XQN-qy-J8p" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="qyN-ut-Fec"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="1Bg-Rj-sGb" secondAttribute="bottom" constant="20" id="z2I-nN-zQS"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Choose Role" id="U7C-Jw-GTH"/>
@@ -157,11 +154,11 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F1H-bP-e2z">
-                                        <rect key="frame" x="0.0" y="29" width="560" height="263"/>
+                                        <rect key="frame" x="0.0" y="29" width="560" height="267"/>
                                         <animations/>
                                     </imageView>
                                     <pickerView contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KDW-Y0-aTM">
-                                        <rect key="frame" x="0.0" y="300" width="560" height="221"/>
+                                        <rect key="frame" x="0.0" y="304" width="560" height="217"/>
                                         <animations/>
                                     </pickerView>
                                 </subviews>

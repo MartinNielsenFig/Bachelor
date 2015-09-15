@@ -103,7 +103,7 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
                 
                 //Replace marker
                 let coordinate = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-                mapView.region = MKCoordinateRegionMakeWithDistance(coordinate, 1000, 1000)
+                mapView.region = MKCoordinateRegionMakeWithDistance(coordinate, 500, 500)
                 
                 let circle = MKCircle(centerCoordinate: location.coordinate, radius: location.horizontalAccuracy as CLLocationDistance)
                 mapView.addOverlay(circle)
@@ -124,8 +124,7 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
     //Segue
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "CreateRoom" {
-            let createRoomViewController = segue.destinationViewController as! CreateRoomViewController
-            createRoomViewController.userLocation = location
+            //let createRoomViewController = segue.destinationViewController as! CreateRoomViewController
         }
         else if segue.identifier == "Login" {
             let loginRoomViewController = segue.destinationViewController as! LogonViewController

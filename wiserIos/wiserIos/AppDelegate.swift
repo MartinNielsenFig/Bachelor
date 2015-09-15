@@ -52,7 +52,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if FBSDKAccessToken.currentAccessToken() != nil {
             CurrentUser.sharedInstance.FacebookId = "pending logon"
-            FacebookHelper.requestCurrentUserInformation()
+            FacebookHelper.requestCurrentUserInformation(createUser: false)
         }
         else {
             CurrentUser.sharedInstance.FacebookId = nil

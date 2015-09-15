@@ -53,8 +53,10 @@ class QuestionListViewController: UIViewController, UITableViewDataSource, UITab
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print(indexPath.row)
         
+        
         let roomPageViewController = parentViewController?.parentViewController as! RoomPageViewController
-        let questionPage = roomPageViewController.viewControllerAtIndex(1)!
+        let questionPage = roomPageViewController.viewControllerAtIndex(1)! as! QuestionViewController
+        questionPage.chosenQuestion = questions[indexPath.row]
         roomPageViewController.pageViewController.setViewControllers([questionPage], direction: .Forward, animated: true, completion: nil)
     }
     

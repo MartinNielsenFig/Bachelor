@@ -14,6 +14,13 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     let pageIndex = 1
     var roomId: String?
     
+    //Get instantiated by QuestionListViewController
+    var chosenQuestion: Question? {
+        didSet {
+            print("did set chosenQuestion")
+        }
+    }
+    
     @IBOutlet weak var roomName: UILabel!
     @IBOutlet weak var answerPicker: UIPickerView!
     @IBOutlet weak var questionImage: UIImageView!

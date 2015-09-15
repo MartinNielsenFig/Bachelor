@@ -23,10 +23,7 @@ class CreateRoomViewController: UITableViewController {
     
     var room = Room()
     
-    
-    
     //Get's initialized in prepareForSegue from Choose Role
-    var userLocation: CLLocation? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -145,16 +142,12 @@ class CreateRoomViewController: UITableViewController {
         
         room.Name = roomNameInputCell?.inputField.text
         room.AllowAnonymous = (anonymousInputCell?.uiSwitch.on)!
-        room.CreatedById = "id not implemented on iOS"
+        room.CreatedById = CurrentUser.sharedInstance._id
         room.HasChat = (chatInputCell?.uiSwitch.on)!
         room.HasPassword = (pwSwitchCell?.uiSwitch.on)!
-        room.Location.Latitude = userLocation?.coordinate.latitude
-        room.Location.Longitude = userLocation?.coordinate.longitude
-        
-        let meters = sqrt(pow((userLocation?.horizontalAccuracy)!, 2) + pow((userLocation?.verticalAccuracy)!, 2))
-        room.Location.AccuracyMeters = Int(meters) ?? 20
-        
-        
+        room.Location.Latitude = CurrentUser.sharedInstance.location.Latitude
+        room.Location.Longitude = CurrentUser.sharedInstance.location.Longitude
+        room.Location.AccuracyMeters = CurrentUser.sharedInstance.location.AccuracyMeters ?? 20
         
         let seg = radiusInputCell?.segment
         let metersStr = seg?.titleForSegmentAtIndex((seg?.selectedSegmentIndex)!)
