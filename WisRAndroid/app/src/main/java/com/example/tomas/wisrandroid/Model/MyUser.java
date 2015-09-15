@@ -24,12 +24,12 @@ public final class MyUser extends User {
 //    public static void set_isLoggedIn( boolean isLoggedIn){isLoggedIn = isLoggedIn;}
 
     @Override
-    public int get_FacebookId() {
+    public String get_FacebookId() {
         return super.get_FacebookId();
     }
 
     @Override
-    public void set_FacebookId(int _facebookId) {
+    public void set_FacebookId(String _facebookId) {
         super.set_FacebookId(_facebookId);
     }
 

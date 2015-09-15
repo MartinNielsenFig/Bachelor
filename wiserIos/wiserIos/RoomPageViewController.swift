@@ -13,9 +13,6 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     //Gets instantiated by previous caller
     var room: Room? = nil
     
-    //Callback instantiated
-    var questions = [Question]()
-    
     var pageViewController: UIPageViewController!
     let pageCount = 3
     
@@ -35,28 +32,23 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
         addChildViewController(pageViewController)
         view.addSubview(pageViewController.view)
         pageViewController.didMoveToParentViewController(self)
-        
-        //Load questions for room
-        HttpHandler.getQuestions(room?._id, completionHandler: { (inout questions: [Question]) -> Void in
-            self.questions += questions
-        })
     }
     
     
     func viewControllerAtIndex(index: Int) -> UIViewController? {
         if index == 0 {
             let currentQuestionViewController = storyboard?.instantiateViewControllerWithIdentifier("QuestionViewController") as! QuestionViewController
-            currentQuestionViewController.questions = self.questions
+            currentQuestionViewController.roomId = (self.room?._id)!
             return currentQuestionViewController
         }
         else if index == 1 {
             let questionListViewController = storyboard?.instantiateViewControllerWithIdentifier("QuestionListViewController") as! QuestionListViewController
-            questionListViewController.questions = self.questions
+            questionListViewController.roomId = (self.room?._id)!
             return questionListViewController
         }
         else if index == 2 {
             let chatViewController = storyboard?.instantiateViewControllerWithIdentifier("ChatViewController") as! ChatViewController
-            chatViewController.questions = self.questions
+            chatViewController.roomId = (self.room?._id)!
             return chatViewController
         }
         

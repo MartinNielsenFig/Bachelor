@@ -1,4 +1,4 @@
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -16,7 +16,6 @@
     <Button
         android:id="@+id/button_create_room"
         android:layout_marginRight="10dp"
-        style="?android:attr/buttonBarStyle"
         android:text="Create Room"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent" />
@@ -24,11 +23,21 @@
     <Button
         android:id="@+id/button_find_room"
         android:layout_marginLeft="10dp"
-        style="?android:attr/buttonBarStyle"
         android:text="Find Room"
         android:layout_width="wrap_content"
         android:layout_height="fill_parent" />
 
+        <!--style="?android:attr/buttonBarStyle"-->
+
     </LinearLayout>
 
-</RelativeLayout>
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:id="@+id/map"
+        tools:context="com.example.tomas.wisrandroid.Activities.MapsActivity"
+        android:name="com.google.android.gms.maps.SupportMapFragment" />
+
+
+</LinearLayout>

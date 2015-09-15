@@ -2,13 +2,14 @@ package com.example.tomas.wisrandroid.Activities;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.tomas.wisrandroid.Helpers.ActivityLayoutHelper;
 import com.example.tomas.wisrandroid.R;
 
-public class SelectRoomActivity extends ActionBarActivity {
+public class SelectRoomActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

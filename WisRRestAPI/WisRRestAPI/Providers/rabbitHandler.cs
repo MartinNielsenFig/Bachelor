@@ -57,17 +57,7 @@ namespace WisRRestAPI.Providers
         }
 
         public void subscribe(string routingKey)
-        {
-            if (isSubscribed)
-            {
-                //If we're allready subscribed to this routingkey we return
-                if(routingKeyList.Contains(routingKey))
-                return;
-                _model.QueueBind("Wisr", "exchangeFromVisualStudio", routingKey);
-                routingKeyList.Add(routingKey);
-                return;
-            }
-                
+        {                
             _consumer =new EventingBasicConsumer(_model);
             _consumer.Received += handle;
             _model.QueueBind("Wisr","exchangeFromVisualStudio",routingKey);

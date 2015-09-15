@@ -3,6 +3,7 @@ package com.example.tomas.wisrandroid.Activities;
 import android.location.GpsStatus;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -39,7 +40,7 @@ import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class CreateRoomActivity extends ActionBarActivity {
+public class CreateRoomActivity extends AppCompatActivity {
 
     Button mTestKnap;
 
@@ -59,14 +60,9 @@ public class CreateRoomActivity extends ActionBarActivity {
 
                 Map<String,String> mParams = new HashMap<String, String>();
 
-                ArrayList<ChatMessage> mList = new ArrayList<ChatMessage>();
-                mList.add(new ChatMessage("Tomas","Super feee","03-09-2015"));
-                mList.add(new ChatMessage("Tomas","Super feee igen","03-09-2015"));
-
                 Room mRoom = new Room();
                 mRoom.set_CreatedById("Tomas");
                 mRoom.set_AllowAnonymous(false);
-                //mRoom.set_ChatLog(mList);
                 mRoom.set_EncryptedPassword("password");
                 mRoom.set_HasChat(false);
                 mRoom.set_HasPassword(false);

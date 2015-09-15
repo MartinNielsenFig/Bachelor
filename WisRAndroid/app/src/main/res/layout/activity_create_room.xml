@@ -7,6 +7,12 @@
     tools:context="com.example.tomas.wisrandroid.Activities.CreateRoomActivity">
 
     <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+
+
+
+    <TextView
         android:id="@+id/create_room_textview"
         android:text="@string/hello_world"
         android:layout_width="wrap_content"
