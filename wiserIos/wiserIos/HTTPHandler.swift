@@ -10,7 +10,7 @@ import Foundation
 
 class HttpHandler {
     
-    static let mainUrl = "http://192.168.198.130:1337/"
+    static let mainUrl = "http://192.168.198.133:1337/"
     //static let mainUrl = "http://wisrrestapi.aceipse.dk/"
     
     //http://stackoverflow.com/questions/25341858/perform-post-request-in-ios-swift
@@ -31,13 +31,13 @@ class HttpHandler {
             
             // handle fundamental network errors (e.g. no connectivity)
             //NSLog("data \(data)")
-            NSLog("reponse \(response)")
-            NSLog("error \(error)")
+            //NSLog("reponse \(response)")
+            //NSLog("error \(error)")
             
             if data != nil {
                 let nsDataString = NSString(data: data!, encoding: NSUTF8StringEncoding)
                 let dataString = nsDataString as! String
-                NSLog("dataString \(dataString)")
+                //NSLog("dataString \(dataString)")
                 
                 //init rooms here
                 var mongoId = dataString
@@ -66,13 +66,13 @@ class HttpHandler {
             
             // handle fundamental network errors (e.g. no connectivity)
             //NSLog("data \(data)")
-            NSLog("reponse \(response)")
-            NSLog("error \(error)")
+            //NSLog("reponse \(response)")
+            //NSLog("error \(error)")
             
             if data != nil {
                 let nsDataString = NSString(data: data!, encoding: NSUTF8StringEncoding)
                 let dataString = nsDataString as! String
-                NSLog("dataString \(dataString)")
+                //NSLog("dataString \(dataString)")
                 
                 //init rooms here
                 var questionArray = [Question]()
@@ -99,13 +99,13 @@ class HttpHandler {
             
             // handle fundamental network errors (e.g. no connectivity)
             //NSLog("data \(data)")
-            NSLog("reponse \(response)")
-            NSLog("error \(error)")
+            //NSLog("reponse \(response)")
+            //NSLog("error \(error)")
             
             if data != nil {
                 let nsDataString = NSString(data: data!, encoding: NSUTF8StringEncoding)
                 let dataString = nsDataString as! String
-                NSLog("dataString \(dataString)")
+                //NSLog("dataString \(dataString)")
                 
                 //init rooms here
                 var rooms = [Room]()
@@ -135,12 +135,12 @@ class HttpHandler {
             
             // handle fundamental network errors (e.g. no connectivity)
             //NSLog("data \(data)")
-            NSLog("reponse \(response)")
-            NSLog("error \(error)")
+            //NSLog("reponse \(response)")
+            //NSLog("error \(error)")
             
             if data != nil {
                 let dataString = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
-                NSLog("dataString \(dataString)")
+                //NSLog("dataString \(dataString)")
             }
             
         }
@@ -161,11 +161,11 @@ class HttpHandler {
             
             // handle fundamental network errors (e.g. no connectivity)
             //NSLog("data \(data)")
-            NSLog("reponse \(response)")
-            NSLog("error \(error)")
+            //NSLog("reponse \(response)")
+            //NSLog("error \(error)")
             if data != nil {
                 let dataString = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
-                NSLog("dataString \(dataString)")
+                //NSLog("dataString \(dataString)")
             }
         
         }

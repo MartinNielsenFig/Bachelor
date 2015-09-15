@@ -12,7 +12,6 @@ class QuestionListViewController: UIViewController, UITableViewDataSource, UITab
     
     let pageIndex = 0
     var roomId: String?
-    
     var questions = [Question]()
     
     @IBOutlet weak var questionsTableView: UITableView!
@@ -21,9 +20,24 @@ class QuestionListViewController: UIViewController, UITableViewDataSource, UITab
         questionsTableView.delegate = self
         questionsTableView.dataSource = self
         
+        let loadingQuestion = Question()
+        loadingQuestion.QuestionText = "Loading..."
+        loadingQuestion.CreatedById = "system"
+        questions += [loadingQuestion]
+        
         //Load questions for room
-        HttpHandler.getQuestions(roomId, completionHandler: { (inout questions: [Question]) -> Void in
-            self.questions += questions
+        HttpHandler.getQuestions(roomId, completionHandler: { (inout newQuestions: [Question]) -> Void in
+            self.questions.removeAll()
+            
+            if newQuestions.count <= 0 {
+                let q = Question()
+                q.QuestionText = "No questions for room"
+                q.CreatedById = "system"
+                self.questions += [q]
+            }
+            else {
+                self.questions += newQuestions
+            }
             
             dispatch_async(dispatch_get_main_queue(), {
                 self.questionsTableView.reloadData()
@@ -45,18 +59,27 @@ class QuestionListViewController: UIViewController, UITableViewDataSource, UITab
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath)
         
         let question = questions[indexPath.row]
-        
         cell.textLabel?.text = question.QuestionText
+        
+        //Todo cleaner?
+        if let parent = (parentViewController?.parentViewController as? RoomPageViewController) {
+            cell.textLabel?.textColor = UIColor.blackColor()
+            if question.CreatedById == parent.room?.CreatedById {
+                cell.textLabel?.font = UIFont.boldSystemFontOfSize(15.0)
+            }
+            else if question.CreatedById == "system" {
+                cell.textLabel?.textColor = UIColor.redColor()
+            }
+        }
+        
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         print(indexPath.row)
-        
-        
         let roomPageViewController = parentViewController?.parentViewController as! RoomPageViewController
         let questionPage = roomPageViewController.viewControllerAtIndex(1)! as! QuestionViewController
-        questionPage.chosenQuestion = questions[indexPath.row]
+        questionPage.question = questions[indexPath.row]
         roomPageViewController.pageViewController.setViewControllers([questionPage], direction: .Forward, animated: true, completion: nil)
     }
     

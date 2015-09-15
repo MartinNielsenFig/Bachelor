@@ -15,34 +15,39 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     var roomId: String?
     
     //Get instantiated by QuestionListViewController
-    var chosenQuestion: Question? {
-        didSet {
-            print("did set chosenQuestion")
-        }
-    }
+    var question = Question()
     
-    @IBOutlet weak var roomName: UILabel!
+    @IBOutlet weak var questionText: UILabel!
     @IBOutlet weak var answerPicker: UIPickerView!
     @IBOutlet weak var questionImage: UIImageView!
     
-    var pickerData = ["doge", "cate", "marsvin"]
+    var pickerData = [String]()
     
-    override func viewDidLoad() {
-        //Load the current question
+    func showQuestionUI() {
         
+        //Picker
+        pickerData.removeAll()
+        for r in question.ResponseOptions {
+            pickerData.append(r.Value)
+        }
+        answerPicker.reloadAllComponents()
         
-        answerPicker.delegate = self
-        answerPicker.dataSource = self
-    }
-    
-    //TODO
-    /*func loadImage() {
-        if let b64Img = (self.parentViewController as! RoomPageViewController).questions[0].Img {
+        //Text
+        questionText.text = question.QuestionText
+        
+        //Image
+        if let b64Img = question.Img {
             let imageData = NSData(base64EncodedString: b64Img, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
             let image = UIImage(data: imageData!)
             questionImage.image = image
         }
-    }*/
+    }
+    
+    override func viewDidLoad() {
+        answerPicker.delegate = self
+        answerPicker.dataSource = self
+        showQuestionUI()
+    }
     
     //UIPickerViewDelegate
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {

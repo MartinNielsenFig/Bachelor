@@ -100,7 +100,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UW9-Au-2Fb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1730" y="-1089"/>
+            <point key="canvasLocation" x="1744" y="-1141"/>
         </scene>
         <!--Room Page View Controller-->
         <scene sceneID="irQ-IB-hn6">
@@ -154,11 +154,11 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F1H-bP-e2z">
-                                        <rect key="frame" x="0.0" y="29" width="560" height="267"/>
+                                        <rect key="frame" x="0.0" y="29" width="560" height="268"/>
                                         <animations/>
                                     </imageView>
                                     <pickerView contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KDW-Y0-aTM">
-                                        <rect key="frame" x="0.0" y="304" width="560" height="217"/>
+                                        <rect key="frame" x="0.0" y="304" width="560" height="216"/>
                                         <animations/>
                                     </pickerView>
                                 </subviews>
@@ -180,7 +180,7 @@
                     <connections>
                         <outlet property="answerPicker" destination="KDW-Y0-aTM" id="Me2-kK-pNK"/>
                         <outlet property="questionImage" destination="F1H-bP-e2z" id="t5M-yA-TVw"/>
-                        <outlet property="roomName" destination="AEy-f9-Q9z" id="DGV-uU-8nx"/>
+                        <outlet property="questionText" destination="iGH-Ed-X4N" id="08Y-gX-Iph"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7vm-I6-Bgi" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -495,10 +495,13 @@
                             <outlet property="delegate" destination="4Nu-Oe-NI9" id="E5Q-Nd-Xdf"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <segue destination="FJI-Ne-eCo" kind="show" identifier="RoomCreated" id="AfI-hH-bll"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ON3-ey-VAx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2512" y="-837"/>
+            <point key="canvasLocation" x="2456" y="-841"/>
         </scene>
         <!--Rooms-->
         <scene sceneID="DFv-wp-ugX">
@@ -574,4 +577,7 @@
             <point key="canvasLocation" x="190" y="-457"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="AfI-hH-bll"/>
+    </inferredMetricsTieBreakers>
 </document>

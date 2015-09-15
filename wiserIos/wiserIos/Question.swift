@@ -22,6 +22,8 @@ class Question {
     var CreationTimestamp: String?
     var ExpireTimestamp: String?
     
+    init() {}
+    
     init(jsonDictionary: NSDictionary) {
         
         self._id = jsonDictionary["_id"] as? String
@@ -56,14 +58,6 @@ class Question {
         
         self.CreationTimestamp = jsonDictionary["CreationTimestamp"] as? String
         self.ExpireTimestamp = jsonDictionary["ExpireTimestamp"] as? String
-    }
-}
-
-class BooleanQuestion: Question {
-    var ManyBool: String? = "swiftenCreated"
-    override init(jsonDictionary: NSDictionary) {
-        super.init(jsonDictionary: jsonDictionary)
-        self.ManyBool = jsonDictionary["ManyBool"] as? String
     }
 }
 

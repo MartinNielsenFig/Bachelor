@@ -161,5 +161,15 @@ class CreateRoomViewController: UITableViewController {
         room.EncryptedPassword = pwInputCell?.inputField.text
         
         HttpHandler.createRoom(JSONSerializer.toJson(room))
+        
+        //Navigate
+        self.performSegueWithIdentifier("RoomCreated", sender: self)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "RoomCreated" {
+            let roomPageViewController = segue.destinationViewController as! RoomPageViewController
+            assert(false)   //Fix yo shit dawg
+        }
     }
 }
