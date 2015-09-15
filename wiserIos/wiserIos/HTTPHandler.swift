@@ -12,8 +12,40 @@ class HttpHandler {
     
     static let mainUrl = "http://192.168.198.133:1337/"
     //static let mainUrl = "http://wisrrestapi.aceipse.dk/"
-    
     //http://stackoverflow.com/questions/25341858/perform-post-request-in-ios-swift
+    
+    static func getChatMessages(roomId: String, completionHandler: (inout messages: [ChatMessage]) -> Void) {
+        let session = NSURLSession.sharedSession()
+        let url = NSURL(string: mainUrl)!.URLByAppendingPathComponent("Chat/GetAllByRoomId")
+        let request = NSMutableURLRequest(URL: url)
+        request.HTTPMethod = "POST"
+        
+        let body = "roomId=\(roomId)"
+        request.HTTPBody = body.dataUsingEncoding(NSUTF8StringEncoding)
+        
+        let task = session.dataTaskWithRequest(request) {
+            data, response, error in
+            
+            // handle fundamental network errors (e.g. no connectivity)
+            //NSLog("data \(data)")
+            //NSLog("reponse \(response)")
+            //NSLog("error \(error)")
+            
+            if data != nil {
+                let nsDataString = NSString(data: data!, encoding: NSUTF8StringEncoding)
+                let dataString = nsDataString as! String
+                //NSLog("dataString \(dataString)")
+                
+                var messageArray = [ChatMessage]()
+                for msgJson in JSONSerializer.toArray(dataString)! {
+                    messageArray += [ChatMessage(jsonDictionary: msgJson as! NSDictionary)]
+                }
+                
+                completionHandler(messages: &messageArray)
+            }
+        }
+        task.resume()
+    }
     
     //Creates an user on MongoDB from User with facebook ID, then returns MongoDB ID.
     //If user already exists, returns MongoDB ID.
@@ -39,7 +71,6 @@ class HttpHandler {
                 let dataString = nsDataString as! String
                 //NSLog("dataString \(dataString)")
                 
-                //init rooms here
                 var mongoId = dataString
                 completionHandler(mongoDbId: &mongoId)
             }
@@ -74,12 +105,9 @@ class HttpHandler {
                 let dataString = nsDataString as! String
                 //NSLog("dataString \(dataString)")
                 
-                //init rooms here
                 var questionArray = [Question]()
-                let	questionJson = JSONSerializer.toArray(dataString)
-                
-                for question in questionJson! {
-                    questionArray.append(Question(jsonDictionary: question as! NSDictionary))
+                for question in JSONSerializer.toArray(dataString)! {
+                    questionArray += [Question(jsonDictionary: question as! NSDictionary)]
                 }
                 
                 completionHandler(questions: &questionArray)
@@ -107,11 +135,8 @@ class HttpHandler {
                 let dataString = nsDataString as! String
                 //NSLog("dataString \(dataString)")
                 
-                //init rooms here
                 var rooms = [Room]()
-                let	roomsJson = JSONSerializer.toArray(dataString)
-                
-                for room in roomsJson! {
+                for room in JSONSerializer.toArray(dataString)! {
                     rooms.append(Room(jsonDictionary: room as! NSDictionary))
                 }
                 
