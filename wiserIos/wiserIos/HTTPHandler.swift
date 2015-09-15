@@ -14,6 +14,12 @@ class HttpHandler {
     static let mainUrl = "http://wisrrestapi.aceipse.dk/"
     //http://stackoverflow.com/questions/25341858/perform-post-request-in-ios-swift
     
+    static func log(data data: NSData?, response: NSURLResponse?, error: NSError?) {
+        /*NSLog("data \(data)")
+        NSLog("reponse \(response)")
+        NSLog("error \(error)")*/
+    }
+    
     static func getChatMessages(roomId: String, completionHandler: (inout messages: [ChatMessage]) -> Void) {
         let session = NSURLSession.sharedSession()
         let url = NSURL(string: mainUrl)!.URLByAppendingPathComponent("Chat/GetAllByRoomId")
@@ -23,13 +29,12 @@ class HttpHandler {
         let body = "roomId=\(roomId)"
         request.HTTPBody = body.dataUsingEncoding(NSUTF8StringEncoding)
         
+        let started = NSDate()
         let task = session.dataTaskWithRequest(request) {
             data, response, error in
+            NSLog("time for \(__FUNCTION__) http call \(NSDate().timeIntervalSinceDate(started)) seconds")
             
-            // handle fundamental network errors (e.g. no connectivity)
-            //NSLog("data \(data)")
-            //NSLog("reponse \(response)")
-            //NSLog("error \(error)")
+            log(data: data, response: response, error: error)
             
             if data != nil {
                 let nsDataString = NSString(data: data!, encoding: NSUTF8StringEncoding)
@@ -61,10 +66,7 @@ class HttpHandler {
         let task = session.dataTaskWithRequest(request) {
             data, response, error in
             
-            // handle fundamental network errors (e.g. no connectivity)
-            //NSLog("data \(data)")
-            //NSLog("reponse \(response)")
-            //NSLog("error \(error)")
+            log(data: data, response: response, error: error)
             
             if data != nil {
                 let nsDataString = NSString(data: data!, encoding: NSUTF8StringEncoding)
@@ -95,12 +97,9 @@ class HttpHandler {
         let started = NSDate()
         let task = session.dataTaskWithRequest(request) {
             data, response, error in
-            NSLog("time for \(__FUNCTION__) http call \(NSDate().timeIntervalSinceDate(started))")
+            NSLog("time for \(__FUNCTION__) http call \(NSDate().timeIntervalSinceDate(started)) seconds")
             
-            // handle fundamental network errors (e.g. no connectivity)
-            //NSLog("data \(data)")
-            //NSLog("reponse \(response)")
-            //NSLog("error \(error)")
+            log(data: data, response: response, error: error)
             
             if data != nil {
                 let nsDataString = NSString(data: data!, encoding: NSUTF8StringEncoding)
@@ -127,13 +126,9 @@ class HttpHandler {
         let started = NSDate()
         let task = session.dataTaskWithRequest(request) {
             data, response, error in
-            NSLog("time for \(__FUNCTION__) http call \(NSDate().timeIntervalSinceDate(started))")
+            NSLog("time for \(__FUNCTION__) http call \(NSDate().timeIntervalSinceDate(started)) seconds")
 
-            
-            // handle fundamental network errors (e.g. no connectivity)
-            //NSLog("data \(data)")
-            //NSLog("reponse \(response)")
-            //NSLog("error \(error)")
+            log(data: data, response: response, error: error)
             
             if data != nil {
                 let nsDataString = NSString(data: data!, encoding: NSUTF8StringEncoding)
@@ -163,10 +158,7 @@ class HttpHandler {
         let task = session.dataTaskWithRequest(request) {
             data, response, error in
             
-            // handle fundamental network errors (e.g. no connectivity)
-            //NSLog("data \(data)")
-            //NSLog("reponse \(response)")
-            //NSLog("error \(error)")
+            log(data: data, response: response, error: error)
             
             if data != nil {
                 let dataString = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
@@ -189,10 +181,8 @@ class HttpHandler {
         let task = session.dataTaskWithRequest(request) {
             data, response, error in
             
-            // handle fundamental network errors (e.g. no connectivity)
-            //NSLog("data \(data)")
-            //NSLog("reponse \(response)")
-            //NSLog("error \(error)")
+            log(data: data, response: response, error: error)
+            
             if data != nil {
                 let dataString = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
                 //NSLog("dataString \(dataString)")

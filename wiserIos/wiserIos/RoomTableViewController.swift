@@ -116,7 +116,6 @@ class RoomTableViewController: UITableViewController {
         
         if segue.identifier == "SelectRoom" {
             if let selectedCell = sender as? UITableViewCell {
-                NSLog(String(selectedCell))
                 
                 let roomViewController = segue.destinationViewController as! RoomPageViewController
                 let index = tableView.indexPathForCell(selectedCell)!
