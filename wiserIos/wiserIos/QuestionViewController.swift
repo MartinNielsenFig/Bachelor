@@ -11,8 +11,8 @@ import UIKit
 class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, Paged {
     
     //Paged
-    let pageIndex = 0
-    var roomId = String()
+    let pageIndex = 1
+    var roomId: String?
     
     @IBOutlet weak var roomName: UILabel!
     @IBOutlet weak var answerPicker: UIPickerView!
@@ -21,6 +21,9 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     var pickerData = ["doge", "cate", "marsvin"]
     
     override func viewDidLoad() {
+        //Load the current question
+        
+        
         answerPicker.delegate = self
         answerPicker.dataSource = self
     }

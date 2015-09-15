@@ -10,8 +10,8 @@ import UIKit
 
 class QuestionListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, Paged {
     
-    let pageIndex = 1
-    var roomId = String()
+    let pageIndex = 0
+    var roomId: String?
     
     var questions = [Question]()
     
@@ -48,6 +48,14 @@ class QuestionListViewController: UIViewController, UITableViewDataSource, UITab
         
         cell.textLabel?.text = question.QuestionText
         return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        print(indexPath.row)
+        
+        let roomPageViewController = parentViewController?.parentViewController as! RoomPageViewController
+        let questionPage = roomPageViewController.viewControllerAtIndex(1)!
+        roomPageViewController.pageViewController.setViewControllers([questionPage], direction: .Forward, animated: true, completion: nil)
     }
     
 }

@@ -10,7 +10,7 @@ import Foundation
 
 class HttpHandler {
     
-    static let mainUrl = "http://10.211.55.8:1337/"
+    static let mainUrl = "http://192.168.198.130:1337/"
     //static let mainUrl = "http://wisrrestapi.aceipse.dk/"
     
     //http://stackoverflow.com/questions/25341858/perform-post-request-in-ios-swift
@@ -33,7 +33,7 @@ class HttpHandler {
             data, response, error in
             
             // handle fundamental network errors (e.g. no connectivity)
-            NSLog("data \(data)")
+            //NSLog("data \(data)")
             NSLog("reponse \(response)")
             NSLog("error \(error)")
             
@@ -66,7 +66,7 @@ class HttpHandler {
             data, response, error in
             
             // handle fundamental network errors (e.g. no connectivity)
-            NSLog("data \(data)")
+            //NSLog("data \(data)")
             NSLog("reponse \(response)")
             NSLog("error \(error)")
             
@@ -102,7 +102,7 @@ class HttpHandler {
             data, response, error in
             
             // handle fundamental network errors (e.g. no connectivity)
-            NSLog("data \(data)")
+            //NSLog("data \(data)")
             NSLog("reponse \(response)")
             NSLog("error \(error)")
             
@@ -128,7 +128,7 @@ class HttpHandler {
             data, response, error in
             
             // handle fundamental network errors (e.g. no connectivity)
-            NSLog("data \(data)")
+            //NSLog("data \(data)")
             NSLog("reponse \(response)")
             NSLog("error \(error)")
             if data != nil {
