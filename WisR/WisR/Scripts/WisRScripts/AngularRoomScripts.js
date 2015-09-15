@@ -114,10 +114,12 @@ app.controller("RoomController", [
         $scope.ToggleShowQuestionTables = function () {
             $scope.SpecificQuestionShown = !$scope.SpecificQuestionShown;
         }
-
+        //Get precentage for loading bar
         $scope.getPercentage = function () {
             if ($scope.SpecificQuestion != undefined) {
-                 return (Date.now()/(($scope.SpecificQuestion.ExpireTimestamp * 1000 * 60) + $scope.SpecificQuestion.CreationTimestamp))*100;
+                var nominater = Date.now() - parseInt($scope.SpecificQuestion.CreationTimestamp);
+                var denominater =  parseInt($scope.SpecificQuestion.ExpireTimestamp) -  parseInt($scope.SpecificQuestion.CreationTimestamp);
+                return (nominater/denominater)*100;
             }
            return 0;
         }
@@ -164,7 +166,7 @@ app.controller("RoomController", [
 
             }
             //Make get request for json object conversion
-            $http.post('/Room/toJsonQuestion', { CreatedBy: $window.userId, RoomId: MyRoomIdFromViewBag, Downvotes: 0, Image: $scope.questionImage.base64, Upvotes: 0, QuestionText: $scope.QuestionText, ResponseOptions: newResponses, ExpireTime: $scope.ExpirationTime, QuetionsType: $scope.QuestionType }).
+            $http.post('/Room/toJsonQuestion', { CreatedBy: $window.userId, RoomId: MyRoomIdFromViewBag, Downvotes: 0, Image: $scope.questionImage.base64, Upvotes: 0, QuestionText: $scope.QuestionText, ResponseOptions: newResponses, ExpireTimestamp: $scope.ExpirationTime, QuetionsType: $scope.QuestionType }).
                 then(function (response) {
                     //Use response to send to REST API
                     $http.post(configs.restHostName + '/Question/CreateQuestion', { question: JSON.stringify(response.data), type: $scope.QuestionType.val });
