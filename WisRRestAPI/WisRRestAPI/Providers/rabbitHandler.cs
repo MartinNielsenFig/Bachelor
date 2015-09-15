@@ -65,13 +65,16 @@ namespace WisRRestAPI.Providers
 
         public void subscribe(string routingKey)
         {
+            if (isSubscribed)
+                return;
             lock (_model)
             {
                 _consumer = new EventingBasicConsumer(_model);
                 _consumer.Received += handle;
                 _model.QueueBind("Wisr", "WisrExchange", routingKey);
                 _model.BasicConsume("Wisr", false, _consumer);
-            }                
+            }
+            isSubscribed = true;
         }
 
         public void handle(object messageModel, BasicDeliverEventArgs ea)

@@ -38,9 +38,17 @@ app.controller("RoomController", [
             };
             hub.client.broadcastUpdateQuestion = function (questionToUpdate) {
                 var updateTemp = JSON.parse(questionToUpdate);
-                var index=findWithAttr($scope.Questions, _id, updateTemp._id);
-                //$scope.Questions.push();
-                //$scope.$apply();
+                var index=findWithAttr($scope.Questions, "_id", updateTemp._id);
+                $scope.Questions[index] = updateTemp;
+                //If this is the specific question that changed update it with new values
+                if ($scope.SpecificQuestion != undefined) {
+                    var indexOfSpecificQuestion = findWithAttr($scope.Questions, "_id", $scope.SpecificQuestion._id);
+                    $scope.SpecificQuestion = $scope.Questions[indexOfSpecificQuestion];
+                    //Redraw the result chart
+                    $scope.createPieChart()
+                }
+                
+                $scope.$apply();
             };
             $.connection.hub.start();
         });
@@ -194,7 +202,7 @@ app.controller("RoomController", [
                         "size": 8
                     },
                     load: {
-                        "speed": 200
+                        effect:"none"
                     }
                 },
                 "misc": {
