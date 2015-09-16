@@ -3,10 +3,9 @@
 }
 <body ng-controller="RoomController">
     <h2>{{CurrentRoom.Name}}</h2>
-    <div class="row">
+    <div class="row" ng-show="rightPassword">
         <div id="questionTables" ng-show="!SpecificQuestionShown">
-
-            <div class="col-md-8">
+        <div class="col-md-8">
                 <h4>Host questions</h4>
                 <table id="hostQuestionsTable" class="table table-hover table-responsive table-bordered">
                     @*<thead>
@@ -203,7 +202,30 @@
 
         </div>
     </div>
-    <!--Modal end-->
+<!--Modal end-->
+    <!-- Modal --> <!--Stops modal from closing-->
+    <div class="modal fade" id="myModalPassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false" data-keyboard="false">
+            <div class="modal-dialog center">
+                <div class="modal-content modal-heigh">
+                    <div class="modal-body">
+                        <form>
+                            <label class="col-md-12 text-center">Enter Password:</label>
+                            <div class="col-md-12 text-center">
+                                <input ng-model="inputPassword" type="password" required />
+                            </div>
+                            <div class="col-md-12 text-center">
+                                <button type="submit" ng-click="validatePassword()">Submit</button>
+                            </div>
+                            <div class="col-md-12 text-center">
+                                {{passwordMessage}}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     <script type="text/javascript">
         var MyRoomIdFromViewBag = '@ViewBag.roomId';
     </script>

@@ -81,8 +81,8 @@ namespace WisRRestAPI.Controllers
                 return "Could not publish to rabbitMQ";
             }
             q.Id = ObjectId.GenerateNewId(DateTime.Now).ToString();
-            q.CreationTimestamp = (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalMilliseconds.ToString();
-            q.ExpireTimestamp = (DateTime.UtcNow.AddMinutes(Convert.ToDouble(q.ExpireTimestamp)).Subtract(new DateTime(1970, 1, 1))).TotalMilliseconds.ToString();
+            q.CreationTimestamp = (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalMilliseconds.ToString().Replace(",", ".");
+            q.ExpireTimestamp = (DateTime.UtcNow.AddMinutes(Convert.ToDouble(q.ExpireTimestamp)).Subtract(new DateTime(1970, 1, 1))).TotalMilliseconds.ToString().Replace(",", ".");
             _qr.AddQuestionObject(b);
             return "Question saved with id: " + q.Id;
 

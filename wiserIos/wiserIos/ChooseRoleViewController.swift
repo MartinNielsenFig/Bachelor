@@ -139,11 +139,10 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
         //http://stackoverflow.com/questions/24022479/how-would-i-create-a-uialertview-in-swift
         let alert = UIAlertController(title: "Confirm logout", message: "Confirm logging out", preferredStyle: .Alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { action in
-            NSLog("cancelled logging off Facebook")
+            //Do nothing
         }))
         
         alert.addAction(UIAlertAction(title: "Logout", style: .Default, handler: { action in
-            NSLog("confirmed logging off Facebook")
             FacebookHelper.logOff()
             self.navigationItem.rightBarButtonItem = nil
         }))

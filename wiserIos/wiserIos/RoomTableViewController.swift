@@ -11,24 +11,22 @@ import UIKit
 class RoomTableViewController: UITableViewController {
     
     //Properties
-    var rooms = [Room]()
+    var rooms = [Room]() {
+        didSet {
+            dispatch_async(dispatch_get_main_queue()) { () -> Void in
+                self.tableView.reloadData()
+            }
+        }
+    }
     
     //Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        HttpHandler.getRooms(
-            {
-                (inout newRooms: [Room]) in
-                
-                self.rooms += self.filterRoomsByLocation(newRooms, metersRadius: 1000)
-                //self.rooms.sort({room1, room2 in }) //todo sort
-                
-                dispatch_async(dispatch_get_main_queue(), {
-                    self.tableView.reloadData()
-                })
-            }
-        )
+        HttpHandler.getRooms { (inout rooms: [Room]) -> Void in
+            //Todo filter
+            self.rooms += self.filterRoomsByLocation(rooms, metersRadius: 1000)
+        }
     }
     
     func filterRoomsByLocation(rooms: [Room], metersRadius: Double) -> [Room] {
@@ -118,7 +116,6 @@ class RoomTableViewController: UITableViewController {
         
         if segue.identifier == "SelectRoom" {
             if let selectedCell = sender as? UITableViewCell {
-                NSLog(String(selectedCell))
                 
                 let roomViewController = segue.destinationViewController as! RoomPageViewController
                 let index = tableView.indexPathForCell(selectedCell)!
