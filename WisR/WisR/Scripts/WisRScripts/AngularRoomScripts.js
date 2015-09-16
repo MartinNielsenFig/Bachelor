@@ -59,7 +59,11 @@ app.controller("RoomController", [
                     return $window.userId;
                 }, function (n, o) {
                     $scope.userId = n;
-                }
+                $http.post(configs.restHostName + '/User/GetById', { id: n }).then(function(response) {
+                    $scope.currentUser = response.data;
+                    getRoom();
+                });
+            }
 );
         //watch the questionImage.filesize variable
         $scope.$watch(
@@ -90,9 +94,26 @@ app.controller("RoomController", [
         var getRoom = function () {
             $http.post(configs.restHostName + '/Room/GetById', { id: MyRoomIdFromViewBag }).then(function (response) {
                 $scope.CurrentRoom = response.data;
+                if ($scope.CurrentRoom.HasPassword && $scope.currentUser.ConnectedRoomIds.indexOf(MyRoomIdFromViewBag) == -1) {
+                    $('#myModalPassword').modal('show');
+                } else {
+                    $scope.rightPassword = true;
+                }
             });
         };
-        getRoom();
+        
+
+
+        $scope.validatePassword = function () {
+            if ($scope.inputPassword == $scope.CurrentRoom.EncryptedPassword) {
+                $('#myModalPassword').modal('hide');
+                $scope.rightPassword = true;
+                $scope.currentUser.ConnectedRoomIds.push(MyRoomIdFromViewBag);
+            } else {
+                $scope.passwordMessage = "Incorrect password";
+            }
+        }
+
         var getChatMessages = function () {
             $http.post(configs.restHostName + '/Chat/GetAllByRoomId', { roomId: MyRoomIdFromViewBag }).then(function (response) {
                 $scope.ChatMessages = response.data;
