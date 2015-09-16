@@ -137,9 +137,7 @@ class CreateRoomViewController: UITableViewController {
     }
     
     //Add room
-    func addRoomButtonPressed(button: UIBarButtonItem) {
-        NSLog("add room button pressed")
-        
+    func addRoomButtonPressed(button: UIBarButtonItem) {        
         room.Name = roomNameInputCell?.inputField.text
         room.AllowAnonymous = (anonymousInputCell?.uiSwitch.on)!
         room.CreatedById = CurrentUser.sharedInstance._id

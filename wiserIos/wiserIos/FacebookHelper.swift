@@ -13,7 +13,6 @@ import FBSDKLoginKit
 class FacebookHelper {
     
     static func logOff() {
-        NSLog("begin log off facebook")
         let fbManager = FBSDKLoginManager()
         fbManager.logOut()
         FBSDKAccessToken.setCurrentAccessToken(nil)
@@ -22,7 +21,7 @@ class FacebookHelper {
     
     static func requestCurrentUserInformation(createUser createUser: Bool) {
         //http://stackoverflow.com/questions/30049450/get-fbsdkloginmanagerloginresults-email-and-name
-        let fbRequest = FBSDKGraphRequest(graphPath: "me", parameters: nil)
+        let fbRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name"])
         fbRequest.startWithCompletionHandler {
             (connection: FBSDKGraphRequestConnection!, result: AnyObject!, error: NSError!) -> Void in
             if error == nil {

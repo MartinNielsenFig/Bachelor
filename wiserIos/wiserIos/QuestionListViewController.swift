@@ -12,7 +12,13 @@ class QuestionListViewController: UIViewController, UITableViewDataSource, UITab
     
     let pageIndex = 0
     var roomId: String?
-    var questions = [Question]()
+    var questions = [Question]() {
+        didSet {
+            dispatch_async(dispatch_get_main_queue()) { () -> Void in
+                self.questionsTableView.reloadData()
+            }
+        }
+    }
     
     @IBOutlet weak var questionsTableView: UITableView!
     
@@ -26,23 +32,20 @@ class QuestionListViewController: UIViewController, UITableViewDataSource, UITab
         questions += [loadingQuestion]
         
         //Load questions for room
-        HttpHandler.getQuestions(roomId, completionHandler: { (inout newQuestions: [Question]) -> Void in
+        //"Swift Trailing Closure" syntax
+        HttpHandler.getQuestions(roomId!) { (questions) -> Void in
             self.questions.removeAll()
             
-            if newQuestions.count <= 0 {
+            if questions.count <= 0 {
                 let q = Question()
                 q.QuestionText = "No questions for room"
                 q.CreatedById = "system"
                 self.questions += [q]
             }
             else {
-                self.questions += newQuestions
+                self.questions += questions
             }
-            
-            dispatch_async(dispatch_get_main_queue(), {
-                self.questionsTableView.reloadData()
-            })
-        })
+        }
     }
     
     //UITableViewDelegate
@@ -76,7 +79,6 @@ class QuestionListViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print(indexPath.row)
         let roomPageViewController = parentViewController?.parentViewController as! RoomPageViewController
         let questionPage = roomPageViewController.viewControllerAtIndex(1)! as! QuestionViewController
         questionPage.question = questions[indexPath.row]

@@ -18,4 +18,12 @@
     <string name="title_activity_start">StartActivity</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_maps">Map</string>
+    <string name="room_name_textview">Room Name</string>
+    <string name="room_tag_textview">Room Tag</string>
+    <string name="room_password_enable_textview">Enable Password</string>
+    <string name="room_password_textview">Password</string>
+    <string name="room_radius_textview">Radius</string>
+    <string name="room_enable_chat_textview">Enable Chat</string>
+    <string name="room_anonymous_enable_textview">Enable Anonymous</string>
+    <string name="create_room_button">Create Room</string>
 </resources>
