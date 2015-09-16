@@ -71,7 +71,7 @@ namespace WisR.Controllers
             chatMessage.ByUserId = userId;
             chatMessage.RoomId = roomId;
             chatMessage.Value = text;
-            chatMessage.Timestamp = (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalMilliseconds.ToString();
+            chatMessage.Timestamp = (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalMilliseconds.ToString().Replace(",",".");
             return chatMessage.ToJson();
         }
     }
