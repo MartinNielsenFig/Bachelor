@@ -156,12 +156,10 @@ app.controller("RoomController", [
                     values.push(1);
                 }
             }
-            var data = [];
-            for (i = 0; i < labels.length; i++) {
-                data.push({ "label": labels[i], "value":values[i] });
-            }
+            
             $scope.labels = labels;
             $scope.data = values;
+            //TODO: $scope.colors = ['#FD1F5E', '#1EF9A1'];
         }
 
         $scope.GetUsernameById = function (userId) {
