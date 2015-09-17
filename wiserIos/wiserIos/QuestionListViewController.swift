@@ -23,6 +23,7 @@ class QuestionListViewController: UIViewController, UITableViewDataSource, UITab
     @IBOutlet weak var questionsTableView: UITableView!
     
     override func viewDidLoad() {
+        
         questionsTableView.delegate = self
         questionsTableView.dataSource = self
         

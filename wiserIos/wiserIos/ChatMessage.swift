@@ -15,6 +15,8 @@ class ChatMessage {
     var Value: String?
     var Timestamp: String?
     
+    init(){}
+    
     init(jsonDictionary: NSDictionary) {
         
         _id = jsonDictionary["_id"] as? String

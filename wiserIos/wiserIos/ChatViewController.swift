@@ -26,32 +26,49 @@ class ChatViewController: UIViewController, UITextFieldDelegate, Paged {
     @IBOutlet weak var chatMessageInput: UITextField!
     
     override func viewDidLoad() {
-        
         chatMessageInput.delegate = self
         
         HttpHandler.getChatMessages(roomId!) { (messages) -> Void in
-            
+            var tempChat = String()
             for m in messages {
                 let line = DateTimeHelper.getTimeStringFromEpochString(m.Timestamp) + " " + m.Value! + "\n"
-                self.chat += String(line)
+                tempChat += line
             }
+            self.chat = tempChat
         }
         
-        
+        super.viewDidLoad()
     }
     
     //UITextFieldDelegate
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        if let text = textField.text where text.isEmpty {
+            return false
+        }
+        
+        let msg = ChatMessage()
+        msg.ByUserId = CurrentUser.sharedInstance._id
+        msg.RoomId = roomId
+        //message timestamp gets created on restApi
+        msg.Value = textField.text
+        
+        HttpHandler.sendChatMessage(JSONSerializer.toJson(msg))
+        
+        return true
+    }
+    
     func textFieldDidBeginEditing(textField: UITextField) {
         movePlate(textField, up: true)
     }
-    
     func textFieldDidEndEditing(textField: UITextField) {
         movePlate(textField, up: false)
     }
+
     
     //http://stackoverflow.com/questions/1247113/iphone-keyboard-covers-uitextfield
     func movePlate(field: UITextField, up: Bool) {
-        let movementDistance = 120 // tweak as needed
+        
+        let movementDistance = 220 // tweak as needed
         let movementDuration = 0.3 // tweak as needed
         
         let movement = (up ? -movementDistance : movementDistance)
