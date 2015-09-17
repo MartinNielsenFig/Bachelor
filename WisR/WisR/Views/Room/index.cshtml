@@ -1,7 +1,7 @@
 ﻿@{
     ViewBag.Title = "index";
 }
-<body ng-controller="RoomController">
+<body ng-cloak ng-controller="RoomController">
     <h2>{{CurrentRoom.Name}}</h2>
     <div class="row" ng-show="rightPassword">
         <div ng-hide="questionsLoaded" class="container text-center col-md-8">
@@ -12,7 +12,7 @@
                 <h4>Host questions</h4>
                 <div style="overflow-y: auto; max-height: 300px">
 
-                    <table id="hostQuestionsTable" class="table table-hover table-responsive table-bordered">
+                    <table id="hostQuestionsTable" class="table table-hover table-responsive">
                         @*<thead>
                                 <tr>
                                     <th>
@@ -37,14 +37,14 @@
                                 <td>{{GetUsernameById(question.CreatedById)}}</td>
                                 <td>{{question.Upvotes}}<span class="glyphicon glyphicon-thumbs-up"></span></td>
                                 <td>{{question.Downvotes}}<span class="glyphicon glyphicon-thumbs-down"></span></td>
-                                <td><img ng-src="data:image/png;base64,{{question.Img}}" style="max-width: 100px; max-height: 100px" /></td>
+                                @*<td><img ng-src="data:image/png;base64,{{question.Img}}" style="max-width: 100px; max-height: 100px" /></td>*@
                         </tbody>
                     </table>
                 </div>
                 <div ng-show="CurrentRoom.UsersCanAsk">
                     <h4>User questions</h4>
                     <div style="overflow-y: auto; max-height: 300px">
-                        <table id="userQuestionsTable" class="table table-hover table-responsive table-bordered">
+                        <table id="userQuestionsTable" class="table table-hover table-responsive">
                             @*<thead>
                                     <tr>
                                         <th>
@@ -69,7 +69,7 @@
                                     <td>{{GetUsernameById(question.CreatedById)}}</td>
                                     <td>{{question.Upvotes}}<span class="glyphicon glyphicon-thumbs-up"></span></td>
                                     <td>{{question.Downvotes}}<span class="glyphicon glyphicon-thumbs-down"></span></td>
-                                    <td><img ng-src="data:image/png;base64,{{question.Img}}" style="max-width: 100px; max-height: 100px" /></td>
+                                    @*<td><img ng-src="data:image/png;base64,{{question.Img}}" style="max-width: 100px; max-height: 100px" /></td>*@
                             </tbody>
                         </table>
                     </div>
