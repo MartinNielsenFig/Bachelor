@@ -21,8 +21,13 @@
                 </div>
                 <div style="height: 300px; overflow: auto">
                     <table id="roomTable" class="table table-responsive table-hover">
-                        <tr class="col-md-12" style="cursor: pointer" ng-repeat="room in Rooms| roomsNear: this" ng-click="changeViewToRoom(room._id)">
-                            <td class="col-md-11">{{room.Name}}</td>
+                        <tr class="col-md-12" style="cursor: pointer" ng-repeat="room in Rooms| roomsNear: this" ng-click="changeViewToRoom(room)" ng-class="{'notClickAble': !room.AllowAnonymous && $parent.userId=='NoUser'}">
+                            <td ng-show="room.AllowAnonymous || $parent.userId != 'NoUser' " class="col-md-11">
+                                {{room.Name}}
+                            </td>
+                            <td ng-show="!room.AllowAnonymous && $parent.userId=='NoUser'" class="col-md-11" title="No access because you're not logged in">
+                                <s>{{room.Name}}</s>
+                            </td>
                             <td class="col-md-1 text-right">
                                 <span ng-show="room.HasPassword" title="Password Protected" class="glyphicon glyphicon-lock right"></span>
                                 <span ng-show="room.HasChat" title="Chat enabled" class="glyphicon glyphicon-comment right"></span>

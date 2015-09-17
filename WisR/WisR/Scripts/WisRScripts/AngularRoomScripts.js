@@ -127,7 +127,11 @@ app.controller("RoomController", [
                         $('#myModalPassword').modal('show');
                     }
                 } else {
-                    if ($scope.CurrentRoom.HasPassword) {
+                    if ($scope.CurrentRoom.AllowAnonymous == false) {
+                        var url = $("#RedirectToHome").val();
+                        location.href = url;
+                    }
+                    else if ($scope.CurrentRoom.HasPassword) {
                         $('#myModalPassword').modal('show');
                     } else {
                         $scope.rightPassword = true;

@@ -85,16 +85,21 @@ app.controller("HomeController", ['$scope', '$http', '$location', '$window', 'co
         });
     });
 
-    $scope.changeViewToRoom = function (roomId) {
-        $scope.RoomId = roomId;
+    $scope.changeViewToRoom = function (room) {
+        if (!room.AllowAnonymous && $scope.userId == 'NoUser') {
+            
+        } else {
+            $scope.RoomId = room._id;
         var url = $("#RedirectTo").val() + "?RoomId=" + $scope.RoomId;
         location.href = url;
+        }
+        
     }
     $scope.connectWithUniqueTag = function () {
         $http.post(configs.restHostName + '/Room/GetByUniqueTag', { tag: $scope.uniqueRoomTag }).then(function (response) {
             //TODO verification of response
             if (response.data._id != undefined) {
-                $scope.changeViewToRoom(response.data._id);
+                $scope.changeViewToRoom(response.data);
             } else {
                 alert("No room with the tag: " + $scope.uniqueRoomTag);
             }
@@ -127,7 +132,8 @@ app.controller("HomeController", ['$scope', '$http', '$location', '$window', 'co
             //Use response to send to REST API
             $http.post(configs.restHostName + '/Room/CreateRoom', { Room: JSON.stringify(response.data) }).
             then(function (response) {
-                $scope.changeViewToRoom(response.data);
+                var room={_id:response.data}
+                $scope.changeViewToRoom(room);
             });
         });
     }

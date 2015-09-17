@@ -46,48 +46,48 @@ public class QuestionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Map<String,String> mParams = new HashMap<String, String>();
-
-                Question mQuestion = new BooleanQuestion("bent");
-                mQuestion.set_CreatedById("Tomas");
-                mQuestion.set_Downvotes(5);
-                mQuestion.set_Id(null);
-                mQuestion.set_Img("base64");
-                mQuestion.set_Upvotes(5);
-                mQuestion.set_QuestionText("SoQuestion");
-                Gson gson = new Gson();
-
-                String json = gson.toJson(mQuestion);
-
-                mTextView.setText(json);
-
-                mParams.put("question", json);
-                mParams.put("roomId", "doge" );
-                mParams.put("type","BooleanQuestion");
-
-                Response.Listener<JSONObject> mListener = new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject jsonObject) {
-                        mTextView.setText(jsonObject.toString());
-                    }
-                };
-
-                Response.ErrorListener mErrorListener = new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError volleyError) {
-                        mTextView.setText( String.valueOf(volleyError.networkResponse.statusCode));
-                    }
-                };
-
-                RequestQueue requestQueue = Volley.newRequestQueue(QuestionActivity.this);
-                HttpHelper jsObjRequest = new HttpHelper(Request.Method.POST, "http://10.0.2.2:1337/Question/CreateQuestion", mParams, mListener , mErrorListener);
-
-                try {
-                    requestQueue.add(jsObjRequest);
-                }
-                catch (Exception e){
-
-                }
+//                Map<String,String> mParams = new HashMap<String, String>();
+//
+//                Question mQuestion = new BooleanQuestion("bent");
+//                mQuestion.set_CreatedById("Tomas");
+//                mQuestion.set_Downvotes(5);
+//                mQuestion.set_Id(null);
+//                mQuestion.set_Img("base64");
+//                mQuestion.set_Upvotes(5);
+//                mQuestion.set_QuestionText("SoQuestion");
+//                Gson gson = new Gson();
+//
+//                String json = gson.toJson(mQuestion);
+//
+//                mTextView.setText(json);
+//
+//                mParams.put("question", json);
+//                mParams.put("roomId", "doge" );
+//                mParams.put("type","BooleanQuestion");
+//
+//                Response.Listener<JSONObject> mListener = new Response.Listener<JSONObject>() {
+//                    @Override
+//                    public void onResponse(JSONObject jsonObject) {
+//                        mTextView.setText(jsonObject.toString());
+//                    }
+//                };
+//
+//                Response.ErrorListener mErrorListener = new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError volleyError) {
+//                        mTextView.setText( String.valueOf(volleyError.networkResponse.statusCode));
+//                    }
+//                };
+//
+//                RequestQueue requestQueue = Volley.newRequestQueue(QuestionActivity.this);
+//                HttpHelper jsObjRequest = new HttpHelper(Request.Method.POST, "http://10.0.2.2:1337/Question/CreateQuestion", mParams, mListener , mErrorListener);
+//
+//                try {
+//                    requestQueue.add(jsObjRequest);
+//                }
+//                catch (Exception e){
+//
+//                }
             }
         });
 
