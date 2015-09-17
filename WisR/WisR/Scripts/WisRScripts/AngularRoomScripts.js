@@ -47,7 +47,7 @@ app.controller("RoomController", [
                     //Redraw the result chart
                     $scope.createPieChart();
                 }
-                
+
                 $scope.$apply();
             };
             $.connection.hub.start();
@@ -67,15 +67,17 @@ app.controller("RoomController", [
                     return $window.userId;
                 }, function (n, o) {
                     $scope.userId = n;
-                if (n != undefined) {
-                 
-              
-                    $http.post(configs.restHostName + '/User/GetById', { id: n }).then(function (response) {
-                    $scope.currentUser = response.data;
-                    getRoom();
-                });
-            }
+                    if (n == "NoUser") {
+                        getRoom(false);
+                    }
+                    else if (n != undefined) {
+                        $http.post(configs.restHostName + '/User/GetById', { id: n }).then(function (response) {
+                            $scope.currentUser = response.data;
+                            getRoom(true);
+                        });
+                    }
                 }
+
 );
         //watch the questionImage.filesize variable
         $scope.$watch(
@@ -103,22 +105,30 @@ app.controller("RoomController", [
 
         //Get information about this specific room
         //Get room info
-        var getRoom = function () {
+        var getRoom = function (user) {
             $http.post(configs.restHostName + '/Room/GetById', { id: MyRoomIdFromViewBag }).then(function (response) {
                 $scope.CurrentRoom = response.data;
-                if ($scope.currentUser.ConnectedRoomIds != undefined) {
-                if ($scope.CurrentRoom.HasPassword && $scope.currentUser.ConnectedRoomIds.indexOf(MyRoomIdFromViewBag) == -1) {
-                    $('#myModalPassword').modal('show');
+                if (user) {
+                    if ($scope.currentUser.ConnectedRoomIds != undefined) {
+                        if ($scope.CurrentRoom.HasPassword && $scope.currentUser.ConnectedRoomIds.indexOf(MyRoomIdFromViewBag) == -1) {
+                            $('#myModalPassword').modal('show');
+                        } else {
+                            $scope.rightPassword = true;
+                        }
+                    } else {
+                        $('#myModalPassword').modal('show');
+                    }
                 } else {
-                    $scope.rightPassword = true;
-                }
-                } else {
-                    $('#myModalPassword').modal('show');
+                    if ($scope.CurrentRoom.HasPassword) {
+                        $('#myModalPassword').modal('show');
+                    } else {
+                        $scope.rightPassword = true;
+                    }
                 }
 
             });
         };
-        
+
 
 
         $scope.validatePassword = function () {
@@ -126,13 +136,13 @@ app.controller("RoomController", [
                 $('#myModalPassword').modal('hide');
                 $scope.rightPassword = true;
                 if ($scope.currentUser.ConnectedRoomIds != undefined) {
-                $scope.currentUser.ConnectedRoomIds.push(MyRoomIdFromViewBag);
+                    $scope.currentUser.ConnectedRoomIds.push(MyRoomIdFromViewBag);
 
                     var newIds = "";
                     for (var i = 0; i < $scope.currentUser.ConnectedRoomIds.length; i++) {
                         if (i != $scope.currentUser.ConnectedRoomIds.length - 1) {
                             newIds = newIds + $scope.currentUser.ConnectedRoomIds[i] + ',';
-            } else {
+                        } else {
                             newIds = newIds + $scope.currentUser.ConnectedRoomIds[i];
                         }
                     }
@@ -172,8 +182,8 @@ app.controller("RoomController", [
         //Function for retrieving userName by an id
         var getAllUsers = function () {
             $http.get(configs.restHostName + '/User/GetAll').then(function (result) {
-                    $scope.ActiveUsers = result.data;
-                });
+                $scope.ActiveUsers = result.data;
+            });
         }
         getAllUsers();
 
@@ -191,7 +201,7 @@ app.controller("RoomController", [
                     values.push(1);
                 }
             }
-            
+
             $scope.labels = labels;
             $scope.data = values;
             //TODO: $scope.colors = ['#FD1F5E', '#1EF9A1'];
@@ -215,14 +225,14 @@ app.controller("RoomController", [
             $scope.SpecificQuestionShown = !$scope.SpecificQuestionShown;
         }
 
-        
+
 
         //Get precentage for loading bar
         $scope.getPercentage = function () {
             if ($scope.SpecificQuestion != undefined) {
                 $scope.timerOverflow = false;
                 $scope.$apply(function () {
-                var nominater = Date.now() - parseInt($scope.SpecificQuestion.CreationTimestamp);
+                    var nominater = Date.now() - parseInt($scope.SpecificQuestion.CreationTimestamp);
                     var denominater = parseInt($scope.SpecificQuestion.ExpireTimestamp) - parseInt($scope.SpecificQuestion.CreationTimestamp);
                     $scope.precentage = (nominater / denominater) * 100;
                     var timeLeftInmSec = parseInt($scope.SpecificQuestion.ExpireTimestamp) - Date.now();
@@ -242,7 +252,7 @@ app.controller("RoomController", [
         //adds answer to specificQuestion
         $scope.AddAnswer = function () {
             $scope.SpecificQuestion.Result.push($scope.answerChoosen);
-           
+
             var newResponses = "";
             for (var i = 0; i < $scope.SpecificQuestion.ResponseOptions.length; i++) {
                 if (i != $scope.SpecificQuestion.ResponseOptions.length - 1) {
@@ -250,7 +260,7 @@ app.controller("RoomController", [
                 } else {
                     newResponses = newResponses + $scope.SpecificQuestion.ResponseOptions[i].Value;
                 }
-        } 
+            }
 
             var newResults = "";
             for (var i = 0; i < $scope.SpecificQuestion.Result.length; i++) {
