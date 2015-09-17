@@ -38,7 +38,6 @@ namespace WisRRestAPI.Controllers
             return ChatMessages.Result.ToJson();
         }
 
-
         [System.Web.Mvc.HttpPost]
         public string CreateChatMessage(string ChatMessage)
         {
@@ -54,9 +53,7 @@ namespace WisRRestAPI.Controllers
             }
 
             //Assign date to ChatMessage
-            TimeSpan t = DateTime.UtcNow - new DateTime(1970, 1, 1);
-            string ms = t.TotalMilliseconds.ToString();
-            chatMsg.Timestamp = ms;
+            chatMsg.Timestamp = TimeHelper.timeSinceEpoch();
 
             //assign ID to room
             chatMsg.Id = ObjectId.GenerateNewId(DateTime.Now).ToString();
