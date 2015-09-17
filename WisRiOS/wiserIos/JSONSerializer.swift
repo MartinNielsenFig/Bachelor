@@ -45,7 +45,7 @@ public class JSONSerializer {
         let mirrorChildrenCollection = AnyRandomAccessCollection(mirror.children)!
         children += mirrorChildrenCollection
         
-        var currentMirror: Mirror = mirror
+        var currentMirror = mirror
         while let superclassChildren = currentMirror.superclassMirror()?.children {
             let randomCollection = AnyRandomAccessCollection(superclassChildren)!
             children += randomCollection
@@ -53,8 +53,8 @@ public class JSONSerializer {
         }
 
         let size = children.count
-        
         var index = 0
+        
         for (optionalPropertyName, value) in children {
             
             let propertyName = optionalPropertyName!
