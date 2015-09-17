@@ -14,10 +14,10 @@ class ChatViewController: JSQMessagesViewController, UITextFieldDelegate, Paged 
     //JSQMessagesViewController
     //Framework by jessesquires https://github.com/jessesquires/JSQMessagesViewController
     //Tutorial inspired by https://www.syncano.io/ios-chat-app-jsqmessagesviewcontroller/
-    var userName = "Peheje"
+    var userName = String()
     var messages = [JSQMessage]()
     let incomingBubble = JSQMessagesBubbleImageFactory().incomingMessagesBubbleImageWithColor(UIColor.blueColor())
-    let outgoingBubble = JSQMessagesBubbleImageFactory().outgoingMessagesBubbleImageWithColor(UIColor.lightGrayColor())
+    let outgoingBubble = JSQMessagesBubbleImageFactory().outgoingMessagesBubbleImageWithColor(UIColor.greenColor())
     
     override func collectionView(collectionView: JSQMessagesCollectionView!, messageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageData! {
         let data = self.messages[indexPath.row]
@@ -66,12 +66,6 @@ class ChatViewController: JSQMessagesViewController, UITextFieldDelegate, Paged 
     override func viewDidLoad() {
         
         self.userName = "iPhone"
-        /*for i in 1...10 {
-            let sender = (i%2 == 0) ? "Syncano" : self.userName
-            let message = JSQMessage(senderId: sender, displayName: sender, text: "Text")
-            self.messages += [message]
-        }*/
-        
         self.collectionView!.reloadData()
         self.senderDisplayName = self.userName
         self.senderId = self.userName
