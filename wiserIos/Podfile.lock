@@ -16,20 +16,14 @@ PODS:
     - FBSDKCoreKit/arc
   - FBSDKLoginKit (4.6.0):
     - FBSDKCoreKit
-  - JSQMessagesViewController (7.2.0):
-    - JSQSystemSoundPlayer (~> 2.0.1)
-  - JSQSystemSoundPlayer (2.0.1)
 
 DEPENDENCIES:
   - FBSDKCoreKit
   - FBSDKLoginKit
-  - JSQMessagesViewController
 
 SPEC CHECKSUMS:
   Bolts: 20a2bd788273360cb1e31530dc19b8544eef2544
   FBSDKCoreKit: 9954492d90c5fd65ae831395697a1660360d61f1
   FBSDKLoginKit: 3d07febbfa884b9878cacba54f705bb41f07d4b6
-  JSQMessagesViewController: 73cab48aa92fc2d512f3b6724f3425cc47a19eb5
-  JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
 
 COCOAPODS: 0.38.2

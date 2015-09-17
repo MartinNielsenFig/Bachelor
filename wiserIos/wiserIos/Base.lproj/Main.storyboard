@@ -146,11 +146,11 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F1H-bP-e2z">
-                                        <rect key="frame" x="0.0" y="29" width="560" height="317"/>
+                                        <rect key="frame" x="0.0" y="29" width="560" height="318"/>
                                         <animations/>
                                     </imageView>
                                     <pickerView contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KDW-Y0-aTM">
-                                        <rect key="frame" x="0.0" y="354" width="560" height="217"/>
+                                        <rect key="frame" x="0.0" y="354" width="560" height="216"/>
                                         <animations/>
                                     </pickerView>
                                 </subviews>

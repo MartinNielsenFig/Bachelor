@@ -22,8 +22,9 @@ class ChatViewController: JSQMessagesViewController, UITextFieldDelegate, Paged 
             }
         }
     }
-    let incomingBubble = JSQMessagesBubbleImageFactory().incomingMessagesBubbleImageWithColor(UIColor.blueColor())
-    let outgoingBubble = JSQMessagesBubbleImageFactory().outgoingMessagesBubbleImageWithColor(UIColor.greenColor())
+    
+    let incomingBubble = JSQMessagesBubbleImageFactory().incomingMessagesBubbleImageWithColor(UIColor(red: 231/255, green: 231/255, blue: 233/255, alpha: 1.0))!
+    let outgoingBubble = JSQMessagesBubbleImageFactory().outgoingMessagesBubbleImageWithColor(UIColor(red: 0, green: 122/255, blue: 1, alpha: 1.0))!
     
     override func collectionView(collectionView: JSQMessagesCollectionView!, messageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageData! {
         let data = self.messages[indexPath.row]
@@ -46,7 +47,14 @@ class ChatViewController: JSQMessagesViewController, UITextFieldDelegate, Paged 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.messages.count
     }
-    
+
+    /*override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = self.collectionView(collectionView, cellForItemAtIndexPath: indexPath) as! JSQMessagesCollectionViewCell
+        
+        cell.textView!.textColor = UIColor.blackColor()
+        return cell
+    }*/
+        
     override func didPressSendButton(button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: NSDate!) {
         let newJsqMessage = JSQMessage(senderId: senderId, displayName: senderDisplayName, text: text)
         messages += [newJsqMessage]

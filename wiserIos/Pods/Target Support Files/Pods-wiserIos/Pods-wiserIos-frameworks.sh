@@ -55,13 +55,9 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework 'Pods-wiserIos/Bolts.framework'
   install_framework 'Pods-wiserIos/FBSDKCoreKit.framework'
   install_framework 'Pods-wiserIos/FBSDKLoginKit.framework'
-  install_framework 'Pods-wiserIos/JSQMessagesViewController.framework'
-  install_framework 'Pods-wiserIos/JSQSystemSoundPlayer.framework'
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework 'Pods-wiserIos/Bolts.framework'
   install_framework 'Pods-wiserIos/FBSDKCoreKit.framework'
   install_framework 'Pods-wiserIos/FBSDKLoginKit.framework'
-  install_framework 'Pods-wiserIos/JSQMessagesViewController.framework'
-  install_framework 'Pods-wiserIos/JSQSystemSoundPlayer.framework'
 fi

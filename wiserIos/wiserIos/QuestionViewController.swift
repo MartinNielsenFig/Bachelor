@@ -25,6 +25,8 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     
     func showQuestionUI() {
         
+        //Load initial question is nil
+        
         //Picker
         pickerData.removeAll()
         for r in question.ResponseOptions {

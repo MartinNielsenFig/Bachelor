@@ -4,7 +4,6 @@
 target 'wiserIos' do
 
 use_frameworks!
-pod 'JSQMessagesViewController'
 pod 'FBSDKCoreKit'
 pod 'FBSDKLoginKit'
 
