@@ -12,8 +12,8 @@ class HttpHandler {
     
     //static let mainUrl = "http://192.168.198.138:1337/"
     static let mainUrl = "http://wisrrestapi.aceipse.dk/"
-    //http://stackoverflow.com/questions/25341858/perform-post-request-in-ios-swift
     
+    //http://stackoverflow.com/questions/25341858/perform-post-request-in-ios-swift
     static func log(data data: NSData?, response: NSURLResponse?, error: NSError?) {
         //NSLog("data \(data)")
         NSLog("reponse \(response)")

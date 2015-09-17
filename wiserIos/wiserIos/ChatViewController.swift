@@ -15,7 +15,13 @@ class ChatViewController: JSQMessagesViewController, UITextFieldDelegate, Paged 
     //Framework by jessesquires https://github.com/jessesquires/JSQMessagesViewController
     //Tutorial inspired by https://www.syncano.io/ios-chat-app-jsqmessagesviewcontroller/
     var userName = String()
-    var messages = [JSQMessage]()
+    var messages = [JSQMessage]() {
+        didSet {
+            dispatch_async(dispatch_get_main_queue()) { () -> Void in
+                self.collectionView!.reloadData()
+            }
+        }
+    }
     let incomingBubble = JSQMessagesBubbleImageFactory().incomingMessagesBubbleImageWithColor(UIColor.blueColor())
     let outgoingBubble = JSQMessagesBubbleImageFactory().outgoingMessagesBubbleImageWithColor(UIColor.greenColor())
     
@@ -70,13 +76,14 @@ class ChatViewController: JSQMessagesViewController, UITextFieldDelegate, Paged 
         self.senderDisplayName = self.userName
         self.senderId = self.userName
         
-        
         HttpHandler.getChatMessages(roomId!) { (messages) -> Void in
+            var tmpMessages = [JSQMessage]()
             for m in messages {
-                
                 let date = DateTimeHelper.getDateFromEpochString(m.Timestamp)
-                self.messages += [JSQMessage(senderId: m.ByUserId ?? self.userName, senderDisplayName: "StillNeedFetch", date: date, text: m.Value)]
+                tmpMessages += [JSQMessage(senderId: m.ByUserId ?? self.userName, senderDisplayName: "StillNeedFetch", date: date, text: m.Value)]
             }
+            
+            self.messages += tmpMessages
         }
         
         super.viewDidLoad()

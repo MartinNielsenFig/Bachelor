@@ -26,6 +26,7 @@
 		CB6BC6281BA1C05A001C303B /* QuestionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6BC6271BA1C05A001C303B /* QuestionListViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		CB84802B1B9EDB5400D1C230 /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB84802A1B9EDB5400D1C230 /* CurrentUser.swift */; settings = {ASSET_TAGS = (); }; };
 		CB84802D1B9EE0DC00D1C230 /* FacebookHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB84802C1B9EE0DC00D1C230 /* FacebookHelper.swift */; settings = {ASSET_TAGS = (); }; };
+		CB97B03B1BAAEE1B00AB77EE /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB97B03A1BAAEE1B00AB77EE /* MapKit.framework */; };
 		CB9FF7C61B8F1401003A193B /* HTTPHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9FF7C51B8F1401003A193B /* HTTPHandler.swift */; };
 		CB9FF7CA1B8F27EC003A193B /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9FF7C91B8F27EC003A193B /* Coordinate.swift */; };
 		CB9FF7CC1B8F28B4003A193B /* Answer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9FF7CB1B8F28B4003A193B /* Answer.swift */; };
@@ -34,7 +35,6 @@
 		CB9FF7D21B8F2B70003A193B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9FF7D11B8F2B70003A193B /* User.swift */; };
 		CB9FF80F1B8F4408003A193B /* JSONSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9FF80E1B8F4408003A193B /* JSONSerializer.swift */; };
 		CBA4372C1B8DEA8E00EF3E01 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBA4372B1B8DEA8E00EF3E01 /* CoreLocation.framework */; };
-		CBA437301B8DF5A500EF3E01 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBA4372F1B8DF5A500EF3E01 /* MapKit.framework */; };
 		CBB4D7D71BA189EC001C531D /* LogonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB4D7D61BA189EC001C531D /* LogonViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		CBB4D7D91BA1A567001C531D /* RoomPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB4D7D81BA1A567001C531D /* RoomPageViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		CBB4D7DB1BA1A664001C531D /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB4D7DA1BA1A664001C531D /* QuestionViewController.swift */; settings = {ASSET_TAGS = (); }; };
@@ -76,6 +76,7 @@
 		CB6BC6271BA1C05A001C303B /* QuestionListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionListViewController.swift; sourceTree = "<group>"; };
 		CB84802A1B9EDB5400D1C230 /* CurrentUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentUser.swift; sourceTree = "<group>"; };
 		CB84802C1B9EE0DC00D1C230 /* FacebookHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookHelper.swift; sourceTree = "<group>"; };
+		CB97B03A1BAAEE1B00AB77EE /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		CB9FF7C51B8F1401003A193B /* HTTPHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPHandler.swift; sourceTree = "<group>"; };
 		CB9FF7C91B8F27EC003A193B /* Coordinate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
 		CB9FF7CB1B8F28B4003A193B /* Answer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Answer.swift; sourceTree = "<group>"; };
@@ -84,7 +85,6 @@
 		CB9FF7D11B8F2B70003A193B /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		CB9FF80E1B8F4408003A193B /* JSONSerializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONSerializer.swift; sourceTree = "<group>"; };
 		CBA4372B1B8DEA8E00EF3E01 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		CBA4372F1B8DF5A500EF3E01 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		CBB4D7D61BA189EC001C531D /* LogonViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogonViewController.swift; sourceTree = "<group>"; };
 		CBB4D7D81BA1A567001C531D /* RoomPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomPageViewController.swift; sourceTree = "<group>"; };
 		CBB4D7DA1BA1A664001C531D /* QuestionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionViewController.swift; sourceTree = "<group>"; };
@@ -102,8 +102,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CBA437301B8DF5A500EF3E01 /* MapKit.framework in Frameworks */,
 				CBA4372C1B8DEA8E00EF3E01 /* CoreLocation.framework in Frameworks */,
+				CB97B03B1BAAEE1B00AB77EE /* MapKit.framework in Frameworks */,
 				9C63CBE67C5C0D40F5EB107C /* Pods_wiserIos.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -204,8 +204,8 @@
 		CB847E811B9EC0CC00D1C230 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CB97B03A1BAAEE1B00AB77EE /* MapKit.framework */,
 				CBA4372B1B8DEA8E00EF3E01 /* CoreLocation.framework */,
-				CBA4372F1B8DF5A500EF3E01 /* MapKit.framework */,
 				D3A4BD83DDD950677E106A8A /* Pods_wiserIos.framework */,
 			);
 			name = Frameworks;
@@ -291,6 +291,11 @@
 					CB3C376D1B8DBF5000897344 = {
 						CreatedOnToolsVersion = 7.0;
 						DevelopmentTeam = 8AEF7L787E;
+						SystemCapabilities = {
+							com.apple.Maps.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					CB3C37811B8DBF5000897344 = {
 						CreatedOnToolsVersion = 7.0;
