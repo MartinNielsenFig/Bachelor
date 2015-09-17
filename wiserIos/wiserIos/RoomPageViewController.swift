@@ -19,7 +19,6 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     
     //https://www.veasoftware.com/tutorials/2015/4/2/uipageviewcontroller-in-swift-xcode-62-ios-82-tutorial
     override func viewDidLoad() {
-        
         //Setup the page view controller
         pageViewController = UIPageViewController(transitionStyle: .Scroll, navigationOrientation: .Horizontal, options: nil)
         pageViewController.dataSource = self

@@ -121,9 +121,12 @@
                         </label>
                     </div>
 
-                    <button class="btn btn-primary" ng-click="AddAnswer()"  ng-disabled="timerOverflow || answerChoosen == undefined">Submit</button><button style="float: right" class="btn btn-primary" ng-click="ToggleShowQuestionTables()">Back to questions</button>
+                    <button class="btn btn-primary" ng-click="AddAnswer()" ng-disabled="timerOverflow || answerChoosen == undefined">Submit</button><button style="float: right" class="btn btn-primary" ng-click="ToggleShowQuestionTables()">Back to questions</button>
                 </form>
-                <canvas id="pie" class="chart chart-pie" chart-legend="true" chart-colors="colors" chart-data="data" chart-labels="labels"></canvas>
+                <label ng-hide="showResults">No results yet</label>
+                <div id="chartDiv" ng-hide="!showResults">
+                    <canvas id="pie" class="chart chart-pie" chart-legend="true" chart-colors="colors" chart-data="data" chart-labels="labels"></canvas>
+                </div>
             </div>
         </div>
         @* Chat template found at: http://bootsnipp.com/snippets/featured/chat *@

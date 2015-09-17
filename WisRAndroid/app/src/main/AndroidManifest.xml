@@ -31,7 +31,7 @@
         <activity
             android:name=".Activities.CreateRoomActivity"
             android:label="@string/title_activity_create_room"
-            android:windowSoftInputMode="stateVisible|adjustPan|adjustResize">
+            android:windowSoftInputMode="stateHidden|adjustPan|adjustResize">
         </activity>
         <activity
             android:name=".Activities.SelectRoomActivity"

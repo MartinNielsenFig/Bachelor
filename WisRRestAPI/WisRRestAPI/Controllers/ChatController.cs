@@ -43,6 +43,7 @@ namespace WisRRestAPI.Controllers
         public string CreateChatMessage(string ChatMessage)
         {
             ChatMessage chatMsg;
+            string errorMsg = String.Empty;
             try
             {
                 chatMsg = BsonSerializer.Deserialize<ChatMessage>(ChatMessage);
@@ -51,6 +52,12 @@ namespace WisRRestAPI.Controllers
             {
                 return "Could not deserialize chatMessage with json: " + ChatMessage;
             }
+
+            //Assign date to ChatMessage
+            TimeSpan t = DateTime.UtcNow - new DateTime(1970, 1, 1);
+            string ms = t.TotalMilliseconds.ToString();
+            chatMsg.Timestamp = ms;
+
             //assign ID to room
             chatMsg.Id = ObjectId.GenerateNewId(DateTime.Now).ToString();
             try
@@ -59,9 +66,10 @@ namespace WisRRestAPI.Controllers
             }
             catch (Exception e)
             {
-                return "Could not publish to rabbitMQ";
+                errorMsg = "Could not publish to rabbitMQ";
             }
-            return _cr.AddChatMessage(chatMsg);
+
+            return _cr.AddChatMessage(chatMsg) + errorMsg;
         }
 
         [System.Web.Mvc.HttpGet]

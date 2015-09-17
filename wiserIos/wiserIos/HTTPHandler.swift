@@ -10,14 +10,39 @@ import Foundation
 
 class HttpHandler {
     
-    //static let mainUrl = "http://192.168.198.133:1337/"
-    static let mainUrl = "http://wisrrestapi.aceipse.dk/"
+    static let mainUrl = "http://192.168.198.132:1337/"
+    //static let mainUrl = "http://wisrrestapi.aceipse.dk/"
     //http://stackoverflow.com/questions/25341858/perform-post-request-in-ios-swift
     
     static func log(data data: NSData?, response: NSURLResponse?, error: NSError?) {
-        /*NSLog("data \(data)")
+        //NSLog("data \(data)")
         NSLog("reponse \(response)")
-        NSLog("error \(error)")*/
+        NSLog("error \(error)")
+    }
+    
+    static func sendChatMessage(chatMessageJson: String) {
+        let session = NSURLSession.sharedSession()
+        let url = NSURL(string: mainUrl)!.URLByAppendingPathComponent("Chat/CreateChatMessage")
+        let request = NSMutableURLRequest(URL: url)
+        request.HTTPMethod = "POST"
+        
+        let body = "ChatMessage=\(chatMessageJson)"
+        request.HTTPBody = body.dataUsingEncoding(NSUTF8StringEncoding)
+        
+        let started = NSDate()
+        let task = session.dataTaskWithRequest(request) {
+            data, response, error in
+            NSLog("time for \(__FUNCTION__) http call \(NSDate().timeIntervalSinceDate(started)) seconds")
+            
+            log(data: data, response: response, error: error)
+            
+            if data != nil {
+                let nsDataString = NSString(data: data!, encoding: NSUTF8StringEncoding)
+                let dataString = nsDataString as! String
+                //NSLog("dataString \(dataString)")
+            }
+        }
+        task.resume()
     }
     
     static func getChatMessages(roomId: String, completionHandler: (inout messages: [ChatMessage]) -> Void) {

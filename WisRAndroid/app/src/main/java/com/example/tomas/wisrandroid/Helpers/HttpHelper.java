@@ -14,18 +14,18 @@ import com.android.volley.toolbox.HttpHeaderParser;
 
 
 //http://stackoverflow.com/questions/19837820/volley-jsonobjectrequest-post-request-not-working
-public class HttpHelper extends Request<JSONObject> {
+public class HttpHelper extends Request<String> {
 
-    private Listener<JSONObject> listener;
+    private Listener<String> listener;
     private Map<String, String> params;
 
-    public HttpHelper(String url, Map<String, String> params,Listener<JSONObject> reponseListener, ErrorListener errorListener) {
+    public HttpHelper(String url, Map<String, String> params,Listener<String> reponseListener, ErrorListener errorListener) {
         super(Method.GET, url, errorListener);
         this.listener = reponseListener;
         this.params = params;
     }
 
-    public HttpHelper(int method, String url, Map<String, String> params,Listener<JSONObject> reponseListener, ErrorListener errorListener) {
+    public HttpHelper(int method, String url, Map<String, String> params,Listener<String> reponseListener, ErrorListener errorListener) {
         super(method, url, errorListener);
         this.listener = reponseListener;
         this.params = params;
@@ -37,20 +37,20 @@ public class HttpHelper extends Request<JSONObject> {
     };
 
     @Override
-    protected Response<JSONObject> parseNetworkResponse(NetworkResponse response) {
+    protected Response<String> parseNetworkResponse(NetworkResponse response) {
         try {
             String jsonString = new String(response.data,HttpHeaderParser.parseCharset(response.headers));
-            return Response.success(new JSONObject(jsonString),HttpHeaderParser.parseCacheHeaders(response));
+            return Response.success(jsonString,HttpHeaderParser.parseCacheHeaders(response));
+            //return Response.success(new JSONObject(jsonString),HttpHeaderParser.parseCacheHeaders(response));
         } catch (UnsupportedEncodingException e) {
             return Response.error(new ParseError(e));
-        } catch (JSONException je) {
-            return Response.error(new ParseError(je));
         }
     }
 
     @Override
-    protected void deliverResponse(JSONObject response) {
+    protected void deliverResponse(String response) {
         // TODO Auto-generated method stub
         listener.onResponse(response);
     }
 }
+

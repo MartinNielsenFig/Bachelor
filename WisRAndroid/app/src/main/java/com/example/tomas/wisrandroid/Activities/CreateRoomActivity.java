@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import com.android.volley.Request;
@@ -25,6 +26,7 @@ import com.example.tomas.wisrandroid.Helpers.ActivityLayoutHelper;
 import com.example.tomas.wisrandroid.Helpers.HttpHelper;
 import com.example.tomas.wisrandroid.Model.BooleanQuestion;
 import com.example.tomas.wisrandroid.Model.ChatMessage;
+import com.example.tomas.wisrandroid.Model.MyUser;
 import com.example.tomas.wisrandroid.Model.Question;
 import com.example.tomas.wisrandroid.Model.Room;
 import com.example.tomas.wisrandroid.R;
@@ -32,6 +34,7 @@ import com.facebook.Profile;
 import com.facebook.ProfileTracker;
 import com.google.gson.Gson;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONStringer;
 
@@ -47,24 +50,25 @@ import javax.net.ssl.HttpsURLConnection;
 public class CreateRoomActivity extends AppCompatActivity {
 
     // Buttons
-    private Button mCreateRoomButton;
+    private volatile Button mCreateRoomButton;
 
     // Inputs
-    private EditText mRoomNameEditText;
-    private EditText mRoomTagEditText;
-    private EditText mPasswordEditText;
+    private volatile EditText mRoomNameEditText;
+    private volatile EditText mRoomTagEditText;
+    private volatile EditText mPasswordEditText;
 
     // Switches
-    private Switch mEnablePasswordSwitch;
-    private Switch mEnableChatSwitch;
-    private Switch mEnableAnonymousSwitch;
-    private Switch mEnableUserQuestionSwitch;
+    private volatile Switch mEnablePasswordSwitch;
+    private volatile Switch mEnableChatSwitch;
+    private volatile Switch mEnableAnonymousSwitch;
+    private volatile Switch mEnableUserQuestionSwitch;
+    private volatile Switch mEnableUseLocationSwitch;
 
     // ToggleButtons with RadioGroup
-    private RadioGroup mRadiusRadioGroup;
-    private ToggleButton mFirstRadiusToggleButton;
-    private ToggleButton mSecondRadiusToggleButton;
-    private ToggleButton mThirdRadiusToggleButton;
+    private volatile RadioGroup mRadiusRadioGroup;
+    private volatile ToggleButton mFirstRadiusToggleButton;
+    private volatile ToggleButton mSecondRadiusToggleButton;
+    private volatile ToggleButton mThirdRadiusToggleButton;
 
 
     @Override
@@ -83,27 +87,23 @@ public class CreateRoomActivity extends AppCompatActivity {
         mEnablePasswordSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mEnablePasswordSwitch.isChecked())
-                {
-                    mPasswordEditText.setEnabled(true);
-                }else {
-                    mPasswordEditText.setEnabled(false);
-                }
+                CheckState();
             }
         });
         mEnableChatSwitch = (Switch) findViewById(R.id.room_enable_chat_switch);
         mEnableAnonymousSwitch = (Switch) findViewById(R.id.room_anonymous_switch);
         mEnableUserQuestionSwitch = (Switch) findViewById(R.id.room_enable_userquestions_switch);
+        mEnableUseLocationSwitch = (Switch)findViewById(R.id.room_enable_uselocation_switch);
 
         // Toggle Button Logic
         mFirstRadiusToggleButton = (ToggleButton) findViewById(R.id.first_radius_button);
+//        mFirstRadiusToggleButton.setTextOn("10m");
+//        mFirstRadiusToggleButton.setTextOff("10m");
         mFirstRadiusToggleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mFirstRadiusToggleButton.isChecked())
-                {
-                    if(mSecondRadiusToggleButton.isChecked() || mThirdRadiusToggleButton.isChecked())
-                    {
+                if (mFirstRadiusToggleButton.isChecked()) {
+                    if (mSecondRadiusToggleButton.isChecked() || mThirdRadiusToggleButton.isChecked()) {
                         mSecondRadiusToggleButton.setChecked(false);
                         mThirdRadiusToggleButton.setChecked(false);
                     }
@@ -112,13 +112,13 @@ public class CreateRoomActivity extends AppCompatActivity {
             }
         });
         mSecondRadiusToggleButton = (ToggleButton) findViewById(R.id.second_radius_button);
+//        mSecondRadiusToggleButton.setTextOn("20m");
+//        mSecondRadiusToggleButton.setTextOff("20m");
         mSecondRadiusToggleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(mSecondRadiusToggleButton.isChecked())
-                {
-                    if(mFirstRadiusToggleButton.isChecked() || mThirdRadiusToggleButton.isChecked())
-                    {
+                if (mSecondRadiusToggleButton.isChecked()) {
+                    if (mFirstRadiusToggleButton.isChecked() || mThirdRadiusToggleButton.isChecked()) {
                         mFirstRadiusToggleButton.setChecked(false);
                         mThirdRadiusToggleButton.setChecked(false);
                     }
@@ -126,6 +126,8 @@ public class CreateRoomActivity extends AppCompatActivity {
             }
         });
         mThirdRadiusToggleButton = (ToggleButton) findViewById(R.id.third_radius_button);
+//        mThirdRadiusToggleButton.setTextOn("40m");
+//        mThirdRadiusToggleButton.setTextOff("40m");
         mThirdRadiusToggleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -146,42 +148,53 @@ public class CreateRoomActivity extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                final TextView mTextView = (TextView) findViewById(R.id.room_name_textview);
-
                 Map<String,String> mParams = new HashMap<String, String>();
 
-                Room mRoom = new Room();
-                mRoom.set_CreatedById("Tomas");
-                mRoom.set_AllowAnonymous(false);
-                mRoom.set_EncryptedPassword("password");
-                mRoom.set_HasChat(false);
-                mRoom.set_HasPassword(false);
+                final Room mRoom = new Room();
+                //mRoom.set_CreatedById(MyUser.getMyuser().get_Id()); // Husk at implementere at få user id under login,
+                                                                      // samt at få tildelt en bruger under login hvis ingen bruger er tilstede på MongoDB
+                mRoom.set_Name(mRoomNameEditText.getText().toString());
+                mRoom.set_AllowAnonymous(mEnableAnonymousSwitch.isChecked());
+                mRoom.set_HasPassword(mEnablePasswordSwitch.isChecked());
+                mRoom.set_EncryptedPassword(mPasswordEditText.getText().toString());
+                mRoom.set_HasChat(mEnableChatSwitch.isChecked());
                 mRoom.set_Id(null);
-                mRoom.set_Radius(10);
-                mRoom.set_Name("ViggoBent");
-                mRoom.set_Tag("TAG");
-                mRoom.set_UseLocation(false);
-                mRoom.set_UsersCanAsk(false);
+                if (mFirstRadiusToggleButton.isChecked())
+                {
+                    mRoom.set_Radius(Integer.parseInt(mFirstRadiusToggleButton.getTextOn().toString().replace("m","")));
+                }else if(mSecondRadiusToggleButton.isChecked())
+                {
+                    mRoom.set_Radius(Integer.parseInt(mSecondRadiusToggleButton.getTextOn().toString().replace("m","")));
+                }else if(mThirdRadiusToggleButton.isChecked())
+                {
+                    mRoom.set_Radius(Integer.parseInt(mThirdRadiusToggleButton.getTextOn().toString().replace("m","")));
+                }
+                mRoom.set_Tag(mRoomTagEditText.getText().toString());
+                mRoom.set_UseLocation(mEnableUseLocationSwitch.isChecked());
+                mRoom.set_UsersCanAsk(mEnableUserQuestionSwitch.isChecked());
 
                 Gson gson = new Gson();
 
                 String json = gson.toJson(mRoom);
 
-                mTextView.setText(json);
-
                 mParams.put("Room", json);
 
-                Response.Listener<JSONObject> mListener = new Response.Listener<JSONObject>() {
+                final TextView mErr = (TextView) findViewById(R.id.errortext);
+                final TextView mResp = (TextView) findViewById(R.id.responsetext);
+
+                Response.Listener<String> mListener = new Response.Listener<String>() {
                     @Override
-                    public void onResponse(JSONObject jsonObject) {
-                        mTextView.setText(jsonObject.toString());
+                    public void onResponse(String response) {
+                        Toast.makeText(getApplicationContext(), "In Listener", Toast.LENGTH_LONG).show();
+                        mResp.setText(response.toString());
                     }
                 };
 
                 Response.ErrorListener mErrorListener = new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
-                        mTextView.setText( String.valueOf(volleyError.networkResponse.statusCode));
+                        Toast.makeText(getApplicationContext(),"In ErrorListener" + volleyError.getMessage(),Toast.LENGTH_LONG).show();
+                        mErr.setText(volleyError.getMessage());
                     }
                 };
 
@@ -197,6 +210,14 @@ public class CreateRoomActivity extends AppCompatActivity {
 
             }
         });
+
+        CheckState();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        CheckState();
     }
 
     @Override
@@ -221,6 +242,17 @@ public class CreateRoomActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void CheckState()
+    {
+        if(mEnablePasswordSwitch.isChecked())
+        {
+            mPasswordEditText.setEnabled(true);
+        }else {
+            mPasswordEditText.setEnabled(false);
+        }
+    }
+
+    // Skal muligvis fjernes
     private String getPostData(HashMap<String, String> params) throws UnsupportedEncodingException {
         StringBuilder result = new StringBuilder();
         boolean first = true;

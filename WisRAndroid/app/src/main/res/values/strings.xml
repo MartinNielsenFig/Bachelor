@@ -26,4 +26,6 @@
     <string name="room_enable_chat_textview">Enable Chat</string>
     <string name="room_anonymous_enable_textview">Enable Anonymous</string>
     <string name="create_room_button">Create Room</string>
+    <string name="room_userquestion_enable_textview">Enable User Questions</string>
+    <string name="room_uselocation_enable_textview">Enable Uselocation</string>
 </resources>

@@ -132,16 +132,22 @@
             android:layout_weight="6">
             <ToggleButton
                 android:id="@+id/first_radius_button"
+                android:textOn="10m"
+                android:textOff="10m"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"/>
             <ToggleButton
                 android:id="@+id/second_radius_button"
+                android:textOn="20m"
+                android:textOff="20m"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"/>
             <ToggleButton
                 android:id="@+id/third_radius_button"
+                android:textOn="40m"
+                android:textOff="40m"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"/>
@@ -213,7 +219,7 @@
         <TextView
             android:layout_gravity="center_vertical"
             android:id="@+id/room_userquestion_enable_textview"
-            android:text="Enable User Questions"
+            android:text="@string/room_userquestion_enable_textview"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="4"/>
@@ -222,6 +228,33 @@
 
             android:layout_gravity="center"
             android:id="@+id/room_enable_userquestions_switch"
+            android:textOn="Enabled"
+            android:textOff="Disabled"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="6"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_margin="5dp"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <TextView
+            android:layout_gravity="center_vertical"
+            android:id="@+id/room_uselocation_enable_textview"
+            android:text="@string/room_uselocation_enable_textview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"/>
+
+        <Switch
+
+            android:layout_gravity="center"
+            android:id="@+id/room_enable_uselocation_switch"
             android:textOn="Enabled"
             android:textOff="Disabled"
             android:layout_width="0dp"
@@ -242,6 +275,20 @@
         android:text="@string/create_room_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
+        <TextView
+            android:text="Errormsg"
+            android:layout_below="@+id/create_room_button"
+            android:id="@+id/errortext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:text="Responsemsg"
+            android:layout_below="@+id/errortext"
+            android:id="@+id/responsetext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </RelativeLayout>
 
 
