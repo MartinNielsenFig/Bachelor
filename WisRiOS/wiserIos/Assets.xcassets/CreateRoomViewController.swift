@@ -171,13 +171,13 @@ class CreateRoomViewController: UITableViewController {
         HttpHandler.createRoom(JSONSerializer.toJson(room))
         
         //Navigate
-        self.performSegueWithIdentifier("RoomCreated", sender: self)
+        //self.performSegueWithIdentifier("RoomCreated", sender: self)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "RoomCreated" {
             let roomPageViewController = segue.destinationViewController as! RoomPageViewController
-            assert(false)   //Fix yo shit dawg
+            //assert(false)   //Fix yo shit dawg
         }
     }
 }

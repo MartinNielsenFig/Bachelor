@@ -25,7 +25,7 @@ class RoomTableViewController: UITableViewController {
         
         HttpHandler.getRooms { (inout rooms: [Room]) -> Void in
             //Todo filter
-            let filteredRooms = self.filterRoomsByLocation(rooms, metersRadius: 1000)
+            let filteredRooms = self.filterRoomsByLocation(rooms, metersRadius: 100)
             if filteredRooms.count <= 0 {
                 let noRooms = Room()
                 noRooms._id = "system"
