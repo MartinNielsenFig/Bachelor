@@ -368,8 +368,4 @@ class JSONSerializerTests: XCTestCase {
         let expected = "{\"fur\": true, \"weight\": 2.5, \"age\": 2, \"name\": \"An animal\", \"id\": 182371823}"
         stringCompareHelper(json, expected)
     }
-
-    
-
-
 }

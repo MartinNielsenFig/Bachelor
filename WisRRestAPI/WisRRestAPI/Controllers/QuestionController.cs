@@ -74,8 +74,10 @@ namespace WisRRestAPI.Controllers
             }
             
             q.Id = ObjectId.GenerateNewId(DateTime.Now).ToString();
-            q.CreationTimestamp = (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalMilliseconds.ToString().Replace(",", ".");
-            q.ExpireTimestamp = (DateTime.UtcNow.AddMinutes(Convert.ToDouble(q.ExpireTimestamp)).Subtract(new DateTime(1970, 1, 1))).TotalMilliseconds.ToString().Replace(",", ".");
+
+            q.CreationTimestamp = TimeHelper.timeSinceEpoch();
+            q.ExpireTimestamp = TimeHelper.timeSinceEpoch() + Convert.ToInt64(q.ExpireTimestamp) * 60000;
+
             try
             {
                 _rabbitHandler.publishString("CreateQuestion", q.ToJson());

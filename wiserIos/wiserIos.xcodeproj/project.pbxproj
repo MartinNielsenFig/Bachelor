@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1137875702F8FD7CCE2759D4 /* libPods-wiserIos.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6390CA88C0DA808C1089BD22 /* libPods-wiserIos.a */; };
 		CB0218201B9462C400DFC9DD /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB02181F1B9462C400DFC9DD /* ChatMessage.swift */; settings = {ASSET_TAGS = (); }; };
 		CB0D53C61BA85996007E4CD2 /* DateTimeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0D53C51BA85996007E4CD2 /* DateTimeHelper.swift */; settings = {ASSET_TAGS = (); }; };
 		CB1FBA001B983C3A00B1FCF8 /* BooleanInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1FB9FF1B983C3A00B1FCF8 /* BooleanInputCell.swift */; settings = {ASSET_TAGS = (); }; };
@@ -23,9 +24,6 @@
 		CB6BC6241BA1AE92001C303B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB3C37751B8DBF5000897344 /* Main.storyboard */; settings = {ASSET_TAGS = (); }; };
 		CB6BC6261BA1B2ED001C303B /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6BC6251BA1B2ED001C303B /* ChatViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		CB6BC6281BA1C05A001C303B /* QuestionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6BC6271BA1C05A001C303B /* QuestionListViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		CB847E831B9EC11900D1C230 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB847E821B9EC11900D1C230 /* FBSDKCoreKit.framework */; settings = {ASSET_TAGS = (); }; };
-		CB8480281B9ECFBC00D1C230 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB8480261B9ECFBC00D1C230 /* FBSDKCoreKit.framework */; settings = {ASSET_TAGS = (); }; };
-		CB8480291B9ECFBC00D1C230 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB8480271B9ECFBC00D1C230 /* FBSDKLoginKit.framework */; settings = {ASSET_TAGS = (); }; };
 		CB84802B1B9EDB5400D1C230 /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB84802A1B9EDB5400D1C230 /* CurrentUser.swift */; settings = {ASSET_TAGS = (); }; };
 		CB84802D1B9EE0DC00D1C230 /* FacebookHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB84802C1B9EE0DC00D1C230 /* FacebookHelper.swift */; settings = {ASSET_TAGS = (); }; };
 		CB9FF7C61B8F1401003A193B /* HTTPHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9FF7C51B8F1401003A193B /* HTTPHandler.swift */; };
@@ -56,6 +54,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		6390CA88C0DA808C1089BD22 /* libPods-wiserIos.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-wiserIos.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB02181F1B9462C400DFC9DD /* ChatMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
 		CB0D53C51BA85996007E4CD2 /* DateTimeHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateTimeHelper.swift; sourceTree = "<group>"; };
 		CB1FB9FF1B983C3A00B1FCF8 /* BooleanInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BooleanInputCell.swift; sourceTree = "<group>"; };
@@ -76,9 +75,6 @@
 		CB50FD8D1B9708E40003C078 /* TextInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextInputCell.swift; sourceTree = "<group>"; };
 		CB6BC6251BA1B2ED001C303B /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		CB6BC6271BA1C05A001C303B /* QuestionListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionListViewController.swift; sourceTree = "<group>"; };
-		CB847E821B9EC11900D1C230 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = "/Users/PHJ/Documents/FacebookSDKs-iOS-20150817/FBSDKCoreKit.framework"; sourceTree = "<absolute>"; };
-		CB8480261B9ECFBC00D1C230 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = "../../../../../../../Documents/FacebookSDKs-iOS-20150817/FBSDKCoreKit.framework"; sourceTree = "<group>"; };
-		CB8480271B9ECFBC00D1C230 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = "../../../../../../../Documents/FacebookSDKs-iOS-20150817/FBSDKLoginKit.framework"; sourceTree = "<group>"; };
 		CB84802A1B9EDB5400D1C230 /* CurrentUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentUser.swift; sourceTree = "<group>"; };
 		CB84802C1B9EE0DC00D1C230 /* FacebookHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookHelper.swift; sourceTree = "<group>"; };
 		CB9FF7C51B8F1401003A193B /* HTTPHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPHandler.swift; sourceTree = "<group>"; };
@@ -96,6 +92,9 @@
 		CBB4D7DC1BA1A887001C531D /* Paged.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Paged.swift; sourceTree = "<group>"; };
 		CBB60B2E1B9718EC0007A47B /* CreateRoomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreateRoomViewController.swift; path = Assets.xcassets/CreateRoomViewController.swift; sourceTree = "<group>"; };
 		CBB60B301B97253A0007A47B /* SegmentedInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedInputCell.swift; sourceTree = "<group>"; };
+		CBC15B3C1BAAD9BA00293A3E /* wiserIos-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "wiserIos-Bridging-Header.h"; sourceTree = "<group>"; };
+		E1D3CFFDDE44FA9686C08AE3 /* Pods-wiserIos.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-wiserIos.release.xcconfig"; path = "Pods/Target Support Files/Pods-wiserIos/Pods-wiserIos.release.xcconfig"; sourceTree = "<group>"; };
+		F159621980A89FE9BF220862 /* Pods-wiserIos.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-wiserIos.debug.xcconfig"; path = "Pods/Target Support Files/Pods-wiserIos/Pods-wiserIos.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,10 +103,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				CBA437301B8DF5A500EF3E01 /* MapKit.framework in Frameworks */,
-				CB8480281B9ECFBC00D1C230 /* FBSDKCoreKit.framework in Frameworks */,
-				CB8480291B9ECFBC00D1C230 /* FBSDKLoginKit.framework in Frameworks */,
-				CB847E831B9EC11900D1C230 /* FBSDKCoreKit.framework in Frameworks */,
 				CBA4372C1B8DEA8E00EF3E01 /* CoreLocation.framework in Frameworks */,
+				1137875702F8FD7CCE2759D4 /* libPods-wiserIos.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -121,6 +118,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5ED0E8D3A0E854B9C0FB669E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F159621980A89FE9BF220862 /* Pods-wiserIos.debug.xcconfig */,
+				E1D3CFFDDE44FA9686C08AE3 /* Pods-wiserIos.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		CB0218221B947B9E00DFC9DD /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -143,6 +149,7 @@
 				CB3C37701B8DBF5000897344 /* wiserIos */,
 				CB3C37851B8DBF5000897344 /* wiserIosTests */,
 				CB3C376F1B8DBF5000897344 /* Products */,
+				5ED0E8D3A0E854B9C0FB669E /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -169,6 +176,7 @@
 				CB3C377D1B8DBF5000897344 /* Info.plist */,
 				CB84802A1B9EDB5400D1C230 /* CurrentUser.swift */,
 				CBB4D7DC1BA1A887001C531D /* Paged.swift */,
+				CBC15B3C1BAAD9BA00293A3E /* wiserIos-Bridging-Header.h */,
 			);
 			path = wiserIos;
 			sourceTree = "<group>";
@@ -196,10 +204,9 @@
 		CB847E811B9EC0CC00D1C230 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				CB8480261B9ECFBC00D1C230 /* FBSDKCoreKit.framework */,
-				CB8480271B9ECFBC00D1C230 /* FBSDKLoginKit.framework */,
 				CBA4372B1B8DEA8E00EF3E01 /* CoreLocation.framework */,
 				CBA4372F1B8DF5A500EF3E01 /* MapKit.framework */,
+				6390CA88C0DA808C1089BD22 /* libPods-wiserIos.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -237,9 +244,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CB3C378B1B8DBF5000897344 /* Build configuration list for PBXNativeTarget "wiserIos" */;
 			buildPhases = (
+				AD15F7425E1D07D4A8706474 /* Check Pods Manifest.lock */,
 				CB3C376A1B8DBF5000897344 /* Sources */,
 				CB3C376B1B8DBF5000897344 /* Frameworks */,
 				CB3C376C1B8DBF5000897344 /* Resources */,
+				E11CC85047EFD910B4EF80FC /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -327,6 +336,39 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		AD15F7425E1D07D4A8706474 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		E11CC85047EFD910B4EF80FC /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-wiserIos/Pods-wiserIos-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		CB3C376A1B8DBF5000897344 /* Sources */ = {
@@ -492,6 +534,7 @@
 		};
 		CB3C378C1B8DBF5000897344 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F159621980A89FE9BF220862 /* Pods-wiserIos.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
@@ -501,16 +544,37 @@
 				INFOPLIST_FILE = wiserIos/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				"OTHER_LDFLAGS[arch=*]" = (
+					"-ObjC",
+					"-l\"JSQMessagesViewController\"",
+					"-l\"JSQSystemSoundPlayer\"",
+					"-framework",
+					"\"AudioToolbox\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreLocation\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"MapKit\"",
+					"-framework",
+					"\"QuartzCore\"",
+					"-framework",
+					"\"UIKit\"",
+					"$(inherited)",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = peheje.wiserIos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INSTALL_OBJC_HEADER = NO;
-				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "wiserIos/wiserIos-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		CB3C378D1B8DBF5000897344 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E1D3CFFDDE44FA9686C08AE3 /* Pods-wiserIos.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
@@ -520,10 +584,30 @@
 				INFOPLIST_FILE = wiserIos/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				"OTHER_LDFLAGS[arch=*]" = (
+					"-ObjC",
+					"-l\"JSQMessagesViewController\"",
+					"-l\"JSQSystemSoundPlayer\"",
+					"-framework",
+					"\"AudioToolbox\"",
+					"-framework",
+					"\"CoreGraphics\"",
+					"-framework",
+					"\"CoreLocation\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"MapKit\"",
+					"-framework",
+					"\"QuartzCore\"",
+					"-framework",
+					"\"UIKit\"",
+					"$(inherited)",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = peheje.wiserIos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INSTALL_OBJC_HEADER = NO;
-				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "wiserIos/wiserIos-Bridging-Header.h";
 			};
 			name = Release;
 		};
