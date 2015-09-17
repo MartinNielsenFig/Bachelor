@@ -92,6 +92,7 @@
 		CBB4D7DC1BA1A887001C531D /* Paged.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Paged.swift; sourceTree = "<group>"; };
 		CBB60B2E1B9718EC0007A47B /* CreateRoomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreateRoomViewController.swift; path = Assets.xcassets/CreateRoomViewController.swift; sourceTree = "<group>"; };
 		CBB60B301B97253A0007A47B /* SegmentedInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedInputCell.swift; sourceTree = "<group>"; };
+		CBC15B3C1BAAD9BA00293A3E /* wiserIos-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "wiserIos-Bridging-Header.h"; sourceTree = "<group>"; };
 		E1D3CFFDDE44FA9686C08AE3 /* Pods-wiserIos.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-wiserIos.release.xcconfig"; path = "Pods/Target Support Files/Pods-wiserIos/Pods-wiserIos.release.xcconfig"; sourceTree = "<group>"; };
 		F159621980A89FE9BF220862 /* Pods-wiserIos.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-wiserIos.debug.xcconfig"; path = "Pods/Target Support Files/Pods-wiserIos/Pods-wiserIos.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -175,6 +176,7 @@
 				CB3C377D1B8DBF5000897344 /* Info.plist */,
 				CB84802A1B9EDB5400D1C230 /* CurrentUser.swift */,
 				CBB4D7DC1BA1A887001C531D /* Paged.swift */,
+				CBC15B3C1BAAD9BA00293A3E /* wiserIos-Bridging-Header.h */,
 			);
 			path = wiserIos;
 			sourceTree = "<group>";
@@ -565,7 +567,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = peheje.wiserIos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INSTALL_OBJC_HEADER = NO;
-				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "wiserIos/wiserIos-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -605,7 +607,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = peheje.wiserIos;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INSTALL_OBJC_HEADER = NO;
-				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "wiserIos/wiserIos-Bridging-Header.h";
 			};
 			name = Release;
 		};
