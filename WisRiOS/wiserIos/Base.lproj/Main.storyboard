@@ -18,12 +18,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="1Bg-Rj-sGb">
-                                <rect key="frame" x="20" y="272" width="560" height="308"/>
-                                <animations/>
-                            </mapView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="48" translatesAutoresizingMaskIntoConstraints="NO" id="XQN-qy-J8p">
-                                <rect key="frame" x="256" y="124" width="89" height="108"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="50" translatesAutoresizingMaskIntoConstraints="NO" id="XQN-qy-J8p">
+                                <rect key="frame" x="195" y="84" width="211" height="30"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IaR-K2-F17">
                                         <rect key="frame" x="0.0" y="0.0" width="89" height="30"/>
@@ -34,7 +30,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zXc-jJ-l7g">
-                                        <rect key="frame" x="9" y="78" width="72" height="30"/>
+                                        <rect key="frame" x="139" y="0.0" width="72" height="30"/>
                                         <animations/>
                                         <state key="normal" title="Join Room"/>
                                         <connections>
@@ -44,16 +40,20 @@
                                 </subviews>
                                 <animations/>
                             </stackView>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="1Bg-Rj-sGb">
+                                <rect key="frame" x="20" y="134" width="560" height="446"/>
+                                <animations/>
+                            </mapView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="XQN-qy-J8p" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="60" id="446-sV-Pgu"/>
-                            <constraint firstItem="1Bg-Rj-sGb" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="Ni1-Rk-G6I"/>
-                            <constraint firstItem="XQN-qy-J8p" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ay8-sI-ouR"/>
-                            <constraint firstItem="1Bg-Rj-sGb" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="fYD-wi-7NQ"/>
-                            <constraint firstItem="1Bg-Rj-sGb" firstAttribute="top" secondItem="XQN-qy-J8p" secondAttribute="bottom" constant="40" id="jFh-pg-1dL"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="1Bg-Rj-sGb" secondAttribute="bottom" constant="20" id="z2I-nN-zQS"/>
+                            <constraint firstItem="1Bg-Rj-sGb" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="7ed-rK-2FD"/>
+                            <constraint firstAttribute="bottom" secondItem="1Bg-Rj-sGb" secondAttribute="bottom" constant="20" symbolic="YES" id="DAS-Dk-JQF"/>
+                            <constraint firstItem="XQN-qy-J8p" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="N8O-IP-PDe"/>
+                            <constraint firstItem="1Bg-Rj-sGb" firstAttribute="top" secondItem="XQN-qy-J8p" secondAttribute="bottom" constant="20" id="Vxn-Ya-3pB"/>
+                            <constraint firstItem="1Bg-Rj-sGb" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="ks7-gj-BQI"/>
+                            <constraint firstItem="1Bg-Rj-sGb" firstAttribute="centerX" secondItem="XQN-qy-J8p" secondAttribute="centerX" id="nlY-q4-fPA"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Choose Role" id="U7C-Jw-GTH"/>
@@ -146,11 +146,11 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F1H-bP-e2z">
-                                        <rect key="frame" x="0.0" y="29" width="560" height="316"/>
+                                        <rect key="frame" x="0.0" y="29" width="560" height="317"/>
                                         <animations/>
                                     </imageView>
                                     <pickerView contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KDW-Y0-aTM">
-                                        <rect key="frame" x="0.0" y="352" width="560" height="218"/>
+                                        <rect key="frame" x="0.0" y="354" width="560" height="216"/>
                                         <animations/>
                                     </pickerView>
                                 </subviews>
@@ -197,11 +197,11 @@
                                         <rect key="frame" x="0.0" y="28" width="560" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="RnM-TQ-xgY" id="neJ-V4-BKJ">
-                                            <rect key="frame" x="0.0" y="0.0" width="560" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="560" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="R7H-Mg-BCa">
-                                                    <rect key="frame" x="15" y="0.0" width="530" height="43.5"/>
+                                                    <rect key="frame" x="15" y="0.0" width="530" height="43"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -254,7 +254,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="1a6-JL-R3s">
                                 <rect key="frame" x="20" y="560" width="560" height="30"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="v7O-hI-MgI">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="v7O-hI-MgI">
                                         <rect key="frame" x="0.0" y="0.0" width="560" height="30"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -299,7 +299,7 @@
                                 <rect key="frame" x="0.0" y="92" width="600" height="40"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5Rv-TR-dGt" id="bar-YK-LNS">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="39.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="39"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q43-gJ-KKz">
@@ -342,7 +342,7 @@
                                 <rect key="frame" x="0.0" y="132" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5WQ-tG-r8G" id="ll6-Nl-Q99">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mPD-72-i7E">
@@ -388,7 +388,7 @@
                                 <rect key="frame" x="0.0" y="176" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZCB-GH-sbl" id="FRb-l7-oaG">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0kh-c0-YeV">
@@ -429,7 +429,7 @@
                                 <rect key="frame" x="0.0" y="220" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fvv-8t-4tV" id="QUh-Hd-G3A">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="phb-T8-rvW">
@@ -496,11 +496,11 @@
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="UAs-uy-Rnt" id="xds-uT-0oa">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="XIb-Ds-DyA">
-                                            <rect key="frame" x="15" y="6" width="31.5" height="19.5"/>
+                                            <rect key="frame" x="15" y="5" width="32" height="20"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <animations/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -508,7 +508,7 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="DE0-LC-cvC">
-                                            <rect key="frame" x="15" y="25.5" width="40.5" height="13.5"/>
+                                            <rect key="frame" x="15" y="25" width="41" height="14"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <animations/>
                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>

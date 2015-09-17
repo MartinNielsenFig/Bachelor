@@ -25,7 +25,16 @@ class RoomTableViewController: UITableViewController {
         
         HttpHandler.getRooms { (inout rooms: [Room]) -> Void in
             //Todo filter
-            self.rooms += self.filterRoomsByLocation(rooms, metersRadius: 1000)
+            let filteredRooms = self.filterRoomsByLocation(rooms, metersRadius: 1000)
+            if filteredRooms.count <= 0 {
+                let noRooms = Room()
+                noRooms._id = "system"
+                noRooms.Name = "No nearby rooms"
+                self.rooms += [noRooms]
+            }
+            else {
+                self.rooms += filteredRooms
+            }
         }
     }
     
@@ -97,7 +106,10 @@ class RoomTableViewController: UITableViewController {
         
         cell.textLabel?.text = room.Name
         
-        if let cLong = CurrentUser.sharedInstance.location.Longitude, cLat = CurrentUser.sharedInstance.location.Latitude, rLong = room.Location.Longitude, rLat = room.Location.Latitude {
+        if room._id == "system" {
+            cell.detailTextLabel?.text = ""
+        }
+        else if let cLong = CurrentUser.sharedInstance.location.Longitude, cLat = CurrentUser.sharedInstance.location.Latitude, rLong = room.Location.Longitude, rLat = room.Location.Latitude {
             
             let distance = Int(distanceBetweenTwoCoordinatesMeters(cLat, cLong, rLat, rLong))
             cell.detailTextLabel?.text = "\(distance) meters away"
