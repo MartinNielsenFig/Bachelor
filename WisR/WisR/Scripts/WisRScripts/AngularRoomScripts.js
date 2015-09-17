@@ -47,7 +47,7 @@ app.controller("RoomController", [
                     //Redraw the result chart
                     $scope.createPieChart();
                 }
-
+                
                 $scope.$apply();
             };
             $.connection.hub.start();
@@ -71,10 +71,10 @@ app.controller("RoomController", [
                  
               
                     $http.post(configs.restHostName + '/User/GetById', { id: n }).then(function (response) {
-                        $scope.currentUser = response.data;
-                        getRoom();
-                    });
-                }
+                    $scope.currentUser = response.data;
+                    getRoom();
+                });
+            }
                 }
 );
         //watch the questionImage.filesize variable
@@ -107,18 +107,18 @@ app.controller("RoomController", [
             $http.post(configs.restHostName + '/Room/GetById', { id: MyRoomIdFromViewBag }).then(function (response) {
                 $scope.CurrentRoom = response.data;
                 if ($scope.currentUser.ConnectedRoomIds != undefined) {
-                    if ($scope.CurrentRoom.HasPassword && $scope.currentUser.ConnectedRoomIds.indexOf(MyRoomIdFromViewBag) == -1) {
-                        $('#myModalPassword').modal('show');
-                    } else {
-                        $scope.rightPassword = true;
-                    }
+                if ($scope.CurrentRoom.HasPassword && $scope.currentUser.ConnectedRoomIds.indexOf(MyRoomIdFromViewBag) == -1) {
+                    $('#myModalPassword').modal('show');
+                } else {
+                    $scope.rightPassword = true;
+                }
                 } else {
                     $('#myModalPassword').modal('show');
                 }
 
             });
         };
-
+        
 
 
         $scope.validatePassword = function () {
@@ -126,13 +126,13 @@ app.controller("RoomController", [
                 $('#myModalPassword').modal('hide');
                 $scope.rightPassword = true;
                 if ($scope.currentUser.ConnectedRoomIds != undefined) {
-                    $scope.currentUser.ConnectedRoomIds.push(MyRoomIdFromViewBag);
+                $scope.currentUser.ConnectedRoomIds.push(MyRoomIdFromViewBag);
 
                     var newIds = "";
                     for (var i = 0; i < $scope.currentUser.ConnectedRoomIds.length; i++) {
                         if (i != $scope.currentUser.ConnectedRoomIds.length - 1) {
                             newIds = newIds + $scope.currentUser.ConnectedRoomIds[i] + ',';
-                        } else {
+            } else {
                             newIds = newIds + $scope.currentUser.ConnectedRoomIds[i];
                         }
                     }
@@ -172,8 +172,8 @@ app.controller("RoomController", [
         //Function for retrieving userName by an id
         var getAllUsers = function () {
             $http.get(configs.restHostName + '/User/GetAll').then(function (result) {
-                $scope.ActiveUsers = result.data;
-            });
+                    $scope.ActiveUsers = result.data;
+                });
         }
         getAllUsers();
 
@@ -191,83 +191,10 @@ app.controller("RoomController", [
                     values.push(1);
                 }
             }
-            var data = [];
-            for (i = 0; i < labels.length; i++) {
-                data.push({ "label": labels[i], "value": values[i] });
-            }
+            
             $scope.labels = labels;
             $scope.data = values;
-            $scope.chartOptions = { legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>" };
-            //If the pie is allready made, just update the data
-            if ($scope.pie != undefined) {
-                $scope.pie.updateProp("data.content", data);
-                return;
-            }
-
-            $scope.pie = new d3pie("resultchart", {
-                "header": {
-                    "title": {
-                        "text": "Results",
-                        "fontSize": 24,
-                        "font": "open sans"
-                    },
-                },
-                "footer": {
-                    "color": "#999999",
-                    "fontSize": 10,
-                    "font": "open sans",
-                    "location": "bottom-left"
-                },
-                "size": {
-                    "canvasWidth": 590,
-                    "pieOuterRadius": "90%"
-                },
-                "data": {
-                    "sortOrder": "value-desc",
-                    "content": data
-                },
-                "labels": {
-                    "outer": {
-                        "pieDistance": 32
-                    },
-                    "inner": {
-                        "hideWhenLessThanPercentage": 3
-                    },
-                    "mainLabel": {
-                        "fontSize": 11
-                    },
-                    "percentage": {
-                        "color": "#ffffff",
-                        "decimalPlaces": 0
-                    },
-                    "value": {
-                        "color": "#adadad",
-                        "fontSize": 11
-                    },
-                    "lines": {
-                        "enabled": true
-                    },
-                    "truncation": {
-                        "enabled": true
-                    }
-                },
-                "effects": {
-                    "pullOutSegmentOnClick": {
-                        "effect": "linear",
-                        "speed": 400,
-                        "size": 8
-                    },
-                    load: {
-                        effect: "none"
-                    }
-                },
-                "misc": {
-                    "gradient": {
-                        "enabled": true,
-                        "percentage": 100
-                    }
-                }
-            });
+            //TODO: $scope.colors = ['#FD1F5E', '#1EF9A1'];
         }
 
         $scope.GetUsernameById = function (userId) {
@@ -288,14 +215,14 @@ app.controller("RoomController", [
             $scope.SpecificQuestionShown = !$scope.SpecificQuestionShown;
         }
 
-
+        
 
         //Get precentage for loading bar
         $scope.getPercentage = function () {
             if ($scope.SpecificQuestion != undefined) {
                 $scope.timerOverflow = false;
                 $scope.$apply(function () {
-                    var nominater = Date.now() - parseInt($scope.SpecificQuestion.CreationTimestamp);
+                var nominater = Date.now() - parseInt($scope.SpecificQuestion.CreationTimestamp);
                     var denominater = parseInt($scope.SpecificQuestion.ExpireTimestamp) - parseInt($scope.SpecificQuestion.CreationTimestamp);
                     $scope.precentage = (nominater / denominater) * 100;
                     var timeLeftInmSec = parseInt($scope.SpecificQuestion.ExpireTimestamp) - Date.now();
@@ -315,7 +242,7 @@ app.controller("RoomController", [
         //adds answer to specificQuestion
         $scope.AddAnswer = function () {
             $scope.SpecificQuestion.Result.push($scope.answerChoosen);
-
+           
             var newResponses = "";
             for (var i = 0; i < $scope.SpecificQuestion.ResponseOptions.length; i++) {
                 if (i != $scope.SpecificQuestion.ResponseOptions.length - 1) {
@@ -323,7 +250,7 @@ app.controller("RoomController", [
                 } else {
                     newResponses = newResponses + $scope.SpecificQuestion.ResponseOptions[i].Value;
                 }
-            }
+        } 
 
             var newResults = "";
             for (var i = 0; i < $scope.SpecificQuestion.Result.length; i++) {

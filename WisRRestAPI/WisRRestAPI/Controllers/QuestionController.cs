@@ -33,8 +33,8 @@ namespace WisRRestAPI.Controllers
         public string GetAll()
         {
             var questions = _qr.GetAllQuestions();
-
-            return questions.Result.ToJson();
+            var temp= questions.Result.ToJson();
+            return temp;
         }
 
         [System.Web.Mvc.HttpGet]
@@ -72,6 +72,10 @@ namespace WisRRestAPI.Controllers
             {
                 return "New question should have id of null";
             }
+            
+            q.Id = ObjectId.GenerateNewId(DateTime.Now).ToString();
+            q.CreationTimestamp = (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalMilliseconds.ToString().Replace(",", ".");
+            q.ExpireTimestamp = (DateTime.UtcNow.AddMinutes(Convert.ToDouble(q.ExpireTimestamp)).Subtract(new DateTime(1970, 1, 1))).TotalMilliseconds.ToString().Replace(",", ".");
             try
             {
                 _rabbitHandler.publishString("CreateQuestion", q.ToJson());
@@ -80,9 +84,6 @@ namespace WisRRestAPI.Controllers
             {
                 return "Could not publish to rabbitMQ";
             }
-            q.Id = ObjectId.GenerateNewId(DateTime.Now).ToString();
-            q.CreationTimestamp = (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalMilliseconds.ToString().Replace(",", ".");
-            q.ExpireTimestamp = (DateTime.UtcNow.AddMinutes(Convert.ToDouble(q.ExpireTimestamp)).Subtract(new DateTime(1970, 1, 1))).TotalMilliseconds.ToString().Replace(",", ".");
             _qr.AddQuestionObject(b);
             return "Question saved with id: " + q.Id;
 

@@ -6,26 +6,28 @@
     <div class="row" ng-show="rightPassword">
         <div id="questionTables" ng-show="!SpecificQuestionShown">
         <div class="col-md-8">
-                <h4>Host questions</h4>
+            <h4>Host questions</h4>
+            <div style="overflow-y: auto;max-height: 300px">
+
                 <table id="hostQuestionsTable" class="table table-hover table-responsive table-bordered">
                     @*<thead>
-                            <tr>
-                                <th>
-                                    Question text
-                                </th>
-                                <th>
-                                    Created by
-                                </th>
-                                <th>
-                                    Upvotes
-                                </th>
-                                <th>
-                                    Downvotes
-                                </th>
-                                <th>
-                                    Image
-                                </th>
-                        </thead>*@
+                    <tr>
+                        <th>
+                            Question text
+                        </th>
+                        <th>
+                            Created by
+                        </th>
+                        <th>
+                            Upvotes
+                        </th>
+                        <th>
+                            Downvotes
+                        </th>
+                        <th>
+                            Image
+                        </th>
+                </thead>*@
                     <tbody>
                         <tr style="cursor: pointer" ng-repeat="question in Questions|filter: { RoomId: '@ViewBag.roomId',CreatedById: CurrentRoom.CreatedById } " ng-click="ShowSpecificQuestion(question)">
                             <td>{{question.QuestionText}}</td>
@@ -35,37 +37,40 @@
                             <td><img ng-src="data:image/png;base64,{{question.Img}}" style="max-width: 100px; max-height: 100px" /></td>
                     </tbody>
                 </table>
+            </div>
                 <div ng-show="CurrentRoom.UsersCanAsk">
                     <h4>User questions</h4>
-                    <table id="userQuestionsTable" class="table table-hover table-responsive table-bordered">
-                        @*<thead>
-                                <tr>
-                                    <th>
-                                        Question text
-                                    </th>
-                                    <th>
-                                        Created by
-                                    </th>
-                                    <th>
-                                        Upvotes
-                                    </th>
-                                    <th>
-                                        Downvotes
-                                    </th>
-                                    <th>
-                                        Image
-                                    </th>
-                            </thead>*@
-                        <tbody>
+                    <div style="overflow-y: auto;max-height: 300px">
+                        <table id="userQuestionsTable" class="table table-hover table-responsive table-bordered">
+                            @*<thead>
+                    <tr>
+                        <th>
+                            Question text
+                        </th>
+                        <th>
+                            Created by
+                        </th>
+                        <th>
+                            Upvotes
+                        </th>
+                        <th>
+                            Downvotes
+                        </th>
+                        <th>
+                            Image
+                        </th>
+                </thead>*@
+                            <tbody>
                             <tr style="cursor: pointer" ng-repeat="question in Questions|filter: { RoomId: '@ViewBag.roomId',CreatedById: '!'+CurrentRoom.CreatedById  } " ng-click="ShowSpecificQuestion(question)">
-                                <td>{{question.QuestionText}}</td>
-                                <td>{{GetUsernameById(question.CreatedById)}}</td>
-                                <td>{{question.Upvotes}}<span class="glyphicon glyphicon-thumbs-up"></span></td>
-                                <td>{{question.Downvotes}}<span class="glyphicon glyphicon-thumbs-down"></span></td>
-                                <td><img ng-src="data:image/png;base64,{{question.Img}}" style="max-width: 100px; max-height: 100px" /></td>
-                        </tbody>
-                    </table>
-                </div>
+                            <td>{{question.QuestionText}}</td>
+                            <td>{{GetUsernameById(question.CreatedById)}}</td>
+                            <td>{{question.Upvotes}}<span class="glyphicon glyphicon-thumbs-up"></span></td>
+                            <td>{{question.Downvotes}}<span class="glyphicon glyphicon-thumbs-down"></span></td>
+                            <td><img ng-src="data:image/png;base64,{{question.Img}}" style="max-width: 100px; max-height: 100px"/></td>
+                            </tbody>
+                        </table>
+                        </div>
+                    </div>
                 <div class="col-md-3" id="createQuestionDiv">
                     <button id="createQuestionButton" ng-disabled="userId!=CurrentRoom.CreatedById&&!CurrentRoom.UsersCanAsk" title="{{ userId!=CurrentRoom.CreatedById&&!CurrentRoom.UsersCanAsk ? 'User Questions are disabled' : ''}}" style="pointer-events: auto;" class="btn btn-primary" onclick="$('#myModalCreate').modal('toggle')">Create Question</button>
                 </div>
@@ -118,8 +123,7 @@
 
                     <button class="btn btn-primary" ng-click="AddAnswer()"  ng-disabled="timerOverflow || answerChoosen == undefined">Submit</button><button style="float: right" class="btn btn-primary" ng-click="ToggleShowQuestionTables()">Back to questions</button>
                 </form>
-                <div id="resultchart"></div>
-                <canvas id="pie" class="chart chart-pie" chart-legend="true"chart-data="data" chart-labels="labels"></canvas>
+                <canvas id="pie" class="chart chart-pie" chart-legend="true" chart-colors="colors" chart-data="data" chart-labels="labels"></canvas>
             </div>
         </div>
         @* Chat template found at: http://bootsnipp.com/snippets/featured/chat *@
@@ -129,7 +133,7 @@
             
             <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
             @*Scroll glue keeps scroll bar at same location, found at: https://github.com/Luegg/angularjs-scroll-glue*@
-            <div class="container fa-border" style="overflow-x: hidden; overflow-y: auto; max-height: 500px; min-height: 500px" scroll-glue>
+            <div class="container fa-border" style="overflow-x: hidden; overflow-y: auto; max-height: 550px; min-height: 550px" scroll-glue>
 
                 <div class="row">
                     <div class="message-wrap col-lg-8">
@@ -148,13 +152,12 @@
                     </div>
                 </div>
             </div>
-            <br/>
             <div class="send-wrap">
 
-                <textarea ng-enter="postChatMessage(textAreaModel)" ng-model="textAreaModel" class="form-control send-message" rows="3" placeholder="Write a reply..."></textarea>
-
+                <textarea ng-enter="postChatMessage(textAreaModel)" ng-model="textAreaModel" class="form-control send-message" rows="3" style="-moz-min-width: 100%; -ms-min-width: 100%; -o-min-width: 100%; -webkit-min-width: 100%; min-width: 100%" placeholder="Write a reply..."></textarea>
 
             </div>
+            <br />
             <div class="btn-panel">
                 <button type="submit" class="btn btn-primary" ng-click="postChatMessage(textAreaModel)">Send message</button>
             </div>
@@ -190,8 +193,9 @@
                             <img ng-src="data:image/png;base64,{{questionImage.base64}}" style="max-width: 100px; max-height: 100px" />
                         </div>
                         <div class="row">
-                            <label class="col-md-6">Expiration time</label> <input ng-model="ExpirationTime" class="col-md-6" type="number" />
+                            <label class="col-md-6">Expiration time</label> <input ng-model="ExpirationTime" class="col-md-6" type="number"/>
                         </div>
+                        <br/>
                         <div class="row">
                             <button id="ModalCreateQuestionButton" type="submit" class="btn btn-md center-block" ng-click="postQuestion()" data-dismiss="modal">Create question</button>
                             <button id="ModalCancelButton" type="button" class="btn btn-md center-block" data-dismiss="modal">Cancel</button>
