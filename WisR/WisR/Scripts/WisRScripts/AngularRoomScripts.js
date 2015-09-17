@@ -15,7 +15,7 @@ app.directive('ngEnter', function () {
 });
 
 app.controller("RoomController", [
-    '$scope', '$http', 'configs', '$window', 'ChartJs', function ($scope, $http, configs, $window, chartJs) {
+    '$scope', '$http', 'configs', '$window', function ($scope, $http, configs, $window) {
         //Connect to SignalR hub and wait for chat messages
         $(function () {
             // Declare a proxy to reference the hub. 
@@ -67,15 +67,17 @@ app.controller("RoomController", [
                     return $window.userId;
                 }, function (n, o) {
                     $scope.userId = n;
-                    if (n != undefined) {
-
-
+                    if (n == "NoUser") {
+                        getRoom(false);
+                    }
+                    else if (n != undefined) {
                         $http.post(configs.restHostName + '/User/GetById', { id: n }).then(function (response) {
                             $scope.currentUser = response.data;
-                            getRoom();
+                            getRoom(true);
                         });
                     }
                 }
+
 );
         //watch the questionImage.filesize variable
         $scope.$watch(
@@ -103,17 +105,25 @@ app.controller("RoomController", [
 
         //Get information about this specific room
         //Get room info
-        var getRoom = function () {
+        var getRoom = function (user) {
             $http.post(configs.restHostName + '/Room/GetById', { id: MyRoomIdFromViewBag }).then(function (response) {
                 $scope.CurrentRoom = response.data;
-                if ($scope.currentUser.ConnectedRoomIds != undefined) {
-                    if ($scope.CurrentRoom.HasPassword && $scope.currentUser.ConnectedRoomIds.indexOf(MyRoomIdFromViewBag) == -1) {
+                if (user) {
+                    if ($scope.currentUser.ConnectedRoomIds != undefined) {
+                        if ($scope.CurrentRoom.HasPassword && $scope.currentUser.ConnectedRoomIds.indexOf(MyRoomIdFromViewBag) == -1) {
+                            $('#myModalPassword').modal('show');
+                        } else {
+                            $scope.rightPassword = true;
+                        }
+                    } else {
+                        $('#myModalPassword').modal('show');
+                    }
+                } else {
+                    if ($scope.CurrentRoom.HasPassword) {
                         $('#myModalPassword').modal('show');
                     } else {
                         $scope.rightPassword = true;
                     }
-                } else {
-                    $('#myModalPassword').modal('show');
                 }
 
             });
@@ -191,16 +201,10 @@ app.controller("RoomController", [
                     values.push(1);
                 }
             }
-            if (labels.length > 0) {
-                $scope.labels = labels;
-                $scope.data = values;
-                //TODO: $scope.colors = ['#FD1F5E', '#1EF9A1'];
-                $scope.showResults = true;
-            } else {
-                $scope.showResults = false;
-            }
 
-
+            $scope.labels = labels;
+            $scope.data = values;
+            //TODO: $scope.colors = ['#FD1F5E', '#1EF9A1'];
         }
 
         $scope.GetUsernameById = function (userId) {
@@ -213,23 +217,12 @@ app.controller("RoomController", [
 
         //function for showing a specific question
         $scope.ShowSpecificQuestion = function (question) {
-            $scope.redrawChart();
             $scope.ToggleShowQuestionTables();
             $scope.SpecificQuestion = question;
             $scope.createPieChart();
         }
         $scope.ToggleShowQuestionTables = function () {
             $scope.SpecificQuestionShown = !$scope.SpecificQuestionShown;
-        }
-
-        $scope.redrawChart = function () {
-            //$('#pie').remove(); // this is my <canvas> element
-            //$('#chartDiv').append('<canvas id="pie"><canvas>');
-            /*canvas = document.querySelector('#pie');
-            ctx = canvas.getContext('2d');
-            ctx.destroy();
-            ctx.canvas.width = $('#graph').width(); // resize to parent width
-            ctx.canvas.height = $('#graph').height(); // resize to parent height*/
         }
 
 

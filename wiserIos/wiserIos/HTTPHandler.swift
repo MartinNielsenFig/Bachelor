@@ -20,6 +20,31 @@ class HttpHandler {
         NSLog("error \(error)")*/
     }
     
+    static func sendChatMessage(chatMessageJson: String) {
+        let session = NSURLSession.sharedSession()
+        let url = NSURL(string: mainUrl)!.URLByAppendingPathComponent("Chat/CreateChatMessage")
+        let request = NSMutableURLRequest(URL: url)
+        request.HTTPMethod = "POST"
+        
+        let body = "ChatMessage=\(chatMessageJson)"
+        request.HTTPBody = body.dataUsingEncoding(NSUTF8StringEncoding)
+        
+        let started = NSDate()
+        let task = session.dataTaskWithRequest(request) {
+            data, response, error in
+            NSLog("time for \(__FUNCTION__) http call \(NSDate().timeIntervalSinceDate(started)) seconds")
+            
+            log(data: data, response: response, error: error)
+            
+            if data != nil {
+                let nsDataString = NSString(data: data!, encoding: NSUTF8StringEncoding)
+                let dataString = nsDataString as! String
+                //NSLog("dataString \(dataString)")
+            }
+        }
+        task.resume()
+    }
+    
     static func getChatMessages(roomId: String, completionHandler: (inout messages: [ChatMessage]) -> Void) {
         let session = NSURLSession.sharedSession()
         let url = NSURL(string: mainUrl)!.URLByAppendingPathComponent("Chat/GetAllByRoomId")
