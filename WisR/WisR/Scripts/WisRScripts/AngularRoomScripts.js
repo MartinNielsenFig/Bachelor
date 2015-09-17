@@ -38,16 +38,16 @@ app.controller("RoomController", [
             };
             hub.client.broadcastUpdateQuestion = function (questionToUpdate) {
                 var updateTemp = JSON.parse(questionToUpdate);
-                var index=findWithAttr($scope.Questions, "_id", updateTemp._id);
+                var index = findWithAttr($scope.Questions, "_id", updateTemp._id);
                 $scope.Questions[index] = updateTemp;
                 //If this is the specific question that changed update it with new values
                 if ($scope.SpecificQuestion != undefined) {
                     var indexOfSpecificQuestion = findWithAttr($scope.Questions, "_id", $scope.SpecificQuestion._id);
                     $scope.SpecificQuestion = $scope.Questions[indexOfSpecificQuestion];
                     //Redraw the result chart
-                    $scope.createPieChart()
+                    $scope.createPieChart();
                 }
-                
+
                 $scope.$apply();
             };
             $.connection.hub.start();
@@ -67,11 +67,15 @@ app.controller("RoomController", [
                     return $window.userId;
                 }, function (n, o) {
                     $scope.userId = n;
-                $http.post(configs.restHostName + '/User/GetById', { id: n }).then(function(response) {
-                    $scope.currentUser = response.data;
-                    getRoom();
-                });
-            }
+                if (n != undefined) {
+                 
+              
+                    $http.post(configs.restHostName + '/User/GetById', { id: n }).then(function (response) {
+                        $scope.currentUser = response.data;
+                        getRoom();
+                    });
+                }
+                }
 );
         //watch the questionImage.filesize variable
         $scope.$watch(
@@ -102,21 +106,52 @@ app.controller("RoomController", [
         var getRoom = function () {
             $http.post(configs.restHostName + '/Room/GetById', { id: MyRoomIdFromViewBag }).then(function (response) {
                 $scope.CurrentRoom = response.data;
-                if ($scope.CurrentRoom.HasPassword && $scope.currentUser.ConnectedRoomIds.indexOf(MyRoomIdFromViewBag) == -1) {
-                    $('#myModalPassword').modal('show');
+                if ($scope.currentUser.ConnectedRoomIds != undefined) {
+                    if ($scope.CurrentRoom.HasPassword && $scope.currentUser.ConnectedRoomIds.indexOf(MyRoomIdFromViewBag) == -1) {
+                        $('#myModalPassword').modal('show');
+                    } else {
+                        $scope.rightPassword = true;
+                    }
                 } else {
-                    $scope.rightPassword = true;
+                    $('#myModalPassword').modal('show');
                 }
+
             });
         };
-        
+
 
 
         $scope.validatePassword = function () {
             if ($scope.inputPassword == $scope.CurrentRoom.EncryptedPassword) {
                 $('#myModalPassword').modal('hide');
                 $scope.rightPassword = true;
-                $scope.currentUser.ConnectedRoomIds.push(MyRoomIdFromViewBag);
+                if ($scope.currentUser.ConnectedRoomIds != undefined) {
+                    $scope.currentUser.ConnectedRoomIds.push(MyRoomIdFromViewBag);
+
+                    var newIds = "";
+                    for (var i = 0; i < $scope.currentUser.ConnectedRoomIds.length; i++) {
+                        if (i != $scope.currentUser.ConnectedRoomIds.length - 1) {
+                            newIds = newIds + $scope.currentUser.ConnectedRoomIds[i] + ',';
+                        } else {
+                            newIds = newIds + $scope.currentUser.ConnectedRoomIds[i];
+                        }
+                    }
+
+                    $http.post(configs.baseHostName + '/Home/toJsonUser', {
+                        facebookId: $scope.currentUser.FacebookId,
+                        lDAPUserName: $scope.currentUser.LDAPUserName,
+                        displayName: $scope.currentUser.DisplayName,
+                        email: $scope.currentUser.Email,
+                        encryptedPassword: $scope.currentUser.EncryptedPassword,
+                        connectedRoomIds: newIds
+                    }).then(function (response) {
+                        //Use response to send to REST API
+                        $http.post(configs.restHostName + '/User/UpdateUser', { User: JSON.stringify(response.data), Id: $scope.currentUser._id }).
+                            then(function (response) {
+
+                            });
+                    });
+                }
             } else {
                 $scope.passwordMessage = "Incorrect password";
             }
@@ -137,8 +172,8 @@ app.controller("RoomController", [
         //Function for retrieving userName by an id
         var getAllUsers = function () {
             $http.get(configs.restHostName + '/User/GetAll').then(function (result) {
-                    $scope.ActiveUsers = result.data;
-                });
+                $scope.ActiveUsers = result.data;
+            });
         }
         getAllUsers();
 
@@ -149,7 +184,7 @@ app.controller("RoomController", [
             var values = [];
             for (i = 0; i < $scope.SpecificQuestion.Result.length; i++) {
                 var response = $scope.SpecificQuestion.Result[i];
-                if (labels.indexOf(response.Value)!=-1) {
+                if (labels.indexOf(response.Value) != -1) {
                     values[labels.indexOf(response.Value)]++;
                 } else {
                     labels.push(response.Value);
@@ -158,7 +193,7 @@ app.controller("RoomController", [
             }
             var data = [];
             for (i = 0; i < labels.length; i++) {
-                data.push({ "label": labels[i], "value":values[i] });
+                data.push({ "label": labels[i], "value": values[i] });
             }
             $scope.labels = labels;
             $scope.data = values;
@@ -223,7 +258,7 @@ app.controller("RoomController", [
                         "size": 8
                     },
                     load: {
-                        effect:"none"
+                        effect: "none"
                     }
                 },
                 "misc": {
@@ -253,22 +288,22 @@ app.controller("RoomController", [
             $scope.SpecificQuestionShown = !$scope.SpecificQuestionShown;
         }
 
-        
+
 
         //Get precentage for loading bar
         $scope.getPercentage = function () {
             if ($scope.SpecificQuestion != undefined) {
                 $scope.timerOverflow = false;
                 $scope.$apply(function () {
-                var nominater = Date.now() - parseInt($scope.SpecificQuestion.CreationTimestamp);
+                    var nominater = Date.now() - parseInt($scope.SpecificQuestion.CreationTimestamp);
                     var denominater = parseInt($scope.SpecificQuestion.ExpireTimestamp) - parseInt($scope.SpecificQuestion.CreationTimestamp);
                     $scope.precentage = (nominater / denominater) * 100;
                     var timeLeftInmSec = parseInt($scope.SpecificQuestion.ExpireTimestamp) - Date.now();
                     var hours = (parseInt(timeLeftInmSec / 3600000) + "").length == 1 ? "0" + parseInt(timeLeftInmSec / 3600000) : parseInt(timeLeftInmSec / 3600000);
                     var min = (parseInt((timeLeftInmSec % 3600000) / 60000) + "").length == 1 ? "0" + parseInt((timeLeftInmSec % 3600000) / 60000) : parseInt((timeLeftInmSec % 3600000) / 60000);
                     var sec = (parseInt(((timeLeftInmSec % 3600000) % 60000) / 1000) + "").length == 1 ? "0" + parseInt(((timeLeftInmSec % 3600000) % 60000) / 1000) : parseInt(((timeLeftInmSec % 3600000) % 60000) / 1000);
-                    $scope.timeLeft = (hours + ":" + min + ":" + sec).indexOf("-") >-1 ? "The time has run out!" : hours + ":" + min + ":" + sec;
-                    if ($scope.precentage>100) {
+                    $scope.timeLeft = (hours + ":" + min + ":" + sec).indexOf("-") > -1 ? "The time has run out!" : hours + ":" + min + ":" + sec;
+                    if ($scope.precentage > 100) {
                         $scope.timerOverflow = true;
                     }
                 }
@@ -280,7 +315,7 @@ app.controller("RoomController", [
         //adds answer to specificQuestion
         $scope.AddAnswer = function () {
             $scope.SpecificQuestion.Result.push($scope.answerChoosen);
-           
+
             var newResponses = "";
             for (var i = 0; i < $scope.SpecificQuestion.ResponseOptions.length; i++) {
                 if (i != $scope.SpecificQuestion.ResponseOptions.length - 1) {
@@ -288,7 +323,7 @@ app.controller("RoomController", [
                 } else {
                     newResponses = newResponses + $scope.SpecificQuestion.ResponseOptions[i].Value;
                 }
-        } 
+            }
 
             var newResults = "";
             for (var i = 0; i < $scope.SpecificQuestion.Result.length; i++) {

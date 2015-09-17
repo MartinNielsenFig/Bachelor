@@ -47,6 +47,14 @@ namespace WisRRestAPI.Controllers
         }
 
         [System.Web.Mvc.HttpPost]
+        public void UpdateUser(string User,string Id)
+        {
+            var user = BsonSerializer.Deserialize<User>(User);
+            user.Id = Id;
+            _ur.UpdateUser(user.Id, user);
+        }
+
+        [System.Web.Mvc.HttpPost]
         public string GetById(string id)
         {
             if (id == null)

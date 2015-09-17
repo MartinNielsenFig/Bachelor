@@ -67,14 +67,26 @@ namespace WisR.Controllers
             room.UseLocation = useLocation;
             return room.ToJson();
         }
-        public string toJsonUser(string encryptedPassword, string facebookId, string lDAPUserName, string displayName, string email)
+        public string toJsonUser(string encryptedPassword, string facebookId, string lDAPUserName, string displayName, string email, string connectedRoomIds)
         {
             var user = new User();
+
+            var tempList = new List<string>();
+
+            if (connectedRoomIds !=null)
+            {
+                foreach (var id in connectedRoomIds.Split(','))
+                {
+                    tempList.Add(id);
+                }
+            }
+           
             user.FacebookId = facebookId;
             user.LDAPUserName = lDAPUserName;
             user.DisplayName = displayName;
             user.Email = email;
             user.EncryptedPassword = encryptedPassword;
+            user.ConnectedRoomIds = tempList;
            
             return user.ToJson();
         }
