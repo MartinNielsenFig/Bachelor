@@ -22,6 +22,12 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.notClickAble {
+    cursor: default !important;
+    background-color: #DCDCDC;
+}
+
 .glyphicon-refresh-animate {
     -webkit-animation: spin .7s infinite linear;
     -webkit-animation: spin2 .7s infinite linear;
@@ -32,29 +38,61 @@ textarea {
 }
 
 @-webkit-keyframes spin2 {
-    from { -webkit-transform: rotate(0deg);}
-    to { -webkit-transform: rotate(360deg);}
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+
+    to {
+        -webkit-transform: rotate(360deg);
+    }
 }
 
 @keyframes spin {
-    from { -webkit-transform: scale(1) rotate(0deg);}
-    to { -webkit-transform: scale(1) rotate(360deg);}
+    from {
+        -webkit-transform: scale(1) rotate(0deg);
+    }
+
+    to {
+        -webkit-transform: scale(1) rotate(360deg);
+    }
 }
+
 @-moz-keyframes spin3 {
-    from { -moz-transform: rotate(0deg);}
-    to { -moz-transform: rotate(360deg);}
+    from {
+        -moz-transform: rotate(0deg);
+    }
+
+    to {
+        -moz-transform: rotate(360deg);
+    }
 }
 
 @keyframes spin4 {
-    from { -moz-transform: scale(1) rotate(0deg);}
-    to { -moz-transform: scale(1) rotate(360deg);}
+    from {
+        -moz-transform: scale(1) rotate(0deg);
+    }
+
+    to {
+        -moz-transform: scale(1) rotate(360deg);
+    }
 }
+
 @-ms-keyframes spin5 {
-    from { -ms-transform: rotate(0deg);}
-    to { -ms-transform: rotate(360deg);}
+    from {
+        -ms-transform: rotate(0deg);
+    }
+
+    to {
+        -ms-transform: rotate(360deg);
+    }
 }
 
 @keyframes spin6 {
-    from { -ms-transform: scale(1) rotate(0deg);}
-    to { -ms-transform: scale(1) rotate(360deg);}
+    from {
+        -ms-transform: scale(1) rotate(0deg);
+    }
+
+    to {
+        -ms-transform: scale(1) rotate(360deg);
+    }
 }

@@ -219,7 +219,8 @@
                                 <input ng-model="inputPassword" type="password" required />
                             </div>
                             <div class="col-md-12 text-center">
-                                <button type="submit" ng-click="validatePassword()">Submit</button>
+                                <button class="btn btn-default" type="submit" ng-click="validatePassword()">Submit</button>@Html.ActionLink("Go back", "Index","Home",null, new { @class= "btn btn-default" })
+                                @Html.Hidden("RedirectToHome", Url.Action("Index", "Home"))
                             </div>
                             <div class="col-md-12 text-center">
                                 {{passwordMessage}}
