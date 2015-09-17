@@ -249,19 +249,19 @@ app.controller("RoomController", [
 
 
 
-        //Get precentage for loading bar
+        //Get percentage for loading bar
         $scope.getPercentage = function () {
             if ($scope.SpecificQuestion != undefined) {
                 $scope.timerOverflow = false;
                 var nominater = Date.now() - parseInt($scope.SpecificQuestion.CreationTimestamp);
                 var denominater = parseInt($scope.SpecificQuestion.ExpireTimestamp) - parseInt($scope.SpecificQuestion.CreationTimestamp);
-                $scope.precentage = (nominater / denominater) * 100;
+                $scope.percentage = (nominater / denominater) * 100;
                 var timeLeftInmSec = parseInt($scope.SpecificQuestion.ExpireTimestamp) - Date.now();
                 var hours = (parseInt(timeLeftInmSec / 3600000) + "").length == 1 ? "0" + parseInt(timeLeftInmSec / 3600000) : parseInt(timeLeftInmSec / 3600000);
                 var min = (parseInt((timeLeftInmSec % 3600000) / 60000) + "").length == 1 ? "0" + parseInt((timeLeftInmSec % 3600000) / 60000) : parseInt((timeLeftInmSec % 3600000) / 60000);
                 var sec = (parseInt(((timeLeftInmSec % 3600000) % 60000) / 1000) + "").length == 1 ? "0" + parseInt(((timeLeftInmSec % 3600000) % 60000) / 1000) : parseInt(((timeLeftInmSec % 3600000) % 60000) / 1000);
                 $scope.timeLeft = (hours + ":" + min + ":" + sec).indexOf("-") > -1 ? "The time has run out!" : hours + ":" + min + ":" + sec;
-                if ($scope.precentage > 100) {
+                if ($scope.percentage > 100) {
                     $scope.timerOverflow = true;
                 }
                 //$scope.$apply();
