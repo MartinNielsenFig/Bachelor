@@ -18,12 +18,13 @@ public class Room {
     private boolean UsersCanAsk;
     private boolean AllowAnonymous;
     private boolean UseLocation;
+    private Coordinate Location;
 
     //Constructors
     public Room(){}
     public Room(String Id, String Name, String CreatedById, int Radius, String Tag,
                 boolean HasPassword, String EncryptedPassword, boolean HasChat,
-                boolean UsersCanAsk, boolean AllowAnonymous, boolean UseLocation)
+                boolean UsersCanAsk, boolean AllowAnonymous, boolean UseLocation, Coordinate Location)
     {
         this.Id = Id;
         this.Name = Name;
@@ -36,6 +37,7 @@ public class Room {
         this.UsersCanAsk = UsersCanAsk;
         this.AllowAnonymous = AllowAnonymous;
         this.UseLocation = UseLocation;
+        this.Location = Location;
     }
 
     //Properties
@@ -71,5 +73,8 @@ public class Room {
 
     public boolean get_UseLocation(){return this.UseLocation;}
     public void set_UseLocation(boolean UseLocation) {this.UseLocation = UseLocation;}
+
+    public Coordinate get_Location(){return this.Location;}
+    public void set_Locatin(Coordinate Location) {this.Location = Location;}
 
 }

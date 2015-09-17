@@ -1,6 +1,10 @@
 package com.example.tomas.wisrandroid.Activities;
 
+import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.GpsStatus;
+import android.location.Location;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -26,28 +30,39 @@ import com.example.tomas.wisrandroid.Helpers.ActivityLayoutHelper;
 import com.example.tomas.wisrandroid.Helpers.HttpHelper;
 import com.example.tomas.wisrandroid.Model.BooleanQuestion;
 import com.example.tomas.wisrandroid.Model.ChatMessage;
+import com.example.tomas.wisrandroid.Model.Coordinate;
 import com.example.tomas.wisrandroid.Model.MyUser;
 import com.example.tomas.wisrandroid.Model.Question;
 import com.example.tomas.wisrandroid.Model.Room;
 import com.example.tomas.wisrandroid.R;
 import com.facebook.Profile;
 import com.facebook.ProfileTracker;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.Api;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONStringer;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class CreateRoomActivity extends AppCompatActivity {
+public class CreateRoomActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+
+    // Classes needed to handle the coordinates of the room
+    private GoogleApiClient mGoogleApiClient;
+    private Location mLastLocation;
 
     // Buttons
     private volatile Button mCreateRoomButton;
@@ -76,6 +91,8 @@ public class CreateRoomActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_room);
         ActivityLayoutHelper.HideLayout(getWindow(), getSupportActionBar());
+        buildGoogleApiClient();
+        mGoogleApiClient.connect();
 
         // Edit Text Logic
         mRoomNameEditText = (EditText) findViewById(R.id.room_name_edittext);
@@ -173,6 +190,21 @@ public class CreateRoomActivity extends AppCompatActivity {
                 mRoom.set_UseLocation(mEnableUseLocationSwitch.isChecked());
                 mRoom.set_UsersCanAsk(mEnableUserQuestionSwitch.isChecked());
 
+                // Location
+                Geocoder mGeoCoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+                Coordinate mCoordinate = new Coordinate();
+                try {
+                    List<Address> mAddresses = mGeoCoder.getFromLocation(mLastLocation.getLatitude(), mLastLocation.getLongitude(), 1);
+                    mCoordinate.set_Latitude(mLastLocation.getLatitude());
+                    mCoordinate.set_Longitude(mLastLocation.getLongitude());
+                    mCoordinate.set_AccuracyMeters(Math.round(mLastLocation.getAccuracy()));
+                    mCoordinate.set_FormattedAddress(mAddresses.get(0).toString());
+                    mCoordinate.set_Timestamp(String.valueOf(mLastLocation.getTime()));
+                    mRoom.set_Locatin(mCoordinate);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
                 Gson gson = new Gson();
 
                 String json = gson.toJson(mRoom);
@@ -186,7 +218,8 @@ public class CreateRoomActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
                         Toast.makeText(getApplicationContext(), "In Listener", Toast.LENGTH_LONG).show();
-                        mResp.setText(response.toString());
+                        mRoom.set_Id(response);
+                        mResp.setText(response);
                     }
                 };
 
@@ -199,7 +232,7 @@ public class CreateRoomActivity extends AppCompatActivity {
                 };
 
                 RequestQueue requestQueue = Volley.newRequestQueue(CreateRoomActivity.this);
-                HttpHelper jsObjRequest = new HttpHelper(Request.Method.POST, "http://10.0.2.2:1337/Room/CreateRoom", mParams, mListener , mErrorListener);
+                HttpHelper jsObjRequest = new HttpHelper(Request.Method.POST, "http://localhost:7331/Room/CreateRoom", mParams, mListener , mErrorListener); // "http://10.0.2.2:1337/Room/CreateRoom"
 
                 try {
                     requestQueue.add(jsObjRequest);
@@ -268,5 +301,28 @@ public class CreateRoomActivity extends AppCompatActivity {
         }
 
         return result.toString();
+    }
+
+    protected synchronized void buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+
     }
 }
