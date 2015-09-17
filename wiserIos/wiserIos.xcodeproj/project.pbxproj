@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1137875702F8FD7CCE2759D4 /* libPods-wiserIos.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6390CA88C0DA808C1089BD22 /* libPods-wiserIos.a */; };
+		9C63CBE67C5C0D40F5EB107C /* Pods_wiserIos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3A4BD83DDD950677E106A8A /* Pods_wiserIos.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		CB0218201B9462C400DFC9DD /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB02181F1B9462C400DFC9DD /* ChatMessage.swift */; settings = {ASSET_TAGS = (); }; };
 		CB0D53C61BA85996007E4CD2 /* DateTimeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0D53C51BA85996007E4CD2 /* DateTimeHelper.swift */; settings = {ASSET_TAGS = (); }; };
 		CB1FBA001B983C3A00B1FCF8 /* BooleanInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1FB9FF1B983C3A00B1FCF8 /* BooleanInputCell.swift */; settings = {ASSET_TAGS = (); }; };
@@ -54,7 +54,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		6390CA88C0DA808C1089BD22 /* libPods-wiserIos.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-wiserIos.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB02181F1B9462C400DFC9DD /* ChatMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
 		CB0D53C51BA85996007E4CD2 /* DateTimeHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateTimeHelper.swift; sourceTree = "<group>"; };
 		CB1FB9FF1B983C3A00B1FCF8 /* BooleanInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BooleanInputCell.swift; sourceTree = "<group>"; };
@@ -93,6 +92,7 @@
 		CBB60B2E1B9718EC0007A47B /* CreateRoomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreateRoomViewController.swift; path = Assets.xcassets/CreateRoomViewController.swift; sourceTree = "<group>"; };
 		CBB60B301B97253A0007A47B /* SegmentedInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedInputCell.swift; sourceTree = "<group>"; };
 		CBC15B3C1BAAD9BA00293A3E /* wiserIos-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "wiserIos-Bridging-Header.h"; sourceTree = "<group>"; };
+		D3A4BD83DDD950677E106A8A /* Pods_wiserIos.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_wiserIos.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1D3CFFDDE44FA9686C08AE3 /* Pods-wiserIos.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-wiserIos.release.xcconfig"; path = "Pods/Target Support Files/Pods-wiserIos/Pods-wiserIos.release.xcconfig"; sourceTree = "<group>"; };
 		F159621980A89FE9BF220862 /* Pods-wiserIos.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-wiserIos.debug.xcconfig"; path = "Pods/Target Support Files/Pods-wiserIos/Pods-wiserIos.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -104,7 +104,7 @@
 			files = (
 				CBA437301B8DF5A500EF3E01 /* MapKit.framework in Frameworks */,
 				CBA4372C1B8DEA8E00EF3E01 /* CoreLocation.framework in Frameworks */,
-				1137875702F8FD7CCE2759D4 /* libPods-wiserIos.a in Frameworks */,
+				9C63CBE67C5C0D40F5EB107C /* Pods_wiserIos.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -206,7 +206,7 @@
 			children = (
 				CBA4372B1B8DEA8E00EF3E01 /* CoreLocation.framework */,
 				CBA4372F1B8DF5A500EF3E01 /* MapKit.framework */,
-				6390CA88C0DA808C1089BD22 /* libPods-wiserIos.a */,
+				D3A4BD83DDD950677E106A8A /* Pods_wiserIos.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -249,6 +249,7 @@
 				CB3C376B1B8DBF5000897344 /* Frameworks */,
 				CB3C376C1B8DBF5000897344 /* Resources */,
 				E11CC85047EFD910B4EF80FC /* Copy Pods Resources */,
+				4CF07531A7FC9CF0224789A6 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -338,6 +339,21 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		4CF07531A7FC9CF0224789A6 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-wiserIos/Pods-wiserIos-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		AD15F7425E1D07D4A8706474 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;

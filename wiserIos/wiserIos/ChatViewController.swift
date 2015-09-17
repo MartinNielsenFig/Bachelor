@@ -7,77 +7,84 @@
 //
 
 import UIKit
+import JSQMessagesViewController
 
-class ChatViewController: UIViewController, UITextFieldDelegate, Paged {
-    let pageIndex = 2
-    var roomId: String?
+class ChatViewController: JSQMessagesViewController, UITextFieldDelegate, Paged {
     
-    var chat = String() {
-        didSet {
-            dispatch_async(dispatch_get_main_queue()) { () -> Void in
-                self.chatTextField.text = self.chat
-                let range = NSMakeRange(self.chatTextField.text.characters.count - 1, 1)
-                self.chatTextField.scrollRangeToVisible(range)
-            }
+    //JSQMessagesViewController
+    //Framework by jessesquires https://github.com/jessesquires/JSQMessagesViewController
+    //Tutorial inspired by https://www.syncano.io/ios-chat-app-jsqmessagesviewcontroller/
+    var userName = "Peheje"
+    var messages = [JSQMessage]()
+    let incomingBubble = JSQMessagesBubbleImageFactory().incomingMessagesBubbleImageWithColor(UIColor.blueColor())
+    let outgoingBubble = JSQMessagesBubbleImageFactory().outgoingMessagesBubbleImageWithColor(UIColor.lightGrayColor())
+    
+    override func collectionView(collectionView: JSQMessagesCollectionView!, messageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageData! {
+        let data = self.messages[indexPath.row]
+        return data
+    }
+    
+    override func collectionView(collectionView: JSQMessagesCollectionView!, messageBubbleImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageBubbleImageDataSource! {
+        let data = self.messages[indexPath.row]
+        if (data.senderId == self.senderId) {
+            return self.outgoingBubble
+        } else {
+            return self.incomingBubble
         }
     }
     
-    @IBOutlet weak var chatTextField: UITextView!
-    @IBOutlet weak var chatMessageInput: UITextField!
-    
-    override func viewDidLoad() {
-        chatMessageInput.delegate = self
-        
-        HttpHandler.getChatMessages(roomId!) { (messages) -> Void in
-            var tempChat = String()
-            for m in messages {
-                let line = DateTimeHelper.getTimeStringFromEpochString(m.Timestamp) + " " + m.Value! + "\n"
-                tempChat += line
-            }
-            self.chat = tempChat
-        }
-        
-        super.viewDidLoad()
+    override func collectionView(collectionView: JSQMessagesCollectionView!, avatarImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageAvatarImageDataSource! {
+        return nil
     }
     
-    //UITextFieldDelegate
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        if let text = textField.text where text.isEmpty {
-            return false
-        }
+    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.messages.count
+    }
+    
+    override func didPressSendButton(button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: NSDate!) {
+        let newJsqMessage = JSQMessage(senderId: senderId, displayName: senderDisplayName, text: text)
+        messages += [newJsqMessage]
         
         let msg = ChatMessage()
         msg.ByUserId = CurrentUser.sharedInstance._id
         msg.RoomId = roomId
         //message timestamp gets created on restApi
-        msg.Value = textField.text
+        msg.Value = newJsqMessage.text
         
         HttpHandler.sendChatMessage(JSONSerializer.toJson(msg))
-        
-        return true
-    }
-    
-    func textFieldDidBeginEditing(textField: UITextField) {
-        movePlate(textField, up: true)
-    }
-    func textFieldDidEndEditing(textField: UITextField) {
-        movePlate(textField, up: false)
-    }
 
-    
-    //http://stackoverflow.com/questions/1247113/iphone-keyboard-covers-uitextfield
-    func movePlate(field: UITextField, up: Bool) {
-        
-        let movementDistance = 220 // tweak as needed
-        let movementDuration = 0.3 // tweak as needed
-        
-        let movement = (up ? -movementDistance : movementDistance)
-        
-        UIView.beginAnimations("anim", context: nil)
-        UIView.setAnimationBeginsFromCurrentState(true)
-        UIView.setAnimationDuration(NSTimeInterval(movementDuration))
-        self.view.frame = CGRectOffset(self.view.frame, 0, CGFloat(movement))
-        UIView.commitAnimations()
+        self.finishSendingMessage()
     }
     
+    override func didPressAccessoryButton(sender: UIButton!) {
+    }
+    
+    //Paged
+    let pageIndex = 2
+    var roomId: String?
+    
+    override func viewDidLoad() {
+        
+        self.userName = "iPhone"
+        /*for i in 1...10 {
+            let sender = (i%2 == 0) ? "Syncano" : self.userName
+            let message = JSQMessage(senderId: sender, displayName: sender, text: "Text")
+            self.messages += [message]
+        }*/
+        
+        self.collectionView!.reloadData()
+        self.senderDisplayName = self.userName
+        self.senderId = self.userName
+        
+        
+        HttpHandler.getChatMessages(roomId!) { (messages) -> Void in
+            for m in messages {
+                
+                let date = DateTimeHelper.getDateFromEpochString(m.Timestamp)
+                self.messages += [JSQMessage(senderId: m.ByUserId ?? self.userName, senderDisplayName: "StillNeedFetch", date: date, text: m.Value)]
+            }
+        }
+        
+        super.viewDidLoad()
+    }
 }

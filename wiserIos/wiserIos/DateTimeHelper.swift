@@ -12,6 +12,16 @@ import Foundation
 class DateTimeHelper {
     static func getTimeStringFromEpochString(secSince1970: String?) -> String {
         
+        let date = getDateFromEpochString(secSince1970)
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "HH:mm:ss"
+        let dateString = formatter.stringFromDate(date!)
+        
+        return dateString
+    }
+    
+    
+    static func getDateFromEpochString(secSince1970: String?) -> NSDate? {
         var sec = Float()
         if let timestampUnknownSeperator = secSince1970 {
             let timestampDot = timestampUnknownSeperator.stringByReplacingOccurrencesOfString(",", withString: ".")
@@ -20,10 +30,6 @@ class DateTimeHelper {
         
         let timeInterval = NSTimeInterval(sec)
         let date = NSDate(timeIntervalSince1970: timeInterval)
-        let formatter = NSDateFormatter()
-        formatter.dateFormat = "HH:mm:ss"
-        let dateString = formatter.stringFromDate(date)
-        
-        return dateString
+        return date
     }
 }
