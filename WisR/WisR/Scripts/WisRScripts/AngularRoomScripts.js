@@ -107,6 +107,7 @@ app.controller("RoomController", [
         var getQuestions = function () {
             $http.get(configs.restHostName + '/Question/GetAll').then(function (response) {
                 $scope.Questions = response.data;
+                $scope.questionsLoaded = true;
             });
         };
         getQuestions();
@@ -182,6 +183,7 @@ app.controller("RoomController", [
         var getChatMessages = function () {
             $http.post(configs.restHostName + '/Chat/GetAllByRoomId', { roomId: MyRoomIdFromViewBag }).then(function (response) {
                 $scope.ChatMessages = response.data;
+                $scope.chatLoaded = true;
             });
         };
         getChatMessages();

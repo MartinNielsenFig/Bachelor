@@ -4,73 +4,76 @@
 <body ng-controller="RoomController">
     <h2>{{CurrentRoom.Name}}</h2>
     <div class="row" ng-show="rightPassword">
-        <div id="questionTables" ng-show="!SpecificQuestionShown">
-        <div class="col-md-8">
-            <h4>Host questions</h4>
-            <div style="overflow-y: auto;max-height: 300px">
+        <div ng-hide="questionsLoaded" class="container text-center col-md-8">
+            <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span><label id="loadingLabel" class="">Loading questions...</label>
+        </div>
+        <div id="questionTables" ng-show="!SpecificQuestionShown && questionsLoaded">
+            <div class="col-md-8">
+                <h4>Host questions</h4>
+                <div style="overflow-y: auto; max-height: 300px">
 
-                <table id="hostQuestionsTable" class="table table-hover table-responsive table-bordered">
-                    @*<thead>
-                    <tr>
-                        <th>
-                            Question text
-                        </th>
-                        <th>
-                            Created by
-                        </th>
-                        <th>
-                            Upvotes
-                        </th>
-                        <th>
-                            Downvotes
-                        </th>
-                        <th>
-                            Image
-                        </th>
-                </thead>*@
-                    <tbody>
-                        <tr style="cursor: pointer" ng-repeat="question in Questions|filter: { RoomId: '@ViewBag.roomId',CreatedById: CurrentRoom.CreatedById } " ng-click="ShowSpecificQuestion(question)">
-                            <td>{{question.QuestionText}}</td>
-                            <td>{{GetUsernameById(question.CreatedById)}}</td>
-                            <td>{{question.Upvotes}}<span class="glyphicon glyphicon-thumbs-up"></span></td>
-                            <td>{{question.Downvotes}}<span class="glyphicon glyphicon-thumbs-down"></span></td>
-                            <td><img ng-src="data:image/png;base64,{{question.Img}}" style="max-width: 100px; max-height: 100px" /></td>
-                    </tbody>
-                </table>
-            </div>
+                    <table id="hostQuestionsTable" class="table table-hover table-responsive table-bordered">
+                        @*<thead>
+                                <tr>
+                                    <th>
+                                        Question text
+                                    </th>
+                                    <th>
+                                        Created by
+                                    </th>
+                                    <th>
+                                        Upvotes
+                                    </th>
+                                    <th>
+                                        Downvotes
+                                    </th>
+                                    <th>
+                                        Image
+                                    </th>
+                            </thead>*@
+                        <tbody>
+                            <tr style="cursor: pointer" ng-repeat="question in Questions|filter: { RoomId: '@ViewBag.roomId',CreatedById: CurrentRoom.CreatedById } " ng-click="ShowSpecificQuestion(question)">
+                                <td>{{question.QuestionText}}</td>
+                                <td>{{GetUsernameById(question.CreatedById)}}</td>
+                                <td>{{question.Upvotes}}<span class="glyphicon glyphicon-thumbs-up"></span></td>
+                                <td>{{question.Downvotes}}<span class="glyphicon glyphicon-thumbs-down"></span></td>
+                                <td><img ng-src="data:image/png;base64,{{question.Img}}" style="max-width: 100px; max-height: 100px" /></td>
+                        </tbody>
+                    </table>
+                </div>
                 <div ng-show="CurrentRoom.UsersCanAsk">
                     <h4>User questions</h4>
-                    <div style="overflow-y: auto;max-height: 300px">
+                    <div style="overflow-y: auto; max-height: 300px">
                         <table id="userQuestionsTable" class="table table-hover table-responsive table-bordered">
                             @*<thead>
-                    <tr>
-                        <th>
-                            Question text
-                        </th>
-                        <th>
-                            Created by
-                        </th>
-                        <th>
-                            Upvotes
-                        </th>
-                        <th>
-                            Downvotes
-                        </th>
-                        <th>
-                            Image
-                        </th>
-                </thead>*@
+                                    <tr>
+                                        <th>
+                                            Question text
+                                        </th>
+                                        <th>
+                                            Created by
+                                        </th>
+                                        <th>
+                                            Upvotes
+                                        </th>
+                                        <th>
+                                            Downvotes
+                                        </th>
+                                        <th>
+                                            Image
+                                        </th>
+                                </thead>*@
                             <tbody>
-                            <tr style="cursor: pointer" ng-repeat="question in Questions|filter: { RoomId: '@ViewBag.roomId',CreatedById: '!'+CurrentRoom.CreatedById  } " ng-click="ShowSpecificQuestion(question)">
-                            <td>{{question.QuestionText}}</td>
-                            <td>{{GetUsernameById(question.CreatedById)}}</td>
-                            <td>{{question.Upvotes}}<span class="glyphicon glyphicon-thumbs-up"></span></td>
-                            <td>{{question.Downvotes}}<span class="glyphicon glyphicon-thumbs-down"></span></td>
-                            <td><img ng-src="data:image/png;base64,{{question.Img}}" style="max-width: 100px; max-height: 100px"/></td>
+                                <tr style="cursor: pointer" ng-repeat="question in Questions|filter: { RoomId: '@ViewBag.roomId',CreatedById: '!'+CurrentRoom.CreatedById  } " ng-click="ShowSpecificQuestion(question)">
+                                    <td>{{question.QuestionText}}</td>
+                                    <td>{{GetUsernameById(question.CreatedById)}}</td>
+                                    <td>{{question.Upvotes}}<span class="glyphicon glyphicon-thumbs-up"></span></td>
+                                    <td>{{question.Downvotes}}<span class="glyphicon glyphicon-thumbs-down"></span></td>
+                                    <td><img ng-src="data:image/png;base64,{{question.Img}}" style="max-width: 100px; max-height: 100px" /></td>
                             </tbody>
                         </table>
-                        </div>
                     </div>
+                </div>
                 <div class="col-md-3" id="createQuestionDiv">
                     <button id="createQuestionButton" ng-disabled="userId!=CurrentRoom.CreatedById&&!CurrentRoom.UsersCanAsk" title="{{ userId!=CurrentRoom.CreatedById&&!CurrentRoom.UsersCanAsk ? 'User Questions are disabled' : ''}}" style="pointer-events: auto;" class="btn btn-primary" onclick="$('#myModalCreate').modal('toggle')">Create Question</button>
                 </div>
@@ -102,7 +105,7 @@
                         <td>{{GetUsernameById(SpecificQuestion.CreatedById)}}</td>
                         <td>{{SpecificQuestion.Upvotes}}<span class="glyphicon glyphicon-thumbs-up"></span></td>
                         <td>{{SpecificQuestion.Downvotes}}<span class="glyphicon glyphicon-thumbs-down"></span></td>
-                        <td><img ng-src="data:image/png;base64,{{SpecificQuestion.Img}}" style="max-width: 100px; max-height: 100px" /></td>
+                        <td><img ng-src="data:image/png;base64,{{SpecificQuestion.Img}}" style="max-width: 100px; max-height: 100px"/></td>
                     </tr>
 
                 </table>
@@ -130,10 +133,13 @@
                 </div>
             </div>
         </div>
+        <div ng-hide="chatLoaded" class="container text-center col-md-4">
+            <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span><label id="loadingLabel" class="">Loading chat messages...</label>
+        </div>
         @* Chat template found at: http://bootsnipp.com/snippets/featured/chat *@
-        <div class="col-md-4" ng-show="CurrentRoom.HasChat">
-            <br/>
-            <br/>
+        <div ng-show="chatLoaded" class="col-md-4" ng-show="CurrentRoom.HasChat">
+            <br />
+            <br />
             
             <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
             @*Scroll glue keeps scroll bar at same location, found at: https://github.com/Luegg/angularjs-scroll-glue*@
@@ -197,9 +203,9 @@
                             <img ng-src="data:image/png;base64,{{questionImage.base64}}" style="max-width: 100px; max-height: 100px" />
                         </div>
                         <div class="row">
-                            <label class="col-md-6">Expiration time</label> <input ng-model="ExpirationTime" class="col-md-6" type="number"/>
+                            <label class="col-md-6">Expiration time</label> <input ng-model="ExpirationTime" class="col-md-6" type="number" />
                         </div>
-                        <br/>
+                        <br />
                         <div class="row">
                             <button id="ModalCreateQuestionButton" type="submit" class="btn btn-md center-block" ng-click="postQuestion()" data-dismiss="modal">Create question</button>
                             <button id="ModalCancelButton" type="button" class="btn btn-md center-block" data-dismiss="modal">Cancel</button>
@@ -211,29 +217,29 @@
 
         </div>
     </div>
-<!--Modal end-->
+    <!--Modal end-->
     <!-- Modal --> <!--Stops modal from closing-->
     <div class="modal fade" id="myModalPassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false" data-keyboard="false">
-            <div class="modal-dialog center">
-                <div class="modal-content modal-heigh">
-                    <div class="modal-body">
-                        <form>
-                            <label class="col-md-12 text-center">Enter Password:</label>
-                            <div class="col-md-12 text-center">
-                                <input ng-model="inputPassword" type="password" required />
-                            </div>
-                            <div class="col-md-12 text-center">
-                                <button class="btn btn-default" type="submit" ng-click="validatePassword()">Submit</button>@Html.ActionLink("Go back", "Index","Home",null, new { @class= "btn btn-default" })
-                                @Html.Hidden("RedirectToHome", Url.Action("Index", "Home"))
-                            </div>
-                            <div class="col-md-12 text-center">
-                                {{passwordMessage}}
-                            </div>
-                        </form>
-                    </div>
+        <div class="modal-dialog center">
+            <div class="modal-content modal-heigh">
+                <div class="modal-body">
+                    <form>
+                        <label class="col-md-12 text-center">Enter Password:</label>
+                        <div class="col-md-12 text-center">
+                            <input ng-model="inputPassword" type="password" required />
+                        </div>
+                        <div class="col-md-12 text-center">
+                            <button class="btn btn-default" type="submit" ng-click="validatePassword()">Submit</button>@Html.ActionLink("Go back", "Index", "Home", null, new { @class = "btn btn-default" })
+                            @Html.Hidden("RedirectToHome", Url.Action("Index", "Home"))
+                        </div>
+                        <div class="col-md-12 text-center">
+                            {{passwordMessage}}
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
+    </div>
 
 
     <script type="text/javascript">
