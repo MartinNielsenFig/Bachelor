@@ -94,7 +94,7 @@ app.controller("RoomController", [
                 }, function (n, o) {
                     if (n != undefined) {
                         if (n.filesize > 1049000) {
-                            alert("File is too big");
+                            $scope.ImageMessage="File is too big";
                             $scope.questionImage.base64 = "R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==";
                         }
 
@@ -247,7 +247,9 @@ app.controller("RoomController", [
             $scope.SpecificQuestionShown = !$scope.SpecificQuestionShown;
         }
 
-
+        $scope.Downvotes = function(question) {
+            question.Downvotes = question.Downvotes + 1;
+        }
 
         //Get precentage for loading bar
         $scope.getPercentage = function () {

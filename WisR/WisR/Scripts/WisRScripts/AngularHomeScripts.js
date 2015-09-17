@@ -87,7 +87,7 @@ app.controller("HomeController", ['$scope', '$http', '$location', '$window', 'co
 
     $scope.changeViewToRoom = function (room) {
         if (!room.AllowAnonymous && $scope.userId == 'NoUser') {
-            
+            $scope.Message = "The room-tag you have entered requires you to be logged in";
         } else {
             $scope.RoomId = room._id;
         var url = $("#RedirectTo").val() + "?RoomId=" + $scope.RoomId;
@@ -101,7 +101,7 @@ app.controller("HomeController", ['$scope', '$http', '$location', '$window', 'co
             if (response.data._id != undefined) {
                 $scope.changeViewToRoom(response.data);
             } else {
-                alert("No room with the tag: " + $scope.uniqueRoomTag);
+                $scope.Message="No room with the tag: " + $scope.uniqueRoomTag;
             }
 
 

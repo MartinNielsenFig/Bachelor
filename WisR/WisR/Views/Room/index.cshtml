@@ -101,7 +101,7 @@
                         <td>{{SpecificQuestion.QuestionText}}</td>
                         <td>{{GetUsernameById(SpecificQuestion.CreatedById)}}</td>
                         <td>{{SpecificQuestion.Upvotes}}<span class="glyphicon glyphicon-thumbs-up"></span></td>
-                        <td>{{SpecificQuestion.Downvotes}}<span class="glyphicon glyphicon-thumbs-down"></span></td>
+                        <td ng-click="DownVote(SpecificQuestion)">{{SpecificQuestion.Downvotes}}<span  class="glyphicon glyphicon-thumbs-down"></span></td>
                         <td><img ng-src="data:image/png;base64,{{SpecificQuestion.Img}}" style="max-width: 100px; max-height: 100px" /></td>
                     </tr>
 
@@ -194,7 +194,10 @@
                         </div>
                         <div class="row">
                             <label class="col-md-6">Picture</label><input type='file' ng-model='questionImage' base-sixty-four-input class="text-center">
-                            <img ng-src="data:image/png;base64,{{questionImage.base64}}" style="max-width: 100px; max-height: 100px" />
+                            <img ng-src="data:image/png;base64,{{questionImage.base64}}" style="max-width: 100px; max-height: 100px"/>
+                            <div class="col-md-12 text-center">
+                                {{ImageMessage}}
+                            </div>
                         </div>
                         <div class="row">
                             <label class="col-md-6">Expiration time</label> <input ng-model="ExpirationTime" class="col-md-6" type="number"/>
