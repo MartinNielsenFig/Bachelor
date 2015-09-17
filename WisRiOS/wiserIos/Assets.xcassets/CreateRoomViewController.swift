@@ -20,6 +20,7 @@ class CreateRoomViewController: UITableViewController {
     var chatInputCell: BooleanInputCell? = nil
     var anonymousInputCell: BooleanInputCell? = nil
     var userQuestionInputCell: BooleanInputCell? = nil
+    var roomUsesLocationInputCell: BooleanInputCell? = nil
     
     var room = Room()
     
@@ -36,7 +37,7 @@ class CreateRoomViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 8
+        return 9
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -125,6 +126,14 @@ class CreateRoomViewController: UITableViewController {
             return cell
         }
         
+        else if indexPath.row == 8 {
+            let cellIdentifier = "BooleanInputCell"
+            let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! BooleanInputCell
+            cell.label.text = "Uses location"
+            roomUsesLocationInputCell = cell
+            return cell
+        }
+        
         return UITableViewCell()
     }
     
@@ -143,6 +152,7 @@ class CreateRoomViewController: UITableViewController {
         room.CreatedById = CurrentUser.sharedInstance._id
         room.HasChat = (chatInputCell?.uiSwitch.on)!
         room.HasPassword = (pwSwitchCell?.uiSwitch.on)!
+        room.UseLocation = (roomUsesLocationInputCell?.uiSwitch.on)!
         room.Location.Latitude = CurrentUser.sharedInstance.location.Latitude
         room.Location.Longitude = CurrentUser.sharedInstance.location.Longitude
         room.Location.AccuracyMeters = CurrentUser.sharedInstance.location.AccuracyMeters ?? 20

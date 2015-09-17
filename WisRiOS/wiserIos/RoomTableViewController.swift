@@ -48,7 +48,7 @@ class RoomTableViewController: UITableViewController {
         
         if let cLong = currentLong, cLat = currentLat {
             for room in rooms {
-                if room.UseLocation {
+                if let useLocation = room.UseLocation where useLocation == true {
                     if let rLong = room.Location.Longitude, rLat = room.Location.Latitude {
                         
                         //todo add room accuracy as well

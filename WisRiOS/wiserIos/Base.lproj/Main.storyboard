@@ -360,8 +360,8 @@
                                                     <animations/>
                                                     <segments>
                                                         <segment title="10 m"/>
-                                                        <segment title="20 m"/>
                                                         <segment title="40 m"/>
+                                                        <segment title="80 m"/>
                                                     </segments>
                                                 </segmentedControl>
                                             </subviews>
