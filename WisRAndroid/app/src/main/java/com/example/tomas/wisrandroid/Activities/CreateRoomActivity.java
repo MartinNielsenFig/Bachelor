@@ -198,7 +198,7 @@ public class CreateRoomActivity extends AppCompatActivity implements GoogleApiCl
                     mCoordinate.set_Latitude(mLastLocation.getLatitude());
                     mCoordinate.set_Longitude(mLastLocation.getLongitude());
                     mCoordinate.set_AccuracyMeters(Math.round(mLastLocation.getAccuracy()));
-                    mCoordinate.set_FormattedAddress(mAddresses.get(0).toString());
+                    mCoordinate.set_FormattedAddress(mAddresses.get(0).getAddressLine(0) + ", " + mAddresses.get(0).getAddressLine(1) + ", " + mAddresses.get(0).getAddressLine(2));
                     mCoordinate.set_Timestamp(String.valueOf(mLastLocation.getTime()));
                     mRoom.set_Locatin(mCoordinate);
                 } catch (IOException e) {
@@ -232,7 +232,7 @@ public class CreateRoomActivity extends AppCompatActivity implements GoogleApiCl
                 };
 
                 RequestQueue requestQueue = Volley.newRequestQueue(CreateRoomActivity.this);
-                HttpHelper jsObjRequest = new HttpHelper(Request.Method.POST, "http://localhost:7331/Room/CreateRoom", mParams, mListener , mErrorListener); // "http://10.0.2.2:1337/Room/CreateRoom"
+                HttpHelper jsObjRequest = new HttpHelper(Request.Method.POST, "http://wisrrestapi.aceipse.dk/Room/CreateRoom", mParams, mListener , mErrorListener); // "http://10.0.2.2:1337/Room/CreateRoom"
 
                 try {
                     requestQueue.add(jsObjRequest);
