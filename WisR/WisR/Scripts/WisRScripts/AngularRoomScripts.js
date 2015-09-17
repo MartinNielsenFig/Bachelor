@@ -15,7 +15,7 @@ app.directive('ngEnter', function () {
 });
 
 app.controller("RoomController", [
-    '$scope', '$http', 'configs', '$window', function ($scope, $http, configs, $window) {
+    '$scope', '$http', 'configs', '$window','$interval', function ($scope, $http, configs, $window,$interval) {
         //Connect to SignalR hub and wait for chat messages
         $(function () {
             // Declare a proxy to reference the hub. 
@@ -53,6 +53,14 @@ app.controller("RoomController", [
             $.connection.hub.start();
         });
 
+        $scope.$on('create', function (event, chart) {
+            //If there is allready a chart, destroy it
+            if ($scope.chart != undefined) {
+                $scope.chart.destroy();
+            }
+            console.log(chart);
+            $scope.chart = chart;
+        });
         //Helper function to find index of object in array
         function findWithAttr(array, attr, value) {
             for (var i = 0; i < array.length; i += 1) {
@@ -201,10 +209,20 @@ app.controller("RoomController", [
                     values.push(1);
                 }
             }
+            if (labels.length > 0) {
+                $scope.showResults = true;
+                $scope.labels = labels;
+                $scope.options= {
+                    animateRotate: false,
+                    tooltipTemplate: "<%=label%>: <%= value %> (<%= Math.round(circumference / 6.283 * 100) %>%)"
+                }
+                $scope.data = values;
+                //TODO: $scope.colors = ['#FD1F5E', '#1EF9A1'];
+            } else {
+                $scope.showResults = false;
+            }
 
-            $scope.labels = labels;
-            $scope.data = values;
-            //TODO: $scope.colors = ['#FD1F5E', '#1EF9A1'];
+           
         }
 
         $scope.GetUsernameById = function (userId) {
@@ -231,24 +249,22 @@ app.controller("RoomController", [
         $scope.getPercentage = function () {
             if ($scope.SpecificQuestion != undefined) {
                 $scope.timerOverflow = false;
-                $scope.$apply(function () {
-                    var nominater = Date.now() - parseInt($scope.SpecificQuestion.CreationTimestamp);
-                    var denominater = parseInt($scope.SpecificQuestion.ExpireTimestamp) - parseInt($scope.SpecificQuestion.CreationTimestamp);
-                    $scope.precentage = (nominater / denominater) * 100;
-                    var timeLeftInmSec = parseInt($scope.SpecificQuestion.ExpireTimestamp) - Date.now();
-                    var hours = (parseInt(timeLeftInmSec / 3600000) + "").length == 1 ? "0" + parseInt(timeLeftInmSec / 3600000) : parseInt(timeLeftInmSec / 3600000);
-                    var min = (parseInt((timeLeftInmSec % 3600000) / 60000) + "").length == 1 ? "0" + parseInt((timeLeftInmSec % 3600000) / 60000) : parseInt((timeLeftInmSec % 3600000) / 60000);
-                    var sec = (parseInt(((timeLeftInmSec % 3600000) % 60000) / 1000) + "").length == 1 ? "0" + parseInt(((timeLeftInmSec % 3600000) % 60000) / 1000) : parseInt(((timeLeftInmSec % 3600000) % 60000) / 1000);
-                    $scope.timeLeft = (hours + ":" + min + ":" + sec).indexOf("-") > -1 ? "The time has run out!" : hours + ":" + min + ":" + sec;
-                    if ($scope.precentage > 100) {
-                        $scope.timerOverflow = true;
-                    }
+                var nominater = Date.now() - parseInt($scope.SpecificQuestion.CreationTimestamp);
+                var denominater = parseInt($scope.SpecificQuestion.ExpireTimestamp) - parseInt($scope.SpecificQuestion.CreationTimestamp);
+                $scope.precentage = (nominater / denominater) * 100;
+                var timeLeftInmSec = parseInt($scope.SpecificQuestion.ExpireTimestamp) - Date.now();
+                var hours = (parseInt(timeLeftInmSec / 3600000) + "").length == 1 ? "0" + parseInt(timeLeftInmSec / 3600000) : parseInt(timeLeftInmSec / 3600000);
+                var min = (parseInt((timeLeftInmSec % 3600000) / 60000) + "").length == 1 ? "0" + parseInt((timeLeftInmSec % 3600000) / 60000) : parseInt((timeLeftInmSec % 3600000) / 60000);
+                var sec = (parseInt(((timeLeftInmSec % 3600000) % 60000) / 1000) + "").length == 1 ? "0" + parseInt(((timeLeftInmSec % 3600000) % 60000) / 1000) : parseInt(((timeLeftInmSec % 3600000) % 60000) / 1000);
+                $scope.timeLeft = (hours + ":" + min + ":" + sec).indexOf("-") > -1 ? "The time has run out!" : hours + ":" + min + ":" + sec;
+                if ($scope.precentage > 100) {
+                    $scope.timerOverflow = true;
                 }
-                )
+                //$scope.$apply();
             }
         }
-
-        setInterval($scope.getPercentage, 1000);
+        $interval($scope.getPercentage,1000);
+        //setInterval($scope.getPercentage, 1000);
         //adds answer to specificQuestion
         $scope.AddAnswer = function () {
             $scope.SpecificQuestion.Result.push($scope.answerChoosen);

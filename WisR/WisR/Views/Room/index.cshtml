@@ -125,7 +125,8 @@
                 </form>
                 <label ng-hide="showResults">No results yet</label>
                 <div id="chartDiv" ng-hide="!showResults">
-                    <canvas id="pie" class="chart chart-pie" chart-legend="true" chart-colors="colors" chart-data="data" chart-labels="labels"></canvas>
+                    <h3>Results</h3>
+                    <canvas id="pie" class="chart chart-pie" chart-options="options" chart-legend="true" chart-colors="colors" chart-data="data" chart-labels="labels"></canvas>
                 </div>
             </div>
         </div>
