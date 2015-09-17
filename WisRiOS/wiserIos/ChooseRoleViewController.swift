@@ -36,7 +36,7 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
-        locationManager.distanceFilter = 10
+        locationManager.distanceFilter = 0
         locationManager.startUpdatingLocation()
         
         //Map delegation for pin behaviour
@@ -85,15 +85,20 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
     //CLLocationManagerDelegate
     let locationManager = CLLocationManager()
     var bestAccuracy = Double.init(Int.max)
+    var maxUpdates = 30
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        NSLog("didUpdateLocations")
-        
-        //locationManager.stopUpdatingLocation()
-
         if let location = manager.location {
             let currentAccuracy = location.horizontalAccuracy
+            if --maxUpdates <= 0 || currentAccuracy <= 10 {
+                NSLog("stopped updating location")
+                locationManager.stopUpdatingLocation()
+            }
+            NSLog("\(maxUpdates) tries left")
+            NSLog("didUpdateLocations accuracy was \(currentAccuracy)")
+            
             if currentAccuracy < bestAccuracy {
+                bestAccuracy = currentAccuracy
                 
                 //Save position to singleton
                 self.location = location
@@ -101,7 +106,10 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
                 CurrentUser.sharedInstance.location.Longitude = location.coordinate.longitude
                 CurrentUser.sharedInstance.location.AccuracyMeters = Int(currentAccuracy)
                 
-                //Replace marker
+                //Replace and update overlays, annotations and positioning
+                mapView.removeOverlays(mapView.overlays)
+                mapView.removeAnnotations(mapView.annotations)
+                
                 let coordinate = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
                 mapView.region = MKCoordinateRegionMakeWithDistance(coordinate, 500, 500)
                 
@@ -111,8 +119,6 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
                 let annotation = MKPointAnnotation()
                 annotation.coordinate = coordinate
                 mapView.addAnnotation(annotation)
-                
-                bestAccuracy = currentAccuracy
             }
         }
     }
