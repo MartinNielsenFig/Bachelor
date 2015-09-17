@@ -1,0 +1,28 @@
+//
+//  ChatMessage.swift
+//  wiserIos
+//
+//  Created by Peter Helstrup Jensen on 31/08/2015.
+//  Copyright © 2015 Peter Helstrup Jensen. All rights reserved.
+//
+
+import Foundation
+
+class ChatMessage {
+    var _id: String?
+    var ByUserId: String?
+    var RoomId: String?
+    var Value: String?
+    var Timestamp: String?
+    
+    init(){}
+    
+    init(jsonDictionary: NSDictionary) {
+        
+        _id = jsonDictionary["_id"] as? String
+        ByUserId = jsonDictionary["ByUserId"] as? String
+        RoomId = jsonDictionary["RoomId"] as? String
+        Value = jsonDictionary["Value"] as? String
+        Timestamp = jsonDictionary["Timestamp"] as? String
+    }
+}
