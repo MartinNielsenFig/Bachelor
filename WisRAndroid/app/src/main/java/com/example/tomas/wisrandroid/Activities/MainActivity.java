@@ -36,9 +36,9 @@ public class MainActivity extends FragmentActivity implements GoogleApiClient.Co
     private GoogleApiClient mGoogleApiClient;
     private Location mLastLocation;
 
-    private Button mCreateRoomButton = null;
-    private Button mSelectRoomButton = null;
-    private Button mLogoutButton = null;
+    private Button mCreateRoomButton;
+    private Button mSelectRoomButton;
+    private Button mLogoutButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

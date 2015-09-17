@@ -61,7 +61,7 @@ public class Room {
     public void set_EncryptedPassword(String EncryptedPassword) {this.EncryptedPassword = EncryptedPassword;}
 
     public boolean get_HasChat(){return this.HasChat;}
-    public void set_HasChat(boolean _hasChat) {this.HasChat = HasChat;}
+    public void set_HasChat(boolean HasChat) {this.HasChat = HasChat;}
 
     public boolean get_UsersCanAsk(){return this.UsersCanAsk;}
     public void set_UsersCanAsk(boolean UsersCanAsk) {this.UsersCanAsk = UsersCanAsk;}
