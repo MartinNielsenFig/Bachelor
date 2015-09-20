@@ -21,6 +21,7 @@ class CreateRoomViewController: UITableViewController {
     var anonymousInputCell: BooleanInputCell? = nil
     var userQuestionInputCell: BooleanInputCell? = nil
     var roomUsesLocationInputCell: BooleanInputCell? = nil
+    var pwLabel: UILabel? = nil
     
     var room = Room()
     
@@ -66,7 +67,7 @@ class CreateRoomViewController: UITableViewController {
             pwSwitchCell = cell
             
             //Save as field and add a delegate function to this viewcontroller with name enablePwSwitchChanged
-            pwSwitchCell?.uiSwitch.addTarget(self, action: Selector("enablePwSwitchChanged:"), forControlEvents: UIControlEvents.ValueChanged)
+            pwSwitchCell?.uiSwitch.addTarget(self, action: "enablePwSwitchChanged:", forControlEvents: UIControlEvents.ValueChanged)
             
             return cell
         }
@@ -78,16 +79,10 @@ class CreateRoomViewController: UITableViewController {
             cell.label.text = "Password"
             cell.inputField.secureTextEntry = true
             
+            pwLabel = cell.label
             pwInputCell = cell
             
-            if let uiSwitch = pwSwitchCell?.uiSwitch {
-                if !uiSwitch.on {
-                    cell.inputField.enabled = false
-                }
-                else {
-                    cell.inputField.enabled = true
-                }
-            }
+            cell.inputField.enabled = (pwSwitchCell?.uiSwitch.on)!
             
             return cell
             
@@ -137,7 +132,6 @@ class CreateRoomViewController: UITableViewController {
         return UITableViewCell()
     }
     
-    
     //Handle selector events
     
     //Password switch
@@ -168,15 +162,21 @@ class CreateRoomViewController: UITableViewController {
         room.UsersCanAsk = (userQuestionInputCell?.uiSwitch.on)!
         room.EncryptedPassword = pwInputCell?.inputField.text
         
-        HttpHandler.createRoom(JSONSerializer.toJson(room))
-        
-        //Navigate
-        //self.performSegueWithIdentifier("RoomCreated", sender: self)
+        //Creating the room callback adds the id and navigates (todo loading bar or indicator)
+        HttpHandler.createRoom(JSONSerializer.toJson(self.room)) { (roomId) -> Void in
+            self.room._id = roomId
+            
+            //Navigate
+            dispatch_async(dispatch_get_main_queue()) {
+                self.performSegueWithIdentifier("RoomCreated", sender: self)
+            }
+        }
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "RoomCreated" {
             let roomPageViewController = segue.destinationViewController as! RoomPageViewController
+            roomPageViewController.room = self.room
             //assert(false)   //Fix yo shit dawg
         }
     }

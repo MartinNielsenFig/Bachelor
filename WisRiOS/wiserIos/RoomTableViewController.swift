@@ -13,7 +13,7 @@ class RoomTableViewController: UITableViewController {
     //Properties
     var rooms = [Room]() {
         didSet {
-            dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            dispatch_async(dispatch_get_main_queue()) {
                 self.tableView.reloadData()
             }
         }
@@ -51,7 +51,6 @@ class RoomTableViewController: UITableViewController {
                 if let useLocation = room.UseLocation where useLocation == true {
                     if let rLong = room.Location.Longitude, rLat = room.Location.Latitude {
                         
-                        //todo add room accuracy as well
                         let roomAccuracy = Double(room.Location.AccuracyMeters ?? 0)
                         let distance = distanceBetweenTwoCoordinatesMeters(cLat, cLong, rLat, rLong) + currentAccuracyMeters + roomAccuracy
                         if distance < metersRadius {
@@ -81,13 +80,8 @@ class RoomTableViewController: UITableViewController {
         return (degree*M_PI)/180
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
-    // MARK: - Table view data source
-    
+    //UITableViewController
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
@@ -121,7 +115,6 @@ class RoomTableViewController: UITableViewController {
     
     // Navigation
     
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.

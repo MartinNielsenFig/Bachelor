@@ -171,7 +171,7 @@ class HttpHandler {
         task.resume()
     }
     
-    static func createRoom(room: String) {
+    static func createRoom(room: String, completionHandler: (roomId: String) -> Void) {
         let session = NSURLSession.sharedSession()
         let url = NSURL(string: mainUrl)!.URLByAppendingPathComponent("Room/CreateRoom")
         let request = NSMutableURLRequest(URL: url)
@@ -187,6 +187,7 @@ class HttpHandler {
             
             if data != nil {
                 let dataString = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
+                completionHandler(roomId: dataString)
                 //NSLog("dataString \(dataString)")
             }
             

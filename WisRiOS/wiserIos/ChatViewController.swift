@@ -14,7 +14,7 @@ class ChatViewController: UIViewController, UITextFieldDelegate, Paged {
     
     var chat = String() {
         didSet {
-            dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            dispatch_async(dispatch_get_main_queue()) {
                 self.chatTextField.text = self.chat
                 let range = NSMakeRange(self.chatTextField.text.characters.count - 1, 1)
                 self.chatTextField.scrollRangeToVisible(range)

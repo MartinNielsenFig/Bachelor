@@ -9,12 +9,9 @@
 import UIKit
 import CoreLocation
 import MapKit
-import FBSDKCoreKit
-import FBSDKLoginKit
 
 class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
 
-    //Properties
     @IBOutlet var mapView: MKMapView!
     var location = CLLocation()
 
@@ -28,7 +25,6 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
         }
     }
     
-    //Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -44,6 +40,9 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
     }
     
     override func viewDidAppear(animated: Bool) {
+        locationManager.startUpdatingLocation()
+        maxPositionUpdatesThisSession = 30
+        
         //Log off btn
         if CurrentUser.sharedInstance.FacebookId != nil {
             navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Log out", style: .Plain, target: self, action: "logOffFacebook")
@@ -85,22 +84,24 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
     //CLLocationManagerDelegate
     let locationManager = CLLocationManager()
     var bestAccuracy = Double.init(Int.max)
-    var maxUpdates = 30
+    var maxPositionUpdatesThisSession = 30
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = manager.location {
+            
+            //Determine is accuracy is better than before
             let currentAccuracy = location.horizontalAccuracy
-            if --maxUpdates <= 0 || currentAccuracy <= 10 {
+            if --maxPositionUpdatesThisSession <= 0 || currentAccuracy <= 10 {
                 NSLog("stopped updating location")
                 locationManager.stopUpdatingLocation()
             }
-            NSLog("\(maxUpdates) tries left")
+            NSLog("\(maxPositionUpdatesThisSession) tries left")
             NSLog("didUpdateLocations accuracy was \(currentAccuracy)")
             
             if currentAccuracy < bestAccuracy {
                 bestAccuracy = currentAccuracy
                 
-                //Save position to singleton
+                //Save position
                 self.location = location
                 CurrentUser.sharedInstance.location.Latitude = location.coordinate.latitude
                 CurrentUser.sharedInstance.location.Longitude = location.coordinate.longitude

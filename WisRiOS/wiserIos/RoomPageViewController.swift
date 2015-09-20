@@ -11,7 +11,7 @@ import UIKit
 class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     
     //Gets instantiated by previous caller
-    var room: Room? = nil
+    var room: Room!
     
     var pageViewController: UIPageViewController!
     let pageCount = 3
@@ -19,6 +19,10 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     
     //https://www.veasoftware.com/tutorials/2015/4/2/uipageviewcontroller-in-swift-xcode-62-ios-82-tutorial
     override func viewDidLoad() {
+        
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Ask Question", style: .Plain, target: self, action: "addQuestion")
+        
         //Setup the page view controller
         pageViewController = UIPageViewController(transitionStyle: .Scroll, navigationOrientation: .Horizontal, options: nil)
         pageViewController.dataSource = self
@@ -34,21 +38,25 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
         pageViewController.didMoveToParentViewController(self)
     }
     
+    func addQuestion() {
+        NSLog("add question pressed")
+    }
+    
     func viewControllerAtIndex(index: Int) -> UIViewController? {
         currentPage = index
         if index == 0 {
             let questionListViewController = storyboard?.instantiateViewControllerWithIdentifier("QuestionListViewController") as! QuestionListViewController
-            questionListViewController.roomId = self.room?._id
+            questionListViewController.roomId = self.room._id
             return questionListViewController
         }
         else if index == 1 {
             let currentQuestionViewController = storyboard?.instantiateViewControllerWithIdentifier("QuestionViewController") as! QuestionViewController
-            currentQuestionViewController.roomId = self.room?._id
+            currentQuestionViewController.roomId = self.room._id
             return currentQuestionViewController
         }
         else if index == 2 {
             let chatViewController = storyboard?.instantiateViewControllerWithIdentifier("ChatViewController") as! ChatViewController
-            chatViewController.roomId = self.room?._id
+            chatViewController.roomId = self.room._id
             return chatViewController
         }
         
