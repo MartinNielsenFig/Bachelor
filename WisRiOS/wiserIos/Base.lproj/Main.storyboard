@@ -324,10 +324,10 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="9" placeholderIntrinsicHeight="30" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pBy-K9-qnx">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="9" placeholderIntrinsicHeight="30" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="pBy-K9-qnx">
                                                     <rect key="frame" x="260" y="0.0" width="324" height="36"/>
                                                     <animations/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
                                             </subviews>
@@ -441,49 +441,6 @@
                                 <connections>
                                     <outlet property="label" destination="kyd-b5-ZYD" id="EgY-1m-9gq"/>
                                     <outlet property="uiSwitch" destination="QgJ-hR-7A8" id="sfM-Me-r2m"/>
-                                </connections>
-                            </tableViewCell>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TextArrowInput" id="fvv-8t-4tV" customClass="BooleanInputCell" customModule="wiserIos" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="260" width="600" height="64"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="fvv-8t-4tV" id="QUh-Hd-G3A">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="63.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="phb-T8-rvW">
-                                            <rect key="frame" x="8" y="5" width="584" height="34"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="1" placeholderIntrinsicHeight="31" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="atv-C3-DUy">
-                                                    <rect key="frame" x="0.0" y="0.0" width="535" height="34"/>
-                                                    <animations/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RPC-ms-eHr">
-                                                    <rect key="frame" x="535" y="0.0" width="49" height="34"/>
-                                                    <animations/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="49" id="aZf-fy-8FM"/>
-                                                    </constraints>
-                                                </button>
-                                            </subviews>
-                                            <animations/>
-                                            <constraints>
-                                                <constraint firstItem="atv-C3-DUy" firstAttribute="trailing" secondItem="RPC-ms-eHr" secondAttribute="leading" id="oEP-D4-ezI"/>
-                                            </constraints>
-                                        </stackView>
-                                    </subviews>
-                                    <animations/>
-                                    <constraints>
-                                        <constraint firstItem="phb-T8-rvW" firstAttribute="centerY" secondItem="QUh-Hd-G3A" secondAttribute="centerY" id="iqh-Ok-DrO"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="phb-T8-rvW" secondAttribute="trailing" id="sHy-Ll-Odf"/>
-                                        <constraint firstItem="phb-T8-rvW" firstAttribute="leading" secondItem="QUh-Hd-G3A" secondAttribute="leadingMargin" id="vmM-OY-Yvl"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                                <animations/>
-                                <connections>
-                                    <outlet property="label" destination="atv-C3-DUy" id="JG5-j3-nZG"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

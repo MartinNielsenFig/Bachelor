@@ -82,7 +82,9 @@ class CreateRoomViewController: UITableViewController {
             pwLabel = cell.label
             pwInputCell = cell
             
-            cell.inputField.enabled = (pwSwitchCell?.uiSwitch.on)!
+            let on = (pwSwitchCell?.uiSwitch.on)!
+            cell.inputField.enabled = on
+            pwLabel?.enabled = on
             
             return cell
             
@@ -137,6 +139,7 @@ class CreateRoomViewController: UITableViewController {
     //Password switch
     func enablePwSwitchChanged(uiSwitch: UISwitch) {
         pwInputCell?.inputField.enabled = uiSwitch.on
+        pwLabel?.enabled = uiSwitch.on
     }
     
     //Add room

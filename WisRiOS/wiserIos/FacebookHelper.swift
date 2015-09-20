@@ -31,16 +31,17 @@ class FacebookHelper {
                 
                 CurrentUser.sharedInstance.FacebookId = fbId as? String
                 CurrentUser.sharedInstance.DisplayName = name as? String
-                let user = User()
-                user.FacebookId = CurrentUser.sharedInstance.FacebookId
-                user.DisplayName = CurrentUser.sharedInstance.DisplayName
-                
-                let userJson = JSONSerializer.toJson(user)
                 
                 if createUser {
-                    HttpHandler.createUser(userJson, completionHandler: {(inout mongoDBId: String) in
-                        CurrentUser.sharedInstance._id = mongoDBId
-                    })
+                    let user = User()
+                    user.FacebookId = CurrentUser.sharedInstance.FacebookId
+                    user.DisplayName = CurrentUser.sharedInstance.DisplayName
+                    
+                    let userJson = JSONSerializer.toJson(user)
+                    
+                    HttpHandler.createUser(userJson) { (inout mongoDbId: String) -> Void in
+                        CurrentUser.sharedInstance._id = mongoDbId
+                    }
                 }
                 
             } else {
