@@ -13,16 +13,19 @@ import Foundation
 public class JSONSerializer {
     
     //http://stackoverflow.com/questions/30480672/how-to-convert-a-json-string-to-a-dictionary
+    //Todo Make throwable
     public static func toDictionary(jsonString: String) -> NSDictionary? {
         let dictionary = jsonToAnyObject(jsonString) as? NSDictionary
         return dictionary
     }
     
+    //Todo Make throwable
     public static func toArray(jsonString: String) -> NSArray? {
         let array = jsonToAnyObject(jsonString) as? NSArray
         return array
     }
     
+    //Todo Make throwable
     private static func jsonToAnyObject(jsonString: String) -> AnyObject? {
         var any: AnyObject? = nil
         
@@ -31,7 +34,8 @@ public class JSONSerializer {
                 any = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers)
             }
             catch let error as NSError {
-                NSLog(String(error))
+                let sError = String(error)
+                NSLog(sError)
             }
         }
         return any

@@ -44,6 +44,7 @@
 		CBB60B311B97253A0007A47B /* SegmentedInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB60B301B97253A0007A47B /* SegmentedInputCell.swift */; settings = {ASSET_TAGS = (); }; };
 		CBF19CD81BAFFBA700A906B3 /* CreateQuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF19CD71BAFFBA700A906B3 /* CreateQuestionViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		CBF19CDA1BB0065A00A906B3 /* NumberInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF19CD91BB0065A00A906B3 /* NumberInputCell.swift */; settings = {ASSET_TAGS = (); }; };
+		CBF19CDE1BB03D5800A906B3 /* Vote.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF19CDD1BB03D5800A906B3 /* Vote.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,6 +99,7 @@
 		CBB60B301B97253A0007A47B /* SegmentedInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedInputCell.swift; sourceTree = "<group>"; };
 		CBF19CD71BAFFBA700A906B3 /* CreateQuestionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateQuestionViewController.swift; sourceTree = "<group>"; };
 		CBF19CD91BB0065A00A906B3 /* NumberInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberInputCell.swift; sourceTree = "<group>"; };
+		CBF19CDD1BB03D5800A906B3 /* Vote.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vote.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -229,6 +231,7 @@
 				CB9FF7CF1B8F2A78003A193B /* ResponseOption.swift */,
 				CB9FF7D11B8F2B70003A193B /* User.swift */,
 				CB02181F1B9462C400DFC9DD /* ChatMessage.swift */,
+				CBF19CDD1BB03D5800A906B3 /* Vote.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -351,6 +354,7 @@
 				CB2EF9C31B8DE7260098871B /* Room.swift in Sources */,
 				CB6BC6261BA1B2ED001C303B /* ChatViewController.swift in Sources */,
 				CB3C37721B8DBF5000897344 /* AppDelegate.swift in Sources */,
+				CBF19CDE1BB03D5800A906B3 /* Vote.swift in Sources */,
 				CBB4D7DB1BA1A664001C531D /* QuestionViewController.swift in Sources */,
 				CB9FF80F1B8F4408003A193B /* JSONSerializer.swift in Sources */,
 				CBB60B2F1B9718EC0007A47B /* CreateRoomViewController.swift in Sources */,

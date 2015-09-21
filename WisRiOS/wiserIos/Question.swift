@@ -13,8 +13,7 @@ class Question {
     var _id: String?
     var RoomId: String?
     var CreatedById: String?
-    var Upvotes: Int?
-    var Downvotes: Int?
+    var Votes = [Vote]()
     var Img: String?
     var QuestionText: String?
     var ResponseOptions = [ResponseOption]()
@@ -29,12 +28,18 @@ class Question {
         self._id = jsonDictionary["_id"] as? String
         self.RoomId = jsonDictionary["RoomId"] as? String
         self.CreatedById = jsonDictionary["CreatedById"] as? String
-        self.Upvotes = jsonDictionary["Upvotes"] as? Int
-        self.Downvotes = jsonDictionary["Downvotes"] as? Int
         self.Img = jsonDictionary["Img"] as? String
         self.QuestionText = jsonDictionary["QuestionText"] as? String
         
-        //Response
+        //Votes
+        if let votes = jsonDictionary["Votes"] as? NSArray {
+            for v in votes {
+                let vote = Vote(createdById: v["CreatedById"] as? String ?? "none", value: v["Value"] as? Int ?? 1)
+                self.Votes += [vote]
+            }
+        }
+        
+        //ResponseOptions
         if let responseArray = jsonDictionary["ResponseOptions"] as? NSArray {
             for opt in responseArray {
                 let value = opt["Value"] as? String
@@ -45,7 +50,7 @@ class Question {
             }
         }
         
-        //Answer
+        //Result
         if let resultArray = jsonDictionary["Result"] as? NSArray {
             for ans in resultArray {
                 let value = ans["Value"] as? String
