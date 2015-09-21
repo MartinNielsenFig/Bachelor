@@ -16,7 +16,7 @@ class HttpHandler {
     
     static func log(data data: NSData?, response: NSURLResponse?, error: NSError?) {
         //NSLog("data \(data)")
-        NSLog("reponse \(response)")
+        NSLog("response \(response)")
         NSLog("error \(error)")
     }
     
@@ -195,13 +195,13 @@ class HttpHandler {
         task.resume()
     }
     
-    static func createQuestion(room: String, question: String, type: String) {
+    static func createQuestion(roomId: String, question: String, type: String) {
         let session = NSURLSession.sharedSession()
         let url = NSURL(string: mainUrl)!.URLByAppendingPathComponent("Question/CreateQuestion")
         let request = NSMutableURLRequest(URL: url)
         request.HTTPMethod = "POST"
         
-        let body = "roomId=\(room)&question=\(question)&type=\(type)"
+        let body = "roomId=\(roomId)&question=\(question)&type=\(type)"
         request.HTTPBody = body.dataUsingEncoding(NSUTF8StringEncoding)
         
         let task = session.dataTaskWithRequest(request) {
