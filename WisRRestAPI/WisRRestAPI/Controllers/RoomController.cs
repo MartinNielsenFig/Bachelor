@@ -33,23 +33,33 @@ namespace WisRRestAPI.Controllers {
             Room room;
             try {
                 room = BsonSerializer.Deserialize<Room>(Room);
-            } catch (Exception e) {
-                return "Could not deserialize room with json: " + Room;
+            } catch (Exception e)
+            {
+                var err = new Error("Could not deserialize room with json: " + Room, 100, e.StackTrace);
+                return err.ToJson();
             }
             //assign ID to room
             room.Id = ObjectId.GenerateNewId(DateTime.Now).ToString();
 
             //Check that the tag doesn't already exist
-            if (GetByUniqueTag(room.Tag) != "Not found")
+            var returnValue = GetByUniqueTag(room.Tag);
+            try
             {
-                return "Room with that tag already exists";
+                var errorFromDb = BsonSerializer.Deserialize<Error>(returnValue);
+            }
+            catch (Exception e)
+            {
+                var err = new Error("Room with that tag already exists", 100);
+                return err.ToJson();
             }
 
             string roomId;
             try {
                 roomId = _rr.AddRoom(room);
             } catch (Exception e) {
-                return "Could not add room";
+                var err = new Error("Could not add room", 100,e.StackTrace);
+                return err.ToJson();
+
             }
             //Publish to rabbitMQ after, because we need the id
             try
@@ -58,7 +68,8 @@ namespace WisRRestAPI.Controllers {
             }
             catch (Exception e)
             {
-                return "Could not publish to rabbitMQ";
+                var err = new Error("Could not publish to RabbitMq", 100, e.StackTrace);
+                return err.ToJson();
             }
 
             return roomId;
@@ -68,7 +79,8 @@ namespace WisRRestAPI.Controllers {
         public string GetById(string id) {
             var item = _rr.GetRoom(id).Result;
             if (item == null) {
-                return "Not found";
+                var err = new Error("Not found", 100);
+                return err.ToJson();
             }
 
             return item.ToJson();
@@ -85,14 +97,17 @@ namespace WisRRestAPI.Controllers {
             {
                 if (e.InnerException.Message == "Sequence contains no elements")
                 {
-                    return "Not found";
+                    var err = new Error("No room with that tag", 100, e.StackTrace);
+                    return err.ToJson();
                 }
-                return e.Message;
+                var err2 = new Error("Something went wrong trying to find room with that id, check stacktrace", 100, e.StackTrace);
+                return err2.ToJson();
             }
             
             if (item == null)
             {
-                return "Not found";
+                var err = new Error("No room with that tag", 100);
+                return err.ToJson();
             }
 
             return item.ToJson();
@@ -103,7 +118,8 @@ namespace WisRRestAPI.Controllers {
             if (result.DeletedCount == 1) {
                 return "Room was deleted";
             }
-            return "Couldn't find Room to delete";
+            var err = new Error("Couldn't find the room to delete", 100);
+            return err.ToJson();
         }
     }
 }
