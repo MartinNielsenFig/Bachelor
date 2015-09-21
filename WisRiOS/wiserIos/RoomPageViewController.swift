@@ -40,6 +40,7 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     
     func addQuestion() {
         NSLog("add question pressed")
+        performSegueWithIdentifier("CreateQuestion", sender: self)
     }
     
     func viewControllerAtIndex(index: Int) -> UIViewController? {
