@@ -23,6 +23,11 @@ textarea {
     max-width: 280px;
 }
 
+.votingBtn {
+    background-color: white; 
+    border: none; 
+    outline: 0;
+}
 .notClickAble {
     cursor: default !important;
     background-color: #DCDCDC;

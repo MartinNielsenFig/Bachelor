@@ -37,9 +37,14 @@ namespace WisR.Controllers
 
             var tempList = new List<ResponseOption>();
 
-            foreach (var response in ResponseOptions.Split(','))
+            if (ResponseOptions != null)
             {
-                tempList.Add(new ResponseOption() { Value = response });
+
+                foreach (var response in ResponseOptions.Split(','))
+                {
+                    tempList.Add(new ResponseOption() { Value = response });
+                }
+
             }
             var tempListResult = new List<Answer>();
             if (QuestionResult != null)
@@ -47,7 +52,7 @@ namespace WisR.Controllers
                 foreach (var result in QuestionResult.Split(','))
                 {
                     var tempResult = result.Split('-');
-                    tempListResult.Add(new Answer(){ Value = tempResult[0],UserId = tempResult[1]});
+                    tempListResult.Add(new Answer() { Value = tempResult[0], UserId = tempResult[1] });
                 }
             }
 
@@ -71,7 +76,7 @@ namespace WisR.Controllers
             chatMessage.ByUserId = userId;
             chatMessage.RoomId = roomId;
             chatMessage.Value = text;
-            chatMessage.Timestamp = (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalMilliseconds.ToString().Replace(",",".");
+            chatMessage.Timestamp = (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalMilliseconds.ToString().Replace(",", ".");
             return chatMessage.ToJson();
         }
     }

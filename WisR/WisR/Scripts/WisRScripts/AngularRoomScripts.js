@@ -249,8 +249,20 @@ app.controller("RoomController", [
             $scope.SpecificQuestionShown = !$scope.SpecificQuestionShown;
         }
 
-        $scope.Downvotes = function(question) {
-            question.Downvotes = question.Downvotes + 1;
+        $scope.Vote = function(direction) {
+            if (direction == "Up") {
+                $scope.SpecificQuestion.Upvotes = $scope.SpecificQuestion.Upvotes + 1;
+            }
+            if (direction == "Down") {
+                $scope.SpecificQuestion.Downvotes = $scope.SpecificQuestion.Downvotes + 1;
+            }
+            $http.post('/Room/toJsonQuestion', {
+                CreatedBy: $scope.SpecificQuestion.CreatedById, RoomId: $scope.SpecificQuestion.RoomId, Downvotes: $scope.SpecificQuestion.Downvotes, Image: $scope.SpecificQuestion.Img, Upvotes: $scope.SpecificQuestion.Upvotes, QuestionText: $scope.SpecificQuestion.QuestionText, ResponseOptions: $scope.SpecificQuestion.ResponseOptions, CreationTimestamp: $scope.SpecificQuestion.CreationTimestamp, ExpireTimestamp: $scope.SpecificQuestion.ExpireTimestamp, QuestionResult: $scope.SpecificQuestion.QuestionResult, QuetionsType: $scope.SpecificQuestion._t
+            }).
+               then(function (response) {
+                   //Use response to send to REST API
+                   $http.post(configs.restHostName + '/Question/UpdateQuestion', { question: JSON.stringify(response.data), type: $scope.SpecificQuestion._t, id: $scope.SpecificQuestion._id });
+               });
         }
 
         //Get percentage for loading bar
