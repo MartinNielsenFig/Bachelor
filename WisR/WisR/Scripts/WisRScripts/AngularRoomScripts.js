@@ -318,7 +318,7 @@ app.controller("RoomController", [
         }
         //Function for creating a question
         $scope.postQuestion = function () {
-
+            $("#myModalCreate").modal("hide");
             var newResponses = "";
             for (var i = 0; i < $scope.ResponseOptions.length; i++) {
                 if (i != $scope.ResponseOptions.length - 1) {

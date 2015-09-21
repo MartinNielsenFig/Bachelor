@@ -32,7 +32,7 @@ namespace WisRRestAPI.Providers
             lock (_model)
             {
                 _model.QueueDeclare(queue: _queuename,
-                                     durable: true,
+                                     durable: false,
                                      exclusive: false,
                                      autoDelete: true,
                                      arguments: null);

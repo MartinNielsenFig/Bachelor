@@ -180,13 +180,13 @@
         <div class="modal-dialog center">
             <div class="modal-content modal-heigh">
                 <div class="modal-body">
-                    <form>
+                    <form ng-submit="postQuestion()">
                         <div class="row">
-                            <label class="col-md-6">Question text:</label> <input ng-model="QuestionText" type="text" class="col-md-6" placeholder="Enter Question text"/>
+                            <label class="col-md-6">Question text:</label> <input required ng-model="QuestionText" type="text" class="col-md-6" placeholder="Enter Question text"/>
                         </div>
                         <div class="row">
                             <label class="col-md-6">Question type:</label>
-                            <select class="col-md-6" ng-model="QuestionType" ng-options="Type.name for Type in QuestionTypes">
+                            <select class="col-md-6" ng-model="QuestionType" required ng-options="Type.name for Type in QuestionTypes">
                                 <option value="" disabled selected> Choose type </option>
                             </select>
                         </div>
@@ -206,11 +206,11 @@
                             </div>
                         </div>
                         <div class="row">
-                            <label class="col-md-6">Expiration time</label> <input ng-model="ExpirationTime" class="col-md-6" type="number"/>
+                            <label class="col-md-6">Expiration time</label> <input required ng-model="ExpirationTime" class="col-md-6" type="number"/>
                         </div>
                         <br/>
                         <div class="row">
-                            <button id="ModalCreateQuestionButton" type="submit" class="btn btn-md center-block" ng-click="postQuestion()" data-dismiss="modal">Create question</button>
+                            <button id="ModalCreateQuestionButton" type="submit" class="btn btn-md center-block">Create question</button>
                             <button id="ModalCancelButton" type="button" class="btn btn-md center-block" data-dismiss="modal">Cancel</button>
                         </div>
                     </form>
