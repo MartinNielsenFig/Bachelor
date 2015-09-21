@@ -39,6 +39,12 @@ namespace WisRRestAPI.Controllers {
             //assign ID to room
             room.Id = ObjectId.GenerateNewId(DateTime.Now).ToString();
 
+            //Check that the tag doesn't already exist
+            if (GetByUniqueTag(room.Tag) != "Not found")
+            {
+                return "Room with that tag already exists";
+            }
+
             string roomId;
             try {
                 roomId = _rr.AddRoom(room);
@@ -77,6 +83,10 @@ namespace WisRRestAPI.Controllers {
             }
             catch (Exception e)
             {
+                if (e.InnerException.Message == "Sequence contains no elements")
+                {
+                    return "Not found";
+                }
                 return e.Message;
             }
             

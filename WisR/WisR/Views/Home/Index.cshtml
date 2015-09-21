@@ -68,22 +68,22 @@
     <div class="modal-dialog center">
         <div class="modal-content modal-heigh">
             <div class="modal-body">
-                <form>
+                <form ng-submit="postRoom()">
 
                     <div class="row">
-                        <label class="col-md-6">Room name:</label> <input ng-model="RoomName" type="text" class="col-md-6" />
+                        <label class="col-md-6">Room name</label> <input required ng-model="RoomName" type="text" class="col-md-6" />
                     </div>
                     <div class="row">
-                        <label class="col-md-6">Unique tag</label> <input ng-model="UniqueTag" class="col-md-6" type="text" />
+                        <label class="col-md-6">Unique tag</label> <input required ng-model="UniqueTag" class="col-md-6" type="text" />
                     </div>
                     <div class="row">
                         <label class="col-md-6">Password</label> <input ng-model="Password" class="col-md-6" type="password" />
                     </div>
                     <div class="row">
-                        <label class="col-md-6">Radius</label> <input ng-model="Radius" class="col-md-6" type="range" max="100" step="50" min="0" />
+                        <label class="col-md-6">Use location</label> <input ng-model="UseLocation" class="col-md-6" type="checkbox"/>
                     </div>
-                    <div class="row">
-                        <label class="col-md-6">Use location</label> <input ng-model="UseLocation" class="col-md-6" type="checkbox" />
+                    <div ng-show="UseLocation" class="row">
+                        <label class="col-md-6">Radius</label> <input ng-model="Radius" class="col-md-6" type="range" max="100" step="50" min="0" />
                     </div>
                     <div class="row">
                         <label class="col-md-6">Has chat</label> <input ng-model="HasChat" class="col-md-6" type="checkbox" />
@@ -95,7 +95,7 @@
                         <label class="col-md-6">Can users ask questions?</label> <input ng-model="UserCanAsk" class="col-md-6" type="checkbox" />
                     </div>
                     <div class="row">
-                        <button id="ModalCreateRoomButton" type="submit" class="btn btn-md center-block" data-dismiss="modal" ng-click="postRoom()">Create room</button>
+                        <button id="ModalCreateRoomButton" type="submit" class="btn btn-md center-block">Create room</button>
                         @Html.Hidden("RedirectTo", Url.Action("Index", "Room"))
                         <button id="ModalCancelButton" class="btn btn-md center-block" data-dismiss="modal">Cancel</button>
                     </div>
