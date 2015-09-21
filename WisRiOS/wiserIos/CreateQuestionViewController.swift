@@ -11,7 +11,21 @@ import UIKit
 class CreateQuestionViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     var questionText: TextInputCell? = nil
+    var durationInput: NumberInputCell? = nil
     var imageTableCell: UITableViewCell? = nil
+    var selectedImage: UIImage?
+    
+    var photoSelected = false {
+        didSet {
+            dispatch_async(dispatch_get_main_queue()) {
+                self.tableView.reloadData()
+            }
+        }
+    }
+    
+    override func viewDidLoad() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Log out", style: .Plain, target: self, action: "logOffFacebook")
+    }
     
     //UITableViewController
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -35,17 +49,30 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
             let cellIdentifier = "NumberInputCell"
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! NumberInputCell
             cell.label.text = "Duration (s)"
+            durationInput = cell
             return cell
         }
         else if indexPath.row == 2 {
             let cell = UITableViewCell()
             imageTableCell = cell
             cell.textLabel?.text = "Select image"
+            if selectedImage != nil {
+                cell.imageView?.image = selectedImage
+            }
             return cell
         }
         
         
         return UITableViewCell()
+    }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if indexPath.row == 2 && photoSelected {
+            return CGFloat(64*3)
+        }
+        else {
+            return CGFloat(64)
+        }
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -59,19 +86,15 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
             alert.addAction(UIAlertAction(title: "Photo Library", style: .Default, handler: { action in
                 imagePickerController.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-                print("photo library clicked")
                 self.presentViewController(imagePickerController, animated: true, completion: nil)
             }))
             
             alert.addAction(UIAlertAction(title: "Camera", style: .Default, handler: { action in
                 imagePickerController.sourceType = UIImagePickerControllerSourceType.Camera
-                print("camera clicked")
                 self.presentViewController(imagePickerController, animated: true, completion: nil)
             }))
             
             presentViewController(alert, animated: true, completion: nil)
-            
-            //This seems to be a bug in iOS9 more on it here: http://stackoverflow.com/questions/24854802/presenting-a-view-controller-modally-from-an-action-sheets-delegate-in-ios8-ios
         }
     }
     
@@ -80,21 +103,16 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
         dismissViewControllerAnimated(true, completion: nil)
     }
     
+    
+    
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        let selectedImage = info[UIImagePickerControllerOriginalImage] as! UIImage
+        self.photoSelected = true
+        selectedImage = (info[UIImagePickerControllerOriginalImage] as! UIImage)
         imageTableCell?.imageView?.image = selectedImage
         dismissViewControllerAnimated(true, completion: nil)
     }
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
     
 }
