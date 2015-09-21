@@ -103,8 +103,8 @@
                     <tr>
                         <td>{{SpecificQuestion.QuestionText}}</td>
                         <td>{{GetUsernameById(SpecificQuestion.CreatedById)}}</td>
-                        <td>{{SpecificQuestion.Upvotes}}<span class="glyphicon glyphicon-thumbs-up"></span></td>
-                        <td ng-click="DownVote(SpecificQuestion)">{{SpecificQuestion.Downvotes}}<span  class="glyphicon glyphicon-thumbs-down"></span></td>
+                        <td>{{SpecificQuestion.Upvotes}}<button class="votingBtn" ng-click="Vote('Up')"><span class="glyphicon glyphicon-thumbs-up"></span></button></td>
+                        <td>{{SpecificQuestion.Downvotes}}<button  class="votingBtn" ng-click="Vote('Down')"><span class="glyphicon glyphicon-thumbs-down"></span></button></td>
                         <td><img ng-src="data:image/png;base64,{{SpecificQuestion.Img}}" style="max-width: 100px; max-height: 100px" /></td>
                     </tr>
 
@@ -182,7 +182,7 @@
                 <div class="modal-body">
                     <form>
                         <div class="row">
-                            <label class="col-md-6">Question text:</label> <input ng-model="QuestionText" type="text" class="col-md-6" placeholder="Enter Question text" />
+                            <label class="col-md-6">Question text:</label> <input ng-model="QuestionText" type="text" class="col-md-6" placeholder="Enter Question text"/>
                         </div>
                         <div class="row">
                             <label class="col-md-6">Question type:</label>
@@ -194,7 +194,7 @@
                             <label class="col-md-6">Response options:</label>
                             <div class="pull-right col-md-6">
                                 <div ng-repeat="option in ResponseOptions">
-                                    <input ng-model="ResponseOptions[option.id].val" class="col-md-12" type="text" placeholder="Add response options" />
+                                    <input ng-model="ResponseOptions[option.id].val" class="col-md-12" type="text" placeholder="Add response options"/>
                                 </div>
                             </div>
                         </div>
@@ -206,9 +206,9 @@
                             </div>
                         </div>
                         <div class="row">
-                            <label class="col-md-6">Expiration time</label> <input ng-model="ExpirationTime" class="col-md-6" type="number" />
+                            <label class="col-md-6">Expiration time</label> <input ng-model="ExpirationTime" class="col-md-6" type="number"/>
                         </div>
-                        <br />
+                        <br/>
                         <div class="row">
                             <button id="ModalCreateQuestionButton" type="submit" class="btn btn-md center-block" ng-click="postQuestion()" data-dismiss="modal">Create question</button>
                             <button id="ModalCancelButton" type="button" class="btn btn-md center-block" data-dismiss="modal">Cancel</button>

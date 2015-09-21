@@ -274,6 +274,7 @@
     <Compile Include="DomainModel\ChatMessage.cs" />
     <Compile Include="DomainModel\Coordinate.cs" />
     <Compile Include="DomainModel\BooleanQuestion.cs" />
+    <Compile Include="DomainModel\Error.cs" />
     <Compile Include="DomainModel\IQuestion.cs" />
     <Compile Include="DomainModel\TextualQuestion.cs" />
     <Compile Include="Providers\ChatRepository.cs" />

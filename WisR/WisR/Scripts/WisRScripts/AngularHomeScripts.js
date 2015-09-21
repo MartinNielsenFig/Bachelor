@@ -64,7 +64,7 @@ app.controller("HomeController", ['$scope', '$http', '$location', '$window', 'co
     $scope.HasChat = true;
     $scope.UserCanAsk = true;
     $scope.AllowAnonymous = true;
-    $scope.UseLocation = true;
+    $scope.UseLocation = false;
 
     //Calls and get the currentlocation, and after that gets the rooms
     navigator.geolocation.getCurrentPosition(function (position) {
@@ -132,6 +132,12 @@ app.controller("HomeController", ['$scope', '$http', '$location', '$window', 'co
             //Use response to send to REST API
             $http.post(configs.restHostName + '/Room/CreateRoom', { Room: JSON.stringify(response.data) }).
             then(function (response) {
+                //Check for error messages
+                if (response.data.ErrorMessage != undefined) {
+                    $("#RoomCreationError").text("Error: "+response.data.ErrorMessage);
+                    return;
+                }
+
                 var room={_id:response.data}
                 $scope.changeViewToRoom(room);
             });
@@ -158,6 +164,5 @@ function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
 }
 
 function deg2rad(deg) {
-    return deg * (Math.PI / 180)
+    return deg * (Math.PI / 180);
 }
-
