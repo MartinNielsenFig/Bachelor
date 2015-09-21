@@ -43,6 +43,15 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
         performSegueWithIdentifier("CreateQuestion", sender: self)
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "CreateQuestion" {
+            let createQuestionViewController = segue.destinationViewController as! CreateQuestionViewController
+            createQuestionViewController.room = self.room
+            //assert(false)   //Fix yo shit dawg
+        }
+
+    }
+    
     func viewControllerAtIndex(index: Int) -> UIViewController? {
         currentPage = index
         if index == 0 {

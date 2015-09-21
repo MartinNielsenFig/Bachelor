@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using Microsoft.Ajax.Utilities;
 using MongoDB.Bson;
 using MongoDB.Bson.IO;
 using MongoDB.Bson.Serialization;
@@ -30,14 +31,14 @@ namespace WisR.Controllers
             ViewBag.roomId = roomId;
             return View();
         }
-        public string toJsonQuestion(string CreatedBy, string RoomId, int Downvotes, string Image, int Upvotes, string QuestionText, string ResponseOptions, string QuestionResult, string CreationTimestamp, string ExpireTimestamp, string QuetionsType)
+        public string toJsonQuestion(string CreatedBy, string RoomId, string Image, int Votes, string QuestionText, string ResponseOptions, string QuestionResult, string CreationTimestamp, string ExpireTimestamp, string QuetionsType)
         {
 
             var question = new BooleanQuestion();
 
             var tempList = new List<ResponseOption>();
 
-            if (ResponseOptions != null)
+            if (!ResponseOptions.IsNullOrWhiteSpace())
             {
 
                 foreach (var response in ResponseOptions.Split(','))
@@ -47,7 +48,7 @@ namespace WisR.Controllers
 
             }
             var tempListResult = new List<Answer>();
-            if (QuestionResult != null)
+            if (!QuestionResult.IsNullOrWhiteSpace())
             {
                 foreach (var result in QuestionResult.Split(','))
                 {
@@ -59,9 +60,8 @@ namespace WisR.Controllers
 
             question.CreatedById = CreatedBy;
             question.RoomId = RoomId;
-            question.Downvotes = Downvotes;
+            question.Votes = null;
             question.Img = Image;
-            question.Upvotes = Upvotes;
             question.QuestionText = QuestionText;
             question.ResponseOptions = tempList;
             question.CreationTimestamp = CreationTimestamp;

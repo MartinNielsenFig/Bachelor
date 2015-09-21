@@ -10,6 +10,9 @@ import UIKit
 
 class CreateQuestionViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
+    //Gets instantiated by RoomPageViewController in prepareForSegue
+    var room: Room!
+    
     var questionText: TextInputCell? = nil
     var durationInput: NumberInputCell? = nil
     var imageTableCell: UITableViewCell? = nil
@@ -24,7 +27,27 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
     }
     
     override func viewDidLoad() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Log out", style: .Plain, target: self, action: "logOffFacebook")
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "addQuestion")
+    }
+    
+    func addQuestion() {
+        let q = Question()
+        q.CreatedById = CurrentUser.sharedInstance._id
+        
+        //http://stackoverflow.com/questions/11251340/convert-uiimage-to-base64-string-in-objective-c-and-swift
+        if let image = selectedImage {
+            let imageData = UIImageJPEGRepresentation(image, 0.8)
+            let b64 = imageData?.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
+            q.Img = b64
+        }
+        
+        q.QuestionText = questionText?.textLabel?.text
+        q.RoomId = room._id
+        
+        let duration = durationInput?.textLabel?.text ?? "0"
+        q.ExpireTimestamp = String(Int(duration)!/60)
+        
+        HttpHandler.createQuestion(room._id!, question: JSONSerializer.toJson(q), type: "Question")
     }
     
     //UITableViewController

@@ -11,8 +11,7 @@ namespace WisR.DomainModels
         public abstract string Id { get; set; }
         public abstract string RoomId { get; set; }
         public abstract string CreatedById { get; set; }
-        public abstract int Upvotes { get; set; }
-        public abstract int Downvotes { get; set; }
+        public abstract List<Vote> Votes { get; set; }
         public abstract string Img { get; set; }
         public abstract string QuestionText { get; set; }
         public abstract List<ResponseOption> ResponseOptions { get; set; }
