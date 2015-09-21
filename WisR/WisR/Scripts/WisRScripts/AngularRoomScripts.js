@@ -233,8 +233,8 @@ app.controller("RoomController", [
 
         $scope.GetUsernameById = function (userId) {
             var result = $.grep($scope.ActiveUsers, function (e) { return e._id == userId; });
-            if (userId == undefined)
-                return "Undefined name";
+            if (userId == undefined||result.length==0)
+                return "Anonymous";
             return result[0].DisplayName;
         }
 
