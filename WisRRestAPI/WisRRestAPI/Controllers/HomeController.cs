@@ -16,7 +16,7 @@ namespace WisRRestAPI.Controllers
         public ActionResult Index()
         {
             ViewBag.Title = "Home Page";
-            ViewBag.q = new JavaScriptSerializer().Serialize(new BooleanQuestion());
+            ViewBag.q = new JavaScriptSerializer().Serialize(new MultipleChoiceQuestion());
             return View();
         }
     }

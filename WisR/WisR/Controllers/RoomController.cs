@@ -34,7 +34,7 @@ namespace WisR.Controllers
         public string toJsonQuestion(string CreatedBy, string RoomId, string Image, int Votes, string QuestionText, string ResponseOptions, string QuestionResult, string CreationTimestamp, string ExpireTimestamp, string QuetionsType)
         {
 
-            var question = new BooleanQuestion();
+            var question = new MultipleChoiceQuestion();
 
             var tempList = new List<ResponseOption>();
 

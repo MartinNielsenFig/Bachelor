@@ -4,7 +4,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace WisR.DomainModels
 {
-    [BsonKnownTypes(typeof(BooleanQuestion), typeof(TextualQuestion))]
+    [BsonKnownTypes(typeof(MultipleChoiceQuestion), typeof(TextualQuestion))]
     public abstract class Question
     {
         [BsonId]

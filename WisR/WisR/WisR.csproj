@@ -212,9 +212,6 @@
     <Compile Include="..\..\WisRRestAPI\WisRRestAPI\DomainModel\Answer.cs">
       <Link>DomainModels\Answer.cs</Link>
     </Compile>
-    <Compile Include="..\..\WisRRestAPI\WisRRestAPI\DomainModel\BooleanQuestion.cs">
-      <Link>DomainModels\BooleanQuestion.cs</Link>
-    </Compile>
     <Compile Include="..\..\WisRRestAPI\WisRRestAPI\DomainModel\ChatMessage.cs">
       <Link>DomainModels\ChatMessage.cs</Link>
     </Compile>
@@ -226,6 +223,9 @@
     </Compile>
     <Compile Include="..\..\WisRRestAPI\WisRRestAPI\DomainModel\IQuestion.cs">
       <Link>DomainModels\IQuestion.cs</Link>
+    </Compile>
+    <Compile Include="..\..\WisRRestAPI\WisRRestAPI\DomainModel\MultipleChoiceQuestion.cs">
+      <Link>DomainModels\MultipleChoiceQuestion.cs</Link>
     </Compile>
     <Compile Include="..\..\WisRRestAPI\WisRRestAPI\DomainModel\ResponseOption.cs">
       <Link>DomainModels\ResponseOption.cs</Link>
