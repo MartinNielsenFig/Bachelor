@@ -96,6 +96,8 @@ app.controller("RoomController", [
                         if (n.filesize > 1049000) {
                             $scope.ImageMessage="File is too big";
                             $scope.questionImage.base64 = "R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==";
+                        } else {
+                            $scope.ImageMessage = null;
                         }
 
                     }
@@ -256,8 +258,25 @@ app.controller("RoomController", [
             if (direction == "Down") {
                 $scope.SpecificQuestion.Downvotes = $scope.SpecificQuestion.Downvotes + 1;
             }
+             var newResponses = "";
+            for (var i = 0; i < $scope.SpecificQuestion.ResponseOptions.length; i++) {
+                if (i != $scope.SpecificQuestion.ResponseOptions.length - 1) {
+                    newResponses = newResponses + $scope.SpecificQuestion.ResponseOptions[i].Value + ',';
+                } else {
+                    newResponses = newResponses + $scope.SpecificQuestion.ResponseOptions[i].Value;
+                }
+            }
+
+            var newResults = "";
+            for (var i = 0; i < $scope.SpecificQuestion.Result.length; i++) {
+                if (i != $scope.SpecificQuestion.Result.length - 1) {
+                    newResults = newResults + $scope.SpecificQuestion.Result[i].Value + "-" + $window.userId + ',';
+                } else {
+                    newResults = newResults + $scope.SpecificQuestion.Result[i].Value + "-" + $window.userId;
+                }
+            }
             $http.post('/Room/toJsonQuestion', {
-                CreatedBy: $scope.SpecificQuestion.CreatedById, RoomId: $scope.SpecificQuestion.RoomId, Downvotes: $scope.SpecificQuestion.Downvotes, Image: $scope.SpecificQuestion.Img, Upvotes: $scope.SpecificQuestion.Upvotes, QuestionText: $scope.SpecificQuestion.QuestionText, ResponseOptions: $scope.SpecificQuestion.ResponseOptions, CreationTimestamp: $scope.SpecificQuestion.CreationTimestamp, ExpireTimestamp: $scope.SpecificQuestion.ExpireTimestamp, QuestionResult: $scope.SpecificQuestion.QuestionResult, QuetionsType: $scope.SpecificQuestion._t
+                CreatedBy: $scope.SpecificQuestion.CreatedById, RoomId: $scope.SpecificQuestion.RoomId, Downvotes: $scope.SpecificQuestion.Downvotes, Image: $scope.SpecificQuestion.Img, Upvotes: $scope.SpecificQuestion.Upvotes, QuestionText: $scope.SpecificQuestion.QuestionText, ResponseOptions: newResponses, CreationTimestamp: $scope.SpecificQuestion.CreationTimestamp, ExpireTimestamp: $scope.SpecificQuestion.ExpireTimestamp, QuestionResult: newResults, QuetionsType: $scope.SpecificQuestion._t
             }).
                then(function (response) {
                    //Use response to send to REST API

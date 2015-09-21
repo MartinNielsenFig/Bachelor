@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
+using Microsoft.Ajax.Utilities;
 using MongoDB.Bson;
 using MongoDB.Bson.IO;
 using MongoDB.Bson.Serialization;
@@ -37,7 +38,7 @@ namespace WisR.Controllers
 
             var tempList = new List<ResponseOption>();
 
-            if (ResponseOptions != null)
+            if (!ResponseOptions.IsNullOrWhiteSpace())
             {
 
                 foreach (var response in ResponseOptions.Split(','))
@@ -47,7 +48,7 @@ namespace WisR.Controllers
 
             }
             var tempListResult = new List<Answer>();
-            if (QuestionResult != null)
+            if (!QuestionResult.IsNullOrWhiteSpace())
             {
                 foreach (var result in QuestionResult.Split(','))
                 {
