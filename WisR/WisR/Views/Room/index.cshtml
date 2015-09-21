@@ -103,8 +103,8 @@
                     <tr>
                         <td>{{SpecificQuestion.QuestionText}}</td>
                         <td>{{GetUsernameById(SpecificQuestion.CreatedById)}}</td>
-                        <td>{{SpecificQuestion.Upvotes}}<span class="glyphicon glyphicon-thumbs-up"></span></td>
-                        <td ng-click="DownVote(SpecificQuestion)">{{SpecificQuestion.Downvotes}}<span  class="glyphicon glyphicon-thumbs-down"></span></td>
+                        <td>{{SpecificQuestion.Upvotes}}<button style="opacity: 0" ng-click="SpecificQuestion.Upvotes = SpecificQuestion.Upvotes + 1;"><span class="glyphicon glyphicon-thumbs-up"></span></button></td>
+                        <td>{{SpecificQuestion.Downvotes}}<button ng-click="SpecificQuestion.Downvotes = SpecificQuestion.Downvotes + 1;"><span class="glyphicon glyphicon-thumbs-down"></span></button></td>
                         <td><img ng-src="data:image/png;base64,{{SpecificQuestion.Img}}" style="max-width: 100px; max-height: 100px" /></td>
                     </tr>
 

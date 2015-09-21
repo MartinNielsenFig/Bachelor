@@ -76,7 +76,7 @@ namespace WisRRestAPI.Controllers
             q.Id = ObjectId.GenerateNewId(DateTime.Now).ToString();
 
             q.CreationTimestamp = TimeHelper.timeSinceEpoch();
-            q.ExpireTimestamp = TimeHelper.timeSinceEpoch() + Convert.ToInt64(q.ExpireTimestamp) * 60000;
+            q.ExpireTimestamp = Convert.ToString(Convert.ToInt64(TimeHelper.timeSinceEpoch()) + Convert.ToInt64(q.ExpireTimestamp) * 60000);
 
             try
             {
