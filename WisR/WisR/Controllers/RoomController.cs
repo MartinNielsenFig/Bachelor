@@ -31,7 +31,7 @@ namespace WisR.Controllers
             ViewBag.roomId = roomId;
             return View();
         }
-        public string toJsonQuestion(string CreatedBy, string RoomId, int Downvotes, string Image, int Upvotes, string QuestionText, string ResponseOptions, string QuestionResult, string CreationTimestamp, string ExpireTimestamp, string QuetionsType)
+        public string toJsonQuestion(string CreatedBy, string RoomId, string Image, int Votes, string QuestionText, string ResponseOptions, string QuestionResult, string CreationTimestamp, string ExpireTimestamp, string QuetionsType)
         {
 
             var question = new BooleanQuestion();
@@ -60,9 +60,8 @@ namespace WisR.Controllers
 
             question.CreatedById = CreatedBy;
             question.RoomId = RoomId;
-            question.Downvotes = Downvotes;
+            question.Votes = null;
             question.Img = Image;
-            question.Upvotes = Upvotes;
             question.QuestionText = QuestionText;
             question.ResponseOptions = tempList;
             question.CreationTimestamp = CreationTimestamp;
