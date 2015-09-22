@@ -41,6 +41,19 @@ namespace WisRRestAPI.Controllers
             var qList = _qr.GetQuestionsForRoom(roomId);
             return qList.Result.ToJson();
         }
+        [System.Web.Mvc.HttpGet]
+        public string GetQuestionsForRoomWithoutImages(string roomId)
+        {
+            var qList = _qr.GetQuestionsForRoomWithoutImages(roomId);
+            return qList.Result.ToJson();
+        }
+        [System.Web.Mvc.HttpGet]
+        public string GetImageByQuestionId(string questionId)
+        {
+            var qList = _qr.GetImageByQuestionId(questionId);
+            var result = qList.Result;
+            return result.Img;
+        }
 
         [System.Web.Mvc.HttpPost]
         public string CreateQuestion(string question, string type)

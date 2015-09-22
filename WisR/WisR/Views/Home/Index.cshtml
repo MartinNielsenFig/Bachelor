@@ -99,10 +99,10 @@
                     <div class="row">
                         <label class="col-md-6">Can users ask questions?</label> <input ng-model="UserCanAsk" class="col-md-6" type="checkbox" />
                     </div>
-                    <div class="row">
-                        <button id="ModalCreateRoomButton" type="submit" class="btn btn-md center-block">Create room</button>
+                    <div class="row text-center">
+                        <button id="ModalCreateRoomButton" type="submit" class="btn btn-primary btn-md center-block">Create room</button>
                         @Html.Hidden("RedirectTo", Url.Action("Index", "Room"))
-                        <button id="ModalCancelButton" class="btn btn-md center-block" data-dismiss="modal">Cancel</button>
+                        <button id="ModalCancelButton" class="btn btn-primary btn-md center-block" data-dismiss="modal">Cancel</button>
                     </div>
                 </form>
                 <div id="RoomCreationError"></div>

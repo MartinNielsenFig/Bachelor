@@ -11,7 +11,7 @@
         <div id="questionTables" ng-show="!SpecificQuestionShown && questionsLoaded">
             <div class="col-md-8">
                 <h4>Host questions</h4>
-                <div style="overflow-y: auto; max-height: 300px">
+                <div style="overflow-y: auto; max-height: 300px;min-height: 300px">
 
                     <table id="hostQuestionsTable" class="table table-hover table-responsive">
                         <tbody>
@@ -25,7 +25,7 @@
                 </div>
                 <div ng-show="CurrentRoom.UsersCanAsk">
                     <h4>User questions</h4>
-                    <div style="overflow-y: auto; max-height: 300px">
+                    <div style="overflow-y: auto; max-height: 300px;min-height: 300px">
                         <table id="userQuestionsTable" class="table table-hover table-responsive">
                             <tbody>
                                 <tr style="cursor: pointer" ng-repeat="question in Questions|filter: { RoomId: '@ViewBag.roomId',CreatedById: '!'+CurrentRoom.CreatedById  } " ng-click="ShowSpecificQuestion(question)">
@@ -46,10 +46,12 @@
         <div id="specificQuestion" ng-show="SpecificQuestionShown">
             <div class="col-md-8">
                 <table class="table table-responsive">
-                    <tr>                       
-                        <td >
-                            <img ng-click="toggleImageSize()" id="specificQuestionImage" ng-src="data:image/png;base64,{{SpecificQuestion.Img}}" title="Click to change image size" style="cursor: pointer;width: 100px; height: 100px"/>
-                           
+                    <tr>
+                        <td>
+                            <div ng-hide="specificImageLoaded" class="container text-center col-md-4">
+                                <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span><label>Loading image...</label>
+                            </div>
+                            <img ng-show="specificImageLoaded" ng-click="toggleImageSize()" id="specificQuestionImage" ng-src="data:image/png;base64,{{SpecificQuestion.Img}}" title="Click to change image size" style="cursor: pointer; width: 100px; height: 100px" />
                         </td>
                         <td>{{SpecificQuestion.QuestionText}}</td>
                         <td>{{GetUsernameById(SpecificQuestion.CreatedById)}}</td>
@@ -57,7 +59,7 @@
                         <td>{{SpecificQuestion.Votes | Votes: -1}}<button class="votingBtn" ng-click="Vote('Down')"><span ng-class="{'downvoted':hasVoted('{{SpecificQuestion }}'!= undefined? SpecificQuestion: 'undefined',false)}" class="glyphicon glyphicon-thumbs-down"></span></button></td>
                     </tr>
 
-                </table> 
+                </table>
                 <div class="progress">
                     <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="{{percentage}}" aria-valuemin="0" aria-valuemax="100" ng-style="{width : ( percentage + '%' ) }">
                     </div>
@@ -144,7 +146,7 @@
                             <div class="pull-right col-md-6">
                                 <input type="button" ng-click="AddResponseOption()" value="Add Response Optione">
                                 <div ng-repeat="option in ResponseOptions">
-                                    <input ng-model="ResponseOptions[option.id].val" class="col-md-12" type="text" placeholder="Add response options"/><input type="button" ng-click="RemoveResponseOption(option.id)" value="Remove">
+                                    <input ng-model="ResponseOptions[option.id].val" class="col-md-12" type="text" placeholder="Add response options" /><input type="button" ng-click="RemoveResponseOption(option.id)" value="Remove">
                                 </div>
                             </div>
                         </div>
@@ -159,9 +161,9 @@
                             <label class="col-md-6">Expiration time</label> <input required ng-model="ExpirationTime" class="col-md-6" type="number" />
                         </div>
                         <br />
-                        <div class="row">
-                            <button id="ModalCreateQuestionButton" type="submit" class="btn btn-md center-block">Create question</button>
-                            <button id="ModalCancelButton" type="button" class="btn btn-md center-block" data-dismiss="modal">Cancel</button>
+                        <div class="row text-center">
+                            <button id="ModalCreateQuestionButton" type="submit" class="btn btn-primary btn-md center-block">Create question</button>
+                            <button id="ModalCancelButton" type="button" class="btn btn-primary btn-md center-block" data-dismiss="modal">Cancel</button>
                         </div>
                     </form>
                 </div>
@@ -182,20 +184,23 @@
                             <input ng-model="inputPassword" type="password" required />
                         </div>
                         <div class="col-md-12 text-center">
-                            <button class="btn btn-default" type="submit" ng-click="validatePassword()">Submit</button>@Html.ActionLink("Go back", "Index", "Home", null, new { @class = "btn btn-default" })
+                            <button class="btn btn-primary btn-md btn-default" type="submit" ng-click="validatePassword()">Submit</button>
+                            <span>
+                                @Html.ActionLink("Go back", "Index", "Home", null, new { @class = "btn btn-primary btn-md btn-default " })
                             @Html.Hidden("RedirectToHome", Url.Action("Index", "Home"))
-                        </div>
-                        <div class="col-md-12 text-center">
-                            {{passwordMessage}}
-                        </div>
-                    </form>
-                </div>
+                        </span>
+                    </div>
+                    <div class="col-md-12 text-center">
+                        {{passwordMessage}}
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+</div>
 
 
-    <script type="text/javascript">
-        var MyRoomIdFromViewBag = '@ViewBag.roomId';
-    </script>
+<script type="text/javascript">
+    var MyRoomIdFromViewBag = '@ViewBag.roomId';
+</script>
 </body>

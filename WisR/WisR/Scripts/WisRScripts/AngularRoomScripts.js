@@ -114,7 +114,7 @@ app.controller("RoomController", [
         };
         //Get all questions
         var getQuestions = function () {
-            $http.get(configs.restHostName + '/Question/GetAll').then(function (response) {
+            $http.get(configs.restHostName + '/Question/GetQuestionsForRoomWithoutImages?roomId='+MyRoomIdFromViewBag).then(function (response) {
                 $scope.Questions = response.data;
                 $scope.questionsLoaded = true;
             });
@@ -162,7 +162,7 @@ app.controller("RoomController", [
         $scope.hasVoted = function (question, checkForUpvote) {
 
             //if we are anonymous user never look for votes
-            if ($scope.currentUser == undefined||question=="") {
+            if ($scope.currentUser == undefined||question==""||question==undefined) {
                 return false;
             }
             var testbool = false;
@@ -284,7 +284,13 @@ app.controller("RoomController", [
         //function for showing a specific question
         $scope.ShowSpecificQuestion = function (question) {
             $scope.ToggleShowQuestionTables();
+            $scope.specificImageLoaded = false;
             $scope.SpecificQuestion = question;
+            //Start getting the image for the specific question
+            $http.get(configs.restHostName + '/Question/GetImageByQuestionId?questionId=' + question._id).then(function (response) {
+                $scope.SpecificQuestion.Img = response.data;
+                $scope.specificImageLoaded = true;
+            });
             $scope.createPieChart();
         }
         $scope.ToggleShowQuestionTables = function () {
