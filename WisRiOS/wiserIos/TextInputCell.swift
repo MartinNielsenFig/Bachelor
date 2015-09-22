@@ -10,8 +10,6 @@ import UIKit
 
 class TextInputCell: UITableViewCell {
     
-    //Mark: Properties
-    
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var inputField: UITextField!
 

@@ -7,6 +7,7 @@
 //
 
 //This is an ongoing effort by me which has been posted in various versions on github as gists and or questions on forums like stackoverflow etc.
+//See JSONSerializerTests
 
 import Foundation
 
