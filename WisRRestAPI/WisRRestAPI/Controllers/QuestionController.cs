@@ -77,16 +77,17 @@ namespace WisRRestAPI.Controllers
             q.CreationTimestamp = TimeHelper.timeSinceEpoch();
             q.ExpireTimestamp = Convert.ToString(Convert.ToInt64(TimeHelper.timeSinceEpoch()) + Convert.ToInt64(q.ExpireTimestamp) * 60000);
 
+            String error = "";
             try
             {
                 _irabbitPublisher.publishString("CreateQuestion", q.ToJson());
             }
             catch (Exception e)
             {
-                return "Could not publish to rabbitMQ";
+                error += "Could not publish to rabbitMQ";
             }
             _qr.AddQuestionObject(b);
-            return "Question saved with id: " + q.Id;
+            return "Question saved with id: " + q.Id + " error: " + error;
 
         }
         [System.Web.Mvc.HttpPost]

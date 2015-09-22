@@ -1,14 +1,10 @@
 package com.example.tomas.wisrandroid.Activities;
 
-import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
-import android.location.GpsStatus;
 import android.location.Location;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,39 +20,22 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.tomas.wisrandroid.Helpers.ActivityLayoutHelper;
 import com.example.tomas.wisrandroid.Helpers.HttpHelper;
-import com.example.tomas.wisrandroid.Model.BooleanQuestion;
-import com.example.tomas.wisrandroid.Model.ChatMessage;
 import com.example.tomas.wisrandroid.Model.Coordinate;
-import com.example.tomas.wisrandroid.Model.MyUser;
-import com.example.tomas.wisrandroid.Model.Question;
 import com.example.tomas.wisrandroid.Model.Room;
 import com.example.tomas.wisrandroid.R;
-import com.facebook.Profile;
-import com.facebook.ProfileTracker;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.Api;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.gson.Gson;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.JSONStringer;
-
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
-
-import javax.net.ssl.HttpsURLConnection;
 
 public class CreateRoomActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 

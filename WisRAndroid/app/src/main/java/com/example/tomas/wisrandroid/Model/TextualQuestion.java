@@ -1,5 +1,6 @@
 package com.example.tomas.wisrandroid.Model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TextualQuestion extends Question{
@@ -34,15 +35,10 @@ public class TextualQuestion extends Question{
     @Override
     public void set_Img(String _img) { super.set_Img(_img);}
 
+     @Override
+    public ArrayList<Vote> get_Votes() { return super.get_Votes(); }
     @Override
-    public int get_Upvotes() { return super.get_Upvotes();}
-    @Override
-    public void set_Upvotes(int _upvotes) { super.set_Upvotes(_upvotes);}
-
-    @Override
-    public int get_Downvotes() { return super.get_Downvotes(); }
-    @Override
-    public void set_Downvotes(int _downvotes) { super.set_Downvotes(_downvotes);}
+    public void set_Votes(ArrayList<Vote> _downvotes) { super.set_Votes(_downvotes);}
 
     @Override
     public String get_CreatedById() { return super.get_CreatedById();}
@@ -55,12 +51,22 @@ public class TextualQuestion extends Question{
     public void set_RoomId(String RoomId) { super.set_RoomId(RoomId);}
 
     @Override
-    public List<ResponseOption> get_ResponseOptions() {return super.get_ResponseOptions();}
+    public ArrayList<ResponseOption> get_ResponseOptions() {return super.get_ResponseOptions();}
     @Override
-    public void set_ResponseOptions(List<ResponseOption> ResponseOptions) {super.set_ResponseOptions(ResponseOptions);}
+    public void set_ResponseOptions(ArrayList<ResponseOption> ResponseOptions) {super.set_ResponseOptions(ResponseOptions);}
 
     @Override
-    public List<Answer> get_Result() {return super.get_Result();}
+    public ArrayList<Answer> get_Result() {return super.get_Result();}
     @Override
-    public void set_Result(List<Answer> Result) {super.set_Result(Result);}
+    public void set_Result(ArrayList<Answer> Result) {super.set_Result(Result);}
+
+    @Override
+    public String get_CreationTimestamp() {return super.get_CreationTimestamp();}
+    @Override
+    public void set_CreationTimestamp(String CreationTimestamp) {super.set_CreationTimestamp(CreationTimestamp);}
+
+    @Override
+    public String get_ExpireTimestamp() {return super.get_ExpireTimestamp();}
+    @Override
+    public void set_ExpireTimestamp(String ExpireTimestamp) {super.set_ExpireTimestamp(ExpireTimestamp);}
 }

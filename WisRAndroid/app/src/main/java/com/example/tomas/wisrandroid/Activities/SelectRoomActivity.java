@@ -1,12 +1,17 @@
 package com.example.tomas.wisrandroid.Activities;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -42,6 +47,19 @@ public class SelectRoomActivity extends AppCompatActivity {
         ActivityLayoutHelper.HideLayout(getWindow(), getSupportActionBar());
 
         mListView = (ListView) findViewById(R.id.select_room_listview);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                Gson mGson = new Gson();
+                Bundle mBundle = new Bundle();
+                mBundle.putString("Room", mGson.toJson((mRoomList.get(i))));
+                Intent mIntent = new Intent(getApplicationContext(), QuestionActivity.class);
+                mIntent.putExtra("CurrentRoom",mBundle);
+                startActivity(mIntent, mBundle);
+
+            }
+        });
 
         final Response.Listener<String> mListener = new Response.Listener<String>() {
             @Override
