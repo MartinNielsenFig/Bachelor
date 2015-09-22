@@ -39,7 +39,6 @@ class HttpHandler {
             if data != nil {
                 let nsDataString = NSString(data: data!, encoding: NSUTF8StringEncoding)
                 let dataString = nsDataString as! String
-                //NSLog("dataString \(dataString)")
             }
         }
         task.resume()
@@ -64,7 +63,6 @@ class HttpHandler {
             if data != nil {
                 let nsDataString = NSString(data: data!, encoding: NSUTF8StringEncoding)
                 let dataString = nsDataString as! String
-                //NSLog("dataString \(dataString)")
                 
                 var messageArray = [ChatMessage]()
                 for msgJson in JSONSerializer.toArray(dataString)! {
@@ -96,7 +94,6 @@ class HttpHandler {
             if data != nil {
                 let nsDataString = NSString(data: data!, encoding: NSUTF8StringEncoding)
                 let dataString = nsDataString as! String
-                //NSLog("dataString \(dataString)")
                 
                 var mongoId = dataString
                 completionHandler(mongoDbId: &mongoId)
@@ -129,7 +126,6 @@ class HttpHandler {
             if data != nil {
                 let nsDataString = NSString(data: data!, encoding: NSUTF8StringEncoding)
                 let dataString = nsDataString as! String
-                //NSLog("dataString \(dataString)")
                 
                 var questionArray = [Question]()
                 for question in JSONSerializer.toArray(dataString)! {
@@ -195,6 +191,25 @@ class HttpHandler {
         task.resume()
     }
     
+    static func handleResponse(data data: NSData?, response: NSURLResponse?, error: NSError?) -> Error? {
+        log(data: data, response: response, error: error)
+        
+        if error == nil && data != nil {
+            let dataString = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
+            let optDic = JSONSerializer.toDictionary(dataString)
+            
+            if let dictionary = optDic {
+                if Error.isError(dictionary) {
+                    let e = Error(jsonDictionary: dictionary)
+                    NSLog("Error code \(e.ErrorCode)")
+                    NSLog("Error Message \(e.ErrorMessage)")
+                    NSLog("Stack trace \(e.StackTrace)")
+                }
+            }
+        }
+        return nil
+    }
+    
     static func createQuestion(roomId: String, question: String, type: String) {
         let session = NSURLSession.sharedSession()
         let url = NSURL(string: mainUrl)!.URLByAppendingPathComponent("Question/CreateQuestion")
@@ -207,13 +222,12 @@ class HttpHandler {
         let task = session.dataTaskWithRequest(request) {
             data, response, error in
             
-            log(data: data, response: response, error: error)
-            
-            if data != nil {
-                let dataString = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
-                //NSLog("dataString \(dataString)")
+            if let error = handleResponse(data: data, response: response, error: error) {
+                assert(true, "handle this")
             }
-        
+            else {
+                NSLog("create room success")
+            }
         }
         task.resume()
     }

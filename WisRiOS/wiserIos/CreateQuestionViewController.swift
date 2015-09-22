@@ -47,7 +47,7 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
         let duration = durationInput?.textLabel?.text ?? "0"
         q.ExpireTimestamp = String(Int(duration)!/60)
         
-        HttpHandler.createQuestion(room._id!, question: JSONSerializer.toJson(q), type: "Question")
+        HttpHandler.createQuestion(room._id!, question: JSONSerializer.toJson(q), type: "MultipleChoiceQuestion1")
     }
     
     //UITableViewController
