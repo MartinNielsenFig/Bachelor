@@ -257,45 +257,46 @@ app.controller("RoomController", [
             $scope.SpecificQuestionShown = !$scope.SpecificQuestionShown;
         }
 
-        $scope.Vote = function(direction) {
+        $scope.Vote = function (direction) {
+            $scope.tempQuestion = $scope.SpecificQuestion;
             if (direction == "Up") {
-                $scope.SpecificQuestion.Votes.push({ CreatedById: $scope.userId, Value: 1});
+                $scope.tempQuestion.Votes.push({ CreatedById: $scope.userId, Value: 1 });
             }
             if (direction == "Down") {
-                $scope.SpecificQuestion.Votes.push({ CreatedById: $scope.userId, Value: -1 });
+                $scope.tempQuestion.Votes.push({ CreatedById: $scope.userId, Value: -1 });
             }
              var newResponses = "";
-            for (var i = 0; i < $scope.SpecificQuestion.ResponseOptions.length; i++) {
-                if (i != $scope.SpecificQuestion.ResponseOptions.length - 1) {
-                    newResponses = newResponses + $scope.SpecificQuestion.ResponseOptions[i].Value + ',';
+             for (var i = 0; i < $scope.tempQuestion.ResponseOptions.length; i++) {
+                 if (i != $scope.tempQuestion.ResponseOptions.length - 1) {
+                     newResponses = newResponses + $scope.tempQuestion.ResponseOptions[i].Value + ',';
                 } else {
-                    newResponses = newResponses + $scope.SpecificQuestion.ResponseOptions[i].Value;
+                     newResponses = newResponses + $scope.tempQuestion.ResponseOptions[i].Value;
                 }
             }
 
             var newResults = "";
-            for (var i = 0; i < $scope.SpecificQuestion.Result.length; i++) {
-                if (i != $scope.SpecificQuestion.Result.length - 1) {
-                    newResults = newResults + $scope.SpecificQuestion.Result[i].Value + "-" + $window.userId + ',';
+            for (var i = 0; i < $scope.tempQuestion.Result.length; i++) {
+                if (i != $scope.tempQuestion.Result.length - 1) {
+                    newResults = newResults + $scope.tempQuestion.Result[i].Value + "-" + $window.userId + ',';
                 } else {
-                    newResults = newResults + $scope.SpecificQuestion.Result[i].Value + "-" + $window.userId;
+                    newResults = newResults + $scope.tempQuestion.Result[i].Value + "-" + $window.userId;
                 }
             }
 
             var newVotes = "";
-            for (var i = 0; i < $scope.SpecificQuestion.Votes.length; i++) {
-                if (i != $scope.SpecificQuestion.Votes.length - 1) {
-                    newVotes = newVotes + $scope.SpecificQuestion.Votes[i].Value + ":" + $window.userId + ',';
+            for (var i = 0; i < $scope.tempQuestion.Votes.length; i++) {
+                if (i != $scope.tempQuestion.Votes.length - 1) {
+                    newVotes = newVotes + $scope.tempQuestion.Votes[i].Value + ":" + $window.userId + ',';
                 } else {
-                    newVotes = newVotes + $scope.SpecificQuestion.Votes[i].Value + ":" + $window.userId;
+                    newVotes = newVotes + $scope.tempQuestion.Votes[i].Value + ":" + $window.userId;
                 }
             }
             $http.post('/Room/toJsonQuestion', {
-                CreatedBy: $scope.SpecificQuestion.CreatedById, RoomId: $scope.SpecificQuestion.RoomId, Votes: newVotes, Image: $scope.SpecificQuestion.Img, QuestionText: $scope.SpecificQuestion.QuestionText, ResponseOptions: newResponses, CreationTimestamp: $scope.SpecificQuestion.CreationTimestamp, ExpireTimestamp: $scope.SpecificQuestion.ExpireTimestamp, QuestionResult: newResults, QuetionsType: $scope.SpecificQuestion._t
+                CreatedBy: $scope.tempQuestion.CreatedById, RoomId: $scope.tempQuestion.RoomId, Votes: newVotes, Image: $scope.tempQuestion.Img, QuestionText: $scope.tempQuestion.QuestionText, ResponseOptions: newResponses, CreationTimestamp: $scope.tempQuestion.CreationTimestamp, ExpireTimestamp: $scope.tempQuestion.ExpireTimestamp, QuestionResult: newResults, QuetionsType: $scope.tempQuestion._t
             }).
                then(function (response) {
                    //Use response to send to REST API
-                   $http.post(configs.restHostName + '/Question/UpdateQuestion', { question: JSON.stringify(response.data), type: $scope.SpecificQuestion._t, id: $scope.SpecificQuestion._id });
+                   $http.post(configs.restHostName + '/Question/UpdateQuestion', { question: JSON.stringify(response.data), type: $scope.tempQuestion._t, id: $scope.tempQuestion._id });
                });
         }
 
@@ -321,33 +322,42 @@ app.controller("RoomController", [
         //setInterval($scope.getPercentage, 1000);
         //adds answer to specificQuestion
         $scope.AddAnswer = function () {
-            $scope.SpecificQuestion.Result.push($scope.answerChoosen);
+            $scope.tempQuestion = $scope.SpecificQuestion;
+            tempQuestion.Result.push($scope.answerChoosen);
 
             var newResponses = "";
-            for (var i = 0; i < $scope.SpecificQuestion.ResponseOptions.length; i++) {
-                if (i != $scope.SpecificQuestion.ResponseOptions.length - 1) {
-                    newResponses = newResponses + $scope.SpecificQuestion.ResponseOptions[i].Value + ',';
+            for (var i = 0; i < $scope.tempQuestion.ResponseOptions.length; i++) {
+                if (i != $scope.tempQuestion.ResponseOptions.length - 1) {
+                    newResponses = newResponses + $scope.tempQuestion.ResponseOptions[i].Value + ',';
                 } else {
-                    newResponses = newResponses + $scope.SpecificQuestion.ResponseOptions[i].Value;
+                    newResponses = newResponses + $scope.tempQuestion.ResponseOptions[i].Value;
                 }
             }
 
             var newResults = "";
-            for (var i = 0; i < $scope.SpecificQuestion.Result.length; i++) {
-                if (i != $scope.SpecificQuestion.Result.length - 1) {
-                    newResults = newResults + $scope.SpecificQuestion.Result[i].Value + "-" + $window.userId + ',';
+            for (var i = 0; i < $scope.tempQuestion.Result.length; i++) {
+                if (i != $scope.tempQuestion.Result.length - 1) {
+                    newResults = newResults + $scope.tempQuestion.Result[i].Value + "-" + $window.userId + ',';
                 } else {
-                    newResults = newResults + $scope.SpecificQuestion.Result[i].Value + "-" + $window.userId;
+                    newResults = newResults + $scope.tempQuestion.Result[i].Value + "-" + $window.userId;
+                }
+            }
+            var newVotes = "";
+            for (var i = 0; i < $scope.tempQuestion.Votes.length; i++) {
+                if (i != $scope.tempQuestion.Votes.length - 1) {
+                    newVotes = newVotes + $scope.tempQuestion.Votes[i].Value + ":" + $window.userId + ',';
+                } else {
+                    newVotes = newVotes + $scope.tempQuestion.Votes[i].Value + ":" + $window.userId;
                 }
             }
 
             //Make get request for json object conversion
             $http.post('/Room/toJsonQuestion', {
-                CreatedBy: $scope.SpecificQuestion.CreatedById, RoomId: $scope.SpecificQuestion.RoomId, Downvotes: $scope.SpecificQuestion.Downvotes, Image: $scope.SpecificQuestion.Img, Upvotes: $scope.SpecificQuestion.Upvotes, QuestionText: $scope.SpecificQuestion.QuestionText, ResponseOptions: newResponses, CreationTimestamp: $scope.SpecificQuestion.CreationTimestamp, ExpireTimestamp: $scope.SpecificQuestion.ExpireTimestamp, QuestionResult: newResults, QuetionsType: $scope.SpecificQuestion._t
+                CreatedBy: $scope.tempQuestion.CreatedById, RoomId: $scope.tempQuestion.RoomId, Votes: newVotes, Image: $scope.tempQuestion.Img, QuestionText: $scope.tempQuestion.QuestionText, ResponseOptions: newResponses, CreationTimestamp: $scope.tempQuestion.CreationTimestamp, ExpireTimestamp: $scope.tempQuestion.ExpireTimestamp, QuestionResult: newResults, QuetionsType: $scope.tempQuestion._t
             }).
                 then(function (response) {
                     //Use response to send to REST API
-                    $http.post(configs.restHostName + '/Question/UpdateQuestionResponse', { question: JSON.stringify(response.data), type: $scope.SpecificQuestion._t, id: $scope.SpecificQuestion._id });
+                    $http.post(configs.restHostName + '/Question/UpdateQuestionResponse', { question: JSON.stringify(response.data), type: $scope.tempQuestion._t, id: $scope.tempQuestion._id });
                 });
         }
         //Function for creating a question
