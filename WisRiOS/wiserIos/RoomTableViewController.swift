@@ -23,6 +23,10 @@ class RoomTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let loading = Room()
+        loading.Name = "Loading rooms..."
+        rooms += [loading]
+        
         HttpHandler.requestWithResponse(action: "Room/GetAll", type: "GET", body: "") { (data, response, error) -> Void in
             var rooms = [Room]()
             for room in JSONSerializer.toArray(data!)! {
@@ -33,10 +37,10 @@ class RoomTableViewController: UITableViewController {
                 let noRooms = Room()
                 noRooms._id = "system"
                 noRooms.Name = "No nearby rooms"
-                self.rooms += [noRooms]
+                self.rooms = [noRooms]
             }
             else {
-                self.rooms += filteredRooms
+                self.rooms = filteredRooms
             }
         }
     }
