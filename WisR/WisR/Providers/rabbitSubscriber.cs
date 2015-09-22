@@ -2,25 +2,23 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
-using System.Net.WebSockets;
 using System.Text;
 using System.Web;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using WisR.Hubs;
 
-namespace WisRRestAPI.Providers
+namespace WisR.Providers
 {
-    public class rabbitHandler : IrabbitHandler
+    public class RabbitSubscriber : IRabbitSubscriber
     {
         private IConnection _conn;
         private IModel _model;
         private bool isSubscribed;
         private EventingBasicConsumer _consumer;
-        private List<string> routingKeyList;
         private string _queuename;
 
-        public rabbitHandler()
+        public RabbitSubscriber()
         {
             ConnectionFactory factory = new ConnectionFactory();
             factory.RequestedHeartbeat = 30;
@@ -37,8 +35,6 @@ namespace WisRRestAPI.Providers
                                      autoDelete: true,
                                      arguments: null);
             }
-            
-            routingKeyList = new List<string>();
         }
 
         public IConnection getConn()
@@ -51,18 +47,18 @@ namespace WisRRestAPI.Providers
             return _model;
         }
 
-        public void publishString(string routingKey,string stringToPublish)
+        public void publishString(string routingKey, string stringToPublish)
         {
             if (stringToPublish == null) return;
             var body = Encoding.UTF8.GetBytes(stringToPublish);
-            lock(_model)
+            lock (_model)
             {
                 _model.BasicPublish(exchange: "WisrExchange",
                                  routingKey: routingKey,
                                  basicProperties: null,
                                  body: body);
             }
-            
+
         }
 
         public void subscribe(string routingKey)
@@ -87,7 +83,7 @@ namespace WisRRestAPI.Providers
             switch (ea.RoutingKey)
             {
                 case "CreateRoom":
-                    var rcHub=new RoomCreationHub();
+                    var rcHub = new RoomCreationHub();
                     rcHub.Send(message);
                     break;
                 case "CreateQuestion":
@@ -99,16 +95,16 @@ namespace WisRRestAPI.Providers
                     updateQuestionHub.Update(message);
                     break;
                 case "CreateChatMessage":
-                    var chatHub=new ChatHub();
+                    var chatHub = new ChatHub();
                     chatHub.Send(message);
                     break;
-                
+
             }
             lock (_model)
             {
                 _model.BasicAck(ea.DeliveryTag, false);
             }
-            
+
 
         }
     }

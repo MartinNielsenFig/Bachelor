@@ -21,12 +21,12 @@ namespace WisRRestAPI.Controllers
     {
         private readonly IQuestionRepository _qr;
         private readonly JavaScriptSerializer _jsSerializer;
-        private readonly IrabbitHandler _rabbitHandler;
-        public QuestionController(IQuestionRepository qr, IrabbitHandler rabbitHandler)
+        private readonly IRabbitPublisher _irabbitPublisher;
+        public QuestionController(IQuestionRepository qr, IRabbitPublisher irabbitPublisher)
         {
             _qr = qr;
             _jsSerializer = new JavaScriptSerializer();
-            _rabbitHandler = rabbitHandler;
+            _irabbitPublisher = irabbitPublisher;
         }
 
         [System.Web.Mvc.HttpGet]
@@ -80,7 +80,7 @@ namespace WisRRestAPI.Controllers
 
             try
             {
-                _rabbitHandler.publishString("CreateQuestion", q.ToJson());
+                _irabbitPublisher.publishString("CreateQuestion", q.ToJson());
             }
             catch (Exception e)
             {
@@ -107,7 +107,7 @@ namespace WisRRestAPI.Controllers
             _qr.UpdateQuestion(id, q);
             try
             {
-                _rabbitHandler.publishString("UpdateQuestion", q.ToJson());
+                _irabbitPublisher.publishString("UpdateQuestion", q.ToJson());
             }
             catch (Exception e)
             {
@@ -133,7 +133,7 @@ namespace WisRRestAPI.Controllers
                 _qr.UpdateQuestion(id, q);
                 try
                 {
-                    _rabbitHandler.publishString("UpdateQuestion", q.ToJson());
+                    _irabbitPublisher.publishString("UpdateQuestion", q.ToJson());
                 }
                 catch (Exception e)
                 {

@@ -3,7 +3,7 @@ using Microsoft.Owin;
 using Owin;
 using SimpleInjector;
 using SimpleInjector.Integration.Web.Mvc;
-using WisRRestAPI.Providers;
+using WisR.Providers;
 
 
 [assembly: OwinStartupAttribute(typeof(WisR.Startup))]
@@ -16,7 +16,7 @@ namespace WisR
             ConfigureAuth(app);
             app.MapSignalR();
             var container = new Container();
-            container.Register<IrabbitHandler, rabbitHandler>(Lifestyle.Singleton);
+            container.Register<IRabbitSubscriber, RabbitSubscriber>(Lifestyle.Singleton);
             DependencyResolver.SetResolver(new SimpleInjectorDependencyResolver(container));
         }
     }

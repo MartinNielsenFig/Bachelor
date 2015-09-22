@@ -10,9 +10,8 @@ import Foundation
 
 class HttpHandler {
     
-    //static let mainUrl = "http://192.168.198.132:1337/"
-    static let mainUrl = "http://wisrrestapi.aceipse.dk/"
-    //http://stackoverflow.com/questions/25341858/perform-post-request-in-ios-swift
+    static let mainUrl = "http://192.168.198.136:1337/"
+    //static let mainUrl = "http://wisrrestapi.aceipse.dk/"
     
     static func log(data data: NSData?, response: NSURLResponse?, error: NSError?) {
         //NSLog("data \(data)")
@@ -20,6 +19,7 @@ class HttpHandler {
         NSLog("error \(error)")
     }
     
+    //http://stackoverflow.com/questions/25341858/perform-post-request-in-ios-swift
     static func sendChatMessage(chatMessageJson: String) {
         let session = NSURLSession.sharedSession()
         let url = NSURL(string: mainUrl)!.URLByAppendingPathComponent("Chat/CreateChatMessage")

@@ -16,13 +16,13 @@ namespace WisRRestAPI.Controllers
     {
         private readonly IChatRepository _cr;
         private readonly JavaScriptSerializer _jsSerializer;
-        private IrabbitHandler _rabbitHandler;
+        private IRabbitPublisher _irabbitPublisher;
 
-        public ChatController(IChatRepository cr, IrabbitHandler rabbitHandler)
+        public ChatController(IChatRepository cr, IRabbitPublisher irabbitPublisher)
         {
             _cr = cr;
             _jsSerializer = new JavaScriptSerializer();
-            _rabbitHandler = rabbitHandler;
+            _irabbitPublisher = irabbitPublisher;
         }
 
         [System.Web.Mvc.HttpGet]
@@ -59,7 +59,7 @@ namespace WisRRestAPI.Controllers
             chatMsg.Id = ObjectId.GenerateNewId(DateTime.Now).ToString();
             try
             {
-                _rabbitHandler.publishString("CreateChatMessage", chatMsg.ToJson());
+                _irabbitPublisher.publishString("CreateChatMessage", chatMsg.ToJson());
             }
             catch (Exception e)
             {

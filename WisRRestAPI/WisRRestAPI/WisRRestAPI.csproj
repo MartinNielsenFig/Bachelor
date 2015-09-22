@@ -223,15 +223,6 @@
     <Compile Include="..\..\WisR\WisR\DomainModels\Vote.cs">
       <Link>DomainModel\Vote.cs</Link>
     </Compile>
-    <Compile Include="..\..\WisR\WisR\Hubs\ChatHub.cs">
-      <Link>Hubs\ChatHub.cs</Link>
-    </Compile>
-    <Compile Include="..\..\WisR\WisR\Hubs\QuestionHub.cs">
-      <Link>Hubs\QuestionHub.cs</Link>
-    </Compile>
-    <Compile Include="..\..\WisR\WisR\Hubs\RoomCreationHub.cs">
-      <Link>Hubs\RoomCreationHub.cs</Link>
-    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -285,13 +276,13 @@
     <Compile Include="Providers\IChatRepository.cs" />
     <Compile Include="Providers\IdbHandler.cs" />
     <Compile Include="Providers\IQuestionRepository.cs" />
-    <Compile Include="Providers\IrabbitHandler.cs" />
+    <Compile Include="Providers\IrabbitPublisher.cs" />
     <Compile Include="Providers\IRoomRepository.cs" />
     <Compile Include="Providers\IUserRepository.cs" />
     <Compile Include="Providers\QuestionRepository.cs" />
     <Compile Include="DomainModel\ResponseOption.cs" />
     <Compile Include="DomainModel\Room.cs" />
-    <Compile Include="Providers\rabbitHandler.cs" />
+    <Compile Include="Providers\rabbitPublisher.cs" />
     <Compile Include="Providers\RoomRepository.cs" />
     <Compile Include="DomainModel\User.cs" />
     <Compile Include="Providers\UserRepository.cs" />

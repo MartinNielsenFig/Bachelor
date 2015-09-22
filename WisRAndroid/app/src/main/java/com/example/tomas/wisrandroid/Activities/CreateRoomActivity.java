@@ -64,7 +64,7 @@ public class CreateRoomActivity extends AppCompatActivity implements GoogleApiCl
     private GoogleApiClient mGoogleApiClient;
     private Location mLastLocation;
 
-    // Buttons
+    // Buttons (Volatile might be redundant)
     private volatile Button mCreateRoomButton;
 
     // Inputs
@@ -114,8 +114,6 @@ public class CreateRoomActivity extends AppCompatActivity implements GoogleApiCl
 
         // Toggle Button Logic
         mFirstRadiusToggleButton = (ToggleButton) findViewById(R.id.first_radius_button);
-//        mFirstRadiusToggleButton.setTextOn("10m");
-//        mFirstRadiusToggleButton.setTextOff("10m");
         mFirstRadiusToggleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -129,8 +127,6 @@ public class CreateRoomActivity extends AppCompatActivity implements GoogleApiCl
             }
         });
         mSecondRadiusToggleButton = (ToggleButton) findViewById(R.id.second_radius_button);
-//        mSecondRadiusToggleButton.setTextOn("20m");
-//        mSecondRadiusToggleButton.setTextOff("20m");
         mSecondRadiusToggleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -143,8 +139,6 @@ public class CreateRoomActivity extends AppCompatActivity implements GoogleApiCl
             }
         });
         mThirdRadiusToggleButton = (ToggleButton) findViewById(R.id.third_radius_button);
-//        mThirdRadiusToggleButton.setTextOn("40m");
-//        mThirdRadiusToggleButton.setTextOff("40m");
         mThirdRadiusToggleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -283,24 +277,6 @@ public class CreateRoomActivity extends AppCompatActivity implements GoogleApiCl
         }else {
             mPasswordEditText.setEnabled(false);
         }
-    }
-
-    // Skal muligvis fjernes
-    private String getPostData(HashMap<String, String> params) throws UnsupportedEncodingException {
-        StringBuilder result = new StringBuilder();
-        boolean first = true;
-        for(Map.Entry<String, String> entry : params.entrySet()){
-            if (first)
-                first = false;
-            else
-                result.append("&");
-
-            result.append(URLEncoder.encode(entry.getKey(), "UTF-8"));
-            result.append("=");
-            result.append(URLEncoder.encode(entry.getValue(), "UTF-8"));
-        }
-
-        return result.toString();
     }
 
     protected synchronized void buildGoogleApiClient() {
