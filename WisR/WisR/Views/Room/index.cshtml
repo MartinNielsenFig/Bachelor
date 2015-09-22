@@ -53,8 +53,8 @@
                         </td>
                         <td>{{SpecificQuestion.QuestionText}}</td>
                         <td>{{GetUsernameById(SpecificQuestion.CreatedById)}}</td>
-                        <td>{{SpecificQuestion.Votes | Votes: 1}}<button class="votingBtn" ng-click="Vote('Up')"><span ng-class="{'upvoted':hasVoted({{question}},true)}" class="glyphicon glyphicon-thumbs-up"></span></button></td>
-                        <td>{{SpecificQuestion.Votes | Votes: -1}}<button class="votingBtn" ng-click="Vote('Down')"><span ng-class="{'downvoted':hasVoted({{question}},false)}" class="glyphicon glyphicon-thumbs-down"></span></button></td>
+                        <td>{{SpecificQuestion.Votes | Votes: 1}}<button class="votingBtn" ng-click="Vote('Up')"><span ng-class="{'upvoted':hasVoted('{{SpecificQuestion}}' != undefined? SpecificQuestion: 'undefined',true)}" class="glyphicon glyphicon-thumbs-up"></span></button></td>
+                        <td>{{SpecificQuestion.Votes | Votes: -1}}<button class="votingBtn" ng-click="Vote('Down')"><span ng-class="{'downvoted':hasVoted('{{SpecificQuestion }}'!= undefined? SpecificQuestion: 'undefined',false)}" class="glyphicon glyphicon-thumbs-down"></span></button></td>
                     </tr>
 
                 </table> 

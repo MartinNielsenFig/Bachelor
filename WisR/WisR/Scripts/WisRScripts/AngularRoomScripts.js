@@ -16,6 +16,7 @@ app.directive('ngEnter', function () {
 
 app.controller("RoomController", [
     '$scope', '$http', 'configs', '$window', '$interval', function ($scope, $http, configs, $window, $interval) {
+
         //Connect to SignalR hub and wait for chat messages
         $(function () {
             // Declare a proxy to reference the hub. 
@@ -100,7 +101,7 @@ app.controller("RoomController", [
                     }
 
                 });
-        //Image popover functions
+        //Image toggle functions
         $scope.toggleImageSize = function () {
             if ($scope.imageSize == undefined || $scope.imageSize == "100px") {
                 $scope.imageSize = "500px";
@@ -161,7 +162,7 @@ app.controller("RoomController", [
         $scope.hasVoted = function (question, checkForUpvote) {
 
             //if we are anonymous user never look for votes
-            if ($scope.currentUser == undefined) {
+            if ($scope.currentUser == undefined||question=="") {
                 return false;
             }
             var testbool = false;
