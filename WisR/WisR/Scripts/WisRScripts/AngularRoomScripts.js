@@ -197,7 +197,7 @@ app.controller("RoomController", [
         getChatMessages();
         $scope.userIsHost = false;
         $scope.SpecificQuestionShown = false;
-        $scope.QuestionTypes = [{ name: 'Boolean Question', val: 'BooleanQuestion' }, { name: 'Textual Question', val: 'TextualQuestion' }];
+        $scope.QuestionTypes = [{ name: 'Multiple Choice Question', val: 'MultipleChoiceQuestion' }, { name: 'Textual Question', val: 'TextualQuestion' }];
         $scope.ActiveUsers = [];
 
         $scope.ResponseOptions = [{ id: 0, val: undefined }, { id: 1, val: undefined }];
@@ -354,7 +354,7 @@ app.controller("RoomController", [
 
             }
             //Make get request for json object conversion
-            $http.post('/Room/toJsonQuestion', { CreatedBy: $window.userId, RoomId: MyRoomIdFromViewBag, Downvotes: 0, Image: $scope.questionImage != undefined ? $scope.questionImage.base64 : "R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==", Upvotes: 0, QuestionText: $scope.QuestionText, ResponseOptions: newResponses, ExpireTimestamp: $scope.ExpirationTime, QuetionsType: $scope.QuestionType }).
+            $http.post('/Room/toJsonQuestion', { CreatedBy: $window.userId, RoomId: MyRoomIdFromViewBag, Image: $scope.questionImage != undefined ? $scope.questionImage.base64 : "R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==", QuestionText: $scope.QuestionText, ResponseOptions: newResponses, ExpireTimestamp: $scope.ExpirationTime, QuetionsType: $scope.QuestionType }).
                 then(function (response) {
                     //Use response to send to REST API
                     $http.post(configs.restHostName + '/Question/CreateQuestion', { question: JSON.stringify(response.data), type: $scope.QuestionType.val });
