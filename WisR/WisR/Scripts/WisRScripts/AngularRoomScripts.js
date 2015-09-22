@@ -15,7 +15,7 @@ app.directive('ngEnter', function () {
 });
 
 app.controller("RoomController", [
-    '$scope', '$http', 'configs', '$window','$interval', function ($scope, $http, configs, $window,$interval) {
+    '$scope', '$http', 'configs', '$window', '$interval', function ($scope, $http, configs, $window, $interval) {
         //Connect to SignalR hub and wait for chat messages
         $(function () {
             // Declare a proxy to reference the hub. 
@@ -84,9 +84,7 @@ app.controller("RoomController", [
                             getRoom(true);
                         });
                     }
-                }
-
-);
+                });
         //watch the questionImage.filesize variable
         $scope.$watch(
                 function () {
@@ -94,7 +92,7 @@ app.controller("RoomController", [
                 }, function (n, o) {
                     if (n != undefined) {
                         if (n.filesize > 1049000) {
-                            $scope.ImageMessage="File is too big";
+                            $scope.ImageMessage = "File is too big";
                             $scope.questionImage.base64 = "R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==";
                         } else {
                             $scope.ImageMessage = null;
@@ -102,9 +100,18 @@ app.controller("RoomController", [
 
                     }
 
+                });
+        //Image popover functions
+        $scope.toggleImageSize = function () {
+            if ($scope.imageSize == undefined || $scope.imageSize == "100px") {
+                $scope.imageSize = "500px";
+            } else {
+                $scope.imageSize = "100px";
                 }
-);
 
+            $("#specificQuestionImage").css("width", $scope.imageSize);
+            $("#specificQuestionImage").css("height", $scope.imageSize);
+        };
         //Get all questions
         var getQuestions = function () {
             $http.get(configs.restHostName + '/Question/GetAll').then(function (response) {
@@ -120,7 +127,7 @@ app.controller("RoomController", [
             $http.post(configs.restHostName + '/Room/GetById', { id: MyRoomIdFromViewBag }).then(function (response) {
                 //Check for errors on request
                 if (response.data.ErrorMessage != undefined) {
-                    $("#RoomErrorDiv").html("<h3>"+response.data.ErrorMessage+"</h3>");
+                    $("#RoomErrorDiv").html("<h3>" + response.data.ErrorMessage + "</h3>");
                     return;
                 }
 
@@ -226,7 +233,7 @@ app.controller("RoomController", [
             if (labels.length > 0) {
                 $scope.showResults = true;
                 $scope.labels = labels;
-                $scope.options= {
+                $scope.options = {
                     animateRotate: false,
                     tooltipTemplate: "<%=label%>: <%= value %> (<%= Math.round(circumference / 6.283 * 100) %>%)"
                 }
@@ -241,7 +248,7 @@ app.controller("RoomController", [
 
         $scope.GetUsernameById = function (userId) {
             var result = $.grep($scope.ActiveUsers, function (e) { return e._id == userId; });
-            if (userId == undefined||result.length==0)
+            if (userId == undefined || result.length == 0)
                 return "Anonymous";
             return result[0].DisplayName;
         }
@@ -274,10 +281,10 @@ app.controller("RoomController", [
                     $http.post(configs.restHostName + '/Question/AddVote', { vote: JSON.stringify(Obj), type: $scope.SpecificQuestion._t, id: $scope.SpecificQuestion._id });
                 
                
+                }
+
+
             }
-             
-               
-        }
 
         //Get percentage for loading bar
         $scope.getPercentage = function () {
@@ -297,7 +304,7 @@ app.controller("RoomController", [
                 //$scope.$apply();
             }
         }
-        $interval($scope.getPercentage,1000);
+        $interval($scope.getPercentage, 1000);
         //setInterval($scope.getPercentage, 1000);
         //adds answer to specificQuestion
         $scope.AddAnswer = function () {
