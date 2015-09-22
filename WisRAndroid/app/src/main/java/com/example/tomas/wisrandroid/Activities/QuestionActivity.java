@@ -1,32 +1,36 @@
 package com.example.tomas.wisrandroid.Activities;
 
-import android.support.v7.app.ActionBarActivity;
+import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.PagerTitleStrip;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.Volley;
 import com.example.tomas.wisrandroid.Helpers.ActivityLayoutHelper;
-import com.example.tomas.wisrandroid.Helpers.HttpHelper;
-import com.example.tomas.wisrandroid.Model.BooleanQuestion;
-import com.example.tomas.wisrandroid.Model.Question;
+import com.example.tomas.wisrandroid.Helpers.CustomPagerAdapter;
 import com.example.tomas.wisrandroid.R;
-import com.google.gson.Gson;
 
-import org.json.JSONObject;
+public class QuestionActivity extends ActionBarActivity {
 
-import java.util.HashMap;
-import java.util.Map;
+    CustomPagerAdapter mPagerAdapter;
+    ViewPager mViewPager;
 
-public class QuestionActivity extends AppCompatActivity {
 
     Button mButton;
     TextView mTextView;
@@ -35,16 +39,46 @@ public class QuestionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
-        ActivityLayoutHelper.HideLayout(getWindow(), getSupportActionBar());
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
 
+        final ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
 
+        mPagerAdapter = new CustomPagerAdapter(getSupportFragmentManager());
+        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager.setAdapter(mPagerAdapter);
+        mViewPager.getAdapter().getItemPosition(1);
 
-        mTextView = (TextView) findViewById(R.id.textview_ask_question);
-
-        mButton = (Button) findViewById(R.id.button_ask_question);
-        mButton.setOnClickListener(new View.OnClickListener() {
+        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
-            public void onClick(View v) {
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                Toast.makeText(QuestionActivity.this, "Selected page position: " + position, Toast.LENGTH_SHORT).show();
+                mViewPager.setCurrentItem(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+
+
+        //ActivityLayoutHelper.HideLayout(getWindow(), getSupportActionBar());
+
+        //mTextView = (TextView) findViewById(R.id.textview_ask_question);
+        //mTextView.setText(getIntent().getBundleExtra("CurrentRoom").getString("Room", "Failed"));
+
+        //mButton = (Button) findViewById(R.id.button_ask_question);
+        //mButton.setOnClickListener(new View.OnClickListener() {
+        //    @Override
+        //    public void onClick(View v) {
 
 //                Map<String,String> mParams = new HashMap<String, String>();
 //
@@ -88,8 +122,8 @@ public class QuestionActivity extends AppCompatActivity {
 //                catch (Exception e){
 //
 //                }
-            }
-        });
+        //    }
+      //  });
 
     }
 
@@ -115,3 +149,5 @@ public class QuestionActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 }
+
+

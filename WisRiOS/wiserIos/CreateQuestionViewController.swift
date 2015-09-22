@@ -36,21 +36,22 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
         
         //http://stackoverflow.com/questions/11251340/convert-uiimage-to-base64-string-in-objective-c-and-swift
         if let image = selectedImage {
-            let imageData = UIImageJPEGRepresentation(image, 0.8)
-            let b64 = imageData?.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
-            q.Img = b64
+            //let imageData = UIImagePNGRepresentation(image)
+            let imageData = UIImageJPEGRepresentation(image, 0.9)
+            let b64 = imageData?.base64EncodedStringWithOptions(NSDataBase64EncodingOptions.EncodingEndLineWithCarriageReturn)
+            q.Img = b64!
         }
         
-        q.QuestionText = questionText?.textLabel?.text
+        q.QuestionText = questionText?.inputField.text
         q.RoomId = room._id
         
-        let duration = durationInput?.textLabel?.text ?? "0"
+        let duration = durationInput?.inputField.text ?? "0"
         q.ExpireTimestamp = String(Int(duration)!/60)
         
         let jsonQ = JSONSerializer.toJson(q)
-        let body = "roomId=\(room._id)&question=\(jsonQ)&type=MultipleChoiceQuestion"
+        let body = "roomId=\(room._id!)&question=\(jsonQ)&type=MultipleChoiceQuestion"
         HttpHandler.requestWithResponse(action: "Question/CreateQuestion", type: "POST", body: body) { (data, response, error) -> Void in
-            NSLog("error 2837")
+            print(data)
         }
     }
     
@@ -108,7 +109,13 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
             
             let imagePickerController = UIImagePickerController()
             imagePickerController.delegate = self
-            imagePickerController.sourceType = .Camera
+            
+            if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera) {
+                imagePickerController.sourceType = .Camera
+            }
+            else {
+                imagePickerController.sourceType = .PhotoLibrary
+            }
             
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
             alert.addAction(UIAlertAction(title: "Photo Library", style: .Default, handler: { action in
@@ -120,6 +127,12 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
                 imagePickerController.sourceType = UIImagePickerControllerSourceType.Camera
                 self.presentViewController(imagePickerController, animated: true, completion: nil)
             }))
+            
+            //http://stackoverflow.com/questions/25759885/uiactionsheet-from-popover-with-ios8-gm
+            //iPad support
+            alert.popoverPresentationController?.sourceView = self.view
+            alert.popoverPresentationController?.sourceRect = CGRectMake(self.view.bounds.size.width / 2.0, self.view.bounds.size.height / 2.0, 1.0, 1.0)
+            
             
             presentViewController(alert, animated: true, completion: nil)
         }

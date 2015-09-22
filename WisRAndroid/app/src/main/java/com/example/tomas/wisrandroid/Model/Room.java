@@ -10,6 +10,7 @@ public class Room {
     private String Id;
     private String Name;
     private String CreatedById;
+    private Coordinate Location;
     private int Radius;
     private String Tag;
     private boolean HasPassword;
@@ -18,7 +19,7 @@ public class Room {
     private boolean UsersCanAsk;
     private boolean AllowAnonymous;
     private boolean UseLocation;
-    private Coordinate Location;
+
 
     //Constructors
     public Room(){}
