@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
@@ -112,22 +113,49 @@ namespace WisRRestAPI.Controllers
             }
         }
 
-        [System.Web.Mvc.HttpPost]
-        public void UpdateQuestionResponse(string question, string type, string id)
+        //[System.Web.Mvc.HttpPost]
+        //public void UpdateQuestionResponse(string question, string type, string id)
+        //{
+        //    Type questionType;
+
+        //    string typeString = "WisR.DomainModels." + type;
+        //    questionType = Type.GetType(typeString);
+
+        //    object b;
+        //    Question q;
+
+        //    b = BsonSerializer.Deserialize(question, questionType);
+        //    q = (Question)b;
+        //    if (Convert.ToDouble(q.ExpireTimestamp) > (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalMilliseconds)
+        //    {
+        //        q.Id = id;
+        //        _qr.UpdateQuestion(id, q);
+        //        try
+        //        {
+        //            _irabbitPublisher.publishString("UpdateQuestion", q.ToJson());
+        //        }
+        //        catch (Exception e)
+        //        {
+        //        }
+        //    }
+
+        //}
+        public void AddQuestionResponse(string response, string type, string id)
         {
             Type questionType;
 
             string typeString = "WisR.DomainModels." + type;
             questionType = Type.GetType(typeString);
 
-            object b;
-            Question q;
+            var q = _qr.GetQuestion(id).Result;
 
-            b = BsonSerializer.Deserialize(question, questionType);
-            q = (Question)b;
-            if (Convert.ToDouble(q.ExpireTimestamp) > (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalMilliseconds)
+            if (Convert.ToDouble(q.ExpireTimestamp) >
+                (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalMilliseconds)
             {
                 q.Id = id;
+
+                var answer = BsonSerializer.Deserialize<Answer>(response);
+                q.Result.Add(answer);
                 _qr.UpdateQuestion(id, q);
                 try
                 {
@@ -137,7 +165,33 @@ namespace WisRRestAPI.Controllers
                 {
                 }
             }
+        }
 
+        public void AddVote(string vote, string type, string id)
+        {
+            Type questionType;
+
+            string typeString = "WisR.DomainModels." + type;
+            questionType = Type.GetType(typeString);
+
+            var q = _qr.GetQuestion(id).Result;
+
+            if (Convert.ToDouble(q.ExpireTimestamp) >
+                (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalMilliseconds)
+            {
+                q.Id = id;
+
+                var v = BsonSerializer.Deserialize<Vote>(vote);
+                q.Votes.Add(v);
+                _qr.UpdateQuestion(id, q);
+                try
+                {
+                    _irabbitPublisher.publishString("UpdateQuestion", q.ToJson());
+                }
+                catch (Exception e)
+                {
+                }
+            }
         }
 
         [System.Web.Mvc.HttpGet]
