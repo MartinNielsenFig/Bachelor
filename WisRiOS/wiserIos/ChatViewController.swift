@@ -28,15 +28,20 @@ class ChatViewController: UIViewController, UITextFieldDelegate, Paged {
     override func viewDidLoad() {
         chatMessageInput.delegate = self
         
-        HttpHandler.getChatMessages(roomId!) { (messages) -> Void in
+        let body = "roomId=\(roomId!)"
+        HttpHandler.requestWithResponse(action: "Chat/GetAllByRoomId", type: "POST", body: body) { (data, response, error) -> Void in
+            var messageArray = [ChatMessage]()
+            for msgJson in JSONSerializer.toArray(data!)! {
+                messageArray += [ChatMessage(jsonDictionary: msgJson as! NSDictionary)]
+            }
+            
             var tempChat = String()
-            for m in messages {
+            for m in messageArray {
                 let line = DateTimeHelper.getTimeStringFromEpochString(m.Timestamp) + " " + m.Value! + "\n"
                 tempChat += line
             }
             self.chat = tempChat
         }
-        
         super.viewDidLoad()
     }
     
@@ -52,7 +57,12 @@ class ChatViewController: UIViewController, UITextFieldDelegate, Paged {
         //message timestamp gets created on restApi
         msg.Value = textField.text
         
-        HttpHandler.sendChatMessage(JSONSerializer.toJson(msg))
+        
+        let msgJson = JSONSerializer.toJson(msg)
+        let body = "ChatMessage=\(msgJson)"
+        HttpHandler.requestWithResponse(action: "Chat/CreateChatMessage", type: "POST", body: body) { (data, response, error) -> Void in
+            NSLog("Chat/CreateChatMessage Done")
+        }
         
         return true
     }

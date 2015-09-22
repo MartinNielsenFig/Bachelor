@@ -166,10 +166,11 @@ class CreateRoomViewController: UITableViewController {
         room.EncryptedPassword = pwInputCell?.inputField.text
         
         //Creating the room callback adds the id and navigates (todo loading bar or indicator)
-        HttpHandler.createRoom(JSONSerializer.toJson(self.room)) { (roomId) -> Void in
-            self.room._id = roomId
-            
-            //Navigate
+        
+        let jsonRoom = JSONSerializer.toJson(self.room)
+        let body = "room=\(jsonRoom)"
+        HttpHandler.requestWithResponse(action: "Room/CreateRoom", type: "POST", body: body) { (data, response, error) -> Void in
+            self.room._id = data
             dispatch_async(dispatch_get_main_queue()) {
                 self.performSegueWithIdentifier("RoomCreated", sender: self)
             }

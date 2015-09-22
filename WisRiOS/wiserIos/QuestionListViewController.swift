@@ -34,17 +34,25 @@ class QuestionListViewController: UIViewController, UITableViewDataSource, UITab
         
         //Load questions for room
         //"Swift Trailing Closure" syntax
-        HttpHandler.getQuestions(roomId!) { (questions) -> Void in
+        
+        let action = "Question/GetQuestionsForRoom?roomId=\(self.roomId!)"
+        HttpHandler.requestWithResponse(action: action, type: "GET", body: "") { (data, response, error) -> Void in
+            
+            var questionArray = [Question]()
+            for question in JSONSerializer.toArray(data!)! {
+                questionArray += [Question(jsonDictionary: question as! NSDictionary)]
+            }
+            
             self.questions.removeAll()
             
-            if questions.count <= 0 {
+            if questionArray.count <= 0 {
                 let q = Question()
                 q.QuestionText = "No questions for room"
                 q.CreatedById = "system"
                 self.questions += [q]
             }
             else {
-                self.questions += questions
+                self.questions += questionArray
             }
         }
     }

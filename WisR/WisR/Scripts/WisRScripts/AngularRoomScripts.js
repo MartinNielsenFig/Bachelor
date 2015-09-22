@@ -107,7 +107,7 @@ app.controller("RoomController", [
                 $scope.imageSize = "500px";
             } else {
                 $scope.imageSize = "100px";
-            }
+                }
 
             $("#specificQuestionImage").css("width", $scope.imageSize);
             $("#specificQuestionImage").css("height", $scope.imageSize);
@@ -243,7 +243,7 @@ app.controller("RoomController", [
                 $scope.showResults = false;
             }
 
-
+           
         }
 
         $scope.GetUsernameById = function (userId) {
@@ -265,46 +265,26 @@ app.controller("RoomController", [
         }
 
         $scope.Vote = function (direction) {
+          
             if (direction == "Up") {
-                $scope.SpecificQuestion.Votes.push({ CreatedById: $scope.userId, Value: 1 });
+               
+                    //Use response to send to REST API
+                    var Obj = { Value: 1, CreatedById: $window.userId }
+                    $http.post(configs.restHostName + '/Question/AddVote', { vote: JSON.stringify(Obj), type: $scope.SpecificQuestion._t, id: $scope.SpecificQuestion._id });
+                
+               
             }
             if (direction == "Down") {
-                $scope.SpecificQuestion.Votes.push({ CreatedById: $scope.userId, Value: -1 });
-            }
-            var newResponses = "";
-            for (var i = 0; i < $scope.SpecificQuestion.ResponseOptions.length; i++) {
-                if (i != $scope.SpecificQuestion.ResponseOptions.length - 1) {
-                    newResponses = newResponses + $scope.SpecificQuestion.ResponseOptions[i].Value + ',';
-                } else {
-                    newResponses = newResponses + $scope.SpecificQuestion.ResponseOptions[i].Value;
+               
+                    //Use response to send to REST API
+                    var Obj = { Value: -1, CreatedById: $window.userId }
+                    $http.post(configs.restHostName + '/Question/AddVote', { vote: JSON.stringify(Obj), type: $scope.SpecificQuestion._t, id: $scope.SpecificQuestion._id });
+                
+               
                 }
-            }
 
-            var newResults = "";
-            for (var i = 0; i < $scope.SpecificQuestion.Result.length; i++) {
-                if (i != $scope.SpecificQuestion.Result.length - 1) {
-                    newResults = newResults + $scope.SpecificQuestion.Result[i].Value + "-" + $window.userId + ',';
-                } else {
-                    newResults = newResults + $scope.SpecificQuestion.Result[i].Value + "-" + $window.userId;
-                }
-            }
 
-            var newVotes = "";
-            for (var i = 0; i < $scope.SpecificQuestion.Votes.length; i++) {
-                if (i != $scope.SpecificQuestion.Votes.length - 1) {
-                    newVotes = newVotes + $scope.SpecificQuestion.Votes[i].Value + ":" + $window.userId + ',';
-                } else {
-                    newVotes = newVotes + $scope.SpecificQuestion.Votes[i].Value + ":" + $window.userId;
-                }
             }
-            $http.post('/Room/toJsonQuestion', {
-                CreatedBy: $scope.SpecificQuestion.CreatedById, RoomId: $scope.SpecificQuestion.RoomId, Votes: newVotes, Image: $scope.SpecificQuestion.Img, QuestionText: $scope.SpecificQuestion.QuestionText, ResponseOptions: newResponses, CreationTimestamp: $scope.SpecificQuestion.CreationTimestamp, ExpireTimestamp: $scope.SpecificQuestion.ExpireTimestamp, QuestionResult: newResults, QuetionsType: $scope.SpecificQuestion._t
-            }).
-               then(function (response) {
-                   //Use response to send to REST API
-                   $http.post(configs.restHostName + '/Question/UpdateQuestion', { question: JSON.stringify(response.data), type: $scope.SpecificQuestion._t, id: $scope.SpecificQuestion._id });
-               });
-        }
 
         //Get percentage for loading bar
         $scope.getPercentage = function () {
@@ -328,34 +308,9 @@ app.controller("RoomController", [
         //setInterval($scope.getPercentage, 1000);
         //adds answer to specificQuestion
         $scope.AddAnswer = function () {
-            $scope.SpecificQuestion.Result.push($scope.answerChoosen);
-
-            var newResponses = "";
-            for (var i = 0; i < $scope.SpecificQuestion.ResponseOptions.length; i++) {
-                if (i != $scope.SpecificQuestion.ResponseOptions.length - 1) {
-                    newResponses = newResponses + $scope.SpecificQuestion.ResponseOptions[i].Value + ',';
-                } else {
-                    newResponses = newResponses + $scope.SpecificQuestion.ResponseOptions[i].Value;
-                }
-            }
-
-            var newResults = "";
-            for (var i = 0; i < $scope.SpecificQuestion.Result.length; i++) {
-                if (i != $scope.SpecificQuestion.Result.length - 1) {
-                    newResults = newResults + $scope.SpecificQuestion.Result[i].Value + "-" + $window.userId + ',';
-                } else {
-                    newResults = newResults + $scope.SpecificQuestion.Result[i].Value + "-" + $window.userId;
-                }
-            }
-
-            //Make get request for json object conversion
-            $http.post('/Room/toJsonQuestion', {
-                CreatedBy: $scope.SpecificQuestion.CreatedById, RoomId: $scope.SpecificQuestion.RoomId, Downvotes: $scope.SpecificQuestion.Downvotes, Image: $scope.SpecificQuestion.Img, Upvotes: $scope.SpecificQuestion.Upvotes, QuestionText: $scope.SpecificQuestion.QuestionText, ResponseOptions: newResponses, CreationTimestamp: $scope.SpecificQuestion.CreationTimestamp, ExpireTimestamp: $scope.SpecificQuestion.ExpireTimestamp, QuestionResult: newResults, QuetionsType: $scope.SpecificQuestion._t
-            }).
-                then(function (response) {
-                    //Use response to send to REST API
-                    $http.post(configs.restHostName + '/Question/UpdateQuestionResponse', { question: JSON.stringify(response.data), type: $scope.SpecificQuestion._t, id: $scope.SpecificQuestion._id });
-                });
+                    //Use response to send to REST API string response
+                    var Obj ={ Value: $scope.answerChoosen.Value,UserId:$window.userId}
+                    $http.post(configs.restHostName + '/Question/AddQuestionResponse', { response: JSON.stringify(Obj), type: $scope.tempQuestion._t, id: $scope.tempQuestion._id });
         }
         //Function for creating a question
         $scope.postQuestion = function () {
