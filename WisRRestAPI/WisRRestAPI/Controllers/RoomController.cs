@@ -16,11 +16,11 @@ using WisRRestAPI.Providers;
 namespace WisRRestAPI.Controllers {
     public class RoomController : Controller {
         private readonly IRoomRepository _rr;
-        private IrabbitHandler _rabbitHandler;
+        private IRabbitPublisher _irabbitPublisher;
 
-        public RoomController(IRoomRepository rr, IrabbitHandler rabbitHandler) {
+        public RoomController(IRoomRepository rr, IRabbitPublisher irabbitPublisher) {
             _rr = rr;
-            _rabbitHandler = rabbitHandler;
+            _irabbitPublisher = irabbitPublisher;
         }
 
         [System.Web.Mvc.HttpGet]
@@ -64,7 +64,7 @@ namespace WisRRestAPI.Controllers {
             //Publish to rabbitMQ after, because we need the id
             try
             {
-                _rabbitHandler.publishString("CreateRoom", room.ToJson());
+                _irabbitPublisher.publishString("CreateRoom", room.ToJson());
             }
             catch (Exception e)
             {

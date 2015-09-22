@@ -10,20 +10,20 @@ using MongoDB.Bson.IO;
 using MongoDB.Bson.Serialization;
 using Newtonsoft.Json.Linq;
 using WisR.DomainModels;
+using WisR.Providers;
 using WisRRestAPI.DomainModel;
-using WisRRestAPI.Providers;
 
 namespace WisR.Controllers
 {
     public class RoomController : Controller
     {
-        private IrabbitHandler _rabbitHandler;
+        private IRabbitSubscriber _rabbitSubscriber;
 
-        public RoomController(IrabbitHandler rabbitHandler)
+        public RoomController(IRabbitSubscriber rabbitSubscriber)
         {
-            _rabbitHandler = rabbitHandler;
-            _rabbitHandler.subscribe("CreateChatMessage");
-            _rabbitHandler.subscribe("CreateQuestion");
+            _rabbitSubscriber = rabbitSubscriber;
+            _rabbitSubscriber.subscribe("CreateChatMessage");
+            _rabbitSubscriber.subscribe("CreateQuestion");
         }
         // GET: Room
         public ActionResult Index(string roomId)

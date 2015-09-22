@@ -26,7 +26,7 @@ namespace WisRRestAPI
             container.Register<IChatRepository, ChatRepository>(Lifestyle.Singleton);
             container.Register<IQuestionRepository, QuestionRepository>(Lifestyle.Singleton);
             container.Register<IUserRepository, UserRepository>(Lifestyle.Singleton);
-            container.Register<IrabbitHandler, rabbitHandler>(Lifestyle.Singleton);
+            container.Register<IRabbitPublisher, rabbitPublisher>(Lifestyle.Singleton);
             DependencyResolver.SetResolver(new SimpleInjectorDependencyResolver(container));
 
 

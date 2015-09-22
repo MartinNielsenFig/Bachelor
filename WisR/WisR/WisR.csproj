@@ -239,12 +239,6 @@
     <Compile Include="..\..\WisRRestAPI\WisRRestAPI\DomainModel\User.cs">
       <Link>DomainModels\User.cs</Link>
     </Compile>
-    <Compile Include="..\..\WisRRestAPI\WisRRestAPI\Providers\IrabbitHandler.cs">
-      <Link>Providers\IrabbitHandler.cs</Link>
-    </Compile>
-    <Compile Include="..\..\WisRRestAPI\WisRRestAPI\Providers\rabbitHandler.cs">
-      <Link>Providers\rabbitHandler.cs</Link>
-    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -266,6 +260,8 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\IRabbitSubscriber.cs" />
+    <Compile Include="Providers\RabbitSubscriber.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>

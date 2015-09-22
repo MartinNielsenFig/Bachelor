@@ -1,14 +1,14 @@
 ﻿using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
-namespace WisRRestAPI.Providers
+namespace WisR.Providers
 {
-    public interface IrabbitHandler
+    public interface IRabbitSubscriber
     {
         IConnection getConn();
         IModel getModel();
-        void publishString(string routingKey,string value);
-        void subscribe(string routingKey);
         void handle(object messageModel, BasicDeliverEventArgs ea);
+        void publishString(string routingKey, string stringToPublish);
+        void subscribe(string routingKey);
     }
 }
