@@ -41,7 +41,12 @@ textarea {
     -ms-animation: spin5 .7s infinite linear;
     -ms-animation: spin6 .7s infinite linear;
 }
-
+.upvoted {
+    color:lightgreen
+}
+.downvoted {
+    color:red
+}
 @-webkit-keyframes spin2 {
     from {
         -webkit-transform: rotate(0deg);
