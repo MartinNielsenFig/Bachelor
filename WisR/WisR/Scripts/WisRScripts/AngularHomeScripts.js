@@ -19,20 +19,6 @@ app.config(['$httpProvider', function ($httpProvider) {
 app.controller("UserController", ['$scope', function ($scope) {
 }]);
 
-
-app.filter('roomsNear', function () {
-    return function (rooms, scope) {
-        if (rooms != undefined && scope.currentLocation != undefined) {
-            var filtered = [];
-            for (var i = 0; i < rooms.length; i++) {
-                var room = rooms[i];
-                if (shouldBeAdded(room, scope))
-                    filtered.push(room);
-                }
-            return filtered;
-        }
-    };
-});
 app.controller("HomeController", ['$scope', '$http', '$location', '$window', 'configs', function ($scope, $http, $location, $window, configs) {
     //SignalR initiation
     $(function () {

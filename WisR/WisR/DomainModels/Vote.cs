@@ -2,7 +2,7 @@ namespace WisR.DomainModels
 {
     public class Vote
     {
-        string CreatedById { get; set; }
-        int Value { get; set; }
+        public string CreatedById { get; set; }
+        public int Value { get; set; }
     }
 }
