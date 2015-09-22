@@ -10,8 +10,8 @@ import Foundation
 
 class HttpHandler {
     
-    static let mainUrl = "http://192.168.198.141:1337/"
-    //static let mainUrl = "http://wisrrestapi.aceipse.dk/"
+    //static let mainUrl = "http://192.168.198.141:1337/"
+    static let mainUrl = "http://wisrrestapi.aceipse.dk/"
     //static let mainUrl = "http://10.192.15.42/"
     
     static func log(data data: NSData?, response: NSURLResponse?, error: NSError?) {
