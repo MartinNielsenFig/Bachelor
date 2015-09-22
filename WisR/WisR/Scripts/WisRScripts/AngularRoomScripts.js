@@ -253,10 +253,10 @@ app.controller("RoomController", [
 
         $scope.Vote = function(direction) {
             if (direction == "Up") {
-                $scope.SpecificQuestion.Upvotes = $scope.SpecificQuestion.Upvotes + 1;
+                $scope.SpecificQuestion.Votes.push({ CreatedById: $scope.userId, Value: 1});
             }
             if (direction == "Down") {
-                $scope.SpecificQuestion.Downvotes = $scope.SpecificQuestion.Downvotes + 1;
+                $scope.SpecificQuestion.Votes.push({ CreatedById: $scope.userId, Value: -1 });
             }
              var newResponses = "";
             for (var i = 0; i < $scope.SpecificQuestion.ResponseOptions.length; i++) {
@@ -275,8 +275,17 @@ app.controller("RoomController", [
                     newResults = newResults + $scope.SpecificQuestion.Result[i].Value + "-" + $window.userId;
                 }
             }
+
+            var newVotes = "";
+            for (var i = 0; i < $scope.SpecificQuestion.Votes.length; i++) {
+                if (i != $scope.SpecificQuestion.Votes.length - 1) {
+                    newVotes = newVotes + $scope.SpecificQuestion.Votes[i].Value + ":" + $window.userId + ',';
+                } else {
+                    newVotes = newVotes + $scope.SpecificQuestion.Votes[i].Value + ":" + $window.userId;
+                }
+            }
             $http.post('/Room/toJsonQuestion', {
-                CreatedBy: $scope.SpecificQuestion.CreatedById, RoomId: $scope.SpecificQuestion.RoomId, Downvotes: $scope.SpecificQuestion.Downvotes, Image: $scope.SpecificQuestion.Img, Upvotes: $scope.SpecificQuestion.Upvotes, QuestionText: $scope.SpecificQuestion.QuestionText, ResponseOptions: newResponses, CreationTimestamp: $scope.SpecificQuestion.CreationTimestamp, ExpireTimestamp: $scope.SpecificQuestion.ExpireTimestamp, QuestionResult: newResults, QuetionsType: $scope.SpecificQuestion._t
+                CreatedBy: $scope.SpecificQuestion.CreatedById, RoomId: $scope.SpecificQuestion.RoomId, Votes: newVotes, Image: $scope.SpecificQuestion.Img, QuestionText: $scope.SpecificQuestion.QuestionText, ResponseOptions: newResponses, CreationTimestamp: $scope.SpecificQuestion.CreationTimestamp, ExpireTimestamp: $scope.SpecificQuestion.ExpireTimestamp, QuestionResult: newResults, QuetionsType: $scope.SpecificQuestion._t
             }).
                then(function (response) {
                    //Use response to send to REST API

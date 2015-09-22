@@ -13,31 +13,12 @@
                 <div style="overflow-y: auto; max-height: 300px">
 
                     <table id="hostQuestionsTable" class="table table-hover table-responsive">
-                    @*<thead>
-                    <tr>
-                        <th>
-                            Question text
-                        </th>
-                        <th>
-                            Created by
-                        </th>
-                        <th>
-                            Upvotes
-                        </th>
-                        <th>
-                            Downvotes
-                        </th>
-                        <th>
-                            Image
-                        </th>
-                </thead>*@
                     <tbody>
                         <tr style="cursor: pointer" ng-repeat="question in Questions|filter: { RoomId: '@ViewBag.roomId',CreatedById: CurrentRoom.CreatedById } " ng-click="ShowSpecificQuestion(question)">
                             <td>{{question.QuestionText}}</td>
                             <td>{{GetUsernameById(question.CreatedById)}}</td>
-                            <td>{{question.Upvotes}}<span class="glyphicon glyphicon-thumbs-up"></span></td>
-                            <td>{{question.Downvotes}}<span class="glyphicon glyphicon-thumbs-down"></span></td>
-                                @*<td><img ng-src="data:image/png;base64,{{question.Img}}" style="max-width: 100px; max-height: 100px" /></td>*@
+                            <td>{{question.Votes | Votes: 1}}<span class="glyphicon glyphicon-thumbs-up"></span></td>
+                            <td>{{question.Votes | Votes: -1}}<span class="glyphicon glyphicon-thumbs-down"></span></td>
                     </tbody>
                 </table>
             </div>
@@ -45,31 +26,12 @@
                     <h4>User questions</h4>
                     <div style="overflow-y: auto; max-height: 300px">
                         <table id="userQuestionsTable" class="table table-hover table-responsive">
-                            @*<thead>
-                    <tr>
-                        <th>
-                            Question text
-                        </th>
-                        <th>
-                            Created by
-                        </th>
-                        <th>
-                            Upvotes
-                        </th>
-                        <th>
-                            Downvotes
-                        </th>
-                        <th>
-                            Image
-                        </th>
-                </thead>*@
                             <tbody>
                             <tr style="cursor: pointer" ng-repeat="question in Questions|filter: { RoomId: '@ViewBag.roomId',CreatedById: '!'+CurrentRoom.CreatedById  } " ng-click="ShowSpecificQuestion(question)">
                             <td>{{question.QuestionText}}</td>
                             <td>{{GetUsernameById(question.CreatedById)}}</td>
-                            <td>{{question.Upvotes}}<span class="glyphicon glyphicon-thumbs-up"></span></td>
-                            <td>{{question.Downvotes}}<span class="glyphicon glyphicon-thumbs-down"></span></td>
-                                    @*<td><img ng-src="data:image/png;base64,{{question.Img}}" style="max-width: 100px; max-height: 100px" /></td>*@
+                            <td>{{question.Votes | Votes: 1}}<span class="glyphicon glyphicon-thumbs-up"></span></td>
+                            <td>{{question.Votes | Votes: -1}}<span class="glyphicon glyphicon-thumbs-down"></span></td>
                             </tbody>
                         </table>
                         </div>
@@ -103,8 +65,8 @@
                     <tr>
                         <td>{{SpecificQuestion.QuestionText}}</td>
                         <td>{{GetUsernameById(SpecificQuestion.CreatedById)}}</td>
-                        <td>{{SpecificQuestion.Upvotes}}<button class="votingBtn" ng-click="Vote('Up')"><span class="glyphicon glyphicon-thumbs-up"></span></button></td>
-                        <td>{{SpecificQuestion.Downvotes}}<button  class="votingBtn" ng-click="Vote('Down')"><span class="glyphicon glyphicon-thumbs-down"></span></button></td>
+                        <td>{{SpecificQuestion.Votes | Votes: 1}}<button class="votingBtn" ng-click="Vote('Up')"><span class="glyphicon glyphicon-thumbs-up"></span></button></td>
+                        <td>{{SpecificQuestion.Votes | Votes: -1}}<button class="votingBtn" ng-click="Vote('Down')"><span class="glyphicon glyphicon-thumbs-down"></span></button></td>
                         <td><img ng-src="data:image/png;base64,{{SpecificQuestion.Img}}" style="max-width: 100px; max-height: 100px" /></td>
                     </tr>
 

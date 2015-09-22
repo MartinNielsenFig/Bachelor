@@ -666,6 +666,7 @@
     <Content Include="Scripts\jquery.signalR-2.2.0.js" />
     <Content Include="Scripts\jquery.signalR-2.2.0.min.js" />
     <Content Include="Scripts\scrollglue.js" />
+    <Content Include="Scripts\WisRScripts\AngularFiltersScripts.js" />
     <Content Include="Scripts\WisRScripts\AngularHomeScripts.js" />
     <Content Include="Scripts\WisRScripts\AngularRoomScripts.js" />
     <Content Include="Scripts\bootstrap.js" />
