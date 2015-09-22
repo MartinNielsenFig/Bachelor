@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
+import android.media.audiofx.BassBoost;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -90,14 +91,14 @@ public class MainActivity extends FragmentActivity implements GoogleApiClient.Co
             }
         });
 
-        mLogoutButton = (Button) findViewById(R.id.button_logout);
-        mLogoutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                LoginManager.getInstance().logOut();
-                mLogoutButton.setEnabled(false);
-            }
-        });
+//        mLogoutButton = (Button) findViewById(R.id.button_logout);
+//        mLogoutButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                LoginManager.getInstance().logOut();
+//                mLogoutButton.setEnabled(false);
+//            }
+//        });
 
     }
 
@@ -111,9 +112,9 @@ public class MainActivity extends FragmentActivity implements GoogleApiClient.Co
 
         if(AccessToken.getCurrentAccessToken() == null)
         {
-            mLogoutButton.setEnabled(false);
+            //mLogoutButton.setEnabled(false);
         }else {
-            mLogoutButton.setEnabled(true);
+            //mLogoutButton.setEnabled(true);
         }
     }
 
@@ -124,9 +125,10 @@ public class MainActivity extends FragmentActivity implements GoogleApiClient.Co
 
         if(AccessToken.getCurrentAccessToken() == null)
         {
-            mLogoutButton.setEnabled(false);
+
+            //mLogoutButton.setEnabled(false);
         }else {
-            mLogoutButton.setEnabled(true);
+            //mLogoutButton.setEnabled(true);
         }
 
 
@@ -149,6 +151,11 @@ public class MainActivity extends FragmentActivity implements GoogleApiClient.Co
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }
+        if (id == R.id.action_logout)
+        {
+            LoginManager.getInstance().logOut();
+            //mLogoutButton.setEnabled(false);
         }
 
         return super.onOptionsItemSelected(item);
