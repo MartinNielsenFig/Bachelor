@@ -118,6 +118,12 @@ app.controller("RoomController", [
         //Get room info
         var getRoom = function (user) {
             $http.post(configs.restHostName + '/Room/GetById', { id: MyRoomIdFromViewBag }).then(function (response) {
+                //Check for errors on request
+                if (response.data.ErrorMessage != undefined) {
+                    $("#RoomErrorDiv").html("<h3>"+response.data.ErrorMessage+"</h3>");
+                    return;
+                }
+
                 $scope.CurrentRoom = response.data;
                 if (user) {
                     if ($scope.currentUser.ConnectedRoomIds != undefined) {

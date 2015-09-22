@@ -77,7 +77,17 @@ namespace WisRRestAPI.Controllers {
 
         [System.Web.Mvc.HttpPost]
         public string GetById(string id) {
-            var item = _rr.GetRoom(id).Result;
+            var item=new Room();
+            try
+            {
+                item = _rr.GetRoom(id).Result;
+            }
+            catch (Exception e)
+            {
+                var err=new Error("Couldn't get room by that id",100,e.StackTrace);
+                return err.ToJson();
+            }
+            
             if (item == null) {
                 var err = new Error("Not found", 100);
                 return err.ToJson();
