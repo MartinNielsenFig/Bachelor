@@ -50,9 +50,9 @@ namespace WisRRestAPI.Controllers
                 string typeString = "WisR.DomainModels." + type;
                 questionType = Type.GetType(typeString);
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                return "Could not determine type from string: " + type;
+                return new Error("Could not determine type from string: " + type, 100, e.StackTrace).ToJson();
             }
 
             object b;
@@ -64,7 +64,7 @@ namespace WisRRestAPI.Controllers
             }
             catch (Exception e)
             {
-                return "Could not deserialize the JSON string: " + question;
+                return new Error("Could not deserialize the JSON string: " + question, 100, e.StackTrace).ToJson();
             }
             if (q.Id != null)
             {
