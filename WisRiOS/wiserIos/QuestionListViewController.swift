@@ -37,7 +37,7 @@ class QuestionListViewController: UIViewController, UITableViewDataSource, UITab
         
         let action = "Question/GetQuestionsForRoom?roomId=\(self.roomId!)"
         HttpHandler.requestWithResponse(action: action, type: "GET", body: "") { (data, response, error) -> Void in
-            
+                        
             var questionArray = [Question]()
             for question in JSONSerializer.toArray(data!)! {
                 questionArray += [Question(jsonDictionary: question as! NSDictionary)]
