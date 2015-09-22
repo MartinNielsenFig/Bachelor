@@ -33,6 +33,18 @@ namespace WisRRestAPI.DomainModel
             return qList;
         }
 
+        public Task<List<Question>> GetQuestionsForRoomWithoutImages(string roomId)
+        {
+            var qList = _database.GetCollection<Question>("question").Find(x => x.RoomId == roomId).Project<Question>(Builders<Question>.Projection.Exclude(doc => doc.Img)).ToListAsync();
+            return qList;
+        }
+
+        public Task<Question> GetImageByQuestionId(string questionId)
+        {
+            var qList = _database.GetCollection<Question>("question").Find(x => x.Id== questionId).Project<Question>(Builders<Question>.Projection.Include("_t").Include("Img")).SingleAsync();
+            return qList;
+        }
+
         public void AddQuestionObject(object item)
         {
             _database.GetCollection<object>("question").InsertOneAsync(item);

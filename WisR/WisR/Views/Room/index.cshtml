@@ -46,10 +46,12 @@
         <div id="specificQuestion" ng-show="SpecificQuestionShown">
             <div class="col-md-8">
                 <table class="table table-responsive">
-                    <tr>                       
+                    <tr>
                         <td >
-                            <img ng-click="toggleImageSize()" id="specificQuestionImage" ng-src="data:image/png;base64,{{SpecificQuestion.Img}}" title="Click to change image size" style="cursor: pointer;width: 100px; height: 100px"/>
-                           
+                            <div ng-hide="specificImageLoaded" class="container text-center col-md-4">
+                                <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span><label>Loading image...</label>
+                            </div>
+                            <img ng-show="specificImageLoaded" ng-click="toggleImageSize()" id="specificQuestionImage" ng-src="data:image/png;base64,{{SpecificQuestion.Img}}" title="Click to change image size" style="cursor: pointer; width: 100px; height: 100px"/>
                         </td>
                         <td>{{SpecificQuestion.QuestionText}}</td>
                         <td>{{GetUsernameById(SpecificQuestion.CreatedById)}}</td>
