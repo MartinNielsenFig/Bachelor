@@ -228,6 +228,12 @@ app.controller("RoomController", [
         $scope.QuestionTypes = [{ name: 'Multiple Choice Question', val: 'MultipleChoiceQuestion' }, { name: 'Textual Question', val: 'TextualQuestion' }];
         $scope.ActiveUsers = [];
 
+        $scope.AddResponseOption = function() {
+            $scope.ResponseOptions.push({id: $scope.ResponseOptions.length+1, val: undefined });
+        }
+        $scope.RemoveResponseOption = function(id) {
+            $scope.ResponseOptions.splice(id, 1);
+        }
         $scope.ResponseOptions = [{ id: 0, val: undefined }, { id: 1, val: undefined }];
         //Function for retrieving userName by an id
         var getAllUsers = function () {

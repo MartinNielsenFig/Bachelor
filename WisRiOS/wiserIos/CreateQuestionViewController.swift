@@ -37,9 +37,18 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
         //http://stackoverflow.com/questions/11251340/convert-uiimage-to-base64-string-in-objective-c-and-swift
         if let image = selectedImage {
             //let imageData = UIImagePNGRepresentation(image)
-            let imageData = UIImageJPEGRepresentation(image, 0.9)
-            let b64 = imageData?.base64EncodedStringWithOptions(NSDataBase64EncodingOptions.EncodingEndLineWithCarriageReturn)
-            q.Img = b64!
+            let imageData = UIImageJPEGRepresentation(image, 0.8)
+            if let imageData = imageData {
+                let imageSizeMb = (imageData.length)/(1024*1024)
+                print("IMAGE SIZE: \(imageSizeMb) MB")
+                
+                let b64 = imageData.base64EncodedStringWithOptions(NSDataBase64EncodingOptions.EncodingEndLineWithCarriageReturn)
+                
+                let b64ImageSizeMb = b64.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)/(1024*1024)
+                print("BASE64 IMAGE SIZE \(b64ImageSizeMb) MB")
+                
+                q.Img = b64
+            }
         }
         
         q.QuestionText = questionText?.inputField.text
