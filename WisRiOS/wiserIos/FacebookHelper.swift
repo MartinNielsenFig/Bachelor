@@ -38,9 +38,10 @@ class FacebookHelper {
                     user.DisplayName = CurrentUser.sharedInstance.DisplayName
                     
                     let userJson = JSONSerializer.toJson(user)
+                    let body = "User=\(userJson)"
                     
-                    HttpHandler.createUser(userJson) { (inout mongoDbId: String) -> Void in
-                        CurrentUser.sharedInstance._id = mongoDbId
+                    HttpHandler.requestWithResponse(action: "User/CreateUser", type: "POST", body: body) { (data, response, error) -> Void in
+                        CurrentUser.sharedInstance._id = data
                     }
                 }
                 

@@ -23,8 +23,11 @@ class RoomTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        HttpHandler.getRooms { (inout rooms: [Room]) -> Void in
-            //Todo filter
+        HttpHandler.requestWithResponse(action: "Room/GetAll", type: "GET", body: "") { (data, response, error) -> Void in
+            var rooms = [Room]()
+            for room in JSONSerializer.toArray(data!)! {
+                rooms.append(Room(jsonDictionary: room as! NSDictionary))
+            }
             let filteredRooms = self.filterRoomsByLocation(rooms, metersRadius: 1000)
             if filteredRooms.count <= 0 {
                 let noRooms = Room()

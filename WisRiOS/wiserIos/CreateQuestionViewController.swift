@@ -47,7 +47,11 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
         let duration = durationInput?.textLabel?.text ?? "0"
         q.ExpireTimestamp = String(Int(duration)!/60)
         
-        HttpHandler.createQuestion(room._id!, question: JSONSerializer.toJson(q), type: "MultipleChoiceQuestion1")
+        let jsonQ = JSONSerializer.toJson(q)
+        let body = "roomId=\(room._id)&question=\(jsonQ)&type=MultipleChoiceQuestion"
+        HttpHandler.requestWithResponse(action: "Question/CreateQuestion", type: "POST", body: body) { (data, response, error) -> Void in
+            NSLog("error 2837")
+        }
     }
     
     //UITableViewController
