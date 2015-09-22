@@ -1,5 +1,7 @@
 package com.example.tomas.wisrandroid.Model;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Question {
@@ -8,27 +10,30 @@ public abstract class Question {
     private String Id;
     private String QuestionText;
     private String Img;
-    private int Upvotes;
-    private int Downvotes;
+    private ArrayList<Vote> Votes;
     private String CreatedById;
     private String RoomId;
-    private List<ResponseOption> ResponseOptions;
-    private List<Answer> Result;
+    private ArrayList<ResponseOption> ResponseOptions;
+    private ArrayList<Answer> Result;
+    private String CreationTimestamp;
+    private String ExpireTimestamp;
 
     //Constructors
     public Question(){};
-    public Question(String Id, String QuestionText, String Img, int Upvotes,
-                    int Downvotes, String CreatedById, String RoomId, List<ResponseOption> ResponseOptions,List<Answer> Result  )
+    public Question(String Id, String QuestionText, String Img, ArrayList<Vote> Votes,
+                    int Downvotes, String CreatedById, String RoomId, ArrayList<ResponseOption> ResponseOptions,
+                    ArrayList<Answer> Result, String CreationTimestamp, String ExpireTimestamp  )
     {
         this.Id = Id;
         this.QuestionText = QuestionText;
         this.Img = Img;
-        this.Upvotes = Upvotes;
-        this.Downvotes = Downvotes;
+        this.Votes = Votes;
         this.CreatedById = CreatedById;
         this.RoomId = RoomId;
         this.ResponseOptions = ResponseOptions;
         this.Result = Result;
+        this.CreationTimestamp = CreationTimestamp;
+        this.ExpireTimestamp = ExpireTimestamp;
     }
 
     //Properties
@@ -41,11 +46,8 @@ public abstract class Question {
     public String get_Img(){return this.Img;}
     public void set_Img(String Img){this.Img = Img;}
 
-    public int get_Upvotes(){return this.Upvotes;}
-    public void set_Upvotes(int Upvotes){this.Upvotes = Upvotes;}
-
-    public int get_Downvotes(){return this.Downvotes;}
-    public void set_Downvotes(int Downvotes){this.Downvotes = Downvotes;}
+    public ArrayList<Vote> get_Votes(){return this.Votes;}
+    public void set_Votes(ArrayList<Vote> Votes){this.Votes = Votes;}
 
     public String get_CreatedById(){return this.CreatedById;}
     public void set_CreatedById(String CreatedById){this.CreatedById = CreatedById;}
@@ -53,9 +55,17 @@ public abstract class Question {
     public String get_RoomId(){return this.RoomId;}
     public void set_RoomId(String RoomId){this.RoomId = RoomId;}
 
-    public List<ResponseOption> get_ResponseOptions(){return this.ResponseOptions;}
-    public void set_ResponseOptions(List<ResponseOption> ResponseOptions){this.ResponseOptions = ResponseOptions;}
+    public ArrayList<ResponseOption> get_ResponseOptions(){return this.ResponseOptions;}
+    public void set_ResponseOptions(ArrayList<ResponseOption> ResponseOptions){this.ResponseOptions = ResponseOptions;}
 
-    public List<Answer> get_Result(){return this.Result;}
-    public void set_Result(List<Answer> Result){this.Result = Result;}
+    public ArrayList<Answer> get_Result(){return this.Result;}
+    public void set_Result(ArrayList<Answer> Result){this.Result = Result;}
+
+    public String get_CreationTimestamp(){return this.CreationTimestamp;}
+    public void set_CreationTimestamp(String CreationTimestamp){this.CreationTimestamp = CreationTimestamp;}
+
+    public String get_ExpireTimestamp(){return this.ExpireTimestamp;}
+    public void set_ExpireTimestamp(String ExpireTimestamp){this.ExpireTimestamp = ExpireTimestamp;}
+
+
 }
