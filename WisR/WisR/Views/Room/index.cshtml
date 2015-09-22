@@ -3,6 +3,7 @@
 }
 <body ng-cloak ng-controller="RoomController">
     <h2>{{CurrentRoom.Name}}</h2>
+    <div id="RoomErrorDiv"></div>
     <div class="row" ng-show="rightPassword">
         <div ng-hide="questionsLoaded" class="container text-center col-md-8">
             <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span><label id="loadingLabel" class="">Loading questions...</label>
@@ -144,7 +145,7 @@
                 <div class="modal-body">
                     <form ng-submit="postQuestion()">
                         <div class="row">
-                            <label class="col-md-6">Question text:</label> <input required ng-model="QuestionText" type="text" class="col-md-6" placeholder="Enter Question text"/>
+                            <label class="col-md-6">Question text:</label> <input required ng-model="QuestionText" type="text" class="col-md-6" placeholder="Enter Question text" />
                         </div>
                         <div class="row">
                             <label class="col-md-6">Question type:</label>
@@ -156,21 +157,21 @@
                             <label class="col-md-6">Response options:</label>
                             <div class="pull-right col-md-6">
                                 <div ng-repeat="option in ResponseOptions">
-                                    <input ng-model="ResponseOptions[option.id].val" class="col-md-12" type="text" placeholder="Add response options"/>
+                                    <input ng-model="ResponseOptions[option.id].val" class="col-md-12" type="text" placeholder="Add response options" />
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <label class="col-md-6">Picture</label><input type='file' ng-model='questionImage' base-sixty-four-input class="text-center">
-                            <img ng-src="data:image/png;base64,{{questionImage.base64}}" style="max-width: 100px; max-height: 100px"/>
+                            <img ng-src="data:image/png;base64,{{questionImage.base64}}" style="max-width: 100px; max-height: 100px" />
                             <div class="col-md-12 text-center">
                                 {{ImageMessage}}
                             </div>
                         </div>
                         <div class="row">
-                            <label class="col-md-6">Expiration time</label> <input required ng-model="ExpirationTime" class="col-md-6" type="number"/>
+                            <label class="col-md-6">Expiration time</label> <input required ng-model="ExpirationTime" class="col-md-6" type="number" />
                         </div>
-                        <br/>
+                        <br />
                         <div class="row">
                             <button id="ModalCreateQuestionButton" type="submit" class="btn btn-md center-block">Create question</button>
                             <button id="ModalCancelButton" type="button" class="btn btn-md center-block" data-dismiss="modal">Cancel</button>

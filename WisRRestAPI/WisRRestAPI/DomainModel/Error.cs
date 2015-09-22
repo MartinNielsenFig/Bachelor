@@ -11,7 +11,16 @@ namespace WisRRestAPI.DomainModel
         {
             ErrorMessage = eMsg;
             ErrorCode = eCode;
-            StackTrace = sTrace;
+            //Only apply stacktrace if we're running in debug mode
+            if (System.Diagnostics.Debugger.IsAttached)
+            {
+                StackTrace = sTrace;
+            }
+            else
+            {
+                StackTrace = "No stacktrace in release mode"; 
+            }
+           
         }
         public string ErrorMessage { get; set; }
         public int ErrorCode { get; set; }
