@@ -20,12 +20,10 @@ namespace WisRRestAPI.Controllers
     public class QuestionController : Controller
     {
         private readonly IQuestionRepository _qr;
-        private readonly JavaScriptSerializer _jsSerializer;
         private readonly IRabbitPublisher _irabbitPublisher;
         public QuestionController(IQuestionRepository qr, IRabbitPublisher irabbitPublisher)
         {
             _qr = qr;
-            _jsSerializer = new JavaScriptSerializer();
             _irabbitPublisher = irabbitPublisher;
         }
 
