@@ -53,8 +53,8 @@
                         </td>
                         <td>{{SpecificQuestion.QuestionText}}</td>
                         <td>{{GetUsernameById(SpecificQuestion.CreatedById)}}</td>
-                        <td>{{SpecificQuestion.Votes | Votes: 1}}<button class="votingBtn" ng-click="Vote('Up')"><span ng-class="{'upvoted':hasVoted({{question}},true)}" class="glyphicon glyphicon-thumbs-up"></span></button></td>
-                        <td>{{SpecificQuestion.Votes | Votes: -1}}<button class="votingBtn" ng-click="Vote('Down')"><span ng-class="{'downvoted':hasVoted({{question}},false)}" class="glyphicon glyphicon-thumbs-down"></span></button></td>
+                        <td>{{SpecificQuestion.Votes | Votes: 1}}<button class="votingBtn" ng-click="Vote('Up')"><span ng-class="{'upvoted':hasVoted('{{SpecificQuestion}}' != undefined? SpecificQuestion: 'undefined',true)}" class="glyphicon glyphicon-thumbs-up"></span></button></td>
+                        <td>{{SpecificQuestion.Votes | Votes: -1}}<button class="votingBtn" ng-click="Vote('Down')"><span ng-class="{'downvoted':hasVoted('{{SpecificQuestion }}'!= undefined? SpecificQuestion: 'undefined',false)}" class="glyphicon glyphicon-thumbs-down"></span></button></td>
                     </tr>
 
                 </table> 
@@ -142,8 +142,9 @@
                         <div ng-show="QuestionType != undefined && QuestionType.val != 'TextualQuestion'" class="row">
                             <label class="col-md-6">Response options:</label>
                             <div class="pull-right col-md-6">
+                                <input type="button" ng-click="AddResponseOption()" value="Add Response Optione">
                                 <div ng-repeat="option in ResponseOptions">
-                                    <input ng-model="ResponseOptions[option.id].val" class="col-md-12" type="text" placeholder="Add response options" />
+                                    <input ng-model="ResponseOptions[option.id].val" class="col-md-12" type="text" placeholder="Add response options"/><input type="button" ng-click="RemoveResponseOption(option.id)" value="Remove">
                                 </div>
                             </div>
                         </div>
