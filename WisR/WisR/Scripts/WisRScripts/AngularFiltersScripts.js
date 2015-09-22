@@ -2,7 +2,7 @@
     return function (rooms, scope) {
         if (rooms != undefined && scope.currentLocation != undefined) {
             var filtered = [];
-            console.log("got here");
+            
             for (var i = 0; i < rooms.length; i++) {
                 var room = rooms[i];
                 if (shouldBeAdded(room, scope))
