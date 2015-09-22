@@ -155,7 +155,15 @@ namespace WisRRestAPI.Controllers
                 q.Id = id;
 
                 var answer = BsonSerializer.Deserialize<Answer>(response);
-                q.Result.Add(answer);
+                if (q.Result.Exists(x=> x.UserId == answer.UserId))
+                {
+                    q.Result.Find(x => x.UserId == answer.UserId).Value = answer.Value;
+                }
+                else
+                {
+                    q.Result.Add(answer);
+                }
+                
                 _qr.UpdateQuestion(id, q);
                 try
                 {
@@ -182,7 +190,16 @@ namespace WisRRestAPI.Controllers
                 q.Id = id;
 
                 var v = BsonSerializer.Deserialize<Vote>(vote);
-                q.Votes.Add(v);
+
+                if (q.Votes.Exists(x => x.CreatedById == v.CreatedById))
+                {
+                    q.Votes.Find(x => x.CreatedById == v.CreatedById).Value = v.Value;
+                }
+                else
+                {
+                    q.Votes.Add(v);
+                }
+                    
                 _qr.UpdateQuestion(id, q);
                 try
                 {
