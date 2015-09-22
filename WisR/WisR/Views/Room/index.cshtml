@@ -142,8 +142,9 @@
                         <div ng-show="QuestionType != undefined && QuestionType.val != 'TextualQuestion'" class="row">
                             <label class="col-md-6">Response options:</label>
                             <div class="pull-right col-md-6">
+                                <input type="button" ng-click="AddResponseOption()" value="Add Response Optione">
                                 <div ng-repeat="option in ResponseOptions">
-                                    <input ng-model="ResponseOptions[option.id].val" class="col-md-12" type="text" placeholder="Add response options" />
+                                    <input ng-model="ResponseOptions[option.id].val" class="col-md-12" type="text" placeholder="Add response options"/><input type="button" ng-click="RemoveResponseOption(option.id)" value="Remove">
                                 </div>
                             </div>
                         </div>
