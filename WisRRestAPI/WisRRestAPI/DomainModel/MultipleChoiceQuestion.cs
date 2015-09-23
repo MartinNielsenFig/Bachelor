@@ -12,7 +12,7 @@ namespace WisR.DomainModels
         public override string CreatedById { get; set; }
         public override List<Vote> Votes { get; set; }
         public override string Img { get; set; }
-        public override string QuestionText { get; set; } = "much bool";
+        public override string QuestionText { get; set; }
         public override List<ResponseOption> ResponseOptions { get; set; }
         public override List<Answer> Result { get; set; }
         public override string CreationTimestamp { get; set; }
