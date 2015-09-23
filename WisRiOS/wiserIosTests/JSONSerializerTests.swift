@@ -394,7 +394,7 @@ class JSONSerializerTests: XCTestCase {
         let json = JSONSerializer.toJson(m)
         
         //Assert
-        let expected = "{\"name\": \"Olsen\", \"persons\": [{\"name\": \"Peter\", age: 24}, {\"name\": \"Tomas\", age: 1000}]}"
+        let expected = "{\"name\": \"Olsen\", \"persons\": [{\"name\": \"Peter\", \"age\": 24}, {\"name\": \"Tomas\", \"age\": 1000}]}"
         stringCompareHelper(json, expected)
     }
 

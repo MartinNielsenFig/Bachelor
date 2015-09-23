@@ -56,7 +56,7 @@ public class JSONSerializer {
             children += randomCollection
             currentMirror = currentMirror.superclassMirror()!
         }
-
+        
         let size = children.count
         var index = 0
         
@@ -120,7 +120,12 @@ public class JSONSerializer {
             else if let array = value as? NSArray {
                 handledValue += "["
                 for (index, value) in array.enumerate() {
-                    handledValue += "\(value)"
+                    if !(value is Int) && !(value is Double) && !(value is Float) && !(value is Bool) && !(value is String) {
+                        handledValue += toJson(value)
+                    }
+                    else {
+                        handledValue += "\(value)"
+                    }
                     handledValue += (index < array.count-1 ? ", " : "")
                 }
                 handledValue += "]"
