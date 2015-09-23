@@ -23,6 +23,21 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     
     var pickerData = [String]()
     
+    @IBAction func sendResponse(sender: AnyObject) {
+        let index = answerPicker.selectedRowInComponent(0)
+        let answerPickerText = pickerData[index]
+        
+        let answer = Answer(value: answerPickerText, userId: CurrentUser.sharedInstance._id!)
+        let answerJson = JSONSerializer.toJson(answer)
+        
+        let body = "response=\(answerJson)&questionId=\(question._id!)"
+        HttpHandler.requestWithResponse(action: "Question/AddQuestionResponse", type: "POST", body: body) { (data, response, error) -> Void in
+            NSLog(data ?? "no data")
+            NSLog(response ?? "no response")
+            NSLog(error ?? "no error")
+        }
+    }
+    
     func showQuestionUI() {
         //Picker
         pickerData.removeAll()

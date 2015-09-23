@@ -19,6 +19,14 @@ class FacebookHelper {
         CurrentUser.sharedInstance.FacebookId = nil
     }
     
+    static func requestWisrUserFrom(facebookId: String) {
+        let body = "facebookId=\(facebookId)"
+        
+        HttpHandler.requestWithResponse(action: "User/GetWisrIdFromFacebookId", type: "POST", body: body) { (data, response, error) -> Void in
+            CurrentUser.sharedInstance._id = data
+        }
+    }
+    
     static func requestCurrentUserInformation(createUser createUser: Bool) {
         //http://stackoverflow.com/questions/30049450/get-fbsdkloginmanagerloginresults-email-and-name
         let fbRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name"])
@@ -26,11 +34,15 @@ class FacebookHelper {
             (connection: FBSDKGraphRequestConnection!, result: AnyObject!, error: NSError!) -> Void in
             if error == nil {
                 NSLog("User Info : \(result)")
-                let fbId = result["id"]
-                let name = result["name"]
+                let fbId = result["id"] as? String
+                let name = result["name"] as? String
                 
-                CurrentUser.sharedInstance.FacebookId = fbId as? String
-                CurrentUser.sharedInstance.DisplayName = name as? String
+                if let fbId = fbId {
+                    requestWisrUserFrom(fbId)
+                }
+                
+                CurrentUser.sharedInstance.FacebookId = fbId
+                CurrentUser.sharedInstance.DisplayName = name
                 
                 if createUser {
                     let user = User()
