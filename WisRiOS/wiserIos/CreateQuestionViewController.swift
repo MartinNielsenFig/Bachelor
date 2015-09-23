@@ -35,9 +35,8 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
         q.CreatedById = CurrentUser.sharedInstance._id
         
         //http://stackoverflow.com/questions/11251340/convert-uiimage-to-base64-string-in-objective-c-and-swift
-        if let image = selectedImage {
-            //let imageData = UIImagePNGRepresentation(image)
-            let imageData = UIImageJPEGRepresentation(image, 0.8)
+        if let selectedImage = selectedImage {
+            let imageData = UIImageJPEGRepresentation(selectedImage, 0.8)
             if let imageData = imageData {
                 let imageSizeMb = (imageData.length)/(1024*1024)
                 print("IMAGE SIZE: \(imageSizeMb) MB")

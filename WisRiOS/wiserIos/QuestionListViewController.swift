@@ -28,14 +28,13 @@ class QuestionListViewController: UIViewController, UITableViewDataSource, UITab
         questionsTableView.dataSource = self
         
         let loadingQuestion = Question()
-        loadingQuestion.QuestionText = "Loading..."
-        loadingQuestion.CreatedById = "system"
+        loadingQuestion.QuestionText = "Loading questions..."
         questions += [loadingQuestion]
         
         //Load questions for room
         //"Swift Trailing Closure" syntax
         
-        let action = "Question/GetQuestionsForRoom?roomId=\(self.roomId!)"
+        let action = "Question/GetQuestionsForRoomWithoutImages?roomId=\(self.roomId!)"
         HttpHandler.requestWithResponse(action: action, type: "GET", body: "") { (data, response, error) -> Void in
                         
             var questionArray = [Question]()
@@ -78,9 +77,6 @@ class QuestionListViewController: UIViewController, UITableViewDataSource, UITab
             cell.textLabel?.textColor = UIColor.blackColor()
             if question.CreatedById == parent.room?.CreatedById {
                 cell.textLabel?.font = UIFont.boldSystemFontOfSize(15.0)
-            }
-            else if question.CreatedById == "system" {
-                cell.textLabel?.textColor = UIColor.redColor()
             }
         }
         

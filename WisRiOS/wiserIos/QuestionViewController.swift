@@ -24,7 +24,6 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     var pickerData = [String]()
     
     func showQuestionUI() {
-        
         //Picker
         pickerData.removeAll()
         for r in question.ResponseOptions {
@@ -36,10 +35,27 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         questionText.text = question.QuestionText
         
         //Image
-        if let b64Img = question.Img {
-            let imageData = NSData(base64EncodedString: b64Img, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
-            let image = UIImage(data: imageData!)
-            questionImage.image = image
+        let indicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+        indicator.center = self.questionImage.center
+
+        indicator.startAnimating()
+        self.view.addSubview(indicator)
+        
+        HttpHandler.requestWithResponse(action: "Question/GetImageByQuestionId?questionId=\(self.question._id!)", type: "GET", body: "") {
+            (data, response, error) -> Void in
+            self.question.Img = data
+            
+            if let b64Img = self.question.Img {
+                let imageData = NSData(base64EncodedString: b64Img, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
+                let image = UIImage(data: imageData!)
+                
+                dispatch_async(dispatch_get_main_queue()) {
+                    indicator.stopAnimating()
+                    indicator.removeFromSuperview()
+                    self.questionImage.image = image
+                    self.questionImage.reloadInputViews()
+                }
+            }
         }
     }
     
