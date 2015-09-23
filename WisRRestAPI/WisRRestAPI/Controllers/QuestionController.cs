@@ -155,6 +155,8 @@ namespace WisRRestAPI.Controllers
         //    }
 
         //}
+
+        [System.Web.Mvc.HttpPost]
         public void AddQuestionResponse(string response, string questionId)
         {
             var q = _qr.GetQuestionWithoutImage(questionId).Result;

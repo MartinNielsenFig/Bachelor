@@ -369,7 +369,34 @@ class JSONSerializerTests: XCTestCase {
         stringCompareHelper(json, expected)
     }
 
-    
+    func test_arrayOfCustomClass_included() {
+        //Arrange
+        class Person {
+            var name: String
+            var age: Int
+            
+            init(name: String, age: Int) {
+                self.name = name
+                self.age = age
+            }
+        }
+        class Family {
+            var name = "Olsen"
+            var persons = [Person]()
+            init(){
+                persons += [Person(name: "Peter", age: 24), Person(name: "Tomas", age: 1000)]
+            }
+        }
+        
+        let m = Family()
+        
+        //Act
+        let json = JSONSerializer.toJson(m)
+        
+        //Assert
+        let expected = "{\"name\": \"Olsen\", \"persons\": [{\"name\": \"Peter\", age: 24}, {\"name\": \"Tomas\", age: 1000}]}"
+        stringCompareHelper(json, expected)
+    }
 
 
 }

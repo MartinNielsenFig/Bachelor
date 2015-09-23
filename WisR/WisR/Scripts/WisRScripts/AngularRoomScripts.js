@@ -267,10 +267,18 @@ app.controller("RoomController", [
         $scope.ActiveUsers = [];
 
         $scope.AddResponseOption = function() {
-            $scope.ResponseOptions.push({id: $scope.ResponseOptions.length+1, val: undefined });
+            $scope.ResponseOptions.push({id: $scope.ResponseOptions.length, val: undefined});
         }
-        $scope.RemoveResponseOption = function(id) {
-            $scope.ResponseOptions.splice(id, 1);
+        $scope.RemoveResponseOption = function(item) {
+            var temp = [];
+            var counter = 0;
+            for (var i = 0; i < $scope.ResponseOptions.length; i++) {
+                if ($scope.ResponseOptions[i] != item) {
+                    temp.push({ id: counter, val: $scope.ResponseOptions[i].val });
+                    counter = counter + 1;
+                }
+            }
+            $scope.ResponseOptions = temp;
         }
         $scope.ResponseOptions = [{ id: 0, val: undefined }, { id: 1, val: undefined }];
         //Function for retrieving userName by an id
@@ -381,7 +389,7 @@ app.controller("RoomController", [
         $scope.AddAnswer = function () {
                     //Use response to send to REST API string response
                     var Obj ={ Value: $scope.answerChoosen.Value,UserId:$window.userId}
-                    $http.post(configs.restHostName + '/Question/AddQuestionResponse', { response: JSON.stringify(Obj), type: $scope.SpecificQuestion._t, id: $scope.SpecificQuestion._id });
+                    $http.post(configs.restHostName + '/Question/AddQuestionResponse', { response: JSON.stringify(Obj), questionId: $scope.SpecificQuestion._id });
         }
         //Function for creating a question
         $scope.postQuestion = function () {

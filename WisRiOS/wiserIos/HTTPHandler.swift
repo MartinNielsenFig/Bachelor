@@ -10,7 +10,7 @@ import Foundation
 
 class HttpHandler {
     
-    static let mainUrl = "http://192.168.198.141:1337/"
+    static let mainUrl = "http://192.168.198.140:1337/"
     //static let mainUrl = "http://wisrrestapi.aceipse.dk/"
     //static let mainUrl = "http://10.192.15.42/"
     

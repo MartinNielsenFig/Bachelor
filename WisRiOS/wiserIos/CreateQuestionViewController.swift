@@ -13,10 +13,19 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
     //Gets instantiated by RoomPageViewController in prepareForSegue
     var room: Room!
     
+    var responseOptions = [ResponseOption]() {
+        didSet {
+            dispatch_async(dispatch_get_main_queue()) {
+                self.tableView.reloadData()
+            }
+        }
+    }
+    
     var questionText: TextInputCell? = nil
     var durationInput: NumberInputCell? = nil
     var imageTableCell: UITableViewCell? = nil
     var selectedImage: UIImage?
+    var addResponseCell: TextInputCell? = nil
     
     var photoSelected = false {
         didSet {
@@ -50,6 +59,7 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
             }
         }
         
+        q.ResponseOptions = responseOptions
         q.QuestionText = questionText?.inputField.text
         q.RoomId = room._id
         
@@ -65,37 +75,68 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
     
     //UITableViewController
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        return 2
+    }
+    
+    override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0 {
+            return "Question parameters"
+        }
+        else {
+            return "Reponse options"
+        }
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        if section == 0 {
+            return 4
+        }
+        else {
+            return responseOptions.count
+        }
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if indexPath.row == 0 {
-            
-            let cellIdentifier = "TextInputCell"
-            let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! TextInputCell
-            cell.label.text = "Question text"
-            questionText = cell
-            return cell
-        }
-        else if indexPath.row == 1 {
-            let cellIdentifier = "NumberInputCell"
-            let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! NumberInputCell
-            cell.label.text = "Duration (s)"
-            durationInput = cell
-            return cell
-        }
-        else if indexPath.row == 2 {
-            let cell = UITableViewCell()
-            imageTableCell = cell
-            cell.textLabel?.text = "Select image"
-            if selectedImage != nil {
-                cell.imageView?.image = selectedImage
+        if indexPath.section == 0 {
+            if indexPath.row == 0 {
+                
+                let cellIdentifier = "TextInputCell"
+                let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! TextInputCell
+                cell.label.text = "Question text"
+                questionText = cell
+                return cell
             }
-            return cell
+            else if indexPath.row == 1 {
+                let cellIdentifier = "NumberInputCell"
+                let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! NumberInputCell
+                cell.label.text = "Duration (s)"
+                durationInput = cell
+                return cell
+            }
+            else if indexPath.row == 2 {
+                let cell = UITableViewCell()
+                imageTableCell = cell
+                cell.textLabel?.text = "Select image"
+                if selectedImage != nil {
+                    cell.imageView?.image = selectedImage
+                }
+                return cell
+            }
+            else if indexPath.row == 3 {
+                let cellIdentifier = "TextInputCell"
+                let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! TextInputCell
+                cell.label.text = "Add Response"
+                addResponseCell = cell
+                return cell
+
+            }
+        }
+        else {
+                let cellIdentifier = "TextInputCell"
+                let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! TextInputCell
+                cell.label.text = responseOptions[indexPath.row].Value
+                questionText = cell
+                return cell
         }
         
         
@@ -103,7 +144,7 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if indexPath.row == 2 && photoSelected {
+        if indexPath.section == 0 && indexPath.row == 2 && photoSelected {
             return CGFloat(64*3)
         }
         else {
@@ -112,7 +153,10 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.row == 2 {
+        
+        print("section \(indexPath.section) row \(indexPath.row)")
+        
+        if indexPath.section == 0 && indexPath.row == 2 {
             questionText?.resignFirstResponder()    //hide keyboard
             
             let imagePickerController = UIImagePickerController()
@@ -144,6 +188,15 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
             
             presentViewController(alert, animated: true, completion: nil)
         }
+        else if indexPath.section == 0 && indexPath.row == 3 {
+            print("want to add response")
+            
+            if let responseText = addResponseCell?.inputField.text {
+                let r = ResponseOption(value: responseText, weight: 1)
+                addResponseCell?.inputField.text
+                responseOptions += [r]
+            }
+        }
     }
     
     //UIImagePickerControllerDelegate
@@ -161,6 +214,6 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
     }
     
     
-
+    
     
 }

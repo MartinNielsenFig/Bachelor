@@ -13,6 +13,7 @@ namespace WisRRestAPI.DomainModel
         Task<List<User>> GetAllUsers();
         Task<User> GetUser(string id);
         string AddUser(User item);
+        string GetWisrIdFromFacebookId(string facebookId);
         Task<DeleteResult> RemoveUser(string id);
         Task<User> UpdateUser(string id, User item);
     }
