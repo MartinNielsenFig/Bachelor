@@ -79,5 +79,11 @@ namespace WisRRestAPI.Controllers
             }
             return "Couldn't find User to delete";
         }
+
+        [System.Web.Mvc.HttpPost]
+        public string GetWisrIdFromFacebookId(string facebookId)
+        {
+            return _ur.GetWisrIdFromFacebookId(facebookId);
+        }
     }
 }

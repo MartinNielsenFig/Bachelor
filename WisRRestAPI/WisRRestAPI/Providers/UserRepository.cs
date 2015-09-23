@@ -35,6 +35,12 @@ namespace WisRRestAPI.DomainModel
             return item.Id;
         }
 
+        public string GetWisrIdFromFacebookId(string facebookId)
+        {
+            var u =_database.GetCollection<User>("User").Find(x => x.FacebookId == facebookId).SingleAsync();
+            return u.Result.Id;
+        }
+
         public Task<DeleteResult> RemoveUser(string id)
         {
             var task = _database.GetCollection<User>("User").DeleteOneAsync(x => x.Id == id);
