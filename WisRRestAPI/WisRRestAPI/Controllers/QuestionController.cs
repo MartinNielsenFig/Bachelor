@@ -157,7 +157,7 @@ namespace WisRRestAPI.Controllers
         //}
         public void AddQuestionResponse(string response, string questionId)
         {
-            var q = _qr.GetQuestion(questionId).Result;
+            var q = _qr.GetQuestionWithoutImage(questionId).Result;
 
             if (Convert.ToDouble(q.ExpireTimestamp) >
                 (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalMilliseconds)
@@ -174,7 +174,7 @@ namespace WisRRestAPI.Controllers
                     q.Result.Add(answer);
                 }
                 
-                _qr.UpdateQuestion(questionId, q);
+                _qr.UpdateQuestionResults(questionId, q);
                 try
                 {
                     _irabbitPublisher.publishString("AddQuestionResponse", q.ToJson());
