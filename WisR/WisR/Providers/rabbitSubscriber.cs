@@ -98,6 +98,14 @@ namespace WisR.Providers
                     var chatHub = new ChatHub();
                     chatHub.Send(message);
                     break;
+                case "AddQuestionResponse":
+                    var qhub = new QuestionHub();
+                    qhub.AddResponse(message);
+                    break;
+                case "AddQuestionVote":
+                    var qhub2 = new QuestionHub();
+                    qhub2.AddVote(message);
+                    break;
 
             }
             lock (_model)

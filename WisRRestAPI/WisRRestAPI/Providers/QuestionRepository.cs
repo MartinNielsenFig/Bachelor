@@ -28,6 +28,12 @@ namespace WisRRestAPI.DomainModel
             return question;
         }
 
+        public Task<Question> GetQuestionWithoutImage(string id)
+        {
+            var question = _database.GetCollection<Question>("question").Find(x => x.Id == id).Project<Question>(Builders<Question>.Projection.Exclude(doc => doc.Img)).SingleAsync();
+            return question;
+        }
+
         public Task<List<Question>> GetQuestionsForRoom(string roomId) {
             var qList = _database.GetCollection<Question>("question").Find(x => x.RoomId == roomId).ToListAsync();
             return qList;
@@ -67,6 +73,24 @@ namespace WisRRestAPI.DomainModel
         {
             var task = _database.GetCollection<Question>("question").FindOneAndReplaceAsync(x => x.Id == id, item);
             return task;
+        }
+
+        public UpdateResult UpdateQuestionResults(string id, Question item)
+        {
+            var collection = _database.GetCollection<BsonDocument>("question");
+            var filter = Builders<BsonDocument>.Filter.Eq("_id", id);
+            var update = Builders<BsonDocument>.Update
+                .Set("Result", item.Result);
+            return collection.UpdateOneAsync(filter, update).Result;
+        }
+
+        public UpdateResult UpdateQuestionVotes(string id, Question item)
+        {
+            var collection = _database.GetCollection<BsonDocument>("question");
+            var filter = Builders<BsonDocument>.Filter.Eq("_id", id);
+            var update = Builders<BsonDocument>.Update
+                .Set("Votes", item.Votes);
+            return collection.UpdateOneAsync(filter, update).Result;
         }
     }
 }

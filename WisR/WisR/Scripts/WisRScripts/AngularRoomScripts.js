@@ -37,6 +37,7 @@ app.controller("RoomController", [
                 $scope.Questions.push(JSON.parse(questionToAdd));
                 $scope.$apply();
             };
+            //SignalR function call that the question should be updated
             hub.client.broadcastUpdateQuestion = function (questionToUpdate) {
                 var updateTemp = JSON.parse(questionToUpdate);
                 var index = findWithAttr($scope.Questions, "_id", updateTemp._id);
@@ -47,6 +48,43 @@ app.controller("RoomController", [
                     $scope.SpecificQuestion = $scope.Questions[indexOfSpecificQuestion];
                     //Redraw the result chart
                     $scope.createPieChart();
+                }
+
+                $scope.$apply();
+            };
+            //SignalR function call that the question should be updated with new responses
+            hub.client.broadcastUpdateResult = function (questionToUpdate) {
+                var updateTemp = JSON.parse(questionToUpdate);
+                var index = findWithAttr($scope.Questions, "_id", updateTemp._id);
+                $scope.Questions[index].Result = updateTemp.Result;
+                //If this is the specific question that changed update it with new values
+                if ($scope.SpecificQuestion != undefined) {
+                    var indexOfSpecificQuestion = findWithAttr($scope.Questions, "_id", $scope.SpecificQuestion._id);
+                    $scope.SpecificQuestion = $scope.Questions[indexOfSpecificQuestion];
+                    //Redraw the result chart
+                    $scope.createPieChart();
+                }
+
+                $scope.$apply();
+            };
+            //SignalR function call that the question should be updated with new votes
+            hub.client.broadcastUpdateVotes = function (questionToUpdate) {
+                var updateTemp = JSON.parse(questionToUpdate);
+                var index = findWithAttr($scope.Questions, "_id", updateTemp._id);
+
+                //AngularJS hack to retrigger filter(it doesn't recognize updated values)
+                var temperino = $scope.Questions[index];
+                temperino.Votes = updateTemp.Votes;
+                $scope.Questions[index] = "";
+                $scope.$apply();
+                $scope.Questions[index] = temperino;
+
+
+                //$scope.Questions[index].Votes = updateTemp.Votes;
+                //If this is the specific question that changed update it with new values
+                if ($scope.SpecificQuestion != undefined) {
+                    var indexOfSpecificQuestion = findWithAttr($scope.Questions, "_id", $scope.SpecificQuestion._id);
+                    $scope.SpecificQuestion = $scope.Questions[indexOfSpecificQuestion];
                 }
 
                 $scope.$apply();
@@ -159,14 +197,14 @@ app.controller("RoomController", [
 
 
         //Function that checks if user has up/downvoted
-        $scope.hasVoted = function (question, checkForUpvote) {
+        $scope.hasVoted = function (questionvotes, checkForUpvote) {
 
             //if we are anonymous user never look for votes
-            if ($scope.currentUser == undefined||question==""||question==undefined) {
+            if ($scope.currentUser == undefined || questionvotes == "" || questionvotes == undefined) {
                 return false;
             }
             var testbool = false;
-            jQuery.each(question.Votes, function (index, vote) {
+            jQuery.each(questionvotes, function (index, vote) {
                 //check if vote is made by current user
                 if (vote.CreatedById == $scope.currentUser._id) {
                     //Check if vote is upvote or downvote

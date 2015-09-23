@@ -13,6 +13,7 @@ namespace WisRRestAPI.DomainModel
     {
         Task<List<Question>> GetAllQuestions();
         Task<Question> GetQuestion(string id);
+        Task<Question> GetQuestionWithoutImage(string id);
         Task<List<Question>> GetQuestionsForRoom(string roomId);
         Task<List<Question>> GetQuestionsForRoomWithoutImages(string roomId);
         Task<Question> GetImageByQuestionId(string questionId);
@@ -20,5 +21,7 @@ namespace WisRRestAPI.DomainModel
         void AddQuestionObject(object item);
         Task<DeleteResult> RemoveQuestion(string id);
         Task<Question> UpdateQuestion(string id, Question item);
+        UpdateResult UpdateQuestionResults(string id, Question item);
+        UpdateResult UpdateQuestionVotes(string id, Question item);
     }
 }

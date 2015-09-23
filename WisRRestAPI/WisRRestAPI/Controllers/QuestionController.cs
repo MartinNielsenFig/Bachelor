@@ -44,8 +44,9 @@ namespace WisRRestAPI.Controllers
         [System.Web.Mvc.HttpGet]
         public string GetQuestionsForRoomWithoutImages(string roomId)
         {
-            var qList = _qr.GetQuestionsForRoomWithoutImages(roomId);
-            return qList.Result.ToJson();
+            var qList = _qr.GetQuestionsForRoomWithoutImages(roomId);           
+            var result= qList.Result.ToJson();
+            return result;
         }
         [System.Web.Mvc.HttpGet]
         public string GetImageByQuestionId(string questionId)
@@ -154,19 +155,14 @@ namespace WisRRestAPI.Controllers
         //    }
 
         //}
-        public void AddQuestionResponse(string response, string type, string id)
+        public void AddQuestionResponse(string response, string questionId)
         {
-            Type questionType;
-
-            string typeString = "WisR.DomainModels." + type;
-            questionType = Type.GetType(typeString);
-
-            var q = _qr.GetQuestion(id).Result;
+            var q = _qr.GetQuestion(questionId).Result;
 
             if (Convert.ToDouble(q.ExpireTimestamp) >
                 (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalMilliseconds)
             {
-                q.Id = id;
+                q.Id = questionId;
 
                 var answer = BsonSerializer.Deserialize<Answer>(response);
                 if (q.Result.Exists(x=> x.UserId == answer.UserId))
@@ -178,10 +174,10 @@ namespace WisRRestAPI.Controllers
                     q.Result.Add(answer);
                 }
                 
-                _qr.UpdateQuestion(id, q);
+                _qr.UpdateQuestion(questionId, q);
                 try
                 {
-                    _irabbitPublisher.publishString("UpdateQuestion", q.ToJson());
+                    _irabbitPublisher.publishString("AddQuestionResponse", q.ToJson());
                 }
                 catch (Exception e)
                 {
@@ -196,7 +192,7 @@ namespace WisRRestAPI.Controllers
             string typeString = "WisR.DomainModels." + type;
             questionType = Type.GetType(typeString);
 
-            var q = _qr.GetQuestion(id).Result;
+            var q = _qr.GetQuestionWithoutImage(id).Result;
 
             if (Convert.ToDouble(q.ExpireTimestamp) >
                 (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalMilliseconds)
@@ -213,11 +209,11 @@ namespace WisRRestAPI.Controllers
                 {
                     q.Votes.Add(v);
                 }
-                    
-                _qr.UpdateQuestion(id, q);
+                //Todo: error handling?
+                _qr.UpdateQuestionVotes(id, q);
                 try
                 {
-                    _irabbitPublisher.publishString("UpdateQuestion", q.ToJson());
+                    _irabbitPublisher.publishString("AddQuestionVote", q.ToJson());
                 }
                 catch (Exception e)
                 {

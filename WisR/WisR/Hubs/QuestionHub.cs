@@ -20,5 +20,19 @@ namespace WisR.Hubs
             var context = GlobalHost.ConnectionManager.GetHubContext<QuestionHub>();
             context.Clients.All.broadcastUpdateQuestion(question);
         }
+
+        public void AddResponse(string question)
+        {
+            // Call the broadcastMessage method to update clients.
+            var context = GlobalHost.ConnectionManager.GetHubContext<QuestionHub>();
+            context.Clients.All.broadcastUpdateResult(question);
+        }
+
+        public void AddVote(string question)
+        {
+            // Call the broadcastMessage method to update clients.
+            var context = GlobalHost.ConnectionManager.GetHubContext<QuestionHub>();
+            context.Clients.All.broadcastUpdateVotes(question);
+        }
     }
 }
