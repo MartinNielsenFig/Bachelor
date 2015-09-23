@@ -389,7 +389,7 @@ app.controller("RoomController", [
         $scope.AddAnswer = function () {
                     //Use response to send to REST API string response
                     var Obj ={ Value: $scope.answerChoosen.Value,UserId:$window.userId}
-                    $http.post(configs.restHostName + '/Question/AddQuestionResponse', { response: JSON.stringify(Obj), type: $scope.SpecificQuestion._t, id: $scope.SpecificQuestion._id });
+                    $http.post(configs.restHostName + '/Question/AddQuestionResponse', { response: JSON.stringify(Obj), questionId: $scope.SpecificQuestion._id });
         }
         //Function for creating a question
         $scope.postQuestion = function () {
