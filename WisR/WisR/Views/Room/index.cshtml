@@ -15,11 +15,11 @@
 
                     <table id="hostQuestionsTable" class="table table-hover table-responsive">
                         <tbody>
-                            <tr style="cursor: pointer" ng-repeat="question in Questions|filter: { RoomId: '@ViewBag.roomId',CreatedById: CurrentRoom.CreatedById } " ng-click="ShowSpecificQuestion(question)">
+                            <tr style="cursor: pointer" ng-repeat="question in Questions|filter: { RoomId: '@ViewBag.roomId',CreatedById: CurrentRoom.CreatedById }" ng-click="ShowSpecificQuestion(question)">
                                 <td>{{question.QuestionText}}</td>
                                 <td>{{GetUsernameById(question.CreatedById)}}</td>
-                                <td>{{question.Votes | Votes: 1}}<span ng-class="{'upvoted':hasVoted({{question}},true)}" class="glyphicon glyphicon-thumbs-up"></span></td>
-                                <td>{{question.Votes | Votes: -1}}<span ng-class="{'downvoted':hasVoted({{question}},false)}" class="glyphicon glyphicon-thumbs-down"></span></td>
+                                <td>{{question.Votes | Votes: 1}}<span ng-class="{'upvoted':hasVoted({{question.Votes}},true)}" class="glyphicon glyphicon-thumbs-up"></span></td>
+                                <td>{{question.Votes | Votes: -1}}<span ng-class="{'downvoted':hasVoted({{question.Votes}},false)}" class="glyphicon glyphicon-thumbs-down"></span></td>
                         </tbody>
                     </table>
                 </div>
@@ -31,8 +31,8 @@
                                 <tr style="cursor: pointer" ng-repeat="question in Questions|filter: { RoomId: '@ViewBag.roomId',CreatedById: '!'+CurrentRoom.CreatedById  } " ng-click="ShowSpecificQuestion(question)">
                                     <td>{{question.QuestionText}}</td>
                                     <td>{{GetUsernameById(question.CreatedById)}}</td>
-                                    <td>{{question.Votes | Votes: 1}}<span ng-class="{'upvoted':hasVoted({{question}},true)}" class="glyphicon glyphicon-thumbs-up"></span></td>
-                                    <td>{{question.Votes | Votes: -1}}<span ng-class="{'downvoted':hasVoted({{question}},false)}" class="glyphicon glyphicon-thumbs-down"></span></td>
+                                    <td>{{question.Votes | Votes: 1}}<span ng-class="{'upvoted':hasVoted({{question.Votes}},true)}" class="glyphicon glyphicon-thumbs-up"></span></td>
+                                    <td>{{question.Votes | Votes: -1}}<span ng-class="{'downvoted':hasVoted({{question.Votes}},false)}" class="glyphicon glyphicon-thumbs-down"></span></td>
                             </tbody>
                         </table>
                     </div>
@@ -55,8 +55,8 @@
                         </td>
                         <td>{{SpecificQuestion.QuestionText}}</td>
                         <td>{{GetUsernameById(SpecificQuestion.CreatedById)}}</td>
-                        <td>{{SpecificQuestion.Votes | Votes: 1}}<button class="votingBtn" ng-click="Vote('Up')"><span ng-class="{'upvoted':hasVoted('{{SpecificQuestion}}' != undefined? SpecificQuestion: 'undefined',true)}" class="glyphicon glyphicon-thumbs-up"></span></button></td>
-                        <td>{{SpecificQuestion.Votes | Votes: -1}}<button class="votingBtn" ng-click="Vote('Down')"><span ng-class="{'downvoted':hasVoted('{{SpecificQuestion }}'!= undefined? SpecificQuestion: 'undefined',false)}" class="glyphicon glyphicon-thumbs-down"></span></button></td>
+                        <td>{{SpecificQuestion.Votes | Votes: 1}}<button class="votingBtn" ng-click="Vote('Up')"><span ng-class="{'upvoted':hasVoted('{{SpecificQuestion.Votes}}' != undefined? SpecificQuestion.Votes: 'undefined',true)}" class="glyphicon glyphicon-thumbs-up"></span></button></td>
+                        <td>{{SpecificQuestion.Votes | Votes: -1}}<button class="votingBtn" ng-click="Vote('Down')"><span ng-class="{'downvoted':hasVoted('{{SpecificQuestion.Votes}}'!= undefined? SpecificQuestion.Votes: 'undefined',false)}" class="glyphicon glyphicon-thumbs-down"></span></button></td>
                     </tr>
 
                 </table>
