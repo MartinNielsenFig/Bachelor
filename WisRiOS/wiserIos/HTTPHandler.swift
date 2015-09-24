@@ -16,8 +16,8 @@ class HttpHandler {
     
     static func log(data data: NSData?, response: NSURLResponse?, error: NSError?) {
         //NSLog("data \(data)")
-        NSLog("response \(response)")
-        NSLog("error \(error)")
+        //NSLog("response \(response)")
+        //NSLog("error \(error)")
     }
     
     //http://stackoverflow.com/questions/25341858/perform-post-request-in-ios-swift
@@ -34,7 +34,7 @@ class HttpHandler {
         let started = NSDate()
         let task = session.dataTaskWithRequest(request) {
             data, response, error in
-            NSLog("time for \(__FUNCTION__) action: \(action) and body: \(body) http call \(NSDate().timeIntervalSinceDate(started)) seconds")
+            NSLog("time for \(__FUNCTION__) action: \(action) http call \(NSDate().timeIntervalSinceDate(started)) seconds")
             
             //Todo add customError class to completionHandler
             log(data: data, response: response, error: error)

@@ -63,13 +63,17 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
         q.QuestionText = questionText?.inputField.text
         q.RoomId = room._id
         
-        let duration = durationInput?.inputField.text ?? "0"
-        q.ExpireTimestamp = String(Int(duration)!/60)
+        if let input = durationInput?.inputField.text where input != "" {
+            let duration = Int(input)!/60
+            q.ExpireTimestamp = String(duration)
+        } else {
+            q.ExpireTimestamp = "1"
+        }
         
         let jsonQ = JSONSerializer.toJson(q)
         let body = "roomId=\(room._id!)&question=\(jsonQ)&type=MultipleChoiceQuestion"
         HttpHandler.requestWithResponse(action: "Question/CreateQuestion", type: "POST", body: body) { (data, response, error) -> Void in
-
+            
         }
     }
     
@@ -128,15 +132,13 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
                 cell.label.text = "Add Response"
                 addResponseCell = cell
                 return cell
-
+                
             }
         }
         else {
-                let cellIdentifier = "TextInputCell"
-                let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! TextInputCell
-                cell.label.text = responseOptions[indexPath.row].Value
-                questionText = cell
-                return cell
+            let cell = UITableViewCell()
+            cell.textLabel?.text = responseOptions[indexPath.row].Value
+            return cell
         }
         
         
@@ -189,7 +191,6 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
         else if indexPath.section == 0 && indexPath.row == 3 {
             if let responseText = addResponseCell?.inputField.text {
                 let r = ResponseOption(value: responseText, weight: 1)
-                addResponseCell?.inputField.text
                 responseOptions += [r]
             }
         }
