@@ -72,3 +72,37 @@ function toggleLocation() {
     }
 
 }
+
+//Code for rooms maps
+function toggleRoomLocation(lat, long) {
+    $("#googlemapsRoom").toggle();
+
+    var mapOptions = {
+        disableDefaultUI: true,
+        center: {
+            lat: lat,
+            lng: long
+        },
+        zoom: 22
+    }
+    map = new google.maps.Map(document.getElementById("mapRoom"), mapOptions);
+    var marker = new google.maps.Marker({
+        map: map,
+        position: {
+            lat: lat,
+            lng: long
+        },
+        title: 'Rooms position'
+    });
+    navigator.geolocation.getCurrentPosition(function(position) {
+        var pos = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+        }
+        var marker = new google.maps.Marker({
+            map: map,
+            position: pos,
+            title: 'Your position'
+        });
+    });
+}

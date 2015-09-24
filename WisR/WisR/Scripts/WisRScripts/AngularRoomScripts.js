@@ -114,10 +114,12 @@ app.controller("RoomController", [
                 }, function (n, o) {
                     $scope.userId = n;
                     if (n == "NoUser") {
+                        $scope.anonymousUser = true;
                         getRoom(false);
                     }
                     else if (n != undefined) {
                         $http.post(configs.restHostName + '/User/GetById', { id: n }).then(function (response) {
+                            $scope.anonymousUser = false;
                             $scope.currentUser = response.data;
                             getRoom(true);
                         });

@@ -3,7 +3,15 @@
 }
 <body ng-cloak ng-controller="RoomController">
     <h2>{{CurrentRoom.Name}}</h2>
-    <div id="RoomErrorDiv"></div>
+    <div id="RoomErrorDiv"></div>@*Used to insert error message*@
+    <div ng-show="CurrentRoom.CreatedById == currentUser._id">
+        <div id="roomText" class="text-center">
+            <h2><small>Rooms based on <a onClick="toggleRoomLocation($scope.CurrentRoom.Location.Latitude, $scope.CurrentRoom.Location.Longitude);" style="cursor: pointer">your location</a></small></h2>
+        </div>
+        <div id="googlemapsRoom" hidden>
+            <div id="mapRoom" style="height: 300px"></div>
+        </div>
+    </div>
     <div class="row" ng-show="rightPassword">
         <div ng-hide="questionsLoaded" class="container text-center col-md-8">
             <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span><label id="loadingLabel" class="">Loading questions...</label>
@@ -55,8 +63,8 @@
                         </td>
                         <td>{{SpecificQuestion.QuestionText}}</td>
                         <td>{{GetUsernameById(SpecificQuestion.CreatedById)}}</td>
-                        <td>{{SpecificQuestion.Votes | Votes: 1}}<button class="votingBtn" ng-click="Vote('Up')"><span ng-class="{'upvoted':hasVoted('{{SpecificQuestion.Votes}}' != undefined? SpecificQuestion.Votes: 'undefined',true)}" class="glyphicon glyphicon-thumbs-up"></span></button></td>
-                        <td>{{SpecificQuestion.Votes | Votes: -1}}<button class="votingBtn" ng-click="Vote('Down')"><span ng-class="{'downvoted':hasVoted('{{SpecificQuestion.Votes}}'!= undefined? SpecificQuestion.Votes: 'undefined',false)}" class="glyphicon glyphicon-thumbs-down"></span></button></td>
+                        <td>{{SpecificQuestion.Votes | Votes: 1}}<button class="votingBtn" ng-click="Vote('Up')" title="{{{true: 'Login to enable', false: ''}[anonymousUser]}}" style="pointer-events: auto;" ng-disabled="anonymousUser"> <span ng-class="{'upvoted':hasVoted('{{SpecificQuestion.Votes}}' != undefined? SpecificQuestion.Votes: 'undefined',true)}" class="glyphicon glyphicon-thumbs-up"></span></button></td>
+                        <td>{{SpecificQuestion.Votes | Votes: -1}}<button class="votingBtn" ng-click="Vote('Down')" title="{{{true: 'Login to enable', false: ''}[anonymousUser]}}" style="pointer-events: auto;" ng-disabled="anonymousUser"><span ng-class="{'downvoted':hasVoted('{{SpecificQuestion.Votes}}'!= undefined? SpecificQuestion.Votes: 'undefined',false)}" class="glyphicon glyphicon-thumbs-down"></span></button></td>
                     </tr>
 
                 </table>
@@ -75,7 +83,7 @@
                         </label>
                     </div>
 
-                    <button class="btn btn-primary" ng-click="AddAnswer()" ng-disabled="timerOverflow || answerChoosen == undefined">Submit</button><button style="float: right" class="btn btn-primary" ng-click="ToggleShowQuestionTables()">Back to questions</button>
+                    <button class="btn btn-primary" ng-click="AddAnswer()" ng-disabled="timerOverflow || answerChoosen == undefined" title="{{{true: 'Login to enable', false: ''}[anonymousUser]}}" style="pointer-events: auto;" ng-disabled="anonymousUser">Submit</button><button style="float: right" class="btn btn-primary" ng-click="ToggleShowQuestionTables()">Back to questions</button>
                 </form>
                 <label ng-hide="showResults">No results yet</label>
                 <div id="chartDiv" ng-hide="!showResults">
@@ -187,20 +195,20 @@
                             <button class="btn btn-primary btn-md btn-default" type="submit" ng-click="validatePassword()">Submit</button>
                             <span>
                                 @Html.ActionLink("Go back", "Index", "Home", null, new { @class = "btn btn-primary btn-md btn-default " })
-                            @Html.Hidden("RedirectToHome", Url.Action("Index", "Home"))
-                        </span>
-                    </div>
-                    <div class="col-md-12 text-center">
-                        {{passwordMessage}}
-                    </div>
-                </form>
+                                @Html.Hidden("RedirectToHome", Url.Action("Index", "Home"))
+                            </span>
+                        </div>
+                        <div class="col-md-12 text-center">
+                            {{passwordMessage}}
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
-<script type="text/javascript">
-    var MyRoomIdFromViewBag = '@ViewBag.roomId';
-</script>
+    <script type="text/javascript">
+        var MyRoomIdFromViewBag = '@ViewBag.roomId';
+    </script>
 </body>
