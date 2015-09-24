@@ -39,6 +39,11 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     
     func showQuestionUI() {
+        if self.question._id == nil {
+            return
+            //todo display something nice to user :-)
+        }
+        
         //Picker
         pickerData.removeAll()
         for r in question.ResponseOptions {

@@ -22,18 +22,32 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
 import com.example.tomas.wisrandroid.Helpers.ActivityLayoutHelper;
 import com.example.tomas.wisrandroid.Helpers.CustomPagerAdapter;
+import com.example.tomas.wisrandroid.Helpers.HttpHelper;
+import com.example.tomas.wisrandroid.Model.MultipleChoiceQuestion;
+import com.example.tomas.wisrandroid.Model.MyUser;
+import com.example.tomas.wisrandroid.Model.Question;
+import com.example.tomas.wisrandroid.Model.Room;
+import com.example.tomas.wisrandroid.Model.User;
 import com.example.tomas.wisrandroid.R;
+import com.google.gson.Gson;
 
-public class QuestionActivity extends ActionBarActivity {
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+public class QuestionActivity extends AppCompatActivity {
+
+    final ArrayList<Question> mQuestions = new ArrayList<Question>();
     CustomPagerAdapter mPagerAdapter;
     ViewPager mViewPager;
-
-
-    Button mButton;
-    TextView mTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,62 +82,43 @@ public class QuestionActivity extends ActionBarActivity {
             }
         });
 
+        Map<String, String> mParams = new HashMap<String, String>();
 
+        final Gson gson = new Gson();
 
-        //ActivityLayoutHelper.HideLayout(getWindow(), getSupportActionBar());
+        String stuff = getIntent().getBundleExtra("CurrentRoom").getString("Room");
 
-        //mTextView = (TextView) findViewById(R.id.textview_ask_question);
-        //mTextView.setText(getIntent().getBundleExtra("CurrentRoom").getString("Room", "Failed"));
+        Room mRoom = gson.fromJson(stuff,Room.class);
 
-        //mButton = (Button) findViewById(R.id.button_ask_question);
-        //mButton.setOnClickListener(new View.OnClickListener() {
-        //    @Override
-        //    public void onClick(View v) {
+        Response.Listener<String> mListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Question[] tempQuestions = gson.fromJson(response,Question[].class);
 
-//                Map<String,String> mParams = new HashMap<String, String>();
-//
-//                Question mQuestion = new BooleanQuestion("bent");
-//                mQuestion.set_CreatedById("Tomas");
-//                mQuestion.set_Downvotes(5);
-//                mQuestion.set_Id(null);
-//                mQuestion.set_Img("base64");
-//                mQuestion.set_Upvotes(5);
-//                mQuestion.set_QuestionText("SoQuestion");
-//                Gson gson = new Gson();
-//
-//                String json = gson.toJson(mQuestion);
-//
-//                mTextView.setText(json);
-//
-//                mParams.put("question", json);
-//                mParams.put("roomId", "doge" );
-//                mParams.put("type","BooleanQuestion");
-//
-//                Response.Listener<JSONObject> mListener = new Response.Listener<JSONObject>() {
-//                    @Override
-//                    public void onResponse(JSONObject jsonObject) {
-//                        mTextView.setText(jsonObject.toString());
-//                    }
-//                };
-//
-//                Response.ErrorListener mErrorListener = new Response.ErrorListener() {
-//                    @Override
-//                    public void onErrorResponse(VolleyError volleyError) {
-//                        mTextView.setText( String.valueOf(volleyError.networkResponse.statusCode));
-//                    }
-//                };
-//
-//                RequestQueue requestQueue = Volley.newRequestQueue(QuestionActivity.this);
-//                HttpHelper jsObjRequest = new HttpHelper(Request.Method.POST, "http://10.0.2.2:1337/Question/CreateQuestion", mParams, mListener , mErrorListener);
-//
-//                try {
-//                    requestQueue.add(jsObjRequest);
-//                }
-//                catch (Exception e){
-//
-//                }
-        //    }
-      //  });
+                for(Question question : tempQuestions) {
+                    mQuestions.add(question);
+                }
+
+                Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
+            }
+        };
+
+        Response.ErrorListener mErrorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Toast.makeText(getApplicationContext(),String.valueOf(volleyError.networkResponse.statusCode),Toast.LENGTH_LONG).show();
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(QuestionActivity.this);
+        HttpHelper jsObjRequest = new HttpHelper( "http://wisrrestapi.aceipse.dk/Question/GetQuestionsForRoom?roomId="+mRoom.get_id(), null, mListener, mErrorListener);
+
+        try {
+            requestQueue.add(jsObjRequest);
+        } catch (Exception e) {
+
+        }
+
 
     }
 
