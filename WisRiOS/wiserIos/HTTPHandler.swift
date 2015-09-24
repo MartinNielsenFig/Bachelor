@@ -29,6 +29,7 @@ class HttpHandler {
         request.HTTPMethod = type
         // "+" becomes " " http://stackoverflow.com/questions/2491351/nsmutableurlrequest-eats-plus-signs that's half a day lost
         request.HTTPBody = body.stringByReplacingOccurrencesOfString("+", withString: "%2b").dataUsingEncoding(NSUTF8StringEncoding)
+        request.timeoutInterval = 10
         
         let started = NSDate()
         let task = session.dataTaskWithRequest(request) {
