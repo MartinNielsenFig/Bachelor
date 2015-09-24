@@ -12,6 +12,7 @@ import MapKit
 
 class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
 
+    //Properties
     @IBOutlet var mapView: MKMapView!
     var location = CLLocation()
 
@@ -25,6 +26,7 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
         }
     }
     
+    //Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -128,7 +130,7 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
         NSLog("Error while updating location \(error.localizedDescription)")
     }
     
-    //Segue
+    //Navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "CreateRoom" {
             //let createRoomViewController = segue.destinationViewController as! CreateRoomViewController

@@ -9,6 +9,8 @@
 import UIKit
 
 class ChatViewController: UIViewController, UITextFieldDelegate, Paged {
+    
+    //Properties
     let pageIndex = 2
     var roomId: String?
     
@@ -25,6 +27,7 @@ class ChatViewController: UIViewController, UITextFieldDelegate, Paged {
     @IBOutlet weak var chatTextField: UITextView!
     @IBOutlet weak var chatMessageInput: UITextField!
     
+    //Lifecycle
     override func viewDidLoad() {
         chatMessageInput.delegate = self
         
@@ -81,7 +84,7 @@ class ChatViewController: UIViewController, UITextFieldDelegate, Paged {
         movePlate(textField, up: false)
     }
     
-    
+    //Utilities
     //http://stackoverflow.com/questions/1247113/iphone-keyboard-covers-uitextfield
     func movePlate(field: UITextField, up: Bool) {
         

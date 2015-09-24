@@ -25,14 +25,14 @@ class CreateRoomViewController: UITableViewController {
     
     var room = Room()
     
-    //Get's initialized in prepareForSegue from Choose Role
-    
+    //Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addRoomButtonPressed:")
     }
     
+    //Tableview
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
@@ -134,16 +134,13 @@ class CreateRoomViewController: UITableViewController {
         return UITableViewCell()
     }
     
-    //Handle selector events
-    
-    //Password switch
+    //Utilities
     func enablePwSwitchChanged(uiSwitch: UISwitch) {
         pwInputCell?.inputField.enabled = uiSwitch.on
         pwLabel?.enabled = uiSwitch.on
     }
     
-    //Add room
-    func addRoomButtonPressed(button: UIBarButtonItem) {        
+    func addRoomButtonPressed(button: UIBarButtonItem) {
         room.Name = roomNameInputCell?.inputField.text
         room.AllowAnonymous = (anonymousInputCell?.uiSwitch.on)!
         room.CreatedById = CurrentUser.sharedInstance._id
@@ -175,6 +172,7 @@ class CreateRoomViewController: UITableViewController {
         }
     }
     
+    //Navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "RoomCreated" {
             let roomPageViewController = segue.destinationViewController as! RoomPageViewController

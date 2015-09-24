@@ -10,10 +10,13 @@ import UIKit
 
 class QuestionListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, Paged {
     
+    //Properties
     let pageIndex = 0
     var roomId: String?
     var questions = [Question]() {
+        
         didSet {
+            filter(&self.questions)
             dispatch_async(dispatch_get_main_queue()) { () -> Void in
                 self.questionsTableView.reloadData()
             }
@@ -22,6 +25,32 @@ class QuestionListViewController: UIViewController, UITableViewDataSource, UITab
     
     @IBOutlet weak var questionsTableView: UITableView!
     
+    //Utility functions
+    func filter(inout questions: [Question]) {
+        questions.sortInPlace { (el1, el2) -> Bool in
+            let t1 = upDownVotesCount(el1)
+            let t2 = upDownVotesCount(el2)
+            
+            let c1 = t1.upvotes - t1.downvotes
+            let c2 = t2.upvotes - t2.downvotes
+            
+            return c1 > c2
+        }
+    }
+    
+    func upDownVotesCount(question: Question) -> (downvotes: Int, upvotes: Int) {
+        let noDownvotes = question.Votes.filter { (element) -> Bool in
+            return element.Value == -1
+            }.count
+        
+        let noUpvotes = question.Votes.filter { (element) -> Bool in
+            return element.Value == 1
+            }.count
+        
+        return (noDownvotes, noUpvotes)
+    }
+    
+    //Lifetime
     override func viewDidLoad() {
         
         questionsTableView.delegate = self
@@ -75,16 +104,21 @@ class QuestionListViewController: UIViewController, UITableViewDataSource, UITab
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cellIdentifier = "QuestionCell"
-        let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! QuestionViewCell
         
         let question = questions[indexPath.row]
-        cell.textLabel?.text = question.QuestionText
+        cell.label.text = question.QuestionText
+        
+        
+        let votesCount = upDownVotesCount(question)
+        cell.upvoteCounter.text = String(votesCount.upvotes)
+        cell.downvoteCounter.text = String(votesCount.downvotes)
         
         //Todo cleaner?
         if let parent = (parentViewController?.parentViewController as? RoomPageViewController) {
             cell.textLabel?.textColor = UIColor.blackColor()
             if question.CreatedById == parent.room?.CreatedById {
-                cell.textLabel?.font = UIFont.boldSystemFontOfSize(15.0)
+                cell.label.font = UIFont.boldSystemFontOfSize(15.0)
             }
         }
         
