@@ -31,21 +31,23 @@ class ChatViewController: UIViewController, UITextFieldDelegate, Paged {
         let body = "roomId=\(roomId!)"
         HttpHandler.requestWithResponse(action: "Chat/GetAllByRoomId", type: "POST", body: body) { (data, response, error) -> Void in
             var messageArray = [ChatMessage]()
+            var tempChat = String()
             
             if let data = data, jsonArray = try? JSONSerializer.toArray(data) {
                 for msg in jsonArray {
                     messageArray += [ChatMessage(jsonDictionary: msg as! NSDictionary)]
                 }
                 
-                var tempChat = String()
                 for m in messageArray {
                     let line = DateTimeHelper.getTimeStringFromEpochString(m.Timestamp) + " " + m.Value! + "\n"
                     tempChat += line
                 }
-                self.chat = tempChat
             } else {
-                assert(true)
+                let line = "Could not load the chat"
+                tempChat += line
             }
+            
+            self.chat = tempChat
         }
         super.viewDidLoad()
     }
@@ -78,7 +80,7 @@ class ChatViewController: UIViewController, UITextFieldDelegate, Paged {
     func textFieldDidEndEditing(textField: UITextField) {
         movePlate(textField, up: false)
     }
-
+    
     
     //http://stackoverflow.com/questions/1247113/iphone-keyboard-covers-uitextfield
     func movePlate(field: UITextField, up: Bool) {

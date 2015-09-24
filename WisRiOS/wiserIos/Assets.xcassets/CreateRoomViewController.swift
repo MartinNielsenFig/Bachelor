@@ -165,8 +165,6 @@ class CreateRoomViewController: UITableViewController {
         room.UsersCanAsk = (userQuestionInputCell?.uiSwitch.on)!
         room.EncryptedPassword = pwInputCell?.inputField.text
         
-        //Creating the room callback adds the id and navigates (todo loading bar or indicator)
-        
         let jsonRoom = JSONSerializer.toJson(self.room)
         let body = "room=\(jsonRoom)"
         HttpHandler.requestWithResponse(action: "Room/CreateRoom", type: "POST", body: body) { (data, response, error) -> Void in

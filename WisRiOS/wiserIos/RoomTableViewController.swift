@@ -47,7 +47,10 @@ class RoomTableViewController: UITableViewController {
                     self.rooms = filteredRooms
                 }
             } else {
-                assert(true)
+                let errorRoom = Room()
+                errorRoom.Name = "Could not load rooms"
+                errorRoom._id = "system"
+                self.rooms = [errorRoom]
             }
         }
     }

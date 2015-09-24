@@ -56,7 +56,10 @@ class QuestionListViewController: UIViewController, UITableViewDataSource, UITab
                     self.questions += questions
                 }
             } else {
-                assert(true)
+                let qError = Question()
+                qError.QuestionText = "Could not load questions"
+                qError.CreatedById = "system"
+                self.questions += [qError]
             }
         }
     }
