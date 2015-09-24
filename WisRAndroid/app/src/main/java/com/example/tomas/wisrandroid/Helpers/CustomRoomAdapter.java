@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.tomas.wisrandroid.Model.Room;
 import com.example.tomas.wisrandroid.R;
@@ -26,7 +25,7 @@ public class CustomRoomAdapter extends ArrayAdapter<Room> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View rowView = inflater.inflate(R.layout.rowlayout, parent, false);
+        View rowView = inflater.inflate(R.layout.roomrowlayout, parent, false);
         TextView textView = (TextView) rowView.findViewById(R.id.custom_name);
         TextView textView2 = (TextView) rowView.findViewById(R.id.custom_tag);
         TextView textView3 = (TextView) rowView.findViewById(R.id.custom_anonymous);
@@ -41,3 +40,8 @@ public class CustomRoomAdapter extends ArrayAdapter<Room> {
         return rowView;
     }
 }
+
+//static class ViewHolder
+//{
+
+//}
