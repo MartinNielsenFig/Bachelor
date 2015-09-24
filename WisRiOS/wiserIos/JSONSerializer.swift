@@ -11,38 +11,48 @@
 
 import Foundation
 
-public class JSONSerializer {
+ class JSONSerializer {
+    
+    enum JSONSerializerError: ErrorType {
+        case JsonIsNotDictionary
+        case JsonIsNotArray
+        case JsonIsNotValid
+    }
     
     //http://stackoverflow.com/questions/30480672/how-to-convert-a-json-string-to-a-dictionary
-    //Todo Make throwable
-    public static func toDictionary(jsonString: String) -> NSDictionary? {
-        let dictionary = jsonToAnyObject(jsonString) as? NSDictionary
-        return dictionary
+     static func toDictionary(jsonString: String) throws -> NSDictionary {
+        if let dictionary = try jsonToAnyObject(jsonString) as? NSDictionary {
+            return dictionary
+        } else {
+            throw JSONSerializerError.JsonIsNotDictionary
+        }
     }
     
-    //Todo Make throwable
-    public static func toArray(jsonString: String) -> NSArray? {
-        let array = jsonToAnyObject(jsonString) as? NSArray
-        return array
+     static func toArray(jsonString: String) throws -> NSArray {
+        if let array = try jsonToAnyObject(jsonString) as? NSArray {
+            return array
+        } else {
+            throw JSONSerializerError.JsonIsNotArray
+        }
     }
     
-    //Todo Make throwable
-    private static func jsonToAnyObject(jsonString: String) -> AnyObject? {
+    private static func jsonToAnyObject(jsonString: String) throws -> AnyObject? {
         var any: AnyObject? = nil
         
         if let data = jsonString.dataUsingEncoding(NSUTF8StringEncoding) {
             do {
-                any = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers)
+                any = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableContainers)
             }
             catch let error as NSError {
                 let sError = String(error)
                 NSLog(sError)
+                throw JSONSerializerError.JsonIsNotValid
             }
         }
         return any
     }
     
-    public static func toJson(object: Any) -> String {
+     static func toJson(object: Any) -> String {
         var json = "{"
         let mirror = Mirror(reflecting: object)
         

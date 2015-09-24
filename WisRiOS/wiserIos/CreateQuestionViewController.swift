@@ -69,7 +69,7 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
         let jsonQ = JSONSerializer.toJson(q)
         let body = "roomId=\(room._id!)&question=\(jsonQ)&type=MultipleChoiceQuestion"
         HttpHandler.requestWithResponse(action: "Question/CreateQuestion", type: "POST", body: body) { (data, response, error) -> Void in
-            print(data)
+
         }
     }
     
@@ -154,8 +154,6 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        print("section \(indexPath.section) row \(indexPath.row)")
-        
         if indexPath.section == 0 && indexPath.row == 2 {
             questionText?.resignFirstResponder()    //hide keyboard
             
@@ -189,8 +187,6 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
             presentViewController(alert, animated: true, completion: nil)
         }
         else if indexPath.section == 0 && indexPath.row == 3 {
-            print("want to add response")
-            
             if let responseText = addResponseCell?.inputField.text {
                 let r = ResponseOption(value: responseText, weight: 1)
                 addResponseCell?.inputField.text

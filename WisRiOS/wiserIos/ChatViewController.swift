@@ -31,16 +31,21 @@ class ChatViewController: UIViewController, UITextFieldDelegate, Paged {
         let body = "roomId=\(roomId!)"
         HttpHandler.requestWithResponse(action: "Chat/GetAllByRoomId", type: "POST", body: body) { (data, response, error) -> Void in
             var messageArray = [ChatMessage]()
-            for msgJson in JSONSerializer.toArray(data!)! {
-                messageArray += [ChatMessage(jsonDictionary: msgJson as! NSDictionary)]
-            }
             
-            var tempChat = String()
-            for m in messageArray {
-                let line = DateTimeHelper.getTimeStringFromEpochString(m.Timestamp) + " " + m.Value! + "\n"
-                tempChat += line
+            if let data = data, jsonArray = try? JSONSerializer.toArray(data) {
+                for msg in jsonArray {
+                    messageArray += [ChatMessage(jsonDictionary: msg as! NSDictionary)]
+                }
+                
+                var tempChat = String()
+                for m in messageArray {
+                    let line = DateTimeHelper.getTimeStringFromEpochString(m.Timestamp) + " " + m.Value! + "\n"
+                    tempChat += line
+                }
+                self.chat = tempChat
+            } else {
+                assert(true)
             }
-            self.chat = tempChat
         }
         super.viewDidLoad()
     }

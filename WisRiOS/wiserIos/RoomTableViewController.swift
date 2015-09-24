@@ -25,22 +25,29 @@ class RoomTableViewController: UITableViewController {
         
         let loading = Room()
         loading.Name = "Loading rooms..."
+        loading._id = "system"
         rooms += [loading]
         
         HttpHandler.requestWithResponse(action: "Room/GetAll", type: "GET", body: "") { (data, response, error) -> Void in
             var rooms = [Room]()
-            for room in JSONSerializer.toArray(data!)! {
-                rooms.append(Room(jsonDictionary: room as! NSDictionary))
-            }
-            let filteredRooms = self.filterRoomsByLocation(rooms, metersRadius: 1000)
-            if filteredRooms.count <= 0 {
-                let noRooms = Room()
-                noRooms._id = "system"
-                noRooms.Name = "No nearby rooms"
-                self.rooms = [noRooms]
-            }
-            else {
-                self.rooms = filteredRooms
+            
+            //try? operator makes roomsJson nil if .toArray throws instead of do try catch-pattern
+            if let data = data, jsonArray = try? JSONSerializer.toArray(data) {
+                for room in jsonArray {
+                    rooms += [Room(jsonDictionary: room as! NSDictionary)]
+                }
+                let filteredRooms = self.filterRoomsByLocation(rooms, metersRadius: 1000)
+                if filteredRooms.count <= 0 {
+                    let noRooms = Room()
+                    noRooms._id = "system"
+                    noRooms.Name = "No nearby rooms"
+                    self.rooms = [noRooms]
+                }
+                else {
+                    self.rooms = filteredRooms
+                }
+            } else {
+                assert(true)
             }
         }
     }

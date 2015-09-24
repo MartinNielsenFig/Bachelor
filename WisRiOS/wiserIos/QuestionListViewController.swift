@@ -37,21 +37,26 @@ class QuestionListViewController: UIViewController, UITableViewDataSource, UITab
         let action = "Question/GetQuestionsForRoomWithoutImages?roomId=\(self.roomId!)"
         HttpHandler.requestWithResponse(action: action, type: "GET", body: "") { (data, response, error) -> Void in
                         
-            var questionArray = [Question]()
-            for question in JSONSerializer.toArray(data!)! {
-                questionArray += [Question(jsonDictionary: question as! NSDictionary)]
-            }
+            var questions = [Question]()
             
-            self.questions.removeAll()
-            
-            if questionArray.count <= 0 {
-                let q = Question()
-                q.QuestionText = "No questions for room"
-                q.CreatedById = "system"
-                self.questions += [q]
-            }
-            else {
-                self.questions += questionArray
+            if let data = data, jsonArray = try? JSONSerializer.toArray(data) {
+                for question in jsonArray {
+                    questions += [Question(jsonDictionary: question as! NSDictionary)]
+                }
+                
+                self.questions.removeAll()
+                
+                if questions.count <= 0 {
+                    let q = Question()
+                    q.QuestionText = "No questions for room"
+                    q.CreatedById = "system"
+                    self.questions += [q]
+                }
+                else {
+                    self.questions += questions
+                }
+            } else {
+                assert(true)
             }
         }
     }
