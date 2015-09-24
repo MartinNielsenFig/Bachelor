@@ -7,7 +7,7 @@ import java.util.List;
 public class Room {
 
     //Fields
-    private String Id;
+    private String _id;
     private String Name;
     private String CreatedById;
     private Coordinate Location;
@@ -23,11 +23,11 @@ public class Room {
 
     //Constructors
     public Room(){}
-    public Room(String Id, String Name, String CreatedById, int Radius, String Tag,
+    public Room(String _id, String Name, String CreatedById, int Radius, String Tag,
                 boolean HasPassword, String EncryptedPassword, boolean HasChat,
                 boolean UsersCanAsk, boolean AllowAnonymous, boolean UseLocation, Coordinate Location)
     {
-        this.Id = Id;
+        this._id = _id;
         this.Name = Name;
         this.CreatedById = CreatedById;
         this.Radius = Radius;
@@ -42,8 +42,8 @@ public class Room {
     }
 
     //Properties
-    public String get_Id(){return this.Id;}
-    public void set_Id(String Id) {this.Id = Id;}
+    public String get_id(){return this._id;}
+    public void set_id(String _id) {this._id = _id;}
 
     public String get_Name(){return this.Name;}
     public void set_Name(String Name) {this.Name = Name;}

@@ -148,7 +148,7 @@ public class CreateRoomActivity extends AppCompatActivity implements GoogleApiCl
                 mRoom.set_HasPassword(mEnablePasswordSwitch.isChecked());
                 mRoom.set_EncryptedPassword(mPasswordEditText.getText().toString());
                 mRoom.set_HasChat(mEnableChatSwitch.isChecked());
-                mRoom.set_Id(null);
+                mRoom.set_id(null);
                 if (mFirstRadiusToggleButton.isChecked())
                 {
                     mRoom.set_Radius(Integer.parseInt(mFirstRadiusToggleButton.getTextOn().toString().replace("m","")));
@@ -191,7 +191,7 @@ public class CreateRoomActivity extends AppCompatActivity implements GoogleApiCl
                     @Override
                     public void onResponse(String response) {
                         Toast.makeText(getApplicationContext(), "In Listener", Toast.LENGTH_LONG).show();
-                        mRoom.set_Id(response);
+                        mRoom.set_id(response);
                         mResp.setText(response);
                     }
                 };
