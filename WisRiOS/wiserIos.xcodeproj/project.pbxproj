@@ -43,6 +43,7 @@
 		CBB4D7DD1BA1A887001C531D /* Paged.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB4D7DC1BA1A887001C531D /* Paged.swift */; settings = {ASSET_TAGS = (); }; };
 		CBB60B2F1B9718EC0007A47B /* CreateRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB60B2E1B9718EC0007A47B /* CreateRoomViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		CBB60B311B97253A0007A47B /* SegmentedInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB60B301B97253A0007A47B /* SegmentedInputCell.swift */; settings = {ASSET_TAGS = (); }; };
+		CBCD8B271BB3F158002ACBC4 /* TextButtonInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCD8B261BB3F158002ACBC4 /* TextButtonInputCell.swift */; settings = {ASSET_TAGS = (); }; };
 		CBF19CD81BAFFBA700A906B3 /* CreateQuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF19CD71BAFFBA700A906B3 /* CreateQuestionViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		CBF19CDA1BB0065A00A906B3 /* NumberInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF19CD91BB0065A00A906B3 /* NumberInputCell.swift */; settings = {ASSET_TAGS = (); }; };
 		CBF19CDE1BB03D5800A906B3 /* Vote.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF19CDD1BB03D5800A906B3 /* Vote.swift */; settings = {ASSET_TAGS = (); }; };
@@ -99,6 +100,7 @@
 		CBB4D7DC1BA1A887001C531D /* Paged.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Paged.swift; sourceTree = "<group>"; };
 		CBB60B2E1B9718EC0007A47B /* CreateRoomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreateRoomViewController.swift; path = Assets.xcassets/CreateRoomViewController.swift; sourceTree = "<group>"; };
 		CBB60B301B97253A0007A47B /* SegmentedInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedInputCell.swift; sourceTree = "<group>"; };
+		CBCD8B261BB3F158002ACBC4 /* TextButtonInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextButtonInputCell.swift; sourceTree = "<group>"; };
 		CBF19CD71BAFFBA700A906B3 /* CreateQuestionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateQuestionViewController.swift; sourceTree = "<group>"; };
 		CBF19CD91BB0065A00A906B3 /* NumberInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberInputCell.swift; sourceTree = "<group>"; };
 		CBF19CDD1BB03D5800A906B3 /* Vote.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vote.swift; sourceTree = "<group>"; };
@@ -196,6 +198,7 @@
 				CBB60B301B97253A0007A47B /* SegmentedInputCell.swift */,
 				CB1FB9FF1B983C3A00B1FCF8 /* BooleanInputCell.swift */,
 				CBF19CD91BB0065A00A906B3 /* NumberInputCell.swift */,
+				CBCD8B261BB3F158002ACBC4 /* TextButtonInputCell.swift */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -372,6 +375,7 @@
 				CB1FBA001B983C3A00B1FCF8 /* BooleanInputCell.swift in Sources */,
 				CB84F8B31BB13FA400CD07AD /* Error.swift in Sources */,
 				CB39A97B1B986B7F0014F818 /* StringExtractor.swift in Sources */,
+				CBCD8B271BB3F158002ACBC4 /* TextButtonInputCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

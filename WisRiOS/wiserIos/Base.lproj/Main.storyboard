@@ -383,6 +383,63 @@
                                     <outlet property="label" destination="ytR-Gq-AnO" id="eSh-C9-l8D"/>
                                 </connections>
                             </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="TextButtonInputCell" rowHeight="40" id="Fqa-h0-I3z" userLabel="TextButtonInputCell" customClass="TextButtonInputCell" customModule="wiserIos" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="300" width="600" height="40"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Fqa-h0-I3z" id="LQ2-dZ-2l9">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="39.5"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WRZ-mb-EFX">
+                                            <rect key="frame" x="8" y="2" width="584" height="30"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="1" placeholderIntrinsicHeight="30" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d0c-mP-k52">
+                                                    <rect key="frame" x="0.0" y="0.0" width="241" height="30"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="9" placeholderIntrinsicHeight="30" contentHorizontalAlignment="left" contentVerticalAlignment="center" usesAttributedText="YES" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ocn-uL-DA3">
+                                                    <rect key="frame" x="241" y="0.0" width="301" height="30"/>
+                                                    <animations/>
+                                                    <attributedString key="attributedText"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YDx-ul-GZM">
+                                                    <rect key="frame" x="542" y="0.0" width="42" height="30"/>
+                                                    <animations/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="42" id="agC-rv-fh0"/>
+                                                        <constraint firstAttribute="width" constant="42" id="eW9-at-kyQ"/>
+                                                    </constraints>
+                                                    <state key="normal" title="Add"/>
+                                                </button>
+                                            </subviews>
+                                            <animations/>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="YDx-ul-GZM" secondAttribute="trailing" id="a3t-Ha-a6c"/>
+                                                <constraint firstItem="d0c-mP-k52" firstAttribute="width" secondItem="ocn-uL-DA3" secondAttribute="width" multiplier="8:10" id="cF4-FW-gT9"/>
+                                            </constraints>
+                                        </stackView>
+                                    </subviews>
+                                    <animations/>
+                                    <constraints>
+                                        <constraint firstAttribute="trailingMargin" secondItem="WRZ-mb-EFX" secondAttribute="trailing" id="B6x-Bs-yDc"/>
+                                        <constraint firstItem="WRZ-mb-EFX" firstAttribute="centerY" secondItem="LQ2-dZ-2l9" secondAttribute="centerY" id="Ghf-sV-Uzd"/>
+                                        <constraint firstItem="WRZ-mb-EFX" firstAttribute="leading" secondItem="LQ2-dZ-2l9" secondAttribute="leadingMargin" id="KYt-u7-ASS"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstItem="ocn-uL-DA3" firstAttribute="height" secondItem="Fqa-h0-I3z" secondAttribute="height" multiplier="90:100" id="jlZ-Ba-UJy"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="button" destination="YDx-ul-GZM" id="UtF-jK-QxZ"/>
+                                    <outlet property="inputField" destination="ocn-uL-DA3" id="XbR-xg-ND0"/>
+                                    <outlet property="label" destination="d0c-mP-k52" id="Q2X-AK-Z7t"/>
+                                </connections>
+                            </tableViewCell>
                         </prototypes>
                         <connections>
                             <outlet property="dataSource" destination="J7j-bt-NRW" id="0Xi-S8-n3Z"/>

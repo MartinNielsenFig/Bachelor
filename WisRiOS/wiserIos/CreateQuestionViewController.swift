@@ -25,7 +25,7 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
     var durationInput: NumberInputCell? = nil
     var imageTableCell: UITableViewCell? = nil
     var selectedImage: UIImage?
-    var addResponseCell: TextInputCell? = nil
+    var addResponseCell: TextButtonInputCell? = nil
     
     var photoSelected = false {
         didSet {
@@ -39,6 +39,7 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "addQuestion")
     }
     
+    //Button actions
     func addQuestion() {
         let q = Question()
         q.CreatedById = CurrentUser.sharedInstance._id
@@ -74,6 +75,13 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
         let body = "roomId=\(room._id!)&question=\(jsonQ)&type=MultipleChoiceQuestion"
         HttpHandler.requestWithResponse(action: "Question/CreateQuestion", type: "POST", body: body) { (data, response, error) -> Void in
             
+        }
+    }
+    
+    func AddResponseOption() {
+        if let responseText = addResponseCell?.inputField.text {
+            let r = ResponseOption(value: responseText, weight: 1)
+            responseOptions += [r]
         }
     }
     
@@ -127,9 +135,10 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
                 return cell
             }
             else if indexPath.row == 3 {
-                let cellIdentifier = "TextInputCell"
-                let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! TextInputCell
+                let cellIdentifier = "TextButtonInputCell"
+                let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! TextButtonInputCell
                 cell.label.text = "Add Response"
+                cell.button.addTarget(self, action: "AddResponseOption", forControlEvents: .TouchUpInside)
                 addResponseCell = cell
                 return cell
                 
@@ -187,12 +196,6 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
             
             
             presentViewController(alert, animated: true, completion: nil)
-        }
-        else if indexPath.section == 0 && indexPath.row == 3 {
-            if let responseText = addResponseCell?.inputField.text {
-                let r = ResponseOption(value: responseText, weight: 1)
-                responseOptions += [r]
-            }
         }
     }
     
