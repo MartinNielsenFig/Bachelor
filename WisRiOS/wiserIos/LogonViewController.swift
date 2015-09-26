@@ -17,6 +17,9 @@ class LogonViewController: UIViewController, FBSDKLoginButtonDelegate {
     var previousViewController: UIViewController? = nil
     
     //Utilities
+    /**
+    Cancels logon by asking previous navigation controller to dismiss the current view
+    */
     @IBAction func cancelLogonBtn() {
         previousNavigationController?.dismissViewControllerAnimated(true, completion: nil)
     }

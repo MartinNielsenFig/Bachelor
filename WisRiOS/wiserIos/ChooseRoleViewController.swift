@@ -17,6 +17,11 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
     var location = CLLocation()
 
     //Actions
+    
+    /**
+    Navigates to CreateRoom if logged in. Else navigate to Login screen.
+    - parameter sender:	The button pressed
+    */
     @IBAction func clickCreateRoomBtn(sender: AnyObject) {
         if CurrentUser.sharedInstance.FacebookId != nil {
             performSegueWithIdentifier("CreateRoom", sender: sender)
@@ -143,6 +148,10 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
     }
     
     //Facebook
+    
+    /**
+    Shows a UI Alert so user can confirm logging out of Facebook.
+    */
     func logOffFacebook() {
         
         //http://stackoverflow.com/questions/24022479/how-would-i-create-a-uialertview-in-swift

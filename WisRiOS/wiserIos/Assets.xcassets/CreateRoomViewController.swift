@@ -135,11 +135,20 @@ class CreateRoomViewController: UITableViewController {
     }
     
     //Utilities
+    
+    /**
+    Sets the inputfield.enabled based on the uiSwitch pressed
+    - parameter uiSwitch:	The UISwitch pressed
+    */
     func enablePwSwitchChanged(uiSwitch: UISwitch) {
         pwInputCell?.inputField.enabled = uiSwitch.on
         pwLabel?.enabled = uiSwitch.on
     }
     
+    /**
+    Action that runs when pressing the add room button. Fetches the data from the UI and instantiates the Room field. Then sends the room as JSON to the RestAPI which handles creation.
+    - parameter button:	The button that initated the function call.
+    */
     func addRoomButtonPressed(button: UIBarButtonItem) {
         room.Name = roomNameInputCell?.inputField.text
         room.AllowAnonymous = (anonymousInputCell?.uiSwitch.on)!
