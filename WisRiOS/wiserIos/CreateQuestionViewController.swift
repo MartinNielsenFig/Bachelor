@@ -82,7 +82,7 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
     }
     
     func addResponseOption() {
-        if let responseText = addResponseCell?.inputField.text {
+        if let responseText = addResponseCell?.inputField.text where responseText != "" {
             let r = ResponseOption(value: responseText, weight: 1)
             responseOptions += [r]
         }
@@ -212,16 +212,10 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
         dismissViewControllerAnimated(true, completion: nil)
     }
     
-    
-    
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         self.photoSelected = true
         selectedImage = (info[UIImagePickerControllerOriginalImage] as! UIImage)
         imageTableCell?.imageView?.image = selectedImage
         dismissViewControllerAnimated(true, completion: nil)
     }
-    
-    
-    
-    
 }
