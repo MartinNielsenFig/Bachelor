@@ -11,7 +11,8 @@
 
 import Foundation
 
- class JSONSerializer {
+/// Handles Convertion from instances of objects to JSON strings. Also helps with casting strings of JSON to Arrays or Dictionaries.
+class JSONSerializer {
     
     enum JSONSerializerError: ErrorType {
         case JsonIsNotDictionary
@@ -20,7 +21,8 @@ import Foundation
     }
     
     //http://stackoverflow.com/questions/30480672/how-to-convert-a-json-string-to-a-dictionary
-     static func toDictionary(jsonString: String) throws -> NSDictionary {
+    
+    static func toDictionary(jsonString: String) throws -> NSDictionary {
         if let dictionary = try jsonToAnyObject(jsonString) as? NSDictionary {
             return dictionary
         } else {
@@ -28,7 +30,7 @@ import Foundation
         }
     }
     
-     static func toArray(jsonString: String) throws -> NSArray {
+    static func toArray(jsonString: String) throws -> NSArray {
         if let array = try jsonToAnyObject(jsonString) as? NSArray {
             return array
         } else {
@@ -52,7 +54,12 @@ import Foundation
         return any
     }
     
-     static func toJson(object: Any) -> String {
+    /**
+    Generates the JSON representation given any custom object of any custom class. Inherited properties will also be represented.
+    - parameter object:	The instantiation of any custom class to be represented as JSON.
+    - returns: A JSON representation of object.
+    */
+    static func toJson(object: Any) -> String {
         var json = "{"
         let mirror = Mirror(reflecting: object)
         
@@ -71,6 +78,10 @@ import Foundation
         var index = 0
         
         for (optionalPropertyName, value) in children {
+            
+            /*let type = value.dynamicType
+            let typeString = String(type)
+            print("SELF: \(type)")*/
             
             let propertyName = optionalPropertyName!
             let property = Mirror(reflecting: value)

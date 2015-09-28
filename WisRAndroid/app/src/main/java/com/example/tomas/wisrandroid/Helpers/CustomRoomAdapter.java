@@ -34,14 +34,8 @@ public class CustomRoomAdapter extends ArrayAdapter<Room> {
         textView2.setText(values.get(position).get_Tag());
         textView3.setText(values.get(position).get_AllowAnonymous() ? "Anonymous: Yes" : "Anonymous: No");
         textView4.setText(String.valueOf(values.get(position).get_Radius()) + " meters");
-        // change the icon for Windows and iPhone
-        Room s = values.get(position);
 
         return rowView;
     }
 }
 
-//static class ViewHolder
-//{
-
-//}

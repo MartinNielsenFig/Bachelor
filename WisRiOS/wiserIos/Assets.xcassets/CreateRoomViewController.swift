@@ -9,6 +9,7 @@
 import UIKit
 import MapKit
 
+/// Handles creation of a room with all its settings.
 class CreateRoomViewController: UITableViewController {
     
     //Properties
@@ -25,14 +26,14 @@ class CreateRoomViewController: UITableViewController {
     
     var room = Room()
     
-    //Get's initialized in prepareForSegue from Choose Role
-    
+    //Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addRoomButtonPressed:")
     }
     
+    //Tableview
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
@@ -134,16 +135,17 @@ class CreateRoomViewController: UITableViewController {
         return UITableViewCell()
     }
     
-    //Handle selector events
-    
-    //Password switch
+    //Utilities
     func enablePwSwitchChanged(uiSwitch: UISwitch) {
         pwInputCell?.inputField.enabled = uiSwitch.on
         pwLabel?.enabled = uiSwitch.on
     }
     
-    //Add room
-    func addRoomButtonPressed(button: UIBarButtonItem) {        
+    /**
+    Method triggered by add room button. Fetches the data from the UI and instantiates the Room field. Then sends the room as JSON to the RestAPI which handles creation.
+    - parameter button:	The button that initated the function call.
+    */
+    func addRoomButtonPressed(button: UIBarButtonItem) {
         room.Name = roomNameInputCell?.inputField.text
         room.AllowAnonymous = (anonymousInputCell?.uiSwitch.on)!
         room.CreatedById = CurrentUser.sharedInstance._id
@@ -175,6 +177,7 @@ class CreateRoomViewController: UITableViewController {
         }
     }
     
+    //Navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "RoomCreated" {
             let roomPageViewController = segue.destinationViewController as! RoomPageViewController

@@ -8,8 +8,14 @@
 
 import Foundation
 
-
+/// Helps with time-keeping
 class DateTimeHelper {
+    
+    /**
+    Returns a human readable string of the time from a epoch string.
+    - parameter secSince1970:	Seconds since 1970. Aka Epoch.
+    - returns: A string representing the time.
+    */
     static func getTimeStringFromEpochString(secSince1970: String?) -> String {
         
         var sec = Float()

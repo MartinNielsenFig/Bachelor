@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// Handles the Http-Calls from the client to the RestAPI
 class HttpHandler {
     
     //static let mainUrl = "http://192.168.198.140:1337/"
@@ -20,7 +21,18 @@ class HttpHandler {
         //NSLog("error \(error)")
     }
     
-    //http://stackoverflow.com/questions/25341858/perform-post-request-in-ios-swift
+    //
+    
+    /**
+    Sends a HTTP request to the RestAPI with the specified action and body.
+    - parameter action:						Is the HTTP call to invoke on the RestAPI
+    - parameter type:							Type of call: POST or GET
+    - parameter body:							A body of the POST, empty if GET
+    - parameter completionHandler:	A closure function to be run when the HTTP request is complete and the client has received an answer from the RestAPI. See Apple dataTaskWithRequest documentation
+    - parameter data:					Data returned from the RestAPI
+    - parameter response:					Metadata associated with the response. See Apple NSURLResponse documentation.
+    - parameter error:							Error returned from the server. This is not same as the WisR.Error class.
+    */
     static func requestWithResponse(action action: String, type: String, body: String, completionHandler: (data: String?, response: String?, error: String?) -> Void) {
         let session = NSURLSession.sharedSession()
         let url = NSURL(string: mainUrl + action)!

@@ -8,8 +8,10 @@
 
 import UIKit
 
+/// The ViewController which handles the creation of a question inside a room.
 class CreateQuestionViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
+    //Properties
     //Gets instantiated by RoomPageViewController in prepareForSegue
     var room: Room!
     
@@ -35,11 +37,12 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
         }
     }
     
+    //Lifecycle
     override func viewDidLoad() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "addQuestion")
     }
     
-    //Button actions
+    //Utilities
     func addQuestion() {
         let q = Question()
         q.CreatedById = CurrentUser.sharedInstance._id
@@ -78,7 +81,7 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
         }
     }
     
-    func AddResponseOption() {
+    func addResponseOption() {
         if let responseText = addResponseCell?.inputField.text {
             let r = ResponseOption(value: responseText, weight: 1)
             responseOptions += [r]
@@ -116,6 +119,7 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
                 let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! TextInputCell
                 cell.label.text = "Question text"
                 questionText = cell
+                cell.selectionStyle = .None
                 return cell
             }
             else if indexPath.row == 1 {
@@ -123,6 +127,7 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
                 let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! NumberInputCell
                 cell.label.text = "Duration (s)"
                 durationInput = cell
+                cell.selectionStyle = .None
                 return cell
             }
             else if indexPath.row == 2 {
@@ -132,16 +137,17 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
                 if selectedImage != nil {
                     cell.imageView?.image = selectedImage
                 }
+                cell.selectionStyle = .None
                 return cell
             }
             else if indexPath.row == 3 {
                 let cellIdentifier = "TextButtonInputCell"
                 let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! TextButtonInputCell
                 cell.label.text = "Add Response"
-                cell.button.addTarget(self, action: "AddResponseOption", forControlEvents: .TouchUpInside)
+                cell.button.addTarget(self, action: "addResponseOption", forControlEvents: .TouchUpInside)
                 addResponseCell = cell
+                cell.selectionStyle = .None
                 return cell
-                
             }
         }
         else {
@@ -149,8 +155,6 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
             cell.textLabel?.text = responseOptions[indexPath.row].Value
             return cell
         }
-        
-        
         return UITableViewCell()
     }
     
@@ -161,6 +165,10 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
         else {
             return CGFloat(64)
         }
+    }
+    
+    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return indexPath.section == 1
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

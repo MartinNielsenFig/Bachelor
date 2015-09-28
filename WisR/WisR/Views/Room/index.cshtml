@@ -89,7 +89,12 @@
                 <label ng-hide="showResults">No results yet</label>
                 <div id="chartDiv" ng-hide="!showResults">
                     <h3>Results</h3>
-                    <canvas id="pie" class="chart chart-pie" chart-options="options" chart-legend="true" chart-colors="colors" chart-data="data" chart-labels="labels"></canvas>
+                    <select ng-model="chartType">
+                        <option>Pie</option>
+                        <option>Doughnut</option>
+                        <option>PolarArea</option>
+                    </select>
+                    <canvas id="pie" class="chart chart-base" chart-options="options" chart-type="chartType" chart-legend="true" chart-colors="colors" chart-data="data" chart-labels="labels"></canvas>
                 </div>
             </div>
         </div>

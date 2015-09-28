@@ -45,7 +45,6 @@ import java.util.Map;
 
 public class QuestionActivity extends AppCompatActivity {
 
-    final ArrayList<Question> mQuestions = new ArrayList<Question>();
     CustomPagerAdapter mPagerAdapter;
     ViewPager mViewPager;
 
@@ -59,7 +58,13 @@ public class QuestionActivity extends AppCompatActivity {
         final ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
 
-        mPagerAdapter = new CustomPagerAdapter(getSupportFragmentManager());
+        final Gson gson = new Gson();
+
+        String roomString = getIntent().getBundleExtra("CurrentRoom").getString("Room");
+
+        Room mRoom = gson.fromJson(roomString, Room.class);
+
+        mPagerAdapter = new CustomPagerAdapter(getSupportFragmentManager(),mRoom.get_id());
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mPagerAdapter);
         mViewPager.getAdapter().getItemPosition(1);
@@ -81,45 +86,6 @@ public class QuestionActivity extends AppCompatActivity {
 
             }
         });
-
-        Map<String, String> mParams = new HashMap<String, String>();
-
-        final Gson gson = new Gson();
-
-        String stuff = getIntent().getBundleExtra("CurrentRoom").getString("Room");
-
-        Room mRoom = gson.fromJson(stuff,Room.class);
-
-        Response.Listener<String> mListener = new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Question[] tempQuestions = gson.fromJson(response,Question[].class);
-
-                for(Question question : tempQuestions) {
-                    mQuestions.add(question);
-                }
-
-                Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
-            }
-        };
-
-        Response.ErrorListener mErrorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                Toast.makeText(getApplicationContext(),String.valueOf(volleyError.networkResponse.statusCode),Toast.LENGTH_LONG).show();
-            }
-        };
-
-        RequestQueue requestQueue = Volley.newRequestQueue(QuestionActivity.this);
-        HttpHelper jsObjRequest = new HttpHelper( "http://wisrrestapi.aceipse.dk/Question/GetQuestionsForRoom?roomId="+mRoom.get_id(), null, mListener, mErrorListener);
-
-        try {
-            requestQueue.add(jsObjRequest);
-        } catch (Exception e) {
-
-        }
-
-
     }
 
     @Override

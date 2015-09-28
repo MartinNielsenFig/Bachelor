@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// Shows the rooms nearby in a list, enabling the user to join the room.
 class RoomTableViewController: UITableViewController {
     
     //Properties
@@ -55,6 +56,14 @@ class RoomTableViewController: UITableViewController {
         }
     }
     
+    //Utility
+    
+    /**
+    Returns a new array of Room containing only the rooms that are within a specified radius of the current user that is logged on. Required that CurrentUser.sharedInstance.location is set.
+    - parameter rooms:				An array of Room to be filtered.
+    - parameter metersRadius:	The radius in which the room has to be in proximity to the user. Adds the accuracy of the room location and user location to this.
+    - returns: Array of filtered rooms.
+    */
     func filterRoomsByLocation(rooms: [Room], metersRadius: Double) -> [Room] {
         
         var filteredRooms = [Room]()
@@ -81,7 +90,16 @@ class RoomTableViewController: UITableViewController {
         return filteredRooms
     }
     
-    //http://www.movable-type.co.uk/scripts/latlong.html
+    //
+    
+    /**
+    Calculation based upon http://www.movable-type.co.uk/scripts/latlong.html Calculates the distance between to latitude-longitude pairs.
+    - parameter lat1:	latitude of the first coordinate
+    - parameter long1:	longitude of the first coordinate
+    - parameter lat2:	latitude of the second coordinate
+    - parameter long2:	longitude of the second coordinate
+    - returns: Distance between the two coordinates
+    */
     func distanceBetweenTwoCoordinatesMeters(lat1: Double, _ long1: Double, _ lat2: Double, _ long2: Double) -> Double {
         let r = 6371000.0
         let dLat = degreesToRadians(lat2-lat1)
@@ -93,6 +111,11 @@ class RoomTableViewController: UITableViewController {
         return d
     }
     
+    /**
+    Converts degrees to radians.
+    - parameter degree:	Angle in degree
+    - returns: Angle in radians
+    */
     func degreesToRadians(degree: Double) -> Double {
         return (degree*M_PI)/180
     }
@@ -130,8 +153,7 @@ class RoomTableViewController: UITableViewController {
     }
     
     
-    // Navigation
-    
+    //Navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.

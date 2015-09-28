@@ -10,7 +10,7 @@ import XCTest
 @testable import wiserIos
 
 class JSONSerializerTests: XCTestCase {
-
+    
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -368,7 +368,7 @@ class JSONSerializerTests: XCTestCase {
         let expected = "{\"fur\": true, \"weight\": 2.5, \"age\": 2, \"name\": \"An animal\", \"id\": 182371823}"
         stringCompareHelper(json, expected)
     }
-
+    
     func test_arrayOfCustomClass_included() {
         //Arrange
         class Person {
@@ -397,6 +397,70 @@ class JSONSerializerTests: XCTestCase {
         let expected = "{\"name\": \"Olsen\", \"persons\": [{\"name\": \"Peter\", \"age\": 24}, {\"name\": \"Tomas\", \"age\": 1000}]}"
         stringCompareHelper(json, expected)
     }
+    
+    func testPerformance_singleObject7Properties_lessThan10ms() {
+        
+        class Person {
+            var name: String
+            var age: Int
+            var favNumbers = [1, 5, -10, 1023]
+            var height = 1.86
+            var aStringArray = ["hest", "fest", "bedst"]
+            var nullArray: [String?] = [nil, "2.4", "99", "hejsan"]
+            var cool = true
+            
+            init(name: String, age: Int) {
+                self.name = name
+                self.age = age
+            }
+        }
+        
+        let m = Person(name: "testSubject", age: 25)
+        
+        self.measureBlock {
+            JSONSerializer.toJson(m)
+        }
+    }
+    
 
-
+    func testPerformance_familyWith10000PersonsAndInheritance_lessThan1500ms() {
+        
+        //Arrange
+        class Entity {
+            var id = "An ID"
+            var half = 0.5
+        }
+        
+        class Person : Entity {
+            var name: String
+            var age: Int
+            
+            var favNumbers = [1, 5, -10, 1023]
+            
+            init(name: String, age: Int) {
+                self.name = name
+                self.age = age
+            }
+        }
+        class Family {
+            var name = "Olsen"
+            var persons = [Person]()
+            init(){
+                
+                for _ in 0...10000 {
+                    persons += [Person(name: "Person", age: 25)]
+                }
+                
+            }
+        }
+        
+        let m = Family()
+        
+        self.measureBlock {
+            //Act
+            let json = JSONSerializer.toJson(m)
+        }
+    }
+    
+    
 }

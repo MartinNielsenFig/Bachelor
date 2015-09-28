@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// A singleton class that contains the current user information
 class CurrentUser: User {
     var location = Coordinate()
     

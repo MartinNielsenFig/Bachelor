@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
 using System.Linq;
@@ -18,6 +18,7 @@ using WisRRestAPI.Providers;
 
 namespace WisRRestAPI.Controllers
 {
+    //Todo handle errors with Error() class.
     public class QuestionController : Controller
     {
         private readonly IQuestionRepository _qr;
@@ -102,7 +103,8 @@ namespace WisRRestAPI.Controllers
             }
             _qr.AddQuestionObject(b);
             return "Question saved with id: " + q.Id + " error: " + error;
-
+            
+            //Todo use Error() class instead of string.
         }
         [System.Web.Mvc.HttpPost]
         public void UpdateQuestion(string question, string type, string id)
@@ -126,6 +128,7 @@ namespace WisRRestAPI.Controllers
             catch (Exception e)
             {
             }
+            //TODO return something to the user
         }
 
         //[System.Web.Mvc.HttpPost]
@@ -185,6 +188,7 @@ namespace WisRRestAPI.Controllers
                 {
                 }
             }
+            //Todo handle return with Error() class
         }
 
         public void AddVote(string vote, string type, string id)

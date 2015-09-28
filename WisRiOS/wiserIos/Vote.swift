@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// A Vote is an up or downvote for a question. Value will either be -1 for down, or 1 for up.
 class Vote {
     var CreatedById: String?
     var Value: Int?
