@@ -11,7 +11,7 @@
         </div>
         <div ng-show="CurrentRoom.CreatedById == currentUser._id">
             <div id="roomText" class="text-center">
-                <h2><small>See Room & your location <a ng-click="toggleRoomLocation()" style="cursor: pointer">your location</a></small></h2>
+                <h2><small><a ng-click="toggleRoomLocation()" style="cursor: pointer">See Room & your location</a></small></h2>
             </div>
             <div id="googlemapsRoom" hidden>
                 <div id="mapRoom" style="height: 300px"></div>
@@ -127,9 +127,7 @@
                 </div>
             </div>
             <div class="send-wrap">
-
                 <textarea ng-enter="postChatMessage(textAreaModel)" ng-model="textAreaModel" class="form-control send-message" rows="3" style="-moz-min-width: 100%; -ms-min-width: 100%; -o-min-width: 100%; -webkit-min-width: 100%; min-width: 100%" placeholder="Write a reply..."></textarea>
-
             </div>
             <div class="btn-panel">
                 <button type="submit" class="btn btn-primary" ng-click="postChatMessage(textAreaModel)">Send message</button>

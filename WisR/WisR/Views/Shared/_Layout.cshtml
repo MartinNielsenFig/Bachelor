@@ -3,11 +3,11 @@
 
 <html>
 <head>
-    
+
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGUkernNPkypdfcFhlIOs5Bt-8c5MUPYo">
-    
+
     </script>
-    <meta charset="utf-8"/>
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
@@ -29,17 +29,18 @@
                     <span class="icon-bar"></span>
                 </button>
             </div>
-            <div class="navbar-collapse collapse" ng-controller="UserController">
-                <ul class="nav navbar-nav col-lg-12">
-                    <li>@Html.ActionLink("WisR", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })</li>
-                    @if (Session["accessToken"] != null)
-                    {
-                        var facebookId = Session["FacebookId"];
+            <div class="navbar-collapse collapse dropdown" ng-controller="UserController">
 
-                        var client = new FacebookClient(Session["accessToken"].ToString());
 
-                        dynamic result = client.Get("me", new { fields = "name, id, birthday" });
+                @if (Session["accessToken"] != null)
+                {
+                    var facebookId = Session["FacebookId"];
 
+                    var client = new FacebookClient(Session["accessToken"].ToString());
+
+                    dynamic result = client.Get("me", new { fields = "name, id, birthday" });
+                    <ul class="nav navbar-nav col-lg-12">
+                        <li>@Html.ActionLink("WisR", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })</li>
                         <li class="pull-right">
                             <div class="fb-info">
 
@@ -54,40 +55,55 @@
                             @Html.ActionLink("Log out", "Logout", "Login")
                             <script>
 
-                                app.controller("UserController", ['$scope', '$http', '$location', '$window', 'configs', function ($scope, $http, $location, $window, configs) {
-                                    $http.post(configs.baseHostName+'/Home/toJsonUser', {
-                                        facebookId: @result.id,
-                                        lDAPUserName: null,
-                                        displayName: '@result.name',
-                                        email: null,
-                                        encryptedPassword: null,
-                                    }).then(function (response) {
-                                        //Use response to send to REST API
-                                        $http.post(configs.restHostName + '/User/CreateUser', { User: JSON.stringify(response.data) }).
-                                            then(function (response) {
-                                                window.userId = response.data;
-                                              
-                                                $('#createRoomButton').prop("disabled",false);
-                                                $('#createRoomButton').prop("title",'');
-                                            });
-                                    });
-                                }]);
+                                app.controller("UserController", [
+                                    '$scope', '$http', '$location', '$window', 'configs', function($scope, $http, $location, $window, configs) {
+                                        $http.post(configs.baseHostName + '/Home/toJsonUser', {
+                                            facebookId: @result.id,
+                                            lDAPUserName: null,
+                                            displayName: '@result.name',
+                                            email: null,
+                                            encryptedPassword: null,
+                                        }).then(function(response) {
+                                            //Use response to send to REST API
+                                            $http.post(configs.restHostName + '/User/CreateUser', { User: JSON.stringify(response.data) }).
+                                                then(function(response) {
+                                                    window.userId = response.data;
+
+                                                    $('#createRoomButton').prop("disabled", false);
+                                                    $('#createRoomButton').prop("title", '');
+                                                });
+                                        });
+                                    }
+                                ]);
 
                             </script>
                         </li>
+                    </ul>
 
-                    }
-                    else
-                    {
-
-                        <li class="pull-right">
-                            @Html.ActionLink("Log in", "LogIn", "Login")
+                }
+                else
+                {
+                    <ul class="nav navbar-nav col-lg-12">
+                        @Html.ActionLink("WisR", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                        <li class="pull-right" style="cursor: pointer" data-toggle="dropdown">
+                            <a id="dropdownMenu1" aria-haspopup="true" aria-expanded="true">
+                                Login
+                                <span class="caret"></span>
+                            </a>
                         </li>
-                        <script>
-                            window.userId = "NoUser";
-                        </script>
-                    }
-                </ul>
+
+                        <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
+                            <li><a href="#">Action</a></li>
+                            <li>
+                                @Html.ActionLink("Facebook", "LoginWithFacebook", "Login")
+                            </li>
+                            <script>
+                                window.userId = "NoUser";
+                            </script>
+                        </ul>
+                    </ul>
+                }
+
             </div>
             @*<div class="navbar-collapse collapse">
                     @Html.Partial("_LoginPartial")
