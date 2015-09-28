@@ -149,24 +149,35 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView autoresizesSubviews="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F1H-bP-e2z">
-                                        <rect key="frame" x="0.0" y="31" width="560" height="273"/>
+                                        <rect key="frame" x="0.0" y="31" width="560" height="259"/>
                                         <animations/>
                                     </imageView>
                                     <pickerView contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KDW-Y0-aTM">
-                                        <rect key="frame" x="0.0" y="314" width="560" height="185"/>
+                                        <rect key="frame" x="0.0" y="300" width="560" height="199"/>
                                         <animations/>
                                     </pickerView>
-                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tGJ-Gn-5Xl">
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="OHX-Qo-ZkL">
                                         <rect key="frame" x="0.0" y="508" width="560" height="42"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tGJ-Gn-5Xl">
+                                                <rect key="frame" x="0.0" y="6" width="103" height="30"/>
+                                                <animations/>
+                                                <state key="normal" title="Send response"/>
+                                                <connections>
+                                                    <action selector="sendResponse:" destination="ock-zx-gTK" eventType="touchUpInside" id="FDD-aN-YCr"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uV7-tu-bL6">
+                                                <rect key="frame" x="479" y="6" width="81" height="30"/>
+                                                <animations/>
+                                                <state key="normal" title="See Results"/>
+                                            </button>
+                                        </subviews>
                                         <animations/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="42" id="GWV-8B-1up"/>
+                                            <constraint firstAttribute="height" constant="42" id="WOy-71-v3X"/>
                                         </constraints>
-                                        <state key="normal" title="Send response"/>
-                                        <connections>
-                                            <action selector="sendResponse:" destination="ock-zx-gTK" eventType="touchUpInside" id="FDD-aN-YCr"/>
-                                        </connections>
-                                    </button>
+                                    </stackView>
                                     <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" misplaced="YES" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="1vg-7e-t9r">
                                         <rect key="frame" x="0.0" y="560" width="560" height="20"/>
                                         <animations/>
