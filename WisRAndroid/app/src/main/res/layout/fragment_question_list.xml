@@ -4,9 +4,9 @@
     tools:context="com.example.tomas.wisrandroid.Fragments.QuestionListFragment">
 
     <ListView
+        android:layout_margin="16dp"
+        android:id="@+id/question_listview"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"/>
-    <TextView android:id="@+id/fragment_textview" android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
 </FrameLayout>

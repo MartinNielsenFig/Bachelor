@@ -4,12 +4,20 @@
     android:layout_height="match_parent">
 
     <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="30dp">
+        android:layout_height="30dp"
+        android:weightSum="10">
         <TextView
             android:id="@+id/question_row_textview"
-            android:layout_width="fill_parent"
-            android:layout_height="30dp" />
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="7"/>
+        <ImageView
+            android:id="@+id/question_row_imageview"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_weight="3"/>
     </LinearLayout>
 
 </LinearLayout>
