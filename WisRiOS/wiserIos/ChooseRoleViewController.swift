@@ -12,10 +12,16 @@ import MapKit
 
 class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
 
+    //Properties
     @IBOutlet var mapView: MKMapView!
     var location = CLLocation()
 
     //Actions
+    
+    /**
+    Navigates to CreateRoom if logged in. Else navigate to Login screen.
+    - parameter sender:	The button pressed
+    */
     @IBAction func clickCreateRoomBtn(sender: AnyObject) {
         if CurrentUser.sharedInstance.FacebookId != nil {
             performSegueWithIdentifier("CreateRoom", sender: sender)
@@ -25,6 +31,7 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
         }
     }
     
+    //Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -128,7 +135,7 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
         NSLog("Error while updating location \(error.localizedDescription)")
     }
     
-    //Segue
+    //Navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "CreateRoom" {
             //let createRoomViewController = segue.destinationViewController as! CreateRoomViewController
@@ -141,6 +148,10 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
     }
     
     //Facebook
+    
+    /**
+    Shows a UI Alert so user can confirm logging out of Facebook.
+    */
     func logOffFacebook() {
         
         //http://stackoverflow.com/questions/24022479/how-would-i-create-a-uialertview-in-swift

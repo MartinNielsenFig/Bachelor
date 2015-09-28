@@ -10,7 +10,7 @@ import UIKit
 
 class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, Paged {
     
-    //Paged
+    //Properties
     let pageIndex = 1
     var roomId: String?
     
@@ -23,6 +23,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     
     var pickerData = [String]()
     
+    //Utilities
     @IBAction func sendResponse(sender: AnyObject) {
         let index = answerPicker.selectedRowInComponent(0)
         let answerPickerText = pickerData[index]
@@ -79,6 +80,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         }
     }
     
+    //Lifecycle
     override func viewDidLoad() {
         answerPicker.delegate = self
         answerPicker.dataSource = self

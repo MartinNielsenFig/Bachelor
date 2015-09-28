@@ -12,13 +12,19 @@ import FBSDKLoginKit
 
 class LogonViewController: UIViewController, FBSDKLoginButtonDelegate {
     
+    //Properties
     var previousNavigationController: UINavigationController? = nil
     var previousViewController: UIViewController? = nil
     
+    //Utilities
+    /**
+    Cancels logon by asking previous navigation controller to dismiss the current view
+    */
     @IBAction func cancelLogonBtn() {
         previousNavigationController?.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    //Lifecycle
     override func viewDidLoad() {
         //Login button
         let loginBtn = FBSDKLoginButton()

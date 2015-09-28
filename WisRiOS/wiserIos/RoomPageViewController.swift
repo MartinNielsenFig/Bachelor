@@ -10,17 +10,16 @@ import UIKit
 
 class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     
+    //Properties
     //Gets instantiated by previous caller
     var room: Room!
-    
     var pageViewController: UIPageViewController!
     let pageCount = 3
     var currentPage = 0
     
+    //Lifecycle
     //https://www.veasoftware.com/tutorials/2015/4/2/uipageviewcontroller-in-swift-xcode-62-ios-82-tutorial
     override func viewDidLoad() {
-        
-        
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Ask Question", style: .Plain, target: self, action: "addQuestion")
         
         //Setup the page view controller
@@ -38,6 +37,10 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
         pageViewController.didMoveToParentViewController(self)
     }
     
+    //Navigation
+    /**
+    Called when pressed the Add Question button. Navigates to CreateQuestion viewController.
+    */
     func addQuestion() {
         NSLog("add question pressed")
         performSegueWithIdentifier("CreateQuestion", sender: self)
@@ -52,6 +55,12 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
 
     }
     
+    //Utilities
+    
+    /**
+    - parameter index:	The index of the viewcontroller.
+    - returns: Returns the UIViewController at a specific location on the UIPageViewController
+    */
     func viewControllerAtIndex(index: Int) -> UIViewController? {
         currentPage = index
         if index == 0 {
