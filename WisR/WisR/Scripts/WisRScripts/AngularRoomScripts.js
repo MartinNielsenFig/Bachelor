@@ -19,7 +19,7 @@ app.controller("RoomController", [
         //default charttype as pie
         $scope.chartType = "Pie";
 
-        //Connect to SignalR hub and wait for RoomUpdate
+        //Connect to SignalR hub and wait for chat message
         $(function () {
             // Declare a proxy to reference the hub. 
             var hub = $.connection.chatHub;
@@ -31,7 +31,7 @@ app.controller("RoomController", [
             $.connection.hub.start();
         });
 
-        //Connect to SignalR hub and wait for chat messages
+        //Connect to SignalR hub and wait for room update
         $(function () {
             // Declare a proxy to reference the hub. 
             var hub = $.connection.roomHub;

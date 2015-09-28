@@ -48,7 +48,7 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
     
     override func viewDidAppear(animated: Bool) {
         locationManager.startUpdatingLocation()
-        maxPositionUpdatesThisSession = 30
+        maxPositionUpdatesThisSession = 10
         
         //Log off btn
         if CurrentUser.sharedInstance.FacebookId != nil {
@@ -91,7 +91,7 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
     //CLLocationManagerDelegate
     let locationManager = CLLocationManager()
     var bestAccuracy = Double.init(Int.max)
-    var maxPositionUpdatesThisSession = 30
+    var maxPositionUpdatesThisSession = Int()
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = manager.location {

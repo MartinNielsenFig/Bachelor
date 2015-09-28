@@ -138,8 +138,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" distribution="fillProportionally" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="YtQ-Vc-14h">
-                                <rect key="frame" x="20" y="30" width="560" height="580"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="YtQ-Vc-14h">
+                                <rect key="frame" x="20" y="20" width="560" height="580"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Question text" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iGH-Ed-X4N">
                                         <rect key="frame" x="0.0" y="0.0" width="560" height="21"/>
@@ -149,24 +149,42 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView autoresizesSubviews="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="F1H-bP-e2z">
-                                        <rect key="frame" x="0.0" y="31" width="560" height="284"/>
+                                        <rect key="frame" x="0.0" y="31" width="560" height="259"/>
                                         <animations/>
                                     </imageView>
                                     <pickerView contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KDW-Y0-aTM">
-                                        <rect key="frame" x="0.0" y="324" width="560" height="204"/>
+                                        <rect key="frame" x="0.0" y="300" width="560" height="199"/>
                                         <animations/>
                                     </pickerView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tGJ-Gn-5Xl">
-                                        <rect key="frame" x="0.0" y="538" width="560" height="42"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="OHX-Qo-ZkL">
+                                        <rect key="frame" x="0.0" y="508" width="560" height="42"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tGJ-Gn-5Xl">
+                                                <rect key="frame" x="0.0" y="6" width="103" height="30"/>
+                                                <animations/>
+                                                <state key="normal" title="Send response"/>
+                                                <connections>
+                                                    <action selector="sendResponse:" destination="ock-zx-gTK" eventType="touchUpInside" id="FDD-aN-YCr"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uV7-tu-bL6">
+                                                <rect key="frame" x="479" y="6" width="81" height="30"/>
+                                                <animations/>
+                                                <state key="normal" title="See Results"/>
+                                            </button>
+                                        </subviews>
                                         <animations/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="42" id="GWV-8B-1up"/>
+                                            <constraint firstAttribute="height" constant="42" id="WOy-71-v3X"/>
                                         </constraints>
-                                        <state key="normal" title="Send response"/>
-                                        <connections>
-                                            <action selector="sendResponse:" destination="ock-zx-gTK" eventType="touchUpInside" id="FDD-aN-YCr"/>
-                                        </connections>
-                                    </button>
+                                    </stackView>
+                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" misplaced="YES" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="1vg-7e-t9r">
+                                        <rect key="frame" x="0.0" y="560" width="560" height="20"/>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="zEd-td-XUB"/>
+                                        </constraints>
+                                    </progressView>
                                 </subviews>
                                 <animations/>
                                 <rect key="contentStretch" x="0.0" y="0.0" width="1" height="0.0"/>
@@ -183,6 +201,7 @@
                     </view>
                     <connections>
                         <outlet property="answerPicker" destination="KDW-Y0-aTM" id="Me2-kK-pNK"/>
+                        <outlet property="progressBar" destination="1vg-7e-t9r" id="7v8-zT-M9b"/>
                         <outlet property="questionImage" destination="F1H-bP-e2z" id="t5M-yA-TVw"/>
                         <outlet property="questionText" destination="iGH-Ed-X4N" id="08Y-gX-Iph"/>
                     </connections>
