@@ -89,6 +89,7 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
             self.rooms = tmpRooms
             
             //Show on map
+            self.mapView.removeOverlays(self.mapView.overlays)
             for room in tmpRooms {
                 if let lat = room.Location.Latitude, long = room.Location.Longitude {
                     let roomPosition = CLLocationCoordinate2D(latitude: lat, longitude: long)
@@ -143,7 +144,6 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
             
             //Get rooms first time to show on map
             if self.rooms.count <= 0 {
-                mapView.removeOverlays(mapView.overlays)
                 loadRoomsBasedOnLocation()
             }
             
@@ -166,7 +166,6 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
                 CurrentUser.sharedInstance.location.AccuracyMeters = Int(currentAccuracy)
                 
                 //Replace and update overlays, annotations and positioning
-                mapView.removeOverlays(mapView.overlays)
                 mapView.removeAnnotations(mapView.annotations)
                 
                 let coordinate = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
