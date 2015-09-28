@@ -150,7 +150,7 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
                 return cell
             }
         }
-        else {
+        else { //section == 1
             let cell = UITableViewCell()
             cell.textLabel?.text = responseOptions[indexPath.row].Value
             return cell
@@ -169,6 +169,10 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
     
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         return indexPath.section == 1
+    }
+    
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        responseOptions.removeAtIndex(indexPath.row)
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
