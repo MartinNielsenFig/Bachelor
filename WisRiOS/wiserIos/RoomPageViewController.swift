@@ -22,6 +22,10 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     override func viewDidLoad() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Ask Question", style: .Plain, target: self, action: "addQuestion")
         
+        //Handle back button on UINavigation Bar
+        let logoutBtn = UIBarButtonItem(barButtonSystemItem: .Stop, target: self, action: "logoutRoom")
+        self.navigationItem.leftBarButtonItem = logoutBtn
+        
         //Setup the page view controller
         pageViewController = UIPageViewController(transitionStyle: .Scroll, navigationOrientation: .Horizontal, options: nil)
         pageViewController.dataSource = self
@@ -38,6 +42,20 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     }
     
     //Navigation
+    func logoutRoom() {
+        let alert = UIAlertController(title: "Leaving Room", message: "Do you want to leave current room?", preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { action in
+            //Do nothing
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Logout", style: .Default, handler: { action in
+            FacebookHelper.logOff()
+            self.navigationController?.popViewControllerAnimated(true)
+        }))
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
     func addQuestion() {
         NSLog("add question pressed")
         performSegueWithIdentifier("CreateQuestion", sender: self)
