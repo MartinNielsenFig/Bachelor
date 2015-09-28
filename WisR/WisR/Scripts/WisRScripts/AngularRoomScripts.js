@@ -165,7 +165,7 @@ app.controller("RoomController", [
                 $scope.imageSize = "500px";
             } else {
                 $scope.imageSize = "100px";
-                }
+            }
 
             $("#specificQuestionImage").css("width", $scope.imageSize);
             $("#specificQuestionImage").css("height", $scope.imageSize);
@@ -416,6 +416,9 @@ app.controller("RoomController", [
             $scope.ToggleShowQuestionTables();
             $scope.specificImageLoaded = false;
             $scope.SpecificQuestion = question;
+            //Get percentage once and start timer to fire once every second
+            $scope.getPercentage();
+            $scope.progressCancel = $interval($scope.getPercentage, 1000);
             //Start getting the image for the specific question
             $http.get(configs.restHostName + '/Question/GetImageByQuestionId?questionId=' + question._id).then(function (response) {
                 $scope.SpecificQuestion.Img = response.data;
@@ -425,29 +428,35 @@ app.controller("RoomController", [
         }
         $scope.ToggleShowQuestionTables = function () {
             $scope.SpecificQuestionShown = !$scope.SpecificQuestionShown;
+            //Stop the timer for the progress bar if it is running
+            if (angular.isDefined($scope.progressCancel)) {
+                $interval.cancel($scope.progressCancel);
+                $scope.progressCancel = undefined;
+                $scope.showProgressBar = false;
+            }
         }
 
         $scope.Vote = function (direction) {
           
             if (direction == "Up") {
                
-                    //Use response to send to REST API
-                    var Obj = { Value: 1, CreatedById: $window.userId }
-                    $http.post(configs.restHostName + '/Question/AddVote', { vote: JSON.stringify(Obj), type: $scope.SpecificQuestion._t, id: $scope.SpecificQuestion._id });
+                //Use response to send to REST API
+                var Obj = { Value: 1, CreatedById: $window.userId }
+                $http.post(configs.restHostName + '/Question/AddVote', { vote: JSON.stringify(Obj), type: $scope.SpecificQuestion._t, id: $scope.SpecificQuestion._id });
                 
                
             }
             if (direction == "Down") {
                
-                    //Use response to send to REST API
-                    var Obj = { Value: -1, CreatedById: $window.userId }
-                    $http.post(configs.restHostName + '/Question/AddVote', { vote: JSON.stringify(Obj), type: $scope.SpecificQuestion._t, id: $scope.SpecificQuestion._id });
+                //Use response to send to REST API
+                var Obj = { Value: -1, CreatedById: $window.userId }
+                $http.post(configs.restHostName + '/Question/AddVote', { vote: JSON.stringify(Obj), type: $scope.SpecificQuestion._t, id: $scope.SpecificQuestion._id });
                 
                
-                }
-
-
             }
+
+
+        }
 
         //Get percentage for loading bar
         $scope.getPercentage = function () {
@@ -460,20 +469,33 @@ app.controller("RoomController", [
                 var hours = (parseInt(timeLeftInmSec / 3600000) + "").length == 1 ? "0" + parseInt(timeLeftInmSec / 3600000) : parseInt(timeLeftInmSec / 3600000);
                 var min = (parseInt((timeLeftInmSec % 3600000) / 60000) + "").length == 1 ? "0" + parseInt((timeLeftInmSec % 3600000) / 60000) : parseInt((timeLeftInmSec % 3600000) / 60000);
                 var sec = (parseInt(((timeLeftInmSec % 3600000) % 60000) / 1000) + "").length == 1 ? "0" + parseInt(((timeLeftInmSec % 3600000) % 60000) / 1000) : parseInt(((timeLeftInmSec % 3600000) % 60000) / 1000);
-                $scope.timeLeft = (hours + ":" + min + ":" + sec).indexOf("-") > -1 ? "The time has run out!" : hours + ":" + min + ":" + sec;
+                if ((hours + ":" + min + ":" + sec).indexOf("-") > -1)
+                {
+                    $scope.timeLeft = "The time has run out!";
+                    $("#progressDiv").removeClass("active progress-striped").children().addClass("progress-bar-danger");
+                    //Stop timer
+                    if (angular.isDefined($scope.progressCancel)) {
+                        $interval.cancel($scope.progressCancel);
+                        $scope.progressCancel = undefined;
+                        $scope.showProgressBar = false;
+                    }
+                }else
+                {
+                    $scope.timeLeft = hours + ":" + min + ":" + sec;
+                    $("#progressDiv").addClass("active progress-striped").children().removeClass("progress-bar-danger");
+                }
                 if ($scope.percentage > 100) {
                     $scope.timerOverflow = true;
                 }
-                //$scope.$apply();
+                $scope.showProgressBar = true;
             }
         }
-        $interval($scope.getPercentage, 1000);
         //setInterval($scope.getPercentage, 1000);
         //adds answer to specificQuestion
         $scope.AddAnswer = function () {
-                    //Use response to send to REST API string response
-                    var Obj ={ Value: $scope.answerChoosen.Value,UserId:$window.userId}
-                    $http.post(configs.restHostName + '/Question/AddQuestionResponse', { response: JSON.stringify(Obj), questionId: $scope.SpecificQuestion._id });
+            //Use response to send to REST API string response
+            var Obj ={ Value: $scope.answerChoosen.Value,UserId:$window.userId}
+            $http.post(configs.restHostName + '/Question/AddQuestionResponse', { response: JSON.stringify(Obj), questionId: $scope.SpecificQuestion._id });
         }
         //Function for creating a question
         $scope.postQuestion = function () {
