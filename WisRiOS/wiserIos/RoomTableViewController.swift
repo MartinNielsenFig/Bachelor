@@ -18,13 +18,12 @@ class RoomTableViewController: UITableViewController {
     
     //Lifecycle
     override func viewDidLoad() {
-        
         rooms = RoomFilterHelper.filterRoomsByLocation(self.rooms, metersRadius: 1000)
         
         self.tableView.reloadData()
         super.viewDidLoad()
     }
-        
+    
     //UITableViewController
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
@@ -55,7 +54,6 @@ class RoomTableViewController: UITableViewController {
         
         return cell
     }
-    
     
     //Navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {

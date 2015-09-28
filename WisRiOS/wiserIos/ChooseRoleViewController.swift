@@ -17,6 +17,7 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
     @IBOutlet var mapView: MKMapView!
     var location = CLLocation()
     var rooms = [Room]()
+    var firstTimeRoomsLoaded = true
     
     //Actions
     /**
@@ -143,7 +144,8 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
         if let location = manager.location {
             
             //Get rooms first time to show on map
-            if self.rooms.count <= 0 {
+            if firstTimeRoomsLoaded {
+                firstTimeRoomsLoaded = false
                 loadRoomsBasedOnLocation()
             }
             

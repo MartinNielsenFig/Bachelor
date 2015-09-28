@@ -33,7 +33,8 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
         //Set initial page
         let startVC = viewControllerAtIndex(0)!
         pageViewController.setViewControllers([startVC], direction: .Forward, animated: true, completion: nil)
-        pageViewController.view.frame = CGRect(x: 0, y: 30, width: view.frame.size.width, height: view.frame.size.height - 30)
+        let cellHeight = CGFloat(64) //todo read cell hight dynamically
+        pageViewController.view.frame = CGRect(x: 0, y: cellHeight, width: view.frame.size.width, height: view.frame.size.height - cellHeight)
         
         //Add it to the current viewcontroller
         addChildViewController(pageViewController)
