@@ -27,7 +27,7 @@ namespace WisR.DomainModels
         public bool UsersCanAsk { get; set; }
         public bool AllowAnonymous { get; set; }
         
-        //Indicates whether room should be findable by being near the room.
+        //Indicates whether room should be findable by being near the room. If this is false, you'll need to room tag to join the room.
         public bool UseLocation { get; set; }
     }
 }
