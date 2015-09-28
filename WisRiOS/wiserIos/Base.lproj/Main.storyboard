@@ -426,7 +426,7 @@
                                                     <rect key="frame" x="241" y="0.0" width="301" height="30"/>
                                                     <animations/>
                                                     <attributedString key="attributedText"/>
-                                                    <textInputTraits key="textInputTraits"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textField>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YDx-ul-GZM">
                                                     <rect key="frame" x="542" y="0.0" width="42" height="30"/>

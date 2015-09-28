@@ -86,6 +86,17 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
             let r = ResponseOption(value: responseText, weight: 1)
             responseOptions += [r]
         }
+        
+        /*NSInteger numberOfRows = [_tableView numberOfRowsInSection:0];
+        if (numberOfRows) {
+            [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:numberOfRows-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:animated];
+        }*/
+        
+        let numberOfRows = tableView.numberOfRowsInSection(1)
+        if numberOfRows > 0 {
+            tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: numberOfRows-1, inSection: 1), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+        }
+
     }
     
     //UITableViewController
