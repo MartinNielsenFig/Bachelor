@@ -16,7 +16,6 @@ app.directive('ngEnter', function () {
 
 app.controller("RoomController", [
     '$scope', '$http', 'configs', '$window', '$interval', function ($scope, $http, configs, $window, $interval) {
-
         //default charttype as pie
         $scope.chartType = "Pie";
 

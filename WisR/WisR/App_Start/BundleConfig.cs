@@ -14,8 +14,13 @@ namespace WisR
             
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
-            bundles.Add(new ScriptBundle("~/bundles/chartbundle").Include(
-                        "~/Scripts/chart.js", "~/Scripts/angular-chart.js"));
+
+            var chartBundle = new ScriptBundle("~/bundles/chartbundle").Include(
+                "~/Scripts/chart.js", "~/Scripts/angular-chart.js");
+
+            //disable minification of this bundle
+            chartBundle.Transforms.Clear();
+            bundles.Add(chartBundle);
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
