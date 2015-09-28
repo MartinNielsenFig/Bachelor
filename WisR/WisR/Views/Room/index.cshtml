@@ -4,23 +4,24 @@
 <body ng-cloak ng-controller="RoomController">
     <h2>{{CurrentRoom.Name}}</h2>
     <div id="RoomErrorDiv"></div>@*Used to insert error message*@
-    <div ng-show="CurrentRoom.CreatedById == currentUser._id">
-        <div id="roomText" class="text-center">
-            <h2><small>Rooms based on <a onClick="toggleRoomLocation($scope.CurrentRoom.Location.Latitude, $scope.CurrentRoom.Location.Longitude);" style="cursor: pointer">your location</a></small></h2>
-        </div>
-        <div id="googlemapsRoom" hidden>
-            <div id="mapRoom" style="height: 300px"></div>
-        </div>
-    </div>
+    
     <div class="row" ng-show="rightPassword">
         <div ng-hide="questionsLoaded" class="container text-center col-md-8">
             <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span><label id="loadingLabel" class="">Loading questions...</label>
+        </div>
+        <div ng-show="CurrentRoom.CreatedById == currentUser._id">
+            <div id="roomText" class="text-center">
+                <h2><small>See Room & your location <a ng-click="toggleRoomLocation()" style="cursor: pointer">your location</a></small></h2>
+            </div>
+            <div id="googlemapsRoom" hidden>
+                <div id="mapRoom" style="height: 300px"></div>
+            </div>
+            <button id="updateBtn" ng-click="updateLocation()" hidden>Update location</button>
         </div>
         <div id="questionTables" ng-show="!SpecificQuestionShown && questionsLoaded">
             <div class="col-md-8">
                 <h4>Host questions</h4>
                 <div style="overflow-y: auto; max-height: 300px;min-height: 300px">
-
                     <table id="hostQuestionsTable" class="table table-hover table-responsive">
                         <tbody>
                             <tr style="cursor: pointer" ng-repeat="question in Questions|filter: { RoomId: '@ViewBag.roomId',CreatedById: CurrentRoom.CreatedById }" ng-click="ShowSpecificQuestion(question)">

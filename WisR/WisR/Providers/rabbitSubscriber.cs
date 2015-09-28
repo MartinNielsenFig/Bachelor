@@ -83,7 +83,7 @@ namespace WisR.Providers
             switch (ea.RoutingKey)
             {
                 case "CreateRoom":
-                    var rcHub = new RoomCreationHub();
+                    var rcHub = new RoomHub();
                     rcHub.Send(message);
                     break;
                 case "CreateQuestion":
@@ -106,7 +106,10 @@ namespace WisR.Providers
                     var qhub2 = new QuestionHub();
                     qhub2.AddVote(message);
                     break;
-
+                case "UpdateRoom":
+                    var ruHub = new RoomHub();
+                    ruHub.Update(message);
+                    break;
             }
             lock (_model)
             {

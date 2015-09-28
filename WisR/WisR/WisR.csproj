@@ -255,7 +255,7 @@
     </Compile>
     <Compile Include="Hubs\ChatHub.cs" />
     <Compile Include="Hubs\QuestionHub.cs" />
-    <Compile Include="Hubs\RoomCreationHub.cs" />
+    <Compile Include="Hubs\RoomHub.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />

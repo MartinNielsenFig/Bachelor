@@ -13,27 +13,34 @@ using WisR.DomainModels;
 using WisRRestAPI.DomainModel;
 using WisRRestAPI.Providers;
 
-namespace WisRRestAPI.Controllers {
-    public class RoomController : Controller {
+namespace WisRRestAPI.Controllers
+{
+    public class RoomController : Controller
+    {
         private readonly IRoomRepository _rr;
         private IRabbitPublisher _irabbitPublisher;
 
-        public RoomController(IRoomRepository rr, IRabbitPublisher irabbitPublisher) {
+        public RoomController(IRoomRepository rr, IRabbitPublisher irabbitPublisher)
+        {
             _rr = rr;
             _irabbitPublisher = irabbitPublisher;
         }
 
         [System.Web.Mvc.HttpGet]
-        public string GetAll() {
+        public string GetAll()
+        {
             var Rooms = _rr.GetAllRooms();
             return Rooms.Result.ToJson();
         }
         [System.Web.Mvc.HttpPost]
-        public string CreateRoom(string Room) {
+        public string CreateRoom(string Room)
+        {
             Room room;
-            try {
+            try
+            {
                 room = BsonSerializer.Deserialize<Room>(Room);
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 var err = new Error("Could not deserialize room with json: " + Room, 100, e.StackTrace);
                 return err.ToJson();
@@ -54,10 +61,13 @@ namespace WisRRestAPI.Controllers {
             }
 
             string roomId;
-            try {
+            try
+            {
                 roomId = _rr.AddRoom(room);
-            } catch (Exception e) {
-                var err = new Error("Could not add room", 100,e.StackTrace);
+            }
+            catch (Exception e)
+            {
+                var err = new Error("Could not add room", 100, e.StackTrace);
                 return err.ToJson();
 
             }
@@ -76,19 +86,21 @@ namespace WisRRestAPI.Controllers {
         }
 
         [System.Web.Mvc.HttpPost]
-        public string GetById(string id) {
-            var item=new Room();
+        public string GetById(string id)
+        {
+            var item = new Room();
             try
             {
                 item = _rr.GetRoom(id).Result;
             }
             catch (Exception e)
             {
-                var err=new Error("Couldn't get room by that id",100,e.StackTrace);
+                var err = new Error("Couldn't get room by that id", 100, e.StackTrace);
                 return err.ToJson();
             }
-            
-            if (item == null) {
+
+            if (item == null)
+            {
                 var err = new Error("Not found", 100);
                 return err.ToJson();
             }
@@ -101,7 +113,7 @@ namespace WisRRestAPI.Controllers {
             Room item;
             try
             {
-                item= _rr.GetRoomByTag(tag).Result;
+                item = _rr.GetRoomByTag(tag).Result;
             }
             catch (Exception e)
             {
@@ -113,7 +125,7 @@ namespace WisRRestAPI.Controllers {
                 var err2 = new Error("Something went wrong trying to find room with that id, check stacktrace", 100, e.StackTrace);
                 return err2.ToJson();
             }
-            
+
             if (item == null)
             {
                 var err = new Error("No room with that tag", 100);
@@ -123,13 +135,65 @@ namespace WisRRestAPI.Controllers {
             return item.ToJson();
         }
         [System.Web.Mvc.HttpDelete]
-        public string DeleteRoom(string id) {
+        public string DeleteRoom(string id)
+        {
             var result = _rr.RemoveRoom(id).Result;
-            if (result.DeletedCount == 1) {
+            if (result.DeletedCount == 1)
+            {
                 return "Room was deleted";
             }
             var err = new Error("Couldn't find the room to delete", 100);
             return err.ToJson();
+        }
+
+        public string UpdateLocation(string id, string location)
+        {
+            var item = new Room();
+
+            try
+            {
+                item = _rr.GetRoom(id).Result;
+            }
+            catch (Exception e)
+            {
+                var err = new Error("Couldn't get room by that id", 100, e.StackTrace);
+                return err.ToJson();
+            }
+
+            Coordinate tempCoord = null;
+            try
+            {
+                tempCoord = BsonSerializer.Deserialize<Coordinate>(location);
+            }
+            catch (Exception e)
+            {
+                var err = new Error("Could not deserialize", 100, e.StackTrace);
+                return err.ToJson();
+            }
+           
+
+            item.Location = tempCoord;
+
+            try
+            {
+                _rr.UpdateRoom(id, item);
+            }
+            catch (Exception e)
+            {
+                var err = new Error("Could not update", 100, e.StackTrace);
+                return err.ToJson();
+            }
+            //Publish to rabbitMQ after, because we need the id
+            try
+            {
+                _irabbitPublisher.publishString("UpdateRoom", item.ToJson());
+            }
+            catch (Exception e)
+            {
+                var err = new Error("Could not publish to RabbitMq", 100, e.StackTrace);
+                return err.ToJson();
+            }
+            return "";
         }
     }
 }

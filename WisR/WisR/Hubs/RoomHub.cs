@@ -9,13 +9,20 @@ using WisR.DomainModels;
 
 namespace WisR.Hubs
 {
-    public class RoomCreationHub : Hub
+    public class RoomHub : Hub
     {
         public void Send(string room)
         {
             // Call the broadcastMessage method to update clients.
-            var context = GlobalHost.ConnectionManager.GetHubContext<RoomCreationHub>();
+            var context = GlobalHost.ConnectionManager.GetHubContext<RoomHub>();
             context.Clients.All.broadcastRoom(room);
+        }
+
+        public void Update(string room)
+        {
+            // Call the broadcastMessage method to update clients.
+            var context = GlobalHost.ConnectionManager.GetHubContext<RoomHub>();
+            context.Clients.All.broadcastUpdateRoom(room);
         }
     }
 }

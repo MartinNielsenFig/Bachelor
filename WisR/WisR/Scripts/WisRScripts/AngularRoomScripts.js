@@ -17,13 +17,29 @@ app.directive('ngEnter', function () {
 app.controller("RoomController", [
     '$scope', '$http', 'configs', '$window', '$interval', function ($scope, $http, configs, $window, $interval) {
 
-        //Connect to SignalR hub and wait for chat messages
+        //Connect to SignalR hub and wait for RoomUpdate
         $(function () {
             // Declare a proxy to reference the hub. 
             var hub = $.connection.chatHub;
             // Create a function that the hub can call to broadcast messages.
             hub.client.broadcastChatMessage = function (chatMessageToAdd) {
                 $scope.ChatMessages.push(JSON.parse(chatMessageToAdd));
+                $scope.$apply();
+            };
+            $.connection.hub.start();
+        });
+
+        //Connect to SignalR hub and wait for chat messages
+        $(function () {
+            // Declare a proxy to reference the hub. 
+            var hub = $.connection.roomHub;
+            // Create a function that the hub can call to broadcast messages.
+            hub.client.broadcastUpdateRoom = function (roomToUpdate) {
+                $scope.CurrentRoom = JSON.parse(roomToUpdate);
+
+                //trick to update the map
+                $scope.toggleRoomLocation();
+                $scope.toggleRoomLocation();
                 $scope.$apply();
             };
             $.connection.hub.start();
@@ -161,6 +177,57 @@ app.controller("RoomController", [
         };
         getQuestions();
 
+        //Calls and get the currentlocation
+        navigator.geolocation.getCurrentPosition(function (position) {
+            $scope.currentLocation = position;
+        });
+
+        //Code for rooms maps
+        $scope.toggleRoomLocation = function() {
+            $("#googlemapsRoom").toggle();
+            $("#updateBtn").toggle();
+            var bounds = new google.maps.LatLngBounds();
+            var mapOptions = {
+                disableDefaultUI: true,
+                center: {
+                    lat: $scope.CurrentRoom.Location.Latitude,
+                    lng: $scope.CurrentRoom.Location.Longitude
+                },
+                zoom: 22
+            }
+            map = new google.maps.Map(document.getElementById("mapRoom"), mapOptions);
+            $scope.map = map;
+            $scope.markers = [];
+            var marker = new google.maps.Marker({
+                map: map,
+                position: {
+                    lat: $scope.CurrentRoom.Location.Latitude,
+                    lng: $scope.CurrentRoom.Location.Longitude
+                },
+                title: 'Rooms position',
+                icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|7569fe'
+            });
+            $scope.markers.push(marker);
+            bounds.extend(marker.getPosition());
+            var pos;
+            navigator.geolocation.getCurrentPosition(function(position) {
+                pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                }
+                var marker2 = new google.maps.Marker({
+                    map: map,
+                    position: pos,
+                    title: 'Your position',
+                    icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|fe7569',
+                    animation: google.maps.Animation.BOUNCE
+                });
+                
+                $scope.markers.push(marker2);
+                bounds.extend(marker2.getPosition());
+                map.fitBounds(bounds);
+            });
+        }
         //Get information about this specific room
         //Get room info
         var getRoom = function (user) {
@@ -197,6 +264,20 @@ app.controller("RoomController", [
             });
         };
 
+        $scope.updateLocation = function() {
+            var pos;
+            var tempLocation = $scope.CurrentRoom.Location;
+            navigator.geolocation.getCurrentPosition(function(position) {
+                pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                }
+                tempLocation.Latitude = position.coords.latitude;
+                tempLocation.Longitude = position.coords.longitude;
+
+                $http.post(configs.restHostName + '/Room/UpdateLocation', {id: $scope.CurrentRoom._id, location: JSON.stringify(tempLocation) });
+            });
+        }
 
         //Function that checks if user has up/downvoted
         $scope.hasVoted = function (questionvotes, checkForUpvote) {
