@@ -11,6 +11,7 @@
 		CB0D53C61BA85996007E4CD2 /* DateTimeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0D53C51BA85996007E4CD2 /* DateTimeHelper.swift */; settings = {ASSET_TAGS = (); }; };
 		CB1B7B901BB966B400EB637E /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1B7B8F1BB966B400EB637E /* ResultViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		CB1FBA001B983C3A00B1FCF8 /* BooleanInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1FB9FF1B983C3A00B1FCF8 /* BooleanInputCell.swift */; settings = {ASSET_TAGS = (); }; };
+		CB2A1B881BB9DA0F00821087 /* RoomFilterHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A1B871BB9DA0F00821087 /* RoomFilterHelper.swift */; settings = {ASSET_TAGS = (); }; };
 		CB2EF9C31B8DE7260098871B /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2EF9C21B8DE7260098871B /* Room.swift */; };
 		CB39A97B1B986B7F0014F818 /* StringExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB39A97A1B986B7F0014F818 /* StringExtractor.swift */; settings = {ASSET_TAGS = (); }; };
 		CB3C37721B8DBF5000897344 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3C37711B8DBF5000897344 /* AppDelegate.swift */; };
@@ -96,6 +97,7 @@
 		CB0D53C51BA85996007E4CD2 /* DateTimeHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateTimeHelper.swift; sourceTree = "<group>"; };
 		CB1B7B8F1BB966B400EB637E /* ResultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		CB1FB9FF1B983C3A00B1FCF8 /* BooleanInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BooleanInputCell.swift; sourceTree = "<group>"; };
+		CB2A1B871BB9DA0F00821087 /* RoomFilterHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomFilterHelper.swift; sourceTree = "<group>"; };
 		CB2EF9C21B8DE7260098871B /* Room.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
 		CB2FC2DD1B8F93BC00CD8B28 /* JSONSerializerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONSerializerTests.swift; sourceTree = "<group>"; };
 		CB39A97A1B986B7F0014F818 /* StringExtractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtractor.swift; sourceTree = "<group>"; };
@@ -261,6 +263,7 @@
 				CB39A97A1B986B7F0014F818 /* StringExtractor.swift */,
 				CB84802C1B9EE0DC00D1C230 /* FacebookHelper.swift */,
 				CB0D53C51BA85996007E4CD2 /* DateTimeHelper.swift */,
+				CB2A1B871BB9DA0F00821087 /* RoomFilterHelper.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -434,6 +437,7 @@
 				CB50FD8E1B9708E40003C078 /* TextInputCell.swift in Sources */,
 				CBF19CD81BAFFBA700A906B3 /* CreateQuestionViewController.swift in Sources */,
 				CB9FF7C61B8F1401003A193B /* HTTPHandler.swift in Sources */,
+				CB2A1B881BB9DA0F00821087 /* RoomFilterHelper.swift in Sources */,
 				CB9FF7CC1B8F28B4003A193B /* Answer.swift in Sources */,
 				CB9FF7D21B8F2B70003A193B /* User.swift in Sources */,
 				CBB60B311B97253A0007A47B /* SegmentedInputCell.swift in Sources */,
