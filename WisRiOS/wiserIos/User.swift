@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// Any user of the system
 class User {
     var _id: String?
     var FacebookId: String?

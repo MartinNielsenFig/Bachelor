@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// A sub-ViewController of RoomPageViewController. This handles the chat logic for the room.
 class ChatViewController: UIViewController, UITextFieldDelegate, Paged {
     
     //Properties

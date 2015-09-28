@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// The ViewController which handles the creation of a question inside a room.
 class CreateQuestionViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     //Properties

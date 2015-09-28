@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// Question for a room.
 class Question {
     var _id: String?
     var RoomId: String?

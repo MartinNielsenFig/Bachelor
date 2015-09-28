@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// The room is a digital representation of a room/place in the world. The room is the hub of Questions and Chat.
 class Room {
     var _id: String?
     var Name: String?

@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// Container for the Room view. This ViewController basically has three sub-viewcontrollers: QuestionViewController, ChatViewController and QuestionListViewController. It enables the user to slide between these three views with a finger-flick. The implementation of this ViewController is influenced by this guide: https://www.veasoftware.com/tutorials/2015/4/2/uipageviewcontroller-in-swift-xcode-62-ios-82-tutorial
 class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     
     //Properties
@@ -18,7 +19,6 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     var currentPage = 0
     
     //Lifecycle
-    //https://www.veasoftware.com/tutorials/2015/4/2/uipageviewcontroller-in-swift-xcode-62-ios-82-tutorial
     override func viewDidLoad() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Ask Question", style: .Plain, target: self, action: "addQuestion")
         

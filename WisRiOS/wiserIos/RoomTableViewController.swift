@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// Shows the rooms nearby in a list, enabling the user to join the room.
 class RoomTableViewController: UITableViewController {
     
     //Properties

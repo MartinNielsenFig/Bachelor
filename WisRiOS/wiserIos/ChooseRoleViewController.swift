@@ -10,6 +10,7 @@ import UIKit
 import CoreLocation
 import MapKit
 
+/// This is the application start ViewController. Handles the user choices between joining a room or creating a room. Also handles the MapView which collects the user position in a singleton for the application to use. This is also where the user can log out.
 class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
 
     //Properties

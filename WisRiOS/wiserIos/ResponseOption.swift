@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// ResponseOption is a part of a Question. A Question can have one or more ResponseOptions.
 class ResponseOption {
     var Value: String
     var Weight: Int

@@ -10,6 +10,7 @@ import UIKit
 import FBSDKCoreKit
 import FBSDKLoginKit
 
+/// Handles the logon view logic.
 class LogonViewController: UIViewController, FBSDKLoginButtonDelegate {
     
     //Properties

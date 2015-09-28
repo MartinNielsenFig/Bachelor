@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// A sub-ViewController of RoomPageViewController. This shows the available questions for the room.
 class QuestionListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, Paged {
     
     //Properties
