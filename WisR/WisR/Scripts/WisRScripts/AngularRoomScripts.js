@@ -17,6 +17,9 @@ app.directive('ngEnter', function () {
 app.controller("RoomController", [
     '$scope', '$http', 'configs', '$window', '$interval', function ($scope, $http, configs, $window, $interval) {
 
+        //default charttype as pie
+        $scope.chartType = "Pie";
+
         //Connect to SignalR hub and wait for chat messages
         $(function () {
             // Declare a proxy to reference the hub. 
@@ -293,7 +296,6 @@ app.controller("RoomController", [
 
         //Function for creating result chart with d3js
         $scope.createPieChart = function () {
-
             var labels = [];
             var values = [];
             for (i = 0; i < $scope.SpecificQuestion.Result.length; i++) {

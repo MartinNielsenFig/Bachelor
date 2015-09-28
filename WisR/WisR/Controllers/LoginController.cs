@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -10,6 +11,19 @@ namespace Web.Controllers
 {
     public class LoginController : Controller
     {
+        public string redirecturi;
+
+        public LoginController()
+        {
+            if (Debugger.IsAttached)
+            {
+                redirecturi = "http://localhost:7331";
+            }
+            else
+            {
+                redirecturi = "http://wisr.azurewebsites.net";
+            }
+        }
         public void LogIn()
         {
             Session.Clear();
@@ -20,7 +34,7 @@ namespace Web.Controllers
             {
                 client_id = "389473737909264",
 
-                redirect_uri = "http://localhost:7331/Login/LoginCheck",
+                redirect_uri = redirecturi+"/Login/LoginCheck",
 
                 response_type = "code",
 
@@ -47,7 +61,7 @@ namespace Web.Controllers
 
                 client_secret = "be14709def182d9b073a51301a722c1e",
 
-                redirect_uri = "http://localhost:7331/Login/LoginCheck",
+                redirect_uri = redirecturi+"/Login/LoginCheck",
 
                 code = accessCode
             });
@@ -67,7 +81,7 @@ namespace Web.Controllers
                 var token = Session["AccessToken"].ToString();
                 var client = new FacebookClient();
 
-                var logoutUrl = client.GetLogoutUrl(new { access_token = token, next = "http://localhost:7331/" });
+                var logoutUrl = client.GetLogoutUrl(new { access_token = token, next = redirecturi });
 
                 Response.Redirect(logoutUrl.AbsoluteUri);
                 Session.Clear();
