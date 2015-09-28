@@ -38,10 +38,9 @@ class ChatViewController: UIViewController, UITextFieldDelegate, Paged {
             
             if let data = data, jsonArray = try? JSONSerializer.toArray(data) {
                 for msg in jsonArray {
-                    messageArray += [ChatMessage(jsonDictionary: msg as! NSDictionary)]
-                }
-                
-                for m in messageArray {
+                    let m = ChatMessage(jsonDictionary: msg as! NSDictionary)
+                    messageArray += [m]
+                    
                     let line = DateTimeHelper.getTimeStringFromEpochString(m.Timestamp) + " " + m.Value! + "\n"
                     tempChat += line
                 }
@@ -85,7 +84,11 @@ class ChatViewController: UIViewController, UITextFieldDelegate, Paged {
     }
     
     //Utilities
-    //http://stackoverflow.com/questions/1247113/iphone-keyboard-covers-uitextfield
+    /**
+    Moves the view up/down when displaying the keyboard. This function is inspired heavely by http://stackoverflow.com/questions/1247113/iphone-keyboard-covers-uitextfield
+    - parameter field:	The text field the user entered which triggered this function
+    - parameter up:		Determines whether the plate should move up (true) or down (false)
+    */
     func movePlate(field: UITextField, up: Bool) {
         
         let movementDistance = 220 // tweak as needed

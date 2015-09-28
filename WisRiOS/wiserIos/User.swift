@@ -9,7 +9,6 @@
 import Foundation
 
 class User {
-    
     var _id: String?
     var FacebookId: String?
     var ConnectedRoomIds: [Int]?

@@ -17,7 +17,6 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
     var location = CLLocation()
 
     //Actions
-    
     /**
     Navigates to CreateRoom if logged in. Else navigate to Login screen.
     - parameter sender:	The button pressed

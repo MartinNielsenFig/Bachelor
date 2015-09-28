@@ -78,7 +78,9 @@ class JSONSerializer {
         
         for (optionalPropertyName, value) in children {
             
-            print("SELF: \(value.dynamicType)")
+            /*let type = value.dynamicType
+            let typeString = String(type)
+            print("SELF: \(type)")*/
             
             let propertyName = optionalPropertyName!
             let property = Mirror(reflecting: value)

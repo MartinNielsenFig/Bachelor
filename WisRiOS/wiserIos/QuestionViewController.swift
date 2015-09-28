@@ -24,6 +24,11 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     var pickerData = [String]()
     
     //Utilities
+    
+    /**
+    Sends a response to the Question to the RestAPI. The answer has the users ID to ensure that he can only respond once (handled by RestAPI)
+    - parameter sender:	The button pressed
+    */
     @IBAction func sendResponse(sender: AnyObject) {
         let index = answerPicker.selectedRowInComponent(0)
         let answerPickerText = pickerData[index]
@@ -39,7 +44,12 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         }
     }
     
-    func showQuestionUI() {
+    //Lifecycle
+    override func viewDidLoad() {
+        answerPicker.delegate = self
+        answerPicker.dataSource = self
+        
+        //Show UI
         if self.question._id == nil {
             return
             //todo display something nice to user :-)
@@ -58,7 +68,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         //Image
         let indicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
         indicator.center = self.questionImage.center
-
+        
         indicator.startAnimating()
         self.view.addSubview(indicator)
         
@@ -80,13 +90,6 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         }
     }
     
-    //Lifecycle
-    override func viewDidLoad() {
-        answerPicker.delegate = self
-        answerPicker.dataSource = self
-        showQuestionUI()
-    }
-    
     //UIPickerViewDelegate
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
         return 1
@@ -99,5 +102,5 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return pickerData[row]
     }
-
+    
 }

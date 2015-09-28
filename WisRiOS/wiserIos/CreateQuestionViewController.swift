@@ -80,7 +80,7 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
         }
     }
     
-    func AddResponseOption() {
+    func addResponseOption() {
         if let responseText = addResponseCell?.inputField.text {
             let r = ResponseOption(value: responseText, weight: 1)
             responseOptions += [r]
@@ -143,7 +143,7 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
                 let cellIdentifier = "TextButtonInputCell"
                 let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! TextButtonInputCell
                 cell.label.text = "Add Response"
-                cell.button.addTarget(self, action: "AddResponseOption", forControlEvents: .TouchUpInside)
+                cell.button.addTarget(self, action: "addResponseOption", forControlEvents: .TouchUpInside)
                 addResponseCell = cell
                 cell.selectionStyle = .None
                 return cell

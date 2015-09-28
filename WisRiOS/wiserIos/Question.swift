@@ -9,7 +9,6 @@
 import Foundation
 
 class Question {
-    
     var _id: String?
     var RoomId: String?
     var CreatedById: String?

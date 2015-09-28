@@ -38,9 +38,6 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     }
     
     //Navigation
-    /**
-    Called when pressed the Add Question button. Navigates to CreateQuestion viewController.
-    */
     func addQuestion() {
         NSLog("add question pressed")
         performSegueWithIdentifier("CreateQuestion", sender: self)
@@ -56,8 +53,8 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     }
     
     //Utilities
-    
     /**
+    Helper function for UIPageViewControllerDataSource. Returns the ViewController at a specific index.
     - parameter index:	The index of the viewcontroller.
     - returns: Returns the UIViewController at a specific location on the UIPageViewController
     */

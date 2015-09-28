@@ -9,7 +9,6 @@
 import Foundation
 
 class Room {
-    
     var _id: String?
     var Name: String?
     var CreatedById: String?
