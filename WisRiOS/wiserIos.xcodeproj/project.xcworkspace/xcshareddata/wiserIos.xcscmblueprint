@@ -1,0 +1,37 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "B5CE4A7F04D33ED0E4610F3EEAB8460F40260E8E",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "54023E5A69A8ACBF4248AE90064E6E1B8A22CC88" : 0,
+    "9025163822AAEA7A2D8AC9210D0874A56F62B462" : 0,
+    "B5CE4A7F04D33ED0E4610F3EEAB8460F40260E8E" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "3FBBDDBC-97A9-44CD-8E52-DD22C6A786AF",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "54023E5A69A8ACBF4248AE90064E6E1B8A22CC88" : "PNChart-Swift\/",
+    "9025163822AAEA7A2D8AC9210D0874A56F62B462" : "ios-charts\/",
+    "B5CE4A7F04D33ED0E4610F3EEAB8460F40260E8E" : "WisR\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "wiserIos",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "WisRiOS\/wiserIos.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/kevinzhow\/PNChart-Swift.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "54023E5A69A8ACBF4248AE90064E6E1B8A22CC88"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/danielgindi\/ios-charts.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "9025163822AAEA7A2D8AC9210D0874A56F62B462"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/Aceipse\/Bachelor.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "B5CE4A7F04D33ED0E4610F3EEAB8460F40260E8E"
+    }
+  ]
+}

@@ -167,10 +167,13 @@
                                                     <action selector="sendResponse:" destination="ock-zx-gTK" eventType="touchUpInside" id="FDD-aN-YCr"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uV7-tu-bL6">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uV7-tu-bL6">
                                                 <rect key="frame" x="479" y="6" width="81" height="30"/>
                                                 <animations/>
                                                 <state key="normal" title="See Results"/>
+                                                <connections>
+                                                    <segue destination="beQ-E0-jbN" kind="show" id="Vq6-kL-d2Z"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <animations/>
@@ -468,7 +471,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8vI-dz-Z8B" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4518" y="-841"/>
+            <point key="canvasLocation" x="3122" y="-841"/>
         </scene>
         <!--QuestionList-->
         <scene sceneID="ucy-ed-XED">
@@ -580,6 +583,29 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PdT-pg-CAA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3764" y="-98"/>
+        </scene>
+        <!--Result-->
+        <scene sceneID="6f4-NU-xUV">
+            <objects>
+                <viewController title="Result" id="beQ-E0-jbN" customClass="ResultViewController" customModule="wiserIos" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Hgq-q9-QaY"/>
+                        <viewControllerLayoutGuide type="bottom" id="OFZ-5e-dN3"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="0le-i0-huN" customClass="BarChartView" customModule="Charts">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <connections>
+                        <outlet property="barChartView" destination="0le-i0-huN" id="9u6-8Q-1jh"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qIJ-uQ-6Lf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4426" y="-98"/>
         </scene>
         <!--Chat-->
         <scene sceneID="HDc-aC-Y8j">
