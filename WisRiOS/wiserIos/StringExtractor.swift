@@ -10,6 +10,11 @@ import Foundation
 
 class StringExtractor {
     
+    /**
+    Extracts the highest number in a string
+    - parameter aString:	string with e.g. text and numbers
+    - returns: The highest number represented in aString
+    */
     static func highestNumberInString (aString: String) -> Int {
         var alphanumerics = String()
         var highest = Int()

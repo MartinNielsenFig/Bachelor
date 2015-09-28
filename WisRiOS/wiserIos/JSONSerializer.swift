@@ -11,6 +11,7 @@
 
 import Foundation
 
+/// Handles Convertion from instances of objects to JSON strings. Also helps with casting strings of JSON to Arrays or Dictionaries.
 class JSONSerializer {
     
     enum JSONSerializerError: ErrorType {
