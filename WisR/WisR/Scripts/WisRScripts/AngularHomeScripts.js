@@ -23,11 +23,29 @@ app.controller("HomeController", ['$scope', '$http', '$location', '$window', 'co
     //SignalR initiation
     $(function () {
         // Declare a proxy to reference the hub. 
-        var hub = $.connection.roomCreationHub;
+        var hub = $.connection.roomHub;
         // Create a function that the hub can call to broadcast messages.
         hub.client.broadcastRoom = function (roomToAdd) {
             $scope.Rooms.push(JSON.parse(roomToAdd));
             $scope.$apply();
+        };
+        $.connection.hub.start();
+    });
+
+    //Connect to SignalR hub and wait for room update
+    $(function () {
+        // Declare a proxy to reference the hub. 
+        var hub = $.connection.roomHub;
+        // Create a function that the hub can call to broadcast messages.
+        hub.client.broadcastUpdateRoom = function (roomToUpdate) {
+            var tempRoom = JSON.parse(roomToUpdate);
+            for (var i = 0; i < $scope.Rooms.length; i++) {
+                if ($scope.Rooms[i]._id == tempRoom._id) {
+                    $scope.Rooms[i] = tempRoom;
+                    $scope.$apply();
+                }
+            }
+
         };
         $.connection.hub.start();
     });
