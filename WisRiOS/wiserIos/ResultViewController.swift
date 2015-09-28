@@ -10,14 +10,27 @@ import UIKit
 import Charts
 
 class ResultViewController: UIViewController {
-    @IBOutlet var barChartView: BarChartView!
-    var months = [String]()
+    @IBOutlet var pieChartView: PieChartView!
+    var options = [String]()
+    
+    //Instantiated by previous ViewController
+    var question: Question!
 
     override func viewDidLoad() {
-        months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-        let unitsSold = [20.0, 4.0, 6.0, 3.0, 12.0, 16.0, 4.0, 18.0, 2.0, 4.0, 5.0, 4.0]
+        var values = [Double](count: question.ResponseOptions.count, repeatedValue: 0)
         
-        setChart(months, values: unitsSold)
+        for (index, ro) in question.ResponseOptions.enumerate() {
+            options += [ro.Value]
+            
+            for a in self.question.Result {
+                if a.Value == ro.Value {
+                    ++values[index]
+                }
+            }
+            
+        }
+        
+        setChart(options, values: values)
     }
     
     func setChart(dataPoints: [String], values: [Double]) {
@@ -26,8 +39,20 @@ class ResultViewController: UIViewController {
             let dataEntry = BarChartDataEntry(value: values[i], xIndex: i)
             dataEntries += [dataEntry]
         }
-        let chartDataSet = BarChartDataSet(yVals: dataEntries, label: "Units Sold")
-        let chartData = BarChartData(xVals: months, dataSet: chartDataSet)
-        self.barChartView.data = chartData
+        let chartDataSet = PieChartDataSet(yVals: dataEntries, label: "")
+        let chartData = PieChartData(xVals: options, dataSet: chartDataSet)
+        self.pieChartView.data = chartData
+        
+        var colors = [UIColor]()
+        
+        for _ in 0..<dataPoints.count {
+            let red = Double(arc4random_uniform(256))
+            let green = Double(arc4random_uniform(256))
+            let blue = Double(arc4random_uniform(256))
+            
+            let color = UIColor(red: CGFloat(red/255), green: CGFloat(green/255), blue: CGFloat(blue/255), alpha: 1)
+            colors.append(color)
+        }
+        chartDataSet.colors = colors
     }
 }

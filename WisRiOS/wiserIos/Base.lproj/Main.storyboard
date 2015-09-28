@@ -172,7 +172,7 @@
                                                 <animations/>
                                                 <state key="normal" title="See Results"/>
                                                 <connections>
-                                                    <segue destination="beQ-E0-jbN" kind="show" id="Vq6-kL-d2Z"/>
+                                                    <segue destination="beQ-E0-jbN" kind="show" identifier="ShowResult" id="Vq6-kL-d2Z"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -592,7 +592,7 @@
                         <viewControllerLayoutGuide type="top" id="Hgq-q9-QaY"/>
                         <viewControllerLayoutGuide type="bottom" id="OFZ-5e-dN3"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="0le-i0-huN" customClass="BarChartView" customModule="Charts">
+                    <view key="view" contentMode="scaleToFill" id="0le-i0-huN" customClass="PieChartView" customModule="Charts">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
@@ -600,7 +600,7 @@
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <connections>
-                        <outlet property="barChartView" destination="0le-i0-huN" id="9u6-8Q-1jh"/>
+                        <outlet property="pieChartView" destination="0le-i0-huN" id="ztz-0q-rNE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qIJ-uQ-6Lf" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -134,4 +134,12 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         return pickerData[row]
     }
     
+    //Navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "ShowResult" {
+            let resultViewController = segue.destinationViewController as! ResultViewController
+            resultViewController.question = self.question
+        }
+    }
+    
 }
