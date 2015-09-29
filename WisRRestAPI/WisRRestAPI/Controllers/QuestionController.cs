@@ -160,7 +160,7 @@ namespace WisRRestAPI.Controllers
         //}
 
         [System.Web.Mvc.HttpPost]
-        public void AddQuestionResponse(string response, string questionId)
+        public string AddQuestionResponse(string response, string questionId)
         {
             var q = _qr.GetQuestionWithoutImage(questionId).Result;
 
@@ -189,9 +189,10 @@ namespace WisRRestAPI.Controllers
                 }
             }
             //Todo handle return with Error() class
+            return "";
         }
 
-        public void AddVote(string vote, string type, string id)
+        public string AddVote(string vote, string type, string id)
         {
             Type questionType;
 
@@ -225,6 +226,7 @@ namespace WisRRestAPI.Controllers
                 {
                 }
             }
+            return "";
         }
 
         [System.Web.Mvc.HttpGet]
