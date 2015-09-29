@@ -4,5 +4,4 @@
     //baseHostName: 'http://wisr.azurewebsites.net',
     //restHostName: 'http://wisrrestapi.azurewebsites.net'
     //restHostName: 'http://wisrrestapi.aceipse.dk'
-
 })

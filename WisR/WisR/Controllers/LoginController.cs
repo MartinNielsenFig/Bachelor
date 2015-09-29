@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.DirectoryServices;
+using System.DirectoryServices.ActiveDirectory;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using Facebook;
+using System.DirectoryServices.AccountManagement;
 
 namespace Web.Controllers
 {
@@ -46,27 +49,29 @@ namespace Web.Controllers
             Response.Redirect(loginUrl.AbsoluteUri);
         }
 
-        public bool LoginWithLDAP(string email, string password)
+        public string LoginWithLDAP(string email, string password)
         {
             bool authenticated = false;
-
             try
             {
                 DirectoryEntry entry = new DirectoryEntry("LDAP://ldap.iha.dk", email, password);
+                entry.RefreshCache();
                 object nativeObject = entry.NativeObject;
                 authenticated = true;
             }
             catch (DirectoryServicesCOMException cex)
             {
+                return "a"+cex.ToString();
                 Console.WriteLine(cex);
             }
             catch (Exception ex)
             {
+                return "b"+ex.Message;
                 Console.WriteLine(ex);
             }
             if (authenticated)
                 Session["LDAPid"] = email;
-            return authenticated;
+            return authenticated.ToString();
         }
 
         public ActionResult LoginCheck()
