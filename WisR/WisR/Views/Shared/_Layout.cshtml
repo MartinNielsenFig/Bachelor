@@ -1,13 +1,14 @@
-﻿@using Facebook
+﻿@using System.Dynamic
+@using Facebook
 <!DOCTYPE html>
 
 <html>
 <head>
-    
+
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGUkernNPkypdfcFhlIOs5Bt-8c5MUPYo">
-    
+
     </script>
-    <meta charset="utf-8"/>
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
@@ -29,65 +30,104 @@
                     <span class="icon-bar"></span>
                 </button>
             </div>
-            <div class="navbar-collapse collapse" ng-controller="UserController">
-                <ul class="nav navbar-nav col-lg-12">
-                    <li>@Html.ActionLink("WisR", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })</li>
-                    @if (Session["accessToken"] != null)
-                    {
-                        var facebookId = Session["FacebookId"];
+            <div class="navbar-collapse collapse dropdown" ng-controller="UserController">
 
-                        var client = new FacebookClient(Session["accessToken"].ToString());
-
-                        dynamic result = client.Get("me", new { fields = "name, id, birthday" });
-
+                @*If we aren't logged in*@
+                @if (Session["accessToken"] != null || Session["LDAPid"] != null)
+                {
+                    dynamic result = new ExpandoObject();
+                    result.id = "";
+                    result.name = "";
+                    string ldapUserName = "";
+                    string email = "";
+                    <ul class="nav navbar-nav col-lg-12">
+                        <li>@Html.ActionLink("WisR", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })</li>
                         <li class="pull-right">
-                            <div class="fb-info">
+                           
+                            @*if logged in with facebook*@
+                            @if (Session["accessToken"] != null)
+                            {
+                                var facebookId = Session["FacebookId"];
+                                var client = new FacebookClient(Session["accessToken"].ToString());
 
-                                <img class="pull-left" src="http://graph.facebook.com/@facebookId/picture?type=square" alt="FacebookBillede" />
+                                result = client.Get("me", new { fields = "name, id, birthday" });
+                                <div class="fb-info">
 
+                                    <img class="pull-left" src="http://graph.facebook.com/@facebookId/picture?type=square" alt="FacebookBillede" />
+
+                                    <p class="pull-left" style="color: #999999; padding: 15px 15px 15px 15px">
+                                        @result.name
+                                    </p>
+                                </div>
+                            }
+                            else if (Session["LDAPid"] != null)
+                            {
+                                email = Session["LDAPid"].ToString();
+                                ldapUserName = email.Split('@')[0];
+                                result.name = ldapUserName;
                                 <p class="pull-left" style="color: #999999; padding: 15px 15px 15px 15px">
-                                    @result.name
+                                    @Session["LDAPid"].ToString().Split('@')[0]
                                 </p>
-                            </div>
+                            }
+
+
+
                         </li>
                         <li class="pull-right">
                             @Html.ActionLink("Log out", "Logout", "Login")
                             <script>
 
-                                app.controller("UserController", ['$scope', '$http', '$location', '$window', 'configs', function ($scope, $http, $location, $window, configs) {
-                                    $http.post(configs.baseHostName+'/Home/toJsonUser', {
-                                        facebookId: @result.id,
-                                        lDAPUserName: null,
-                                        displayName: '@result.name',
-                                        email: null,
-                                        encryptedPassword: null,
-                                    }).then(function (response) {
-                                        //Use response to send to REST API
-                                        $http.post(configs.restHostName + '/User/CreateUser', { User: JSON.stringify(response.data) }).
-                                            then(function (response) {
-                                                window.userId = response.data;
-                                              
-                                                $('#createRoomButton').prop("disabled",false);
-                                                $('#createRoomButton').prop("title",'');
-                                            });
-                                    });
-                                }]);
+                                app.controller("UserController", [
+                                    '$scope', '$http', '$location', '$window', 'configs', function($scope, $http, $location, $window, configs) {
+                                        $http.post(configs.baseHostName + '/Home/toJsonUser', {
+                                            facebookId: '@result.id' != "" ? '@result.id' : null,
+                                            lDAPUserName: '@ldapUserName' != "" ? '@ldapUserName' : null,
+                                            displayName: '@result.name',
+                                            email: '@email' != "" ? '@email' : null,
+                                            encryptedPassword: null,
+                                        }).then(function(response) {
+                                            //Use response to send to REST API
+                                            $http.post(configs.restHostName + '/User/CreateUser', { User: JSON.stringify(response.data) }).
+                                                then(function(response) {
+                                                    window.userId = response.data;
+
+                                                    $('#createRoomButton').prop("disabled", false);
+                                                    $('#createRoomButton').prop("title", '');
+                                                });
+                                        });
+                                    }
+                                ]);
 
                             </script>
                         </li>
+                    </ul>
 
-                    }
-                    else
-                    {
-
-                        <li class="pull-right">
-                            @Html.ActionLink("Log in", "LogIn", "Login")
+                }
+                else
+                {
+                    <ul class="nav navbar-nav col-lg-12">
+                        <li>
+                            @Html.ActionLink("WisR", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
                         </li>
-                        <script>
-                            window.userId = "NoUser";
-                        </script>
-                    }
-                </ul>
+                        <li class="navbar-right" style="cursor: pointer" data-toggle="dropdown">
+                            <a id="dropdownMenu1" aria-haspopup="true" aria-expanded="true">
+                                Login
+                                <span class="caret"></span>
+                            </a>
+                        </li>
+
+                        <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
+                            <li><a onclick="$('#myModalLDAPLogin').modal('toggle')">LDAP login</a></li>
+                            <li>
+                                @Html.ActionLink("Facebook", "LoginWithFacebook", "Login")
+                            </li>
+                        </ul>
+                    </ul>
+                    <script>
+                        window.userId = "NoUser";
+                    </script>
+                }
+
             </div>
             @*<div class="navbar-collapse collapse">
                     @Html.Partial("_LoginPartial")
@@ -102,6 +142,56 @@
         </footer>
     </div>
 
+    <!--LDAP modal window--> <!--Stops modal from closing-->
+    <div class="modal fade" id="myModalLDAPLogin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="true" data-keyboard="true">
+        <div class="modal-dialog center">
+            <div class="modal-content modal-heigh">
+                <div class="modal-body">
+                    <form id="ldapForm" method="POST" action="@Url.Action("LoginWithLDAP","Login")">
+                        <div class="row">
+                            <label class="col-md-6">Email:</label> <input name="email" required type="email" class="col-md-6"/>
+                        </div>
+                        <div class="row">
+                            <label class="col-md-6">Password:</label> <input name="password" required type="password" class="col-md-6" />
+                        </div>
+                        <div class="col-md-12 text-center">
+                            <button id="ModalSubmitButton" type="submit" class="btn btn-primary btn-md center-block">Login</button>
+                            <span>
+                                <button id="ModalCancelButton" type="button" class="btn btn-primary btn-md center-block" data-dismiss="modal">Cancel</button>
+                            </span>                            
+                            
+                        </div>
+                        <p class="text-center" id="ldapErrorMsg"></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+    var ldapForm = $('#ldapForm');
+    ldapForm.submit(function (e) {
+        e.preventDefault(); // stops the form submission
+
+        $.ajax({
+            url: $(this).attr('action'), // action attribute of form to send the values
+            type: $(this).attr('method'), // method used in the form
+            data: $(this).serialize(), // data to be sent to php
+            dataType: "text",
+            success: function (data) {
+                if (data == "True") {
+                    location.reload();
+                } else {
+                    $("#ldapErrorMsg").text("No user with that login information");
+                }
+              
+            },
+            error: function (err) {
+                console.log(err);
+            }
+        });
+
+    });
+</script>
 
 </body>
 </html>

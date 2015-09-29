@@ -10,13 +10,15 @@ import UIKit
 import CoreLocation
 import MapKit
 
-/// This is the application start ViewController. Handles the user choices between joining a room or creating a room. Also handles the MapView which collects the user position in a singleton for the application to use. This is also where the user can log out.
+/// This is the application start ViewController. Handles the user choices between joining a room or creating a room. Also handles the MapView which collects the user position in a singleton for the application to use, and shows the rooms nearby. This is also where the user can log out.
 class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
-
+    
     //Properties
     @IBOutlet var mapView: MKMapView!
     var location = CLLocation()
-
+    var rooms = [Room]()
+    var firstTimeRoomsLoaded = true
+    
     //Actions
     /**
     Navigates to CreateRoom if logged in. Else navigate to Login screen.
@@ -34,7 +36,7 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
     //Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         //Setup location
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -48,7 +50,7 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
     
     override func viewDidAppear(animated: Bool) {
         locationManager.startUpdatingLocation()
-        maxPositionUpdatesThisSession = 30
+        maxPositionUpdatesThisSession = 10
         
         //Log off btn
         if CurrentUser.sharedInstance.FacebookId != nil {
@@ -56,6 +58,51 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
         }
         
         super.viewDidAppear(animated)
+    }
+    
+    func loadRoomsBasedOnLocation() {
+        //Show nearby rooms
+        HttpHandler.requestWithResponse(action: "Room/GetAll", type: "GET", body: "") { (data, response, error) -> Void in
+            var tmpRooms = [Room]()
+            
+            //try? operator makes roomsJson nil if .toArray throws instead of do try catch-pattern
+            if let data = data, jsonArray = try? JSONSerializer.toArray(data) {
+                for room in jsonArray {
+                    tmpRooms += [Room(jsonDictionary: room as! NSDictionary)]
+                }
+                let filteredRooms = RoomFilterHelper.filterRoomsByLocation(tmpRooms, metersRadius: 1000*1000)
+                if filteredRooms.count <= 0 {
+                    let noRooms = Room()
+                    noRooms._id = "system"
+                    noRooms.Name = "No nearby rooms"
+                    tmpRooms = [noRooms]
+                }
+                else {
+                    tmpRooms = filteredRooms
+                }
+            } else {
+                let errorRoom = Room()
+                errorRoom.Name = "Could not load rooms"
+                errorRoom._id = "system"
+                tmpRooms = [errorRoom]
+            }
+            
+            self.rooms = tmpRooms
+            
+            //Show on map
+            self.mapView.removeOverlays(self.mapView.overlays)
+            for room in tmpRooms {
+                if let lat = room.Location.Latitude, long = room.Location.Longitude {
+                    let roomPosition = CLLocationCoordinate2D(latitude: lat, longitude: long)
+                    
+                    let circleRadius = (room.Location.AccuracyMeters ?? 0) + (room.Radius ?? 0)
+                    let circle = MKCircle(centerCoordinate: roomPosition, radius: CLLocationDistance(circleRadius))
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.mapView.addOverlay(circle)
+                    }
+                }
+            }
+        }
     }
     
     //MKMapViewDelegate
@@ -91,10 +138,16 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
     //CLLocationManagerDelegate
     let locationManager = CLLocationManager()
     var bestAccuracy = Double.init(Int.max)
-    var maxPositionUpdatesThisSession = 30
+    var maxPositionUpdatesThisSession = Int()
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = manager.location {
+            
+            //Get rooms first time to show on map
+            if firstTimeRoomsLoaded {
+                firstTimeRoomsLoaded = false
+                loadRoomsBasedOnLocation()
+            }
             
             //Determine is accuracy is better than before
             let currentAccuracy = location.horizontalAccuracy
@@ -115,14 +168,16 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
                 CurrentUser.sharedInstance.location.AccuracyMeters = Int(currentAccuracy)
                 
                 //Replace and update overlays, annotations and positioning
-                mapView.removeOverlays(mapView.overlays)
                 mapView.removeAnnotations(mapView.annotations)
                 
                 let coordinate = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
                 mapView.region = MKCoordinateRegionMakeWithDistance(coordinate, 500, 500)
                 
+                //Current location circle todo need fixing
+                /*
                 let circle = MKCircle(centerCoordinate: location.coordinate, radius: location.horizontalAccuracy as CLLocationDistance)
                 mapView.addOverlay(circle)
+                */
                 
                 let annotation = MKPointAnnotation()
                 annotation.coordinate = coordinate
@@ -144,6 +199,10 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
             let loginRoomViewController = segue.destinationViewController as! LogonViewController
             loginRoomViewController.previousNavigationController = self.navigationController
             loginRoomViewController.previousViewController = self
+        }
+        else if segue.identifier == "JoinRoom" {
+            let roomTableViewController = segue.destinationViewController as! RoomTableViewController
+            roomTableViewController.rooms = self.rooms
         }
     }
     

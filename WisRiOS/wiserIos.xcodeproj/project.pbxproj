@@ -9,7 +9,9 @@
 /* Begin PBXBuildFile section */
 		CB0218201B9462C400DFC9DD /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB02181F1B9462C400DFC9DD /* ChatMessage.swift */; settings = {ASSET_TAGS = (); }; };
 		CB0D53C61BA85996007E4CD2 /* DateTimeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0D53C51BA85996007E4CD2 /* DateTimeHelper.swift */; settings = {ASSET_TAGS = (); }; };
+		CB1B7B901BB966B400EB637E /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1B7B8F1BB966B400EB637E /* ResultViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		CB1FBA001B983C3A00B1FCF8 /* BooleanInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1FB9FF1B983C3A00B1FCF8 /* BooleanInputCell.swift */; settings = {ASSET_TAGS = (); }; };
+		CB2A1B881BB9DA0F00821087 /* RoomFilterHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A1B871BB9DA0F00821087 /* RoomFilterHelper.swift */; settings = {ASSET_TAGS = (); }; };
 		CB2EF9C31B8DE7260098871B /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2EF9C21B8DE7260098871B /* Room.swift */; };
 		CB39A97B1B986B7F0014F818 /* StringExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB39A97A1B986B7F0014F818 /* StringExtractor.swift */; settings = {ASSET_TAGS = (); }; };
 		CB3C37721B8DBF5000897344 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3C37711B8DBF5000897344 /* AppDelegate.swift */; };
@@ -43,6 +45,8 @@
 		CBB4D7DD1BA1A887001C531D /* Paged.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB4D7DC1BA1A887001C531D /* Paged.swift */; settings = {ASSET_TAGS = (); }; };
 		CBB60B2F1B9718EC0007A47B /* CreateRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB60B2E1B9718EC0007A47B /* CreateRoomViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		CBB60B311B97253A0007A47B /* SegmentedInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB60B301B97253A0007A47B /* SegmentedInputCell.swift */; settings = {ASSET_TAGS = (); }; };
+		CBCD3F481BB96F0100E53F76 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBCD3F471BB96EF800E53F76 /* Charts.framework */; };
+		CBCD3F491BB96F0100E53F76 /* Charts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CBCD3F471BB96EF800E53F76 /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CBCD8B271BB3F158002ACBC4 /* TextButtonInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCD8B261BB3F158002ACBC4 /* TextButtonInputCell.swift */; settings = {ASSET_TAGS = (); }; };
 		CBCD8B291BB409C0002ACBC4 /* QuestionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCD8B281BB409C0002ACBC4 /* QuestionViewCell.swift */; settings = {ASSET_TAGS = (); }; };
 		CBF19CD81BAFFBA700A906B3 /* CreateQuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF19CD71BAFFBA700A906B3 /* CreateQuestionViewController.swift */; settings = {ASSET_TAGS = (); }; };
@@ -58,12 +62,42 @@
 			remoteGlobalIDString = CB3C376D1B8DBF5000897344;
 			remoteInfo = wiserIos;
 		};
+		CBCD3F461BB96EF800E53F76 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CBCD3F421BB96EF800E53F76 /* Charts.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5BA8EC401A9D14DC00CE82E1;
+			remoteInfo = Charts;
+		};
+		CBCD3F4A1BB96F0100E53F76 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CBCD3F421BB96EF800E53F76 /* Charts.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 5BA8EC3F1A9D14DC00CE82E1;
+			remoteInfo = Charts;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		CB1B7BA41BB96A2900EB637E /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				CBCD3F491BB96F0100E53F76 /* Charts.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		CB02181F1B9462C400DFC9DD /* ChatMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatMessage.swift; sourceTree = "<group>"; };
 		CB0D53C51BA85996007E4CD2 /* DateTimeHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateTimeHelper.swift; sourceTree = "<group>"; };
+		CB1B7B8F1BB966B400EB637E /* ResultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		CB1FB9FF1B983C3A00B1FCF8 /* BooleanInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BooleanInputCell.swift; sourceTree = "<group>"; };
+		CB2A1B871BB9DA0F00821087 /* RoomFilterHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomFilterHelper.swift; sourceTree = "<group>"; };
 		CB2EF9C21B8DE7260098871B /* Room.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
 		CB2FC2DD1B8F93BC00CD8B28 /* JSONSerializerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONSerializerTests.swift; sourceTree = "<group>"; };
 		CB39A97A1B986B7F0014F818 /* StringExtractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtractor.swift; sourceTree = "<group>"; };
@@ -101,6 +135,7 @@
 		CBB4D7DC1BA1A887001C531D /* Paged.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Paged.swift; sourceTree = "<group>"; };
 		CBB60B2E1B9718EC0007A47B /* CreateRoomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreateRoomViewController.swift; path = Assets.xcassets/CreateRoomViewController.swift; sourceTree = "<group>"; };
 		CBB60B301B97253A0007A47B /* SegmentedInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedInputCell.swift; sourceTree = "<group>"; };
+		CBCD3F421BB96EF800E53F76 /* Charts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Charts.xcodeproj; path = "../../ios-charts/Charts/Charts.xcodeproj"; sourceTree = "<group>"; };
 		CBCD8B261BB3F158002ACBC4 /* TextButtonInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextButtonInputCell.swift; sourceTree = "<group>"; };
 		CBCD8B281BB409C0002ACBC4 /* QuestionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionViewCell.swift; sourceTree = "<group>"; };
 		CBF19CD71BAFFBA700A906B3 /* CreateQuestionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateQuestionViewController.swift; sourceTree = "<group>"; };
@@ -115,6 +150,7 @@
 			files = (
 				CBA437301B8DF5A500EF3E01 /* MapKit.framework in Frameworks */,
 				CBB34B091BAF549C00CA98DD /* FBSDKCoreKit.framework in Frameworks */,
+				CBCD3F481BB96F0100E53F76 /* Charts.framework in Frameworks */,
 				CBB34B0A1BAF549C00CA98DD /* FBSDKLoginKit.framework in Frameworks */,
 				CBA4372C1B8DEA8E00EF3E01 /* CoreLocation.framework in Frameworks */,
 			);
@@ -142,6 +178,7 @@
 				CB6BC6251BA1B2ED001C303B /* ChatViewController.swift */,
 				CB6BC6271BA1C05A001C303B /* QuestionListViewController.swift */,
 				CBF19CD71BAFFBA700A906B3 /* CreateQuestionViewController.swift */,
+				CB1B7B8F1BB966B400EB637E /* ResultViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -209,6 +246,7 @@
 		CB847E811B9EC0CC00D1C230 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CBCD3F421BB96EF800E53F76 /* Charts.xcodeproj */,
 				CBB34B071BAF549C00CA98DD /* FBSDKCoreKit.framework */,
 				CBB34B081BAF549C00CA98DD /* FBSDKLoginKit.framework */,
 				CBA4372B1B8DEA8E00EF3E01 /* CoreLocation.framework */,
@@ -225,6 +263,7 @@
 				CB39A97A1B986B7F0014F818 /* StringExtractor.swift */,
 				CB84802C1B9EE0DC00D1C230 /* FacebookHelper.swift */,
 				CB0D53C51BA85996007E4CD2 /* DateTimeHelper.swift */,
+				CB2A1B871BB9DA0F00821087 /* RoomFilterHelper.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -245,6 +284,14 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
+		CBCD3F431BB96EF800E53F76 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CBCD3F471BB96EF800E53F76 /* Charts.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -255,10 +302,12 @@
 				CB3C376A1B8DBF5000897344 /* Sources */,
 				CB3C376B1B8DBF5000897344 /* Frameworks */,
 				CB3C376C1B8DBF5000897344 /* Resources */,
+				CB1B7BA41BB96A2900EB637E /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				CBCD3F4B1BB96F0100E53F76 /* PBXTargetDependency */,
 			);
 			name = wiserIos;
 			productName = wiserIos;
@@ -315,6 +364,12 @@
 			mainGroup = CB3C37651B8DBF5000897344;
 			productRefGroup = CB3C376F1B8DBF5000897344 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = CBCD3F431BB96EF800E53F76 /* Products */;
+					ProjectRef = CBCD3F421BB96EF800E53F76 /* Charts.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				CB3C376D1B8DBF5000897344 /* wiserIos */,
@@ -322,6 +377,16 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		CBCD3F471BB96EF800E53F76 /* Charts.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Charts.framework;
+			remoteRef = CBCD3F461BB96EF800E53F76 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		CB3C376C1B8DBF5000897344 /* Resources */ = {
@@ -372,6 +437,7 @@
 				CB50FD8E1B9708E40003C078 /* TextInputCell.swift in Sources */,
 				CBF19CD81BAFFBA700A906B3 /* CreateQuestionViewController.swift in Sources */,
 				CB9FF7C61B8F1401003A193B /* HTTPHandler.swift in Sources */,
+				CB2A1B881BB9DA0F00821087 /* RoomFilterHelper.swift in Sources */,
 				CB9FF7CC1B8F28B4003A193B /* Answer.swift in Sources */,
 				CB9FF7D21B8F2B70003A193B /* User.swift in Sources */,
 				CBB60B311B97253A0007A47B /* SegmentedInputCell.swift in Sources */,
@@ -380,6 +446,7 @@
 				CB84F8B31BB13FA400CD07AD /* Error.swift in Sources */,
 				CB39A97B1B986B7F0014F818 /* StringExtractor.swift in Sources */,
 				CBCD8B271BB3F158002ACBC4 /* TextButtonInputCell.swift in Sources */,
+				CB1B7B901BB966B400EB637E /* ResultViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -399,6 +466,11 @@
 			isa = PBXTargetDependency;
 			target = CB3C376D1B8DBF5000897344 /* wiserIos */;
 			targetProxy = CB3C37831B8DBF5000897344 /* PBXContainerItemProxy */;
+		};
+		CBCD3F4B1BB96F0100E53F76 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Charts;
+			targetProxy = CBCD3F4A1BB96F0100E53F76 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -518,6 +590,7 @@
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = "/Users/PHJ/Documents/FacebookSDKs-iOS-20150910";
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = wiserIos/Info.plist;
@@ -538,6 +611,7 @@
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = "/Users/PHJ/Documents/FacebookSDKs-iOS-20150910";
 				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_FILE = wiserIos/Info.plist;

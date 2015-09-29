@@ -4,14 +4,14 @@
 <body ng-cloak ng-controller="RoomController">
     <h2>{{CurrentRoom.Name}}</h2>
     <div id="RoomErrorDiv"></div>@*Used to insert error message*@
-    
+
     <div class="row" ng-show="rightPassword">
         <div ng-hide="questionsLoaded" class="container text-center col-md-8">
             <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span><label id="loadingLabel" class="">Loading questions...</label>
         </div>
         <div ng-show="CurrentRoom.CreatedById == currentUser._id">
             <div id="roomText" class="text-center">
-                <h2><small>See Room & your location <a ng-click="toggleRoomLocation()" style="cursor: pointer">your location</a></small></h2>
+                <h2><small><a ng-click="toggleRoomLocation()" style="cursor: pointer">See Room & your location</a></small></h2>
             </div>
             <div id="googlemapsRoom" hidden>
                 <div id="mapRoom" style="height: 300px"></div>
@@ -69,12 +69,14 @@
                     </tr>
 
                 </table>
-                <div class="progress">
-                    <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="{{percentage}}" aria-valuemin="0" aria-valuemax="100" ng-style="{width : ( percentage + '%' ) }">
+                <div ng-show="showProgressBar">
+                    <div id="progressDiv" class="progress progress-striped active">
+                        <div class="progress-bar" role="progressbar" aria-valuenow="{{percentage}}" aria-valuemin="0" aria-valuemax="100" ng-style="{width : ( percentage + '%' ) }">
+                        </div>
                     </div>
-                </div>
-                <div>
-                    <p class="text-center">{{timeLeft}}</p>
+                    <div>
+                        <p class="text-center">{{timeLeft}}</p>
+                    </div>
                 </div>
                 <form>
                     <div ng-repeat="responseOption in SpecificQuestion.ResponseOptions">
@@ -103,12 +105,9 @@
         </div>
         @* Chat template found at: http://bootsnipp.com/snippets/featured/chat *@
         <div ng-show="chatLoaded" class="col-md-4" ng-show="CurrentRoom.HasChat">
-            <br />
-            <br />
-
             <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
             @*Scroll glue keeps scroll bar at same location, found at: https://github.com/Luegg/angularjs-scroll-glue*@
-            <div class="container fa-border" style="overflow-x: hidden; overflow-y: auto; max-height: 550px; min-height: 550px" scroll-glue>
+            <div class="container fa-border" style="overflow-x: hidden; overflow-y: auto; max-height: 600px; min-height: 600px" scroll-glue>
 
                 <div class="row">
                     <div class="message-wrap col-lg-8">
@@ -128,11 +127,8 @@
                 </div>
             </div>
             <div class="send-wrap">
-
                 <textarea ng-enter="postChatMessage(textAreaModel)" ng-model="textAreaModel" class="form-control send-message" rows="3" style="-moz-min-width: 100%; -ms-min-width: 100%; -o-min-width: 100%; -webkit-min-width: 100%; min-width: 100%" placeholder="Write a reply..."></textarea>
-
             </div>
-            <br />
             <div class="btn-panel">
                 <button type="submit" class="btn btn-primary" ng-click="postChatMessage(textAreaModel)">Send message</button>
             </div>

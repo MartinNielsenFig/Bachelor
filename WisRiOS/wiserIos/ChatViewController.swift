@@ -30,6 +30,7 @@ class ChatViewController: UIViewController, UITextFieldDelegate, Paged {
     
     //Lifecycle
     override func viewDidLoad() {
+        
         chatMessageInput.delegate = self
         
         let body = "roomId=\(roomId!)"
@@ -104,4 +105,27 @@ class ChatViewController: UIViewController, UITextFieldDelegate, Paged {
         UIView.commitAnimations()
     }
     
+    /*
+    in viewDidLoad:
+    //Todo remove observer
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardShown:", name: UIKeyboardDidShowNotification, object: nil)
+    NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardHidden:", name: UIKeyboardDidHideNotification, object: nil)
+    
+    
+    var keyboardHeight = CGFloat(200)
+    var totalMovement = CGFloat(0)
+    //http://stackoverflow.com/questions/11284321/what-is-the-height-of-iphones-onscreen-keyboard
+    func getboardHeight(notification: NSNotification) -> CGFloat {
+        let info  = notification.userInfo!
+        let value: AnyObject = info[UIKeyboardFrameEndUserInfoKey]!
+        let rawFrame = value.CGRectValue
+        let keyboardFrame = view.convertRect(rawFrame, fromView: nil)
+        return keyboardFrame.height
+    }
+    func keyboardShown(notification: NSNotification) {
+        movePlate(chatMessageInput, up: true, movementDistance: getboardHeight(notification))
+    }
+    func keyboardHidden(notification: NSNotification) {
+        movePlate(chatMessageInput, up: false, movementDistance: getboardHeight(notification))
+    }*/
 }

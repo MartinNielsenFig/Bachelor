@@ -82,10 +82,21 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
     }
     
     func addResponseOption() {
-        if let responseText = addResponseCell?.inputField.text {
+        if let responseText = addResponseCell?.inputField.text where responseText != "" {
             let r = ResponseOption(value: responseText, weight: 1)
             responseOptions += [r]
         }
+        
+        /*NSInteger numberOfRows = [_tableView numberOfRowsInSection:0];
+        if (numberOfRows) {
+            [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:numberOfRows-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:animated];
+        }*/
+        
+        let numberOfRows = tableView.numberOfRowsInSection(1)
+        if numberOfRows > 0 {
+            tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: numberOfRows-1, inSection: 1), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+        }
+
     }
     
     //UITableViewController
@@ -150,7 +161,7 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
                 return cell
             }
         }
-        else {
+        else { //section == 1
             let cell = UITableViewCell()
             cell.textLabel?.text = responseOptions[indexPath.row].Value
             return cell
@@ -169,6 +180,10 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
     
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         return indexPath.section == 1
+    }
+    
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        responseOptions.removeAtIndex(indexPath.row)
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -212,16 +227,10 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
         dismissViewControllerAnimated(true, completion: nil)
     }
     
-    
-    
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         self.photoSelected = true
         selectedImage = (info[UIImagePickerControllerOriginalImage] as! UIImage)
         imageTableCell?.imageView?.image = selectedImage
         dismissViewControllerAnimated(true, completion: nil)
     }
-    
-    
-    
-    
 }

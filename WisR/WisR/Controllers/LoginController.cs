@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.DirectoryServices;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -24,7 +25,7 @@ namespace Web.Controllers
                 redirecturi = "http://wisr.azurewebsites.net";
             }
         }
-        public void LogIn()
+        public void LoginWithFacebook()
         {
             Session.Clear();
 
@@ -34,15 +35,38 @@ namespace Web.Controllers
             {
                 client_id = "389473737909264",
 
-                redirect_uri = redirecturi+"/Login/LoginCheck",
+                redirect_uri = redirecturi + "/Login/LoginCheck",
 
                 response_type = "code",
 
                 scope = "email" // Add other permissions as needed)
             });
-           
+
 
             Response.Redirect(loginUrl.AbsoluteUri);
+        }
+
+        public bool LoginWithLDAP(string email, string password)
+        {
+            bool authenticated = false;
+
+            try
+            {
+                DirectoryEntry entry = new DirectoryEntry("LDAP://ldap.iha.dk", email, password);
+                object nativeObject = entry.NativeObject;
+                authenticated = true;
+            }
+            catch (DirectoryServicesCOMException cex)
+            {
+                Console.WriteLine(cex);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            if (authenticated)
+                Session["LDAPid"] = email;
+            return authenticated;
         }
 
         public ActionResult LoginCheck()
@@ -61,7 +85,7 @@ namespace Web.Controllers
 
                 client_secret = "be14709def182d9b073a51301a722c1e",
 
-                redirect_uri = redirecturi+"/Login/LoginCheck",
+                redirect_uri = redirecturi + "/Login/LoginCheck",
 
                 code = accessCode
             });
@@ -76,17 +100,17 @@ namespace Web.Controllers
 
         public ActionResult Logout()
         {
-            if (Session["AccessToken"] != null)
-            {
-                var token = Session["AccessToken"].ToString();
-                var client = new FacebookClient();
+            //if (Session["AccessToken"] != null)
+            //{
+            //var token = Session["AccessToken"].ToString();
+            //var client = new FacebookClient();
 
-                var logoutUrl = client.GetLogoutUrl(new { access_token = token, next = redirecturi });
+            //var logoutUrl = client.GetLogoutUrl(new { access_token = token, next = redirecturi });
 
-                Response.Redirect(logoutUrl.AbsoluteUri);
-                Session.Clear();
-                Session.RemoveAll();
-            }
+            //Response.Redirect(logoutUrl.AbsoluteUri);
+            Session.Clear();
+            Session.RemoveAll();
+            //}
 
             return RedirectToAction("Index", "Home");
         }

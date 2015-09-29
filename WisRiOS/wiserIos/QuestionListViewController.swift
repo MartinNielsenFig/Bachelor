@@ -9,7 +9,7 @@
 import UIKit
 
 /// A sub-ViewController of RoomPageViewController. This shows the available questions for the room.
-class QuestionListViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, Paged {
+class QuestionListViewController: UITableViewController, Paged {
     
     //Properties
     let pageIndex = 0
@@ -18,12 +18,10 @@ class QuestionListViewController: UIViewController, UITableViewDataSource, UITab
         didSet {
             filter(&self.questions)
             dispatch_async(dispatch_get_main_queue()) { () -> Void in
-                self.questionsTableView.reloadData()
+                self.tableView.reloadData()
             }
         }
     }
-    
-    @IBOutlet weak var questionsTableView: UITableView!
     
     //Utility
     /**
@@ -62,9 +60,6 @@ class QuestionListViewController: UIViewController, UITableViewDataSource, UITab
     //Lifetime
     override func viewDidLoad() {
         
-        questionsTableView.delegate = self
-        questionsTableView.dataSource = self
-        
         let loadingQuestion = Question()
         loadingQuestion.QuestionText = "Loading questions..."
         questions += [loadingQuestion]
@@ -101,15 +96,15 @@ class QuestionListViewController: UIViewController, UITableViewDataSource, UITab
     }
     
     //UITableViewDelegate
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return questions.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cellIdentifier = "QuestionCell"
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! QuestionViewCell
         
@@ -132,7 +127,7 @@ class QuestionListViewController: UIViewController, UITableViewDataSource, UITab
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let roomPageViewController = parentViewController?.parentViewController as! RoomPageViewController
         let questionPage = roomPageViewController.viewControllerAtIndex(1)! as! QuestionViewController
         questionPage.question = questions[indexPath.row]
