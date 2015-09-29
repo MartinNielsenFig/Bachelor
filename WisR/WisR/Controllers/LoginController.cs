@@ -46,13 +46,13 @@ namespace Web.Controllers
             Response.Redirect(loginUrl.AbsoluteUri);
         }
 
-        public bool LoginWithLDAP(string username, string password)
+        public bool LoginWithLDAP(string email, string password)
         {
             bool authenticated = false;
 
             try
             {
-                DirectoryEntry entry = new DirectoryEntry("LDAP://ldap.iha.dk", username, password);
+                DirectoryEntry entry = new DirectoryEntry("LDAP://ldap.iha.dk", email, password);
                 object nativeObject = entry.NativeObject;
                 authenticated = true;
             }
@@ -65,7 +65,7 @@ namespace Web.Controllers
                 Console.WriteLine(ex);
             }
             if (authenticated)
-                Session["LDAPid"] = username;
+                Session["LDAPid"] = email;
             return authenticated;
         }
 
@@ -100,17 +100,17 @@ namespace Web.Controllers
 
         public ActionResult Logout()
         {
-            if (Session["AccessToken"] != null)
-            {
-                var token = Session["AccessToken"].ToString();
-                var client = new FacebookClient();
+            //if (Session["AccessToken"] != null)
+            //{
+            //var token = Session["AccessToken"].ToString();
+            //var client = new FacebookClient();
 
-                var logoutUrl = client.GetLogoutUrl(new { access_token = token, next = redirecturi });
+            //var logoutUrl = client.GetLogoutUrl(new { access_token = token, next = redirecturi });
 
-                Response.Redirect(logoutUrl.AbsoluteUri);
-                Session.Clear();
-                Session.RemoveAll();
-            }
+            //Response.Redirect(logoutUrl.AbsoluteUri);
+            Session.Clear();
+            Session.RemoveAll();
+            //}
 
             return RedirectToAction("Index", "Home");
         }

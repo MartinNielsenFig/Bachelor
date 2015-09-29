@@ -32,9 +32,18 @@ namespace WisRRestAPI.Controllers
         public string CreateUser(string User)
         {
             var userToAdd = BsonSerializer.Deserialize<User>(User);
+
             //Add more for other systems than facebook
-            var  user = _ur.GetAllUsers().Result.Where(x => x.FacebookId == userToAdd.FacebookId);
-            if (user.Count() == 0)
+            IEnumerable<User> user = null;
+            if (userToAdd.FacebookId != null)
+            {
+                user = _ur.GetAllUsers().Result.Where(x => x.FacebookId == userToAdd.FacebookId);
+            }else if (userToAdd.LDAPUserName!=null)
+            {
+                user = _ur.GetAllUsers().Result.Where(x => x.LDAPUserName == userToAdd.LDAPUserName);
+            }
+           
+            if (user==null||!user.Any())
             {
                 userToAdd.Id = ObjectId.GenerateNewId(DateTime.Now).ToString();
                 return _ur.AddUser(userToAdd);
