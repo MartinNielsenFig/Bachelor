@@ -857,6 +857,57 @@
             </objects>
             <point key="canvasLocation" x="1744" y="-98"/>
         </scene>
+        <!--Input Room Password-->
+        <scene sceneID="yJx-UE-LgV">
+            <objects>
+                <viewController storyboardIdentifier="InputRoomPassword" modalPresentationStyle="overCurrentContext" id="wfS-EN-3xh" userLabel="Input Room Password" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="q4V-MR-3qN"/>
+                        <viewControllerLayoutGuide type="bottom" id="byD-AV-hTl"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="QLX-v0-4rZ">
+                        <rect key="frame" x="0.0" y="0.0" width="400" height="200"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="UlR-or-R2J">
+                                <rect key="frame" x="20" y="100" width="360" height="51"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Room Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="opH-9b-VCu">
+                                        <rect key="frame" x="119" y="0.0" width="123" height="21"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rMu-P5-l0Q">
+                                        <rect key="frame" x="0.0" y="21" width="360" height="30"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                </subviews>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstItem="rMu-P5-l0Q" firstAttribute="leading" secondItem="UlR-or-R2J" secondAttribute="leading" id="BSH-oh-Z0N"/>
+                                    <constraint firstAttribute="trailing" secondItem="rMu-P5-l0Q" secondAttribute="trailing" id="cMv-Lu-QOD"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="UlR-or-R2J" firstAttribute="top" secondItem="QLX-v0-4rZ" secondAttribute="topMargin" constant="100" id="Pnz-uT-brc"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="UlR-or-R2J" secondAttribute="trailing" id="TOr-Uu-oqi"/>
+                            <constraint firstItem="UlR-or-R2J" firstAttribute="leading" secondItem="QLX-v0-4rZ" secondAttribute="leadingMargin" id="vx3-eT-AG7"/>
+                        </constraints>
+                    </view>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="400" height="200"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AbX-P0-y32" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1744" y="628"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="M5o-0i-xGh">
             <objects>

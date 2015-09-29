@@ -9,7 +9,7 @@
 import UIKit
 
 /// Shows the rooms nearby in a list, enabling the user to join the room.
-class RoomTableViewController: UITableViewController {
+class RoomTableViewController: UITableViewController, UIPopoverPresentationControllerDelegate {
     
     //Properties
     
@@ -56,6 +56,34 @@ class RoomTableViewController: UITableViewController {
     }
     
     //Navigation
+    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+        if let cell = sender as? UITableViewCell, indexPath = tableView.indexPathForCell(cell) {
+                let selectedRoom = rooms[indexPath.row]
+                if let hasPw = selectedRoom.HasPassword where hasPw {
+                    print("ROOM HAS PW")
+                    
+                    //Many quarrels much fight
+                    //https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIPopoverPresentationController_class/
+                    //http://stackoverflow.com/questions/25319179/uipopoverpresentationcontroller-on-ios-8-iphone
+                    let roomPwViewController: UIViewController! = self.storyboard?.instantiateViewControllerWithIdentifier("InputRoomPassword")
+                    roomPwViewController.modalPresentationStyle = .FormSheet
+                    roomPwViewController.presentationController?.delegate = self
+                    self.presentViewController(roomPwViewController, animated: true, completion: nil)
+                    roomPwViewController.view.backgroundColor = UIColor.redColor()
+                    
+                    return false
+                }
+            }
+        
+        
+        print("FREE ACCESSS")
+        return true
+    }
+    
+    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .None
+    }
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
@@ -63,11 +91,10 @@ class RoomTableViewController: UITableViewController {
         if segue.identifier == "SelectRoom" {
             if let selectedCell = sender as? UITableViewCell {
                 
-                let roomViewController = segue.destinationViewController as! RoomPageViewController
                 let index = tableView.indexPathForCell(selectedCell)!
                 let selectedRoom = rooms[index.row]
                 
-                
+                let roomViewController = segue.destinationViewController as! RoomPageViewController
                 roomViewController.room = selectedRoom
             }
         }
