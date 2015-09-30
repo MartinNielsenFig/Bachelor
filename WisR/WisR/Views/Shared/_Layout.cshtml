@@ -45,7 +45,7 @@
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li>
-
+                           
                             @*if logged in with facebook*@
                             @if (Session["accessToken"] != null)
                             {
@@ -57,7 +57,7 @@
                                     <ul class="nav navbar-nav navbar-right">
                                         <li>
                                             <a>
-                                                @result.name
+                                        @result.name
                                             </a>
                                         </li>
                                         <li style="padding: 0 10px 0 0">
@@ -120,11 +120,11 @@
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                <li><a onclick="$('#myModalLDAPLogin').modal('toggle')">LDAP login</a></li>
-                                <li>
-                                    @Html.ActionLink("Facebook", "LoginWithFacebook", "Login")
-                                </li>
-                            </ul>
+                            <li><a onclick="$('#myModalLDAPLogin').modal('toggle')">LDAP login</a></li>
+                            <li>
+                                @Html.ActionLink("Facebook", "LoginWithFacebook", "Login")
+                            </li>
+                        </ul>
                         </li>
 
                        
@@ -153,51 +153,53 @@
         <div class="modal-dialog center">
             <div class="modal-content modal-heigh">
                 <div class="modal-body">
-                    <form id="ldapForm" method="POST" action="@Url.Action("LoginWithLDAP","Login")">
+                    <form id="ldapForm" method="POST" action="@Url.Action("LoginWithLDAP", "Login")">
                         <div class="row">
-                            <label class="col-md-6">Email:</label> <input name="email" required type="email" class="col-md-6" />
+                            <div class="row col-md-12">
+                                <label class="col-md-6">Email:</label> <input name="email" required type="email" class="col-md-6" />
                         </div>
-                        <div class="row">
+                            <div class="row col-md-12">
                             <label class="col-md-6">Password:</label> <input name="password" required type="password" class="col-md-6" />
                         </div>
                         <div class="col-md-12 text-center">
-                            <button id="ModalSubmitButton" type="submit" class="btn btn-primary btn-md center-block">Login</button>
+                                <button id="ModalSubmitButton" type="submit" class="btn btn-primary">Login</button>
                             <span>
-                                <button id="ModalCancelButton" type="button" class="btn btn-primary btn-md center-block" data-dismiss="modal">Cancel</button>
-                            </span>
-
+                                    <button id="ModalCancelButton" type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                            </span>                            
+                            
                         </div>
                         <p class="text-center" id="ldapErrorMsg"></p>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-    <script>
-        var ldapForm = $('#ldapForm');
-        ldapForm.submit(function (e) {
-            e.preventDefault(); // stops the form submission
+<script>
+    var ldapForm = $('#ldapForm');
+    ldapForm.submit(function (e) {
+        e.preventDefault(); // stops the form submission
 
-            $.ajax({
-                url: $(this).attr('action'), // action attribute of form to send the values
-                type: $(this).attr('method'), // method used in the form
-                data: $(this).serialize(), // data to be sent to php
-                dataType: "text",
-                success: function (data) {
-                    if (data == "True") {
-                        location.reload();
-                    } else {
-                        $("#ldapErrorMsg").text("No user with that login information");
-                    }
-
-                },
-                error: function (err) {
-                    console.log(err);
+        $.ajax({
+            url: $(this).attr('action'), // action attribute of form to send the values
+            type: $(this).attr('method'), // method used in the form
+            data: $(this).serialize(), // data to be sent to php
+            dataType: "text",
+            success: function (data) {
+                if (data == "True") {
+                    location.reload();
+                } else {
+                    $("#ldapErrorMsg").text("No user with that login information");
                 }
-            });
-
+              
+            },
+            error: function (err) {
+                console.log(err);
+            }
         });
-    </script>
+
+    });
+</script>
 
 </body>
 </html>
