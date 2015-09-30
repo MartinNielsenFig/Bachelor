@@ -60,11 +60,18 @@ class QuestionListViewController: UITableViewController, Paged {
     //Lifetime
     override func viewDidLoad() {
         
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl!.addTarget(self, action: "handleRefresh:", forControlEvents: UIControlEvents.ValueChanged)
+        
         let loadingQuestion = Question()
         loadingQuestion.QuestionText = "Loading questions..."
         questions += [loadingQuestion]
         
         //Load questions for room
+        updateQuestions()
+    }
+    
+    func updateQuestions(refreshControl: UIRefreshControl? = nil) {
         //"Swift Trailing Closure" syntax
         let action = "Question/GetQuestionsForRoomWithoutImages?roomId=\(self.roomId!)"
         HttpHandler.requestWithResponse(action: action, type: "GET", body: "") { (data, response, error) -> Void in
@@ -92,10 +99,15 @@ class QuestionListViewController: UITableViewController, Paged {
                 tmpQuestions += [qError]
             }
             self.questions += tmpQuestions
+            refreshControl?.endRefreshing()
         }
     }
     
-    //UITableViewDelegate
+    //UITableViewController
+    func handleRefresh(refreshControl: UIRefreshControl) {
+        updateQuestions(refreshControl)
+    }
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }

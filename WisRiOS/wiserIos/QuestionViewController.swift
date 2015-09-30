@@ -20,6 +20,8 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     //Get instantiated by QuestionListViewController
     var question = Question()
     
+    var timeLabel = UILabel()
+    
     @IBOutlet weak var questionText: UILabel!
     @IBOutlet weak var answerPicker: UIPickerView!
     @IBOutlet weak var questionImage: UIImageView!
@@ -36,6 +38,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         let index = answerPicker.selectedRowInComponent(0)
         let answerPickerText = pickerData[index]
         
+        //Todo handle if not logged in
         let answer = Answer(value: answerPickerText, userId: CurrentUser.sharedInstance._id!)
         let answerJson = JSONSerializer.toJson(answer)
         
@@ -47,8 +50,8 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         }
     }
     
-    
     func updateProgressbar() {
+        
         if let startStr = question.CreationTimestamp?.stringByReplacingOccurrencesOfString(",", withString: "."), endStr = question.ExpireTimestamp?.stringByReplacingOccurrencesOfString(",", withString: "."), start = Double(startStr), end = Double(endStr) {
             let totalDurationMs = end - start
             
@@ -58,6 +61,15 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             
             progressBar.setProgress(part, animated: !firstProgressBarUpdate)
             firstProgressBarUpdate = false
+            
+            //Text
+            timeLabel.removeFromSuperview()
+            timeLabel = UILabel(frame: CGRectMake(0, 0, progressBar.frame.size.width, 20))
+            timeLabel.textAlignment = .Center
+            let tLeftStr = DateTimeHelper.getTimeStringFromEpochString(String(part-Float(partOfTotalDurationMs)))
+            timeLabel.text = "Time left: \(tLeftStr)"
+            progressBar.clipsToBounds = false
+            progressBar.addSubview(timeLabel)
             
             if part >= 1 {
                 progressTimer?.invalidate()
@@ -83,7 +95,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         
         //Progress bar
         updateProgressbar()
-        progressTimer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "updateProgressbar", userInfo: nil, repeats: true)
+        progressTimer = NSTimer.scheduledTimerWithTimeInterval(0.75, target: self, selector: "updateProgressbar", userInfo: nil, repeats: true)
         
         //Picker
         pickerData.removeAll()
