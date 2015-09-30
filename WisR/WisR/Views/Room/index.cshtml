@@ -88,6 +88,7 @@
 
                     <button class="btn btn-primary" ng-click="AddAnswer()" ng-disabled="timerOverflow || answerChoosen == undefined" title="{{{true: 'Login to enable', false: ''}[anonymousUser]}}" style="pointer-events: auto;" ng-disabled="anonymousUser">Submit</button><button style="float: right" class="btn btn-primary" ng-click="ToggleShowQuestionTables()">Back to questions</button>
                 </form>
+                <label ng-show="specificAnswer!=null" id="specificAnswerLabel">You answered: {{specificAnswer}}</label>
                 <label ng-hide="showResults">No results yet</label>
                 <div id="chartDiv" ng-hide="!showResults">
                     <h3>Results</h3>
@@ -107,10 +108,9 @@
         <div ng-show="chatLoaded" class="col-md-4" ng-show="CurrentRoom.HasChat">
             <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
             @*Scroll glue keeps scroll bar at same location, found at: https://github.com/Luegg/angularjs-scroll-glue*@
-            <div class="container fa-border" style="overflow-x: hidden; overflow-y: auto; max-height: 600px; min-height: 600px" scroll-glue>
-
+            <div class="fa-border" style="overflow-x: hidden; overflow-y: auto; max-height: 600px; min-height: 600px" scroll-glue>
                 <div class="row">
-                    <div class="message-wrap col-lg-8">
+                    <div class="message-wrap col-lg-12">
                         <div class="msg-wrap">
                             <div ng-repeat="chatMessage in ChatMessages" class="media msg">
                                 <div class="media-body">
@@ -154,9 +154,9 @@
                         <div ng-show="QuestionType != undefined && QuestionType.val != 'TextualQuestion'" class="row">
                             <label class="col-md-6">Response options:</label>
                             <div class="pull-right col-md-6">
-                                <input type="button" ng-click="AddResponseOption()" value="Add Response Optione">
+                                <input type="button" ng-click="AddResponseOption()" value="Add Response Option">
                                 <div ng-repeat="option in ResponseOptions">
-                                    <input ng-model="ResponseOptions[option.id].val" class="col-md-12" type="text" placeholder="Add response options" /><input type="button" ng-click="RemoveResponseOption(option)" value="Remove">
+                                    <input required ng-model="ResponseOptions[option.id].val" class="col-md-12" type="text" placeholder="Add response options" /><input type="button" ng-click="RemoveResponseOption(option)" value="Remove">
                                 </div>
                             </div>
                         </div>
@@ -172,8 +172,8 @@
                         </div>
                         <br />
                         <div class="row text-center">
-                            <button id="ModalCreateQuestionButton" type="submit" class="btn btn-primary btn-md center-block">Create question</button>
-                            <button id="ModalCancelButton" type="button" class="btn btn-primary btn-md center-block" data-dismiss="modal">Cancel</button>
+                            <button id="ModalCreateQuestionButton" type="submit" class="btn btn-primary">Create question</button>
+                            <button id="ModalCancelButton" type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
                         </div>
                     </form>
                 </div>
@@ -189,19 +189,21 @@
             <div class="modal-content modal-heigh">
                 <div class="modal-body">
                     <form>
-                        <label class="col-md-12 text-center">Enter Password:</label>
-                        <div class="col-md-12 text-center">
-                            <input ng-model="inputPassword" type="password" required />
-                        </div>
-                        <div class="col-md-12 text-center">
-                            <button class="btn btn-primary btn-md btn-default" type="submit" ng-click="validatePassword()">Submit</button>
-                            <span>
-                                @Html.ActionLink("Go back", "Index", "Home", null, new { @class = "btn btn-primary btn-md btn-default " })
-                                @Html.Hidden("RedirectToHome", Url.Action("Index", "Home"))
-                            </span>
-                        </div>
-                        <div class="col-md-12 text-center">
-                            {{passwordMessage}}
+                        <div class="row">
+                            <label class="col-md-12 text-center">Enter Password:</label>
+                            <div class="col-md-12 text-center">
+                                <input ng-model="inputPassword" type="password" required />
+                            </div>
+                            <div class="col-md-12 text-center">
+                                <button class="btn btn-primary btn-md btn-default" type="submit" ng-click="validatePassword()">Submit</button>
+                                <span>
+                                    @Html.ActionLink("Go back", "Index", "Home", null, new { @class = "btn btn-primary btn-md btn-default " })
+                                    @Html.Hidden("RedirectToHome", Url.Action("Index", "Home"))
+                                </span>
+                            </div>
+                            <div class="col-md-12 text-center">
+                                {{passwordMessage}}
+                            </div>
                         </div>
                     </form>
                 </div>
