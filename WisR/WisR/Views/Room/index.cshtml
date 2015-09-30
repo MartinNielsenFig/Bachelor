@@ -108,8 +108,7 @@
         <div ng-show="chatLoaded" class="col-md-4" ng-show="CurrentRoom.HasChat">
             <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
             @*Scroll glue keeps scroll bar at same location, found at: https://github.com/Luegg/angularjs-scroll-glue*@
-            <div class="container fa-border" style="overflow-x: hidden; overflow-y: auto; max-height: 600px; min-height: 600px" scroll-glue>
-
+            <div class="fa-border" style="overflow-x: hidden; overflow-y: auto; max-height: 600px; min-height: 600px" scroll-glue>
                 <div class="row">
                     <div class="message-wrap col-lg-8">
                         <div class="msg-wrap">
@@ -173,8 +172,8 @@
                         </div>
                         <br />
                         <div class="row text-center">
-                            <button id="ModalCreateQuestionButton" type="submit" class="btn btn-primary btn-md center-block">Create question</button>
-                            <button id="ModalCancelButton" type="button" class="btn btn-primary btn-md center-block" data-dismiss="modal">Cancel</button>
+                            <button id="ModalCreateQuestionButton" type="submit" class="btn btn-primary">Create question</button>
+                            <button id="ModalCancelButton" type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
                         </div>
                     </form>
                 </div>
