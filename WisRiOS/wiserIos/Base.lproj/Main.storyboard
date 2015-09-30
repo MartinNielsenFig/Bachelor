@@ -162,22 +162,50 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="3mO-eB-Cj7">
                                         <rect key="frame" x="0.0" y="496" width="560" height="44"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tGJ-Gn-5Xl">
-                                                <rect key="frame" x="0.0" y="7" width="280" height="30"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="KSa-BF-G8k">
+                                                <rect key="frame" x="0.0" y="0.0" width="280" height="44"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S9p-q1-9ue" userLabel="Upvote Question">
+                                                        <rect key="frame" x="0.0" y="0.0" width="280" height="14"/>
+                                                        <animations/>
+                                                        <state key="normal" title="Upvote Question"/>
+                                                        <connections>
+                                                            <action selector="upvoteBtnPressed:" destination="ock-zx-gTK" eventType="touchUpInside" id="lkD-RR-7WY"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cfJ-dB-iui" userLabel="Downvote Question">
+                                                        <rect key="frame" x="0.0" y="14" width="280" height="30"/>
+                                                        <animations/>
+                                                        <state key="normal" title="Downvote Question"/>
+                                                        <connections>
+                                                            <action selector="downvoteBtnPressed:" destination="ock-zx-gTK" eventType="touchUpInside" id="Cfj-8H-lIT"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
                                                 <animations/>
-                                                <state key="normal" title="Send response"/>
-                                                <connections>
-                                                    <action selector="sendResponse:" destination="ock-zx-gTK" eventType="touchUpInside" id="FDD-aN-YCr"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uV7-tu-bL6">
-                                                <rect key="frame" x="280" y="7" width="280" height="30"/>
+                                            </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="6yD-dw-RAh">
+                                                <rect key="frame" x="280" y="0.0" width="280" height="44"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tGJ-Gn-5Xl">
+                                                        <rect key="frame" x="0.0" y="0.0" width="280" height="14"/>
+                                                        <animations/>
+                                                        <state key="normal" title="Send response"/>
+                                                        <connections>
+                                                            <action selector="sendResponse:" destination="ock-zx-gTK" eventType="touchUpInside" id="FDD-aN-YCr"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uV7-tu-bL6">
+                                                        <rect key="frame" x="0.0" y="14" width="280" height="30"/>
+                                                        <animations/>
+                                                        <state key="normal" title="See Results"/>
+                                                        <connections>
+                                                            <segue destination="beQ-E0-jbN" kind="show" identifier="ShowResult" id="Vq6-kL-d2Z"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
                                                 <animations/>
-                                                <state key="normal" title="See Results"/>
-                                                <connections>
-                                                    <segue destination="beQ-E0-jbN" kind="show" identifier="ShowResult" id="Vq6-kL-d2Z"/>
-                                                </connections>
-                                            </button>
+                                            </stackView>
                                         </subviews>
                                         <animations/>
                                         <constraints>

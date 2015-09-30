@@ -23,7 +23,7 @@ class HttpHandler {
     
     /**
     Sends a HTTP request to the RestAPI with the specified action and body. Then runs a callback-function with the received data as parameters.
-    - parameter action:						Is the HTTP call to invoke on the RestAPI. Follows the "/Controller/Action" syntax.
+    - parameter action:						Is the HTTP call to invoke on the RestAPI. Follows the "/Controller/Action" pattern.
     - parameter type:							Type of call: POST or GET.
     - parameter body:							The body of the POST, empty if GET.
     - parameter completionHandler:	A closure function to be run when the HTTP request is complete and the client has received an answer from the RestAPI. See Apple dataTaskWithRequest documentation.

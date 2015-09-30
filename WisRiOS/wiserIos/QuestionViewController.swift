@@ -27,7 +27,17 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     @IBOutlet weak var questionImage: UIImageView!
     @IBOutlet weak var progressBar: UIProgressView!
     
+    
     var pickerData = [String]()
+    
+    //Actions
+    @IBAction func upvoteBtnPressed(sender: AnyObject) {
+        vote(true)
+    }
+    
+    @IBAction func downvoteBtnPressed(sender: AnyObject) {
+        vote(false)
+    }
     
     //Utilities
     /**
@@ -50,14 +60,23 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         }
     }
     
+    func vote(up: Bool) {
+        let vote = Vote(createdById: CurrentUser.sharedInstance._id!, value: up ? 1 : -1)
+        let voteJson = JSONSerializer.toJson(vote)
+        let body = "vote=\(voteJson)&type=MultipleChoiceQuestion&id=\(question._id!)"
+        HttpHandler.requestWithResponse(action: "Question/AddVote", type: "POST", body: body) { (data, response, error) -> Void in
+        }
+        
+    }
+    
     func updateProgressbar() {
         
         if let startStr = question.CreationTimestamp?.stringByReplacingOccurrencesOfString(",", withString: "."), endStr = question.ExpireTimestamp?.stringByReplacingOccurrencesOfString(",", withString: "."), start = Double(startStr), end = Double(endStr) {
             let totalDurationMs = end - start
             
             let nowMs = Double(NSDate().timeIntervalSince1970*1000)
-            let partOfTotalDurationMs = nowMs - start
-            let part = Float(partOfTotalDurationMs)/Float(totalDurationMs)
+            let elapsedMs = nowMs - start
+            let part = Float(elapsedMs)/Float(totalDurationMs)
             
             progressBar.setProgress(part, animated: !firstProgressBarUpdate)
             firstProgressBarUpdate = false
@@ -66,8 +85,10 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             timeLabel.removeFromSuperview()
             timeLabel = UILabel(frame: CGRectMake(0, 0, progressBar.frame.size.width, 20))
             timeLabel.textAlignment = .Center
-            let tLeftStr = DateTimeHelper.getTimeStringFromEpochString(String(part-Float(partOfTotalDurationMs)))
-            timeLabel.text = "Time left: \(tLeftStr)"
+            
+            let tLeftS = NSTimeInterval((totalDurationMs - elapsedMs)/1000)
+            let tLeftComponents = DateTimeHelper.getComponents(tLeftS, flags: [NSCalendarUnit.Hour, .Minute, .Second])
+            timeLabel.text = "Time left: \(tLeftComponents.hour):\(tLeftComponents.minute):\(tLeftComponents.second)"
             progressBar.clipsToBounds = false
             progressBar.addSubview(timeLabel)
             
@@ -86,7 +107,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     override func viewDidLoad() {
         
         print("QuestionViewController instantiated, roomId: \(self.roomId)")
-
+        
         //Show UI
         if self.question._id == nil {
             return
@@ -156,5 +177,4 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             resultViewController.question = self.question
         }
     }
-    
 }
