@@ -88,6 +88,7 @@
 
                     <button class="btn btn-primary" ng-click="AddAnswer()" ng-disabled="timerOverflow || answerChoosen == undefined" title="{{{true: 'Login to enable', false: ''}[anonymousUser]}}" style="pointer-events: auto;" ng-disabled="anonymousUser">Submit</button><button style="float: right" class="btn btn-primary" ng-click="ToggleShowQuestionTables()">Back to questions</button>
                 </form>
+                <label ng-show="specificAnswer!=null" id="specificAnswerLabel">You answered: {{specificAnswer}}</label>
                 <label ng-hide="showResults">No results yet</label>
                 <div id="chartDiv" ng-hide="!showResults">
                     <h3>Results</h3>
@@ -154,9 +155,9 @@
                         <div ng-show="QuestionType != undefined && QuestionType.val != 'TextualQuestion'" class="row">
                             <label class="col-md-6">Response options:</label>
                             <div class="pull-right col-md-6">
-                                <input type="button" ng-click="AddResponseOption()" value="Add Response Optione">
+                                <input type="button" ng-click="AddResponseOption()" value="Add Response Option">
                                 <div ng-repeat="option in ResponseOptions">
-                                    <input ng-model="ResponseOptions[option.id].val" class="col-md-12" type="text" placeholder="Add response options" /><input type="button" ng-click="RemoveResponseOption(option)" value="Remove">
+                                    <input required ng-model="ResponseOptions[option.id].val" class="col-md-12" type="text" placeholder="Add response options" /><input type="button" ng-click="RemoveResponseOption(option)" value="Remove">
                                 </div>
                             </div>
                         </div>

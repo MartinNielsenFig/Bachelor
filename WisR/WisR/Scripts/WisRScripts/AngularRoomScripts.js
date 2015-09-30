@@ -19,6 +19,15 @@ app.controller("RoomController", [
         //default charttype as pie
         $scope.chartType = "Pie";
 
+        //Get answer that current user made.
+        var getSpecificAnswer = function (question) {
+            for (i = 0; i < question.Result.length; i++) {
+                if (question.Result[i].UserId == $scope.currentUser._id)
+                    return question.Result[i].Value;
+            }
+            return null;
+        }
+
         //Connect to SignalR hub and wait for chat message
         $(function () {
             // Declare a proxy to reference the hub. 
@@ -79,6 +88,8 @@ app.controller("RoomController", [
                 if ($scope.SpecificQuestion != undefined) {
                     var indexOfSpecificQuestion = findWithAttr($scope.Questions, "_id", $scope.SpecificQuestion._id);
                     $scope.SpecificQuestion = $scope.Questions[indexOfSpecificQuestion];
+                    $scope.specificAnswer=getSpecificAnswer($scope.SpecificQuestion);
+
                     //Redraw the result chart
                     $scope.createPieChart();
                 }
@@ -416,6 +427,7 @@ app.controller("RoomController", [
             $scope.ToggleShowQuestionTables();
             $scope.specificImageLoaded = false;
             $scope.SpecificQuestion = question;
+            $scope.specificAnswer = getSpecificAnswer(question);
             //Get percentage once and start timer to fire once every second
             $scope.getPercentage();
             $scope.progressCancel = $interval($scope.getPercentage, 1000);
@@ -426,6 +438,7 @@ app.controller("RoomController", [
             });
             $scope.createPieChart();
         }
+        
         $scope.ToggleShowQuestionTables = function () {
             $scope.SpecificQuestionShown = !$scope.SpecificQuestionShown;
             //Stop the timer for the progress bar if it is running
