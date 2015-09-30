@@ -189,19 +189,21 @@
             <div class="modal-content modal-heigh">
                 <div class="modal-body">
                     <form>
-                        <label class="col-md-12 text-center">Enter Password:</label>
-                        <div class="col-md-12 text-center">
-                            <input ng-model="inputPassword" type="password" required />
-                        </div>
-                        <div class="col-md-12 text-center">
-                            <button class="btn btn-primary btn-md btn-default" type="submit" ng-click="validatePassword()">Submit</button>
-                            <span>
-                                @Html.ActionLink("Go back", "Index", "Home", null, new { @class = "btn btn-primary btn-md btn-default " })
-                                @Html.Hidden("RedirectToHome", Url.Action("Index", "Home"))
-                            </span>
-                        </div>
-                        <div class="col-md-12 text-center">
-                            {{passwordMessage}}
+                        <div class="row">
+                            <label class="col-md-12 text-center">Enter Password:</label>
+                            <div class="col-md-12 text-center">
+                                <input ng-model="inputPassword" type="password" required />
+                            </div>
+                            <div class="col-md-12 text-center">
+                                <button class="btn btn-primary btn-md btn-default" type="submit" ng-click="validatePassword()">Submit</button>
+                                <span>
+                                    @Html.ActionLink("Go back", "Index", "Home", null, new { @class = "btn btn-primary btn-md btn-default " })
+                                    @Html.Hidden("RedirectToHome", Url.Action("Index", "Home"))
+                                </span>
+                            </div>
+                            <div class="col-md-12 text-center">
+                                {{passwordMessage}}
+                            </div>
                         </div>
                     </form>
                 </div>

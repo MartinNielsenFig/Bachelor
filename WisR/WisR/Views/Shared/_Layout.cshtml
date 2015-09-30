@@ -147,21 +147,23 @@
         <div class="modal-dialog center">
             <div class="modal-content modal-heigh">
                 <div class="modal-body">
-                    <form id="ldapForm" method="POST" action="@Url.Action("LoginWithLDAP","Login")">
+                    <form id="ldapForm" method="POST" action="@Url.Action("LoginWithLDAP", "Login")">
                         <div class="row">
-                            <label class="col-md-6">Email:</label> <input name="email" required type="email" class="col-md-6"/>
+                            <div class="row col-md-12">
+                                <label class="col-md-6">Email:</label> <input name="email" required type="email" class="col-md-6" />
+                            </div>
+                            <div class="row col-md-12">
+                                <label class="col-md-6">Password:</label> <input name="password" required type="password" class="col-md-6" />
+                            </div>
+                            <div class="col-md-12 text-center">
+                                <button id="ModalSubmitButton" type="submit" class="btn btn-primary">Login</button>
+                                <span>
+                                    <button id="ModalCancelButton" type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                                </span>
+
+                            </div>
+                            <p class="text-center" id="ldapErrorMsg"></p>
                         </div>
-                        <div class="row">
-                            <label class="col-md-6">Password:</label> <input name="password" required type="password" class="col-md-6" />
-                        </div>
-                        <div class="col-md-12 text-center">
-                            <button id="ModalSubmitButton" type="submit" class="btn btn-primary btn-md center-block">Login</button>
-                            <span>
-                                <button id="ModalCancelButton" type="button" class="btn btn-primary btn-md center-block" data-dismiss="modal">Cancel</button>
-                            </span>                            
-                            
-                        </div>
-                        <p class="text-center" id="ldapErrorMsg"></p>
                     </form>
                 </div>
             </div>
