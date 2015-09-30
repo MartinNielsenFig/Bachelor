@@ -21,6 +21,8 @@ app.controller("RoomController", [
 
         //Get answer that current user made.
         var getSpecificAnswer = function (question) {
+            if ($scope.currentUser == undefined)
+                return null;
             for (i = 0; i < question.Result.length; i++) {
                 if (question.Result[i].UserId == $scope.currentUser._id)
                     return question.Result[i].Value;
