@@ -26,7 +26,7 @@
                 </div>
                 <div ng-show="(Rooms|roomsNear:this).length>0" style="height: 300px; overflow: auto">
                     <table id="roomTable" class="table table-responsive table-hover">
-                        <tr class="col-md-12" style="cursor: pointer" ng-repeat="room in Rooms| roomsNear: this" ng-click="changeViewToRoom(room)" ng-class="{'notClickAble': !room.AllowAnonymous && $parent.userId=='NoUser'}">
+                        <tr class="" style="cursor: pointer" ng-repeat="room in Rooms| roomsNear: this" ng-click="changeViewToRoom(room)" ng-class="{'notClickAble': !room.AllowAnonymous && $parent.userId=='NoUser'}">
                             <td ng-show="room.AllowAnonymous || $parent.userId != 'NoUser' " class="col-md-11">
                                 {{room.Name}}
                             </td>
@@ -100,9 +100,9 @@
                         <label class="col-md-6">Can users ask questions?</label> <input ng-model="UserCanAsk" class="col-md-6" type="checkbox" />
                     </div>
                     <div class="row text-center">
-                        <button id="ModalCreateRoomButton" type="submit" class="btn btn-primary btn-md center-block">Create room</button>
+                        <button id="ModalCreateRoomButton" type="submit" class="btn btn-primary">Create room</button>
                         @Html.Hidden("RedirectTo", Url.Action("Index", "Room"))
-                        <button id="ModalCancelButton" class="btn btn-primary btn-md center-block" data-dismiss="modal">Cancel</button>
+                        <button id="ModalCancelButton" class="btn btn-primary" data-dismiss="modal">Cancel</button>
                     </div>
                 </form>
                 <div id="RoomCreationError"></div>
