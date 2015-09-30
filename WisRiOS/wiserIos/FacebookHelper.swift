@@ -10,7 +10,7 @@ import Foundation
 import FBSDKCoreKit
 import FBSDKLoginKit
 
-/// Encapsulates some of the functionality related to logging in/out of FB and requestion user information from FB.
+/// Encapsulates the functionality related to logging in/out of FB and requestion user information from FB.
 class FacebookHelper {
     
     static func logOff() {

@@ -21,17 +21,15 @@ class HttpHandler {
         //NSLog("error \(error)")
     }
     
-    //
-    
     /**
-    Sends a HTTP request to the RestAPI with the specified action and body.
-    - parameter action:						Is the HTTP call to invoke on the RestAPI
-    - parameter type:							Type of call: POST or GET
-    - parameter body:							A body of the POST, empty if GET
-    - parameter completionHandler:	A closure function to be run when the HTTP request is complete and the client has received an answer from the RestAPI. See Apple dataTaskWithRequest documentation
-    - parameter data:					Data returned from the RestAPI
+    Sends a HTTP request to the RestAPI with the specified action and body. Then runs a callback-function with the received data as parameters.
+    - parameter action:						Is the HTTP call to invoke on the RestAPI. Follows the "/Controller/Action" syntax.
+    - parameter type:							Type of call: POST or GET.
+    - parameter body:							The body of the POST, empty if GET.
+    - parameter completionHandler:	A closure function to be run when the HTTP request is complete and the client has received an answer from the RestAPI. See Apple dataTaskWithRequest documentation.
+    - parameter data:					Data returned from the RestAPI. Typically a mongoDB ID or a JSON string. Can be JSON string of type WisR.Error. See Apple dataTaskWithRequest documentation.
     - parameter response:					Metadata associated with the response. See Apple NSURLResponse documentation.
-    - parameter error:							Error returned from the server. This is not same as the WisR.Error class.
+    - parameter error:							Error returned from the server. This is not the WisR.Error. See Apple dataTaskWithRequest documentation.
     */
     static func requestWithResponse(action action: String, type: String, body: String, completionHandler: (data: String?, response: String?, error: String?) -> Void) {
         let session = NSURLSession.sharedSession()

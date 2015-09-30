@@ -37,7 +37,6 @@ class RoomFilterHelper {
                 }
             }
         }
-        
         return filteredRooms
     }
     

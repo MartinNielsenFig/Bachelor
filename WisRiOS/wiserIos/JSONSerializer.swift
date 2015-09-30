@@ -14,6 +14,12 @@ import Foundation
 /// Handles Convertion from instances of objects to JSON strings. Also helps with casting strings of JSON to Arrays or Dictionaries.
 class JSONSerializer {
     
+    /**
+    Errors that indicates failures of JSONSerialization
+    - JsonIsNotDictionary:	-
+    - JsonIsNotArray:			-
+    - JsonIsNotValid:			-
+    */
     enum JSONSerializerError: ErrorType {
         case JsonIsNotDictionary
         case JsonIsNotArray
@@ -21,7 +27,14 @@ class JSONSerializer {
     }
     
     //http://stackoverflow.com/questions/30480672/how-to-convert-a-json-string-to-a-dictionary
+    //The documentation is mine and the functions has been optimized for the use of this project.
     
+    /**
+    Tries to convert a JSON string to a NSDictionary. NSDictionary can be easier to work with, and supports string bracket referencing. E.g. personDictionary["name"].
+    - parameter jsonString:	JSON string to be converted to a NSDictionary.
+    - throws: Throws error of type JSONSerializerError. Either JsonIsNotValid or JsonIsNotDictionary. JsonIsNotDictionary will typically be thrown if you try to parse an array of JSON objects.
+    - returns: A NSDictionary representation of the JSON string.
+    */
     static func toDictionary(jsonString: String) throws -> NSDictionary {
         if let dictionary = try jsonToAnyObject(jsonString) as? NSDictionary {
             return dictionary
@@ -30,6 +43,12 @@ class JSONSerializer {
         }
     }
     
+    /**
+    Tries to convert a JSON string to a NSArray. NSArrays can be iterated and each item in the array can be converted to a NSDictionary.
+    - parameter jsonString:	The JSON string to be converted to an NSArray
+    - throws: Throws error of type JSONSerializerError. Either JsonIsNotValid or JsonIsNotArray. JsonIsNotArray will typically be thrown if you try to parse a single JSON object.
+    - returns: NSArray representation of the JSON objects.
+    */
     static func toArray(jsonString: String) throws -> NSArray {
         if let array = try jsonToAnyObject(jsonString) as? NSArray {
             return array
@@ -38,6 +57,12 @@ class JSONSerializer {
         }
     }
     
+    /**
+    Tries to convert a JSON string to AnyObject. AnyObject can then be casted to either NSDictionary or NSArray.
+    - parameter jsonString:	JSON string to be converted to AnyObject
+    - throws: Throws error of type JSONSerializerError.
+    - returns: Returns the JSON string as AnyObject
+    */
     private static func jsonToAnyObject(jsonString: String) throws -> AnyObject? {
         var any: AnyObject? = nil
         
@@ -57,7 +82,7 @@ class JSONSerializer {
     /**
     Generates the JSON representation given any custom object of any custom class. Inherited properties will also be represented.
     - parameter object:	The instantiation of any custom class to be represented as JSON.
-    - returns: A JSON representation of object.
+    - returns: A string JSON representation of the object.
     */
     static func toJson(object: Any) -> String {
         var json = "{"
