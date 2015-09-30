@@ -84,14 +84,17 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     
     //Lifecycle
     override func viewDidLoad() {
-        answerPicker.delegate = self
-        answerPicker.dataSource = self
         
+        print("QuestionViewController instantiated, roomId: \(self.roomId)")
+
         //Show UI
         if self.question._id == nil {
             return
             //todo display something nice to user :-)
         }
+        
+        answerPicker.delegate = self
+        answerPicker.dataSource = self
         
         //Progress bar
         updateProgressbar()

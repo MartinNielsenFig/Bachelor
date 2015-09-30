@@ -60,6 +60,9 @@ class QuestionListViewController: UITableViewController, Paged {
     //Lifetime
     override func viewDidLoad() {
         
+        print("QuestionListViewController instantiated, roomId: \(self.roomId)")
+
+        
         self.refreshControl = UIRefreshControl()
         self.refreshControl!.addTarget(self, action: "handleRefresh:", forControlEvents: UIControlEvents.ValueChanged)
         

@@ -20,6 +20,9 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     
     //Lifecycle
     override func viewDidLoad() {
+        
+        print("RoomPageViewController instantiated with roomId \(room._id)")
+        
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Ask Question", style: .Plain, target: self, action: "addQuestion")
         
         //Handle back button on UINavigation Bar
@@ -66,14 +69,14 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
         if segue.identifier == "CreateQuestion" {
             let createQuestionViewController = segue.destinationViewController as! CreateQuestionViewController
             createQuestionViewController.room = self.room
-            //assert(false)   //Fix yo shit dawg
+            //assert(false)   //Todo check if ok
         }
 
     }
     
     //Utilities
     /**
-    Helper function for UIPageViewControllerDataSource. Returns the ViewController at a specific index.
+    Helper function for UIPageViewControllerDataSource. Returns the ViewController at a specific index. Initiates the roomId parameter.
     - parameter index:	The index of the viewcontroller.
     - returns: Returns the UIViewController at a specific location on the UIPageViewController
     */

@@ -31,6 +31,8 @@ class ChatViewController: UIViewController, UITextFieldDelegate, Paged {
     //Lifecycle
     override func viewDidLoad() {
         
+        print("ChatViewController instantiated, roomId: \(self.roomId)")
+        
         chatMessageInput.delegate = self
         
         let body = "roomId=\(roomId!)"
