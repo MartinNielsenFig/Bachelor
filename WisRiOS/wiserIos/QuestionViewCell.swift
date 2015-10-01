@@ -34,13 +34,13 @@ class QuestionViewCell: UITableViewCell {
     }
     
     func defaultImage() {
-        upvoteImage.image = UIImage(named: "Upvote")
-        downvoteImage.image = UIImage(named: "Downvote")
+        upvoteImage.image = UIImage(named: "ThumbsUp")
+        downvoteImage.image = UIImage(named: "ThumbsDown")
     }
     
     func userHasVoted(up up: Bool) {
-        downvoteImage.image = up ? UIImage(named: "Downvote") : UIImage(named: "DownvoteBlue")
-        upvoteImage.image = !up ? UIImage(named: "Upvote") : UIImage(named: "UpvoteBlue")
+        downvoteImage.image = up ? UIImage(named: "ThumbsDown") : UIImage(named: "ThumbsDownBlue")
+        upvoteImage.image = !up ? UIImage(named: "ThumbsUp") : UIImage(named: "ThumbsUpBlue")
     }
     
 }
