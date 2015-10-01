@@ -192,8 +192,7 @@ namespace WisRRestAPI.Controllers
             return "";
         }
 
-        public string AddVote(string vote, string type, string id)
-        {
+        public string AddVote(string vote, string type, string id) {
             Type questionType;
 
             string typeString = "WisR.DomainModels." + type;
@@ -201,31 +200,23 @@ namespace WisRRestAPI.Controllers
 
             var q = _qr.GetQuestionWithoutImage(id).Result;
 
-            if (Convert.ToDouble(q.ExpireTimestamp) >
-                (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalMilliseconds)
-            {
-                q.Id = id;
+            q.Id = id;
 
-                var v = BsonSerializer.Deserialize<Vote>(vote);
+            var v = BsonSerializer.Deserialize<Vote>(vote);
 
-                if (q.Votes.Exists(x => x.CreatedById == v.CreatedById))
-                {
-                    q.Votes.Find(x => x.CreatedById == v.CreatedById).Value = v.Value;
-                }
-                else
-                {
-                    q.Votes.Add(v);
-                }
-                //Todo: error handling?
-                _qr.UpdateQuestionVotes(id, q);
-                try
-                {
-                    _irabbitPublisher.publishString("AddQuestionVote", q.ToJson());
-                }
-                catch (Exception e)
-                {
-                }
+            if (q.Votes.Exists(x => x.CreatedById == v.CreatedById)) {
+                q.Votes.Find(x => x.CreatedById == v.CreatedById).Value = v.Value;
+            } else {
+                q.Votes.Add(v);
             }
+            //Todo: error handling?
+            _qr.UpdateQuestionVotes(id, q);
+            try {
+                _irabbitPublisher.publishString("AddQuestionVote", q.ToJson());
+            } catch (Exception e) {
+                return "error " + e.StackTrace;
+            }
+
             return "";
         }
 
