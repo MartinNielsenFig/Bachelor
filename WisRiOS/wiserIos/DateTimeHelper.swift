@@ -42,10 +42,10 @@ class DateTimeHelper {
     static func getComponents(durationSec: NSTimeInterval, flags: NSCalendarUnit) -> NSDateComponents {
         let cal = NSCalendar.currentCalendar()
         
-        let date1 = NSDate()
-        let date2 = NSDate(timeIntervalSinceNow: durationSec)
+        let now = NSDate()
+        let date = NSDate(timeIntervalSinceNow: durationSec)
 
-        let components = cal.components(flags, fromDate: date1, toDate: date2, options: .MatchFirst)
+        let components = cal.components(flags, fromDate: now, toDate: date, options: .MatchFirst)
         return components
     }
     
