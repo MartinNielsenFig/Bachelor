@@ -76,8 +76,8 @@
                             @Html.ActionLink("Log out", "Logout", "Login")
                             <script>
 
-                                app.controller("UserController", [
-                                    '$scope', '$http', '$location', '$window', 'configs', function ($scope, $http, $location, $window, configs) {
+                                app.controller("UserController", ['$scope', '$http', '$location', '$window', 'configs', function ($scope, $http, $location, $window, configs) {
+                                        //Converts the user to json and sends it to the rest api, on success it adds the user to window.userId
                                         $http.post(configs.baseHostName + '/Home/toJsonUser', {
                                             facebookId: '@result.id' != "" ? '@result.id' : null,
                                             lDAPUserName: '@ldapUserName' != "" ? '@ldapUserName' : null,
