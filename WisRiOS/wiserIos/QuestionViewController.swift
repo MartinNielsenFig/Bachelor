@@ -26,17 +26,18 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     @IBOutlet weak var answerPicker: UIPickerView!
     @IBOutlet weak var questionImage: UIImageView!
     @IBOutlet weak var progressBar: UIProgressView!
-    
+    @IBOutlet weak var upvoteButton: UIButton!
+    @IBOutlet weak var downvoteButton: UIButton!
     
     var pickerData = [String]()
     
     //Actions
     @IBAction func upvoteBtnPressed(sender: AnyObject) {
-        vote(true)
+        vote(true, button: sender as! UIButton)
     }
     
     @IBAction func downvoteBtnPressed(sender: AnyObject) {
-        vote(false)
+        vote(false, button: sender as! UIButton)
     }
     
     //Utilities
@@ -58,19 +59,28 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         }
     }
     
+    func updateVoteUI(up: Bool) {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.upvoteButton.imageView!.image = up ? UIImage(named: "ThumbsUpBlue") : UIImage(named: "ThumbsUp")
+            self.downvoteButton.imageView!.image = !up ? UIImage(named: "ThumbsDownBlue") : UIImage(named: "ThumbsDown")
+        }
+    }
+    
     /**
     Up- or downvotes the current showing question.
     - parameter up:	If true upvotes, if false downvotes.
     */
-    func vote(up: Bool) {
+    func vote(up: Bool, button: UIButton) {
+        updateVoteUI(up)
+        
         let vote = Vote(createdById: CurrentUser.sharedInstance._id!, value: up ? 1 : -1)
         let voteJson = JSONSerializer.toJson(vote)
         let body = "vote=\(voteJson)&type=MultipleChoiceQuestion&id=\(question._id!)"
         HttpHandler.requestWithResponse(action: "Question/AddVote", type: "POST", body: body) { (data, response, error) -> Void in
+            print(up ? "VOTED" : "DOWNVOTED")
         }
-        
     }
-    
+
     func updateProgressbar() {
         
         if let startStr = question.CreationTimestamp?.stringByReplacingOccurrencesOfString(",", withString: "."), endStr = question.ExpireTimestamp?.stringByReplacingOccurrencesOfString(",", withString: "."), start = Double(startStr), end = Double(endStr) {
@@ -111,14 +121,14 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         
         print("QuestionViewController instantiated, roomId: \(self.roomId)")
         
+        answerPicker.delegate = self
+        answerPicker.dataSource = self
+        
         //Show UI
         if self.question._id == nil {
             return
             //todo display something nice to user :-)
         }
-        
-        answerPicker.delegate = self
-        answerPicker.dataSource = self
         
         //Progress bar
         updateProgressbar()
@@ -157,6 +167,17 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                 }
             }
         }
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        //Vote btns
+        for v in question.Votes {
+            if v.CreatedById == CurrentUser.sharedInstance._id {
+                updateVoteUI(v.Value == 1)
+                break
+            }
+        }
+        super.viewDidAppear(animated)
     }
     
     
