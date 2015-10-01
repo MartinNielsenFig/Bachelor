@@ -678,8 +678,10 @@
     <Content Include="Scripts\jquery.signalR-2.2.0.js" />
     <Content Include="Scripts\jquery.signalR-2.2.0.min.js" />
     <Content Include="Scripts\scrollglue.js" />
+    <Content Include="Scripts\WisRScripts\AngularConfig.js" />
     <Content Include="Scripts\WisRScripts\AngularFiltersScripts.js" />
     <Content Include="Scripts\WisRScripts\AngularHomeScripts.js" />
+    <Content Include="Scripts\WisRScripts\AngularModule.js" />
     <Content Include="Scripts\WisRScripts\AngularRoomScripts.js" />
     <Content Include="Content\fonts\FontAwesome.otf" />
     <Content Include="Content\fonts\fontawesome-webfont.woff" />
@@ -690,6 +692,7 @@
     <None Include=".bin\node.cmd" />
     <None Include="Properties\PublishProfiles\WisR - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\WisR - Web Deploy.pubxml" />
+    <Content Include="Scripts\WisRScripts\AngularUserScripts.js" />
     <Content Include="Scripts\WisRScripts\Config.js" />
     <Content Include="Scripts\errors.json" />
     <Content Include="Scripts\angular.min.js.map" />
