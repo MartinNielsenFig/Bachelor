@@ -1,23 +1,30 @@
-﻿app.controller("HomeController", [
-    '$scope', '$http', '$location', '$window', 'configs', function($scope, $http, $location, $window, configs) {
-        //Connect to SignalR hub and wait for new room
-        $(function() {
-            // Declare a proxy to reference the hub. 
+﻿/**
+ * @ngdoc controller
+ * @name dashboard.controller:HomeController
+ * @description
+ * A description of the controller, service or filter
+ */
+app.controller("HomeController", [
+    '$scope', '$http', '$location', '$window', 'configs', function ($scope, $http, $location, $window, configs) {
+        //#region SignalR functions
+        ///Connect to SignalR hub and wait for new room
+        $(function () {
+            /// Declare a proxy to reference the hub. 
             var hub = $.connection.roomHub;
-            // Create a function that the hub can call to broadcast messages.
-            hub.client.broadcastRoom = function(roomToAdd) {
+            /// Create a function that the hub can call to broadcast messages.
+            hub.client.broadcastRoom = function (roomToAdd) {
                 $scope.Rooms.push(JSON.parse(roomToAdd));
                 $scope.$apply();
             };
             $.connection.hub.start();
         });
 
-        //Connect to SignalR hub and wait for room update
-        $(function() {
-            // Declare a proxy to reference the hub. 
+        ///Connect to SignalR hub and wait for room update
+        $(function () {
+            /// Declare a proxy to reference the hub. 
             var hub = $.connection.roomHub;
-            // Create a function that the hub can call to broadcast messages.
-            hub.client.broadcastUpdateRoom = function(roomToUpdate) {
+            /// Create a function that the hub can call to broadcast messages.
+            hub.client.broadcastUpdateRoom = function (roomToUpdate) {
                 var tempRoom = JSON.parse(roomToUpdate);
                 for (var i = 0; i < $scope.Rooms.length; i++) {
                     if ($scope.Rooms[i]._id == tempRoom._id) {
@@ -29,8 +36,9 @@
             };
             $.connection.hub.start();
         });
-
-        //Declare default values
+        //#endregion
+        //#region Declaration of default scope values
+        ///Declare default values
         $scope.RoomName = "";
         $scope.Radius = 50;
         $scope.UniqueTag = "";
@@ -39,10 +47,11 @@
         $scope.UserCanAsk = true;
         $scope.AllowAnonymous = true;
         $scope.UseLocation = false;
-
-        //Function to get all rooms when loading page
-        var getRooms = function() {
-            $http.get(configs.restHostName + '/Room/GetAll').then(function(response) {
+        //#endregion
+        //#region Room specific functions
+        ///Function to get all rooms when loading page
+        var getRooms = function () {
+            $http.get(configs.restHostName + '/Room/GetAll').then(function (response) {
                 $scope.Rooms = response.data;
                 $scope.userId = window.userId;
                 $scope.locationLatitude = $scope.currentLocation.coords.latitude;
@@ -51,9 +60,9 @@
             });
         };
 
-        //Creates a new room, and connects to it
+        ///Creates a new room, and connects to it
         $scope.postRoom = function () {
-            //Make get request for json object conversion
+            ///Make get request for json object conversion
             $http.post('/Home/toJsonRoom',
                 {
                     RoomName: $scope.RoomName,
@@ -72,10 +81,10 @@
                     useLocation: $scope.UseLocation
                 }).
                 then(function (response) {
-                    //Use response to send to REST API
+                    ///Use response to send to REST API
                     $http.post(configs.restHostName + '/Room/CreateRoom', { Room: JSON.stringify(response.data) }).
                         then(function (response) {
-                            //Check for error messages
+                            ///Check for error messages
                             if (response.data.ErrorMessage != undefined) {
                                 $("#RoomCreationError").text("Error: " + response.data.ErrorMessage);
                                 return;
@@ -86,14 +95,37 @@
                         });
                 });
         }
+        ///Changes to view to a new room
+        $scope.changeViewToRoom = function (room) {
+            if (!room.AllowAnonymous && $scope.userId == 'NoUser') {
+                $scope.Message = "The room-tag you have entered requires you to be logged in";
+            } else {
+                $scope.RoomId = room._id;
+                var url = $("#RedirectTo").val() + "?RoomId=" + $scope.RoomId;
+                location.href = url;
+            }
 
-        //Calls and get the currentlocation, and after that gets the rooms
-        navigator.geolocation.getCurrentPosition(function(position) {
+        }
+
+        ///Connects to a new room based on it's tag
+        $scope.connectWithUniqueTag = function () {
+            $http.post(configs.restHostName + '/Room/GetByUniqueTag', { tag: $scope.uniqueRoomTag }).then(function (response) {
+                ///TODO verification of response
+                if (response.data._id != undefined) {
+                    $scope.changeViewToRoom(response.data);
+                } else {
+                    $scope.Message = "No room with the tag: " + $scope.uniqueRoomTag;
+                }
+            });
+        }
+
+        ///Calls and get the currentlocation, and after that gets the rooms
+        navigator.geolocation.getCurrentPosition(function (position) {
             $scope.currentLocation = position;
             $("#loadingLabel").text('Loading rooms...');
             getRooms();
             var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-            geocoder.geocode({ 'location': latLng }, function(results, status) {
+            geocoder.geocode({ 'location': latLng }, function (results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
                     if (results[1]) {
                         $scope.currentAddress = results[1].formatted_address;
@@ -105,50 +137,7 @@
                 }
             });
         });
-
-        //Changes to view to a new room
-        $scope.changeViewToRoom = function(room) {
-            if (!room.AllowAnonymous && $scope.userId == 'NoUser') {
-                $scope.Message = "The room-tag you have entered requires you to be logged in";
-            } else {
-                $scope.RoomId = room._id;
-                var url = $("#RedirectTo").val() + "?RoomId=" + $scope.RoomId;
-                location.href = url;
-            }
-
-        }
-
-        //Connects to a new room based on it's tag
-        $scope.connectWithUniqueTag = function() {
-            $http.post(configs.restHostName + '/Room/GetByUniqueTag', { tag: $scope.uniqueRoomTag }).then(function(response) {
-                //TODO verification of response
-                if (response.data._id != undefined) {
-                    $scope.changeViewToRoom(response.data);
-                } else {
-                    $scope.Message = "No room with the tag: " + $scope.uniqueRoomTag;
-                }
-            });
-        }
+        //#endregion
     }
 ]);
 
-//calculates the distance in km between to points on the globe
-//http://stackoverflow.com/questions/27928/calculate-distance-between-two-latitude-longitude-points-haversine-formula
-function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
-    var R = 6371; // Radius of the earth in km
-    var dLat = deg2rad(lat2 - lat1);  // deg2rad below
-    var dLon = deg2rad(lon2 - lon1);
-    var a =
-      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
-      Math.sin(dLon / 2) * Math.sin(dLon / 2)
-    ;
-    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    var d = R * c; // Distance in km
-    return d;
-}
-
-//Converts degress to radians
-function deg2rad(deg) {
-    return deg * (Math.PI / 180);
-}
