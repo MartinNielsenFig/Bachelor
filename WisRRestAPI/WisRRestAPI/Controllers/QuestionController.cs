@@ -170,7 +170,7 @@ namespace WisRRestAPI.Controllers
                 q.Id = questionId;
 
                 var answer = BsonSerializer.Deserialize<Answer>(response);
-                if (q.Result.Exists(x=> x.UserId == answer.UserId))
+                if (q.Result.Exists(x => x.UserId == answer.UserId))
                 {
                     q.Result.Find(x => x.UserId == answer.UserId).Value = answer.Value;
                 }
@@ -178,7 +178,7 @@ namespace WisRRestAPI.Controllers
                 {
                     q.Result.Add(answer);
                 }
-                
+
                 _qr.UpdateQuestionResults(questionId, q);
                 try
                 {
@@ -186,7 +186,12 @@ namespace WisRRestAPI.Controllers
                 }
                 catch (Exception e)
                 {
+                    return "error" + e.StackTrace;
                 }
+            }
+            else
+            {
+                return "Cannot respond to a question where timer has run out.";
             }
             //Todo handle return with Error() class
             return "";
