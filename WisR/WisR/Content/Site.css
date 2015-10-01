@@ -1,8 +1,11 @@
 ﻿body {
-    padding-top: 50px;
+    padding-top: 70px;
     padding-bottom: 20px;
 }
 
+@media screen and (max-width: 768px) {
+    body { padding-top: 0px; }
+}
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
@@ -32,6 +35,7 @@ textarea {
     cursor: default !important;
     background-color: #DCDCDC;
 }
+
 
 .glyphicon-refresh-animate {
     -webkit-animation: spin .7s infinite linear;
