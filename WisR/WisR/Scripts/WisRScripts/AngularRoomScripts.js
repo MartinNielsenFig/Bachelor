@@ -13,7 +13,6 @@ app.directive('ngEnter', function () {
         });
     };
 });
-
 app.controller("RoomController", [
     '$scope', '$http', 'configs', '$window', '$interval', function ($scope, $http, configs, $window, $interval) {
         //default charttype as pie
@@ -247,6 +246,7 @@ app.controller("RoomController", [
         //Get room info
         var getRoom = function (user) {
             $http.post(configs.restHostName + '/Room/GetById', { id: MyRoomIdFromViewBag }).then(function (response) {
+                $scope.specificRoomLoaded = true;
                 //Check for errors on request
                 if (response.data.ErrorMessage != undefined) {
                     $("#RoomErrorDiv").html("<h3>" + response.data.ErrorMessage + "</h3>");
