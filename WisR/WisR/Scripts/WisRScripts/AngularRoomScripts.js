@@ -282,6 +282,53 @@
         $scope.currentLocation = position;
     });
 
+    //Code for rooms maps
+    $scope.toggleRoomLocation = function () {
+        $("#googlemapsRoom").toggle();
+        $("#updateBtn").toggle();
+        var bounds = new google.maps.LatLngBounds();
+        var mapOptions = {
+            disableDefaultUI: true,
+            center: {
+                lat: $scope.CurrentRoom.Location.Latitude,
+                lng: $scope.CurrentRoom.Location.Longitude
+            },
+            zoom: 22
+        }
+        map = new google.maps.Map(document.getElementById("mapRoom"), mapOptions);
+        $scope.map = map;
+        $scope.markers = [];
+        var marker = new google.maps.Marker({
+            map: map,
+            position: {
+                lat: $scope.CurrentRoom.Location.Latitude,
+                lng: $scope.CurrentRoom.Location.Longitude
+            },
+            title: 'Rooms position',
+            icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|7569fe'
+        });
+        $scope.markers.push(marker);
+        bounds.extend(marker.getPosition());
+        var pos;
+        navigator.geolocation.getCurrentPosition(function (position) {
+            pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            }
+            var marker2 = new google.maps.Marker({
+                map: map,
+                position: pos,
+                title: 'Your position',
+                icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|fe7569',
+                animation: google.maps.Animation.BOUNCE
+            });
+
+            $scope.markers.push(marker2);
+            bounds.extend(marker2.getPosition());
+            map.fitBounds(bounds);
+        });
+    }
+
     ///Updates the room's current location
     $scope.updateLocation = function () {
         var pos;
