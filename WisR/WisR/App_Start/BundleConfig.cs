@@ -17,6 +17,7 @@ namespace WisR
                         "~/Scripts/angular-base64-upload.js",
                         "~/Scripts/WisRScripts/AngularModule.js",
                         "~/Scripts/WisRScripts/AngularConfig.js",
+                        "~/Scripts/WisRScripts/AngularDirectivesScripts.js",
                         "~/Scripts/WisRScripts/AngularUserScripts.js",
                         "~/Scripts/WisRScripts/AngularHomeScripts.js", 
                         "~/Scripts/WisRScripts/AngularFiltersScripts.js", 

@@ -170,7 +170,7 @@ namespace WisRRestAPI.Controllers
                 q.Id = questionId;
 
                 var answer = BsonSerializer.Deserialize<Answer>(response);
-                if (q.Result.Exists(x=> x.UserId == answer.UserId))
+                if (q.Result.Exists(x => x.UserId == answer.UserId))
                 {
                     q.Result.Find(x => x.UserId == answer.UserId).Value = answer.Value;
                 }
@@ -178,7 +178,7 @@ namespace WisRRestAPI.Controllers
                 {
                     q.Result.Add(answer);
                 }
-                
+
                 _qr.UpdateQuestionResults(questionId, q);
                 try
                 {
@@ -186,14 +186,18 @@ namespace WisRRestAPI.Controllers
                 }
                 catch (Exception e)
                 {
+                    return "error" + e.StackTrace;
                 }
+            }
+            else
+            {
+                return "Cannot respond to a question where timer has run out.";
             }
             //Todo handle return with Error() class
             return "";
         }
 
-        public string AddVote(string vote, string type, string id)
-        {
+        public string AddVote(string vote, string type, string id) {
             Type questionType;
 
             string typeString = "WisR.DomainModels." + type;
@@ -201,31 +205,23 @@ namespace WisRRestAPI.Controllers
 
             var q = _qr.GetQuestionWithoutImage(id).Result;
 
-            if (Convert.ToDouble(q.ExpireTimestamp) >
-                (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalMilliseconds)
-            {
-                q.Id = id;
+            q.Id = id;
 
-                var v = BsonSerializer.Deserialize<Vote>(vote);
+            var v = BsonSerializer.Deserialize<Vote>(vote);
 
-                if (q.Votes.Exists(x => x.CreatedById == v.CreatedById))
-                {
-                    q.Votes.Find(x => x.CreatedById == v.CreatedById).Value = v.Value;
-                }
-                else
-                {
-                    q.Votes.Add(v);
-                }
-                //Todo: error handling?
-                _qr.UpdateQuestionVotes(id, q);
-                try
-                {
-                    _irabbitPublisher.publishString("AddQuestionVote", q.ToJson());
-                }
-                catch (Exception e)
-                {
-                }
+            if (q.Votes.Exists(x => x.CreatedById == v.CreatedById)) {
+                q.Votes.Find(x => x.CreatedById == v.CreatedById).Value = v.Value;
+            } else {
+                q.Votes.Add(v);
             }
+            //Todo: error handling?
+            _qr.UpdateQuestionVotes(id, q);
+            try {
+                _irabbitPublisher.publishString("AddQuestionVote", q.ToJson());
+            } catch (Exception e) {
+                return "error " + e.StackTrace;
+            }
+
             return "";
         }
 

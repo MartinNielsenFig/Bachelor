@@ -17,7 +17,7 @@ class QuestionListViewController: UITableViewController, Paged {
     var questions = [Question]() {
         didSet {
             filter(&self.questions)
-            dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            dispatch_async(dispatch_get_main_queue()) {
                 self.tableView.reloadData()
             }
         }
@@ -29,6 +29,9 @@ class QuestionListViewController: UITableViewController, Paged {
     - parameter questions:	The questions array to be filtered in-place.
     */
     func filter(inout questions: [Question]) {
+        if questions.count <= 1 {
+            return
+        }
         questions.sortInPlace { (el1, el2) -> Bool in
             let t1 = upDownVotesCount(el1)
             let t2 = upDownVotesCount(el2)
@@ -62,7 +65,6 @@ class QuestionListViewController: UITableViewController, Paged {
         
         print("QuestionListViewController instantiated, roomId: \(self.roomId)")
 
-        
         self.refreshControl = UIRefreshControl()
         self.refreshControl!.addTarget(self, action: "handleRefresh:", forControlEvents: UIControlEvents.ValueChanged)
         
@@ -86,8 +88,6 @@ class QuestionListViewController: UITableViewController, Paged {
                     tmpQuestions += [Question(jsonDictionary: question as! NSDictionary)]
                 }
                 
-                self.questions.removeAll()
-                
                 if tmpQuestions.count <= 0 {
                     let q = Question()
                     q.QuestionText = "No questions for room"
@@ -99,9 +99,14 @@ class QuestionListViewController: UITableViewController, Paged {
                 let qError = Question()
                 qError.QuestionText = "Could not load questions"
                 qError.CreatedById = "system"
-                tmpQuestions += [qError]
+                tmpQuestions = [qError]
             }
-            self.questions += tmpQuestions
+            
+            //http://stackoverflow.com/questions/18847438/dispatch-get-main-queue-in-main-thread
+            dispatch_async(dispatch_get_main_queue()) {
+                self.questions.removeAll()
+                self.questions += tmpQuestions
+            }
             refreshControl?.endRefreshing()
         }
     }
@@ -144,7 +149,7 @@ class QuestionListViewController: UITableViewController, Paged {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let roomPageViewController = parentViewController?.parentViewController as! RoomPageViewController
-        let questionPage = roomPageViewController.viewControllerAtIndex(1)! as! QuestionViewController
+        let questionPage = roomPageViewController.viewControllerAtIndex(1, createNew: true)! as! QuestionViewController
         questionPage.question = questions[indexPath.row]
         roomPageViewController.pageViewController.setViewControllers([questionPage], direction: .Forward, animated: true, completion: nil)
     }

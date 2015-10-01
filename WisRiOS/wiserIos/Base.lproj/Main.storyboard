@@ -142,61 +142,39 @@
                                 <rect key="frame" x="20" y="20" width="560" height="560"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Question text" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iGH-Ed-X4N">
-                                        <rect key="frame" x="229" y="0.0" width="103" height="146"/>
+                                        <rect key="frame" x="229" y="0.0" width="103" height="102"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView autoresizesSubviews="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="251" ambiguous="YES" placeholderIntrinsicWidth="560" placeholderIntrinsicHeight="250" translatesAutoresizingMaskIntoConstraints="NO" id="F1H-bP-e2z">
-                                        <rect key="frame" x="0.0" y="146" width="560" height="250"/>
+                                        <rect key="frame" x="0.0" y="102" width="560" height="250"/>
                                         <animations/>
                                     </imageView>
                                     <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KDW-Y0-aTM">
-                                        <rect key="frame" x="120" y="396" width="320" height="100"/>
+                                        <rect key="frame" x="120" y="352" width="320" height="100"/>
                                         <animations/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="lessThanOrEqual" constant="100" id="nYL-MG-t1I"/>
                                         </constraints>
                                     </pickerView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="3mO-eB-Cj7">
-                                        <rect key="frame" x="0.0" y="496" width="560" height="44"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="3mO-eB-Cj7">
+                                        <rect key="frame" x="0.0" y="452" width="560" height="88"/>
                                         <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="KSa-BF-G8k">
-                                                <rect key="frame" x="0.0" y="0.0" width="280" height="44"/>
-                                                <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S9p-q1-9ue" userLabel="Upvote Question">
-                                                        <rect key="frame" x="0.0" y="0.0" width="280" height="14"/>
-                                                        <animations/>
-                                                        <state key="normal" title="Upvote Question"/>
-                                                        <connections>
-                                                            <action selector="upvoteBtnPressed:" destination="ock-zx-gTK" eventType="touchUpInside" id="lkD-RR-7WY"/>
-                                                        </connections>
-                                                    </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cfJ-dB-iui" userLabel="Downvote Question">
-                                                        <rect key="frame" x="0.0" y="14" width="280" height="30"/>
-                                                        <animations/>
-                                                        <state key="normal" title="Downvote Question"/>
-                                                        <connections>
-                                                            <action selector="downvoteBtnPressed:" destination="ock-zx-gTK" eventType="touchUpInside" id="Cfj-8H-lIT"/>
-                                                        </connections>
-                                                    </button>
-                                                </subviews>
-                                                <animations/>
-                                            </stackView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="6yD-dw-RAh">
-                                                <rect key="frame" x="280" y="0.0" width="280" height="44"/>
+                                                <rect key="frame" x="0.0" y="14" width="516" height="60"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tGJ-Gn-5Xl">
-                                                        <rect key="frame" x="0.0" y="0.0" width="280" height="14"/>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tGJ-Gn-5Xl">
+                                                        <rect key="frame" x="0.0" y="0.0" width="516" height="30"/>
                                                         <animations/>
                                                         <state key="normal" title="Send response"/>
                                                         <connections>
                                                             <action selector="sendResponse:" destination="ock-zx-gTK" eventType="touchUpInside" id="FDD-aN-YCr"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uV7-tu-bL6">
-                                                        <rect key="frame" x="0.0" y="14" width="280" height="30"/>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uV7-tu-bL6">
+                                                        <rect key="frame" x="0.0" y="30" width="516" height="30"/>
                                                         <animations/>
                                                         <state key="normal" title="See Results"/>
                                                         <connections>
@@ -206,10 +184,46 @@
                                                 </subviews>
                                                 <animations/>
                                             </stackView>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="KSa-BF-G8k">
+                                                <rect key="frame" x="516" y="0.0" width="44" height="88"/>
+                                                <subviews>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S9p-q1-9ue" userLabel="Upvote Question">
+                                                        <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
+                                                        <animations/>
+                                                        <accessibility key="accessibilityConfiguration">
+                                                            <accessibilityTraits key="traits" button="YES" image="YES"/>
+                                                        </accessibility>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="44" id="WCD-fZ-I3K"/>
+                                                            <constraint firstAttribute="height" constant="44" id="s2C-my-QoO"/>
+                                                        </constraints>
+                                                        <state key="normal" image="ThumbsUp"/>
+                                                        <connections>
+                                                            <action selector="upvoteBtnPressed:" destination="ock-zx-gTK" eventType="touchUpInside" id="lkD-RR-7WY"/>
+                                                        </connections>
+                                                    </button>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cfJ-dB-iui" userLabel="Downvote Question">
+                                                        <rect key="frame" x="0.0" y="44" width="44" height="44"/>
+                                                        <animations/>
+                                                        <accessibility key="accessibilityConfiguration">
+                                                            <accessibilityTraits key="traits" button="YES" image="YES"/>
+                                                        </accessibility>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="44" id="dAO-xK-2Vu"/>
+                                                            <constraint firstAttribute="width" constant="44" id="z1V-Di-hfr"/>
+                                                        </constraints>
+                                                        <state key="normal" image="ThumbsDown"/>
+                                                        <connections>
+                                                            <action selector="downvoteBtnPressed:" destination="ock-zx-gTK" eventType="touchUpInside" id="Cfj-8H-lIT"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
+                                                <animations/>
+                                            </stackView>
                                         </subviews>
                                         <animations/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="44" id="bkC-oz-kZV"/>
+                                            <constraint firstAttribute="height" constant="88" id="bkC-oz-kZV"/>
                                         </constraints>
                                     </stackView>
                                     <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" misplaced="YES" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="1vg-7e-t9r">
@@ -243,9 +257,11 @@
                     </view>
                     <connections>
                         <outlet property="answerPicker" destination="KDW-Y0-aTM" id="Me2-kK-pNK"/>
+                        <outlet property="downvoteButton" destination="cfJ-dB-iui" id="FAN-G2-pqw"/>
                         <outlet property="progressBar" destination="1vg-7e-t9r" id="7v8-zT-M9b"/>
                         <outlet property="questionImage" destination="F1H-bP-e2z" id="t5M-yA-TVw"/>
                         <outlet property="questionText" destination="iGH-Ed-X4N" id="08Y-gX-Iph"/>
+                        <outlet property="upvoteButton" destination="S9p-q1-9ue" id="TIN-RF-Tr0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7vm-I6-Bgi" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -967,6 +983,10 @@
             <point key="canvasLocation" x="190" y="-457"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="ThumbsDown" width="24" height="21"/>
+        <image name="ThumbsUp" width="24" height="21"/>
+    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="5nO-ee-P5e"/>
     </inferredMetricsTieBreakers>

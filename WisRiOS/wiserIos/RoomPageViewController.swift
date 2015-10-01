@@ -18,6 +18,8 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     let pageCount = 3
     var currentPage = 0
     
+    var viewControllerArray = [UIViewController?](count: 3, repeatedValue: nil)
+    
     //Lifecycle
     override func viewDidLoad() {
         
@@ -34,7 +36,7 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
         pageViewController.dataSource = self
         
         //Set initial page
-        let startVC = viewControllerAtIndex(0)!
+        let startVC = viewControllerAtIndex(0, createNew: true)!
         pageViewController.setViewControllers([startVC], direction: .Forward, animated: true, completion: nil)
         let cellHeight = CGFloat(64) //todo read cell hight dynamically
         pageViewController.view.frame = CGRect(x: 0, y: cellHeight, width: view.frame.size.width, height: view.frame.size.height - cellHeight)
@@ -80,22 +82,31 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     - parameter index:	The index of the viewcontroller.
     - returns: Returns the UIViewController at a specific location on the UIPageViewController
     */
-    func viewControllerAtIndex(index: Int) -> UIViewController? {
-        currentPage = index
-        if index == 0 {
-            let questionListViewController = storyboard?.instantiateViewControllerWithIdentifier("QuestionListViewController") as! QuestionListViewController
-            questionListViewController.roomId = self.room._id
-            return questionListViewController
+    func viewControllerAtIndex(i: Int, createNew: Bool) -> UIViewController? {
+        
+        //You might wonder why viewController[i] isn't thrown into a variable, cast it to Paged and assign room._id and return it, but there's always the case of i < 0 || i > pageCount-1 which you would have to check, as well as assigning the viewController[i] array field to the correct VC is nice to have verbose imo.
+        
+        currentPage = i
+        if i == 0 {
+            if viewControllerArray[i] == nil || createNew {
+                viewControllerArray[i] = storyboard?.instantiateViewControllerWithIdentifier("QuestionListViewController") as! QuestionListViewController
+            }
+            (viewControllerArray[i] as! QuestionListViewController).roomId = self.room._id
+            return viewControllerArray[i]
         }
-        else if index == 1 {
-            let currentQuestionViewController = storyboard?.instantiateViewControllerWithIdentifier("QuestionViewController") as! QuestionViewController
-            currentQuestionViewController.roomId = self.room._id
-            return currentQuestionViewController
+        else if i == 1 {
+            if viewControllerArray[i] == nil || createNew {
+                viewControllerArray[i] = storyboard?.instantiateViewControllerWithIdentifier("QuestionViewController") as! QuestionViewController
+            }
+            (viewControllerArray[i] as! QuestionViewController).roomId = self.room._id
+            return viewControllerArray[i]
         }
-        else if index == 2 {
-            let chatViewController = storyboard?.instantiateViewControllerWithIdentifier("ChatViewController") as! ChatViewController
-            chatViewController.roomId = self.room._id
-            return chatViewController
+        else if i == 2 {
+            if viewControllerArray[i] == nil || createNew {
+                viewControllerArray[i] = storyboard?.instantiateViewControllerWithIdentifier("ChatViewController") as! ChatViewController
+            }
+            (viewControllerArray[i] as! ChatViewController).roomId = self.room._id
+            return viewControllerArray[i]
         }
         
         return nil
@@ -105,7 +116,7 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
         if let pagedVC = viewController as? Paged {
             var index = pagedVC.pageIndex
-            return self.viewControllerAtIndex(--index)
+            return self.viewControllerAtIndex(--index, createNew: false)
         }
         else {
             return nil
@@ -115,7 +126,7 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
         if let pagedVC = viewController as? Paged {
             var index = pagedVC.pageIndex
-            return self.viewControllerAtIndex(++index)
+            return self.viewControllerAtIndex(++index, createNew: false)
         }
         else {
             return nil
