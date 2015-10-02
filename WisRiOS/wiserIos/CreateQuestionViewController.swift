@@ -9,7 +9,7 @@
 import UIKit
 
 /// The ViewController which handles the creation of a question inside a room.
-class CreateQuestionViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class CreateQuestionViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
     
     //Properties
     //Gets instantiated by RoomPageViewController in prepareForSegue
@@ -86,11 +86,6 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
             let r = ResponseOption(value: responseText, weight: 1)
             responseOptions += [r]
         }
-        
-        /*NSInteger numberOfRows = [_tableView numberOfRowsInSection:0];
-        if (numberOfRows) {
-            [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:numberOfRows-1 inSection:0] atScrollPosition:UITableViewScrollPositionBottom animated:animated];
-        }*/
         
         let numberOfRows = tableView.numberOfRowsInSection(1)
         if numberOfRows > 0 {
@@ -232,5 +227,12 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
         selectedImage = (info[UIImagePickerControllerOriginalImage] as! UIImage)
         imageTableCell?.imageView?.image = selectedImage
         dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    //UITextFieldDelegate
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        print("returning form textfield add choice")
+        addResponseOption()
+        return true
     }
 }
