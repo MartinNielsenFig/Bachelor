@@ -4,11 +4,16 @@
  * @description
  * A description of the controller, service or filter
  */
+
 app.controller("HomeController", [
     '$scope', '$http', '$location', '$window', 'configs', function ($scope, $http, $location, $window, configs) {
+
+
+
         //#region SignalR functions
         ///Connect to SignalR hub and wait for new room
         $(function () {
+
             /// Declare a proxy to reference the hub. 
             var hub = $.connection.roomHub;
             /// Create a function that the hub can call to broadcast messages.

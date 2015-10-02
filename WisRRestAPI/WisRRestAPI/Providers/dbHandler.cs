@@ -15,7 +15,7 @@ namespace WisRRestAPI.DomainModel
         {
             var connection = ConfigurationManager.AppSettings["mongoString"];
             var client = new MongoClient(connection);
-            _db = client.GetDatabase("bachelor");
+            _db = client.GetDatabase("wisr");
         }
 
         public IMongoDatabase getDb()

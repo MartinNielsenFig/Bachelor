@@ -37,7 +37,8 @@ namespace WisRRestAPI.Controllers
             IEnumerable<User> user = null;
             if (userToAdd.FacebookId != null)
             {
-                user = _ur.GetAllUsers().Result.Where(x => x.FacebookId == userToAdd.FacebookId);
+                    user = _ur.GetAllUsers().Result.Where(x => x.FacebookId == userToAdd.FacebookId);               
+                
             }else if (userToAdd.LDAPUserName!=null)
             {
                 user = _ur.GetAllUsers().Result.Where(x => x.LDAPUserName == userToAdd.LDAPUserName);
