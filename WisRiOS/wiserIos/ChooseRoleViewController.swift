@@ -31,6 +31,16 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
         else {
             performSegueWithIdentifier("Login", sender: sender)
         }
+
+    }
+    
+    //Utility
+    func addLoginLogoutButtons() {
+        if CurrentUser.sharedInstance.FacebookId != nil {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Log out", style: .Plain, target: self, action: "logOffFacebook")
+        } else {
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Log in", style: .Plain, target: self, action: "clickCreateRoomBtn:")
+        }
     }
     
     //Lifecycle
@@ -52,13 +62,12 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
         locationManager.startUpdatingLocation()
         maxPositionUpdatesThisSession = 10
         
-        //Log off btn
-        if CurrentUser.sharedInstance.FacebookId != nil {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Log out", style: .Plain, target: self, action: "logOffFacebook")
-        }
+        addLoginLogoutButtons()
         
         super.viewDidAppear(animated)
     }
+    
+
     
     func loadRoomsBasedOnLocation() {
         //Show nearby rooms
@@ -152,7 +161,7 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
             
             //Determine is accuracy is better than before
             let currentAccuracy = location.horizontalAccuracy
-            if --maxPositionUpdatesThisSession <= 0 || currentAccuracy <= 10 {
+            if --maxPositionUpdatesThisSession <= 0 /*|| currentAccuracy <= 10*/ {
                 NSLog("stopped updating location")
                 locationManager.stopUpdatingLocation()
             }
@@ -203,7 +212,7 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
         }
         else if segue.identifier == "JoinRoom" {
             let roomTableViewController = segue.destinationViewController as! RoomTableViewController
-            roomTableViewController.rooms = self.rooms
+            //no need for initilizing
         }
     }
     
@@ -222,7 +231,7 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
         
         alert.addAction(UIAlertAction(title: "Logout", style: .Default, handler: { action in
             FacebookHelper.logOff()
-            self.navigationItem.rightBarButtonItem = nil
+            self.addLoginLogoutButtons()
         }))
         
         self.presentViewController(alert, animated: true, completion: nil)

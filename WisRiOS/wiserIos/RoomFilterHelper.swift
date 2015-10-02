@@ -16,7 +16,7 @@ class RoomFilterHelper {
     - returns: Array of filtered rooms.
     */
     static func filterRoomsByLocation(rooms: [Room], metersRadius: Double) -> [Room] {
-        
+        let start = NSDate()
         var filteredRooms = [Room]()
         
         let currentLong = CurrentUser.sharedInstance.location.Longitude
@@ -37,6 +37,7 @@ class RoomFilterHelper {
                 }
             }
         }
+        print("duration of \(__FUNCTION__) took \(NSDate().timeIntervalSinceDate(start))")
         return filteredRooms
     }
     
