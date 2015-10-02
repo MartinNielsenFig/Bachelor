@@ -1,7 +1,7 @@
 package com.example.tomas.wisrandroid.Activities;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
+import android.media.session.MediaSession;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -9,8 +9,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
 import com.example.tomas.wisrandroid.Helpers.ActivityLayoutHelper;
+import com.example.tomas.wisrandroid.Helpers.HttpHelper;
 import com.example.tomas.wisrandroid.Model.MyUser;
+import com.example.tomas.wisrandroid.Model.User;
 import com.example.tomas.wisrandroid.R;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
@@ -21,16 +28,16 @@ import com.facebook.GraphResponse;
 import com.facebook.HttpMethod;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class LoginActivity extends AppCompatActivity {
 
-    CallbackManager cbm;
-    LoginButton lb;
-    //LoginManager lm;
+    private CallbackManager cbm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +48,21 @@ public class LoginActivity extends AppCompatActivity {
         final Gson gson = new Gson();
         cbm = CallbackManager.Factory.create();
 
-        //lb = (LoginButton) findViewById(R.id.authButton);
+        final Response.Listener<String> mListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Toast.makeText(getApplicationContext(), "In Listener", Toast.LENGTH_LONG).show();
+                MyUser.getMyuser().set_Id(response);
+                finish();
+            }
+        };
+
+        final Response.ErrorListener mErrorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Toast.makeText(getApplicationContext(),"In ErrorListener" + volleyError.getMessage(),Toast.LENGTH_LONG).show();
+            }
+        };
 
         LoginManager.getInstance().registerCallback(cbm, new FacebookCallback<LoginResult>() {
             @Override
@@ -49,42 +70,39 @@ public class LoginActivity extends AppCompatActivity {
 
                 MyUser.getMyuser().set_FacebookId(loginResult.getAccessToken().getUserId());
 
-                /* make the API call */
-                new GraphRequest(
-                        AccessToken.getCurrentAccessToken(),
-                        "/me",
-                        null,
-                        HttpMethod.GET,
+                new GraphRequest(AccessToken.getCurrentAccessToken(), "/me", null, HttpMethod.GET,
                         new GraphRequest.Callback() {
                             public void onCompleted(GraphResponse response) {
                                 try {
-                                    Toast.makeText(getApplicationContext(), response.getRawResponse(), Toast.LENGTH_LONG);
+                                    //Toast.makeText(getApplicationContext(), response.getRawResponse(), Toast.LENGTH_LONG).show();
                                     MyUser.getMyuser().set_DisplayName(response.getJSONObject().getString("name"));
                                     Log.w("NameVariableOfResponse", response.getJSONObject().getString("name"));
+
+                                    Map<String,String> mParams = new HashMap<String,String>();
+                                    User mUser = new User();
+                                    mUser.set_DisplayName(MyUser.getMyuser().get_DisplayName());
+                                    mUser.set_ConnectedRooms(null);
+                                    mUser.set_Email(null);
+                                    mUser.set_FacebookId(AccessToken.getCurrentAccessToken().getUserId());
+                                    mUser.set_Id(null);
+                                    mUser.set_LDAPUserName(null);
+                                    mUser.set_EncryptedPassword(null);
+                                    mParams.put("User",gson.toJson(mUser));
+
+                                    RequestQueue requestQueue = Volley.newRequestQueue(LoginActivity.this);
+                                    HttpHelper jsObjRequest = new HttpHelper(Request.Method.POST, getString(R.string.restapi_url) + "/User/CreateUser", mParams, mListener, mErrorListener); // "http://10.0.2.2:1337/Room/CreateRoom"
+
+                                    try {
+                                        requestQueue.add(jsObjRequest);
+                                    } catch (Exception e) {
+                                    }
+
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
                             }
                         }
                 ).executeAsync();
-
-
-
-//                Map<String,String> mParams = new HashMap<String, String>();
-//
-//
-//                String json = gson.toJson(MyUser.getMyuser().get_FacebookId());
-//
-//                RequestQueue requestQueue = Volley.newRequestQueue(LoginActivity.this);
-//                HttpHelper jsObjRequest = new HttpHelper(Request.Method.GET, "http://10.0.2.2:1337/User/CreateUser", mParams, mListener , mErrorListener);
-//
-//                try {
-//                    requestQueue.add(jsObjRequest);
-//                }
-//                catch (Exception e){
-//
-//                }
-
             }
 
             @Override
@@ -95,10 +113,9 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onError(FacebookException e) {
 
-                Toast.makeText(getParent(), e.toString() ,Toast.LENGTH_LONG).show();
+                Toast.makeText(getParent(), e.toString(), Toast.LENGTH_LONG).show();
             }
         });
-
     }
 
     @Override
@@ -110,9 +127,6 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -128,23 +142,4 @@ public class LoginActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         cbm.onActivityResult(requestCode,resultCode,data);
     }
-
-//    Response.Listener<JSONObject> mListener = new Response.Listener<JSONObject>() {
-//        @Override
-//        public void onResponse(JSONObject jsonObject) {
-//            String response = null;
-//            try {
-//                MyUser.getMyuser().set_Id(jsonObject.getString("Id"));
-//                //MyUser.getMyuser().set;
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    };
-//
-//    Response.ErrorListener mErrorListener = new Response.ErrorListener() {
-//        @Override
-//        public void onErrorResponse(VolleyError volleyError) {
-//        }
-//    };
 }

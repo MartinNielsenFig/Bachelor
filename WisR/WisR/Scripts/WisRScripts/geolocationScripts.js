@@ -43,6 +43,8 @@ function moveMap(position) {
     });
 }
 
+function handleError(error) { alert(error.message); }
+
 //initialize the map where you see your current position
 function initializeGeolocation() {
     var mapOptions = {

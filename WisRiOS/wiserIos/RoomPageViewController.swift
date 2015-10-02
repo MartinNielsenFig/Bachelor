@@ -25,11 +25,29 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
         
         print("RoomPageViewController instantiated with roomId \(room._id)")
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Ask Question", style: .Plain, target: self, action: "addQuestion")
+        
+        //http://stackoverflow.com/questions/18844681/how-to-make-custom-uibarbuttonitem-with-image-and-label
+        let askQBtn = UIButton(type: .Custom)
+        askQBtn.setImage(UIImage(named: "AskQuestion"), forState: .Normal)
+        askQBtn.addTarget(self, action: "addQuestion", forControlEvents: .TouchUpInside)
+        askQBtn.frame = CGRectMake(0, 0, 22, 22)
+        /*let askQLabel = UILabel(frame: CGRectMake(-10, -10, 50, 20))
+        askQLabel.text = "Ask"
+        askQLabel.font = UIFont(name: "Arial-BoldMT", size: 13)
+        askQLabel.textColor = UIColor(red: 52, green: 152, blue: 219, alpha: 0)
+        askQLabel.textAlignment = .Center
+        askQLabel.backgroundColor = UIColor.clearColor()
+        askQBtn.addSubview(askQLabel)*/
+        let askQBarBtn = UIBarButtonItem(customView: askQBtn)
+        navigationItem.rightBarButtonItem = askQBarBtn
         
         //Handle back button on UINavigation Bar
-        let logoutBtn = UIBarButtonItem(barButtonSystemItem: .Stop, target: self, action: "logoutRoom")
-        self.navigationItem.leftBarButtonItem = logoutBtn
+        let exitBtn = UIButton(type: .Custom)
+        exitBtn.setImage(UIImage(named: "Exit"), forState: .Normal)
+        exitBtn.addTarget(self, action: "logoutRoom", forControlEvents: .TouchUpInside)
+        exitBtn.frame = CGRectMake(0, 0, 22, 22)
+        let exitRoomBtn = UIBarButtonItem(customView: exitBtn)
+        self.navigationItem.leftBarButtonItem = exitRoomBtn
         
         //Setup the page view controller
         pageViewController = UIPageViewController(transitionStyle: .Scroll, navigationOrientation: .Horizontal, options: nil)

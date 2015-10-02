@@ -19,8 +19,7 @@ class QuestionViewCell: UITableViewCell {
     @IBOutlet weak var upvoteImage: UIImageView!
     
     override func awakeFromNib() {
-        upvoteImage.image = UIImage(named: "Upvote")
-        downvoteImage.image = UIImage(named: "Downvote")
+        defaultImage()
         
         downvoteCounter.text = "0"
         upvoteCounter.text = "0"
@@ -32,6 +31,16 @@ class QuestionViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
         
         // Configure the view for the selected state
+    }
+    
+    func defaultImage() {
+        upvoteImage.image = UIImage(named: "ThumbsUp")
+        downvoteImage.image = UIImage(named: "ThumbsDown")
+    }
+    
+    func userHasVoted(up up: Bool) {
+        downvoteImage.image = up ? UIImage(named: "ThumbsDown") : UIImage(named: "ThumbsDownBlue")
+        upvoteImage.image = !up ? UIImage(named: "ThumbsUp") : UIImage(named: "ThumbsUpBlue")
     }
     
 }

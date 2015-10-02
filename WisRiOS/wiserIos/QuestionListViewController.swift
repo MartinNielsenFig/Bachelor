@@ -16,6 +16,7 @@ class QuestionListViewController: UITableViewController, Paged {
     var roomId: String?
     var questions = [Question]() {
         didSet {
+            print("QuestionListViewController detected change in self.questions array")
             filter(&self.questions)
             dispatch_async(dispatch_get_main_queue()) {
                 self.tableView.reloadData()
@@ -60,29 +61,12 @@ class QuestionListViewController: UITableViewController, Paged {
         return (noDownvotes, noUpvotes)
     }
     
-    //Lifetime
-    override func viewDidLoad() {
-        
-        print("QuestionListViewController instantiated, roomId: \(self.roomId)")
-
-        self.refreshControl = UIRefreshControl()
-        self.refreshControl!.addTarget(self, action: "handleRefresh:", forControlEvents: UIControlEvents.ValueChanged)
-        
-        let loadingQuestion = Question()
-        loadingQuestion.QuestionText = "Loading questions..."
-        questions += [loadingQuestion]
-        
-        //Load questions for room
-        updateQuestions()
-    }
-    
-    func updateQuestions(refreshControl: UIRefreshControl? = nil) {
+    func fetchQuestions(refreshControl: UIRefreshControl? = nil) {
         //"Swift Trailing Closure" syntax
         let action = "Question/GetQuestionsForRoomWithoutImages?roomId=\(self.roomId!)"
         HttpHandler.requestWithResponse(action: action, type: "GET", body: "") { (data, response, error) -> Void in
             
             var tmpQuestions = [Question]()
-            
             if let data = data, jsonArray = try? JSONSerializer.toArray(data) {
                 for question in jsonArray {
                     tmpQuestions += [Question(jsonDictionary: question as! NSDictionary)]
@@ -106,14 +90,38 @@ class QuestionListViewController: UITableViewController, Paged {
             dispatch_async(dispatch_get_main_queue()) {
                 self.questions.removeAll()
                 self.questions += tmpQuestions
+                refreshControl?.endRefreshing()
             }
-            refreshControl?.endRefreshing()
         }
+    }
+    
+    //Lifetime
+    override func viewDidLoad() {
+        
+        print("QuestionListViewController instantiated, roomId: \(self.roomId)")
+
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl!.addTarget(self, action: "handleRefresh:", forControlEvents: UIControlEvents.ValueChanged)
+        
+        let loadingQuestion = Question()
+        loadingQuestion.QuestionText = "Loading questions..."
+        questions += [loadingQuestion]
+        
+        //Load questions for room
+        fetchQuestions()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        filter(&self.questions)
+        dispatch_async(dispatch_get_main_queue()) {
+            self.tableView.reloadData()
+        }
+        super.viewDidAppear(true)
     }
     
     //UITableViewController
     func handleRefresh(refreshControl: UIRefreshControl) {
-        updateQuestions(refreshControl)
+        fetchQuestions(refreshControl)
     }
     
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -131,10 +139,18 @@ class QuestionListViewController: UITableViewController, Paged {
         let question = questions[indexPath.row]
         cell.label.text = question.QuestionText
         
-        
         let votesCount = upDownVotesCount(question)
         cell.upvoteCounter.text = String(votesCount.upvotes)
         cell.downvoteCounter.text = String(votesCount.downvotes)
+        
+        //If already voted
+        if let myVote = (question.Votes.filter() { $0.CreatedById == CurrentUser.sharedInstance._id }.first) {
+            cell.userHasVoted(up: myVote.Value == 1)
+        }
+        else {
+            //This needs to be done because we're using dequeueReusableCellWithIdentifier, else all will be blue after first
+            cell.defaultImage()
+        }
         
         //Todo cleaner?
         if let parent = (parentViewController?.parentViewController as? RoomPageViewController) {

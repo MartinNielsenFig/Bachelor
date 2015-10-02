@@ -55,7 +55,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         
         let body = "response=\(answerJson)&questionId=\(question._id!)"
         HttpHandler.requestWithResponse(action: "Question/AddQuestionResponse", type: "POST", body: body) { (data, response, error) -> Void in
-            
+            print(data)
         }
     }
     
@@ -72,11 +72,20 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     */
     func vote(up: Bool, button: UIButton) {
         updateVoteUI(up)
+        let voteValue = up ? 1 : -1
         
-        let vote = Vote(createdById: CurrentUser.sharedInstance._id!, value: up ? 1 : -1)
+        let vote = Vote(createdById: CurrentUser.sharedInstance._id!, value: voteValue)
         let voteJson = JSONSerializer.toJson(vote)
         let body = "vote=\(voteJson)&type=MultipleChoiceQuestion&id=\(question._id!)"
         HttpHandler.requestWithResponse(action: "Question/AddVote", type: "POST", body: body) { (data, response, error) -> Void in
+            
+            //If Vote already exists, update it. Else add it.
+            if let myVote = (self.question.Votes.filter() { $0.CreatedById == CurrentUser.sharedInstance._id }.first) {
+                myVote.Value = voteValue
+            }
+            else {
+                self.question.Votes += [vote]
+            }
             print(up ? "VOTED" : "DOWNVOTED")
         }
     }

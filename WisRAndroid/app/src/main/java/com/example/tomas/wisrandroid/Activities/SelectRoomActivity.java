@@ -36,8 +36,9 @@ import java.util.Map;
 
 public class SelectRoomActivity extends AppCompatActivity {
 
-    final ArrayList<Room> mRoomList = new ArrayList();
-    ListView mListView;
+    private final ArrayList<Room> mRoomList = new ArrayList();
+    private final Gson mGson = new Gson();
+    private ListView mListView;
 
 
     @Override
@@ -66,14 +67,11 @@ public class SelectRoomActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 Toast.makeText(getApplicationContext(), "In Listener", Toast.LENGTH_LONG).show();
 
-                Gson mGson = new Gson();
                 Room[] mRooms = mGson.fromJson(response, Room[].class);
                 for(Room room : mRooms)
                 {
                     mRoomList.add(room);
                 }
-                Integer mInt = mListView.getAdapter().getCount();
-                // String mresponsee = response;
                 CustomRoomAdapter temp = (CustomRoomAdapter)mListView.getAdapter();
                 temp.notifyDataSetChanged();
             }
@@ -93,7 +91,7 @@ public class SelectRoomActivity extends AppCompatActivity {
 
         RequestQueue requestQueue = Volley.newRequestQueue(SelectRoomActivity.this);
 
-        HttpHelper jsObjRequest = new HttpHelper("http://wisrrestapi.aceipse.dk/Room/GetAll", mmap, mListener , mErrorListener);
+        HttpHelper jsObjRequest = new HttpHelper(getString(R.string.restapi_url) +"/Room/GetAll", mmap, mListener , mErrorListener);
 
         try {
             requestQueue.add(jsObjRequest);
@@ -117,9 +115,6 @@ public class SelectRoomActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
