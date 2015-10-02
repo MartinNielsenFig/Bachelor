@@ -1,5 +1,6 @@
 package com.example.tomas.wisrandroid.Activities;
 
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -38,6 +39,8 @@ import java.util.Locale;
 import java.util.Map;
 
 public class CreateRoomActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+
+    final Gson gson = new Gson();
 
     // Classes needed to handle the coordinates of the room
     private GoogleApiClient mGoogleApiClient;
@@ -83,7 +86,7 @@ public class CreateRoomActivity extends AppCompatActivity implements GoogleApiCl
         mEnablePasswordSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CheckState();
+                CheckPasswordSwitchState();
             }
         });
         mEnableChatSwitch = (Switch) findViewById(R.id.room_enable_chat_switch);
@@ -137,12 +140,10 @@ public class CreateRoomActivity extends AppCompatActivity implements GoogleApiCl
             @Override
             public void onClick(View v) {
 
-
                 Map<String,String> mParams = new HashMap<String, String>();
 
                 final Room mRoom = new Room();
-                //mRoom.set_CreatedById(MyUser.getMyuser().get_Id()); // Husk at implementere at få user id under login,
-                                                                      // samt at få tildelt en bruger under login hvis ingen bruger er tilstede på MongoDB
+                //mRoom.set_CreatedById(MyUser.getMyuser().get_Id());
                 mRoom.set_Name(mRoomNameEditText.getText().toString());
                 mRoom.set_AllowAnonymous(mEnableAnonymousSwitch.isChecked());
                 mRoom.set_HasPassword(mEnablePasswordSwitch.isChecked());
@@ -178,8 +179,6 @@ public class CreateRoomActivity extends AppCompatActivity implements GoogleApiCl
                     e.printStackTrace();
                 }
 
-                Gson gson = new Gson();
-
                 String json = gson.toJson(mRoom);
 
                 mParams.put("Room", json);
@@ -193,6 +192,13 @@ public class CreateRoomActivity extends AppCompatActivity implements GoogleApiCl
                         Toast.makeText(getApplicationContext(), "In Listener", Toast.LENGTH_LONG).show();
                         mRoom.set_id(response);
                         mResp.setText(response);
+
+                        Gson mGson = new Gson();
+                        Bundle mBundle = new Bundle();
+                        mBundle.putString("Room", mGson.toJson(mRoom));
+                        Intent mIntent = new Intent(getApplicationContext(), QuestionActivity.class);
+                        mIntent.putExtra("CurrentRoom", mBundle);
+                        startActivity(mIntent, mBundle);
                     }
                 };
 
@@ -205,7 +211,7 @@ public class CreateRoomActivity extends AppCompatActivity implements GoogleApiCl
                 };
 
                 RequestQueue requestQueue = Volley.newRequestQueue(CreateRoomActivity.this);
-                HttpHelper jsObjRequest = new HttpHelper(Request.Method.POST, "http://wisrrestapi.aceipse.dk/Room/CreateRoom", mParams, mListener , mErrorListener); // "http://10.0.2.2:1337/Room/CreateRoom"
+                HttpHelper jsObjRequest = new HttpHelper(Request.Method.POST, getString(R.string.restapi_url) + "/Room/CreateRoom", mParams, mListener , mErrorListener); // "http://10.0.2.2:1337/Room/CreateRoom"
 
                 try {
                     requestQueue.add(jsObjRequest);
@@ -217,13 +223,13 @@ public class CreateRoomActivity extends AppCompatActivity implements GoogleApiCl
             }
         });
 
-        CheckState();
+        CheckPasswordSwitchState();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        CheckState();
+        CheckPasswordSwitchState();
     }
 
     @Override
@@ -248,7 +254,22 @@ public class CreateRoomActivity extends AppCompatActivity implements GoogleApiCl
         return super.onOptionsItemSelected(item);
     }
 
-    private void CheckState()
+    @Override
+    public void onConnected(Bundle bundle) {
+        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+
+    }
+
+    private void CheckPasswordSwitchState()
     {
         if(mEnablePasswordSwitch.isChecked())
         {
@@ -264,20 +285,5 @@ public class CreateRoomActivity extends AppCompatActivity implements GoogleApiCl
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
-    }
-
-    @Override
-    public void onConnected(Bundle bundle) {
-        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-
-    }
-
-    @Override
-    public void onConnectionFailed(ConnectionResult connectionResult) {
-
     }
 }

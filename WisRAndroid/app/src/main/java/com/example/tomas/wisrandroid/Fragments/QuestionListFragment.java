@@ -1,22 +1,21 @@
 package com.example.tomas.wisrandroid.Fragments;
 
-import android.app.Activity;
-import android.net.Uri;
+import android.content.Intent;
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
+import com.example.tomas.wisrandroid.Activities.QuestionActivity;
 import com.example.tomas.wisrandroid.Helpers.CustomQuestionAdapter;
 import com.example.tomas.wisrandroid.Helpers.HttpHelper;
 import com.example.tomas.wisrandroid.Model.MultipleChoiceQuestion;
@@ -26,13 +25,9 @@ import com.example.tomas.wisrandroid.R;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import java.util.ArrayList;
-import java.util.Dictionary;
-import java.util.HashMap;
-import java.util.Map;
 
 
 // https://github.com/codepath/android_guides/wiki/ViewPager-with-FragmentPagerAdapter
@@ -43,7 +38,7 @@ public class QuestionListFragment extends android.support.v4.app.Fragment {
     private final Gson gson = new Gson();
     private ListView mListView;
     private CustomQuestionAdapter mAdapter;
-    final ArrayList<Question> mQuestions = new ArrayList<Question>();
+    private final ArrayList<Question> mQuestions = new ArrayList<Question>();
 
 
     public static QuestionListFragment newInstance(int page, String title, String roomId) {
@@ -78,9 +73,8 @@ public class QuestionListFragment extends android.support.v4.app.Fragment {
                         mQuestions.add(gson.fromJson(element, TextualQuestion.class));
                     }
                 }
-
                 mAdapter.notifyDataSetChanged();
-                Toast.makeText(getContext(), response, Toast.LENGTH_LONG).show();
+                //Toast.makeText(getContext(), response, Toast.LENGTH_LONG).show();
             }
         };
 
@@ -92,7 +86,7 @@ public class QuestionListFragment extends android.support.v4.app.Fragment {
         };
 
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        HttpHelper jsObjRequest = new HttpHelper( "http://wisrrestapi.aceipse.dk/Question/GetQuestionsForRoomWithoutImages?roomId="+ roomId, null, mListener, mErrorListener);
+        HttpHelper jsObjRequest = new HttpHelper( getString(R.string.restapi_url) + "/Question/GetQuestionsForRoomWithoutImages?roomId="+ roomId, null, mListener, mErrorListener);
 
         try {
             requestQueue.add(jsObjRequest);
@@ -105,17 +99,18 @@ public class QuestionListFragment extends android.support.v4.app.Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_question_list, container, false);
 
+        Log.w("QuestionListFragment","View Created");
         mAdapter = new CustomQuestionAdapter(getContext(), mQuestions);
         mListView = (ListView)view.findViewById(R.id.question_listview);
         mListView.setAdapter(mAdapter);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Bundle mBundle = new Bundle();
-                mBundle.putString("SelectedQuestion",gson.toJson(mQuestions.get(i)));
-                android.support.v4.app.Fragment mFragment = getFragmentManager().findFragmentById(R.id.super_fragment);
-                //ViewGroup mViewGroup = (ViewGroup)mFragment.getView();
-                //mViewGroup.findViewById(R.)
+
+//                Intent intent = new Intent("com.example.tomas.wisrandroid.QUESTION_EVENT");
+                setCurrentQuestionFragment(mQuestions.get(i));
+//                LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
+                Log.w("BroadcastIntent", "AwesomeQuestionizing");
             }
         });
         return view;
@@ -125,5 +120,10 @@ public class QuestionListFragment extends android.support.v4.app.Fragment {
     public void onStart() {
         super.onStart();
 
+    }
+
+    public void setCurrentQuestionFragment(Question curQuestion)
+    {
+        ((QuestionActivity)getActivity()).TransferCurrentQuestion(curQuestion);
     }
 }
