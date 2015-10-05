@@ -684,9 +684,9 @@
     <Content Include="Scripts\WisRScripts\AngularConfig.js" />
     <Content Include="Scripts\WisRScripts\AngularDirectivesScripts.js" />
     <Content Include="Scripts\WisRScripts\AngularFiltersScripts.js" />
-    <Content Include="Scripts\WisRScripts\AngularHomeScripts.js" />
+    <Content Include="Scripts\WisRScripts\AngularHomeController.js" />
     <Content Include="Scripts\WisRScripts\AngularModule.js" />
-    <Content Include="Scripts\WisRScripts\AngularRoomScripts.js" />
+    <Content Include="Scripts\WisRScripts\AngularRoomController.js" />
     <Content Include="Content\fonts\FontAwesome.otf" />
     <Content Include="Content\fonts\fontawesome-webfont.woff" />
     <Content Include="Content\fonts\fontawesome-webfont.ttf" />

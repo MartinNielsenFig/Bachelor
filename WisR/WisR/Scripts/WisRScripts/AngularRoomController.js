@@ -1,4 +1,10 @@
-﻿app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$interval', function ($scope, $http, configs, $window, $interval) {
+﻿/**
+ * @ngdoc controller
+ * @name WisR.controller:RoomController
+ * @description
+ * Controller for the Room View of the application
+ */
+app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$interval', function ($scope, $http, configs, $window, $interval) {
     //#region SignalR 
     ///Connect to SignalR hub and wait for chat messages
     $(function () {
