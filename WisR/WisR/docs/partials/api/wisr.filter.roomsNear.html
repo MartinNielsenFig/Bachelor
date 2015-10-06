@@ -1,0 +1,20 @@
+<h1><code ng:non-bindable="">roomsNear</code>
+<div><span class="hint">filter in module <code ng:non-bindable="">WisR</code>
+</span>
+</div>
+</h1>
+<div><h2 id="description">Description</h2>
+<div class="description"><div class="wisr-filter-page wisr-filter-roomsnear-page"><p>Filter that returns the rooms that are nearby(based on location)</p>
+</div></div>
+<h2 id="usage">Usage</h2>
+<div class="usage"><h3 id="usage_in-html-template-binding">In HTML Template Binding</h3>
+<div class="in-html-template-binding"><code ng:non-bindable=""><span>{{</span> roomsNear_expression | roomsNear:scope <span>}}</span></code>
+</div>
+<h3 id="usage_in-javascript">In JavaScript</h3>
+<div class="in-javascript"><code ng:non-bindable="">$filter('roomsNear')(rooms, scope)</code>
+</div>
+<h4 id="usage_in-javascript_parameters">Parameters</h4><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>rooms</td><td><a href="" class="label type-hint type-hint-array">Array&lt;Room&gt;</a></td><td><div class="wisr-filter-page wisr-filter-roomsnear-page"><p>the array of rooms to be filtered</p>
+</div></td></tr><tr><td>scope</td><td><a href="" class="label type-hint type-hint-scope">Scope</a></td><td><div class="wisr-filter-page wisr-filter-roomsnear-page"><p>the angular scope for the controller(so that we can access the currentLocation of the user)</p>
+</div></td></tr></tbody></table><h4 id="usage_in-javascript_returns">Returns</h4><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-array">Array&lt;Room&gt;</a></td><td><div class="wisr-filter-page wisr-filter-roomsnear-page"><p>filtered the filtered array of rooms</p>
+</div></td></tr></table></div>
+</div>

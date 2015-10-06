@@ -167,7 +167,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-6">Picture</label><input type='file' ng-model='questionImage' base-sixty-four-input class="text-center">
+                                <label class="col-md-6">Picture</label><input type='file' ng-model='questionImage' base-sixty-four-input ctrl-function="setImageMessage(msg)" class="text-center">
                                 <img ng-src="data:image/png;base64,{{questionImage.base64}}" style="max-width: 100px; max-height: 100px" />
                                 <div class="col-md-12 text-center">
                                     {{ImageMessage}}

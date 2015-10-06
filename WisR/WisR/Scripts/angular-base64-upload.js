@@ -35,7 +35,7 @@
       return {
         restrict: 'A',
         require: '?ngModel',
-        scope: isolateScope,
+        scope: { setImageMessage: '&ctrlFunction' },
         link: function (scope, elem, attrs, ngModel) {
 
           /* istanbul ignore if */
@@ -59,7 +59,7 @@
           function _readerOnLoad (fReader, file, fileObject) {
 
             return function (e) {
-
+                scope.setImageMessage({ msg: "Loading image..." });
               var buffer = e.target.result;
               var promise;
 
