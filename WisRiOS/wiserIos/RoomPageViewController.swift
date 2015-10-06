@@ -69,7 +69,7 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     - parameter orientationIsLandscape:	Indicates the orientation of the device.
     */
     func makeRoomForNavigationBar(orientationIsLandscape orientationIsLandscape: Bool) {
-        let offset = orientationIsLandscape ? CGFloat(10) : CGFloat(0)
+        let offset = orientationIsLandscape ? CGFloat(16) : CGFloat(0)
         let cellHeight = self.navigationController!.navigationBar.frame.size.height + offset
         pageViewController.view.frame = CGRect(x: 0, y: cellHeight, width: view.frame.size.width, height: view.frame.size.height - cellHeight)
     }

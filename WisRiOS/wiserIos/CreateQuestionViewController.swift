@@ -23,11 +23,11 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
         }
     }
     
-    var questionText: TextInputCell? = nil
-    var durationInput: NumberInputCell? = nil
-    var imageTableCell: UITableViewCell? = nil
+    var questionText: TextInputCell?
+    var durationInput: NumberInputCell?
+    var imageTableCell: UITableViewCell?
     var selectedImage: UIImage?
-    var addResponseCell: TextButtonInputCell? = nil
+    var addResponseCell: TextInputCell?
     
     var photoSelected = false {
         didSet {
@@ -147,10 +147,13 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
                 return cell
             }
             else if indexPath.row == 3 {
-                let cellIdentifier = "TextButtonInputCell"
-                let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! TextButtonInputCell
+                let cellIdentifier = "TextInputCell"
+                let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! TextInputCell
                 cell.label.text = "Add Response"
-                cell.button.addTarget(self, action: "addResponseOption", forControlEvents: .TouchUpInside)
+                cell.inputField.delegate = self
+                cell.inputField.returnKeyType = .Done
+                cell.inputField.clearsOnBeginEditing = true
+                
                 addResponseCell = cell
                 cell.selectionStyle = .None
                 return cell
