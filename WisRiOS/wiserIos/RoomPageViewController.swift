@@ -64,6 +64,10 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
         pageViewController.didMoveToParentViewController(self)
     }
     
+    /**
+    Makes sure there's room enough for the navigation bar when presenting the sub-views. Needs a little offset when in landscape mode.
+    - parameter orientationIsLandscape:	Indicates the orientation of the device.
+    */
     func makeRoomForNavigationBar(orientationIsLandscape orientationIsLandscape: Bool) {
         var offset = CGFloat(0)
         if orientationIsLandscape {
