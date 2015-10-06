@@ -14,7 +14,7 @@
 ///<reference path="~/../WisR/Scripts/WisRScripts/geolocationScripts.js"/>
 ///<reference path="~/../WisR/Scripts/WisRScripts/AngularModule.js"/>
 ///<reference path="~/../WisR/Scripts/WisRScripts/Config.js"/>
-///<reference path="~/../WisR/Scripts/WisRScripts/AngularHomeScripts.js"/>
+///<reference path="~/../WisR/Scripts/WisRScripts/AngularHomeController.js"/>
 
 describe("Homecontroller", function () {
 
