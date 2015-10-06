@@ -52,7 +52,7 @@ var shouldBeAdded = function (room, scope) {
  * @param {Integer} value The value to check for(-1 or 1)
  * @returns {Integer} counter the filtered ammount of votes of the specified value
  */
-app.filter('Votes',function() {
+app.filter('CountVotes',function() {
     return function (votes, value) {
         if (votes != undefined) {
             var counter = 0;

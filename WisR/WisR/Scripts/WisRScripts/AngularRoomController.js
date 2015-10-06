@@ -425,7 +425,6 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
         });
         return testbool;
     }
-
     ///Used to vote, parameter, is direction
     $scope.Vote = function (direction) {
         if (direction == "Up") {

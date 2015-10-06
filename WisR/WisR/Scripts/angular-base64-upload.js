@@ -117,7 +117,6 @@
           }
 
           function _readFiles () {
-
             for (var i = rawFiles.length - 1; i >= 0; i--) {
 
               var reader = new $window.FileReader();
