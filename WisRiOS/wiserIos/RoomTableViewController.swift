@@ -12,15 +12,14 @@ import UIKit
 class RoomTableViewController: UITableViewController, UIPopoverPresentationControllerDelegate {
     
     //Properties
-    
-    //Gets set from ChooseRoleViewController
     var rooms = [Room]()
     
     //Lifecycle
     override func viewDidLoad() {
-        rooms = RoomFilterHelper.filterRoomsByLocation(self.rooms, metersRadius: 1000)
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl!.addTarget(self, action: "handleRefresh:", forControlEvents: UIControlEvents.ValueChanged)
         
-        self.tableView.reloadData()
+        fetchRooms(refreshControl)
         super.viewDidLoad()
     }
     
@@ -53,6 +52,34 @@ class RoomTableViewController: UITableViewController, UIPopoverPresentationContr
         }
         
         return cell
+    }
+    
+    func handleRefresh(refreshControl: UIRefreshControl) {
+        fetchRooms(refreshControl)
+    }
+    
+    //Utilities
+    func fetchRooms(refreshControl: UIRefreshControl? = nil) {
+        
+        let start = NSDate()
+        HttpHandler.requestWithResponse(action: "Room/GetAll", type: "GET", body: "") { (data, response, error) -> Void in
+            var tmpRooms = [Room]()
+            
+            if let data = data, jsonArray = try? JSONSerializer.toArray(data) {
+                for room in jsonArray {
+                    tmpRooms += [Room(jsonDictionary: room as! NSDictionary)]
+                }
+            }
+            
+            self.rooms.removeAll()
+            self.rooms += tmpRooms
+            
+            self.rooms = RoomFilterHelper.filterRoomsByLocation(self.rooms, metersRadius: 1000)
+            refreshControl?.endRefreshing()
+            self.tableView.reloadData()
+            
+            print("duration of \(__FUNCTION__) took \(NSDate().timeIntervalSinceDate(start))")
+        }
     }
     
     //Navigation

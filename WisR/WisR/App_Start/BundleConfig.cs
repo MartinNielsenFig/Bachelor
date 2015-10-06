@@ -19,9 +19,9 @@ namespace WisR
                         "~/Scripts/WisRScripts/AngularConfig.js",
                         "~/Scripts/WisRScripts/AngularDirectivesScripts.js",
                         "~/Scripts/WisRScripts/AngularUserScripts.js",
-                        "~/Scripts/WisRScripts/AngularHomeScripts.js", 
+                        "~/Scripts/WisRScripts/AngularHomeController.js", 
                         "~/Scripts/WisRScripts/AngularFiltersScripts.js", 
-                        "~/Scripts/WisRScripts/AngularRoomScripts.js", 
+                        "~/Scripts/WisRScripts/AngularRoomController.js", 
                         "~/Scripts/WisRScripts/Config.js"));
             
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(

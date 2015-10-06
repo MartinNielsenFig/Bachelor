@@ -1,5 +1,10 @@
-﻿//Directive for capturing enter key in angular
-//Found at: http://stackoverflow.com/questions/28851893/angularjs-textaera-enter-key-submit-form-with-autocomplete
+﻿/**
+ * @ngdoc directive
+ * @name WisR.directive:NgEnter
+ * @description
+ * Directive for registering enter key and executing code when the key is hit.
+ * Found at: http://stackoverflow.com/questions/28851893/angularjs-textaera-enter-key-submit-form-with-autocomplete
+ */
 app.directive('ngEnter', function () {
     return function (scope, element, attrs) {
         element.bind("keydown", function (e) {
