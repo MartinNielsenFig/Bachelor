@@ -137,7 +137,10 @@ class QuestionListViewController: UITableViewController, Paged {
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! QuestionViewCell
         
         let question = questions[indexPath.row]
-        cell.label.text = question.QuestionText
+        
+        //If question string is too long shorten it
+        cell.label.text = StringExtractor.shortenString(question.QuestionText!, maxLength: 30)
+        //cell.label.text = question.QuestionText
         
         let votesCount = upDownVotesCount(question)
         cell.upvoteCounter.text = String(votesCount.upvotes)

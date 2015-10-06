@@ -40,4 +40,16 @@ class StringExtractor {
         determineHighest()
         return highest
     }
+    
+    static func shortenString(aString: String, maxLength: Int) -> String {
+        var shortenedText = aString
+
+        if aString.characters.count > maxLength {
+            let endIndex = aString.startIndex.advancedBy(maxLength)
+            shortenedText = aString.substringToIndex(endIndex) + "..."
+        }
+        
+        return shortenedText
+    }
+    
 }
