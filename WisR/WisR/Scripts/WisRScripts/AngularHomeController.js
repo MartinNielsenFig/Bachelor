@@ -221,7 +221,7 @@ app.controller("HomeController", [
         *
         * @description
         * Function to create a new room on the database with the entered information from the modal window.
-        * If no error is returned, this function calls "changeViewToRoom"
+        * If no error is returned, this function calls "changeViewToRoom" and adds room to connected rooms(so that user doesn't have to enter password)
         */
         ///Creates a new room, and connects to it
         $scope.postRoom = function () {
@@ -253,11 +253,61 @@ app.controller("HomeController", [
                                 return;
                             }
 
+
+                            //Add roomId to connected rooms for the user
                             var room = { _id: response.data }
+                            $scope.currentUser.ConnectedRoomIds.push(room._id);
+
+                            var newIds = "";
+                            for (var i = 0; i < $scope.currentUser.ConnectedRoomIds.length; i++) {
+                                if (i != $scope.currentUser.ConnectedRoomIds.length - 1) {
+                                    newIds = newIds + $scope.currentUser.ConnectedRoomIds[i] + ',';
+                                } else {
+                                    newIds = newIds + $scope.currentUser.ConnectedRoomIds[i];
+                                }
+                            }
+
+                            $http.post(configs.baseHostName + '/Home/toJsonUser', {
+                                facebookId: $scope.currentUser.FacebookId,
+                                lDAPUserName: $scope.currentUser.LDAPUserName,
+                                displayName: $scope.currentUser.DisplayName,
+                                email: $scope.currentUser.Email,
+                                encryptedPassword: $scope.currentUser.EncryptedPassword,
+                                connectedRoomIds: newIds
+                            }).then(function (response) {
+                                ///Use response to send to REST API
+                                $http.post(configs.restHostName + '/User/UpdateUser', { User: JSON.stringify(response.data), Id: $scope.currentUser._id }).
+                                    then(function (response) {
+
+                                    });
+                            });
+                            
                             $scope.changeViewToRoom(room);
                         });
                 });
         }
+        /**
+       * @ngdoc watch
+       * @name HomeController#userIdWatch
+       * @methodOf WisR.controller:HomeController
+       *
+       * @description
+       * Function that watches the userId variable and fetches user from restAPI when it changes
+       * @param {Room} room The room that the view changes to
+       */
+        $scope.$watch(function () {
+            return $window.userId;
+        }, function (n, o) {
+            $scope.userId = n;
+            if (n == "NoUser") {
+                $scope.anonymousUser = true;
+            }
+            else if (n != undefined) {
+                $http.post(configs.restHostName + '/User/GetById', { id: n }).then(function (response) {
+                    $scope.currentUser = response.data;
+                });
+            }
+        });
         /**
        * @ngdoc method
        * @name HomeController#changeViewToRoom

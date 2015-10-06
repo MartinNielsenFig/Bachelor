@@ -136,6 +136,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
             }, function (n, o) {
                 if (n != undefined) {
                     if (n.filesize > 1049000) {
+                        $scope.imageTooBig = true;
                         $scope.ImageMessage = "File is too big, resizing...";
                         var img = new Image();
                         img.src = 'data:image/png;base64,' + n.base64;
@@ -144,10 +145,12 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
                             var resized = resizeImg(img, 800, 800, 0);
                             $scope.questionImage.base64 = resized.split('ata:image/png;base64,')[1];
                             $scope.ImageMessage = "Image resized";
+                            $scope.imageTooBig =false;
                             $scope.$apply();                            
                             //$scope.questionImage.base64 = "R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==";
                         }           
                     } else {
+                        $scope.imageTooBig = false;
                         $scope.ImageMessage = null;
                     }
                 }
@@ -167,7 +170,9 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
         $("#specificQuestionImage").css("height", $scope.imageSize);
     };
     //image message function that can be called from outside the controller
-    $scope.setImageMessage=function() {
+    $scope.setImageMessage = function () {
+        //start by assuming the picture is too big
+        $scope.imageTooBig = true;
         $scope.ImageMessage = "Loading image...";
         $scope.$apply();
     }
