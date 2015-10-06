@@ -56,13 +56,25 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
         //Set initial page
         let startVC = viewControllerAtIndex(0, createNew: true)!
         pageViewController.setViewControllers([startVC], direction: .Forward, animated: true, completion: nil)
-        let cellHeight = CGFloat(64) //todo read cell hight dynamically
-        pageViewController.view.frame = CGRect(x: 0, y: cellHeight, width: view.frame.size.width, height: view.frame.size.height - cellHeight)
+        makeRoomForNavigationBar(orientationIsLandscape: !UIApplication.sharedApplication().statusBarOrientation.isLandscape)   //this is odd, but works
         
         //Add it to the current viewcontroller
         addChildViewController(pageViewController)
         view.addSubview(pageViewController.view)
         pageViewController.didMoveToParentViewController(self)
+    }
+    
+    func makeRoomForNavigationBar(orientationIsLandscape orientationIsLandscape: Bool) {
+        var offset = CGFloat(0)
+        if orientationIsLandscape {
+            offset = 10
+        }
+        let cellHeight = self.navigationController!.navigationBar.frame.size.height + offset
+        pageViewController.view.frame = CGRect(x: 0, y: cellHeight, width: view.frame.size.width, height: view.frame.size.height - cellHeight)
+    }
+    
+    override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation) {
+        makeRoomForNavigationBar(orientationIsLandscape: fromInterfaceOrientation.isLandscape)
     }
     
     //Navigation
