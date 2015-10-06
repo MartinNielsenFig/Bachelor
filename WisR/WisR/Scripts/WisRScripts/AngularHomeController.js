@@ -307,24 +307,28 @@ app.controller("HomeController", [
       * Geolocation function that gets called at load of the home index page to get the location of the user. When the location is fetched the property currentLocation is set with the value and the getRooms function is called.
       * At this point the function calls geocode to get the formatted address
       */
-        ///Calls and get the currentlocation, and after that gets the rooms
-        navigator.geolocation.getCurrentPosition(function (position) {
-            $scope.currentLocation = position;
-            $("#loadingLabel").text('Loading rooms...');
-            getRooms();
-            var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-            geocoder.geocode({ 'location': latLng }, function (results, status) {
-                if (status == google.maps.GeocoderStatus.OK) {
-                    if (results[1]) {
-                        $scope.currentAddress = results[1].formatted_address;
+        //this check is to make the tests excecuteable
+        if (navigator.geolocation != undefined) {
+            ///Calls and get the currentlocation, and after that gets the rooms
+            navigator.geolocation.getCurrentPosition(function (position) {
+                $scope.currentLocation = position;
+                $("#loadingLabel").text('Loading rooms...');
+                getRooms();
+                var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                geocoder.geocode({ 'location': latLng }, function (results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        if (results[1]) {
+                            $scope.currentAddress = results[1].formatted_address;
+                        } else {
+                            window.alert('No results found');
+                        }
                     } else {
-                        window.alert('No results found');
+                        window.alert('Geocoder failed due to: ' + status);
                     }
-                } else {
-                    window.alert('Geocoder failed due to: ' + status);
-                }
+                });
             });
-        });
+
+        }
         //#endregion
     }
 ]);
