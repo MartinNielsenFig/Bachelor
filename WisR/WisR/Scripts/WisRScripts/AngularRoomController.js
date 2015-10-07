@@ -484,7 +484,8 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
 
     //#region Password
     $scope.validatePassword = function () {
-        if ($scope.inputPassword == $scope.CurrentRoom.EncryptedPassword) {
+        //Check if the inputted password with hash is the same as the rooms password
+        if (CryptoJS.SHA512($scope.inputPassword).toString() == $scope.CurrentRoom.EncryptedPassword) {
             $('#myModalPassword').modal('hide');
             $scope.rightPassword = true;
             if ($scope.currentUser.ConnectedRoomIds != undefined) {

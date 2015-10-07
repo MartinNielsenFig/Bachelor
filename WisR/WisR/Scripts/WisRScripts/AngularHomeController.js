@@ -46,6 +46,15 @@ app.controller("HomeController", [
         */
         $scope.Password = "";
         /**
+       * @ngdoc property
+       * @name .#HashedPassword
+       * @returns {String} HashedPassword
+       * @propertyOf WisR.controller:HomeController
+       * @description Property the SHA512 hashed version of the password
+       * Default is Empty string
+       */
+        $scope.HashedPassword = "";
+        /**
         * @ngdoc property
         * @name .#HasChat
         * @returns {Boolean} HasChat
@@ -225,6 +234,7 @@ app.controller("HomeController", [
         */
         ///Creates a new room, and connects to it
         $scope.postRoom = function () {
+            $scope.HashedPassword = CryptoJS.SHA512($scope.Password).toString();
             ///Make get request for json object conversion
             $http.post('/Home/toJsonRoom',
                 {
@@ -237,7 +247,7 @@ app.controller("HomeController", [
                     locationFormattedAddress: $scope.currentAddress,
                     radius: $scope.Radius,
                     tag: $scope.UniqueTag,
-                    password: $scope.Password,
+                    password: $scope.HashedPassword,
                     hasChat: $scope.HasChat,
                     userCanAsk: $scope.UserCanAsk,
                     allowAnonymous: $scope.AllowAnonymous,
