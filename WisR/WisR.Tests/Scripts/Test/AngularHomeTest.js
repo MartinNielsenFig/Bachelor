@@ -38,5 +38,12 @@ describe("Homecontroller", function () {
         it('should set the room radius to 50', function () {
             expect(scope.Radius).toBe(50);
         });
+
+        it('should change $scope.message to "The room-tag you have entered requires you to be logged in"', function() {
+            var room = { AllowAnonymous: false }
+            scope.changeViewToRoom(room);
+            expect(scope.message).toBe('The room-tag you have entered requires you to be logged in');
+        });
+    
     });
 });

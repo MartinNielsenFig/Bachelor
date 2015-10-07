@@ -109,7 +109,9 @@
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\jasmine\jasmine.css" />
     <Content Include="Content\jasmine\jasmine_favicon.png" />
-    <Content Include="Scripts\AngularHomeTest.js" />
+    <Content Include="Gruntfile.js" />
+    <Content Include="Scripts\server.js" />
+    <Content Include="Scripts\Test\AngularHomeTest.js" />
     <Content Include="Scripts\d3\d3.js" />
     <Content Include="Scripts\d3\d3.min.js" />
     <Content Include="Scripts\GoogleForTest\googleForTest.js" />
@@ -487,6 +489,7 @@
     <None Include=".bin\bower.cmd" />
     <None Include=".bin\git.cmd" />
     <None Include=".bin\node.cmd" />
+    <Content Include="package.json" />
     <None Include="packages.config" />
     <None Include="Scripts\d3\LICENSE" />
     <None Include="Scripts\jquery-1.11.3.min.map" />
