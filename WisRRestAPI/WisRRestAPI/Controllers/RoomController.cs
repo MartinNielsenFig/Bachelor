@@ -56,7 +56,7 @@ namespace WisRRestAPI.Controllers
             }
             catch (Exception e)
             {
-                var err = new Error("Room with that tag already exists", 100);
+                var err = new Error("Room with that tag already exists", (int) ErrorCodes.RoomTagAlreadyInUse);
                 return err.ToJson();
             }
 
@@ -72,17 +72,17 @@ namespace WisRRestAPI.Controllers
 
             }
             //Publish to rabbitMQ after, because we need the id
+            string error = String.Empty;
             try
             {
                 _irabbitPublisher.publishString("CreateRoom", room.ToJson());
             }
             catch (Exception e)
             {
-                var err = new Error("Could not publish to RabbitMq", 100, e.StackTrace);
-                return err.ToJson();
+                error = new Error("Could not publish to RabbitMq", (int) ErrorCodes.RabbitMqError, e.StackTrace).ToJson();
             }
 
-            return roomId;
+            return roomId + ";" + error;
         }
 
         [System.Web.Mvc.HttpPost]

@@ -56,13 +56,26 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
         //Set initial page
         let startVC = viewControllerAtIndex(0, createNew: true)!
         pageViewController.setViewControllers([startVC], direction: .Forward, animated: true, completion: nil)
-        let cellHeight = CGFloat(64) //todo read cell hight dynamically
-        pageViewController.view.frame = CGRect(x: 0, y: cellHeight, width: view.frame.size.width, height: view.frame.size.height - cellHeight)
+        makeRoomForNavigationBar(orientationIsLandscape: !UIApplication.sharedApplication().statusBarOrientation.isLandscape)   //this is odd, but works
         
         //Add it to the current viewcontroller
         addChildViewController(pageViewController)
         view.addSubview(pageViewController.view)
         pageViewController.didMoveToParentViewController(self)
+    }
+    
+    /**
+    Makes sure there's room enough for the navigation bar when presenting the sub-views. Needs a little offset when in landscape mode.
+    - parameter orientationIsLandscape:	Indicates the orientation of the device.
+    */
+    func makeRoomForNavigationBar(orientationIsLandscape orientationIsLandscape: Bool) {
+        let offset = orientationIsLandscape ? CGFloat(16) : CGFloat(0)
+        let cellHeight = self.navigationController!.navigationBar.frame.size.height + offset
+        pageViewController.view.frame = CGRect(x: 0, y: cellHeight, width: view.frame.size.width, height: view.frame.size.height - cellHeight)
+    }
+    
+    override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation) {
+        makeRoomForNavigationBar(orientationIsLandscape: fromInterfaceOrientation.isLandscape)
     }
     
     //Navigation
@@ -73,8 +86,7 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
         }))
         
         alert.addAction(UIAlertAction(title: "Logout", style: .Default, handler: { action in
-            FacebookHelper.logOff()
-            self.navigationController?.popViewControllerAnimated(true)
+            self.navigationController?.popToRootViewControllerAnimated(true)
         }))
         
         self.presentViewController(alert, animated: true, completion: nil)

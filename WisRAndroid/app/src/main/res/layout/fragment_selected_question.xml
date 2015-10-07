@@ -1,11 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:id="@+id/super_fragment">
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/super_fragment">
 
     <TextView
-        android:id="@+id/selected_fragment_textview"
+        android:id="@+id/selected_fragment_questiontextview"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
+        android:layout_height="40dp" />
+
+    <ImageView
+        android:id="@+id/selected_fragment_imageview"
+        android:layout_width="fill_parent"
+        android:layout_height="200dp" />
+
+    <NumberPicker
+        android:layout_gravity="center"
+        android:id="@+id/selected_fragment_numberpicker"
+        android:layout_width="100dp"
+        android:layout_height="100dp" />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:weightSum="100">
+        <Button
+            android:id="@+id/selected_fragment_sendresponse_button"
+            android:text="Send Response"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="50"/>
+
+        <Button
+            android:id="@+id/selected_fragment_seeresult_button"
+            android:text="See Result"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="50"/>
+    </LinearLayout>
+
+    <!--android:theme="@style/Base.V11.Theme.AppCompat.Light.Dialog"-->
+
+    <!-- Debugging textview -->
+    <TextView
+        android:id="@+id/selected_fragment_debugtextview"
+        android:layout_width="fill_parent"
+        android:layout_height="300dp" />
 
 </LinearLayout>
+</ScrollView>

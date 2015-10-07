@@ -271,6 +271,7 @@
     <Compile Include="DomainModel\Error.cs" />
     <Compile Include="DomainModel\IQuestion.cs" />
     <Compile Include="DomainModel\TextualQuestion.cs" />
+    <Compile Include="ErrorCodes.cs" />
     <Compile Include="Providers\ChatRepository.cs" />
     <Compile Include="Providers\dbHandler.cs" />
     <Compile Include="Providers\IChatRepository.cs" />

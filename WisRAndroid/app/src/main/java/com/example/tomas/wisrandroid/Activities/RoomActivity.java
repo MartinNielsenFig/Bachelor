@@ -1,16 +1,9 @@
 package com.example.tomas.wisrandroid.Activities;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,14 +13,12 @@ import android.widget.Toast;
 
 import com.example.tomas.wisrandroid.Fragments.SelectedQuestionFragment;
 import com.example.tomas.wisrandroid.Helpers.CustomPagerAdapter;
-import com.example.tomas.wisrandroid.Model.MultipleChoiceQuestion;
 import com.example.tomas.wisrandroid.Model.Question;
 import com.example.tomas.wisrandroid.Model.Room;
-import com.example.tomas.wisrandroid.Model.TextualQuestion;
 import com.example.tomas.wisrandroid.R;
 import com.google.gson.Gson;
 
-public class QuestionActivity extends AppCompatActivity {
+public class RoomActivity extends AppCompatActivity {
 
     private CustomPagerAdapter mPagerAdapter;
     private ViewPager mViewPager;
@@ -36,7 +27,7 @@ public class QuestionActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_question);
+        setContentView(R.layout.activity_room);
         HideUI();
         Init();
     }
@@ -85,7 +76,7 @@ public class QuestionActivity extends AppCompatActivity {
         String roomString = getIntent().getBundleExtra("CurrentRoom").getString("Room");
         Room mRoom = gson.fromJson(roomString, Room.class);
 
-        // Setting up the viewpager for QuestionActivity
+        // Setting up the viewpager for RoomActivity
         mPagerAdapter = new CustomPagerAdapter(getSupportFragmentManager(), mRoom.get_id());
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mPagerAdapter);
@@ -98,7 +89,17 @@ public class QuestionActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-                Toast.makeText(QuestionActivity.this, "Selected page position: " + position, Toast.LENGTH_SHORT).show();
+                if(position == 0)
+                {
+                    Toast.makeText(RoomActivity.this, "Questions", Toast.LENGTH_SHORT).show();
+                }else if(position == 1)
+                {
+                    Toast.makeText(RoomActivity.this, "Selected Question", Toast.LENGTH_SHORT).show();
+                }else
+                {
+                    Toast.makeText(RoomActivity.this, "Chat", Toast.LENGTH_SHORT).show();
+                }
+
                 mViewPager.setCurrentItem(position);
             }
 
