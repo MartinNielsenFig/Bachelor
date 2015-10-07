@@ -9,10 +9,10 @@
         <div class="col-md-12">
             <div id="rooms">
                 <div id="roomText" class="text-center">
-                    <h2><small>Rooms based on <a onClick="toggleLocation();" style="cursor: pointer">your location</a></small></h2>
+                    <h2><small>@WisR.App_Resources.Resource.RoomsBasedOn <a onClick="toggleLocation();" style="cursor: pointer">@WisR.App_Resources.Resource.YourLocation</a></small></h2>
                 </div>
                 <div ng-hide="roomsLoaded" class="container text-center">
-                    <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span><label id="loadingLabel" class="">Loading location...</label>
+                    <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span><label id="loadingLabel" class="">@WisR.App_Resources.Resource.Loading @WisR.App_Resources.Resource.YourLocation ...</label>
                 </div>
                 <div id="googlemaps" hidden>
                     <div id="address"></div>
@@ -21,7 +21,7 @@
                 </div>
                 <div ng-show="roomsLoaded">
                     <div style="height: 300px; text-align: center" ng-hide="(Rooms|roomsNear:this).length>0">
-                        <h3>No rooms nearby</h3>
+                        <h3>@WisR.App_Resources.Resource.NoRoomsNearby</h3>
                     </div>
                 </div>
                 <div ng-show="(Rooms|roomsNear:this).length>0" style="height: 300px; overflow: auto">

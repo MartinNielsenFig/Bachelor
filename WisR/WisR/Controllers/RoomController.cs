@@ -19,7 +19,7 @@ using WisRRestAPI.DomainModel;
 
 namespace WisR.Controllers
 {
-    public class RoomController : Controller
+    public class RoomController : BaseController
     {
         private IRabbitSubscriber _rabbitSubscriber;
 
