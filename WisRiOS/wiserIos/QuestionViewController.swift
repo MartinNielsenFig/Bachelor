@@ -52,10 +52,17 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         //Todo handle if not logged in
         let answer = Answer(value: answerPickerText, userId: CurrentUser.sharedInstance._id!)
         let answerJson = JSONSerializer.toJson(answer)
-        
         let body = "response=\(answerJson)&questionId=\(question._id!)"
-        HttpHandler.requestWithResponse(action: "Question/AddQuestionResponse", type: "POST", body: body) { (data, response, error) -> Void in
-            print(data)
+        
+        HttpHandler.requestWithResponse(action: "Question/AddQuestionResponse", type: "POST", body: body) { (data, response, error) in
+            if error == "nil" && data == "" {
+                if let myResponse = (self.question.Result.filter() { $0.UserId == CurrentUser.sharedInstance._id}.first) {
+                    myResponse.Value = answer.Value
+                }
+                else {
+                    self.question.Result += [answer]
+                }
+            }
         }
     }
     
@@ -73,20 +80,21 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     func vote(up: Bool, button: UIButton) {
         updateVoteUI(up)
         let voteValue = up ? 1 : -1
-        
         let vote = Vote(createdById: CurrentUser.sharedInstance._id!, value: voteValue)
         let voteJson = JSONSerializer.toJson(vote)
         let body = "vote=\(voteJson)&type=MultipleChoiceQuestion&id=\(question._id!)"
-        HttpHandler.requestWithResponse(action: "Question/AddVote", type: "POST", body: body) { (data, response, error) -> Void in
-            
-            //If Vote already exists, update it. Else add it.
-            if let myVote = (self.question.Votes.filter() { $0.CreatedById == CurrentUser.sharedInstance._id }.first) {
-                myVote.Value = voteValue
+        
+        HttpHandler.requestWithResponse(action: "Question/AddVote", type: "POST", body: body) { (data, response, error) in
+            if error == "nil" && data == "" {
+                //If Vote already exists, update it. Else add it.
+                if let myVote = (self.question.Votes.filter() { $0.CreatedById == CurrentUser.sharedInstance._id }.first) {
+                    myVote.Value = voteValue
+                }
+                else {
+                    self.question.Votes += [vote]
+                }
+                print(up ? "VOTED" : "DOWNVOTED")
             }
-            else {
-                self.question.Votes += [vote]
-            }
-            print(up ? "VOTED" : "DOWNVOTED")
         }
     }
 

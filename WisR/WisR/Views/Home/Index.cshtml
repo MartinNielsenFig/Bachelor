@@ -76,7 +76,7 @@
                 <form ng-submit="postRoom()">
 
                     <div class="row">
-                        <label class="col-md-6">Room name</label> <input required ng-model="RoomName" type="text" class="col-md-6" />
+                        <label class="col-md-6">Room name</label>  <input required ng-model="RoomName" type="text" class="col-md-6" />
                     </div>
                     <div class="row">
                         <label class="col-md-6">Unique tag</label> <input required ng-model="UniqueTag" class="col-md-6" type="text" />
@@ -88,7 +88,8 @@
                         <label class="col-md-6">Use location</label> <input ng-model="UseLocation" class="col-md-6" type="checkbox" />
                     </div>
                     <div ng-show="UseLocation" class="row">
-                        <label class="col-md-6">Radius</label> <input ng-model="Radius" class="col-md-6" type="range" max="100" step="50" min="0" />
+                        <label class="col-md-6">Radius</label> <input ng-model="Radius" class="col-md-6" type="range" max="200" step="75" min="50"/>
+                        <div class="col-md-6"></div><p>{{Radius}} Meters</p>
                     </div>
                     <div class="row">
                         <label class="col-md-6">Has chat</label> <input ng-model="HasChat" class="col-md-6" type="checkbox" />
