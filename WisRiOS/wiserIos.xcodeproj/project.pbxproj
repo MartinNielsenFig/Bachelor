@@ -52,6 +52,8 @@
 		CBF19CDA1BB0065A00A906B3 /* NumberInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF19CD91BB0065A00A906B3 /* NumberInputCell.swift */; settings = {ASSET_TAGS = (); }; };
 		CBF19CDE1BB03D5800A906B3 /* Vote.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF19CDD1BB03D5800A906B3 /* Vote.swift */; settings = {ASSET_TAGS = (); }; };
 		CBF51C911BC5254A002F2732 /* ErrorCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF51C901BC5254A002F2732 /* ErrorCodes.swift */; settings = {ASSET_TAGS = (); }; };
+		CBF51C9F1BC54EA2002F2732 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBF51C9C1BC54E78002F2732 /* CryptoSwift.framework */; };
+		CBF51CA01BC54EA2002F2732 /* CryptoSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CBF51C9C1BC54E78002F2732 /* CryptoSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +85,27 @@
 			remoteGlobalIDString = 5BA8EC3F1A9D14DC00CE82E1;
 			remoteInfo = Charts;
 		};
+		CBF51C9B1BC54E78002F2732 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CBF51C941BC54E78002F2732 /* CryptoSwift.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 754BE45519693E190098E6F3;
+			remoteInfo = CryptoSwift;
+		};
+		CBF51C9D1BC54E78002F2732 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CBF51C941BC54E78002F2732 /* CryptoSwift.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 754BE46019693E190098E6F3;
+			remoteInfo = CryptoSwiftTests;
+		};
+		CBF51CA11BC54EA2002F2732 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CBF51C941BC54E78002F2732 /* CryptoSwift.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 754BE45419693E190098E6F3;
+			remoteInfo = CryptoSwift;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -93,6 +116,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				CBCD3F491BB96F0100E53F76 /* Charts.framework in Embed Frameworks */,
+				CBF51CA01BC54EA2002F2732 /* CryptoSwift.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -148,6 +172,7 @@
 		CBF19CD91BB0065A00A906B3 /* NumberInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberInputCell.swift; sourceTree = "<group>"; };
 		CBF19CDD1BB03D5800A906B3 /* Vote.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vote.swift; sourceTree = "<group>"; };
 		CBF51C901BC5254A002F2732 /* ErrorCodes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorCodes.swift; sourceTree = "<group>"; };
+		CBF51C941BC54E78002F2732 /* CryptoSwift.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CryptoSwift.xcodeproj; path = ../../CryptoSwift/CryptoSwift.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,6 +183,7 @@
 				CBA437301B8DF5A500EF3E01 /* MapKit.framework in Frameworks */,
 				CBB34B091BAF549C00CA98DD /* FBSDKCoreKit.framework in Frameworks */,
 				CBCD3F481BB96F0100E53F76 /* Charts.framework in Frameworks */,
+				CBF51C9F1BC54EA2002F2732 /* CryptoSwift.framework in Frameworks */,
 				CBB34B0A1BAF549C00CA98DD /* FBSDKLoginKit.framework in Frameworks */,
 				CBA4372C1B8DEA8E00EF3E01 /* CoreLocation.framework in Frameworks */,
 			);
@@ -252,6 +278,7 @@
 		CB847E811B9EC0CC00D1C230 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CBF51C941BC54E78002F2732 /* CryptoSwift.xcodeproj */,
 				CBCD3F421BB96EF800E53F76 /* Charts.xcodeproj */,
 				CBB34B071BAF549C00CA98DD /* FBSDKCoreKit.framework */,
 				CBB34B081BAF549C00CA98DD /* FBSDKLoginKit.framework */,
@@ -300,6 +327,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		CBF51C951BC54E78002F2732 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CBF51C9C1BC54E78002F2732 /* CryptoSwift.framework */,
+				CBF51C9E1BC54E78002F2732 /* CryptoSwiftTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -316,6 +352,7 @@
 			);
 			dependencies = (
 				CBCD3F4B1BB96F0100E53F76 /* PBXTargetDependency */,
+				CBF51CA21BC54EA2002F2732 /* PBXTargetDependency */,
 			);
 			name = wiserIos;
 			productName = wiserIos;
@@ -377,6 +414,10 @@
 					ProductGroup = CBCD3F431BB96EF800E53F76 /* Products */;
 					ProjectRef = CBCD3F421BB96EF800E53F76 /* Charts.xcodeproj */;
 				},
+				{
+					ProductGroup = CBF51C951BC54E78002F2732 /* Products */;
+					ProjectRef = CBF51C941BC54E78002F2732 /* CryptoSwift.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -399,6 +440,20 @@
 			fileType = wrapper.framework;
 			path = Charts.framework;
 			remoteRef = CBCD3F461BB96EF800E53F76 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CBF51C9C1BC54E78002F2732 /* CryptoSwift.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = CryptoSwift.framework;
+			remoteRef = CBF51C9B1BC54E78002F2732 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CBF51C9E1BC54E78002F2732 /* CryptoSwiftTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = CryptoSwiftTests.xctest;
+			remoteRef = CBF51C9D1BC54E78002F2732 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -486,6 +541,11 @@
 			isa = PBXTargetDependency;
 			name = Charts;
 			targetProxy = CBCD3F4A1BB96F0100E53F76 /* PBXContainerItemProxy */;
+		};
+		CBF51CA21BC54EA2002F2732 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = CryptoSwift;
+			targetProxy = CBF51CA11BC54EA2002F2732 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

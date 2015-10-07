@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CryptoSwift  //CryptoSwift https://github.com/krzyzanowskim/CryptoSwift all credits to krzyzanowskim
 
 /// Shows the rooms nearby in a list, enabling the user to join the room.
 class RoomTableViewController: UITableViewController {
@@ -139,9 +140,11 @@ class RoomTableViewController: UITableViewController {
             
             let alert = UIAlertController(title: "Enter password", message: "The room you selected is password protected. Enter the password for the room.", preferredStyle: .Alert)
             alert.addAction(UIAlertAction(title: "Connect", style: .Default, handler: { action in
+                
                 //Do some encryption here on user input
-                if aRoom.EncryptedPassword == pwTextField?.text {
+                if let pw = pwTextField!.text, inputEncryptedPw = pw.sha512(), roomEncryptedPw = aRoom.EncryptedPassword where roomEncryptedPw == inputEncryptedPw {
                     print("CORRECT PASSWORD")
+                    self.performSegueWithIdentifier("SelectRoom", sender: aRoom)
                 }
                 else {
                     print("WRONG PASSWORD")
@@ -155,9 +158,7 @@ class RoomTableViewController: UITableViewController {
                 textField.placeholder = "Enter room password"
             }
             
-            dispatch_async(dispatch_get_main_queue()) {
-                self.presentViewController(alert, animated: true, completion: nil)
-            }
+            self.presentViewController(alert, animated: true, completion: nil)
             
             return false
         }
