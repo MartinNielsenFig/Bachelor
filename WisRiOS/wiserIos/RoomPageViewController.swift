@@ -86,8 +86,7 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
         }))
         
         alert.addAction(UIAlertAction(title: "Logout", style: .Default, handler: { action in
-            FacebookHelper.logOff()
-            self.navigationController?.popViewControllerAnimated(true)
+            self.navigationController?.popToRootViewControllerAnimated(true)
         }))
         
         self.presentViewController(alert, animated: true, completion: nil)

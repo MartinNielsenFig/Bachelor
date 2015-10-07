@@ -41,6 +41,12 @@ class StringExtractor {
         return highest
     }
     
+    /**
+    Shortens a string.
+    - parameter aString:		The string to be shortened
+    - parameter maxLength:	Max length of the string
+    - returns: The shortened string.
+    */
     static func shortenString(aString: String, maxLength: Int) -> String {
         var shortenedText = aString
 
