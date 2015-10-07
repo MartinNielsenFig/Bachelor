@@ -1,37 +1,28 @@
 package com.example.tomas.wisrandroid.Activities;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.tomas.wisrandroid.Helpers.ActivityLayoutHelper;
 import com.example.tomas.wisrandroid.Helpers.HttpHelper;
 import com.example.tomas.wisrandroid.Helpers.CustomRoomAdapter;
-import com.example.tomas.wisrandroid.Model.MyUser;
 import com.example.tomas.wisrandroid.Model.Room;
 import com.example.tomas.wisrandroid.R;
 import com.google.gson.Gson;
 
-import java.net.Proxy;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class SelectRoomActivity extends AppCompatActivity {
@@ -55,7 +46,7 @@ public class SelectRoomActivity extends AppCompatActivity {
                 Gson mGson = new Gson();
                 Bundle mBundle = new Bundle();
                 mBundle.putString("Room", mGson.toJson((mRoomList.get(i))));
-                Intent mIntent = new Intent(getApplicationContext(), QuestionActivity.class);
+                Intent mIntent = new Intent(getApplicationContext(), RoomActivity.class);
                 mIntent.putExtra("CurrentRoom",mBundle);
                 startActivity(mIntent, mBundle);
 

@@ -38,7 +38,7 @@
             android:label="@string/title_activity_select_room" >
         </activity>
         <activity
-            android:name=".Activities.QuestionActivity"
+            android:name=".Activities.RoomActivity"
             android:label="@string/title_activity_ask_question" >
         </activity>
         <activity

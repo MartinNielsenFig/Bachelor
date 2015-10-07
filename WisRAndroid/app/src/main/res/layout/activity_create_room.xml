@@ -30,7 +30,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="6"
-                android:hint="Wanted room name" />
+                android:hint="Enter room name" />
 
         </LinearLayout>
 
@@ -53,7 +53,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="6"
-                android:hint="Wanted unique tag" />
+                android:hint="Enter unique tag" />
 
         </LinearLayout>
 
@@ -104,7 +104,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="6"
                 android:enabled="false"
-                android:hint="Wanted password"
+                android:hint="Enter password"
                 android:inputType="textPassword" />
 
         </LinearLayout>

@@ -196,7 +196,7 @@ public class CreateRoomActivity extends AppCompatActivity implements GoogleApiCl
                         Gson mGson = new Gson();
                         Bundle mBundle = new Bundle();
                         mBundle.putString("Room", mGson.toJson(mRoom));
-                        Intent mIntent = new Intent(getApplicationContext(), QuestionActivity.class);
+                        Intent mIntent = new Intent(getApplicationContext(), RoomActivity.class);
                         mIntent.putExtra("CurrentRoom", mBundle);
                         startActivity(mIntent, mBundle);
                     }

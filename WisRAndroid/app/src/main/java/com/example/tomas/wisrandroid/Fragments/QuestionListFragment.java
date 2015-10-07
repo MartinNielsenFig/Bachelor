@@ -1,8 +1,6 @@
 package com.example.tomas.wisrandroid.Fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +13,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
-import com.example.tomas.wisrandroid.Activities.QuestionActivity;
+import com.example.tomas.wisrandroid.Activities.RoomActivity;
 import com.example.tomas.wisrandroid.Helpers.CustomQuestionAdapter;
 import com.example.tomas.wisrandroid.Helpers.HttpHelper;
 import com.example.tomas.wisrandroid.Model.MultipleChoiceQuestion;
@@ -74,7 +72,6 @@ public class QuestionListFragment extends android.support.v4.app.Fragment {
                     }
                 }
                 mAdapter.notifyDataSetChanged();
-                //Toast.makeText(getContext(), response, Toast.LENGTH_LONG).show();
             }
         };
 
@@ -124,6 +121,6 @@ public class QuestionListFragment extends android.support.v4.app.Fragment {
 
     public void setCurrentQuestionFragment(Question curQuestion)
     {
-        ((QuestionActivity)getActivity()).TransferCurrentQuestion(curQuestion);
+        ((RoomActivity)getActivity()).TransferCurrentQuestion(curQuestion);
     }
 }

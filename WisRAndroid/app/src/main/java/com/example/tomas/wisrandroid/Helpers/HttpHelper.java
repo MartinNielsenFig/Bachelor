@@ -34,7 +34,7 @@ public class HttpHelper extends Request<String> {
     protected Map<String, String> getParams()
             throws com.android.volley.AuthFailureError {
         return params;
-    };
+    }
 
     @Override
     protected Response<String> parseNetworkResponse(NetworkResponse response) {
