@@ -165,7 +165,7 @@ class CreateRoomViewController: UITableViewController {
         
         room.Tag = roomTagInputCell?.inputField.text
         room.UsersCanAsk = (userQuestionInputCell?.uiSwitch.on)!
-        room.EncryptedPassword = pwInputCell?.inputField.text
+        room.EncryptedPassword = pwInputCell?.inputField.text?.sha512()
         
         let jsonRoom = JSONSerializer.toJson(self.room)
         let body = "room=\(jsonRoom)"
