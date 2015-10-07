@@ -41,9 +41,16 @@ describe("Homecontroller", function () {
 
         it('should change $scope.message to "The room-tag you have entered requires you to be logged in"', function() {
             var room = { AllowAnonymous: false }
+            scope.userId = 'NoUser';
             scope.changeViewToRoom(room);
-            expect(scope.message).toBe('The room-tag you have entered requires you to be logged in');
+            expect(scope.Message).toBe('The room-tag you have entered requires you to be logged in');
         });
     
+        it('should change location to ?RoomId=1', function () {
+            var room = { _id: 1 }
+            scope.userId = 'NoUser';
+            scope.changeViewToRoom(room);
+            expect(location.href).toBe('http://localhost:63385/?RoomId=1');
+        });
     });
 });
