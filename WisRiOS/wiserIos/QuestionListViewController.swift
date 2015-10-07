@@ -119,11 +119,13 @@ class QuestionListViewController: UITableViewController, Paged {
         super.viewDidAppear(true)
     }
     
-    //UITableViewController
+    
+    //UIRefreshControl
     func handleRefresh(refreshControl: UIRefreshControl) {
         fetchQuestions(refreshControl)
     }
     
+    //UITableViewController
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
