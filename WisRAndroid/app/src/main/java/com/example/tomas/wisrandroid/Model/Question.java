@@ -7,7 +7,7 @@ import java.util.List;
 public abstract class Question {
 
     //Fields
-    private String Id;
+    private String _id;
     private String QuestionText;
     private String Img;
     private ArrayList<Vote> Votes;
@@ -20,11 +20,11 @@ public abstract class Question {
 
     //Constructors
     public Question(){};
-    public Question(String Id, String QuestionText, String Img, ArrayList<Vote> Votes,
+    public Question(String _id, String QuestionText, String Img, ArrayList<Vote> Votes,
                     int Downvotes, String CreatedById, String RoomId, ArrayList<ResponseOption> ResponseOptions,
                     ArrayList<Answer> Result, String CreationTimestamp, String ExpireTimestamp  )
     {
-        this.Id = Id;
+        this._id = _id;
         this.QuestionText = QuestionText;
         this.Img = Img;
         this.Votes = Votes;
@@ -37,8 +37,8 @@ public abstract class Question {
     }
 
     //Properties
-    public String get_Id(){return this.Id;}
-    public void set_Id(String Id){this.Id = Id;}
+    public String get_Id(){return this._id;}
+    public void set_Id(String _id){this._id = _id;}
 
     public String get_QuestionText(){return this.QuestionText;}
     public void set_QuestionText(String QuestionText){this.QuestionText = QuestionText;}
