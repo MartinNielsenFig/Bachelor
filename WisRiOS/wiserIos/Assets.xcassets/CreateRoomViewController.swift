@@ -169,10 +169,29 @@ class CreateRoomViewController: UITableViewController {
         
         let jsonRoom = JSONSerializer.toJson(self.room)
         let body = "room=\(jsonRoom)"
-        HttpHandler.requestWithResponse(action: "Room/CreateRoom", type: "POST", body: body) { (data, response, error) -> Void in
-            self.room._id = data
-            dispatch_async(dispatch_get_main_queue()) {
-                self.performSegueWithIdentifier("RoomCreated", sender: self)
+        HttpHandler.requestWithResponse(action: "Room/CreateRoom", type: "POST", body: body) { (data, response, error) in
+            if let data = data, error = try? Error.parse(data) {
+                print(error.ErrorMessage)
+                
+                if error.ErrorCode == ErrorCodes.RoomTagAlreadyInUse.rawValue {
+                    print("TAG ALREADY IN USE")
+                    
+                    let alert = UIAlertController(title: "Tag in use", message: "Tag is already in use, choose another.", preferredStyle: .Alert)
+                    alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { action in
+                        roomTagInputCell?.inputField.becomeFirstResponder()
+                    }))
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.presentViewController(alert, animated: true, completion: nil)
+                    }
+                }
+                
+                
+            }
+            else {
+                self.room._id = data
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.performSegueWithIdentifier("RoomCreated", sender: self)
+                }
             }
         }
     }

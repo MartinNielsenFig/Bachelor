@@ -51,6 +51,7 @@
 		CBF19CD81BAFFBA700A906B3 /* CreateQuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF19CD71BAFFBA700A906B3 /* CreateQuestionViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		CBF19CDA1BB0065A00A906B3 /* NumberInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF19CD91BB0065A00A906B3 /* NumberInputCell.swift */; settings = {ASSET_TAGS = (); }; };
 		CBF19CDE1BB03D5800A906B3 /* Vote.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF19CDD1BB03D5800A906B3 /* Vote.swift */; settings = {ASSET_TAGS = (); }; };
+		CBF51C911BC5254A002F2732 /* ErrorCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF51C901BC5254A002F2732 /* ErrorCodes.swift */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -146,6 +147,7 @@
 		CBF19CD71BAFFBA700A906B3 /* CreateQuestionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateQuestionViewController.swift; sourceTree = "<group>"; };
 		CBF19CD91BB0065A00A906B3 /* NumberInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NumberInputCell.swift; sourceTree = "<group>"; };
 		CBF19CDD1BB03D5800A906B3 /* Vote.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vote.swift; sourceTree = "<group>"; };
+		CBF51C901BC5254A002F2732 /* ErrorCodes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorCodes.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -268,6 +270,7 @@
 				CB84802C1B9EE0DC00D1C230 /* FacebookHelper.swift */,
 				CB0D53C51BA85996007E4CD2 /* DateTimeHelper.swift */,
 				CB2A1B871BB9DA0F00821087 /* RoomFilterHelper.swift */,
+				CBF51C901BC5254A002F2732 /* ErrorCodes.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -426,6 +429,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CBB4D7D71BA189EC001C531D /* LogonViewController.swift in Sources */,
+				CBF51C911BC5254A002F2732 /* ErrorCodes.swift in Sources */,
 				CBF19CDA1BB0065A00A906B3 /* NumberInputCell.swift in Sources */,
 				CB9FF7CA1B8F27EC003A193B /* Coordinate.swift in Sources */,
 				CBB4D7D91BA1A567001C531D /* RoomPageViewController.swift in Sources */,
