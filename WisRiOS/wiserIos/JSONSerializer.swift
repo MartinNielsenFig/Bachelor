@@ -64,7 +64,7 @@ class JSONSerializer {
     - returns: Returns the JSON string as AnyObject
     */
     private static func jsonToAnyObject(jsonString: String) throws -> AnyObject? {
-        var any: AnyObject? = nil
+        var any: AnyObject?
         
         if let data = jsonString.dataUsingEncoding(NSUTF8StringEncoding) {
             do {

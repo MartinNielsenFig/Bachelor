@@ -13,16 +13,16 @@ import MapKit
 class CreateRoomViewController: UITableViewController {
     
     //Properties
-    var roomNameInputCell: TextInputCell? = nil
-    var roomTagInputCell: TextInputCell? = nil
-    var pwSwitchCell: BooleanInputCell? = nil
-    var pwInputCell: TextInputCell? = nil
-    var radiusInputCell: SegmentedInputCell? = nil
-    var chatInputCell: BooleanInputCell? = nil
-    var anonymousInputCell: BooleanInputCell? = nil
-    var userQuestionInputCell: BooleanInputCell? = nil
-    var roomUsesLocationInputCell: BooleanInputCell? = nil
-    var pwLabel: UILabel? = nil
+    var roomNameInputCell: TextInputCell?
+    var roomTagInputCell: TextInputCell?
+    var pwSwitchCell: BooleanInputCell?
+    var pwInputCell: TextInputCell?
+    var radiusInputCell: SegmentedInputCell?
+    var chatInputCell: BooleanInputCell?
+    var anonymousInputCell: BooleanInputCell?
+    var userQuestionInputCell: BooleanInputCell?
+    var roomUsesLocationInputCell: BooleanInputCell?
+    var pwLabel: UILabel?
     
     var room = Room()
     
