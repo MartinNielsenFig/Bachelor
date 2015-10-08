@@ -78,8 +78,8 @@ class RoomTableViewController: UITableViewController {
             
             self.rooms.removeAll()
             self.allRooms.removeAll()
-            self.allRooms = tmpRooms
             
+            self.allRooms = tmpRooms
             self.rooms = RoomFilterHelper.filterRoomsByLocation(self.allRooms, metersRadius: 1000)
             refreshControl?.endRefreshing()
             self.tableView.reloadData()
@@ -130,11 +130,11 @@ class RoomTableViewController: UITableViewController {
         if let cell = sender as? UITableViewCell, indexPath = tableView.indexPathForCell(cell) {
             selectedRoom = rooms[indexPath.row]
         }
-        else if let aRoom = sender as? Room {
-            selectedRoom = aRoom
+        else if let room = sender as? Room {
+            selectedRoom = room
         }
         
-        if let aRoom = selectedRoom, hasPw = aRoom.HasPassword where hasPw {
+        if let room = selectedRoom, hasPw = room.HasPassword where hasPw {
             print("ROOM HAS PW")
             var pwTextField: UITextField?
             
@@ -142,9 +142,9 @@ class RoomTableViewController: UITableViewController {
             alert.addAction(UIAlertAction(title: "Connect", style: .Default, handler: { action in
                 
                 //Do some encryption here on user input
-                if let pw = pwTextField!.text, inputEncryptedPw = pw.sha512(), roomEncryptedPw = aRoom.EncryptedPassword where roomEncryptedPw == inputEncryptedPw {
+                if let pw = pwTextField!.text, inputEncryptedPw = pw.sha512(), roomEncryptedPw = room.EncryptedPassword where roomEncryptedPw == inputEncryptedPw {
                     print("CORRECT PASSWORD")
-                    self.performSegueWithIdentifier("SelectRoom", sender: aRoom)
+                    self.performSegueWithIdentifier("SelectRoom", sender: room)
                 }
                 else {
                     print("WRONG PASSWORD")
