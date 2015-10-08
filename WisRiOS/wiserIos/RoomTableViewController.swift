@@ -82,8 +82,10 @@ class RoomTableViewController: UITableViewController {
             self.allRooms = tmpRooms
             self.rooms = RoomFilterHelper.filterRoomsByLocation(self.allRooms, metersRadius: 1000)
             refreshControl?.endRefreshing()
-            self.tableView.reloadData()
             
+            dispatch_async(dispatch_get_main_queue()) { //fixes rare bug, where list wouldn't refresh if slow internet connection (> 2 sec)
+                self.tableView.reloadData()
+            }
             print("duration of \(__FUNCTION__) took \(NSDate().timeIntervalSinceDate(start))")
         }
     }
@@ -173,8 +175,7 @@ class RoomTableViewController: UITableViewController {
             if let foundRoom = sender as? Room {
                 selectedRoom = foundRoom
             }
-            else if let selectedCell = sender as? UITableViewCell {
-                let index = tableView.indexPathForCell(selectedCell)!
+            else if let selectedCell = sender as? UITableViewCell, index = tableView.indexPathForCell(selectedCell) {
                 selectedRoom = rooms[index.row]
             }
             let roomViewController = segue.destinationViewController as! RoomPageViewController
