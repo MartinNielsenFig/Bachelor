@@ -23,7 +23,7 @@ class FacebookHelper {
     static func requestWisrUserFrom(facebookId: String) {
         let body = "facebookId=\(facebookId)"
         
-        HttpHandler.requestWithResponse(action: "User/GetWisrIdFromFacebookId", type: "POST", body: body) { (data, response, error) -> Void in
+        HttpHandler.requestWithResponse(action: "User/GetWisrIdFromFacebookId", type: "POST", body: body) { (data, response, error) in
             CurrentUser.sharedInstance._id = data
         }
     }
@@ -53,7 +53,7 @@ class FacebookHelper {
                     let userJson = JSONSerializer.toJson(user)
                     let body = "User=\(userJson)"
                     
-                    HttpHandler.requestWithResponse(action: "User/CreateUser", type: "POST", body: body) { (data, response, error) -> Void in
+                    HttpHandler.requestWithResponse(action: "User/CreateUser", type: "POST", body: body) { (data, response, error) in
                         CurrentUser.sharedInstance._id = data
                     }
                 }

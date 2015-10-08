@@ -71,11 +71,11 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
     
     func loadRoomsBasedOnLocation() {
         //Show nearby rooms
-        HttpHandler.requestWithResponse(action: "Room/GetAll", type: "GET", body: "") { (data, response, error) -> Void in
+        HttpHandler.requestWithResponse(action: "Room/GetAll", type: "GET", body: "") { (data, response, error) in
             var tmpRooms = [Room]()
             
             //try? operator makes roomsJson nil if .toArray throws instead of do try catch-pattern
-            if let data = data, jsonArray = try? JSONSerializer.toArray(data) {
+            if let jsonArray = try? JSONSerializer.toArray(data) {
                 for room in jsonArray {
                     tmpRooms += [Room(jsonDictionary: room as! NSDictionary)]
                 }

@@ -76,8 +76,8 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
         
         let jsonQ = JSONSerializer.toJson(q)
         let body = "roomId=\(room._id!)&question=\(jsonQ)&type=MultipleChoiceQuestion"
-        HttpHandler.requestWithResponse(action: "Question/CreateQuestion", type: "POST", body: body) { (data, response, error) -> Void in
-            
+        HttpHandler.requestWithResponse(action: "Question/CreateQuestion", type: "POST", body: body) { (data, response, error) in
+            NSLog("Question tried Created")
         }
     }
     

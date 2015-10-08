@@ -36,11 +36,11 @@ class ChatViewController: UIViewController, UITextFieldDelegate, Paged {
         chatMessageInput.delegate = self
         
         let body = "roomId=\(roomId!)"
-        HttpHandler.requestWithResponse(action: "Chat/GetAllByRoomId", type: "POST", body: body) { (data, response, error) -> Void in
+        HttpHandler.requestWithResponse(action: "Chat/GetAllByRoomId", type: "POST", body: body) { (data, response, error) in
             var messageArray = [ChatMessage]()
             var tempChat = String()
             
-            if let data = data, jsonArray = try? JSONSerializer.toArray(data) {
+            if let jsonArray = try? JSONSerializer.toArray(data) {
                 for msg in jsonArray {
                     let m = ChatMessage(jsonDictionary: msg as! NSDictionary)
                     messageArray += [m]
@@ -73,7 +73,7 @@ class ChatViewController: UIViewController, UITextFieldDelegate, Paged {
         
         let msgJson = JSONSerializer.toJson(msg)
         let body = "ChatMessage=\(msgJson)"
-        HttpHandler.requestWithResponse(action: "Chat/CreateChatMessage", type: "POST", body: body) { (data, response, error) -> Void in
+        HttpHandler.requestWithResponse(action: "Chat/CreateChatMessage", type: "POST", body: body) { (data, response, error) in
             NSLog("Chat/CreateChatMessage Done")
         }
         

@@ -67,10 +67,10 @@ class RoomTableViewController: UITableViewController {
     func fetchRooms(refreshControl: UIRefreshControl? = nil) {
         
         let start = NSDate()
-        HttpHandler.requestWithResponse(action: "Room/GetAll", type: "GET", body: "") { (data, response, error) -> Void in
+        HttpHandler.requestWithResponse(action: "Room/GetAll", type: "GET", body: "") { (data, response, error) in
             var tmpRooms = [Room]()
             
-            if let data = data, jsonArray = try? JSONSerializer.toArray(data) {
+            if let jsonArray = try? JSONSerializer.toArray(data) {
                 for room in jsonArray {
                     tmpRooms += [Room(jsonDictionary: room as! NSDictionary)]
                 }

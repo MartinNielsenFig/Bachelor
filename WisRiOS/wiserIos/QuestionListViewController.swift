@@ -67,7 +67,7 @@ class QuestionListViewController: UITableViewController, Paged {
         HttpHandler.requestWithResponse(action: action, type: "GET", body: "") { (data, response, error) -> Void in
             
             var tmpQuestions = [Question]()
-            if let data = data, jsonArray = try? JSONSerializer.toArray(data) {
+            if let jsonArray = try? JSONSerializer.toArray(data) {
                 for question in jsonArray {
                     tmpQuestions += [Question(jsonDictionary: question as! NSDictionary)]
                 }

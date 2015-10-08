@@ -32,7 +32,7 @@ class Error {
             let e = Error(jsonDictionary: dictionary)
             return e
         }
-        catch let nserror as NSError {
+        catch let nserror as NSError {  //todo test if this catches custom Error class
             print(nserror)
             throw nserror
         }
