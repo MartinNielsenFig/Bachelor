@@ -154,7 +154,6 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
             
             //Get rooms first time to show on map
             if firstTimeRoomsLoaded {
-                
                 firstTimeRoomsLoaded = false
                 loadRoomsBasedOnLocation()
             }
