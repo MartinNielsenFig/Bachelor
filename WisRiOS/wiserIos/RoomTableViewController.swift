@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import JsonSerializerSwift
 import CryptoSwift  //CryptoSwift https://github.com/krzyzanowskim/CryptoSwift all credits to krzyzanowskim
 
 /// Shows the rooms nearby in a list, enabling the user to join the room.

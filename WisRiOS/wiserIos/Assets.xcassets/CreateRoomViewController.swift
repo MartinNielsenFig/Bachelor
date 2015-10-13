@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import JsonSerializerSwift
 
 /// Handles creation of a room with all its settings.
 class CreateRoomViewController: UITableViewController {

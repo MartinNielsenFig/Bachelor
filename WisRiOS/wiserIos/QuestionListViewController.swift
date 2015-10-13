@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import JsonSerializerSwift
 
 /// A sub-ViewController of RoomPageViewController. This shows the available questions for the room.
 class QuestionListViewController: UITableViewController, Paged {

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import JsonSerializerSwift
 
 /// The ViewController which handles the creation of a question inside a room.
 class CreateQuestionViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
