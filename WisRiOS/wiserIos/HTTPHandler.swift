@@ -27,9 +27,10 @@ class HttpHandler {
     - parameter type:							Type of call: POST or GET.
     - parameter body:							The body of the POST, empty if GET.
     - parameter completionHandler:	A closure function to be run when the HTTP request is complete and the client has received an answer from the RestAPI. See Apple dataTaskWithRequest documentation.
-    - parameter data:					Data returned from the RestAPI. Typically a mongoDB ID or a JSON string. Can be JSON string of type WisR.Error. See Apple dataTaskWithRequest documentation.
+    - parameter data:					Data returned from the RestAPI. Should always be a JSON string of type ReturnMessage.
     - parameter response:					Metadata associated with the response. See Apple NSURLResponse documentation.
-    - parameter error:							Error returned from the server. This is not the WisR.Error. See Apple dataTaskWithRequest documentation.
+    - parameter error:							Error returned from the server. See Apple dataTaskWithRequest documentation.
+    - parameter message:                The data parsed as ReturnMessage. Never nil, but if nothing is received from server, gains custom error code.
     */
     static func requestWithResponse(action action: String, type: String, body: String, completionHandler:
         (data: String, response: String?, error: String?) -> Void) {
@@ -49,9 +50,9 @@ class HttpHandler {
             
             //Todo add customError class to completionHandler?
             log(data: data, response: response, error: error)
-            var dataString = ""
-            if let d = data {
-                dataString = NSString(data: d, encoding: NSUTF8StringEncoding) as! String
+            var dataString = String()
+            if let data = data {
+                dataString = (NSString(data: data, encoding: NSUTF8StringEncoding) as! String)
             }
             completionHandler(data: dataString, response: String(response), error: String(error))
         }
