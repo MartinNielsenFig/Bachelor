@@ -31,7 +31,8 @@ class HttpHandler {
     - parameter response:					Metadata associated with the response. See Apple NSURLResponse documentation.
     - parameter error:							Error returned from the server. This is not the WisR.Error. See Apple dataTaskWithRequest documentation.
     */
-    static func requestWithResponse(action action: String, type: String, body: String, completionHandler: (data: String, response: String?, error: String?) -> Void) {
+    static func requestWithResponse(action action: String, type: String, body: String, completionHandler:
+        (data: String, response: String?, error: String?) -> Void) {
         let session = NSURLSession.sharedSession()
         let url = NSURL(string: mainUrl + action)!
         
