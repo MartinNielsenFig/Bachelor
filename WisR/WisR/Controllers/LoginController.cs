@@ -10,10 +10,11 @@ using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using Facebook;
 using System.DirectoryServices.AccountManagement;
+using WisR.Controllers;
 
 namespace Web.Controllers
 {
-    public class LoginController : Controller
+    public class LoginController : BaseController
     {
         public string redirecturi;
 
@@ -62,12 +63,12 @@ namespace Web.Controllers
             catch (DirectoryServicesCOMException cex)
             {
                 return "a"+cex.ToString();
-                Console.WriteLine(cex);
+                //Console.WriteLine(cex);
             }
             catch (Exception ex)
             {
                 return "b"+ex.Message;
-                Console.WriteLine(ex);
+                //Console.WriteLine(ex);
             }
             if (authenticated)
                 Session["LDAPid"] = email;

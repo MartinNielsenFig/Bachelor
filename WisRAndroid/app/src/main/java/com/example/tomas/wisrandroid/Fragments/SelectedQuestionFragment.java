@@ -42,6 +42,7 @@ public class SelectedQuestionFragment extends Fragment {
 
     // Current Question
     private Question mQuestion;
+    private Bitmap mPicture;
 
     // TextView
     private TextView mDebugTextView;
@@ -54,7 +55,7 @@ public class SelectedQuestionFragment extends Fragment {
     private NumberPicker mNumberPicker;
 
     // Gson
-    final Gson gson = new Gson();
+    private final Gson gson = new Gson();
 
     public static SelectedQuestionFragment newInstance(int page, String title) {
         SelectedQuestionFragment mSelectedQuestionFragment = new SelectedQuestionFragment();
@@ -65,7 +66,6 @@ public class SelectedQuestionFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -76,12 +76,28 @@ public class SelectedQuestionFragment extends Fragment {
         mImageView = (ImageView) view.findViewById(R.id.selected_fragment_imageview);
         mNumberPicker = (NumberPicker) view.findViewById(R.id.selected_fragment_numberpicker);
         Log.w("SelectedQuestion", "View Created");
+
+        if (savedInstanceState != null)
+        {
+            String Question = savedInstanceState.getString("Question","");
+            if(Question.contains("MultipleChoiceQuestion")) {
+                mQuestion = gson.fromJson(Question, Question.class);
+            }else {
+                mQuestion = gson.fromJson(Question, Question.class);
+            }
+        }
+
         return view;
     }
 
     @Override
     public void onStart() {
         super.onStart();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -92,7 +108,12 @@ public class SelectedQuestionFragment extends Fragment {
     public void setCurrentQuestion(Question currentQuestion)
     {
         mQuestion = currentQuestion;
-        if(currentQuestion.getClass().getName().equals(MultipleChoiceQuestion.class.toString().replace("class ","")))
+        initView();
+    }
+
+    public void initView()
+    {
+        if(mQuestion.getClass().getName().equals(MultipleChoiceQuestion.class.toString().replace("class ", "")))
         {
             mDebugTextView.setText(gson.toJson(mQuestion));
             mQuestionTextView.setText(mQuestion.get_QuestionText());
@@ -105,18 +126,18 @@ public class SelectedQuestionFragment extends Fragment {
             mNumberPicker.setMaxValue(responses.length-1);
             mNumberPicker.setDisplayedValues(responses);
         }else{
-            mDebugTextView.setText(gson.toJson(mQuestion));
-            mQuestionTextView.setText(mQuestion.get_QuestionText());
-            ArrayList<String> mResponses = new ArrayList<>();
-            for( ResponseOption curString : mQuestion.get_ResponseOptions())
-                mResponses.add(curString.get_value());
-            String[] responses = new String[mResponses.size()];
-            responses =  mResponses.toArray(responses);
-            mNumberPicker.setMinValue(0);
-            mNumberPicker.setMaxValue(responses.length-1);
-            mNumberPicker.setDisplayedValues(responses);
         }
+        GetPicture();
+    }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("Question", gson.toJson(mQuestion));
+    }
+
+    public void GetPicture()
+    {
         Thread mThread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -127,8 +148,8 @@ public class SelectedQuestionFragment extends Fragment {
 
                         mQuestion.set_Img(response);
                         byte[] bytesDecoded = Base64.decode(response, Base64.DEFAULT);
-                        Bitmap decodedByte = BitmapFactory.decodeByteArray(bytesDecoded, 0, bytesDecoded.length);
-                        mImageView.setImageBitmap(decodedByte);
+                        mPicture = BitmapFactory.decodeByteArray(bytesDecoded, 0, bytesDecoded.length);
+                        mImageView.setImageBitmap(mPicture);
 
                     }
                 };
@@ -152,6 +173,5 @@ public class SelectedQuestionFragment extends Fragment {
         });
         mThread.start();
     }
-
 }
 

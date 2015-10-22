@@ -25,7 +25,6 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
         
         print("RoomPageViewController instantiated with roomId \(room._id)")
         
-        
         //http://stackoverflow.com/questions/18844681/how-to-make-custom-uibarbuttonitem-with-image-and-label
         let askQBtn = UIButton(type: .Custom)
         askQBtn.setImage(UIImage(named: "AskQuestion"), forState: .Normal)
@@ -101,6 +100,7 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
         if segue.identifier == "CreateQuestion" {
             let createQuestionViewController = segue.destinationViewController as! CreateQuestionViewController
             createQuestionViewController.room = self.room
+            createQuestionViewController.previousNavigationController = self.navigationController
             //assert(false)   //Todo check if ok
         }
 

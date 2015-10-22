@@ -7,17 +7,22 @@
 //
 
 import UIKit
+import JsonSerializerSwift
+import CryptoSwift  //CryptoSwift https://github.com/krzyzanowskim/CryptoSwift all credits to krzyzanowskim
 
 /// Shows the rooms nearby in a list, enabling the user to join the room.
-class RoomTableViewController: UITableViewController, UIPopoverPresentationControllerDelegate {
+class RoomTableViewController: UITableViewController {
     
     //Properties
     var rooms = [Room]()
+    var allRooms = [Room]()
     
     //Lifecycle
     override func viewDidLoad() {
         self.refreshControl = UIRefreshControl()
         self.refreshControl!.addTarget(self, action: "handleRefresh:", forControlEvents: UIControlEvents.ValueChanged)
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Use Tag", style: .Plain, target: self, action: "useTag")
         
         fetchRooms(refreshControl)
         super.viewDidLoad()
@@ -38,7 +43,7 @@ class RoomTableViewController: UITableViewController, UIPopoverPresentationContr
         let cellIdentifier = "SubtitleCell"
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath)
         
-        let room = rooms[indexPath.row]
+        let room = self.rooms[indexPath.row]
         
         cell.textLabel?.text = room.Name
         
@@ -54,6 +59,7 @@ class RoomTableViewController: UITableViewController, UIPopoverPresentationContr
         return cell
     }
     
+    //UIRefreshControl
     func handleRefresh(refreshControl: UIRefreshControl) {
         fetchRooms(refreshControl)
     }
@@ -62,68 +68,119 @@ class RoomTableViewController: UITableViewController, UIPopoverPresentationContr
     func fetchRooms(refreshControl: UIRefreshControl? = nil) {
         
         let start = NSDate()
-        HttpHandler.requestWithResponse(action: "Room/GetAll", type: "GET", body: "") { (data, response, error) -> Void in
+        HttpHandler.requestWithResponse(action: "Room/GetAll", type: "GET", body: "") { (data, response, error) in
             var tmpRooms = [Room]()
             
-            if let data = data, jsonArray = try? JSONSerializer.toArray(data) {
+            if let jsonArray = try? JSONSerializer.toArray(data) {
                 for room in jsonArray {
                     tmpRooms += [Room(jsonDictionary: room as! NSDictionary)]
                 }
             }
             
             self.rooms.removeAll()
-            self.rooms += tmpRooms
+            self.allRooms.removeAll()
             
-            self.rooms = RoomFilterHelper.filterRoomsByLocation(self.rooms, metersRadius: 1000)
+            self.allRooms = tmpRooms
+            self.rooms = RoomFilterHelper.filterRoomsByLocation(self.allRooms, metersRadius: 1000)
             refreshControl?.endRefreshing()
-            self.tableView.reloadData()
             
+            dispatch_async(dispatch_get_main_queue()) { //fixes rare bug, where list wouldn't refresh if slow internet connection (> 2 sec)
+                self.tableView.reloadData()
+            }
             print("duration of \(__FUNCTION__) took \(NSDate().timeIntervalSinceDate(start))")
+        }
+    }
+    
+    /**
+    Function that runs when user chooses to use a tag to connect to a room
+    */
+    func useTag() {
+        var tagInput: UITextField?
+        
+        let alert = UIAlertController(title: "Connect with tag", message: "", preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "Connect", style: .Default, handler: { action in
+            
+            //Find room with tag
+            if let tag = tagInput?.text, foundRoom = (self.allRooms.filter(){ return $0.Tag == tag }).first {
+                if self.shouldPerformSegueWithIdentifier("SelectRoom", sender: foundRoom) {
+                    self.performSegueWithIdentifier("SelectRoom", sender: foundRoom)
+                }
+            }
+            else {
+                print("tag not found")
+            }
+            
+            
+        }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Destructive, handler: { (action) -> Void in
+            //Nothing
+        }))
+        alert.addTextFieldWithConfigurationHandler { (textField) -> Void in
+            tagInput = textField
+            textField.placeholder = "Enter room tag"
+        }
+        
+        dispatch_async(dispatch_get_main_queue()) {
+            self.presentViewController(alert, animated: true, completion: nil)
         }
     }
     
     //Navigation
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+        var selectedRoom: Room?
+        
+        //Can either be called where sender is UITableViewCell (from storyboard) or where sender is the actual Room (programmatically)
         if let cell = sender as? UITableViewCell, indexPath = tableView.indexPathForCell(cell) {
-                let selectedRoom = rooms[indexPath.row]
-                if let hasPw = selectedRoom.HasPassword where hasPw {
-                    print("ROOM HAS PW")
-                    
-                    //Many quarrels much fight
-                    //https://developer.apple.com/library/ios/documentation/UIKit/Reference/UIPopoverPresentationController_class/
-                    //http://stackoverflow.com/questions/25319179/uipopoverpresentationcontroller-on-ios-8-iphone
-                    let roomPwViewController: UIViewController! = self.storyboard?.instantiateViewControllerWithIdentifier("InputRoomPassword")
-                    roomPwViewController.modalPresentationStyle = .FormSheet
-                    roomPwViewController.presentationController?.delegate = self
-                    self.presentViewController(roomPwViewController, animated: true, completion: nil)
-                    roomPwViewController.view.backgroundColor = UIColor.redColor()
-                    
-                    return false
+            selectedRoom = rooms[indexPath.row]
+        }
+        else if let room = sender as? Room {
+            selectedRoom = room
+        }
+        
+        if let room = selectedRoom, hasPw = room.HasPassword where hasPw {
+            print("ROOM HAS PW")
+            var pwTextField: UITextField?
+            
+            let alert = UIAlertController(title: "Enter password", message: "The room you selected is password protected. Enter the password for the room.", preferredStyle: .Alert)
+            alert.addAction(UIAlertAction(title: "Connect", style: .Default, handler: { action in
+                
+                //Do some encryption here on user input
+                if let pw = pwTextField!.text, inputEncryptedPw = pw.sha512(), roomEncryptedPw = room.EncryptedPassword where roomEncryptedPw == inputEncryptedPw {
+                    print("CORRECT PASSWORD")
+                    self.performSegueWithIdentifier("SelectRoom", sender: room)
                 }
+                else {
+                    print("WRONG PASSWORD")
+                }
+            }))
+            alert.addAction(UIAlertAction(title: "Cancel", style: .Destructive, handler: { (action) -> Void in
+                //Nothing
+            }))
+            alert.addTextFieldWithConfigurationHandler { (textField) -> Void in
+                pwTextField = textField
+                textField.placeholder = "Enter room password"
             }
+            
+            self.presentViewController(alert, animated: true, completion: nil)
+            
+            return false
+        }
         
-        
-        print("FREE ACCESSS")
         return true
     }
     
-    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
-        return .None
-    }
-    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-        
         if segue.identifier == "SelectRoom" {
-            if let selectedCell = sender as? UITableViewCell {
-                
-                let index = tableView.indexPathForCell(selectedCell)!
-                let selectedRoom = rooms[index.row]
-                
-                let roomViewController = segue.destinationViewController as! RoomPageViewController
-                roomViewController.room = selectedRoom
+            var selectedRoom: Room?
+            
+            if let foundRoom = sender as? Room {
+                selectedRoom = foundRoom
             }
+            else if let selectedCell = sender as? UITableViewCell, index = tableView.indexPathForCell(selectedCell) {
+                selectedRoom = rooms[index.row]
+            }
+            let roomViewController = segue.destinationViewController as! RoomPageViewController
+            roomViewController.room = selectedRoom
         }
     }
 }

@@ -235,7 +235,7 @@ app.controller("HomeController", [
         ///Creates a new room, and connects to it
         $scope.postRoom = function () {
             if ($scope.Password.length !== 0) {
-                $scope.HashedPassword = CryptoJS.SHA512($scope.Password).toString();
+            $scope.HashedPassword = CryptoJS.SHA512($scope.Password).toString();
             }
             
             ///Make get request for json object conversion
@@ -268,7 +268,8 @@ app.controller("HomeController", [
 
 
                             //Add roomId to connected rooms for the user
-                            var room = { _id: response.data }
+                            //TODO: error in message, handling?
+                            var room = { _id: response.data.split(";")[0] }
                             $scope.currentUser.ConnectedRoomIds.push(room._id);
 
                             var newIds = "";
@@ -334,7 +335,7 @@ app.controller("HomeController", [
         ///Changes to view to a new room
         $scope.changeViewToRoom = function (room) {
             if (!room.AllowAnonymous && $scope.userId == 'NoUser') {
-                $scope.Message = "The room-tag you have entered requires you to be logged in";
+                $scope.Message = Resources.RoomTagRequiresLogin;
             } else {
                 $scope.RoomId = room._id;
                 var url = $("#RedirectTo").val() + "?RoomId=" + $scope.RoomId;
@@ -357,7 +358,7 @@ app.controller("HomeController", [
                 if (response.data._id != undefined) {
                     $scope.changeViewToRoom(response.data);
                 } else {
-                    $scope.Message = "No room with the tag: " + $scope.uniqueRoomTag;
+                    $scope.Message =Resources.NoRoomWithThatTag + $scope.uniqueRoomTag;
                 }
             });
         }
@@ -375,18 +376,18 @@ app.controller("HomeController", [
             ///Calls and get the currentlocation, and after that gets the rooms
             navigator.geolocation.getCurrentPosition(function (position) {
                 $scope.currentLocation = position;
-                $("#loadingLabel").text('Loading rooms...');
-                $scope.getRooms();
+                $("#loadingLabel").text(Resources.LoadingRooms +"...");
+                getRooms();
                 var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                 geocoder.geocode({ 'location': latLng }, function (results, status) {
                     if (status == google.maps.GeocoderStatus.OK) {
                         if (results[1]) {
                             $scope.currentAddress = results[1].formatted_address;
                         } else {
-                            window.alert('No results found');
+                            window.alert(Resources.NoResponseFound);
                         }
                     } else {
-                        window.alert('Geocoder failed due to: ' + status);
+                        window.alert(Resources.GeoCoderFailedDueTo + status);
                     }
                 });
             });

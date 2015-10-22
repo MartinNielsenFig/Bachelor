@@ -3,7 +3,7 @@
 }
 <body ng-controller="RoomController">
 <div ng-hide="specificRoomLoaded" style="min-height: 800px;align-items: center">
-    <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span><label class="">Loading room...</label>
+    <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span><label class="">@WisR.App_Resources.Resource.LoadingRoom...</label>
 </div>
     <div ng-show="specificRoomLoaded" ng-cloak>
         <h2>{{CurrentRoom.Name}}</h2>
@@ -11,22 +11,22 @@
 
         <div class="row" ng-show="rightPassword">
             <div ng-hide="questionsLoaded" class="container text-center col-md-8" style="min-height: 800px">
-                <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span><label id="loadingLabel" class="">Loading questions...</label>
+                <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span><label id="loadingLabel" class="">@WisR.App_Resources.Resource.LoadingQuestions...</label>
             </div>
             <div ng-show="CurrentRoom.CreatedById == currentUser._id">
                 <div id="roomText" class="text-center">
                     <h2>
-                        <small><a ng-click="toggleRoomLocation()" style="cursor: pointer">See Room & your location</a></small>
+                        <small><a ng-click="toggleRoomLocation()" style="cursor: pointer">@WisR.App_Resources.Resource.SeeRoomAndLocation</a></small>
                     </h2>
                 </div>
                 <div id="googlemapsRoom" hidden>
                     <div id="mapRoom" style="height: 300px"></div>
                 </div>
-                <button id="updateBtn" ng-click="updateLocation()" hidden>Update location</button>
+                <button id="updateBtn" ng-click="updateLocation()" hidden>@WisR.App_Resources.Resource.UpdateLocation</button>
             </div>
             <div id="questionTables" ng-show="!SpecificQuestionShown && questionsLoaded">
                 <div class="col-md-8">
-                    <h4>Host questions</h4>
+                    <h4>@WisR.App_Resources.Resource.HostQuestions</h4>
                     <div style="overflow-y: auto; max-height: 300px; min-height: 300px">
                         <table id="hostQuestionsTable" class="table table-hover table-responsive">
                             <tbody>
@@ -39,7 +39,7 @@
                         </table>
                     </div>
                     <div ng-show="CurrentRoom.UsersCanAsk">
-                        <h4>User questions</h4>
+                        <h4>@WisR.App_Resources.Resource.UserQuestions</h4>
                         <div style="overflow-y: auto; max-height: 300px; min-height: 300px">
                             <table id="userQuestionsTable" class="table table-hover table-responsive">
                                 <tbody>
@@ -53,7 +53,7 @@
                         </div>
                     </div>
                     <div class="col-md-3" id="createQuestionDiv">
-                        <button id="createQuestionButton" ng-disabled="userId!=CurrentRoom.CreatedById&&!CurrentRoom.UsersCanAsk" title="{{ userId!=CurrentRoom.CreatedById&&!CurrentRoom.UsersCanAsk ? 'User Questions are disabled' : ''}}" style="pointer-events: auto;" class="btn btn-primary" onclick="$('#myModalCreate').modal('toggle')">Create Question</button>
+                        <button id="createQuestionButton" ng-disabled="userId!=CurrentRoom.CreatedById&&!CurrentRoom.UsersCanAsk" title="{{ userId!=CurrentRoom.CreatedById&&!CurrentRoom.UsersCanAsk ? 'User Questions are disabled' : ''}}" style="pointer-events: auto;" class="btn btn-primary" onclick="$('#myModalCreate').modal('toggle')">@WisR.App_Resources.Resource.CreateQuestion</button>
                     </div>
                 </div>
 
@@ -64,7 +64,7 @@
                         <tr>
                             <td>
                                 <div ng-hide="specificImageLoaded" class="container text-center col-md-4">
-                                    <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span><label>Loading image...</label>
+                                    <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span><label>@WisR.App_Resources.Resource.LoadingImage...</label>
                                 </div>
                                 <img ng-show="specificImageLoaded" ng-click="toggleImageSize()" id="specificQuestionImage" ng-src="data:image/png;base64,{{SpecificQuestion.Img}}" title="Click to change image size" style="cursor: pointer; width: 100px; height: 100px" />
                             </td>
@@ -92,12 +92,12 @@
                             </label>
                         </div>
 
-                        <button class="btn btn-primary" ng-click="AddAnswer()" ng-disabled="timerOverflow || answerChoosen == undefined" title="{{{true: 'Login to enable', false: ''}[anonymousUser]}}" style="pointer-events: auto;" ng-disabled="anonymousUser">Submit</button><button style="float: right" class="btn btn-primary" ng-click="ToggleShowQuestionTables()">Back to questions</button>
+                        <button class="btn btn-primary" ng-click="AddAnswer()" ng-disabled="timerOverflow || answerChoosen == undefined||anonymousUser" title="{{{true: 'Login to enable', false: ''}[anonymousUser]}}" style="pointer-events: auto;">@WisR.App_Resources.Resource.Submit</button><button style="float: right" class="btn btn-primary" ng-click="ToggleShowQuestionTables()">@WisR.App_Resources.Resource.BackToQuestions</button>
                     </form>
-                    <label ng-show="specificAnswer!=null" id="specificAnswerLabel">You answered: {{specificAnswer}}</label>
-                    <label ng-hide="showResults">No results yet</label>
+                    <label ng-show="specificAnswer!=null" id="specificAnswerLabel">@WisR.App_Resources.Resource.YouAnswered: {{specificAnswer}}</label>
+                    <label ng-hide="showResults">@WisR.App_Resources.Resource.NoResultsYet</label>
                     <div id="chartDiv" ng-hide="!showResults">
-                        <h3>Results</h3>
+                        <h3>@WisR.App_Resources.Resource.Results</h3>
                         <select ng-model="chartType">
                             <option>Pie</option>
                             <option>Doughnut</option>
@@ -105,16 +105,16 @@
                         </select>
                         <canvas id="pie" class="chart chart-base" chart-options="options" chart-type="chartType" chart-legend="true" chart-colors="colors" chart-data="data" chart-labels="labels"></canvas>
                     </div>
-                </div>
+                </div>||
             </div>
             <div ng-hide="chatLoaded" class="container text-center col-md-4">
-                <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span><label id="loadingLabel" class="">Loading chat messages...</label>
+                <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span><label id="loadingLabel" class="">@WisR.App_Resources.Resource.LoadingChatMessages...</label>
             </div>
             @* Chat template found at: http://bootsnipp.com/snippets/featured/chat *@
-            <div ng-show="chatLoaded" class="col-md-4" ng-show="CurrentRoom.HasChat">
+            <div ng-show="chatLoaded && CurrentRoom.HasChat" class="col-md-4" >
                 <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
                 @*Scroll glue keeps scroll bar at same location, found at: https://github.com/Luegg/angularjs-scroll-glue*@
-                <div class="fa-border" style="overflow-x: hidden; overflow-y: auto; max-height: 600px; min-height: 600px" scroll-glue>
+                <div class="fa-border fa" style="overflow-x: hidden; overflow-y: auto; max-height: 600px; min-height: 600px;min-width: 100%" scroll-glue>
                     <div class="row">
                         <div class="message-wrap col-lg-12">
                             <div class="msg-wrap">
@@ -133,10 +133,10 @@
                     </div>
                 </div>
                 <div class="send-wrap">
-                    <textarea ng-enter="postChatMessage(textAreaModel)" ng-model="textAreaModel" class="form-control send-message" rows="3" style="-moz-min-width: 100%; -ms-min-width: 100%; -o-min-width: 100%; -webkit-min-width: 100%; min-width: 100%" placeholder="Write a reply..."></textarea>
+                    <textarea ng-enter="postChatMessage(textAreaModel)" ng-model="textAreaModel" class="form-control send-message" rows="3" style="-moz-min-width: 100%; -ms-min-width: 100%; -o-min-width: 100%; -webkit-min-width: 100%; min-width: 100%" placeholder="@WisR.App_Resources.Resource.WriteAReply..."></textarea>
                 </div>
                 <div class="btn-panel">
-                    <button type="submit" class="btn btn-primary" ng-click="postChatMessage(textAreaModel)">Send message</button>
+                    <button type="submit" class="btn btn-primary" ng-click="postChatMessage(textAreaModel)">@WisR.App_Resources.Resource.SendMessage</button>
                 </div>
             </div>
 
@@ -149,37 +149,37 @@
                     <div class="modal-body">
                         <form ng-submit="postQuestion()">
                             <div class="row">
-                                <label class="col-md-6">Question text:</label> <input required ng-model="QuestionText" type="text" class="col-md-6" placeholder="Enter Question text" />
+                                <label class="col-md-6">@WisR.App_Resources.Resource.QuestionText</label> <input required ng-model="QuestionText" type="text" class="col-md-6" placeholder="@WisR.App_Resources.Resource.EnterQuestionText" />
                             </div>
                             <div class="row">
-                                <label class="col-md-6">Question type:</label>
+                                <label class="col-md-6">@WisR.App_Resources.Resource.QuestionType</label>
                                 <select class="col-md-6" ng-model="QuestionType" required ng-options="Type.name for Type in QuestionTypes">
-                                    <option value="" disabled selected> Choose type </option>
+                                    <option value="" disabled selected> @WisR.App_Resources.Resource.ChooseType </option>
                                 </select>
                             </div>
                             <div ng-show="QuestionType != undefined && QuestionType.val != 'TextualQuestion'" class="row">
-                                <label class="col-md-6">Response options:</label>
+                                <label class="col-md-6">@WisR.App_Resources.Resource.ResponseOptions</label>
                                 <div class="pull-right col-md-6">
-                                    <input type="button" ng-click="AddResponseOption()" value="Add Response Option">
+                                    <input type="button" ng-click="AddResponseOption()" value="@WisR.App_Resources.Resource.AddResponseOption">
                                     <div ng-repeat="option in ResponseOptions">
-                                        <input required ng-model="ResponseOptions[option.id].val" class="col-md-12" type="text" placeholder="Add response options" /><input type="button" ng-click="RemoveResponseOption(option)" value="Remove">
+                                        <input required ng-model="ResponseOptions[option.id].val" class="col-md-12" type="text" placeholder="@WisR.App_Resources.Resource.AddResponseOptions" /><input type="button" ng-click="RemoveResponseOption(option)" value="@WisR.App_Resources.Resource.Remove">
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-6">Picture</label><input type='file' ng-model='questionImage' base-sixty-four-input ctrl-function="setImageMessage(msg)" class="text-center">
+                                <label class="col-md-6">@WisR.App_Resources.Resource.Picture</label><input type='file' ng-model='questionImage' base-sixty-four-input ctrl-function="setImageMessage(msg)" class="text-center">
                                 <img ng-src="data:image/png;base64,{{questionImage.base64}}" style="max-width: 100px; max-height: 100px" />
                                 <div class="col-md-12 text-center">
                                     {{ImageMessage}}
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-6">Expiration time</label> <input required ng-model="ExpirationTime" class="col-md-6" type="number" />
+                                <label class="col-md-6">@WisR.App_Resources.Resource.ExpirationTime</label> <input required ng-model="ExpirationTime" class="col-md-6" type="number" />
                             </div>
                             <br />
                             <div class="row text-center">
-                                <button ng-disabled="imageTooBig" id="ModalCreateQuestionButton" type="submit" class="btn btn-primary">Create question</button>
-                                <button id="ModalCancelButton" type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                                <button ng-disabled="imageTooBig" id="ModalCreateQuestionButton" type="submit" class="btn btn-primary">@WisR.App_Resources.Resource.CreateQuestion</button>
+                                <button id="ModalCancelButton" type="button" class="btn btn-primary" data-dismiss="modal">@WisR.App_Resources.Resource.Cancel</button>
                             </div>
                         </form>
                     </div>
@@ -196,14 +196,14 @@
                     <div class="modal-body">
                         <form>
                             <div class="row">
-                                <label class="col-md-12 text-center">Enter Password:</label>
+                                <label class="col-md-12 text-center">@WisR.App_Resources.Resource.EnterPassword:</label>
                                 <div class="col-md-12 text-center">
                                     <input ng-model="inputPassword" type="password" required />
                                 </div>
                                 <div class="col-md-12 text-center">
-                                    <button class="btn btn-primary btn-md btn-default" type="submit" ng-click="validatePassword()">Submit</button>
+                                    <button class="btn btn-primary btn-md btn-default" type="submit" ng-click="validatePassword()">@WisR.App_Resources.Resource.Submit</button>
                                     <span>
-                                        @Html.ActionLink("Go back", "Index", "Home", null, new { @class = "btn btn-primary btn-md btn-default " })
+                                        @Html.ActionLink(WisR.App_Resources.Resource.GoBack, "Index", "Home", null, new { @class = "btn btn-primary btn-md btn-default " })
                                         @Html.Hidden("RedirectToHome", Url.Action("Index", "Home"))
                                     </span>
                                 </div>

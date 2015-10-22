@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import JsonSerializerSwift
 
 /// The ViewController which handles the creation of a question inside a room.
 class CreateQuestionViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
@@ -14,6 +15,7 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
     //Properties
     //Gets instantiated by RoomPageViewController in prepareForSegue
     var room: Room!
+    var previousNavigationController: UINavigationController?
     
     var responseOptions = [ResponseOption]() {
         didSet {
@@ -44,6 +46,12 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
     
     //Utilities
     func addQuestion() {
+        
+        if durationInput?.inputField.text == "" {
+            print("tell user to input a duration")
+            return
+        }
+        
         let q = Question()
         q.CreatedById = CurrentUser.sharedInstance._id
         
@@ -66,17 +74,16 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
         q.ResponseOptions = responseOptions
         q.QuestionText = questionText?.inputField.text
         q.RoomId = room._id
-        
-        if let input = durationInput?.inputField.text where input != "" {
-            let duration = Int(input)!/60
-            q.ExpireTimestamp = String(duration)
-        } else {
-            q.ExpireTimestamp = "1"
-        }
+        q.ExpireTimestamp = durationInput?.inputField.text
         
         let jsonQ = JSONSerializer.toJson(q)
         let body = "roomId=\(room._id!)&question=\(jsonQ)&type=MultipleChoiceQuestion"
-        HttpHandler.requestWithResponse(action: "Question/CreateQuestion", type: "POST", body: body) { (data, response, error) -> Void in
+        HttpHandler.requestWithResponse(action: "Question/CreateQuestion", type: "POST", body: body) { (data, response, error) in
+            
+            if error != nil {
+                NSLog("Question tried Created")
+                self.previousNavigationController!.parentViewController?.navigationController!.popViewControllerAnimated(true)
+            }
             
         }
     }

@@ -1,4 +1,6 @@
 ﻿@using System.Dynamic
+@using System.Globalization
+@using System.Threading
 @using Facebook
 <!DOCTYPE html>
 
@@ -19,6 +21,10 @@
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
     <script src="signalr/hubs"></script>
+
+    <script>
+        window.Resources =@Html.Raw(Json.Encode(WisR.Helper.ResourceHelper.GetResource()));
+    </script>
 
 </head>
 <body ng-app="wisrApp">
@@ -52,11 +58,11 @@
                                 var facebookId = Session["FacebookId"];
                                 var client = new FacebookClient(Session["accessToken"].ToString());
 
-                                result = client.Get("me", new { fields = "name, id, birthday" });
+                                result = client.Get("me", new {fields = "name, id, birthday"});
                                 <div class="fb-info">
                                     <ul class="nav navbar-nav navbar-right">
                                         <li>
-                                            <a>
+                                            <a style="border: none !important">
                                                 @result.name
                                             </a>
                                         </li>
@@ -68,16 +74,31 @@
                                 email = Session["LDAPid"].ToString();
                                 ldapUserName = email.Split('@')[0];
                                 result.name = ldapUserName;
-                                <a>
+                                <a style="border: none !important">
                                     @Session["LDAPid"].ToString().Split('@')[0]
                                 </a>
                             }
                         </li>
+                        @{
+                            CultureInfo currentCulture = Thread.CurrentThread.CurrentCulture;
+                            <li class="dropdown" style="cursor: pointer">
+                                <a class="downdown-toggle" id="dropdownMenu2" data-toggle="dropdown" aria-expanded="false">
+                                    Language
+                                    <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                    <li><a href="/Home/ChangeCurrentCulture/0">English</a></li>
+                                    <li><a href="/Home/ChangeCurrentCulture/1">Danish</a></li>
+                                </ul>
+                            </li>
+                        }
                         <li class="navbar-right">
-                            @Html.ActionLink("Log out", "Logout", "Login")
+                            
+                            @Html.ActionLink(WisR.App_Resources.Resource.LogOut, "Logout", "Login")
                             <script>
 
-                                app.controller("UserController", ['$scope', '$http', '$location', '$window', 'configs', function ($scope, $http, $location, $window, configs) {
+                                app.controller("UserController", [
+                                    '$scope', '$http', '$location', '$window', 'configs', function($scope, $http, $location, $window, configs) {
                                         //Converts the user to json and sends it to the rest api, on success it adds the user to window.userId
                                         $http.post(configs.baseHostName + '/Home/toJsonUser', {
                                             facebookId: '@result.id' != "" ? '@result.id' : null,
@@ -85,10 +106,10 @@
                                             displayName: '@result.name',
                                             email: '@email' != "" ? '@email' : null,
                                             encryptedPassword: null,
-                                        }).then(function (response) {
+                                        }).then(function(response) {
                                             //Use response to send to REST API
                                             $http.post(configs.restHostName + '/User/CreateUser', { User: JSON.stringify(response.data) }).
-                                                then(function (response) {
+                                                then(function(response) {
                                                     window.userId = response.data;
 
                                                     $('#createRoomButton').prop("disabled", false);
@@ -99,6 +120,7 @@
                                 ]);
 
                             </script>
+
                         </li>
                     </ul>
 
@@ -108,24 +130,37 @@
 
                     @Html.ActionLink("WisR", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
                     <ul class="navbar-right navbar-nav nav">
+                        @{
+                            CultureInfo currentCulture = Thread.CurrentThread.CurrentCulture;
+                            <li class="dropdown" style="cursor: pointer">
+                                <a class="downdown-toggle" id="dropdownMenu2" data-toggle="dropdown" aria-expanded="false">
+                                    Language
+                                    <span class="caret"></span>
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                    <li><a href="/Home/ChangeCurrentCulture/0">English</a></li>
+                                    <li><a href="/Home/ChangeCurrentCulture/1">Danish</a></li>
+                                </ul>
+                            </li>
+                        }
                         <li class="dropdown" style="cursor: pointer">
-                            <a class="downdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="false">Login
+                            <a class="downdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="false">
+                                @WisR.App_Resources.Resource.LogIn
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                                <li><a onclick="$('#myModalLDAPLogin').modal('toggle')">LDAP login</a></li>
+                                <li><a onclick="$('#myModalLDAPLogin').modal('toggle')">LDAP</a></li>
                                 <li>
                                     @Html.ActionLink("Facebook", "LoginWithFacebook", "Login")
                                 </li>
                             </ul>
                         </li>
 
-
                     </ul>
                     <script>
                         window.userId = "NoUser";
                     </script>
-                }
+                }                   
 
             </div>
             @*<div class="navbar-collapse collapse">
@@ -152,12 +187,12 @@
                                 <label class="col-md-6">Email:</label> <input name="email" required type="email" class="col-md-6" />
                             </div>
                             <div class="row col-md-12">
-                                <label class="col-md-6">Password:</label> <input name="password" required type="password" class="col-md-6" />
+                                <label class="col-md-6">@WisR.App_Resources.Resource.Password:</label> <input name="password" required type="password" class="col-md-6" />
                             </div>
                             <div class="col-md-12 text-center">
-                                <button id="ModalSubmitButton" type="submit" class="btn btn-primary">Login</button>
+                                <button id="ModalSubmitButton" type="submit" class="btn btn-primary">@WisR.App_Resources.Resource.LogIn</button>
                                 <span>
-                                    <button id="ModalCancelButton" type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                                    <button id="ModalCancelButton" type="button" class="btn btn-primary" data-dismiss="modal">@WisR.App_Resources.Resource.Cancel</button>
                                 </span>
 
                             </div>
@@ -193,6 +228,5 @@
 
         });
     </script>
-
 </body>
 </html>

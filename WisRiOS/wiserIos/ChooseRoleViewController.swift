@@ -9,6 +9,7 @@
 import UIKit
 import CoreLocation
 import MapKit
+import JsonSerializerSwift
 
 /// This is the application start ViewController. Handles the user choices between joining a room or creating a room. Also handles the MapView which collects the user position in a singleton for the application to use, and shows the rooms nearby. This is also where the user can log out.
 class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
@@ -71,11 +72,11 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
     
     func loadRoomsBasedOnLocation() {
         //Show nearby rooms
-        HttpHandler.requestWithResponse(action: "Room/GetAll", type: "GET", body: "") { (data, response, error) -> Void in
+        HttpHandler.requestWithResponse(action: "Room/GetAll", type: "GET", body: "") { (data, response, error) in
             var tmpRooms = [Room]()
             
             //try? operator makes roomsJson nil if .toArray throws instead of do try catch-pattern
-            if let data = data, jsonArray = try? JSONSerializer.toArray(data) {
+            if let jsonArray = try? JSONSerializer.toArray(data) {
                 for room in jsonArray {
                     tmpRooms += [Room(jsonDictionary: room as! NSDictionary)]
                 }
@@ -154,7 +155,6 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
             
             //Get rooms first time to show on map
             if firstTimeRoomsLoaded {
-                
                 firstTimeRoomsLoaded = false
                 loadRoomsBasedOnLocation()
             }

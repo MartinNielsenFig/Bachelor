@@ -27,18 +27,18 @@ function moveMap(position) {
     map.panTo(latLng);
 
     //Shows the accuaracy of the postition to the user
-    $("#accuracy").html('Precision: ' + position.coords.accuracy + ' meters');
+    $("#accuracy").html(Resources.Precision + position.coords.accuracy +" "+ Resources.Meters);
 
     //Get address from location
     geocoder.geocode({ 'location': latLng }, function (results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
             if (results[1]) {
-                $("#address").html('You are here: ' + results[1].formatted_address);
+                $("#address").html(Resources.YouAreHere + results[1].formatted_address);
             } else {
-                window.alert('No results found');
+                window.alert(Resources.NoResultsFound);
             }
         } else {
-            window.alert('Geocoder failed due to: ' + status);
+            window.alert(Resources.GeoCoderFailedDueTo + status);
         }
     });
 }

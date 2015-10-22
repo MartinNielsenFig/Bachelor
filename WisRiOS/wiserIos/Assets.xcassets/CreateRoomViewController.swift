@@ -8,21 +8,22 @@
 
 import UIKit
 import MapKit
+import JsonSerializerSwift
 
 /// Handles creation of a room with all its settings.
 class CreateRoomViewController: UITableViewController {
     
     //Properties
-    var roomNameInputCell: TextInputCell? = nil
-    var roomTagInputCell: TextInputCell? = nil
-    var pwSwitchCell: BooleanInputCell? = nil
-    var pwInputCell: TextInputCell? = nil
-    var radiusInputCell: SegmentedInputCell? = nil
-    var chatInputCell: BooleanInputCell? = nil
-    var anonymousInputCell: BooleanInputCell? = nil
-    var userQuestionInputCell: BooleanInputCell? = nil
-    var roomUsesLocationInputCell: BooleanInputCell? = nil
-    var pwLabel: UILabel? = nil
+    var roomNameInputCell: TextInputCell?
+    var roomTagInputCell: TextInputCell?
+    var pwSwitchCell: BooleanInputCell?
+    var pwInputCell: TextInputCell?
+    var radiusInputCell: SegmentedInputCell?
+    var chatInputCell: BooleanInputCell?
+    var anonymousInputCell: BooleanInputCell?
+    var userQuestionInputCell: BooleanInputCell?
+    var roomUsesLocationInputCell: BooleanInputCell?
+    var pwLabel: UILabel?
     
     var room = Room()
     
@@ -165,14 +166,31 @@ class CreateRoomViewController: UITableViewController {
         
         room.Tag = roomTagInputCell?.inputField.text
         room.UsersCanAsk = (userQuestionInputCell?.uiSwitch.on)!
-        room.EncryptedPassword = pwInputCell?.inputField.text
+        room.EncryptedPassword = pwInputCell?.inputField.text?.sha512()
         
         let jsonRoom = JSONSerializer.toJson(self.room)
         let body = "room=\(jsonRoom)"
-        HttpHandler.requestWithResponse(action: "Room/CreateRoom", type: "POST", body: body) { (data, response, error) -> Void in
-            self.room._id = data
-            dispatch_async(dispatch_get_main_queue()) {
-                self.performSegueWithIdentifier("RoomCreated", sender: self)
+        HttpHandler.requestWithResponse(action: "Room/CreateRoom", type: "POST", body: body) { (data, response, error) in
+            if let error = try? Error.parse(data) {
+                print(error.ErrorMessage)
+                
+                if error.ErrorCode == ErrorCodes.RoomTagAlreadyInUse.rawValue {
+                    print("TAG ALREADY IN USE")
+                    
+                    let alert = UIAlertController(title: "Tag in use", message: "Tag is already in use, choose another.", preferredStyle: .Alert)
+                    alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { action in
+                        roomTagInputCell?.inputField.becomeFirstResponder()
+                    }))
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.presentViewController(alert, animated: true, completion: nil)
+                    }
+                }
+            }
+            else {
+                self.room._id = data
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.performSegueWithIdentifier("RoomCreated", sender: self)
+                }
             }
         }
     }

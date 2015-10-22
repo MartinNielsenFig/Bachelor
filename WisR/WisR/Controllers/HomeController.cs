@@ -11,11 +11,12 @@ using MongoDB.Bson.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Bson;
 using WisR.DomainModels;
+using WisR.Helper;
 using WisR.Providers;
 
 namespace WisR.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         private IRabbitSubscriber _rabbitHandler;
 
@@ -89,6 +90,21 @@ namespace WisR.Controllers
             user.ConnectedRoomIds = tempList;
            
             return user.ToJson();
+        }
+        public ActionResult ChangeCurrentCulture(int id)
+        {
+            //  
+            // Change the current culture for this user.  
+            //  
+            CultureHelper.CurrentCulture = id;
+            //  
+            // Cache the new current culture into the user HTTP session.   
+            //  
+            Session["CurrentCulture"] = id;
+            //  
+            // Redirect to the same page from where the request was made!   
+            //  
+            return Redirect(Request.UrlReferrer.ToString());
         }
     }
 }
