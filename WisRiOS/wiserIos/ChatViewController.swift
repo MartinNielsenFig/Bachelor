@@ -93,14 +93,8 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return true
     }
     
-    func textFieldDidBeginEditing(textField: UITextField) {
-        movePlate(textField, up: true)
-    }
-    func textFieldDidEndEditing(textField: UITextField) {
-        movePlate(textField, up: false)
-    }
-    
     //UIKeyboardWillShowNotification & UIKeyboardWillHideNotification
+    //https://github.com/Lightstreamer/Lightstreamer-example-Chat-client-ios-swift
     func keyboardWillShow(notification: NSNotification) {
         print("\(__FUNCTION__) has been called")
         
@@ -111,6 +105,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         // Reducing size of table
         let baseView = self.view
+        let keyboardFrame = notification.userInfo![UIKeyboardFrameBeginUserInfoKey]!.CGRectValue
         let animationDuration = notification.userInfo![UIKeyboardAnimationDurationUserInfoKey]!.doubleValue
         
         let visibleRows = tableView!.indexPathsForVisibleRows
@@ -121,7 +116,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         
         UIView.animateWithDuration(animationDuration, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-            baseView!.frame = CGRectMake(baseView!.frame.origin.x, baseView!.frame.origin.y, baseView!.frame.size.width, baseView!.frame.size.height)
+            baseView!.frame = CGRectMake(baseView!.frame.origin.x, baseView!.frame.origin.y, baseView!.frame.size.width, baseView!.frame.size.height - keyboardFrame.height)
             }, completion: {
                 (finished: Bool) in
                 if lastIndexPath != nil {
@@ -142,10 +137,11 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         // Expanding size of table
         let baseView = self.view
+        let keyboardFrame = notification.userInfo![UIKeyboardFrameBeginUserInfoKey]!.CGRectValue
         let animationDuration = notification.userInfo![UIKeyboardAnimationDurationUserInfoKey]!.doubleValue
         
         UIView.animateWithDuration(animationDuration, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-            baseView!.frame = CGRectMake(baseView!.frame.origin.x, baseView!.frame.origin.y, baseView!.frame.size.width, baseView!.frame.size.height)
+            baseView!.frame = CGRectMake(baseView!.frame.origin.x, baseView!.frame.origin.y, baseView!.frame.size.width, baseView!.frame.size.height + keyboardFrame.height)
             
             }, completion: nil)
     }
