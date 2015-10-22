@@ -15,21 +15,28 @@ class ResultViewController: UIViewController {
     
     //Instantiated by previous ViewController
     var question: Question!
-
+    
     override func viewDidLoad() {
-        //Values hold a counter for how many have votes that particular response
+        
+        pieChartView.descriptionText = ""
+        pieChartView.legend.position = ChartLegend.ChartLegendPosition.AboveChartRight
+        
+        //Values hold a counter for how many have votes that particular response have
         var values = [Double](count: question.ResponseOptions.count, repeatedValue: 0)
         //Options holds the response options
         var options = [String]()
         
-        for (index, ro) in question.ResponseOptions.enumerate() {
-            options += [ro.Value]
-            
+        let totalVotes = Double(self.question.Result.count)
+        
+        for (index, option) in question.ResponseOptions.enumerate() {
             for a in self.question.Result {
-                if a.Value == ro.Value {
+                if a.Value == option.Value {
                     ++values[index]
                 }
             }
+            
+            let percentage = Int(((values[index]/totalVotes)*100))
+            options += [ "\(option.Value) (\(percentage)%)" ]
         }
         
         updateChart(options, values: values)
@@ -46,10 +53,10 @@ class ResultViewController: UIViewController {
         self.pieChartView.data = chartData
         
         var colors = [UIColor]()
-        colors += [UIColor.redColor()]
-        colors += [UIColor.blueColor()]
-        colors += [UIColor.greenColor()]
-        colors += [UIColor.purpleColor()]
+        colors += ChartColorTemplates.joyful()
+        colors += ChartColorTemplates.colorful()
+        colors += ChartColorTemplates.liberty()
+        colors += ChartColorTemplates.pastel()
         let predefinedColorsCount = colors.count
         
         if predefinedColorsCount < dataPoints.count {

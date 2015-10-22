@@ -69,6 +69,7 @@ class RoomTableViewController: UITableViewController {
         
         let start = NSDate()
         HttpHandler.requestWithResponse(action: "Room/GetAll", type: "GET", body: "") { (data, response, error) in
+            
             var tmpRooms = [Room]()
             
             if let jsonArray = try? JSONSerializer.toArray(data) {
