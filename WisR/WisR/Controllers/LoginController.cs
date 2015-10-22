@@ -31,7 +31,10 @@ namespace Web.Controllers
         }
         public void LoginWithFacebook()
         {
-            Session.Clear();
+            //Save culture information before deleting session
+            var culture = (int)this.Session["CurrentCulture"];
+            Session.RemoveAll();
+            this.Session["CurrentCulture"] = culture;
 
             var fb = new FacebookClient();
 
@@ -45,8 +48,6 @@ namespace Web.Controllers
 
                 scope = "email" // Add other permissions as needed)
             });
-
-
             Response.Redirect(loginUrl.AbsoluteUri);
         }
 
@@ -114,8 +115,10 @@ namespace Web.Controllers
             //var logoutUrl = client.GetLogoutUrl(new { access_token = token, next = redirecturi });
 
             //Response.Redirect(logoutUrl.AbsoluteUri);
-            Session.Clear();
+            //Save culture information before deleting session
+            var culture = (int)this.Session["CurrentCulture"];
             Session.RemoveAll();
+            this.Session["CurrentCulture"] = culture;
             //}
 
             return RedirectToAction("Index", "Home");
