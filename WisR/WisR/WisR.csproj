@@ -274,6 +274,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helper\CultureHelper.cs" />
+    <Compile Include="Helper\ResourceHelper.cs" />
     <Compile Include="Hubs\ChatHub.cs" />
     <Compile Include="Hubs\QuestionHub.cs" />
     <Compile Include="Hubs\RoomHub.cs" />

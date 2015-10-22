@@ -15,6 +15,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+      'WisR/Scripts/CryptoJS/rollups/sha512.js',
       'WisR/Scripts/angular.js',
       'WisR/Scripts/angular-mocks.js',
       'WisR/Scripts/jquery-1.11.3.js',

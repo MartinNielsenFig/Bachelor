@@ -214,7 +214,7 @@ app.controller("HomeController", [
         * @description
         * Function to get all rooms when loading page, this function also maps the userId from the window to the property "userId", and the location of the current user to the properties "locationLatitude" and "locationLongitude"
         */
-        var getRooms = function () {
+        $scope.getRooms = function () {
             $http.get(configs.restHostName + '/Room/GetAll').then(function (response) {
                 $scope.Rooms = response.data;
                 $scope.userId = window.userId;
@@ -234,9 +234,12 @@ app.controller("HomeController", [
         */
         ///Creates a new room, and connects to it
         $scope.postRoom = function () {
+            if ($scope.Password.length !== 0) {
             $scope.HashedPassword = CryptoJS.SHA512($scope.Password).toString();
+            }
+            
             ///Make get request for json object conversion
-            $http.post('/Home/toJsonRoom',
+            $http.post(configs.baseHostName + '/Home/toJsonRoom',
                 {
                     RoomName: $scope.RoomName,
                     CreatedBy: window.userId,
@@ -332,7 +335,7 @@ app.controller("HomeController", [
         ///Changes to view to a new room
         $scope.changeViewToRoom = function (room) {
             if (!room.AllowAnonymous && $scope.userId == 'NoUser') {
-                $scope.Message = "The room-tag you have entered requires you to be logged in";
+                $scope.Message = Resources.RoomTagRequiresLogin;
             } else {
                 $scope.RoomId = room._id;
                 var url = $("#RedirectTo").val() + "?RoomId=" + $scope.RoomId;
@@ -355,7 +358,7 @@ app.controller("HomeController", [
                 if (response.data._id != undefined) {
                     $scope.changeViewToRoom(response.data);
                 } else {
-                    $scope.Message = "No room with the tag: " + $scope.uniqueRoomTag;
+                    $scope.Message =Resources.NoRoomWithThatTag + $scope.uniqueRoomTag;
                 }
             });
         }
@@ -373,18 +376,18 @@ app.controller("HomeController", [
             ///Calls and get the currentlocation, and after that gets the rooms
             navigator.geolocation.getCurrentPosition(function (position) {
                 $scope.currentLocation = position;
-                $("#loadingLabel").text('Loading rooms...');
-                getRooms();
+                $("#loadingLabel").text(Resources.LoadingRooms +"...");
+                $scope.getRooms();
                 var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                 geocoder.geocode({ 'location': latLng }, function (results, status) {
                     if (status == google.maps.GeocoderStatus.OK) {
                         if (results[1]) {
                             $scope.currentAddress = results[1].formatted_address;
                         } else {
-                            window.alert('No results found');
+                            window.alert(Resources.NoResponseFound);
                         }
                     } else {
-                        window.alert('Geocoder failed due to: ' + status);
+                        window.alert(Resources.GeoCoderFailedDueTo + status);
                     }
                 });
             });

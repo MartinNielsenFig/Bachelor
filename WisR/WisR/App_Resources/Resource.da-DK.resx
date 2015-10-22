@@ -255,4 +255,25 @@
   <data name="YouAreHere" xml:space="preserve">
     <value>Du er her:</value>
   </data>
+  <data name="GeoCoderFailedDueTo" xml:space="preserve">
+    <value>Geocoder fejlede på grund af: </value>
+  </data>
+  <data name="LoadingRooms" xml:space="preserve">
+    <value>Henter rum</value>
+  </data>
+  <data name="Meters" xml:space="preserve">
+    <value>meter</value>
+  </data>
+  <data name="NoResultsFound" xml:space="preserve">
+    <value>Ingen resultater fundet</value>
+  </data>
+  <data name="NoRoomWithThatTag" xml:space="preserve">
+    <value>Intet rum med tagget: </value>
+  </data>
+  <data name="Precision" xml:space="preserve">
+    <value>Præcision: </value>
+  </data>
+  <data name="RoomTagRequiresLogin" xml:space="preserve">
+    <value>Rummet med det tag, kræver at du logger ind</value>
+  </data>
 </root>
