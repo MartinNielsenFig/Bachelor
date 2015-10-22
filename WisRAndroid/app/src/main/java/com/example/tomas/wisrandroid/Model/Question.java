@@ -19,7 +19,7 @@ public abstract class Question {
     private String ExpireTimestamp;
 
     //Constructors
-    public Question(){};
+    public Question(){}
     public Question(String _id, String QuestionText, String Img, ArrayList<Vote> Votes,
                     int Downvotes, String CreatedById, String RoomId, ArrayList<ResponseOption> ResponseOptions,
                     ArrayList<Answer> Result, String CreationTimestamp, String ExpireTimestamp  )

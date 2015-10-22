@@ -53,10 +53,50 @@ public class QuestionListFragment extends android.support.v4.app.Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         page = getArguments().getInt("someInt", 0);
         title = getArguments().getString("someTitle");
         roomId = getArguments().getString("someRoomId");
 
+        InitQuestionList();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_question_list, container, false);
+
+        Log.w("QuestionListFragment","View Created");
+        mAdapter = new CustomQuestionAdapter(getContext(), mQuestions);
+        mListView = (ListView)view.findViewById(R.id.question_listview);
+        mListView.setAdapter(mAdapter);
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                setCurrentQuestionFragment(mQuestions.get(i));
+            }
+        });
+        return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+    }
+
+    public void setCurrentQuestionFragment(Question curQuestion)
+    {
+        ((RoomActivity)getActivity()).TransferCurrentQuestion(curQuestion);
+    }
+
+    private void InitQuestionList()
+    {
         Response.Listener<String> mListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -90,37 +130,5 @@ public class QuestionListFragment extends android.support.v4.app.Fragment {
         } catch (Exception e) {
 
         }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_question_list, container, false);
-
-        Log.w("QuestionListFragment","View Created");
-        mAdapter = new CustomQuestionAdapter(getContext(), mQuestions);
-        mListView = (ListView)view.findViewById(R.id.question_listview);
-        mListView.setAdapter(mAdapter);
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-//                Intent intent = new Intent("com.example.tomas.wisrandroid.QUESTION_EVENT");
-                setCurrentQuestionFragment(mQuestions.get(i));
-//                LocalBroadcastManager.getInstance(getContext()).sendBroadcast(intent);
-                Log.w("BroadcastIntent", "AwesomeQuestionizing");
-            }
-        });
-        return view;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-    }
-
-    public void setCurrentQuestionFragment(Question curQuestion)
-    {
-        ((RoomActivity)getActivity()).TransferCurrentQuestion(curQuestion);
     }
 }
