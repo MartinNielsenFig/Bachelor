@@ -29,27 +29,27 @@ public class CustomPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         switch (position) {
-            case 0: // Fragment # 0 - This will show FirstFragment
+            case 0:
                 if(mQuestionFragment == null)
                 {
                     mQuestionFragment = QuestionListFragment.newInstance(0, "Page # 1", _id);
                     mQuestionFragment.setRetainInstance(true);
                 }
                 return mQuestionFragment;
-            case 1: // Fragment # 0 - This will show FirstFragment different title
+            case 1:
                 if(mSelectedQuestionFragment == null)
                 {
                     mSelectedQuestionFragment = SelectedQuestionFragment.newInstance(0,"page # 2");
                     mSelectedQuestionFragment.setRetainInstance(true);
                 }
                 return mSelectedQuestionFragment;
-            case 2: // Fragment # 1 - This will show SecondFragment
+            case 2:
                 if(mChatFragment == null)
                 {
                     mChatFragment = ChatFragment.newInstance(0,"page # 2");
                     mChatFragment.setRetainInstance(true);
                 }
-                return mChatFragment;//QuestionListFragment.newInstance(0, "Page # 1",_id);
+                return mChatFragment;
             default:
                 return null;
         }
