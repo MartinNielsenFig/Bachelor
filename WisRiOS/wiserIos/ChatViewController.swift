@@ -33,32 +33,30 @@ class ChatViewController: UIViewController, UITextFieldDelegate, Paged {
     override func viewDidLoad() {
         
         print("ChatViewController instantiated, roomId: \(self.roomId)")
+        super.viewDidLoad()
         
         chatMessageInput.delegate = self
         
         let body = "roomId=\(roomId!)"
         HttpHandler.requestWithResponse(action: "Chat/GetAllByRoomId", type: "POST", body: body) { (data, response, error) in
-            var messageArray = [ChatMessage]()
-            var tempChat = String()
             
-            if let jsonArray = try? JSONSerializer.toArray(data) {
-                for msg in jsonArray {
-                    let m = ChatMessage(jsonDictionary: msg as! NSDictionary)
+            var tempChat = String()
+            if let msg = try? ReturnMessage.parse(data), jsonArray = try? JSONSerializer.toArray(msg.Data)  {
+                var messageArray = [ChatMessage]()
+                for chatMsg in jsonArray {
+                    let m = ChatMessage(jsonDictionary: chatMsg as! NSDictionary)
                     messageArray += [m]
-                    
                     let line = DateTimeHelper.getTimeStringFromEpochString(m.Timestamp) + " " + m.Value! + "\n"
                     tempChat += line
                 }
-            } else {
-                let line = "Could not load the chat"
-                tempChat += line
             }
-            
+            else {
+                tempChat += "Could not load the chat"
+            }
             self.chat = tempChat
         }
-        super.viewDidLoad()
     }
-    
+
     //UITextFieldDelegate
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         if let text = textField.text where text.isEmpty {
