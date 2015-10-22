@@ -27,7 +27,7 @@
             <div id="questionTables" ng-show="!SpecificQuestionShown && questionsLoaded">
                 <div class="col-md-8">
                     <h4>@WisR.App_Resources.Resource.HostQuestions</h4>
-                    <div style="overflow-y: auto; max-height: 300px; min-height: 300px">
+                    <div style="overflow-y: auto; max-height: 200px; min-height: 200px">
                         <table id="hostQuestionsTable" class="table table-hover table-responsive">
                             @*The ng-if Disables the initial animation of the rows *@
                             <tbody ng-if="specificRoomLoaded && questionsLoaded">
@@ -41,7 +41,7 @@
                     </div>
                     <div ng-show="CurrentRoom.UsersCanAsk">
                         <h4>@WisR.App_Resources.Resource.UserQuestions</h4>
-                        <div style="overflow-y: auto; max-height: 300px; min-height: 300px">
+                        <div style="overflow-y: auto; max-height: 200px; min-height: 200px">
                             <table id="userQuestionsTable" class="table table-hover table-responsive">
                                 @*The ng-if Disables the initial animation of the rows *@
                                 <tbody ng-if="specificRoomLoaded && questionsLoaded">
@@ -116,7 +116,7 @@
             <div ng-show="chatLoaded && CurrentRoom.HasChat" class="col-md-4">
                 <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
                 @*Scroll glue keeps scroll bar at same location, found at: https://github.com/Luegg/angularjs-scroll-glue*@
-                <div class="fa-border fa" style="overflow-x: hidden; overflow-y: auto; max-height: 600px; min-height: 600px;min-width: 100%" scroll-glue>
+                <div class="fa-border fa" style="overflow-x: hidden; overflow-y: auto; max-height: 400px; min-height: 400px;min-width: 100%" scroll-glue>
                     <div class="row">
                         <div class="message-wrap col-lg-12">
                             <div ng-if="ChatMessages.length" class="msg-wrap">
