@@ -27,7 +27,7 @@ namespace WisR
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
             bundles.Add(new ScriptBundle("~/bundles/crypto").Include(
-                        "~/Scripts/CryptoJS/rollups/core.js", "~/Scripts/CryptoJS/rollups/sha512.js"));
+                        "~/Scripts/CryptoJS/rollups/sha512.js"));
 
             var chartBundle = new ScriptBundle("~/bundles/chartbundle").Include(
                 "~/Scripts/chart.js", "~/Scripts/angular-chart.js");

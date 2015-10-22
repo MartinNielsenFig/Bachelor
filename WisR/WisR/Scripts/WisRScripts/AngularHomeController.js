@@ -214,7 +214,7 @@ app.controller("HomeController", [
         * @description
         * Function to get all rooms when loading page, this function also maps the userId from the window to the property "userId", and the location of the current user to the properties "locationLatitude" and "locationLongitude"
         */
-        var getRooms = function () {
+        $scope.getRooms = function () {
             $http.get(configs.restHostName + '/Room/GetAll').then(function (response) {
                 $scope.Rooms = response.data;
                 $scope.userId = window.userId;
@@ -234,9 +234,12 @@ app.controller("HomeController", [
         */
         ///Creates a new room, and connects to it
         $scope.postRoom = function () {
+            if ($scope.Password.length !== 0) {
             $scope.HashedPassword = CryptoJS.SHA512($scope.Password).toString();
+            }
+            
             ///Make get request for json object conversion
-            $http.post('/Home/toJsonRoom',
+            $http.post(configs.baseHostName + '/Home/toJsonRoom',
                 {
                     RoomName: $scope.RoomName,
                     CreatedBy: window.userId,
@@ -374,7 +377,7 @@ app.controller("HomeController", [
             navigator.geolocation.getCurrentPosition(function (position) {
                 $scope.currentLocation = position;
                 $("#loadingLabel").text(Resources.LoadingRooms +"...");
-                getRooms();
+                $scope.getRooms();
                 var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                 geocoder.geocode({ 'location': latLng }, function (results, status) {
                     if (status == google.maps.GeocoderStatus.OK) {
