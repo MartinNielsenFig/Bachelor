@@ -276,4 +276,22 @@
   <data name="RoomTagRequiresLogin" xml:space="preserve">
     <value />
   </data>
+  <data name="ChoosePicture" xml:space="preserve">
+    <value />
+  </data>
+  <data name="FileTooBigResizing" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ImageResized" xml:space="preserve">
+    <value />
+  </data>
+  <data name="IncorrectPassword" xml:space="preserve">
+    <value />
+  </data>
+  <data name="PositionOfTheRoom" xml:space="preserve">
+    <value />
+  </data>
+  <data name="TimeHasRunOut" xml:space="preserve">
+    <value />
+  </data>
 </root>

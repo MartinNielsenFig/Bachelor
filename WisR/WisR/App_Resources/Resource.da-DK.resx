@@ -253,7 +253,7 @@
     <value>Gå tilbage</value>
   </data>
   <data name="YouAreHere" xml:space="preserve">
-    <value>Du er her:</value>
+    <value>Du er her: </value>
   </data>
   <data name="GeoCoderFailedDueTo" xml:space="preserve">
     <value>Geocoder fejlede på grund af: </value>
@@ -275,5 +275,23 @@
   </data>
   <data name="RoomTagRequiresLogin" xml:space="preserve">
     <value>Rummet med det tag, kræver at du logger ind</value>
+  </data>
+  <data name="ChoosePicture" xml:space="preserve">
+    <value>Vælg billede</value>
+  </data>
+  <data name="FileTooBigResizing" xml:space="preserve">
+    <value>Billedet er for stort, ændrer størrelse</value>
+  </data>
+  <data name="ImageResized" xml:space="preserve">
+    <value>Billedets størrelse er blevet ændret</value>
+  </data>
+  <data name="IncorrectPassword" xml:space="preserve">
+    <value>Forkert password</value>
+  </data>
+  <data name="PositionOfTheRoom" xml:space="preserve">
+    <value>Rummets position</value>
+  </data>
+  <data name="TimeHasRunOut" xml:space="preserve">
+    <value>Tiden er løbet ud</value>
   </data>
 </root>

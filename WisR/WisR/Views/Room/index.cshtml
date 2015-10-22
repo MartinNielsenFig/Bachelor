@@ -105,7 +105,7 @@
                         </select>
                         <canvas id="pie" class="chart chart-base" chart-options="options" chart-type="chartType" chart-legend="true" chart-colors="colors" chart-data="data" chart-labels="labels"></canvas>
                     </div>
-                </div>||
+                </div>
             </div>
             <div ng-hide="chatLoaded" class="container text-center col-md-4">
                 <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span><label id="loadingLabel" class="">@WisR.App_Resources.Resource.LoadingChatMessages...</label>
@@ -159,16 +159,16 @@
                             </div>
                             <div ng-show="QuestionType != undefined && QuestionType.val != 'TextualQuestion'" class="row">
                                 <label class="col-md-6">@WisR.App_Resources.Resource.ResponseOptions</label>
-                                <div class="pull-right col-md-6">
-                                    <input type="button" ng-click="AddResponseOption()" value="@WisR.App_Resources.Resource.AddResponseOption">
-                                    <div ng-repeat="option in ResponseOptions">
-                                        <input required ng-model="ResponseOptions[option.id].val" class="col-md-12" type="text" placeholder="@WisR.App_Resources.Resource.AddResponseOptions" /><input type="button" ng-click="RemoveResponseOption(option)" value="@WisR.App_Resources.Resource.Remove">
+                                <div class="col-md-6 input-group">
+
+                                    <div ng-repeat="option in ResponseOptions" class="input-group col-md-12">
+                                        <input required ng-model="ResponseOptions[option.id].val" class="col-md-8" type="text" placeholder="@WisR.App_Resources.Resource.AddResponseOptions"/><span type="button" class="glyphicon glyphicon-minus" ng-click="RemoveResponseOption(option)" value="@WisR.App_Resources.Resource.Remove"/>
                                     </div>
+                                    <span type="button" ng-click="AddResponseOption()" class="glyphicon glyphicon-plus" value="@WisR.App_Resources.Resource.AddResponseOption"/>
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-6">@WisR.App_Resources.Resource.Picture</label><input type='file' ng-model='questionImage' base-sixty-four-input ctrl-function="setImageMessage(msg)" class="text-center">
-                                <img ng-src="data:image/png;base64,{{questionImage.base64}}" style="max-width: 100px; max-height: 100px" />
+                                <label class="col-md-6">@WisR.App_Resources.Resource.Picture</label><input type='file' accept="image/*" ng-model='questionImage' base-sixty-four-input ctrl-function="setImageMessage(msg)" class="text-center filestyle" data-buttonName="btn-primary" data-buttontext="@WisR.App_Resources.Resource.ChoosePicture">
                                 <div class="col-md-12 text-center">
                                     {{ImageMessage}}
                                 </div>

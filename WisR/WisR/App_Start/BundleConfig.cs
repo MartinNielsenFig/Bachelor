@@ -21,7 +21,7 @@ namespace WisR
                         "~/Scripts/WisRScripts/AngularUserScripts.js",
                         "~/Scripts/WisRScripts/AngularHomeController.js", 
                         "~/Scripts/WisRScripts/AngularFiltersScripts.js", 
-                        "~/Scripts/WisRScripts/AngularRoomController.js", 
+                        "~/Scripts/WisRScripts/AngularRoomController.js",
                         "~/Scripts/WisRScripts/Config.js"));
             
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -43,6 +43,7 @@ namespace WisR
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
+                      "~/Scripts/bootstrap-filestyle.min.js",
                       "~/Scripts/respond.js",
                       "~/Scripts/scrollglue.js",
                       "~/Scripts/d3/d3.min.js",
