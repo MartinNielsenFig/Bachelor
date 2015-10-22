@@ -39,8 +39,13 @@ At this point the function calls geocode to get the formatted address</p>
 </li>
 <li><h3 id="methods_postroom">postRoom()</h3>
 <div class="postroom"><div class="homecontroller-postroom-page"><p>Function to create a new room on the database with the entered information from the modal window.
-If no error is returned, this function calls &quot;changeViewToRoom&quot;</p>
+If no error is returned, this function calls &quot;changeViewToRoom&quot; and adds room to connected rooms(so that user doesn&#39;t have to enter password)</p>
 </div></div>
+</li>
+<li><h3 id="methods_useridwatch">userIdWatch(room)</h3>
+<div class="useridwatch"><div class="homecontroller-useridwatch-page"><p>Function that watches the userId variable and fetches user from restAPI when it changes</p>
+</div><h5 id="methods_useridwatch_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>room</td><td><a href="" class="label type-hint type-hint-room">Room</a></td><td><div class="homecontroller-useridwatch-page"><p>The room that the view changes to</p>
+</div></td></tr></tbody></table></div>
 </li>
 </ul>
 </div>
@@ -56,6 +61,12 @@ Default is Empty string</p>
 <div class="haschat"><div class="-haschat-page"><p>Property that is set when creating a new room in the modal window
 Default is Empty string</p>
 </div><h5 id="properties_haschat_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-boolean">Boolean</a></td><td><div class="-haschat-page"><p>HasChat</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="properties_hashedpassword">HashedPassword</h3>
+<div class="hashedpassword"><div class="-hashedpassword-page"><p>Property the SHA512 hashed version of the password
+Default is Empty string</p>
+</div><h5 id="properties_hashedpassword_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="-hashedpassword-page"><p>HashedPassword</p>
 </div></td></tr></table></div>
 </li>
 <li><h3 id="properties_message">Message</h3>

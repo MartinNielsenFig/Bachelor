@@ -255,4 +255,25 @@
   <data name="YouAreHere" xml:space="preserve">
     <value>You are here:</value>
   </data>
+  <data name="GeoCoderFailedDueTo" xml:space="preserve">
+    <value>Geocoder failed due to: </value>
+  </data>
+  <data name="LoadingRooms" xml:space="preserve">
+    <value>Loading rooms</value>
+  </data>
+  <data name="Meters" xml:space="preserve">
+    <value>meters</value>
+  </data>
+  <data name="NoResultsFound" xml:space="preserve">
+    <value>No Results found</value>
+  </data>
+  <data name="NoRoomWithThatTag" xml:space="preserve">
+    <value>No room with the tag: </value>
+  </data>
+  <data name="Precision" xml:space="preserve">
+    <value>Precision: </value>
+  </data>
+  <data name="RoomTagRequiresLogin" xml:space="preserve">
+    <value>The room-tag you have entered requires you to login</value>
+  </data>
 </root>

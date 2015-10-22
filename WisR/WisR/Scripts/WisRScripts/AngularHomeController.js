@@ -332,7 +332,7 @@ app.controller("HomeController", [
         ///Changes to view to a new room
         $scope.changeViewToRoom = function (room) {
             if (!room.AllowAnonymous && $scope.userId == 'NoUser') {
-                $scope.Message = "The room-tag you have entered requires you to be logged in";
+                $scope.Message = Resources.RoomTagRequiresLogin;
             } else {
                 $scope.RoomId = room._id;
                 var url = $("#RedirectTo").val() + "?RoomId=" + $scope.RoomId;
@@ -355,7 +355,7 @@ app.controller("HomeController", [
                 if (response.data._id != undefined) {
                     $scope.changeViewToRoom(response.data);
                 } else {
-                    $scope.Message = "No room with the tag: " + $scope.uniqueRoomTag;
+                    $scope.Message =Resources.NoRoomWithThatTag + $scope.uniqueRoomTag;
                 }
             });
         }
@@ -373,7 +373,7 @@ app.controller("HomeController", [
             ///Calls and get the currentlocation, and after that gets the rooms
             navigator.geolocation.getCurrentPosition(function (position) {
                 $scope.currentLocation = position;
-                $("#loadingLabel").text('Loading rooms...');
+                $("#loadingLabel").text(Resources.LoadingRooms +"...");
                 getRooms();
                 var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                 geocoder.geocode({ 'location': latLng }, function (results, status) {
@@ -381,10 +381,10 @@ app.controller("HomeController", [
                         if (results[1]) {
                             $scope.currentAddress = results[1].formatted_address;
                         } else {
-                            window.alert('No results found');
+                            window.alert(Resources.NoResponseFound);
                         }
                     } else {
-                        window.alert('Geocoder failed due to: ' + status);
+                        window.alert(Resources.GeoCoderFailedDueTo + status);
                     }
                 });
             });

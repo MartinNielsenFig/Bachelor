@@ -22,6 +22,10 @@
     @RenderSection("scripts", required: false)
     <script src="signalr/hubs"></script>
 
+    <script>
+        window.Resources =@Html.Raw(Json.Encode(WisR.Helper.ResourceHelper.GetResource()));
+    </script>
+
 </head>
 <body ng-app="wisrApp">
     <div class="navbar navbar-inverse navbar-fixed-top">
