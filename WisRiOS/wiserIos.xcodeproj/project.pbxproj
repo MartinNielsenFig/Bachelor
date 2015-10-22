@@ -45,6 +45,7 @@
 		CBB4D7DD1BA1A887001C531D /* Paged.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB4D7DC1BA1A887001C531D /* Paged.swift */; settings = {ASSET_TAGS = (); }; };
 		CBB60B2F1B9718EC0007A47B /* CreateRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB60B2E1B9718EC0007A47B /* CreateRoomViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		CBB60B311B97253A0007A47B /* SegmentedInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB60B301B97253A0007A47B /* SegmentedInputCell.swift */; settings = {ASSET_TAGS = (); }; };
+		CBBE94901BD9171B007C0EB7 /* IntervalUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBE948F1BD9171B007C0EB7 /* IntervalUpdater.swift */; settings = {ASSET_TAGS = (); }; };
 		CBCD3F481BB96F0100E53F76 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBCD3F471BB96EF800E53F76 /* Charts.framework */; };
 		CBCD3F491BB96F0100E53F76 /* Charts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CBCD3F471BB96EF800E53F76 /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CBCD8B291BB409C0002ACBC4 /* QuestionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCD8B281BB409C0002ACBC4 /* QuestionViewCell.swift */; settings = {ASSET_TAGS = (); }; };
@@ -187,6 +188,7 @@
 		CBB4D7DC1BA1A887001C531D /* Paged.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Paged.swift; sourceTree = "<group>"; };
 		CBB60B2E1B9718EC0007A47B /* CreateRoomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreateRoomViewController.swift; path = Assets.xcassets/CreateRoomViewController.swift; sourceTree = "<group>"; };
 		CBB60B301B97253A0007A47B /* SegmentedInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedInputCell.swift; sourceTree = "<group>"; };
+		CBBE948F1BD9171B007C0EB7 /* IntervalUpdater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntervalUpdater.swift; sourceTree = "<group>"; };
 		CBCD3F421BB96EF800E53F76 /* Charts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Charts.xcodeproj; path = "../../ios-charts/Charts/Charts.xcodeproj"; sourceTree = "<group>"; };
 		CBCD8B281BB409C0002ACBC4 /* QuestionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionViewCell.swift; sourceTree = "<group>"; };
 		CBF19CD71BAFFBA700A906B3 /* CreateQuestionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateQuestionViewController.swift; sourceTree = "<group>"; };
@@ -328,6 +330,7 @@
 				CB0D53C51BA85996007E4CD2 /* DateTimeHelper.swift */,
 				CB2A1B871BB9DA0F00821087 /* RoomFilterHelper.swift */,
 				CBF51C901BC5254A002F2732 /* ErrorCodes.swift */,
+				CBBE948F1BD9171B007C0EB7 /* IntervalUpdater.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -540,6 +543,7 @@
 				CBCD8B291BB409C0002ACBC4 /* QuestionViewCell.swift in Sources */,
 				CB3C37921B8DE1F000897344 /* RoomTableViewController.swift in Sources */,
 				CB0D53C61BA85996007E4CD2 /* DateTimeHelper.swift in Sources */,
+				CBBE94901BD9171B007C0EB7 /* IntervalUpdater.swift in Sources */,
 				CB6BC6281BA1C05A001C303B /* QuestionListViewController.swift in Sources */,
 				CB0218201B9462C400DFC9DD /* ChatMessage.swift in Sources */,
 				CB3C37741B8DBF5000897344 /* ChooseRoleViewController.swift in Sources */,

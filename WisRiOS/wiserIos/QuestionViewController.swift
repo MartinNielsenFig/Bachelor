@@ -16,7 +16,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     let pageIndex = 1
     var roomId: String?
     var firstProgressBarUpdate = true
-    var progressTimer: NSTimer?
+    var progressTimerUpdater: Updater?
     
     //Get instantiated by QuestionListViewController
     var question = Question()
@@ -123,8 +123,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             progressBar.addSubview(timeLabel)
             
             if part >= 1 {
-                progressTimer?.invalidate()
-                progressTimer = nil
+                progressTimerUpdater?.stop()
                 return
             }
             firstProgressBarUpdate = false
@@ -150,7 +149,9 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         
         //Progress bar
         updateProgressbar()
-        progressTimer = NSTimer.scheduledTimerWithTimeInterval(0.75, target: self, selector: "updateProgressbar", userInfo: nil, repeats: true)
+        progressTimerUpdater = Updater(secondsDelay: 0.75, function: {
+            self.updateProgressbar()
+        })
         
         //Picker
         pickerData.removeAll()

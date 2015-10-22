@@ -49,7 +49,7 @@ class HttpHandler {
             print("time for \(__FUNCTION__) mainUrl: \(mainUrl) action: \(action) http call \(NSDate().timeIntervalSinceDate(started)) seconds")
             
             //Todo add customError class to completionHandler?
-            log(data: data, response: response, error: error)
+            //log(data: data, response: response, error: error)
             var dataString = String()
             if let data = data {
                 dataString = (NSString(data: data, encoding: NSUTF8StringEncoding) as! String)
