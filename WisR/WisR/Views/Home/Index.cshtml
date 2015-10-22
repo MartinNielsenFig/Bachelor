@@ -46,17 +46,17 @@
                 <br />
                 <div class="row">
                     <div>
-                        <form ng-submit="connectWithUniqueTag()"><input class="form-control" style="margin: 0 auto" ng-model="uniqueRoomTag" type="text" placeholder="Enter unique tag" /></form>
+                        <form ng-submit="connectWithUniqueTag()"><input class="form-control" style="margin: 0 auto" ng-model="uniqueRoomTag" type="text" placeholder="@WisR.App_Resources.Resource.EnterUniqueTag" /></form>
                     </div>
                 </div>
 
                 <div class="row">
                     <div id="buttonsDiv" class="text-center">
                         <div style="display: inline">
-                            <button id="connectRoomButton" class="btn btn-primary" ng-click="connectWithUniqueTag()">Connect</button>
+                            <button id="connectRoomButton" class="btn btn-primary" ng-click="connectWithUniqueTag()">@WisR.App_Resources.Resource.Connect</button>
                         </div>
                         <span id="createRoomButtonDiv">
-                            <button id="createRoomButton" title="Login to enable" class="btn btn-primary" style="pointer-events: auto;" disabled onclick="$('#myModalCreate').modal('toggle')">Create Room</button>
+                            <button id="createRoomButton" title="Login to enable" class="btn btn-primary" style="pointer-events: auto;" disabled onclick="$('#myModalCreate').modal('toggle')">@WisR.App_Resources.Resource.CreateRoom</button>
                         </span>
                     </div>
                 </div>
@@ -76,34 +76,34 @@
                 <form ng-submit="postRoom()">
 
                     <div class="row">
-                        <label class="col-md-6">Room name</label>  <input required ng-model="RoomName" type="text" class="col-md-6" />
+                        <label class="col-md-6">@WisR.App_Resources.Resource.RoomName</label>  <input required ng-model="RoomName" type="text" class="col-md-6" />
                     </div>
                     <div class="row">
-                        <label class="col-md-6">Unique tag</label> <input required ng-model="UniqueTag" class="col-md-6" type="text" />
+                        <label class="col-md-6">@WisR.App_Resources.Resource.UniqueTag</label> <input required ng-model="UniqueTag" class="col-md-6" type="text" />
                     </div>
                     <div class="row">
-                        <label class="col-md-6">Password</label> <input ng-model="Password" class="col-md-6" type="password" />
+                        <label class="col-md-6">@WisR.App_Resources.Resource.Password</label> <input ng-model="Password" class="col-md-6" type="password" />
                     </div>
                     <div class="row">
-                        <label class="col-md-6">Use location</label> <input ng-model="UseLocation" class="col-md-6" type="checkbox" />
+                        <label class="col-md-6">@WisR.App_Resources.Resource.UseLocation</label> <input ng-model="UseLocation" class="col-md-6" type="checkbox" />
                     </div>
                     <div ng-show="UseLocation" class="row">
                         <label class="col-md-6">Radius</label> <input ng-model="Radius" class="col-md-6" type="range" max="200" step="75" min="50"/>
                         <div class="col-md-6"></div><p>{{Radius}} Meters</p>
                     </div>
                     <div class="row">
-                        <label class="col-md-6">Has chat</label> <input ng-model="HasChat" class="col-md-6" type="checkbox" />
+                        <label class="col-md-6">@WisR.App_Resources.Resource.HasChat</label> <input ng-model="HasChat" class="col-md-6" type="checkbox" />
                     </div>
                     <div class="row">
-                        <label class="col-md-6">Allow anonymous users?</label> <input ng-model="AllowAnonymous" class="col-md-6" type="checkbox" />
+                        <label class="col-md-6">@WisR.App_Resources.Resource.AllowAnonymousUsers</label> <input ng-model="AllowAnonymous" class="col-md-6" type="checkbox" />
                     </div>
                     <div class="row">
-                        <label class="col-md-6">Can users ask questions?</label> <input ng-model="UserCanAsk" class="col-md-6" type="checkbox" />
+                        <label class="col-md-6">@WisR.App_Resources.Resource.CanUsersAsk</label> <input ng-model="UserCanAsk" class="col-md-6" type="checkbox" />
                     </div>
                     <div class="row text-center">
-                        <button id="ModalCreateRoomButton" type="submit" class="btn btn-primary">Create room</button>
+                        <button id="ModalCreateRoomButton" type="submit" class="btn btn-primary">@WisR.App_Resources.Resource.CreateRoom</button>
                         @Html.Hidden("RedirectTo", Url.Action("Index", "Room"))
-                        <button id="ModalCancelButton" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                        <button id="ModalCancelButton" class="btn btn-primary" data-dismiss="modal">@WisR.App_Resources.Resource.Cancel</button>
                     </div>
                 </form>
                 <div id="RoomCreationError"></div>

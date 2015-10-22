@@ -117,16 +117,142 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AllowAnonymousUsers" xml:space="preserve">
+    <value>Anonyme brugere</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Fortryd</value>
+  </data>
+  <data name="CanUsersAsk" xml:space="preserve">
+    <value>Bruger spørgsmål</value>
+  </data>
+  <data name="Connect" xml:space="preserve">
+    <value>Forbind</value>
+  </data>
+  <data name="CreateRoom" xml:space="preserve">
+    <value>Opret rum</value>
+  </data>
+  <data name="EnterUniqueTag" xml:space="preserve">
+    <value>Indtast unikt tag</value>
+  </data>
+  <data name="HasChat" xml:space="preserve">
+    <value>Chat</value>
+  </data>
   <data name="Loading" xml:space="preserve">
     <value>Henter</value>
+  </data>
+  <data name="LogIn" xml:space="preserve">
+    <value>Log ind</value>
+  </data>
+  <data name="LogOut" xml:space="preserve">
+    <value>Log ud</value>
   </data>
   <data name="NoRoomsNearby" xml:space="preserve">
     <value>Ingen rum i nærheden</value>
   </data>
+  <data name="Password" xml:space="preserve">
+    <value>Kodeord</value>
+  </data>
+  <data name="RoomName" xml:space="preserve">
+    <value>Rum navn</value>
+  </data>
   <data name="RoomsBasedOn" xml:space="preserve">
     <value>Rum baseret ud fra</value>
   </data>
+  <data name="SeeRoomAndLocation" xml:space="preserve">
+    <value>Se rum samt din placering</value>
+  </data>
+  <data name="UniqueTag" xml:space="preserve">
+    <value>Unikt tag</value>
+  </data>
+  <data name="UseLocation" xml:space="preserve">
+    <value>Anvend placering</value>
+  </data>
   <data name="YourLocation" xml:space="preserve">
     <value>din placering</value>
+  </data>
+  <data name="AddResponseOption" xml:space="preserve">
+    <value>Tilføj svarmulighed</value>
+  </data>
+  <data name="AddResponseOptions" xml:space="preserve">
+    <value>Tilføj svarmuligheder</value>
+  </data>
+  <data name="BackToQuestions" xml:space="preserve">
+    <value>Tilbage til spørgsmål</value>
+  </data>
+  <data name="ChooseType" xml:space="preserve">
+    <value>Vælg type</value>
+  </data>
+  <data name="CreateQuestion" xml:space="preserve">
+    <value>Opret spørgsmål</value>
+  </data>
+  <data name="EnterPassword" xml:space="preserve">
+    <value>Indtast kodeord</value>
+  </data>
+  <data name="EnterQuestionText" xml:space="preserve">
+    <value>Indtast spørgsmålets tekst</value>
+  </data>
+  <data name="ExpirationTime" xml:space="preserve">
+    <value>Udløbstid(Minutter)</value>
+  </data>
+  <data name="HostQuestions" xml:space="preserve">
+    <value>Ejer spørgsmål</value>
+  </data>
+  <data name="LoadingChatMessages" xml:space="preserve">
+    <value>Henter chat beskeder</value>
+  </data>
+  <data name="LoadingImage" xml:space="preserve">
+    <value>Henter billede</value>
+  </data>
+  <data name="LoadingQuestions" xml:space="preserve">
+    <value>Henter spørgsmål</value>
+  </data>
+  <data name="LoadingRoom" xml:space="preserve">
+    <value>Henter rum</value>
+  </data>
+  <data name="NoResultsYet" xml:space="preserve">
+    <value>Ingen svar endnu</value>
+  </data>
+  <data name="Picture" xml:space="preserve">
+    <value>Billede</value>
+  </data>
+  <data name="QuestionText" xml:space="preserve">
+    <value>Spørgsmålets tekst</value>
+  </data>
+  <data name="QuestionType" xml:space="preserve">
+    <value>Spørgsmålets type</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Fjern</value>
+  </data>
+  <data name="ResponseOptions" xml:space="preserve">
+    <value>Svar muligheder</value>
+  </data>
+  <data name="Results" xml:space="preserve">
+    <value>Resultater</value>
+  </data>
+  <data name="SendMessage" xml:space="preserve">
+    <value>Send besked</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Indsend</value>
+  </data>
+  <data name="UpdateLocation" xml:space="preserve">
+    <value>Opdatér placering</value>
+  </data>
+  <data name="UserQuestions" xml:space="preserve">
+    <value>Bruger spørgsmål</value>
+  </data>
+  <data name="WriteAReply" xml:space="preserve">
+    <value>Skriv en chatbesked</value>
+  </data>
+  <data name="YouAnswered" xml:space="preserve">
+    <value>Du svarede</value>
+  </data>
+  <data name="GoBack" xml:space="preserve">
+    <value>Gå tilbage</value>
+  </data>
+  <data name="YouAreHere" xml:space="preserve">
+    <value>Du er her:</value>
   </data>
 </root>

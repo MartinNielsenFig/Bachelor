@@ -265,7 +265,8 @@ app.controller("HomeController", [
 
 
                             //Add roomId to connected rooms for the user
-                            var room = { _id: response.data }
+                            //TODO: error in message, handling?
+                            var room = { _id: response.data.split(";")[0] }
                             $scope.currentUser.ConnectedRoomIds.push(room._id);
 
                             var newIds = "";

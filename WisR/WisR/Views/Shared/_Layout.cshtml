@@ -90,7 +90,7 @@
                         }
                         <li class="navbar-right">
                             
-                            @Html.ActionLink("Log out", "Logout", "Login")
+                            @Html.ActionLink(WisR.App_Resources.Resource.LogOut, "Logout", "Login")
                             <script>
 
                                 app.controller("UserController", [
@@ -141,7 +141,7 @@
                         }
                         <li class="dropdown" style="cursor: pointer">
                             <a class="downdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="false">
-                                Login
+                                @WisR.App_Resources.Resource.LogIn
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
@@ -183,12 +183,12 @@
                                 <label class="col-md-6">Email:</label> <input name="email" required type="email" class="col-md-6" />
                             </div>
                             <div class="row col-md-12">
-                                <label class="col-md-6">Password:</label> <input name="password" required type="password" class="col-md-6" />
+                                <label class="col-md-6">@WisR.App_Resources.Resource.Password:</label> <input name="password" required type="password" class="col-md-6" />
                             </div>
                             <div class="col-md-12 text-center">
-                                <button id="ModalSubmitButton" type="submit" class="btn btn-primary">Login</button>
+                                <button id="ModalSubmitButton" type="submit" class="btn btn-primary">@WisR.App_Resources.Resource.LogIn</button>
                                 <span>
-                                    <button id="ModalCancelButton" type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                                    <button id="ModalCancelButton" type="button" class="btn btn-primary" data-dismiss="modal">@WisR.App_Resources.Resource.Cancel</button>
                                 </span>
 
                             </div>

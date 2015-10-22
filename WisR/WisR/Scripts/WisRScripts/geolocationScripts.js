@@ -33,7 +33,7 @@ function moveMap(position) {
     geocoder.geocode({ 'location': latLng }, function (results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
             if (results[1]) {
-                $("#address").html('You are here: ' + results[1].formatted_address);
+                $("#address").html("You are here: " + results[1].formatted_address);
             } else {
                 window.alert('No results found');
             }
