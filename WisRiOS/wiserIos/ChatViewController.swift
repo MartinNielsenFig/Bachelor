@@ -41,7 +41,7 @@ class ChatViewController: UIViewController, UITextFieldDelegate, Paged {
         HttpHandler.requestWithResponse(action: "Chat/GetAllByRoomId", type: "POST", body: body) { (data, response, error) in
             
             var tempChat = String()
-            if let msg = try? ReturnMessage.parse(data), jsonArray = try? JSONSerializer.toArray(msg.Data)  {
+            if let jsonArray = try? JSONSerializer.toArray(data)  {
                 var messageArray = [ChatMessage]()
                 for chatMsg in jsonArray {
                     let m = ChatMessage(jsonDictionary: chatMsg as! NSDictionary)

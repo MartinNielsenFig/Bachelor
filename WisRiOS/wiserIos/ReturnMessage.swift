@@ -12,7 +12,7 @@ import JsonSerializerSwift
 
 /// An return object returned from the RestAPI with data and possibly describing what went wrong.
 class ReturnMessage {
-    var Data = String()
+    //var Data = String()
     var ErrorMessage: String?
     var ErrorCode: Int
     var StackTrace: String?
@@ -22,7 +22,7 @@ class ReturnMessage {
     }
     
     init(jsonDictionary: NSDictionary) {
-        self.Data = jsonDictionary["Data"] as? String ?? String()
+        //self.Data = jsonDictionary["Data"] as? String ?? String()
         self.ErrorMessage = jsonDictionary["ErrorMessage"] as? String
         self.ErrorCode = jsonDictionary["ErrorCode"] as! Int
         self.StackTrace = jsonDictionary["StackTrace"] as? String
