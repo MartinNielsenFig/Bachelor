@@ -11,14 +11,14 @@ import Foundation
 /// Handles the Http-Calls from the client to the RestAPI
 class HttpHandler {
     
-    //static let mainUrl = "http://192.168.198.140:1337/"
+    static let mainUrl = "http://192.168.198.139:1337/"
     //static let mainUrl = "http://wisrrestapi.aceipse.dk/"
-    static let mainUrl = "http://wisrrestapi.azurewebsites.net/"
+    //static let mainUrl = "http://wisrrestapi.azurewebsites.net/"
     
     static func log(data data: NSData?, response: NSURLResponse?, error: NSError?) {
-        //NSLog("data \(data)")
-        //NSLog("response \(response)")
-        //NSLog("error \(error)")
+        NSLog("data \(data)")
+        NSLog("response \(response)")
+        NSLog("error \(error)")
     }
     
     /**
@@ -30,7 +30,7 @@ class HttpHandler {
     - parameter data:					Data returned from the RestAPI. Should always be a JSON string of type ReturnMessage.
     - parameter response:					Metadata associated with the response. See Apple NSURLResponse documentation.
     - parameter error:							Error returned from the server. See Apple dataTaskWithRequest documentation.
-    - parameter message:                The data parsed as ReturnMessage. Never nil, but if nothing is received from server, gains custom error code.
+    - parameter message:                The data parsed as ReturnMessage. Never nil, but if nothing is received from server it will be a custom error code.
     */
     static func requestWithResponse(action action: String, type: String, body: String, completionHandler:
         (data: String, response: String?, error: String?) -> Void) {
@@ -46,7 +46,7 @@ class HttpHandler {
         let started = NSDate()
         let task = session.dataTaskWithRequest(request) {
             data, response, error in
-            //print("time for \(__FUNCTION__) mainUrl: \(mainUrl) action: \(action) http call \(NSDate().timeIntervalSinceDate(started)) seconds")
+            print("time for \(__FUNCTION__) mainUrl: \(mainUrl) action: \(action) http call \(NSDate().timeIntervalSinceDate(started)) seconds")
             
             //Todo add customError class to completionHandler?
             log(data: data, response: response, error: error)

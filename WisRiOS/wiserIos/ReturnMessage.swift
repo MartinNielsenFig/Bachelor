@@ -10,7 +10,7 @@ import Foundation
 import JsonSerializerSwift
 
 
-/// An Error can be returned from the RestAPI describing what went wrong. If nothing went wrong (the http-call was a success), the response from the RestAPI fails to be parsed to an Error.
+/// An return object returned from the RestAPI with data and possibly describing what went wrong.
 class ReturnMessage {
     var Data = String()
     var ErrorMessage: String?

@@ -43,10 +43,9 @@ class ChatViewController: UIViewController, UITextFieldDelegate, Paged {
             var tempChat = String()
             if let msg = try? ReturnMessage.parse(data), jsonArray = try? JSONSerializer.toArray(msg.Data)  {
                 var messageArray = [ChatMessage]()
-                for msg in jsonArray {
-                    let m = ChatMessage(jsonDictionary: msg as! NSDictionary)
+                for chatMsg in jsonArray {
+                    let m = ChatMessage(jsonDictionary: chatMsg as! NSDictionary)
                     messageArray += [m]
-                    
                     let line = DateTimeHelper.getTimeStringFromEpochString(m.Timestamp) + " " + m.Value! + "\n"
                     tempChat += line
                 }
@@ -54,7 +53,6 @@ class ChatViewController: UIViewController, UITextFieldDelegate, Paged {
             else {
                 tempChat += "Could not load the chat"
             }
-            
             self.chat = tempChat
         }
     }
