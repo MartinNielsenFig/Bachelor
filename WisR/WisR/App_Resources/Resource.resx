@@ -117,16 +117,142 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AllowAnonymousUsers" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CanUsersAsk" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Connect" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CreateRoom" xml:space="preserve">
+    <value />
+  </data>
+  <data name="EnterUniqueTag" xml:space="preserve">
+    <value />
+  </data>
+  <data name="HasChat" xml:space="preserve">
+    <value />
+  </data>
   <data name="Loading" xml:space="preserve">
+    <value />
+  </data>
+  <data name="LogIn" xml:space="preserve">
+    <value />
+  </data>
+  <data name="LogOut" xml:space="preserve">
     <value />
   </data>
   <data name="NoRoomsNearby" xml:space="preserve">
     <value />
   </data>
+  <data name="Password" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RoomName" xml:space="preserve">
+    <value />
+  </data>
   <data name="RoomsBasedOn" xml:space="preserve">
     <value />
   </data>
+  <data name="SeeRoomAndLocation" xml:space="preserve">
+    <value />
+  </data>
+  <data name="UniqueTag" xml:space="preserve">
+    <value />
+  </data>
+  <data name="UseLocation" xml:space="preserve">
+    <value />
+  </data>
   <data name="YourLocation" xml:space="preserve">
+    <value />
+  </data>
+  <data name="AddResponseOption" xml:space="preserve">
+    <value />
+  </data>
+  <data name="AddResponseOptions" xml:space="preserve">
+    <value />
+  </data>
+  <data name="BackToQuestions" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ChooseType" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CreateQuestion" xml:space="preserve">
+    <value />
+  </data>
+  <data name="EnterPassword" xml:space="preserve">
+    <value />
+  </data>
+  <data name="EnterQuestionText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ExpirationTime" xml:space="preserve">
+    <value />
+  </data>
+  <data name="HostQuestions" xml:space="preserve">
+    <value />
+  </data>
+  <data name="LoadingChatMessages" xml:space="preserve">
+    <value />
+  </data>
+  <data name="LoadingImage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="LoadingQuestions" xml:space="preserve">
+    <value />
+  </data>
+  <data name="LoadingRoom" xml:space="preserve">
+    <value />
+  </data>
+  <data name="NoResultsYet" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Picture" xml:space="preserve">
+    <value />
+  </data>
+  <data name="QuestionText" xml:space="preserve">
+    <value />
+  </data>
+  <data name="QuestionType" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ResponseOptions" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Results" xml:space="preserve">
+    <value />
+  </data>
+  <data name="SendMessage" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value />
+  </data>
+  <data name="UpdateLocation" xml:space="preserve">
+    <value />
+  </data>
+  <data name="UserQuestions" xml:space="preserve">
+    <value />
+  </data>
+  <data name="WriteAReply" xml:space="preserve">
+    <value />
+  </data>
+  <data name="YouAnswered" xml:space="preserve">
+    <value />
+  </data>
+  <data name="GoBack" xml:space="preserve">
+    <value />
+  </data>
+  <data name="YouAreHere" xml:space="preserve">
     <value />
   </data>
 </root>
