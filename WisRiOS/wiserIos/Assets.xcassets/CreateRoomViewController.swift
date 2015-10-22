@@ -8,21 +8,22 @@
 
 import UIKit
 import MapKit
+import JsonSerializerSwift
 
 /// Handles creation of a room with all its settings.
 class CreateRoomViewController: UITableViewController {
     
     //Properties
-    var roomNameInputCell: TextInputCell? = nil
-    var roomTagInputCell: TextInputCell? = nil
-    var pwSwitchCell: BooleanInputCell? = nil
-    var pwInputCell: TextInputCell? = nil
-    var radiusInputCell: SegmentedInputCell? = nil
-    var chatInputCell: BooleanInputCell? = nil
-    var anonymousInputCell: BooleanInputCell? = nil
-    var userQuestionInputCell: BooleanInputCell? = nil
-    var roomUsesLocationInputCell: BooleanInputCell? = nil
-    var pwLabel: UILabel? = nil
+    var roomNameInputCell: TextInputCell?
+    var roomTagInputCell: TextInputCell?
+    var pwSwitchCell: BooleanInputCell?
+    var pwInputCell: TextInputCell?
+    var radiusInputCell: SegmentedInputCell?
+    var chatInputCell: BooleanInputCell?
+    var anonymousInputCell: BooleanInputCell?
+    var userQuestionInputCell: BooleanInputCell?
+    var roomUsesLocationInputCell: BooleanInputCell?
+    var pwLabel: UILabel?
     
     var room = Room()
     
@@ -170,7 +171,7 @@ class CreateRoomViewController: UITableViewController {
         let jsonRoom = JSONSerializer.toJson(self.room)
         let body = "room=\(jsonRoom)"
         HttpHandler.requestWithResponse(action: "Room/CreateRoom", type: "POST", body: body) { (data, response, error) in
-            if let data = data, error = try? Error.parse(data) {
+            if let error = try? Error.parse(data) {
                 print(error.ErrorMessage)
                 
                 if error.ErrorCode == ErrorCodes.RoomTagAlreadyInUse.rawValue {
@@ -184,8 +185,6 @@ class CreateRoomViewController: UITableViewController {
                         self.presentViewController(alert, animated: true, completion: nil)
                     }
                 }
-                
-                
             }
             else {
                 self.room._id = data

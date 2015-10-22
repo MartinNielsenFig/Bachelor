@@ -100,6 +100,7 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
         if segue.identifier == "CreateQuestion" {
             let createQuestionViewController = segue.destinationViewController as! CreateQuestionViewController
             createQuestionViewController.room = self.room
+            createQuestionViewController.previousNavigationController = self.navigationController
             //assert(false)   //Todo check if ok
         }
 

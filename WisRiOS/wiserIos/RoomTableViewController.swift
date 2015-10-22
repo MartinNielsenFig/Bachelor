@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import JsonSerializerSwift
 import CryptoSwift  //CryptoSwift https://github.com/krzyzanowskim/CryptoSwift all credits to krzyzanowskim
 
 /// Shows the rooms nearby in a list, enabling the user to join the room.
@@ -67,10 +68,10 @@ class RoomTableViewController: UITableViewController {
     func fetchRooms(refreshControl: UIRefreshControl? = nil) {
         
         let start = NSDate()
-        HttpHandler.requestWithResponse(action: "Room/GetAll", type: "GET", body: "") { (data, response, error) -> Void in
+        HttpHandler.requestWithResponse(action: "Room/GetAll", type: "GET", body: "") { (data, response, error) in
             var tmpRooms = [Room]()
             
-            if let data = data, jsonArray = try? JSONSerializer.toArray(data) {
+            if let jsonArray = try? JSONSerializer.toArray(data) {
                 for room in jsonArray {
                     tmpRooms += [Room(jsonDictionary: room as! NSDictionary)]
                 }
@@ -78,12 +79,14 @@ class RoomTableViewController: UITableViewController {
             
             self.rooms.removeAll()
             self.allRooms.removeAll()
-            self.allRooms = tmpRooms
             
+            self.allRooms = tmpRooms
             self.rooms = RoomFilterHelper.filterRoomsByLocation(self.allRooms, metersRadius: 1000)
             refreshControl?.endRefreshing()
-            self.tableView.reloadData()
             
+            dispatch_async(dispatch_get_main_queue()) { //fixes rare bug, where list wouldn't refresh if slow internet connection (> 2 sec)
+                self.tableView.reloadData()
+            }
             print("duration of \(__FUNCTION__) took \(NSDate().timeIntervalSinceDate(start))")
         }
     }
@@ -130,11 +133,11 @@ class RoomTableViewController: UITableViewController {
         if let cell = sender as? UITableViewCell, indexPath = tableView.indexPathForCell(cell) {
             selectedRoom = rooms[indexPath.row]
         }
-        else if let aRoom = sender as? Room {
-            selectedRoom = aRoom
+        else if let room = sender as? Room {
+            selectedRoom = room
         }
         
-        if let aRoom = selectedRoom, hasPw = aRoom.HasPassword where hasPw {
+        if let room = selectedRoom, hasPw = room.HasPassword where hasPw {
             print("ROOM HAS PW")
             var pwTextField: UITextField?
             
@@ -142,9 +145,9 @@ class RoomTableViewController: UITableViewController {
             alert.addAction(UIAlertAction(title: "Connect", style: .Default, handler: { action in
                 
                 //Do some encryption here on user input
-                if let pw = pwTextField!.text, inputEncryptedPw = pw.sha512(), roomEncryptedPw = aRoom.EncryptedPassword where roomEncryptedPw == inputEncryptedPw {
+                if let pw = pwTextField!.text, inputEncryptedPw = pw.sha512(), roomEncryptedPw = room.EncryptedPassword where roomEncryptedPw == inputEncryptedPw {
                     print("CORRECT PASSWORD")
-                    self.performSegueWithIdentifier("SelectRoom", sender: aRoom)
+                    self.performSegueWithIdentifier("SelectRoom", sender: room)
                 }
                 else {
                     print("WRONG PASSWORD")
@@ -173,8 +176,7 @@ class RoomTableViewController: UITableViewController {
             if let foundRoom = sender as? Room {
                 selectedRoom = foundRoom
             }
-            else if let selectedCell = sender as? UITableViewCell {
-                let index = tableView.indexPathForCell(selectedCell)!
+            else if let selectedCell = sender as? UITableViewCell, index = tableView.indexPathForCell(selectedCell) {
                 selectedRoom = rooms[index.row]
             }
             let roomViewController = segue.destinationViewController as! RoomPageViewController

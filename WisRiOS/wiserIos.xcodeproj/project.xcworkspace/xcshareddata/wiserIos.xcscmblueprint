@@ -5,6 +5,7 @@
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
     "B5CE4A7F04D33ED0E4610F3EEAB8460F40260E8E" : 0,
+    "FF9950B1C453BBC546F1A28E9A187E4F73239CE3" : 0,
     "9025163822AAEA7A2D8AC9210D0874A56F62B462" : 0,
     "C3D8ED1CB28D809ADCE2C0DE74935E8A502ACD53" : 0,
     "54023E5A69A8ACBF4248AE90064E6E1B8A22CC88" : 0
@@ -12,6 +13,7 @@
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "3FBBDDBC-97A9-44CD-8E52-DD22C6A786AF",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
     "B5CE4A7F04D33ED0E4610F3EEAB8460F40260E8E" : "WisR\/",
+    "FF9950B1C453BBC546F1A28E9A187E4F73239CE3" : "JsonSerializerSwift\/",
     "9025163822AAEA7A2D8AC9210D0874A56F62B462" : "ios-charts\/",
     "C3D8ED1CB28D809ADCE2C0DE74935E8A502ACD53" : "CryptoSwift\/",
     "54023E5A69A8ACBF4248AE90064E6E1B8A22CC88" : "PNChart-Swift\/"
@@ -39,6 +41,11 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/krzyzanowskim\/CryptoSwift.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "C3D8ED1CB28D809ADCE2C0DE74935E8A502ACD53"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/peheje\/JsonSerializerSwift.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "FF9950B1C453BBC546F1A28E9A187E4F73239CE3"
     }
   ]
 }

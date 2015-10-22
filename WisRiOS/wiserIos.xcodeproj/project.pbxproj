@@ -20,6 +20,8 @@
 		CB3C377C1B8DBF5000897344 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB3C377A1B8DBF5000897344 /* LaunchScreen.storyboard */; };
 		CB3C37871B8DBF5000897344 /* wiserIosTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3C37861B8DBF5000897344 /* wiserIosTests.swift */; };
 		CB3C37921B8DE1F000897344 /* RoomTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3C37911B8DE1F000897344 /* RoomTableViewController.swift */; };
+		CB4D73471BCD1FE70004A896 /* JsonSerializerSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB4D73441BCD1FDE0004A896 /* JsonSerializerSwift.framework */; };
+		CB4D73481BCD1FE70004A896 /* JsonSerializerSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CB4D73441BCD1FDE0004A896 /* JsonSerializerSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CB50FD8E1B9708E40003C078 /* TextInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB50FD8D1B9708E40003C078 /* TextInputCell.swift */; settings = {ASSET_TAGS = (); }; };
 		CB6BC6241BA1AE92001C303B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB3C37751B8DBF5000897344 /* Main.storyboard */; settings = {ASSET_TAGS = (); }; };
 		CB6BC6261BA1B2ED001C303B /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6BC6251BA1B2ED001C303B /* ChatViewController.swift */; settings = {ASSET_TAGS = (); }; };
@@ -33,12 +35,10 @@
 		CB9FF7CE1B8F2916003A193B /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9FF7CD1B8F2916003A193B /* Question.swift */; };
 		CB9FF7D01B8F2A78003A193B /* ResponseOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9FF7CF1B8F2A78003A193B /* ResponseOption.swift */; };
 		CB9FF7D21B8F2B70003A193B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9FF7D11B8F2B70003A193B /* User.swift */; };
-		CB9FF80F1B8F4408003A193B /* JSONSerializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9FF80E1B8F4408003A193B /* JSONSerializer.swift */; };
 		CBA4372C1B8DEA8E00EF3E01 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBA4372B1B8DEA8E00EF3E01 /* CoreLocation.framework */; };
 		CBA437301B8DF5A500EF3E01 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBA4372F1B8DF5A500EF3E01 /* MapKit.framework */; };
 		CBB34B091BAF549C00CA98DD /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBB34B071BAF549C00CA98DD /* FBSDKCoreKit.framework */; settings = {ASSET_TAGS = (); }; };
 		CBB34B0A1BAF549C00CA98DD /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBB34B081BAF549C00CA98DD /* FBSDKLoginKit.framework */; settings = {ASSET_TAGS = (); }; };
-		CBB34B0C1BAF610E00CA98DD /* JSONSerializerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2FC2DD1B8F93BC00CD8B28 /* JSONSerializerTests.swift */; settings = {ASSET_TAGS = (); }; };
 		CBB4D7D71BA189EC001C531D /* LogonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB4D7D61BA189EC001C531D /* LogonViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		CBB4D7D91BA1A567001C531D /* RoomPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB4D7D81BA1A567001C531D /* RoomPageViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		CBB4D7DB1BA1A664001C531D /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB4D7DA1BA1A664001C531D /* QuestionViewController.swift */; settings = {ASSET_TAGS = (); }; };
@@ -70,6 +70,27 @@
 			proxyType = 1;
 			remoteGlobalIDString = CB3C376D1B8DBF5000897344;
 			remoteInfo = wiserIos;
+		};
+		CB4D73431BCD1FDE0004A896 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CB4D733B1BCD1FDE0004A896 /* JsonSerializerSwift.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CB371ED61BCD1D8A004D0E12;
+			remoteInfo = JsonSerializerSwift;
+		};
+		CB4D73451BCD1FDE0004A896 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CB4D733B1BCD1FDE0004A896 /* JsonSerializerSwift.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = CB371EE01BCD1D8A004D0E12;
+			remoteInfo = JsonSerializerSwiftTests;
+		};
+		CB4D73491BCD1FE70004A896 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CB4D733B1BCD1FDE0004A896 /* JsonSerializerSwift.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = CB371ED51BCD1D8A004D0E12;
+			remoteInfo = JsonSerializerSwift;
 		};
 		CBCD3F461BB96EF800E53F76 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -117,6 +138,7 @@
 			files = (
 				CBCD3F491BB96F0100E53F76 /* Charts.framework in Embed Frameworks */,
 				CBF51CA01BC54EA2002F2732 /* CryptoSwift.framework in Embed Frameworks */,
+				CB4D73481BCD1FE70004A896 /* JsonSerializerSwift.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -130,7 +152,6 @@
 		CB1FB9FF1B983C3A00B1FCF8 /* BooleanInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BooleanInputCell.swift; sourceTree = "<group>"; };
 		CB2A1B871BB9DA0F00821087 /* RoomFilterHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomFilterHelper.swift; sourceTree = "<group>"; };
 		CB2EF9C21B8DE7260098871B /* Room.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
-		CB2FC2DD1B8F93BC00CD8B28 /* JSONSerializerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONSerializerTests.swift; sourceTree = "<group>"; };
 		CB39A97A1B986B7F0014F818 /* StringExtractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtractor.swift; sourceTree = "<group>"; };
 		CB3C376E1B8DBF5000897344 /* wiserIos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = wiserIos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB3C37711B8DBF5000897344 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -143,6 +164,7 @@
 		CB3C37861B8DBF5000897344 /* wiserIosTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = wiserIosTests.swift; sourceTree = "<group>"; };
 		CB3C37881B8DBF5000897344 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CB3C37911B8DE1F000897344 /* RoomTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomTableViewController.swift; sourceTree = "<group>"; };
+		CB4D733B1BCD1FDE0004A896 /* JsonSerializerSwift.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = JsonSerializerSwift.xcodeproj; path = ../../JsonSerializerSwift/JsonSerializerSwift.xcodeproj; sourceTree = "<group>"; };
 		CB50FD8D1B9708E40003C078 /* TextInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextInputCell.swift; sourceTree = "<group>"; };
 		CB6BC6251BA1B2ED001C303B /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		CB6BC6271BA1C05A001C303B /* QuestionListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionListViewController.swift; sourceTree = "<group>"; };
@@ -155,7 +177,6 @@
 		CB9FF7CD1B8F2916003A193B /* Question.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
 		CB9FF7CF1B8F2A78003A193B /* ResponseOption.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResponseOption.swift; sourceTree = "<group>"; };
 		CB9FF7D11B8F2B70003A193B /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		CB9FF80E1B8F4408003A193B /* JSONSerializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONSerializer.swift; sourceTree = "<group>"; };
 		CBA4372B1B8DEA8E00EF3E01 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		CBA4372F1B8DF5A500EF3E01 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		CBB34B071BAF549C00CA98DD /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = "../../../FacebookSDKs-iOS-20150910/FBSDKCoreKit.framework"; sourceTree = "<group>"; };
@@ -185,6 +206,7 @@
 				CBCD3F481BB96F0100E53F76 /* Charts.framework in Frameworks */,
 				CBF51C9F1BC54EA2002F2732 /* CryptoSwift.framework in Frameworks */,
 				CBB34B0A1BAF549C00CA98DD /* FBSDKLoginKit.framework in Frameworks */,
+				CB4D73471BCD1FE70004A896 /* JsonSerializerSwift.framework in Frameworks */,
 				CBA4372C1B8DEA8E00EF3E01 /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -258,9 +280,17 @@
 			children = (
 				CB3C37861B8DBF5000897344 /* wiserIosTests.swift */,
 				CB3C37881B8DBF5000897344 /* Info.plist */,
-				CB2FC2DD1B8F93BC00CD8B28 /* JSONSerializerTests.swift */,
 			);
 			path = wiserIosTests;
+			sourceTree = "<group>";
+		};
+		CB4D733C1BCD1FDE0004A896 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CB4D73441BCD1FDE0004A896 /* JsonSerializerSwift.framework */,
+				CB4D73461BCD1FDE0004A896 /* JsonSerializerSwiftTests.xctest */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		CB57059B1B98342700A4E17C /* Cells */ = {
@@ -278,6 +308,7 @@
 		CB847E811B9EC0CC00D1C230 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CB4D733B1BCD1FDE0004A896 /* JsonSerializerSwift.xcodeproj */,
 				CBF51C941BC54E78002F2732 /* CryptoSwift.xcodeproj */,
 				CBCD3F421BB96EF800E53F76 /* Charts.xcodeproj */,
 				CBB34B071BAF549C00CA98DD /* FBSDKCoreKit.framework */,
@@ -292,7 +323,6 @@
 			isa = PBXGroup;
 			children = (
 				CB9FF7C51B8F1401003A193B /* HTTPHandler.swift */,
-				CB9FF80E1B8F4408003A193B /* JSONSerializer.swift */,
 				CB39A97A1B986B7F0014F818 /* StringExtractor.swift */,
 				CB84802C1B9EE0DC00D1C230 /* FacebookHelper.swift */,
 				CB0D53C51BA85996007E4CD2 /* DateTimeHelper.swift */,
@@ -353,6 +383,7 @@
 			dependencies = (
 				CBCD3F4B1BB96F0100E53F76 /* PBXTargetDependency */,
 				CBF51CA21BC54EA2002F2732 /* PBXTargetDependency */,
+				CB4D734A1BCD1FE70004A896 /* PBXTargetDependency */,
 			);
 			name = wiserIos;
 			productName = wiserIos;
@@ -418,6 +449,10 @@
 					ProductGroup = CBF51C951BC54E78002F2732 /* Products */;
 					ProjectRef = CBF51C941BC54E78002F2732 /* CryptoSwift.xcodeproj */;
 				},
+				{
+					ProductGroup = CB4D733C1BCD1FDE0004A896 /* Products */;
+					ProjectRef = CB4D733B1BCD1FDE0004A896 /* JsonSerializerSwift.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -433,6 +468,20 @@
 			fileType = wrapper.framework;
 			path = ChartsTV.framework;
 			remoteRef = CB0D255E1BC400F100825945 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CB4D73441BCD1FDE0004A896 /* JsonSerializerSwift.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = JsonSerializerSwift.framework;
+			remoteRef = CB4D73431BCD1FDE0004A896 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CB4D73461BCD1FDE0004A896 /* JsonSerializerSwiftTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = JsonSerializerSwiftTests.xctest;
+			remoteRef = CB4D73451BCD1FDE0004A896 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		CBCD3F471BB96EF800E53F76 /* Charts.framework */ = {
@@ -502,7 +551,6 @@
 				CB3C37721B8DBF5000897344 /* AppDelegate.swift in Sources */,
 				CBF19CDE1BB03D5800A906B3 /* Vote.swift in Sources */,
 				CBB4D7DB1BA1A664001C531D /* QuestionViewController.swift in Sources */,
-				CB9FF80F1B8F4408003A193B /* JSONSerializer.swift in Sources */,
 				CBB60B2F1B9718EC0007A47B /* CreateRoomViewController.swift in Sources */,
 				CB84802B1B9EDB5400D1C230 /* CurrentUser.swift in Sources */,
 				CB50FD8E1B9708E40003C078 /* TextInputCell.swift in Sources */,
@@ -525,7 +573,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CB3C37871B8DBF5000897344 /* wiserIosTests.swift in Sources */,
-				CBB34B0C1BAF610E00CA98DD /* JSONSerializerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -536,6 +583,11 @@
 			isa = PBXTargetDependency;
 			target = CB3C376D1B8DBF5000897344 /* wiserIos */;
 			targetProxy = CB3C37831B8DBF5000897344 /* PBXContainerItemProxy */;
+		};
+		CB4D734A1BCD1FE70004A896 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = JsonSerializerSwift;
+			targetProxy = CB4D73491BCD1FE70004A896 /* PBXContainerItemProxy */;
 		};
 		CBCD3F4B1BB96F0100E53F76 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

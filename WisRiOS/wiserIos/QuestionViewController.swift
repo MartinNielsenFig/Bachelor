@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import JsonSerializerSwift
 
 /// A sub-ViewController of RoomPageViewController. This shows the selected Question that the user can answer.
 class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, Paged {

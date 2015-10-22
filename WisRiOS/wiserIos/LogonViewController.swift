@@ -14,8 +14,8 @@ import FBSDKLoginKit
 class LogonViewController: UIViewController, FBSDKLoginButtonDelegate {
     
     //Properties
-    var previousNavigationController: UINavigationController? = nil
-    var previousViewController: UIViewController? = nil
+    var previousNavigationController: UINavigationController?
+    var previousViewController: UIViewController?
     
     //Utilities
     @IBAction func cancelLogonBtn() {

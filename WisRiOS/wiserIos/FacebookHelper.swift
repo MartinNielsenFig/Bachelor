@@ -9,6 +9,7 @@
 import Foundation
 import FBSDKCoreKit
 import FBSDKLoginKit
+import JsonSerializerSwift
 
 /// Encapsulates the functionality related to logging in/out of FB and requestion user information from FB.
 class FacebookHelper {
@@ -23,7 +24,7 @@ class FacebookHelper {
     static func requestWisrUserFrom(facebookId: String) {
         let body = "facebookId=\(facebookId)"
         
-        HttpHandler.requestWithResponse(action: "User/GetWisrIdFromFacebookId", type: "POST", body: body) { (data, response, error) -> Void in
+        HttpHandler.requestWithResponse(action: "User/GetWisrIdFromFacebookId", type: "POST", body: body) { (data, response, error) in
             CurrentUser.sharedInstance._id = data
         }
     }
@@ -53,7 +54,7 @@ class FacebookHelper {
                     let userJson = JSONSerializer.toJson(user)
                     let body = "User=\(userJson)"
                     
-                    HttpHandler.requestWithResponse(action: "User/CreateUser", type: "POST", body: body) { (data, response, error) -> Void in
+                    HttpHandler.requestWithResponse(action: "User/CreateUser", type: "POST", body: body) { (data, response, error) in
                         CurrentUser.sharedInstance._id = data
                     }
                 }

@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import JsonSerializerSwift
+
 
 /// An Error can be returned from the RestAPI describing what went wrong. If nothing went wrong (the http-call was a success), the response from the RestAPI fails to be parsed to an Error.
 class Error {
@@ -32,7 +34,7 @@ class Error {
             let e = Error(jsonDictionary: dictionary)
             return e
         }
-        catch let nserror as NSError {
+        catch let nserror as NSError {  //todo test if this catches custom Error class
             print(nserror)
             throw nserror
         }
