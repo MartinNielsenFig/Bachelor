@@ -294,4 +294,25 @@
   <data name="TimeHasRunOut" xml:space="preserve">
     <value />
   </data>
+  <data name="AnonymousUsersAllowed" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ChatEnabled" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ClickToChangeImageSize" xml:space="preserve">
+    <value />
+  </data>
+  <data name="LoginToEnable" xml:space="preserve">
+    <value />
+  </data>
+  <data name="NoAccessRequiresLogin" xml:space="preserve">
+    <value />
+  </data>
+  <data name="PasswordProtected" xml:space="preserve">
+    <value />
+  </data>
+  <data name="UsersCanAsk" xml:space="preserve">
+    <value />
+  </data>
 </root>

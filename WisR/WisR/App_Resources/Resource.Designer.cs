@@ -90,6 +90,15 @@ namespace WisR.App_Resources {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
+        public static string AnonymousUsersAllowed {
+            get {
+                return ResourceManager.GetString("AnonymousUsersAllowed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
         public static string BackToQuestions {
             get {
                 return ResourceManager.GetString("BackToQuestions", resourceCulture);
@@ -117,6 +126,15 @@ namespace WisR.App_Resources {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
+        public static string ChatEnabled {
+            get {
+                return ResourceManager.GetString("ChatEnabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
         public static string ChoosePicture {
             get {
                 return ResourceManager.GetString("ChoosePicture", resourceCulture);
@@ -129,6 +147,15 @@ namespace WisR.App_Resources {
         public static string ChooseType {
             get {
                 return ResourceManager.GetString("ChooseType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string ClickToChangeImageSize {
+            get {
+                return ResourceManager.GetString("ClickToChangeImageSize", resourceCulture);
             }
         }
         
@@ -324,6 +351,15 @@ namespace WisR.App_Resources {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
+        public static string LoginToEnable {
+            get {
+                return ResourceManager.GetString("LoginToEnable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
         public static string LogOut {
             get {
                 return ResourceManager.GetString("LogOut", resourceCulture);
@@ -336,6 +372,15 @@ namespace WisR.App_Resources {
         public static string Meters {
             get {
                 return ResourceManager.GetString("Meters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string NoAccessRequiresLogin {
+            get {
+                return ResourceManager.GetString("NoAccessRequiresLogin", resourceCulture);
             }
         }
         
@@ -381,6 +426,15 @@ namespace WisR.App_Resources {
         public static string Password {
             get {
                 return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string PasswordProtected {
+            get {
+                return ResourceManager.GetString("PasswordProtected", resourceCulture);
             }
         }
         
@@ -552,6 +606,15 @@ namespace WisR.App_Resources {
         public static string UserQuestions {
             get {
                 return ResourceManager.GetString("UserQuestions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string UsersCanAsk {
+            get {
+                return ResourceManager.GetString("UsersCanAsk", resourceCulture);
             }
         }
         

@@ -175,7 +175,7 @@
     <value>Tilføj svarmulighed</value>
   </data>
   <data name="AddResponseOptions" xml:space="preserve">
-    <value>Tilføj svarmuligheder</value>
+    <value>Indtast svarmulighed</value>
   </data>
   <data name="BackToQuestions" xml:space="preserve">
     <value>Tilbage til spørgsmål</value>
@@ -293,5 +293,26 @@
   </data>
   <data name="TimeHasRunOut" xml:space="preserve">
     <value>Tiden er løbet ud</value>
+  </data>
+  <data name="AnonymousUsersAllowed" xml:space="preserve">
+    <value>Anonyme brugere har adgang</value>
+  </data>
+  <data name="ChatEnabled" xml:space="preserve">
+    <value>Har chat</value>
+  </data>
+  <data name="ClickToChangeImageSize" xml:space="preserve">
+    <value>Klik for at ændre billedets størrelse</value>
+  </data>
+  <data name="LoginToEnable" xml:space="preserve">
+    <value>Log ind for at anvende</value>
+  </data>
+  <data name="NoAccessRequiresLogin" xml:space="preserve">
+    <value>Ingen adgang, kræver at du logger ind</value>
+  </data>
+  <data name="PasswordProtected" xml:space="preserve">
+    <value>Anvender kodeord</value>
+  </data>
+  <data name="UsersCanAsk" xml:space="preserve">
+    <value>Brugere kan stille spørgsmål</value>
   </data>
 </root>

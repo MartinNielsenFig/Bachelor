@@ -10,3 +10,4 @@ Localization på webapp(ResourceHelper klasse) - Language er ikke oversat
 Grunt(herunder ngDocs)
 LDAP login
 Image Resizing
+Rest funktioner uden billeder
