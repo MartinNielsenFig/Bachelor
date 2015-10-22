@@ -163,17 +163,14 @@ namespace WisRRestAPI.Controllers
         public string AddQuestionResponse(string response, string questionId)
         {
             var q = _qr.GetQuestionWithoutImage(questionId).Result;
-            var answer = BsonSerializer.Deserialize<Answer>(response);
-
-            List<String> DEBUG_ALWAYS_ADD_ID = new List<string>();
-            DEBUG_ALWAYS_ADD_ID.Add("560e6a12e385c61374a4aa3f");
 
             if (Convert.ToDouble(q.ExpireTimestamp) >
-                (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalMilliseconds || DEBUG_ALWAYS_ADD_ID.Contains(answer.UserId))
+                (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalMilliseconds)
             {
                 q.Id = questionId;
 
-                if (q.Result.Exists(x => x.UserId == answer.UserId) && !DEBUG_ALWAYS_ADD_ID.Contains(answer.UserId))
+                var answer = BsonSerializer.Deserialize<Answer>(response);
+                if (q.Result.Exists(x => x.UserId == answer.UserId))
                 {
                     q.Result.Find(x => x.UserId == answer.UserId).Value = answer.Value;
                 }
