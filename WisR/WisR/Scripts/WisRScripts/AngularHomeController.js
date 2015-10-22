@@ -377,7 +377,7 @@ app.controller("HomeController", [
             navigator.geolocation.getCurrentPosition(function (position) {
                 $scope.currentLocation = position;
                 $("#loadingLabel").text(Resources.LoadingRooms +"...");
-                getRooms();
+                $scope.getRooms();
                 var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                 geocoder.geocode({ 'location': latLng }, function (results, status) {
                     if (status == google.maps.GeocoderStatus.OK) {
