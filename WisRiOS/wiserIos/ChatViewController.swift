@@ -44,21 +44,13 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
             dispatch_async(dispatch_get_main_queue()) {
                 self.textMessageInput.text = ""
-                //self.messages += [msg]
-                if self.messages.count > 0 {
-                    let newMsgIndex = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: self.messages.count-1, inSection: 0))
-                    var found = false
-                    self.tableView.indexPathsForVisibleRows?.forEach({ (indexPath) -> () in
-                        if indexPath.row == newMsgIndex {
-                            found = true
-                        }
-                    })
-                    if !found {
-                        self.scrollToBottom()
-                    }
+                
+                //If the last message is not visible, scroll to bottom
+                if self.stickToBottom() {
+                    self.scrollToBottom()
                 }
-                //self.tableView.reloadData()
                 self.updater?.start()
+                self.updater?.execute()
             }
         }
     }
@@ -97,17 +89,44 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     */
     func scrollToBottom() {
         do {
-            let chatFieldHeight = self.MessageInputStack.frame.height + 20
+            let chatFieldHeight = self.MessageInputStack.frame.height + 10
             dispatch_async(dispatch_get_main_queue()) {
                 if self.messages.count > 0 {
-                    self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.messages.count-1, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: false)
-                    self.tableView.setContentOffset(CGPoint(x: 0, y: self.tableView.contentOffset.y + chatFieldHeight), animated: true)
+                    self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.messages.count-1, inSection: 0), atScrollPosition: UITableViewScrollPosition.Bottom, animated: false)
+                    //self.tableView.setContentOffset(CGPoint(x: 0, y: self.tableView.contentOffset.y + chatFieldHeight), animated: true)
                 }
             }
         }
         catch let error as NSError {
             print(error)
         }
+    }
+    
+    /**
+     Policy that determines whether updates to the chat should scroll the UITableView to the bottom. This is to ensure that the user can scroll up the list to look at older messages, without the UITableView scrolling down again.
+     - returns: Whether UITableView should scroll to bottom on updates.
+     */
+    func stickToBottom() -> Bool {
+        return self.isMessageShown(self.messages.count-1) || self.isMessageShown(self.messages.count-2)
+    }
+    
+    /**
+     Determines whether the cell with index.row is shown on the UI
+     - parameter row:	The row of the cell to check if is visible
+     - returns: True if the cell with given row is shown on GUI. Else false.
+     */
+    func isMessageShown(row: Int) -> Bool {
+        var visible = false
+        if messages.count > 0 {
+            self.tableView.indexPathsForVisibleRows?.forEach({ (indexPath) -> () in
+                if indexPath.row == row {
+                    visible = true
+                }
+            })
+        } else {
+            return true
+        }
+       return visible
     }
     
     /**
@@ -143,11 +162,13 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
         
-        updater = Updater(secondsDelay: 2) {
+        updater = Updater(secondsDelay: 1) {
             print("update chat msg")
             
             let body = "roomId=\(self.roomId!)"
             HttpHandler.requestWithResponse(action: "Chat/GetAllByRoomId", type: "POST", body: body) { (data, response, error) in
+                
+                let sticky = self.stickToBottom()
                 
                 if let jsonArray = try? JSONSerializer.toArray(data)  {
                     for chatMsg in jsonArray {
@@ -159,6 +180,9 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     }
                     dispatch_async(dispatch_get_main_queue()) {
                         self.tableView.reloadData()
+                        if sticky {
+                            self.scrollToBottom()
+                        }
                     }
                 }
                 else {
