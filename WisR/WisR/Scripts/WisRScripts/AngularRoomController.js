@@ -13,7 +13,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
         /// Create a function that the hub can call to broadcast messages.
         hub.client.broadcastChatMessage = function (chatMessageToAdd) {
             //Only add the chatmessage if it is for the currentRoom
-            if (chatMessageToAdd.RoomId === $scope.currentRoom._id) {
+            if (JSON.parse(chatMessageToAdd).RoomId === $scope.CurrentRoom._id) {
                 $scope.ChatMessages.push(JSON.parse(chatMessageToAdd));
                 $scope.$apply();
             }
