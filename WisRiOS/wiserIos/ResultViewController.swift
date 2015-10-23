@@ -57,8 +57,8 @@ class ResultViewController: UIViewController {
         colors += ChartColorTemplates.colorful()
         colors += ChartColorTemplates.liberty()
         colors += ChartColorTemplates.pastel()
-        let predefinedColorsCount = colors.count
         
+        let predefinedColorsCount = colors.count
         if predefinedColorsCount < dataPoints.count {
             for _ in predefinedColorsCount..<dataPoints.count {
                 let red = Double(arc4random_uniform(256))

@@ -179,7 +179,7 @@ class CreateRoomViewController: UITableViewController {
                     
                     let alert = UIAlertController(title: "Tag in use", message: "Tag is already in use, choose another.", preferredStyle: .Alert)
                     alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { action in
-                        roomTagInputCell?.inputField.becomeFirstResponder()
+                        self.roomTagInputCell?.inputField.becomeFirstResponder()
                     }))
                     dispatch_async(dispatch_get_main_queue()) {
                         self.presentViewController(alert, animated: true, completion: nil)

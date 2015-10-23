@@ -59,7 +59,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         
         HttpHandler.requestWithResponse(action: "Question/AddQuestionResponse", type: "POST", body: body) { (data, response, error) in
             if error == "nil" && data == "" {
-                if let myResponse = (self.question.Result.filter() { $0.UserId == CurrentUser.sharedInstance._id }.first) where DEBUG_ALWAYS_ADD == false {
+                if let myResponse = (self.question.Result.filter() { $0.UserId == CurrentUser.sharedInstance._id }.first) where !DEBUG_ALWAYS_ADD {
                     myResponse.Value = answer.Value
                 } else {
                     self.question.Result += [answer]

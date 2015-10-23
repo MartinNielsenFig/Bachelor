@@ -21,6 +21,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var textMessageInput: UITextField!
+    @IBOutlet weak var MessageInputStack: UIStackView!
     
     //Actions
     @IBAction func sendPressed(sender: AnyObject) {
@@ -36,14 +37,18 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         //message timestamp gets created on restApi
         msg.Value = textMessageInput.text
         
-        
         let msgJson = JSONSerializer.toJson(msg)
         let body = "ChatMessage=\(msgJson)"
         HttpHandler.requestWithResponse(action: "Chat/CreateChatMessage", type: "POST", body: body) { (data, response, error) in
             NSLog("Chat/CreateChatMessage Done")
+            
+            dispatch_async(dispatch_get_main_queue()) {
+                self.textMessageInput.text = ""
+                self.messages += [msg]
+                self.tableView.reloadData()
+                self.scrollToBottom()
+            }
         }
-        
-        textMessageInput.resignFirstResponder()
     }
     
     //Lifecycle
@@ -64,6 +69,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 }
                 dispatch_async(dispatch_get_main_queue()) {
                     self.tableView.reloadData()
+                    self.scrollToBottom()
                 }
             }
             else {
@@ -72,7 +78,24 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
-    func oldestMessageEpoch() -> Double {
+    //Utilities
+    
+    /**
+    Scrolls to the bottom of the table view presented on this page
+    */
+    func scrollToBottom() {
+        let chatFieldHeight = self.MessageInputStack.frame.height + 20
+        dispatch_async(dispatch_get_main_queue()) {
+            self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.messages.count-1, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: false)
+            self.tableView.setContentOffset(CGPoint(x: 0, y: self.tableView.contentOffset.y + chatFieldHeight), animated: true)
+        }
+    }
+    
+    /**
+    Looks through the downloaded messages and looks for the oldest message. Then returns its timestamp. Could probably just look at the message last in the array.
+    - returns: Timestamp as seconds since 1-1-1970.
+    */
+    func oldestMessageEpochByIteration() -> Double {
         var oldestTime = 0.0
         for m in self.messages {
             if let timeStamp = m.Timestamp {
@@ -83,6 +106,17 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
             }
         }
         return oldestTime
+    }
+    
+    /**
+     Assumes the oldest message is the last one in the array.
+     - returns: Timestamp of the presumably oldest message as seconds sinde 1-1-1970
+     */
+    func oldestMessageEpochByIndex() -> Double {
+        if let ts = self.messages[self.messages.count-1].Timestamp {
+            return Double(ts.stringByReplacingOccurrencesOfString(",", withString: "."))!
+        }
+        return Double(0)
     }
     
     //Setup registering for keyboard events
@@ -100,7 +134,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     for chatMsg in jsonArray {
                         let m = ChatMessage(jsonDictionary: chatMsg as! NSDictionary)
                         
-                        if Double(m.Timestamp!) > self.oldestMessageEpoch() {
+                        if Double(m.Timestamp!) > self.oldestMessageEpochByIteration() {
                             self.messages += [m]
                         }
                     }
@@ -109,7 +143,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     }
                 }
                 else {
-                    print("could not load chat")
+                    print("could not update chat")
                 }
             }
         }
