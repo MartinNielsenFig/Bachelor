@@ -90,6 +90,24 @@ namespace WisR.App_Resources {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
+        public static string AmountOfDownvotes {
+            get {
+                return ResourceManager.GetString("AmountOfDownvotes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string AmountOfUpvotes {
+            get {
+                return ResourceManager.GetString("AmountOfUpvotes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
         public static string AnonymousUsersAllowed {
             get {
                 return ResourceManager.GetString("AnonymousUsersAllowed", resourceCulture);
@@ -102,6 +120,15 @@ namespace WisR.App_Resources {
         public static string Authenticating {
             get {
                 return ResourceManager.GetString("Authenticating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string AuthorOfQuestion {
+            get {
+                return ResourceManager.GetString("AuthorOfQuestion", resourceCulture);
             }
         }
         

@@ -315,7 +315,16 @@
   <data name="UsersCanAsk" xml:space="preserve">
     <value />
   </data>
+  <data name="AmountOfDownvotes" xml:space="preserve">
+    <value />
+  </data>
+  <data name="AmountOfUpvotes" xml:space="preserve">
+    <value />
+  </data>
   <data name="Authenticating" xml:space="preserve">
+    <value />
+  </data>
+  <data name="AuthorOfQuestion" xml:space="preserve">
     <value />
   </data>
   <data name="NoUserWithThatInformation" xml:space="preserve">

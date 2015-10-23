@@ -32,10 +32,10 @@
                             @*The ng-if Disables the initial animation of the rows *@
                             <tbody ng-if="specificRoomLoaded && questionsLoaded">
                                 <tr style="cursor: pointer" ng-class="{blink_me:!question.Votes.length}" ng-repeat="question in Questions|filter: { RoomId: '@ViewBag.roomId',CreatedById: CurrentRoom.CreatedById }" ng-click="ShowSpecificQuestion(question)">
-                                    <td>{{question.QuestionText}}</td>
-                                    <td>{{GetUsernameById(question.CreatedById)}}</td>
-                                    <td>{{question.Votes | CountVotes: 1}}<span ng-class="{'upvoted':hasVoted({{question.Votes}},true)}" class="glyphicon glyphicon-thumbs-up"></span></td>
-                                    <td>{{question.Votes | CountVotes: -1}}<span ng-class="{'downvoted':hasVoted({{question.Votes}},false)}" class="glyphicon glyphicon-thumbs-down"></span></td>
+                                    <td title="@WisR.App_Resources.Resource.QuestionText">{{question.QuestionText}}</td>
+                                    <td title="@WisR.App_Resources.Resource.AuthorOfQuestion">{{GetUsernameById(question.CreatedById)}}</td>
+                                    <td title="@WisR.App_Resources.Resource.AmountOfUpvotes">{{question.Votes | CountVotes: 1}}<span ng-class="{'upvoted':hasVoted({{question.Votes}},true)}" class="glyphicon glyphicon-thumbs-up"></span></td>
+                                    <td title="@WisR.App_Resources.Resource.AmountOfDownvotes">{{question.Votes | CountVotes: -1}}<span ng-class="{'downvoted':hasVoted({{question.Votes}},false)}" class="glyphicon glyphicon-thumbs-down"></span></td>
                             </tbody>
                         </table>
                     </div>
@@ -46,10 +46,10 @@
                                 @*The ng-if Disables the initial animation of the rows *@
                                 <tbody ng-if="specificRoomLoaded && questionsLoaded">
                                     <tr style="cursor: pointer" ng-class="{blink_me:!question.Votes.length}" ng-repeat="question in Questions|filter: { RoomId: '@ViewBag.roomId',CreatedById: '!'+CurrentRoom.CreatedById  }|orderBy:'-((Votes|CountVotes: 1)-(Votes|CountVotes:-1))' " ng-click="ShowSpecificQuestion(question)">
-                                        <td>{{question.QuestionText}}</td>
-                                        <td>{{GetUsernameById(question.CreatedById)}}</td>
-                                        <td>{{question.Votes | CountVotes: 1}}<span ng-class="{'upvoted':hasVoted({{question.Votes}},true)}" class="glyphicon glyphicon-thumbs-up"></span></td>
-                                        <td>{{question.Votes | CountVotes: -1}}<span ng-class="{'downvoted':hasVoted({{question.Votes}},false)}" class="glyphicon glyphicon-thumbs-down"></span></td>
+                                        <td title="@WisR.App_Resources.Resource.QuestionText">{{question.QuestionText}}</td>
+                                        <td title="@WisR.App_Resources.Resource.AuthorOfQuestion">{{GetUsernameById(question.CreatedById)}}</td>
+                                        <td title="@WisR.App_Resources.Resource.AmountOfUpvotes">{{question.Votes | CountVotes: 1}}<span ng-class="{'upvoted':hasVoted({{question.Votes}},true)}" class="glyphicon glyphicon-thumbs-up"></span></td>
+                                        <td title="@WisR.App_Resources.Resource.AmountOfDownvotes">{{question.Votes | CountVotes: -1}}<span ng-class="{'downvoted':hasVoted({{question.Votes}},false)}" class="glyphicon glyphicon-thumbs-down"></span></td>
                                 </tbody>
                             </table>
                         </div>

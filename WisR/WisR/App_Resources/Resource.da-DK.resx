@@ -315,8 +315,17 @@
   <data name="UsersCanAsk" xml:space="preserve">
     <value>Brugere kan stille spørgsmål</value>
   </data>
+  <data name="AmountOfDownvotes" xml:space="preserve">
+    <value>Antal downvotes spørgsmålet har</value>
+  </data>
+  <data name="AmountOfUpvotes" xml:space="preserve">
+    <value>Antal upvotes spørgsmålet har</value>
+  </data>
   <data name="Authenticating" xml:space="preserve">
     <value>Verificerer informationer, vent venligst</value>
+  </data>
+  <data name="AuthorOfQuestion" xml:space="preserve">
+    <value>Brugeren der oprettede spørgsmålet</value>
   </data>
   <data name="NoUserWithThatInformation" xml:space="preserve">
     <value>Ingen bruger med de oplysninger</value>
