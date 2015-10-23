@@ -83,7 +83,6 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     //Utilities
-    
     /**
     Scrolls to the bottom of the table view presented on this page
     */
@@ -163,8 +162,6 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
         
         updater = Updater(secondsDelay: 1) {
-            print("update chat msg")
-            
             let body = "roomId=\(self.roomId!)"
             HttpHandler.requestWithResponse(action: "Chat/GetAllByRoomId", type: "POST", body: body) { (data, response, error) in
                 
@@ -208,6 +205,16 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let cell = UITableViewCell()
         cell.textLabel?.text = messages[indexPath.row].Value
         return cell
+    }
+    
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        print("scroll began")
+        updater?.stop()
+    }
+    
+    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        print("scroll ended")
+        updater?.start()
     }
     
     
