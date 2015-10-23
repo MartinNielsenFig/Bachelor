@@ -4,6 +4,7 @@ Problemer med access-allow-origin(chrome + azure problemer)
 SignalR
 AngularJS
 CryptoJS
+Scrollglue
 ChartJS og Angular-chart
 RestAPI
 Localization på webapp(ResourceHelper klasse) - Language er ikke oversat

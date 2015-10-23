@@ -315,4 +315,10 @@
   <data name="UsersCanAsk" xml:space="preserve">
     <value />
   </data>
+  <data name="Authenticating" xml:space="preserve">
+    <value />
+  </data>
+  <data name="NoUserWithThatInformation" xml:space="preserve">
+    <value />
+  </data>
 </root>

@@ -99,6 +99,15 @@ namespace WisR.App_Resources {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
+        public static string Authenticating {
+            get {
+                return ResourceManager.GetString("Authenticating", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
         public static string BackToQuestions {
             get {
                 return ResourceManager.GetString("BackToQuestions", resourceCulture);
@@ -417,6 +426,15 @@ namespace WisR.App_Resources {
         public static string NoRoomWithThatTag {
             get {
                 return ResourceManager.GetString("NoRoomWithThatTag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string NoUserWithThatInformation {
+            get {
+                return ResourceManager.GetString("NoUserWithThatInformation", resourceCulture);
             }
         }
         

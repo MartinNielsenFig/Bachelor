@@ -187,16 +187,17 @@
                                 <label class="col-md-6">Email:</label> <input name="email" required type="email" class="col-md-6" />
                             </div>
                             <div class="row col-md-12">
-                                <label class="col-md-6">@WisR.App_Resources.Resource.Password:</label> <input name="password" required type="password" class="col-md-6" />
+                                <label class="col-md-6">@WisR.App_Resources.Resource.Password:</label> <input name="password" required type="password" class="col-md-6"/>
                             </div>
+                            <p ng-show="showLdapLoginText" class="text-center col-md-12" id="ldapErrorMsg">@WisR.App_Resources.Resource.Authenticating...</p>
                             <div class="col-md-12 text-center">
-                                <button id="ModalSubmitButton" type="submit" class="btn btn-primary">@WisR.App_Resources.Resource.LogIn</button>
+                                <button id="ModalSubmitButton" type="submit" ng-click="showLdapLoginText=true" class="btn btn-primary">@WisR.App_Resources.Resource.LogIn</button>
                                 <span>
                                     <button id="ModalCancelButton" type="button" class="btn btn-primary" data-dismiss="modal">@WisR.App_Resources.Resource.Cancel</button>
                                 </span>
 
                             </div>
-                            <p class="text-center" id="ldapErrorMsg"></p>
+                            
                         </div>
                     </form>
                 </div>
@@ -206,6 +207,7 @@
     <script>
         var ldapForm = $('#ldapForm');
         ldapForm.submit(function (e) {
+            $("#ldapErrorMsg").text("@WisR.App_Resources.Resource.Authenticating...");
             e.preventDefault(); // stops the form submission
 
             $.ajax({
@@ -217,7 +219,7 @@
                     if (data == "True") {
                         location.reload();
                     } else {
-                        $("#ldapErrorMsg").text("No user with that login information");
+                        $("#ldapErrorMsg").text("@WisR.App_Resources.Resource.NoUserWithThatInformation");
                     }
 
                 },
