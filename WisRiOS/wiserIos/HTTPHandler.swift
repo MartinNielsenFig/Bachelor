@@ -46,7 +46,7 @@ class HttpHandler {
         let started = NSDate()
         let task = session.dataTaskWithRequest(request) {
             data, response, error in
-            print("time for \(__FUNCTION__) mainUrl: \(mainUrl) action: \(action) http call \(NSDate().timeIntervalSinceDate(started)) seconds")
+            //print("time for \(__FUNCTION__) mainUrl: \(mainUrl) action: \(action) http call \(NSDate().timeIntervalSinceDate(started)) seconds")
             
             //Todo add customError class to completionHandler?
             //log(data: data, response: response, error: error)

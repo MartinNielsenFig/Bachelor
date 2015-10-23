@@ -149,10 +149,24 @@ class CreateRoomViewController: UITableViewController {
     - parameter button:	The button that initated the function call.
     */
     func addRoomButtonPressed(button: UIBarButtonItem) {
-        
-        guard roomNameInputCell?.inputField.text != nil && roomTagInputCell?.inputField.text != nil else {
-            //todo tell user that name and tag has to be filled
-            print("room name or tag cannot be empty")
+
+        if let name = roomNameInputCell?.inputField.text, tag = roomTagInputCell?.inputField.text where name == "" || tag == "" {
+            var msg = ""
+            if name == "" {
+                msg += "Room name cannot be empty. "
+            }
+            if tag == "" {
+                msg += "Room tag cannot be empty. "
+            }
+            
+            let alert = UIAlertController(title: "Empty values", message: msg, preferredStyle: .Alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { action in
+                self.roomTagInputCell?.inputField.becomeFirstResponder()
+            }))
+            dispatch_async(dispatch_get_main_queue()) {
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+            
             return
         }
         
