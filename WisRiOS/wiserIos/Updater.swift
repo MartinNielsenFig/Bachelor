@@ -9,12 +9,14 @@
 import Foundation
 
 class Updater: NSObject {
-    var timer: NSTimer?
-    var userFunction: (() -> Void)?
+    var timer: NSTimer!
+    var userFunction: (() -> Void)!
+    var secondsDelay: Double!
     
     init(secondsDelay: Double, function: () -> Void) {
         super.init()
-        userFunction = function
+        self.userFunction = function
+        self.secondsDelay = secondsDelay
         timer = NSTimer.scheduledTimerWithTimeInterval(secondsDelay, target: self, selector: "execute", userInfo: nil, repeats: true)
     }
     
@@ -25,5 +27,9 @@ class Updater: NSObject {
     func stop() {
         timer?.invalidate()
         timer = nil
+    }
+    
+    func start() {
+        timer = NSTimer.scheduledTimerWithTimeInterval(secondsDelay, target: self, selector: "execute", userInfo: nil, repeats: true)
     }
 }

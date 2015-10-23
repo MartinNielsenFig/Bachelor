@@ -25,7 +25,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     //Actions
     @IBAction func sendPressed(sender: AnyObject) {
-        
+        updater?.stop()
         if let text = textMessageInput.text where text.isEmpty {
             print("empty message not allowed in chat")
             return
@@ -44,9 +44,21 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
             dispatch_async(dispatch_get_main_queue()) {
                 self.textMessageInput.text = ""
-                self.messages += [msg]
-                self.tableView.reloadData()
-                self.scrollToBottom()
+                //self.messages += [msg]
+                if self.messages.count > 0 {
+                    let newMsgIndex = self.tableView.cellForRowAtIndexPath(NSIndexPath(forRow: self.messages.count-1, inSection: 0))
+                    var found = false
+                    self.tableView.indexPathsForVisibleRows?.forEach({ (indexPath) -> () in
+                        if indexPath.row == newMsgIndex {
+                            found = true
+                        }
+                    })
+                    if !found {
+                        self.scrollToBottom()
+                    }
+                }
+                //self.tableView.reloadData()
+                self.updater?.start()
             }
         }
     }
@@ -84,17 +96,24 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     Scrolls to the bottom of the table view presented on this page
     */
     func scrollToBottom() {
-        let chatFieldHeight = self.MessageInputStack.frame.height + 20
-        dispatch_async(dispatch_get_main_queue()) {
-            self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.messages.count-1, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: false)
-            self.tableView.setContentOffset(CGPoint(x: 0, y: self.tableView.contentOffset.y + chatFieldHeight), animated: true)
+        do {
+            let chatFieldHeight = self.MessageInputStack.frame.height + 20
+            dispatch_async(dispatch_get_main_queue()) {
+                if self.messages.count > 0 {
+                    self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.messages.count-1, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: false)
+                    self.tableView.setContentOffset(CGPoint(x: 0, y: self.tableView.contentOffset.y + chatFieldHeight), animated: true)
+                }
+            }
+        }
+        catch let error as NSError {
+            print(error)
         }
     }
     
     /**
-    Looks through the downloaded messages and looks for the oldest message. Then returns its timestamp. Could probably just look at the message last in the array.
-    - returns: Timestamp as seconds since 1-1-1970.
-    */
+     Looks through the downloaded messages and looks for the oldest message. Then returns its timestamp. Could probably just look at the message last in the array.
+     - returns: Timestamp as seconds since 1-1-1970.
+     */
     func oldestMessageEpochByIteration() -> Double {
         var oldestTime = 0.0
         for m in self.messages {
@@ -124,7 +143,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
         
-        updater = Updater(secondsDelay: 1) {
+        updater = Updater(secondsDelay: 2) {
             print("update chat msg")
             
             let body = "roomId=\(self.roomId!)"
@@ -134,7 +153,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     for chatMsg in jsonArray {
                         let m = ChatMessage(jsonDictionary: chatMsg as! NSDictionary)
                         
-                        if Double(m.Timestamp!) > self.oldestMessageEpochByIteration() {
+                        if Double(m.Timestamp!) > self.oldestMessageEpochByIndex() {
                             self.messages += [m]
                         }
                     }
