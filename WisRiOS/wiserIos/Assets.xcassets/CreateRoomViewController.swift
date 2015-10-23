@@ -27,6 +27,8 @@ class CreateRoomViewController: UITableViewController {
     
     var room = Room()
     
+    let onDefault = true
+    
     //Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,7 +86,7 @@ class CreateRoomViewController: UITableViewController {
             pwLabel = cell.label
             pwInputCell = cell
             
-            let on = (pwSwitchCell?.uiSwitch.on)!
+            let on = pwSwitchCell?.uiSwitch.on ?? onDefault
             cell.inputField.enabled = on
             pwLabel?.enabled = on
             
@@ -147,12 +149,19 @@ class CreateRoomViewController: UITableViewController {
     - parameter button:	The button that initated the function call.
     */
     func addRoomButtonPressed(button: UIBarButtonItem) {
+        
+        guard roomNameInputCell?.inputField.text != nil && roomTagInputCell?.inputField.text != nil else {
+            //todo tell user that name and tag has to be filled
+            print("room name or tag cannot be empty")
+            return
+        }
+        
         room.Name = roomNameInputCell?.inputField.text
-        room.AllowAnonymous = (anonymousInputCell?.uiSwitch.on)!
+        room.AllowAnonymous = anonymousInputCell?.uiSwitch.on ?? onDefault
         room.CreatedById = CurrentUser.sharedInstance._id
-        room.HasChat = (chatInputCell?.uiSwitch.on)!
-        room.HasPassword = (pwSwitchCell?.uiSwitch.on)!
-        room.UseLocation = (roomUsesLocationInputCell?.uiSwitch.on)!
+        room.HasChat = chatInputCell?.uiSwitch.on ?? onDefault
+        room.HasPassword = pwSwitchCell?.uiSwitch.on ?? onDefault
+        room.UseLocation = roomUsesLocationInputCell?.uiSwitch.on ?? onDefault
         room.Location.Latitude = CurrentUser.sharedInstance.location.Latitude
         room.Location.Longitude = CurrentUser.sharedInstance.location.Longitude
         room.Location.AccuracyMeters = CurrentUser.sharedInstance.location.AccuracyMeters ?? 20
@@ -165,7 +174,7 @@ class CreateRoomViewController: UITableViewController {
         }
         
         room.Tag = roomTagInputCell?.inputField.text
-        room.UsersCanAsk = (userQuestionInputCell?.uiSwitch.on)!
+        room.UsersCanAsk = userQuestionInputCell?.uiSwitch.on ?? onDefault
         room.EncryptedPassword = pwInputCell?.inputField.text?.sha512()
         
         let jsonRoom = JSONSerializer.toJson(self.room)
@@ -179,7 +188,7 @@ class CreateRoomViewController: UITableViewController {
                     
                     let alert = UIAlertController(title: "Tag in use", message: "Tag is already in use, choose another.", preferredStyle: .Alert)
                     alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { action in
-                        roomTagInputCell?.inputField.becomeFirstResponder()
+                        self.roomTagInputCell?.inputField.becomeFirstResponder()
                     }))
                     dispatch_async(dispatch_get_main_queue()) {
                         self.presentViewController(alert, animated: true, completion: nil)
