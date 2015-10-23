@@ -70,10 +70,18 @@
                                 </div>
                                 <img ng-show="specificImageLoaded" ng-click="toggleImageSize()" id="specificQuestionImage" ng-src="data:image/png;base64,{{SpecificQuestion.Img}}" title="@WisR.App_Resources.Resource.ClickToChangeImageSize" style="cursor: pointer; width: 100px; height: 100px" />
                             </td>
-                            <td>{{SpecificQuestion.QuestionText}}</td>
-                            <td>{{GetUsernameById(SpecificQuestion.CreatedById)}}</td>
-                            <td>{{SpecificQuestion.Votes | CountVotes: 1}}<button class="votingBtn" ng-click="Vote('Up')" title="{{{true: '@WisR.App_Resources.Resource.LoginToEnable', false: ''}[anonymousUser]}}" style="pointer-events: auto;" ng-disabled="anonymousUser"> <span ng-class="{'upvoted':hasVoted('{{SpecificQuestion.Votes}}' != undefined? SpecificQuestion.Votes: 'undefined',true)}" class="glyphicon glyphicon-thumbs-up"></span></button></td>
-                            <td>{{SpecificQuestion.Votes | CountVotes: -1}}<button class="votingBtn" ng-click="Vote('Down')" title="{{{true: '@WisR.App_Resources.Resource.LoginToEnable', false: ''}[anonymousUser]}}" style="pointer-events: auto;" ng-disabled="anonymousUser"><span ng-class="{'downvoted':hasVoted('{{SpecificQuestion.Votes}}'!= undefined? SpecificQuestion.Votes: 'undefined',false)}" class="glyphicon glyphicon-thumbs-down"></span></button></td>
+                            <td title="@WisR.App_Resources.Resource.QuestionText">{{SpecificQuestion.QuestionText}}</td>
+                            <td title="@WisR.App_Resources.Resource.AuthorOfQuestion">{{GetUsernameById(SpecificQuestion.CreatedById)}}</td>
+                            <td>
+                                <span title="@WisR.App_Resources.Resource.AmountOfUpvotes">{{SpecificQuestion.Votes | CountVotes: 1}}</span>
+                                <button class="votingBtn" ng-click="Vote('Up')" title="{{{true: '@WisR.App_Resources.Resource.LoginToEnable', false: ''}[anonymousUser]}}" style="pointer-events: auto;" ng-disabled="anonymousUser"> <span ng-class="{'upvoted':hasVoted('{{SpecificQuestion.Votes}}' != undefined? SpecificQuestion.Votes: 'undefined',true)}" class="glyphicon glyphicon-thumbs-up"></span></button>
+                            </td>
+                            <td>
+                                <span title="@WisR.App_Resources.Resource.AmountOfDownvotes">
+                                    {{SpecificQuestion.Votes | CountVotes: -1}}
+                                </span>
+                                <button class="votingBtn" ng-click="Vote('Down')" title="{{{true: '@WisR.App_Resources.Resource.LoginToEnable', false: '@WisR.App_Resources.Resource.AmountOfDownvotes'}[anonymousUser]}}" style="pointer-events: auto;" ng-disabled="anonymousUser"><span ng-class="{'downvoted':hasVoted('{{SpecificQuestion.Votes}}'!= undefined? SpecificQuestion.Votes: 'undefined',false)}" class="glyphicon glyphicon-thumbs-down"></span></button>
+                            </td>
                         </tr>
 
                     </table>
