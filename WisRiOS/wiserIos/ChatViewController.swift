@@ -70,9 +70,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         updater = Updater(secondsDelay: 1) {
             let body = "roomId=\(self.roomId!)"
             HttpHandler.requestWithResponse(action: "Chat/GetAllByRoomId", type: "POST", body: body) { (data, response, error) in
-                
                 let sticky = self.stickToBottom()
-                
                 if let jsonArray = try? JSONSerializer.toArray(data)  {
                     for chatMsg in jsonArray {
                         let m = ChatMessage(jsonDictionary: chatMsg as! NSDictionary)

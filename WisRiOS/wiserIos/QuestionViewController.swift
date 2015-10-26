@@ -17,6 +17,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     var roomId: String?
     var firstProgressBarUpdate = true
     var progressTimerUpdater: Updater?
+    var selectedAnswerPickerIndex = -1
     
     //Get instantiated by QuestionListViewController
     var question = Question()
@@ -64,8 +65,29 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                 } else {
                     self.question.Result += [answer]
                 }
+                
+                self.highlightSelectedAnswer(index)
             }
         }
+    }
+    
+    /**
+     Highlights the selected answer in the Answer Picker.
+     - parameter index:	The index on the selected answer from the user. If it's nil, this function will find it.
+     */
+    func highlightSelectedAnswer(index: Int? = nil) {
+        if let index = index {
+            self.selectedAnswerPickerIndex = index
+        } else {
+            if let myAnswer = (question.Result.filter() { $0.UserId == CurrentUser.sharedInstance._id }.first) {
+                self.selectedAnswerPickerIndex = pickerData.indexOf(myAnswer.Value) ?? -1
+            }
+        }
+        
+        //Will call pickerView(pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int)
+        dispatch_async(dispatch_get_main_queue(), {
+            self.answerPicker.reloadAllComponents()
+        })
     }
     
     func updateVoteUI(up: Bool) {
@@ -189,6 +211,9 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     
     override func viewDidAppear(animated: Bool) {
+        
+        highlightSelectedAnswer()
+        
         //Vote btns
         for v in question.Votes {
             if v.CreatedById == CurrentUser.sharedInstance._id {
@@ -211,6 +236,15 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return pickerData[row]
+    }
+    
+    func pickerView(pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        if row == selectedAnswerPickerIndex {
+            let title = pickerData[row]
+            let attributedTitle = NSAttributedString(string: title, attributes: [NSForegroundColorAttributeName:UIColor.blueColor()])
+            return attributedTitle
+        }
+        return nil
     }
     
     //Navigation

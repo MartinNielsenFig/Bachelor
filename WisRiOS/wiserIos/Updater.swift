@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// A wrapper for NSTimer.scheduledTimerWithTimeInterval that takes a function as closure that it saves, so that the task can be easily stopped/resumed.
 class Updater: NSObject {
     var timer: NSTimer!
     var userFunction: (() -> Void)!
