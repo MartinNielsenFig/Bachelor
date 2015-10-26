@@ -23,7 +23,6 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     var question = Question()
     
     var timeLabel = UILabel()
-
     @IBOutlet weak var questionText: UILabel!
     @IBOutlet weak var answerPicker: UIPickerView!
     @IBOutlet weak var questionImage: UIImageView!
@@ -110,7 +109,6 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         
         HttpHandler.requestWithResponse(action: "Question/AddVote", type: "POST", body: body) { (data, response, error) in
             if error == "nil" && data == "" {
-                //If Vote already exists, update it. Else add it.
                 if let myVote = (self.question.Votes.filter() { $0.CreatedById == CurrentUser.sharedInstance._id }.first) {
                     myVote.Value = voteValue
                 } else {
@@ -187,8 +185,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         
         //Image
         let indicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
-        indicator.center = self.questionImage.center
-        
+        indicator.center = self.view.center
         indicator.startAnimating()
         self.view.addSubview(indicator)
         
