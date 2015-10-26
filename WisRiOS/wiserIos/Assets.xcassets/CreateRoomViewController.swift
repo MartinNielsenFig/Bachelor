@@ -51,6 +51,7 @@ class CreateRoomViewController: UITableViewController {
             let cellIdentifier = "TextInputCell"
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! TextInputCell
             cell.label.text = "Room name"
+            cell.inputField.placeholder = "Name of the room"
             roomNameInputCell = cell
             return cell
         }
@@ -59,6 +60,7 @@ class CreateRoomViewController: UITableViewController {
             let cellIdentifier = "TextInputCell"
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! TextInputCell
             cell.label.text = "Room Secret"
+            cell.inputField.placeholder = "Let others join with secret"
             roomSecretInputCell = cell
             return cell
         }
@@ -81,6 +83,7 @@ class CreateRoomViewController: UITableViewController {
             let cellIdentifier = "TextInputCell"
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! TextInputCell
             cell.label.text = "Password"
+            cell.inputField.placeholder = "Optional password for room"
             cell.inputField.secureTextEntry = true
             
             pwLabel = cell.label
