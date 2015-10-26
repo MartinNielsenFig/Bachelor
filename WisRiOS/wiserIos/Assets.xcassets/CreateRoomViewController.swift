@@ -15,7 +15,7 @@ class CreateRoomViewController: UITableViewController {
     
     //Properties
     var roomNameInputCell: TextInputCell?
-    var roomTagInputCell: TextInputCell?
+    var roomSecretInputCell: TextInputCell?
     var pwSwitchCell: BooleanInputCell?
     var pwInputCell: TextInputCell?
     var radiusInputCell: SegmentedInputCell?
@@ -58,8 +58,8 @@ class CreateRoomViewController: UITableViewController {
         else if indexPath.row == 1 {
             let cellIdentifier = "TextInputCell"
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! TextInputCell
-            cell.label.text = "Room tag"
-            roomTagInputCell = cell
+            cell.label.text = "Room Secret"
+            roomSecretInputCell = cell
             return cell
         }
             
@@ -150,18 +150,18 @@ class CreateRoomViewController: UITableViewController {
     */
     func addRoomButtonPressed(button: UIBarButtonItem) {
 
-        if let name = roomNameInputCell?.inputField.text, tag = roomTagInputCell?.inputField.text where name == "" || tag == "" {
+        if let name = roomNameInputCell?.inputField.text, secret = roomSecretInputCell?.inputField.text where name == "" || secret == "" {
             var msg = ""
             if name == "" {
                 msg += "Room name cannot be empty. "
             }
-            if tag == "" {
-                msg += "Room tag cannot be empty. "
+            if secret == "" {
+                msg += "Room secret cannot be empty. "
             }
             
             let alert = UIAlertController(title: "Empty values", message: msg, preferredStyle: .Alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { action in
-                self.roomTagInputCell?.inputField.becomeFirstResponder()
+                self.roomSecretInputCell?.inputField.becomeFirstResponder()
             }))
             dispatch_async(dispatch_get_main_queue()) {
                 self.presentViewController(alert, animated: true, completion: nil)
@@ -187,7 +187,7 @@ class CreateRoomViewController: UITableViewController {
             room.Radius = meters
         }
         
-        room.Tag = roomTagInputCell?.inputField.text
+        room.Secret = roomSecretInputCell?.inputField.text
         room.UsersCanAsk = userQuestionInputCell?.uiSwitch.on ?? onDefault
         room.EncryptedPassword = pwInputCell?.inputField.text?.sha512()
         
@@ -197,12 +197,12 @@ class CreateRoomViewController: UITableViewController {
             if let error = try? ReturnMessage.parse(data) {
                 print(error.ErrorMessage)
                 
-                if error.ErrorCode == ErrorCodes.RoomTagAlreadyInUse.rawValue {
-                    print("TAG ALREADY IN USE")
+                if error.ErrorCode == ErrorCodes.RoomSecretAlreadyInUse.rawValue {
+                    print("SECRET ALREADY IN USE")
                     
-                    let alert = UIAlertController(title: "Tag in use", message: "Tag is already in use, choose another.", preferredStyle: .Alert)
+                    let alert = UIAlertController(title: "Secret in use", message: "Secret is already in use, choose another.", preferredStyle: .Alert)
                     alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { action in
-                        self.roomTagInputCell?.inputField.becomeFirstResponder()
+                        self.roomSecretInputCell?.inputField.becomeFirstResponder()
                     }))
                     dispatch_async(dispatch_get_main_queue()) {
                         self.presentViewController(alert, animated: true, completion: nil)

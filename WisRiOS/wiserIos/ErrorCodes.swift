@@ -10,7 +10,7 @@ import Foundation
 
 enum ErrorCodes: Int {
     case NothingReceived = -100
-    case RoomTagAlreadyInUse = 0
+    case RoomSecretAlreadyInUse = 0
     case RabbitMqError
     case StringIsNotJsonFormat
     case CouldNotParseJsonToClass
