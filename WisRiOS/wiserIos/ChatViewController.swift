@@ -60,26 +60,52 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         print("ChatViewController instantiated, roomId: \(self.roomId)")
         
         textMessageInput.delegate = self
+    }
+    
+    //Setup registering for keyboard events
+    override func viewWillAppear(animated: Bool) {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
         
-        //Load the message
-        let body = "roomId=\(roomId!)"
-        HttpHandler.requestWithResponse(action: "Chat/GetAllByRoomId", type: "POST", body: body) { (data, response, error) in
-            
-            if let jsonArray = try? JSONSerializer.toArray(data)  {
-                for chatMsg in jsonArray {
-                    let m = ChatMessage(jsonDictionary: chatMsg as! NSDictionary)
-                    self.messages += [m]
-                    let line = DateTimeHelper.getTimeStringFromEpochString(m.Timestamp) + " " + m.Value! + "\n"
+        updater = Updater(secondsDelay: 1) {
+            let body = "roomId=\(self.roomId!)"
+            HttpHandler.requestWithResponse(action: "Chat/GetAllByRoomId", type: "POST", body: body) { (data, response, error) in
+                
+                let sticky = self.stickToBottom()
+                
+                if let jsonArray = try? JSONSerializer.toArray(data)  {
+                    for chatMsg in jsonArray {
+                        let m = ChatMessage(jsonDictionary: chatMsg as! NSDictionary)
+                        
+                        if Double(m.Timestamp!) > self.oldestMessageEpochByIndex() {
+                            self.messages += [m]
+                        }
+                    }
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.tableView.reloadData()
+                        if sticky {
+                            self.scrollToBottom()
+                        }
+                    }
                 }
-                dispatch_async(dispatch_get_main_queue()) {
-                    self.tableView.reloadData()
-                    self.scrollToBottom()
+                else {
+                    print("could not update chat")
                 }
-            }
-            else {
-                print("could not load chat")
             }
         }
+        updater?.execute()
+        dispatch_async(dispatch_get_main_queue()) {
+            self.tableView.reloadData()
+            self.scrollToBottom()
+        }
+        
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+        
+        updater?.stop()
     }
     
     //Utilities
@@ -106,7 +132,11 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
      - returns: Whether UITableView should scroll to bottom on updates.
      */
     func stickToBottom() -> Bool {
-        return self.isMessageShown(self.messages.count-1) || self.isMessageShown(self.messages.count-2)
+        if self.messages.count > 1 {
+            return self.isMessageShown(self.messages.count-1) || self.isMessageShown(self.messages.count-2)
+        } else {
+            return false
+        }
     }
     
     /**
@@ -150,51 +180,14 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
      - returns: Timestamp of the presumably oldest message as seconds sinde 1-1-1970
      */
     func oldestMessageEpochByIndex() -> Double {
-        if let ts = self.messages[self.messages.count-1].Timestamp {
-            return Double(ts.stringByReplacingOccurrencesOfString(",", withString: "."))!
+        if self.messages.count > 0 {
+            if let ts = self.messages[self.messages.count-1].Timestamp {
+                return Double(ts.stringByReplacingOccurrencesOfString(",", withString: "."))!
+            }
         }
         return Double(0)
     }
     
-    //Setup registering for keyboard events
-    override func viewWillAppear(animated: Bool) {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
-        
-        updater = Updater(secondsDelay: 1) {
-            let body = "roomId=\(self.roomId!)"
-            HttpHandler.requestWithResponse(action: "Chat/GetAllByRoomId", type: "POST", body: body) { (data, response, error) in
-                
-                let sticky = self.stickToBottom()
-                
-                if let jsonArray = try? JSONSerializer.toArray(data)  {
-                    for chatMsg in jsonArray {
-                        let m = ChatMessage(jsonDictionary: chatMsg as! NSDictionary)
-                        
-                        if Double(m.Timestamp!) > self.oldestMessageEpochByIndex() {
-                            self.messages += [m]
-                        }
-                    }
-                    dispatch_async(dispatch_get_main_queue()) {
-                        self.tableView.reloadData()
-                        if sticky {
-                            self.scrollToBottom()
-                        }
-                    }
-                }
-                else {
-                    print("could not update chat")
-                }
-            }
-        }
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
-        
-        updater?.stop()
-    }
     
     //UITableViewController
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -226,7 +219,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     //UIKeyboardWillShowNotification & UIKeyboardWillHideNotification
     let kbOffset = CGFloat(30)
-    //Based upon https://github.com/Lightstreamer/Lightstreamer-example-Chat-client-ios-swift with modifications
+    //Keyboard hide/show based upon https://github.com/Lightstreamer/Lightstreamer-example-Chat-client-ios-swift with modifications
     func keyboardWillShow(notification: NSNotification) {
         print("\(__FUNCTION__) has been called")
         
