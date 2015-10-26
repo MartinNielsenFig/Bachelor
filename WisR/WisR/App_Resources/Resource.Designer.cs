@@ -252,9 +252,9 @@ namespace WisR.App_Resources {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        public static string EnterUniqueTag {
+        public static string EnterUniqueSecret {
             get {
-                return ResourceManager.GetString("EnterUniqueTag", resourceCulture);
+                return ResourceManager.GetString("EnterUniqueSecret", resourceCulture);
             }
         }
         
@@ -459,9 +459,9 @@ namespace WisR.App_Resources {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        public static string NoRoomWithThatTag {
+        public static string NoRoomWithThatSecret {
             get {
-                return ResourceManager.GetString("NoRoomWithThatTag", resourceCulture);
+                return ResourceManager.GetString("NoRoomWithThatSecret", resourceCulture);
             }
         }
         
@@ -585,9 +585,9 @@ namespace WisR.App_Resources {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        public static string RoomTagRequiresLogin {
+        public static string RoomSecretRequiresLogin {
             get {
-                return ResourceManager.GetString("RoomTagRequiresLogin", resourceCulture);
+                return ResourceManager.GetString("RoomSecretRequiresLogin", resourceCulture);
             }
         }
         
@@ -630,9 +630,9 @@ namespace WisR.App_Resources {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
-        public static string UniqueTag {
+        public static string UniqueSecret {
             get {
-                return ResourceManager.GetString("UniqueTag", resourceCulture);
+                return ResourceManager.GetString("UniqueSecret", resourceCulture);
             }
         }
         

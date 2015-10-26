@@ -132,8 +132,8 @@
   <data name="CreateRoom" xml:space="preserve">
     <value>Opret rum</value>
   </data>
-  <data name="EnterUniqueTag" xml:space="preserve">
-    <value>Indtast unikt tag</value>
+  <data name="EnterUniqueSecret" xml:space="preserve">
+    <value>Indtast unikt hemmelighed</value>
   </data>
   <data name="HasChat" xml:space="preserve">
     <value>Chat</value>
@@ -162,8 +162,8 @@
   <data name="SeeRoomAndLocation" xml:space="preserve">
     <value>Se rum samt din placering</value>
   </data>
-  <data name="UniqueTag" xml:space="preserve">
-    <value>Unikt tag</value>
+  <data name="UniqueSecret" xml:space="preserve">
+    <value>Unik hemmelighed</value>
   </data>
   <data name="UseLocation" xml:space="preserve">
     <value>Anvend placering</value>
@@ -267,14 +267,14 @@
   <data name="NoResultsFound" xml:space="preserve">
     <value>Ingen resultater fundet</value>
   </data>
-  <data name="NoRoomWithThatTag" xml:space="preserve">
-    <value>Intet rum med tagget: </value>
+  <data name="NoRoomWithThatSecret" xml:space="preserve">
+    <value>Intet rum med hemmeligheden: </value>
   </data>
   <data name="Precision" xml:space="preserve">
     <value>Præcision: </value>
   </data>
-  <data name="RoomTagRequiresLogin" xml:space="preserve">
-    <value>Rummet med det tag, kræver at du logger ind</value>
+  <data name="RoomSecretRequiresLogin" xml:space="preserve">
+    <value>Rummet med den hemmelighed, kræver at du logger ind</value>
   </data>
   <data name="ChoosePicture" xml:space="preserve">
     <value>Vælg billede</value>

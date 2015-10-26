@@ -132,8 +132,8 @@
   <data name="CreateRoom" xml:space="preserve">
     <value>Create room</value>
   </data>
-  <data name="EnterUniqueTag" xml:space="preserve">
-    <value>Enter unique tag</value>
+  <data name="EnterUniqueSecret" xml:space="preserve">
+    <value>Enter unique secret</value>
   </data>
   <data name="HasChat" xml:space="preserve">
     <value>Chat</value>
@@ -162,8 +162,8 @@
   <data name="SeeRoomAndLocation" xml:space="preserve">
     <value>See room &amp; your location</value>
   </data>
-  <data name="UniqueTag" xml:space="preserve">
-    <value>Unique tag</value>
+  <data name="UniqueSecret" xml:space="preserve">
+    <value>Unique secret</value>
   </data>
   <data name="UseLocation" xml:space="preserve">
     <value>Use location</value>
@@ -267,14 +267,14 @@
   <data name="NoResultsFound" xml:space="preserve">
     <value>No Results found</value>
   </data>
-  <data name="NoRoomWithThatTag" xml:space="preserve">
-    <value>No room with the tag: </value>
+  <data name="NoRoomWithThatSecret" xml:space="preserve">
+    <value>No room with the secret: </value>
   </data>
   <data name="Precision" xml:space="preserve">
     <value>Precision: </value>
   </data>
-  <data name="RoomTagRequiresLogin" xml:space="preserve">
-    <value>The room-tag you have entered requires you to login</value>
+  <data name="RoomSecretRequiresLogin" xml:space="preserve">
+    <value>The room-secret you have entered requires you to login</value>
   </data>
   <data name="ChoosePicture" xml:space="preserve">
     <value>Choose Picture</value>
