@@ -11,7 +11,7 @@ import Foundation
 /// Handles the Http-Calls from the client to the RestAPI
 class HttpHandler {
     
-    //static let mainUrl = "http://192.168.198.149:1337/"
+    //static let mainUrl = "http://192.168.198.152:1337/"
     //static let mainUrl = "http://wisrrestapi.aceipse.dk/"
     static let mainUrl = "http://wisrrestapi.azurewebsites.net/"
     

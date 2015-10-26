@@ -18,6 +18,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var roomId: String?
     var messages = [ChatMessage]()
     var updater: Updater?
+    var firstLoad = true
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var textMessageInput: UITextField!
@@ -81,8 +82,9 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     }
                     dispatch_async(dispatch_get_main_queue()) {
                         self.tableView.reloadData()
-                        if sticky {
+                        if sticky || self.firstLoad {
                             self.scrollToBottom()
+                            self.firstLoad = false
                         }
                     }
                 }
@@ -92,11 +94,6 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
             }
         }
         updater?.execute()
-        dispatch_async(dispatch_get_main_queue()) {
-            self.tableView.reloadData()
-            self.scrollToBottom()
-        }
-        
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -111,20 +108,15 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     Scrolls to the bottom of the table view presented on this page
     */
     func scrollToBottom() {
-        do {
-            let chatFieldHeight = self.MessageInputStack.frame.height + 10
-            dispatch_async(dispatch_get_main_queue()) {
-                if self.messages.count > 0 {
-                    self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.messages.count-1, inSection: 0), atScrollPosition: UITableViewScrollPosition.Bottom, animated: false)
-                    //self.tableView.setContentOffset(CGPoint(x: 0, y: self.tableView.contentOffset.y + chatFieldHeight), animated: true)
-                }
+        let chatFieldHeight = self.MessageInputStack.frame.height + 10
+        dispatch_async(dispatch_get_main_queue()) {
+            if self.messages.count > 0 {
+                self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.messages.count-1, inSection: 0), atScrollPosition: UITableViewScrollPosition.Bottom, animated: false)
+                //self.tableView.setContentOffset(CGPoint(x: 0, y: self.tableView.contentOffset.y + chatFieldHeight), animated: true)
             }
         }
-        catch let error as NSError {
-            print(error)
-        }
     }
-    
+
     /**
      Policy that determines whether updates to the chat should scroll the UITableView to the bottom. This is to ensure that the user can scroll up the list to look at older messages, without the UITableView scrolling down again.
      - returns: Whether UITableView should scroll to bottom on updates.
