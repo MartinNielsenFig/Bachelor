@@ -330,4 +330,7 @@
   <data name="NoUserWithThatInformation" xml:space="preserve">
     <value>Ingen bruger med de oplysninger</value>
   </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Ændr</value>
+  </data>
 </root>

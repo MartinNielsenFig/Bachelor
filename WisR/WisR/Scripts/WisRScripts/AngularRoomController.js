@@ -573,6 +573,9 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
             }
         }
     }
+    $scope.toggleDropdown=function(questionId) {
+        $("#dropdown" + questionId).dropdown("toggle");
+    }
 
     function resizeImg(img, maxWidth, maxHeight, degrees) {
         

@@ -27,7 +27,8 @@
             <div id="questionTables" ng-show="!SpecificQuestionShown && questionsLoaded">
                 <div class="col-md-8">
                     <h4>@WisR.App_Resources.Resource.HostQuestions</h4>
-                    <div style="overflow-y: auto; max-height: 200px; min-height: 200px">
+
+                    <div style="overflow-y: auto; overflow-x: visible; max-height: 200px; min-height: 200px">
                         <table id="hostQuestionsTable" class="table table-hover table-responsive">
                             @*The ng-if Disables the initial animation of the rows *@
                             <tbody ng-if="specificRoomLoaded && questionsLoaded">
@@ -36,6 +37,20 @@
                                     <td title="@WisR.App_Resources.Resource.AuthorOfQuestion">{{GetUsernameById(question.CreatedById)}}</td>
                                     <td title="@WisR.App_Resources.Resource.AmountOfUpvotes">{{question.Votes | CountVotes: 1}}<span ng-class="{'upvoted':hasVoted({{question.Votes}},true)}" class="glyphicon glyphicon-thumbs-up"></span></td>
                                     <td title="@WisR.App_Resources.Resource.AmountOfDownvotes">{{question.Votes | CountVotes: -1}}<span ng-class="{'downvoted':hasVoted({{question.Votes}},false)}" class="glyphicon glyphicon-thumbs-down"></span></td>
+                                    <td ng-hide="question.CreatedById!=currentUser._id" title="@WisR.App_Resources.Resource.Edit" ng-click="toggleDropdown(question._id);$event.stopPropagation();">
+                                        <span class="glyphicon glyphicon-option-vertical"></span>
+                                        <div class="dropdown">
+                                            <button ng-hide="true" class="btn btn-default dropdown-toggle" type="button" id="dropdown{{question._id}}" data-toggle="dropdown">
+                                                Dropdown
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu" style="position: relative;z-index: 1" aria-labelledby="dropdownMenu1">
+                                                <li><a href="#">Update</a></li>
+                                                <li><a href="#">Delete</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+
                             </tbody>
                         </table>
                     </div>
@@ -50,6 +65,7 @@
                                         <td title="@WisR.App_Resources.Resource.AuthorOfQuestion">{{GetUsernameById(question.CreatedById)}}</td>
                                         <td title="@WisR.App_Resources.Resource.AmountOfUpvotes">{{question.Votes | CountVotes: 1}}<span ng-class="{'upvoted':hasVoted({{question.Votes}},true)}" class="glyphicon glyphicon-thumbs-up"></span></td>
                                         <td title="@WisR.App_Resources.Resource.AmountOfDownvotes">{{question.Votes | CountVotes: -1}}<span ng-class="{'downvoted':hasVoted({{question.Votes}},false)}" class="glyphicon glyphicon-thumbs-down"></span></td>
+                                        <td title="@WisR.App_Resources.Resource.Edit" ng-hide="question.CreatedById!=currentUser._id" ng-click="toggleRoomLocation();$event.stopPropagation();"><span class="glyphicon glyphicon-option-vertical"></span></td>
                                 </tbody>
                             </table>
                         </div>
@@ -74,13 +90,13 @@
                             <td title="@WisR.App_Resources.Resource.AuthorOfQuestion">{{GetUsernameById(SpecificQuestion.CreatedById)}}</td>
                             <td>
                                 <span title="@WisR.App_Resources.Resource.AmountOfUpvotes">{{SpecificQuestion.Votes | CountVotes: 1}}</span>
-                                <button class="votingBtn" ng-click="Vote('Up')" title="{{{true: '@WisR.App_Resources.Resource.LoginToEnable', false: ''}[anonymousUser]}}" style="pointer-events: auto;" ng-disabled="anonymousUser"> <span ng-class="{'upvoted':hasVoted('{{SpecificQuestion.Votes}}' != undefined? SpecificQuestion.Votes: 'undefined',true)}" class="glyphicon glyphicon-thumbs-up"></span></button>
+                                <button class="noBtn" ng-click="Vote('Up')" title="{{{true: '@WisR.App_Resources.Resource.LoginToEnable', false: ''}[anonymousUser]}}" style="pointer-events: auto;" ng-disabled="anonymousUser"> <span ng-class="{'upvoted':hasVoted('{{SpecificQuestion.Votes}}' != undefined? SpecificQuestion.Votes: 'undefined',true)}" class="glyphicon glyphicon-thumbs-up"></span></button>
                             </td>
                             <td>
                                 <span title="@WisR.App_Resources.Resource.AmountOfDownvotes">
                                     {{SpecificQuestion.Votes | CountVotes: -1}}
                                 </span>
-                                <button class="votingBtn" ng-click="Vote('Down')" title="{{{true: '@WisR.App_Resources.Resource.LoginToEnable', false: '@WisR.App_Resources.Resource.AmountOfDownvotes'}[anonymousUser]}}" style="pointer-events: auto;" ng-disabled="anonymousUser"><span ng-class="{'downvoted':hasVoted('{{SpecificQuestion.Votes}}'!= undefined? SpecificQuestion.Votes: 'undefined',false)}" class="glyphicon glyphicon-thumbs-down"></span></button>
+                                <button class="noBtn" ng-click="Vote('Down')" title="{{{true: '@WisR.App_Resources.Resource.LoginToEnable', false: '@WisR.App_Resources.Resource.AmountOfDownvotes'}[anonymousUser]}}" style="pointer-events: auto;" ng-disabled="anonymousUser"><span ng-class="{'downvoted':hasVoted('{{SpecificQuestion.Votes}}'!= undefined? SpecificQuestion.Votes: 'undefined',false)}" class="glyphicon glyphicon-thumbs-down"></span></button>
                             </td>
                         </tr>
 
@@ -171,8 +187,8 @@
                                 <label class="col-md-6">@WisR.App_Resources.Resource.ResponseOptions</label>
                                 <div class="col-md-6 input-group">
                                     <div ng-repeat="option in ResponseOptions" class="col-md-12 input-group has-feedback" style="max-width: 280px">
-                                        <input required ng-model="ResponseOptions[option.id].val" class="form-control" type="text" placeholder="@WisR.App_Resources.Resource.AddResponseOptions"/>
-                                        <span type="button" class="input-group-addon" ng-click="RemoveResponseOption(option)" value="@WisR.App_Resources.Resource.Remove" >
+                                        <input required ng-model="ResponseOptions[option.id].val" class="form-control" type="text" placeholder="@WisR.App_Resources.Resource.AddResponseOptions" />
+                                        <span type="button" class="input-group-addon" ng-click="RemoveResponseOption(option)" value="@WisR.App_Resources.Resource.Remove">
                                             <i class="glyphicon glyphicon-minus"></i>
                                         </span>
                                     </div>
@@ -181,7 +197,7 @@
                             </div>
                             <div class="row">
                                 <label class="col-md-6">@WisR.App_Resources.Resource.Picture</label>
-                                    <input type='file' accept="image/*" ng-model='questionImage' base-sixty-four-input ctrl-function="setImageMessage(msg)" class="col-md-6 text-center filestyle" data-buttonName="btn-primary" data-buttontext="@WisR.App_Resources.Resource.ChoosePicture">
+                                <input type='file' accept="image/*" ng-model='questionImage' base-sixty-four-input ctrl-function="setImageMessage(msg)" class="col-md-6 text-center filestyle" data-buttonName="btn-primary" data-buttontext="@WisR.App_Resources.Resource.ChoosePicture">
                                 <div class="col-md-12 text-center">
                                     {{ImageMessage}}
                                 </div>

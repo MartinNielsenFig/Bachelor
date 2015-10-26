@@ -225,6 +225,15 @@ namespace WisR.App_Resources {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
+        public static string Edit {
+            get {
+                return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
         public static string EnterPassword {
             get {
                 return ResourceManager.GetString("EnterPassword", resourceCulture);
