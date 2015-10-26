@@ -19,6 +19,8 @@ namespace WisRRestAPI.DomainModel
             var client = new MongoClient(connection);
             _db = client.GetDatabase("wisr");
 
+            //Update script. Tag to Secret:
+            //db.room.update( { }, { $rename: { "Tag": "Secret" } }, { multi: true } )
         }
 
         public IMongoDatabase getDb()
