@@ -625,10 +625,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="Atz-tx-bef">
-                                <rect key="frame" x="20" y="0.0" width="560" height="600"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ldM-6f-oKy">
-                                        <rect key="frame" x="0.0" y="0.0" width="560" height="570"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="556"/>
                                         <animations/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <connections>
@@ -636,48 +636,67 @@
                                             <outlet property="delegate" destination="jMD-EN-WVm" id="ILK-Qf-tsG"/>
                                         </connections>
                                     </tableView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Mgm-UC-rNB" userLabel="MessageStack">
-                                        <rect key="frame" x="0.0" y="570" width="560" height="30"/>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ULl-c1-bGP">
+                                        <rect key="frame" x="0.0" y="556" width="600" height="44"/>
                                         <subviews>
-                                            <textField opaque="NO" clipsSubviews="YES" tag="102" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter your textmessage" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="tuD-VA-PhF">
-                                                <rect key="frame" x="0.0" y="0.0" width="524" height="30"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="duI-xg-kz9" userLabel="MessageInputStack">
+                                                <rect key="frame" x="0.0" y="7" width="595" height="30"/>
+                                                <subviews>
+                                                    <textField opaque="NO" clipsSubviews="YES" tag="102" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter your textmessage" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tuD-VA-PhF">
+                                                        <rect key="frame" x="0.0" y="0.0" width="554" height="30"/>
+                                                        <animations/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="send" enablesReturnKeyAutomatically="YES"/>
+                                                    </textField>
+                                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X0D-To-bsu">
+                                                        <rect key="frame" x="559" y="0.0" width="36" height="30"/>
+                                                        <animations/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                        <state key="normal" title="Send">
+                                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </state>
+                                                        <connections>
+                                                            <action selector="sendPressed:" destination="jMD-EN-WVm" eventType="touchUpInside" id="zGw-UJ-CuA"/>
+                                                        </connections>
+                                                    </button>
+                                                </subviews>
                                                 <animations/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="send" enablesReturnKeyAutomatically="YES"/>
-                                            </textField>
-                                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X0D-To-bsu">
-                                                <rect key="frame" x="524" y="0.0" width="36" height="30"/>
-                                                <animations/>
-                                                <state key="normal" title="Send">
-                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="sendPressed:" destination="jMD-EN-WVm" eventType="touchUpInside" id="zGw-UJ-CuA"/>
-                                                </connections>
-                                            </button>
+                                                <constraints>
+                                                    <constraint firstItem="tuD-VA-PhF" firstAttribute="leading" secondItem="duI-xg-kz9" secondAttribute="leading" constant="5" id="3VT-FU-lIS"/>
+                                                </constraints>
+                                            </stackView>
                                         </subviews>
                                         <animations/>
-                                    </stackView>
+                                        <color key="backgroundColor" red="0.96470588235294119" green="0.96470588235294119" blue="0.96470588235294119" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="EBS-fo-GEU"/>
+                                            <constraint firstItem="duI-xg-kz9" firstAttribute="leading" secondItem="ULl-c1-bGP" secondAttribute="leading" id="MHd-lu-dUT"/>
+                                            <constraint firstAttribute="trailing" secondItem="duI-xg-kz9" secondAttribute="trailing" constant="5" id="bc8-S8-zeS"/>
+                                            <constraint firstItem="duI-xg-kz9" firstAttribute="centerY" secondItem="ULl-c1-bGP" secondAttribute="centerY" id="frs-Me-Aa8"/>
+                                        </constraints>
+                                    </view>
                                 </subviews>
                                 <animations/>
                                 <constraints>
-                                    <constraint firstItem="ldM-6f-oKy" firstAttribute="width" secondItem="Atz-tx-bef" secondAttribute="width" id="0An-DV-xRl"/>
-                                    <constraint firstAttribute="trailing" secondItem="Mgm-UC-rNB" secondAttribute="trailing" id="G0G-hu-hzE"/>
-                                    <constraint firstItem="Mgm-UC-rNB" firstAttribute="leading" secondItem="Atz-tx-bef" secondAttribute="leading" id="yDS-lt-yqw"/>
+                                    <constraint firstAttribute="trailing" secondItem="ldM-6f-oKy" secondAttribute="trailing" id="013-T2-3rr"/>
+                                    <constraint firstItem="ULl-c1-bGP" firstAttribute="leading" secondItem="Atz-tx-bef" secondAttribute="leading" id="4Gu-CT-f8Y"/>
+                                    <constraint firstAttribute="bottom" secondItem="ULl-c1-bGP" secondAttribute="bottom" id="5Ci-Ms-Ing"/>
+                                    <constraint firstAttribute="bottom" secondItem="ULl-c1-bGP" secondAttribute="bottom" id="YK2-vs-xql"/>
+                                    <constraint firstAttribute="trailing" secondItem="ULl-c1-bGP" secondAttribute="trailing" id="kHJ-g2-Pd8"/>
                                 </constraints>
                             </stackView>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Atz-tx-bef" firstAttribute="leading" secondItem="8jz-Xj-hE2" secondAttribute="leadingMargin" id="dRV-iH-EeM"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Atz-tx-bef" secondAttribute="trailing" id="l45-Qa-efC"/>
+                            <constraint firstItem="Atz-tx-bef" firstAttribute="leading" secondItem="8jz-Xj-hE2" secondAttribute="leading" id="dRV-iH-EeM"/>
+                            <constraint firstAttribute="trailing" secondItem="Atz-tx-bef" secondAttribute="trailing" id="l45-Qa-efC"/>
                             <constraint firstItem="Atz-tx-bef" firstAttribute="top" secondItem="8jz-Xj-hE2" secondAttribute="topMargin" id="nyV-pc-tY2"/>
                             <constraint firstItem="h1t-qe-as3" firstAttribute="top" secondItem="Atz-tx-bef" secondAttribute="bottom" id="pDZ-dd-eud"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="MessageInputStack" destination="Mgm-UC-rNB" id="EmE-jb-hyx"/>
+                        <outlet property="MessageInputStack" destination="duI-xg-kz9" id="a1Z-hT-Nd8"/>
                         <outlet property="tableView" destination="ldM-6f-oKy" id="yuo-nY-RaQ"/>
                         <outlet property="textMessageInput" destination="tuD-VA-PhF" id="3fR-xn-17L"/>
                     </connections>
