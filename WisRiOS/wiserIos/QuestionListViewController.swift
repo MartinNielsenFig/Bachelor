@@ -171,7 +171,7 @@ class QuestionListViewController: UITableViewController, Paged {
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let roomPageViewController = parentViewController?.parentViewController as! RoomPageViewController
-        let questionPage = roomPageViewController.viewControllerAtIndex(1, createNew: true)! as! QuestionViewController
+        let questionPage = roomPageViewController.viewControllerAtIndex(1, createNew: false)! as! QuestionViewController
         questionPage.question = questions[indexPath.row]
         roomPageViewController.pageViewController.setViewControllers([questionPage], direction: .Forward, animated: true, completion: nil)
     }

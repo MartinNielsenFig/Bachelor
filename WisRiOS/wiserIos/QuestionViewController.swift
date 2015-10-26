@@ -178,7 +178,6 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             return
         }
         
-        
         HttpHandler.requestWithResponse(action: "Question/GetImageByQuestionId?questionId=\(self.question._id!)", type: "GET", body: "") {
             (data, response, error) -> Void in
             self.question.Img = data    //this saves the image for later use
@@ -193,6 +192,10 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         
         answerPicker.delegate = self
         answerPicker.dataSource = self
+        
+    }
+    
+    override func viewDidAppear(animated: Bool) {
         
         //Show UI
         if self.question._id == nil {
@@ -218,10 +221,8 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         
         //Image
         loadImage()
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        
+
+        //Answer
         highlightSelectedAnswer()
         
         //Vote btns
@@ -234,6 +235,10 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         super.viewDidAppear(animated)
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        self.questionImage.image = nil
+        super.viewWillDisappear(animated)
+    }
     
     //UIPickerViewDelegate
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
