@@ -6,7 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -18,6 +20,7 @@ import com.example.tomas.wisrandroid.Helpers.CustomQuestionAdapter;
 import com.example.tomas.wisrandroid.Helpers.HttpHelper;
 import com.example.tomas.wisrandroid.Model.MultipleChoiceQuestion;
 import com.example.tomas.wisrandroid.Model.Question;
+import com.example.tomas.wisrandroid.Model.Room;
 import com.example.tomas.wisrandroid.Model.TextualQuestion;
 import com.example.tomas.wisrandroid.R;
 import com.google.gson.Gson;
@@ -32,19 +35,22 @@ import java.util.ArrayList;
 public class QuestionListFragment extends android.support.v4.app.Fragment {
     private String title;
     private int page;
-    private String roomId;
+    private Room mRoom;
     private final Gson gson = new Gson();
     private ListView mListView;
+    private TextView mTextView;
+    private ImageButton mImageButton;
     private CustomQuestionAdapter mAdapter;
-    private final ArrayList<Question> mQuestions = new ArrayList<Question>();
+    private ArrayList<Question> mQuestions = new ArrayList<Question>();
 
 
-    public static QuestionListFragment newInstance(int page, String title, String roomId) {
+    public static QuestionListFragment newInstance(int page, String title, Room room) {
         QuestionListFragment questionListFragment = new QuestionListFragment();
         Bundle args = new Bundle();
+        Gson tempGson = new Gson();
         args.putInt("someInt", page);
         args.putString("someTitle", title);
-        args.putString("someRoomId",roomId);
+        args.putString("someRoom",tempGson.toJson(room));
         questionListFragment.setArguments(args);
 
         return questionListFragment;
@@ -56,9 +62,7 @@ public class QuestionListFragment extends android.support.v4.app.Fragment {
 
         page = getArguments().getInt("someInt", 0);
         title = getArguments().getString("someTitle");
-        roomId = getArguments().getString("someRoomId");
-
-        InitQuestionList();
+        mRoom = gson.fromJson(getArguments().getString("someRoom"),Room.class);
     }
 
     @Override
@@ -66,6 +70,14 @@ public class QuestionListFragment extends android.support.v4.app.Fragment {
         View view = inflater.inflate(R.layout.fragment_question_list, container, false);
 
         Log.w("QuestionListFragment","View Created");
+        mTextView = (TextView) view.findViewById(R.id.questionlistfragment_textview);
+        mImageButton = (ImageButton) view.findViewById(R.id.ask_question_button);
+        mImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
         mAdapter = new CustomQuestionAdapter(getContext(), mQuestions);
         mListView = (ListView)view.findViewById(R.id.question_listview);
         mListView.setAdapter(mAdapter);
@@ -79,9 +91,16 @@ public class QuestionListFragment extends android.support.v4.app.Fragment {
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
-
+        InitQuestionList();
+        mTextView.setText(mRoom.get_Name() + " questions:");
     }
 
     @Override
@@ -97,6 +116,7 @@ public class QuestionListFragment extends android.support.v4.app.Fragment {
 
     private void InitQuestionList()
     {
+        mQuestions.clear();
         Response.Listener<String> mListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -123,7 +143,7 @@ public class QuestionListFragment extends android.support.v4.app.Fragment {
         };
 
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        HttpHelper jsObjRequest = new HttpHelper( getString(R.string.restapi_url) + "/Question/GetQuestionsForRoomWithoutImages?roomId="+ roomId, null, mListener, mErrorListener);
+        HttpHelper jsObjRequest = new HttpHelper( getString(R.string.restapi_url) + "/Question/GetQuestionsForRoomWithoutImages?roomId="+ mRoom.get_id(), null, mListener, mErrorListener);
 
         try {
             requestQueue.add(jsObjRequest);

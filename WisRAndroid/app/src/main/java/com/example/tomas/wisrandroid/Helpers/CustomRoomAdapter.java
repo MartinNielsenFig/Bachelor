@@ -31,7 +31,7 @@ public class CustomRoomAdapter extends ArrayAdapter<Room> {
         TextView textView3 = (TextView) rowView.findViewById(R.id.custom_anonymous);
         TextView textView4 = (TextView) rowView.findViewById(R.id.custom_radius);
         textView.setText(values.get(position).get_Name());
-        textView2.setText(values.get(position).get_Tag());
+        textView2.setText(values.get(position).get_Secret());
         textView3.setText(values.get(position).get_AllowAnonymous() ? "Anonymous: Yes" : "Anonymous: No");
         textView4.setText(String.valueOf(values.get(position).get_Radius()) + " meters");
 
