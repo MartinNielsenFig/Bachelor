@@ -132,8 +132,8 @@
   <data name="CreateRoom" xml:space="preserve">
     <value>Opret rum</value>
   </data>
-  <data name="EnterUniqueTag" xml:space="preserve">
-    <value>Indtast unikt tag</value>
+  <data name="EnterUniqueSecret" xml:space="preserve">
+    <value>Indtast unikt hemmelighed</value>
   </data>
   <data name="HasChat" xml:space="preserve">
     <value>Chat</value>
@@ -162,8 +162,8 @@
   <data name="SeeRoomAndLocation" xml:space="preserve">
     <value>Se rum samt din placering</value>
   </data>
-  <data name="UniqueTag" xml:space="preserve">
-    <value>Unikt tag</value>
+  <data name="UniqueSecret" xml:space="preserve">
+    <value>Unik hemmelighed</value>
   </data>
   <data name="UseLocation" xml:space="preserve">
     <value>Anvend placering</value>
@@ -175,7 +175,7 @@
     <value>Tilføj svarmulighed</value>
   </data>
   <data name="AddResponseOptions" xml:space="preserve">
-    <value>Tilføj svarmuligheder</value>
+    <value>Indtast svarmulighed</value>
   </data>
   <data name="BackToQuestions" xml:space="preserve">
     <value>Tilbage til spørgsmål</value>
@@ -253,7 +253,7 @@
     <value>Gå tilbage</value>
   </data>
   <data name="YouAreHere" xml:space="preserve">
-    <value>Du er her:</value>
+    <value>Du er her: </value>
   </data>
   <data name="GeoCoderFailedDueTo" xml:space="preserve">
     <value>Geocoder fejlede på grund af: </value>
@@ -267,13 +267,70 @@
   <data name="NoResultsFound" xml:space="preserve">
     <value>Ingen resultater fundet</value>
   </data>
-  <data name="NoRoomWithThatTag" xml:space="preserve">
-    <value>Intet rum med tagget: </value>
+  <data name="NoRoomWithThatSecret" xml:space="preserve">
+    <value>Intet rum med hemmeligheden: </value>
   </data>
   <data name="Precision" xml:space="preserve">
     <value>Præcision: </value>
   </data>
-  <data name="RoomTagRequiresLogin" xml:space="preserve">
-    <value>Rummet med det tag, kræver at du logger ind</value>
+  <data name="RoomSecretRequiresLogin" xml:space="preserve">
+    <value>Rummet med den hemmelighed, kræver at du logger ind</value>
+  </data>
+  <data name="ChoosePicture" xml:space="preserve">
+    <value>Vælg billede</value>
+  </data>
+  <data name="FileTooBigResizing" xml:space="preserve">
+    <value>Billedet er for stort, ændrer størrelse</value>
+  </data>
+  <data name="ImageResized" xml:space="preserve">
+    <value>Billedets størrelse er blevet ændret</value>
+  </data>
+  <data name="IncorrectPassword" xml:space="preserve">
+    <value>Forkert password</value>
+  </data>
+  <data name="PositionOfTheRoom" xml:space="preserve">
+    <value>Rummets position</value>
+  </data>
+  <data name="TimeHasRunOut" xml:space="preserve">
+    <value>Tiden er løbet ud</value>
+  </data>
+  <data name="AnonymousUsersAllowed" xml:space="preserve">
+    <value>Anonyme brugere har adgang</value>
+  </data>
+  <data name="ChatEnabled" xml:space="preserve">
+    <value>Har chat</value>
+  </data>
+  <data name="ClickToChangeImageSize" xml:space="preserve">
+    <value>Klik for at ændre billedets størrelse</value>
+  </data>
+  <data name="LoginToEnable" xml:space="preserve">
+    <value>Log ind for at anvende</value>
+  </data>
+  <data name="NoAccessRequiresLogin" xml:space="preserve">
+    <value>Ingen adgang, kræver at du logger ind</value>
+  </data>
+  <data name="PasswordProtected" xml:space="preserve">
+    <value>Anvender kodeord</value>
+  </data>
+  <data name="UsersCanAsk" xml:space="preserve">
+    <value>Brugere kan stille spørgsmål</value>
+  </data>
+  <data name="AmountOfDownvotes" xml:space="preserve">
+    <value>Antal downvotes spørgsmålet har</value>
+  </data>
+  <data name="AmountOfUpvotes" xml:space="preserve">
+    <value>Antal upvotes spørgsmålet har</value>
+  </data>
+  <data name="Authenticating" xml:space="preserve">
+    <value>Verificerer informationer, vent venligst</value>
+  </data>
+  <data name="AuthorOfQuestion" xml:space="preserve">
+    <value>Brugeren der oprettede spørgsmålet</value>
+  </data>
+  <data name="NoUserWithThatInformation" xml:space="preserve">
+    <value>Ingen bruger med de oplysninger</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Ændr</value>
   </data>
 </root>

@@ -29,9 +29,9 @@ namespace WisRRestAPI.DomainModel
             return room;
         }
 
-        public Task<Room> GetRoomByTag(string tag)
+        public Task<Room> GetRoomBySecret(string secret)
         {
-            var room = _database.GetCollection<Room>("room").Find(x => x.Tag == tag).SingleAsync();
+            var room = _database.GetCollection<Room>("room").Find(x => x.Secret == secret).SingleAsync();
             return room;
         }
 

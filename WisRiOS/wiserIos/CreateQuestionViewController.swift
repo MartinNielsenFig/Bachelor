@@ -131,6 +131,7 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
                 let cellIdentifier = "TextInputCell"
                 let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! TextInputCell
                 cell.label.text = "Question text"
+                cell.inputField.placeholder = "Ask a question"
                 questionText = cell
                 cell.selectionStyle = .None
                 return cell
@@ -138,7 +139,8 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
             else if indexPath.row == 1 {
                 let cellIdentifier = "NumberInputCell"
                 let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! NumberInputCell
-                cell.label.text = "Duration (s)"
+                cell.label.text = "Duration"
+                cell.inputField.placeholder = "Duration in seconds"
                 durationInput = cell
                 cell.selectionStyle = .None
                 return cell
@@ -157,6 +159,7 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
                 let cellIdentifier = "TextInputCell"
                 let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! TextInputCell
                 cell.label.text = "Add Response"
+                cell.inputField.placeholder = "A response to question"
                 cell.inputField.delegate = self
                 cell.inputField.returnKeyType = .Done
                 cell.inputField.clearsOnBeginEditing = true

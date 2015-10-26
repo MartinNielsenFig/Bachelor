@@ -45,7 +45,7 @@ namespace WisR.Controllers
             return View();
         }
 
-        public string toJsonRoom(string RoomName, string CreatedBy, int radius, string tag, string password, bool hasChat, bool userCanAsk, bool allowAnonymous, bool useLocation, string locationTimestamp, double locationLatitude, double locationLongitude, int locationAccuracyMeters, string locationFormattedAddress)
+        public string toJsonRoom(string RoomName, string CreatedBy, int radius, string secret, string password, bool hasChat, bool userCanAsk, bool allowAnonymous, bool useLocation, string locationTimestamp, double locationLatitude, double locationLongitude, int locationAccuracyMeters, string locationFormattedAddress)
         {
             var room = new Room();
             room.Name = RoomName;
@@ -56,7 +56,7 @@ namespace WisR.Controllers
             room.Location.AccuracyMeters = locationAccuracyMeters;
             room.Location.FormattedAddress = locationFormattedAddress;
             room.Radius = radius;
-            room.Tag = tag;
+            room.Secret = secret;
             if (!password.IsNullOrWhiteSpace())
             {
                 room.EncryptedPassword = password;

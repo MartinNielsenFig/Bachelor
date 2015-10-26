@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		CB0218201B9462C400DFC9DD /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB02181F1B9462C400DFC9DD /* ChatMessage.swift */; settings = {ASSET_TAGS = (); }; };
-		CB0D53C61BA85996007E4CD2 /* DateTimeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0D53C51BA85996007E4CD2 /* DateTimeHelper.swift */; settings = {ASSET_TAGS = (); }; };
-		CB1B7B901BB966B400EB637E /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1B7B8F1BB966B400EB637E /* ResultViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		CB1FBA001B983C3A00B1FCF8 /* BooleanInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1FB9FF1B983C3A00B1FCF8 /* BooleanInputCell.swift */; settings = {ASSET_TAGS = (); }; };
-		CB2A1B881BB9DA0F00821087 /* RoomFilterHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A1B871BB9DA0F00821087 /* RoomFilterHelper.swift */; settings = {ASSET_TAGS = (); }; };
+		CB0218201B9462C400DFC9DD /* ChatMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB02181F1B9462C400DFC9DD /* ChatMessage.swift */; };
+		CB0D53C61BA85996007E4CD2 /* DateTimeHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB0D53C51BA85996007E4CD2 /* DateTimeHelper.swift */; };
+		CB1B7B901BB966B400EB637E /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1B7B8F1BB966B400EB637E /* ResultViewController.swift */; };
+		CB1FBA001B983C3A00B1FCF8 /* BooleanInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1FB9FF1B983C3A00B1FCF8 /* BooleanInputCell.swift */; };
+		CB2A1B881BB9DA0F00821087 /* RoomFilterHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A1B871BB9DA0F00821087 /* RoomFilterHelper.swift */; };
 		CB2EF9C31B8DE7260098871B /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2EF9C21B8DE7260098871B /* Room.swift */; };
-		CB39A97B1B986B7F0014F818 /* StringExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB39A97A1B986B7F0014F818 /* StringExtractor.swift */; settings = {ASSET_TAGS = (); }; };
+		CB39A97B1B986B7F0014F818 /* StringExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB39A97A1B986B7F0014F818 /* StringExtractor.swift */; };
 		CB3C37721B8DBF5000897344 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3C37711B8DBF5000897344 /* AppDelegate.swift */; };
 		CB3C37741B8DBF5000897344 /* ChooseRoleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3C37731B8DBF5000897344 /* ChooseRoleViewController.swift */; };
 		CB3C37791B8DBF5000897344 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB3C37781B8DBF5000897344 /* Assets.xcassets */; };
@@ -22,13 +22,13 @@
 		CB3C37921B8DE1F000897344 /* RoomTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3C37911B8DE1F000897344 /* RoomTableViewController.swift */; };
 		CB4D73471BCD1FE70004A896 /* JsonSerializerSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB4D73441BCD1FDE0004A896 /* JsonSerializerSwift.framework */; };
 		CB4D73481BCD1FE70004A896 /* JsonSerializerSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CB4D73441BCD1FDE0004A896 /* JsonSerializerSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		CB50FD8E1B9708E40003C078 /* TextInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB50FD8D1B9708E40003C078 /* TextInputCell.swift */; settings = {ASSET_TAGS = (); }; };
-		CB6BC6241BA1AE92001C303B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB3C37751B8DBF5000897344 /* Main.storyboard */; settings = {ASSET_TAGS = (); }; };
-		CB6BC6261BA1B2ED001C303B /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6BC6251BA1B2ED001C303B /* ChatViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		CB6BC6281BA1C05A001C303B /* QuestionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6BC6271BA1C05A001C303B /* QuestionListViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		CB84802B1B9EDB5400D1C230 /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB84802A1B9EDB5400D1C230 /* CurrentUser.swift */; settings = {ASSET_TAGS = (); }; };
-		CB84802D1B9EE0DC00D1C230 /* FacebookHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB84802C1B9EE0DC00D1C230 /* FacebookHelper.swift */; settings = {ASSET_TAGS = (); }; };
-		CB84F8B31BB13FA400CD07AD /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB84F8B21BB13FA400CD07AD /* Error.swift */; settings = {ASSET_TAGS = (); }; };
+		CB50FD8E1B9708E40003C078 /* TextInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB50FD8D1B9708E40003C078 /* TextInputCell.swift */; };
+		CB6BC6241BA1AE92001C303B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB3C37751B8DBF5000897344 /* Main.storyboard */; };
+		CB6BC6261BA1B2ED001C303B /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6BC6251BA1B2ED001C303B /* ChatViewController.swift */; };
+		CB6BC6281BA1C05A001C303B /* QuestionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6BC6271BA1C05A001C303B /* QuestionListViewController.swift */; };
+		CB84802B1B9EDB5400D1C230 /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB84802A1B9EDB5400D1C230 /* CurrentUser.swift */; };
+		CB84802D1B9EE0DC00D1C230 /* FacebookHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB84802C1B9EE0DC00D1C230 /* FacebookHelper.swift */; };
+		CB84F8B31BB13FA400CD07AD /* ReturnMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB84F8B21BB13FA400CD07AD /* ReturnMessage.swift */; };
 		CB9FF7C61B8F1401003A193B /* HTTPHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9FF7C51B8F1401003A193B /* HTTPHandler.swift */; };
 		CB9FF7CA1B8F27EC003A193B /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9FF7C91B8F27EC003A193B /* Coordinate.swift */; };
 		CB9FF7CC1B8F28B4003A193B /* Answer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9FF7CB1B8F28B4003A193B /* Answer.swift */; };
@@ -37,21 +37,22 @@
 		CB9FF7D21B8F2B70003A193B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9FF7D11B8F2B70003A193B /* User.swift */; };
 		CBA4372C1B8DEA8E00EF3E01 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBA4372B1B8DEA8E00EF3E01 /* CoreLocation.framework */; };
 		CBA437301B8DF5A500EF3E01 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBA4372F1B8DF5A500EF3E01 /* MapKit.framework */; };
-		CBB34B091BAF549C00CA98DD /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBB34B071BAF549C00CA98DD /* FBSDKCoreKit.framework */; settings = {ASSET_TAGS = (); }; };
-		CBB34B0A1BAF549C00CA98DD /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBB34B081BAF549C00CA98DD /* FBSDKLoginKit.framework */; settings = {ASSET_TAGS = (); }; };
-		CBB4D7D71BA189EC001C531D /* LogonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB4D7D61BA189EC001C531D /* LogonViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		CBB4D7D91BA1A567001C531D /* RoomPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB4D7D81BA1A567001C531D /* RoomPageViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		CBB4D7DB1BA1A664001C531D /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB4D7DA1BA1A664001C531D /* QuestionViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		CBB4D7DD1BA1A887001C531D /* Paged.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB4D7DC1BA1A887001C531D /* Paged.swift */; settings = {ASSET_TAGS = (); }; };
-		CBB60B2F1B9718EC0007A47B /* CreateRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB60B2E1B9718EC0007A47B /* CreateRoomViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		CBB60B311B97253A0007A47B /* SegmentedInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB60B301B97253A0007A47B /* SegmentedInputCell.swift */; settings = {ASSET_TAGS = (); }; };
+		CBB34B091BAF549C00CA98DD /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBB34B071BAF549C00CA98DD /* FBSDKCoreKit.framework */; };
+		CBB34B0A1BAF549C00CA98DD /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBB34B081BAF549C00CA98DD /* FBSDKLoginKit.framework */; };
+		CBB4D7D71BA189EC001C531D /* LogonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB4D7D61BA189EC001C531D /* LogonViewController.swift */; };
+		CBB4D7D91BA1A567001C531D /* RoomPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB4D7D81BA1A567001C531D /* RoomPageViewController.swift */; };
+		CBB4D7DB1BA1A664001C531D /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB4D7DA1BA1A664001C531D /* QuestionViewController.swift */; };
+		CBB4D7DD1BA1A887001C531D /* Paged.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB4D7DC1BA1A887001C531D /* Paged.swift */; };
+		CBB60B2F1B9718EC0007A47B /* CreateRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB60B2E1B9718EC0007A47B /* CreateRoomViewController.swift */; };
+		CBB60B311B97253A0007A47B /* SegmentedInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB60B301B97253A0007A47B /* SegmentedInputCell.swift */; };
+		CBBE94901BD9171B007C0EB7 /* Updater.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBE948F1BD9171B007C0EB7 /* Updater.swift */; };
 		CBCD3F481BB96F0100E53F76 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBCD3F471BB96EF800E53F76 /* Charts.framework */; };
 		CBCD3F491BB96F0100E53F76 /* Charts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CBCD3F471BB96EF800E53F76 /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		CBCD8B291BB409C0002ACBC4 /* QuestionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCD8B281BB409C0002ACBC4 /* QuestionViewCell.swift */; settings = {ASSET_TAGS = (); }; };
-		CBF19CD81BAFFBA700A906B3 /* CreateQuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF19CD71BAFFBA700A906B3 /* CreateQuestionViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		CBF19CDA1BB0065A00A906B3 /* NumberInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF19CD91BB0065A00A906B3 /* NumberInputCell.swift */; settings = {ASSET_TAGS = (); }; };
-		CBF19CDE1BB03D5800A906B3 /* Vote.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF19CDD1BB03D5800A906B3 /* Vote.swift */; settings = {ASSET_TAGS = (); }; };
-		CBF51C911BC5254A002F2732 /* ErrorCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF51C901BC5254A002F2732 /* ErrorCodes.swift */; settings = {ASSET_TAGS = (); }; };
+		CBCD8B291BB409C0002ACBC4 /* QuestionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCD8B281BB409C0002ACBC4 /* QuestionViewCell.swift */; };
+		CBF19CD81BAFFBA700A906B3 /* CreateQuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF19CD71BAFFBA700A906B3 /* CreateQuestionViewController.swift */; };
+		CBF19CDA1BB0065A00A906B3 /* NumberInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF19CD91BB0065A00A906B3 /* NumberInputCell.swift */; };
+		CBF19CDE1BB03D5800A906B3 /* Vote.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF19CDD1BB03D5800A906B3 /* Vote.swift */; };
+		CBF51C911BC5254A002F2732 /* ErrorCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF51C901BC5254A002F2732 /* ErrorCodes.swift */; };
 		CBF51C9F1BC54EA2002F2732 /* CryptoSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBF51C9C1BC54E78002F2732 /* CryptoSwift.framework */; };
 		CBF51CA01BC54EA2002F2732 /* CryptoSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CBF51C9C1BC54E78002F2732 /* CryptoSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
@@ -170,7 +171,7 @@
 		CB6BC6271BA1C05A001C303B /* QuestionListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionListViewController.swift; sourceTree = "<group>"; };
 		CB84802A1B9EDB5400D1C230 /* CurrentUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentUser.swift; sourceTree = "<group>"; };
 		CB84802C1B9EE0DC00D1C230 /* FacebookHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookHelper.swift; sourceTree = "<group>"; };
-		CB84F8B21BB13FA400CD07AD /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
+		CB84F8B21BB13FA400CD07AD /* ReturnMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReturnMessage.swift; sourceTree = "<group>"; };
 		CB9FF7C51B8F1401003A193B /* HTTPHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPHandler.swift; sourceTree = "<group>"; };
 		CB9FF7C91B8F27EC003A193B /* Coordinate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
 		CB9FF7CB1B8F28B4003A193B /* Answer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Answer.swift; sourceTree = "<group>"; };
@@ -187,6 +188,7 @@
 		CBB4D7DC1BA1A887001C531D /* Paged.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Paged.swift; sourceTree = "<group>"; };
 		CBB60B2E1B9718EC0007A47B /* CreateRoomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreateRoomViewController.swift; path = Assets.xcassets/CreateRoomViewController.swift; sourceTree = "<group>"; };
 		CBB60B301B97253A0007A47B /* SegmentedInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedInputCell.swift; sourceTree = "<group>"; };
+		CBBE948F1BD9171B007C0EB7 /* Updater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Updater.swift; sourceTree = "<group>"; };
 		CBCD3F421BB96EF800E53F76 /* Charts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Charts.xcodeproj; path = "../../ios-charts/Charts/Charts.xcodeproj"; sourceTree = "<group>"; };
 		CBCD8B281BB409C0002ACBC4 /* QuestionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionViewCell.swift; sourceTree = "<group>"; };
 		CBF19CD71BAFFBA700A906B3 /* CreateQuestionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateQuestionViewController.swift; sourceTree = "<group>"; };
@@ -328,6 +330,7 @@
 				CB0D53C51BA85996007E4CD2 /* DateTimeHelper.swift */,
 				CB2A1B871BB9DA0F00821087 /* RoomFilterHelper.swift */,
 				CBF51C901BC5254A002F2732 /* ErrorCodes.swift */,
+				CBBE948F1BD9171B007C0EB7 /* Updater.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -343,7 +346,7 @@
 				CB9FF7D11B8F2B70003A193B /* User.swift */,
 				CB02181F1B9462C400DFC9DD /* ChatMessage.swift */,
 				CBF19CDD1BB03D5800A906B3 /* Vote.swift */,
-				CB84F8B21BB13FA400CD07AD /* Error.swift */,
+				CB84F8B21BB13FA400CD07AD /* ReturnMessage.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -540,6 +543,7 @@
 				CBCD8B291BB409C0002ACBC4 /* QuestionViewCell.swift in Sources */,
 				CB3C37921B8DE1F000897344 /* RoomTableViewController.swift in Sources */,
 				CB0D53C61BA85996007E4CD2 /* DateTimeHelper.swift in Sources */,
+				CBBE94901BD9171B007C0EB7 /* Updater.swift in Sources */,
 				CB6BC6281BA1C05A001C303B /* QuestionListViewController.swift in Sources */,
 				CB0218201B9462C400DFC9DD /* ChatMessage.swift in Sources */,
 				CB3C37741B8DBF5000897344 /* ChooseRoleViewController.swift in Sources */,
@@ -562,7 +566,7 @@
 				CBB60B311B97253A0007A47B /* SegmentedInputCell.swift in Sources */,
 				CB84802D1B9EE0DC00D1C230 /* FacebookHelper.swift in Sources */,
 				CB1FBA001B983C3A00B1FCF8 /* BooleanInputCell.swift in Sources */,
-				CB84F8B31BB13FA400CD07AD /* Error.swift in Sources */,
+				CB84F8B31BB13FA400CD07AD /* ReturnMessage.swift in Sources */,
 				CB39A97B1B986B7F0014F818 /* StringExtractor.swift in Sources */,
 				CB1B7B901BB966B400EB637E /* ResultViewController.swift in Sources */,
 			);

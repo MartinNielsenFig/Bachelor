@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Web;
+using MongoDB.Bson;
 using MongoDB.Driver;
+using WisR.DomainModels;
 
 namespace WisRRestAPI.DomainModel
 {
@@ -16,6 +18,9 @@ namespace WisRRestAPI.DomainModel
             var connection = ConfigurationManager.AppSettings["mongoString"];
             var client = new MongoClient(connection);
             _db = client.GetDatabase("wisr");
+
+            //Update script. Tag to Secret:
+            //db.room.update( { }, { $rename: { "Tag": "Secret" } }, { multi: true } )
         }
 
         public IMongoDatabase getDb()

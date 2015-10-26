@@ -2,16 +2,16 @@
     ViewBag.Title = "index";
 }
 <body ng-controller="RoomController">
-<div ng-hide="specificRoomLoaded" style="min-height: 800px;align-items: center">
-    <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span><label class="">@WisR.App_Resources.Resource.LoadingRoom...</label>
-</div>
+    <div ng-hide="specificRoomLoaded" style="min-height: 800px;align-items: center">
+        <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span><label class="">@WisR.App_Resources.Resource.LoadingRoom...</label>
+    </div>
     <div ng-show="specificRoomLoaded" ng-cloak>
         <h2>{{CurrentRoom.Name}}</h2>
         <div id="RoomErrorDiv"></div>@*Used to insert error message*@
 
         <div class="row" ng-show="rightPassword">
             <div ng-hide="questionsLoaded" class="container text-center col-md-8" style="min-height: 800px">
-                <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span><label id="loadingLabel" class="">@WisR.App_Resources.Resource.LoadingQuestions...</label>
+                <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span><label id="loadingLabelGlobal" class="">@WisR.App_Resources.Resource.LoadingQuestions...</label>
             </div>
             <div ng-show="CurrentRoom.CreatedById == currentUser._id">
                 <div id="roomText" class="text-center">
@@ -27,27 +27,45 @@
             <div id="questionTables" ng-show="!SpecificQuestionShown && questionsLoaded">
                 <div class="col-md-8">
                     <h4>@WisR.App_Resources.Resource.HostQuestions</h4>
-                    <div style="overflow-y: auto; max-height: 300px; min-height: 300px">
+
+                    <div style="overflow-y: auto; overflow-x: visible; max-height: 200px; min-height: 200px">
                         <table id="hostQuestionsTable" class="table table-hover table-responsive">
-                            <tbody>
-                                <tr style="cursor: pointer" ng-repeat="question in Questions|filter: { RoomId: '@ViewBag.roomId',CreatedById: CurrentRoom.CreatedById }" ng-click="ShowSpecificQuestion(question)">
-                                    <td>{{question.QuestionText}}</td>
-                                    <td>{{GetUsernameById(question.CreatedById)}}</td>
-                                    <td>{{question.Votes | CountVotes: 1}}<span ng-class="{'upvoted':hasVoted({{question.Votes}},true)}" class="glyphicon glyphicon-thumbs-up"></span></td>
-                                    <td>{{question.Votes | CountVotes: -1}}<span ng-class="{'downvoted':hasVoted({{question.Votes}},false)}" class="glyphicon glyphicon-thumbs-down"></span></td>
+                            @*The ng-if Disables the initial animation of the rows *@
+                            <tbody ng-if="specificRoomLoaded && questionsLoaded">
+                                <tr style="cursor: pointer" ng-class="{blink_me:!question.Votes.length}" ng-repeat="question in Questions|filter: { RoomId: '@ViewBag.roomId',CreatedById: CurrentRoom.CreatedById }" ng-click="ShowSpecificQuestion(question)">
+                                    <td title="@WisR.App_Resources.Resource.QuestionText">{{question.QuestionText}}</td>
+                                    <td title="@WisR.App_Resources.Resource.AuthorOfQuestion">{{GetUsernameById(question.CreatedById)}}</td>
+                                    <td title="@WisR.App_Resources.Resource.AmountOfUpvotes">{{question.Votes | CountVotes: 1}}<span ng-class="{'upvoted':hasVoted({{question.Votes}},true)}" class="glyphicon glyphicon-thumbs-up"></span></td>
+                                    <td title="@WisR.App_Resources.Resource.AmountOfDownvotes">{{question.Votes | CountVotes: -1}}<span ng-class="{'downvoted':hasVoted({{question.Votes}},false)}" class="glyphicon glyphicon-thumbs-down"></span></td>
+                                    <td ng-hide="question.CreatedById!=currentUser._id" title="@WisR.App_Resources.Resource.Edit" ng-click="toggleDropdown(question._id);$event.stopPropagation();">
+                                        <span class="glyphicon glyphicon-option-vertical"></span>
+                                        <div class="dropdown">
+                                            <button ng-hide="true" class="btn btn-default dropdown-toggle" type="button" id="dropdown{{question._id}}" data-toggle="dropdown">
+                                                Dropdown
+                                                <span class="caret"></span>
+                                            </button>
+                                            <ul class="dropdown-menu" style="position: relative;z-index: 1" aria-labelledby="dropdownMenu1">
+                                                <li><a href="#">Update</a></li>
+                                                <li><a href="#">Delete</a></li>
+                                            </ul>
+                                        </div>
+                                    </td>
+
                             </tbody>
                         </table>
                     </div>
                     <div ng-show="CurrentRoom.UsersCanAsk">
                         <h4>@WisR.App_Resources.Resource.UserQuestions</h4>
-                        <div style="overflow-y: auto; max-height: 300px; min-height: 300px">
+                        <div style="overflow-y: auto; max-height: 200px; min-height: 200px">
                             <table id="userQuestionsTable" class="table table-hover table-responsive">
-                                <tbody>
-                                    <tr style="cursor: pointer" ng-repeat="question in Questions|filter: { RoomId: '@ViewBag.roomId',CreatedById: '!'+CurrentRoom.CreatedById  }|orderBy:'-((Votes|CountVotes: 1)-(Votes|CountVotes:-1))' " ng-click="ShowSpecificQuestion(question)">
-                                        <td>{{question.QuestionText}}</td>
-                                        <td>{{GetUsernameById(question.CreatedById)}}</td>
-                                        <td>{{question.Votes | CountVotes: 1}}<span ng-class="{'upvoted':hasVoted({{question.Votes}},true)}" class="glyphicon glyphicon-thumbs-up"></span></td>
-                                        <td>{{question.Votes | CountVotes: -1}}<span ng-class="{'downvoted':hasVoted({{question.Votes}},false)}" class="glyphicon glyphicon-thumbs-down"></span></td>
+                                @*The ng-if Disables the initial animation of the rows *@
+                                <tbody ng-if="specificRoomLoaded && questionsLoaded">
+                                    <tr style="cursor: pointer" ng-class="{blink_me:!question.Votes.length}" ng-repeat="question in Questions|filter: { RoomId: '@ViewBag.roomId',CreatedById: '!'+CurrentRoom.CreatedById  }|orderBy:'-((Votes|CountVotes: 1)-(Votes|CountVotes:-1))' " ng-click="ShowSpecificQuestion(question)">
+                                        <td title="@WisR.App_Resources.Resource.QuestionText">{{question.QuestionText}}</td>
+                                        <td title="@WisR.App_Resources.Resource.AuthorOfQuestion">{{GetUsernameById(question.CreatedById)}}</td>
+                                        <td title="@WisR.App_Resources.Resource.AmountOfUpvotes">{{question.Votes | CountVotes: 1}}<span ng-class="{'upvoted':hasVoted({{question.Votes}},true)}" class="glyphicon glyphicon-thumbs-up"></span></td>
+                                        <td title="@WisR.App_Resources.Resource.AmountOfDownvotes">{{question.Votes | CountVotes: -1}}<span ng-class="{'downvoted':hasVoted({{question.Votes}},false)}" class="glyphicon glyphicon-thumbs-down"></span></td>
+                                        <td title="@WisR.App_Resources.Resource.Edit" ng-hide="question.CreatedById!=currentUser._id" ng-click="toggleRoomLocation();$event.stopPropagation();"><span class="glyphicon glyphicon-option-vertical"></span></td>
                                 </tbody>
                             </table>
                         </div>
@@ -66,12 +84,20 @@
                                 <div ng-hide="specificImageLoaded" class="container text-center col-md-4">
                                     <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span><label>@WisR.App_Resources.Resource.LoadingImage...</label>
                                 </div>
-                                <img ng-show="specificImageLoaded" ng-click="toggleImageSize()" id="specificQuestionImage" ng-src="data:image/png;base64,{{SpecificQuestion.Img}}" title="Click to change image size" style="cursor: pointer; width: 100px; height: 100px" />
+                                <img ng-show="specificImageLoaded" ng-click="toggleImageSize()" id="specificQuestionImage" ng-src="data:image/png;base64,{{SpecificQuestion.Img}}" title="@WisR.App_Resources.Resource.ClickToChangeImageSize" style="cursor: pointer; width: 100px; height: 100px" />
                             </td>
-                            <td>{{SpecificQuestion.QuestionText}}</td>
-                            <td>{{GetUsernameById(SpecificQuestion.CreatedById)}}</td>
-                            <td>{{SpecificQuestion.Votes | CountVotes: 1}}<button class="votingBtn" ng-click="Vote('Up')" title="{{{true: 'Login to enable', false: ''}[anonymousUser]}}" style="pointer-events: auto;" ng-disabled="anonymousUser"> <span ng-class="{'upvoted':hasVoted('{{SpecificQuestion.Votes}}' != undefined? SpecificQuestion.Votes: 'undefined',true)}" class="glyphicon glyphicon-thumbs-up"></span></button></td>
-                            <td>{{SpecificQuestion.Votes | CountVotes: -1}}<button class="votingBtn" ng-click="Vote('Down')" title="{{{true: 'Login to enable', false: ''}[anonymousUser]}}" style="pointer-events: auto;" ng-disabled="anonymousUser"><span ng-class="{'downvoted':hasVoted('{{SpecificQuestion.Votes}}'!= undefined? SpecificQuestion.Votes: 'undefined',false)}" class="glyphicon glyphicon-thumbs-down"></span></button></td>
+                            <td title="@WisR.App_Resources.Resource.QuestionText">{{SpecificQuestion.QuestionText}}</td>
+                            <td title="@WisR.App_Resources.Resource.AuthorOfQuestion">{{GetUsernameById(SpecificQuestion.CreatedById)}}</td>
+                            <td>
+                                <span title="@WisR.App_Resources.Resource.AmountOfUpvotes">{{SpecificQuestion.Votes | CountVotes: 1}}</span>
+                                <button class="noBtn" ng-click="Vote('Up')" title="{{{true: '@WisR.App_Resources.Resource.LoginToEnable', false: ''}[anonymousUser]}}" style="pointer-events: auto;" ng-disabled="anonymousUser"> <span ng-class="{'upvoted':hasVoted('{{SpecificQuestion.Votes}}' != undefined? SpecificQuestion.Votes: 'undefined',true)}" class="glyphicon glyphicon-thumbs-up"></span></button>
+                            </td>
+                            <td>
+                                <span title="@WisR.App_Resources.Resource.AmountOfDownvotes">
+                                    {{SpecificQuestion.Votes | CountVotes: -1}}
+                                </span>
+                                <button class="noBtn" ng-click="Vote('Down')" title="{{{true: '@WisR.App_Resources.Resource.LoginToEnable', false: '@WisR.App_Resources.Resource.AmountOfDownvotes'}[anonymousUser]}}" style="pointer-events: auto;" ng-disabled="anonymousUser"><span ng-class="{'downvoted':hasVoted('{{SpecificQuestion.Votes}}'!= undefined? SpecificQuestion.Votes: 'undefined',false)}" class="glyphicon glyphicon-thumbs-down"></span></button>
+                            </td>
                         </tr>
 
                     </table>
@@ -92,7 +118,7 @@
                             </label>
                         </div>
 
-                        <button class="btn btn-primary" ng-click="AddAnswer()" ng-disabled="timerOverflow || answerChoosen == undefined||anonymousUser" title="{{{true: 'Login to enable', false: ''}[anonymousUser]}}" style="pointer-events: auto;">@WisR.App_Resources.Resource.Submit</button><button style="float: right" class="btn btn-primary" ng-click="ToggleShowQuestionTables()">@WisR.App_Resources.Resource.BackToQuestions</button>
+                        <button class="btn btn-primary" ng-click="AddAnswer()" ng-disabled="timerOverflow || answerChoosen == undefined||anonymousUser" title="{{{true: '@WisR.App_Resources.Resource.LoginToEnable', false: ''}[anonymousUser]}}" style="pointer-events: auto;">@WisR.App_Resources.Resource.Submit</button><button style="float: right" class="btn btn-primary" ng-click="ToggleShowQuestionTables()">@WisR.App_Resources.Resource.BackToQuestions</button>
                     </form>
                     <label ng-show="specificAnswer!=null" id="specificAnswerLabel">@WisR.App_Resources.Resource.YouAnswered: {{specificAnswer}}</label>
                     <label ng-hide="showResults">@WisR.App_Resources.Resource.NoResultsYet</label>
@@ -105,20 +131,20 @@
                         </select>
                         <canvas id="pie" class="chart chart-base" chart-options="options" chart-type="chartType" chart-legend="true" chart-colors="colors" chart-data="data" chart-labels="labels"></canvas>
                     </div>
-                </div>||
+                </div>
             </div>
             <div ng-hide="chatLoaded" class="container text-center col-md-4">
                 <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span><label id="loadingLabel" class="">@WisR.App_Resources.Resource.LoadingChatMessages...</label>
             </div>
             @* Chat template found at: http://bootsnipp.com/snippets/featured/chat *@
-            <div ng-show="chatLoaded && CurrentRoom.HasChat" class="col-md-4" >
+            <div ng-show="chatLoaded && CurrentRoom.HasChat" class="col-md-4">
                 <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
                 @*Scroll glue keeps scroll bar at same location, found at: https://github.com/Luegg/angularjs-scroll-glue*@
-                <div class="fa-border fa" style="overflow-x: hidden; overflow-y: auto; max-height: 600px; min-height: 600px;min-width: 100%" scroll-glue>
+                <div class="fa-border fa" style="overflow-x: hidden; overflow-y: auto; max-height: 400px; min-height: 400px;min-width: 100%" scroll-glue>
                     <div class="row">
                         <div class="message-wrap col-lg-12">
-                            <div class="msg-wrap">
-                                <div ng-repeat="chatMessage in ChatMessages" class="media msg">
+                            <div ng-if="ChatMessages.length" class="msg-wrap">
+                                <div ng-repeat="chatMessage in ChatMessages" class="media msg blink_me">
                                     <div class="media-body">
                                         <small class="pull-right time"><i class="fa fa-clock-o"></i> {{chatMessage.Timestamp*1| date:'HH:mm:ss dd/MM-yyyy'}}</small>
                                         <h5 class="media-heading">{{GetUsernameById(chatMessage.ByUserId)}}</h5>
@@ -149,32 +175,35 @@
                     <div class="modal-body">
                         <form ng-submit="postQuestion()">
                             <div class="row">
-                                <label class="col-md-6">@WisR.App_Resources.Resource.QuestionText</label> <input required ng-model="QuestionText" type="text" class="col-md-6" placeholder="@WisR.App_Resources.Resource.EnterQuestionText" />
+                                <label class="col-md-6">@WisR.App_Resources.Resource.QuestionText</label> <input required ng-model="QuestionText" type="text" class="col-md-6 form-control" placeholder="@WisR.App_Resources.Resource.EnterQuestionText" />
                             </div>
                             <div class="row">
                                 <label class="col-md-6">@WisR.App_Resources.Resource.QuestionType</label>
-                                <select class="col-md-6" ng-model="QuestionType" required ng-options="Type.name for Type in QuestionTypes">
+                                <select class="col-md-6 form-control" ng-model="QuestionType" required ng-options="Type.name for Type in QuestionTypes">
                                     <option value="" disabled selected> @WisR.App_Resources.Resource.ChooseType </option>
                                 </select>
                             </div>
                             <div ng-show="QuestionType != undefined && QuestionType.val != 'TextualQuestion'" class="row">
                                 <label class="col-md-6">@WisR.App_Resources.Resource.ResponseOptions</label>
-                                <div class="pull-right col-md-6">
-                                    <input type="button" ng-click="AddResponseOption()" value="@WisR.App_Resources.Resource.AddResponseOption">
-                                    <div ng-repeat="option in ResponseOptions">
-                                        <input required ng-model="ResponseOptions[option.id].val" class="col-md-12" type="text" placeholder="@WisR.App_Resources.Resource.AddResponseOptions" /><input type="button" ng-click="RemoveResponseOption(option)" value="@WisR.App_Resources.Resource.Remove">
+                                <div class="col-md-6 input-group">
+                                    <div ng-repeat="option in ResponseOptions" class="col-md-12 input-group has-feedback" style="max-width: 280px">
+                                        <input required ng-model="ResponseOptions[option.id].val" class="form-control" type="text" placeholder="@WisR.App_Resources.Resource.AddResponseOptions" />
+                                        <span type="button" class="input-group-addon" ng-click="RemoveResponseOption(option)" value="@WisR.App_Resources.Resource.Remove">
+                                            <i class="glyphicon glyphicon-minus"></i>
+                                        </span>
                                     </div>
+                                    <span type="button" ng-click="AddResponseOption()" class="glyphicon glyphicon-plus" value="@WisR.App_Resources.Resource.AddResponseOption" />
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-6">@WisR.App_Resources.Resource.Picture</label><input type='file' ng-model='questionImage' base-sixty-four-input ctrl-function="setImageMessage(msg)" class="text-center">
-                                <img ng-src="data:image/png;base64,{{questionImage.base64}}" style="max-width: 100px; max-height: 100px" />
+                                <label class="col-md-6">@WisR.App_Resources.Resource.Picture</label>
+                                <input type='file' accept="image/*" ng-model='questionImage' base-sixty-four-input ctrl-function="setImageMessage(msg)" class="col-md-6 text-center filestyle" data-buttonName="btn-primary" data-buttontext="@WisR.App_Resources.Resource.ChoosePicture">
                                 <div class="col-md-12 text-center">
                                     {{ImageMessage}}
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-6">@WisR.App_Resources.Resource.ExpirationTime</label> <input required ng-model="ExpirationTime" class="col-md-6" type="number" />
+                                <label class="col-md-6">@WisR.App_Resources.Resource.ExpirationTime</label> <input required ng-model="ExpirationTime" class="col-md-6 form-control" type="number" />
                             </div>
                             <br />
                             <div class="row text-center">

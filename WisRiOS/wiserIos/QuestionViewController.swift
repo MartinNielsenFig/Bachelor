@@ -16,7 +16,8 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     let pageIndex = 1
     var roomId: String?
     var firstProgressBarUpdate = true
-    var progressTimer: NSTimer?
+    var progressTimerUpdater: Updater?
+    var selectedAnswerPickerIndex = -1
     
     //Get instantiated by QuestionListViewController
     var question = Question()
@@ -55,16 +56,38 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         let answerJson = JSONSerializer.toJson(answer)
         let body = "response=\(answerJson)&questionId=\(question._id!)"
         
+        let DEBUG_ALWAYS_ADD = true
+        
         HttpHandler.requestWithResponse(action: "Question/AddQuestionResponse", type: "POST", body: body) { (data, response, error) in
             if error == "nil" && data == "" {
-                if let myResponse = (self.question.Result.filter() { $0.UserId == CurrentUser.sharedInstance._id}.first) {
+                if let myResponse = (self.question.Result.filter() { $0.UserId == CurrentUser.sharedInstance._id }.first) where !DEBUG_ALWAYS_ADD {
                     myResponse.Value = answer.Value
-                }
-                else {
+                } else {
                     self.question.Result += [answer]
                 }
+                
+                self.highlightSelectedAnswer(index)
             }
         }
+    }
+    
+    /**
+     Highlights the selected answer in the Answer Picker.
+     - parameter index:	The index on the selected answer from the user. If it's nil, this function will find it.
+     */
+    func highlightSelectedAnswer(index: Int? = nil) {
+        if let index = index {
+            self.selectedAnswerPickerIndex = index
+        } else {
+            if let myAnswer = (question.Result.filter() { $0.UserId == CurrentUser.sharedInstance._id }.first) {
+                self.selectedAnswerPickerIndex = pickerData.indexOf(myAnswer.Value) ?? -1
+            }
+        }
+        
+        //Will call pickerView(pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int)
+        dispatch_async(dispatch_get_main_queue(), {
+            self.answerPicker.reloadAllComponents()
+        })
     }
     
     func updateVoteUI(up: Bool) {
@@ -90,8 +113,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                 //If Vote already exists, update it. Else add it.
                 if let myVote = (self.question.Votes.filter() { $0.CreatedById == CurrentUser.sharedInstance._id }.first) {
                     myVote.Value = voteValue
-                }
-                else {
+                } else {
                     self.question.Votes += [vote]
                 }
                 print(up ? "VOTED" : "DOWNVOTED")
@@ -123,8 +145,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             progressBar.addSubview(timeLabel)
             
             if part >= 1 {
-                progressTimer?.invalidate()
-                progressTimer = nil
+                progressTimerUpdater?.stop()
                 return
             }
             firstProgressBarUpdate = false
@@ -150,7 +171,9 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         
         //Progress bar
         updateProgressbar()
-        progressTimer = NSTimer.scheduledTimerWithTimeInterval(0.75, target: self, selector: "updateProgressbar", userInfo: nil, repeats: true)
+        progressTimerUpdater = Updater(secondsDelay: 0.75, function: {
+            self.updateProgressbar()
+        })
         
         //Picker
         pickerData.removeAll()
@@ -188,6 +211,9 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     
     override func viewDidAppear(animated: Bool) {
+        
+        highlightSelectedAnswer()
+        
         //Vote btns
         for v in question.Votes {
             if v.CreatedById == CurrentUser.sharedInstance._id {
@@ -210,6 +236,15 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return pickerData[row]
+    }
+    
+    func pickerView(pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        if row == selectedAnswerPickerIndex {
+            let title = pickerData[row]
+            let attributedTitle = NSAttributedString(string: title, attributes: [NSForegroundColorAttributeName:UIColor.blueColor()])
+            return attributedTitle
+        }
+        return nil
     }
     
     //Navigation

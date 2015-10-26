@@ -15,7 +15,7 @@ class CreateRoomViewController: UITableViewController {
     
     //Properties
     var roomNameInputCell: TextInputCell?
-    var roomTagInputCell: TextInputCell?
+    var roomSecretInputCell: TextInputCell?
     var pwSwitchCell: BooleanInputCell?
     var pwInputCell: TextInputCell?
     var radiusInputCell: SegmentedInputCell?
@@ -26,6 +26,8 @@ class CreateRoomViewController: UITableViewController {
     var pwLabel: UILabel?
     
     var room = Room()
+    
+    let onDefault = true
     
     //Lifecycle
     override func viewDidLoad() {
@@ -49,6 +51,7 @@ class CreateRoomViewController: UITableViewController {
             let cellIdentifier = "TextInputCell"
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! TextInputCell
             cell.label.text = "Room name"
+            cell.inputField.placeholder = "Name of the room"
             roomNameInputCell = cell
             return cell
         }
@@ -56,8 +59,9 @@ class CreateRoomViewController: UITableViewController {
         else if indexPath.row == 1 {
             let cellIdentifier = "TextInputCell"
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! TextInputCell
-            cell.label.text = "Room tag"
-            roomTagInputCell = cell
+            cell.label.text = "Room Secret"
+            cell.inputField.placeholder = "Let others join with secret"
+            roomSecretInputCell = cell
             return cell
         }
             
@@ -79,12 +83,13 @@ class CreateRoomViewController: UITableViewController {
             let cellIdentifier = "TextInputCell"
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! TextInputCell
             cell.label.text = "Password"
+            cell.inputField.placeholder = "Optional password for room"
             cell.inputField.secureTextEntry = true
             
             pwLabel = cell.label
             pwInputCell = cell
             
-            let on = (pwSwitchCell?.uiSwitch.on)!
+            let on = pwSwitchCell?.uiSwitch.on ?? onDefault
             cell.inputField.enabled = on
             pwLabel?.enabled = on
             
@@ -147,12 +152,33 @@ class CreateRoomViewController: UITableViewController {
     - parameter button:	The button that initated the function call.
     */
     func addRoomButtonPressed(button: UIBarButtonItem) {
+
+        if let name = roomNameInputCell?.inputField.text, secret = roomSecretInputCell?.inputField.text where name == "" || secret == "" {
+            var msg = ""
+            if name == "" {
+                msg += "Room name cannot be empty. "
+            }
+            if secret == "" {
+                msg += "Room secret cannot be empty. "
+            }
+            
+            let alert = UIAlertController(title: "Empty values", message: msg, preferredStyle: .Alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { action in
+                self.roomSecretInputCell?.inputField.becomeFirstResponder()
+            }))
+            dispatch_async(dispatch_get_main_queue()) {
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+            
+            return
+        }
+        
         room.Name = roomNameInputCell?.inputField.text
-        room.AllowAnonymous = (anonymousInputCell?.uiSwitch.on)!
+        room.AllowAnonymous = anonymousInputCell?.uiSwitch.on ?? onDefault
         room.CreatedById = CurrentUser.sharedInstance._id
-        room.HasChat = (chatInputCell?.uiSwitch.on)!
-        room.HasPassword = (pwSwitchCell?.uiSwitch.on)!
-        room.UseLocation = (roomUsesLocationInputCell?.uiSwitch.on)!
+        room.HasChat = chatInputCell?.uiSwitch.on ?? onDefault
+        room.HasPassword = pwSwitchCell?.uiSwitch.on ?? onDefault
+        room.UseLocation = roomUsesLocationInputCell?.uiSwitch.on ?? onDefault
         room.Location.Latitude = CurrentUser.sharedInstance.location.Latitude
         room.Location.Longitude = CurrentUser.sharedInstance.location.Longitude
         room.Location.AccuracyMeters = CurrentUser.sharedInstance.location.AccuracyMeters ?? 20
@@ -164,22 +190,22 @@ class CreateRoomViewController: UITableViewController {
             room.Radius = meters
         }
         
-        room.Tag = roomTagInputCell?.inputField.text
-        room.UsersCanAsk = (userQuestionInputCell?.uiSwitch.on)!
+        room.Secret = roomSecretInputCell?.inputField.text
+        room.UsersCanAsk = userQuestionInputCell?.uiSwitch.on ?? onDefault
         room.EncryptedPassword = pwInputCell?.inputField.text?.sha512()
         
         let jsonRoom = JSONSerializer.toJson(self.room)
         let body = "room=\(jsonRoom)"
         HttpHandler.requestWithResponse(action: "Room/CreateRoom", type: "POST", body: body) { (data, response, error) in
-            if let error = try? Error.parse(data) {
+            if let error = try? ReturnMessage.parse(data) {
                 print(error.ErrorMessage)
                 
-                if error.ErrorCode == ErrorCodes.RoomTagAlreadyInUse.rawValue {
-                    print("TAG ALREADY IN USE")
+                if error.ErrorCode == ErrorCodes.RoomSecretAlreadyInUse.rawValue {
+                    print("SECRET ALREADY IN USE")
                     
-                    let alert = UIAlertController(title: "Tag in use", message: "Tag is already in use, choose another.", preferredStyle: .Alert)
+                    let alert = UIAlertController(title: "Secret in use", message: "Secret is already in use, choose another.", preferredStyle: .Alert)
                     alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { action in
-                        roomTagInputCell?.inputField.becomeFirstResponder()
+                        self.roomSecretInputCell?.inputField.becomeFirstResponder()
                     }))
                     dispatch_async(dispatch_get_main_queue()) {
                         self.presentViewController(alert, animated: true, completion: nil)

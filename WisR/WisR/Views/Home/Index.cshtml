@@ -25,19 +25,19 @@
                     </div>
                 </div>
                 <div ng-show="(Rooms|roomsNear:this).length>0" style="height: 300px; overflow: auto">
-                    <table id="roomTable" class="table table-responsive table-hover">
-                        <tr class="" style="cursor: pointer" ng-repeat="room in Rooms| roomsNear: this" ng-click="changeViewToRoom(room)" ng-class="{'notClickAble': !room.AllowAnonymous && $parent.userId=='NoUser'}">
+                    <table ng-if="Rooms.length" id="roomTable" class="table table-responsive table-hover">
+                        <tr class="blink_me" style="cursor: pointer" ng-repeat="room in Rooms| roomsNear: this" ng-click="changeViewToRoom(room)" ng-class="{'notClickAble': !room.AllowAnonymous && $parent.userId=='NoUser'}">
                             <td ng-show="room.AllowAnonymous || $parent.userId != 'NoUser' " class="col-md-11">
                                 {{room.Name}}
                             </td>
-                            <td ng-show="!room.AllowAnonymous && $parent.userId=='NoUser'" class="col-md-11" title="No access because you're not logged in">
+                            <td ng-show="!room.AllowAnonymous && $parent.userId=='NoUser'" class="col-md-11" title="@WisR.App_Resources.Resource.NoAccessRequiresLogin">
                                 <s>{{room.Name}}</s>
                             </td>
                             <td class="col-md-1 text-right">
-                                <span ng-show="room.HasPassword" title="Password Protected" class="glyphicon glyphicon-lock right"></span>
-                                <span ng-show="room.HasChat" title="Chat enabled" class="glyphicon glyphicon-comment right"></span>
-                                <span ng-show="room.UsersCanAsk" title="Users can ask questions" class="glyphicon glyphicon-question-sign right"></span>
-                                <span ng-show="room.AllowAnonymous" title="Anonymous users allowed" class="glyphicon glyphicon-eye-close"></span>
+                                <span ng-show="room.HasPassword" title="@WisR.App_Resources.Resource.PasswordProtected" class="glyphicon glyphicon-lock right"></span>
+                                <span ng-show="room.HasChat" title="@WisR.App_Resources.Resource.ChatEnabled" class="glyphicon glyphicon-comment right"></span>
+                                <span ng-show="room.UsersCanAsk" title="@WisR.App_Resources.Resource.UsersCanAsk" class="glyphicon glyphicon-question-sign right"></span>
+                                <span ng-show="room.AllowAnonymous" title="@WisR.App_Resources.Resource.AnonymousUsersAllowed" class="glyphicon glyphicon-eye-close"></span>
                             </td>
 
                         </tr>
@@ -46,17 +46,17 @@
                 <br />
                 <div class="row">
                     <div>
-                        <form ng-submit="connectWithUniqueTag()"><input class="form-control" style="margin: 0 auto" ng-model="uniqueRoomTag" type="text" placeholder="@WisR.App_Resources.Resource.EnterUniqueTag" /></form>
+                        <form ng-submit="connectWithUniqueSecret()"><input class="form-control" style="margin: 0 auto" ng-model="uniqueRoomSecret" type="text" placeholder="@WisR.App_Resources.Resource.EnterUniqueSecret" /></form>
                     </div>
                 </div>
 
                 <div class="row">
                     <div id="buttonsDiv" class="text-center">
                         <div style="display: inline">
-                            <button id="connectRoomButton" class="btn btn-primary" ng-click="connectWithUniqueTag()">@WisR.App_Resources.Resource.Connect</button>
+                            <button id="connectRoomButton" class="btn btn-primary" ng-click="connectWithUniqueSecret()">@WisR.App_Resources.Resource.Connect</button>
                         </div>
                         <span id="createRoomButtonDiv">
-                            <button id="createRoomButton" title="Login to enable" class="btn btn-primary" style="pointer-events: auto;" disabled onclick="$('#myModalCreate').modal('toggle')">@WisR.App_Resources.Resource.CreateRoom</button>
+                            <button id="createRoomButton" title="@WisR.App_Resources.Resource.LoginToEnable" class="btn btn-primary" style="pointer-events: auto;" disabled onclick="$('#myModalCreate').modal('toggle')">@WisR.App_Resources.Resource.CreateRoom</button>
                         </span>
                     </div>
                 </div>
@@ -76,13 +76,13 @@
                 <form ng-submit="postRoom()">
 
                     <div class="row">
-                        <label class="col-md-6">@WisR.App_Resources.Resource.RoomName</label>  <input required ng-model="RoomName" type="text" class="col-md-6" />
+                        <label class="col-md-6">@WisR.App_Resources.Resource.RoomName</label>  <input required ng-model="RoomName" type="text" class="form-control col-md-6" />
                     </div>
                     <div class="row">
-                        <label class="col-md-6">@WisR.App_Resources.Resource.UniqueTag</label> <input required ng-model="UniqueTag" class="col-md-6" type="text" />
+                        <label class="col-md-6">@WisR.App_Resources.Resource.UniqueSecret</label> <input required ng-model="UniqueSecret" class="form-control col-md-6" type="text" />
                     </div>
                     <div class="row">
-                        <label class="col-md-6">@WisR.App_Resources.Resource.Password</label> <input ng-model="Password" class="col-md-6" type="password" />
+                        <label class="col-md-6">@WisR.App_Resources.Resource.Password</label> <input ng-model="Password" class="form-control col-md-6" type="password" />
                     </div>
                     <div class="row">
                         <label class="col-md-6">@WisR.App_Resources.Resource.UseLocation</label> <input ng-model="UseLocation" class="col-md-6" type="checkbox" />

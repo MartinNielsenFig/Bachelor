@@ -13,7 +13,14 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.Volley;
+import com.example.tomas.wisrandroid.Helpers.HttpHelper;
 import com.example.tomas.wisrandroid.Model.MyUser;
+import com.example.tomas.wisrandroid.Model.Vote;
 import com.example.tomas.wisrandroid.R;
 import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
@@ -23,6 +30,10 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.*;
+import com.google.gson.Gson;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class MainActivity extends FragmentActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
@@ -30,6 +41,8 @@ public class MainActivity extends FragmentActivity implements GoogleApiClient.Co
     private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClient;
     private Location mLastLocation;
+    private Gson gson;
+
 
     private Button mCreateRoomButton;
     private Button mSelectRoomButton;
@@ -56,6 +69,7 @@ public class MainActivity extends FragmentActivity implements GoogleApiClient.Co
 
                 if (AccessToken.getCurrentAccessToken() != null) {
                     MyUser.getMyuser().set_FacebookId(AccessToken.getCurrentAccessToken().getUserId());
+                    setupMyUser();
                     Intent mCreateRoomIntent = new Intent(MainActivity.this, CreateRoomActivity.class);
                     startActivity(mCreateRoomIntent);
                 } else {
@@ -131,6 +145,11 @@ public class MainActivity extends FragmentActivity implements GoogleApiClient.Co
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
     private void setUpMapIfNeeded() {
         // Do a null check to confirm that we have not already instantiated the map.
         if (mMap == null) {
@@ -159,5 +178,41 @@ public class MainActivity extends FragmentActivity implements GoogleApiClient.Co
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
+    }
+
+    private void setupMyUser()
+    {
+        Map<String,String> mParams = new HashMap<String, String>();
+        mParams.put("id", AccessToken.getCurrentAccessToken().getUserId());
+
+
+        Response.Listener<String> mListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
+                MyUser.getMyuser().set_Id(response);
+            }
+        };
+
+        Response.ErrorListener mErrorListener = new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Toast.makeText(getApplicationContext(),String.valueOf(volleyError.networkResponse.statusCode),Toast.LENGTH_LONG).show();
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        HttpHelper jsObjRequest = new HttpHelper( Request.Method.POST, getString(R.string.restapi_url) + "/User/GetWisrIdFromFacebookId"  , mParams, mListener, mErrorListener);
+
+        try {
+            requestQueue.add(jsObjRequest);
+        } catch (Exception e) {
+
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

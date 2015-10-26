@@ -9,126 +9,263 @@
 import UIKit
 import JsonSerializerSwift
 
+
 /// A sub-ViewController of RoomPageViewController. This handles the chat logic for the room.
-class ChatViewController: UIViewController, UITextFieldDelegate, Paged {
+class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, Paged {
     
     //Properties
     let pageIndex = 2
     var roomId: String?
+    var messages = [ChatMessage]()
+    var updater: Updater?
+    var firstLoad = true
     
-    var chat = String() {
-        didSet {
-            dispatch_async(dispatch_get_main_queue()) {
-                self.chatTextField.text = self.chat
-                let range = NSMakeRange(self.chatTextField.text.characters.count - 1, 1)
-                self.chatTextField.scrollRangeToVisible(range)
-            }
-        }
-    }
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var textMessageInput: UITextField!
+    @IBOutlet weak var MessageInputStack: UIStackView!
     
-    @IBOutlet weak var chatTextField: UITextView!
-    @IBOutlet weak var chatMessageInput: UITextField!
-    
-    //Lifecycle
-    override func viewDidLoad() {
-        
-        print("ChatViewController instantiated, roomId: \(self.roomId)")
-        
-        chatMessageInput.delegate = self
-        
-        let body = "roomId=\(roomId!)"
-        HttpHandler.requestWithResponse(action: "Chat/GetAllByRoomId", type: "POST", body: body) { (data, response, error) in
-            var messageArray = [ChatMessage]()
-            var tempChat = String()
-            
-            if let jsonArray = try? JSONSerializer.toArray(data) {
-                for msg in jsonArray {
-                    let m = ChatMessage(jsonDictionary: msg as! NSDictionary)
-                    messageArray += [m]
-                    
-                    let line = DateTimeHelper.getTimeStringFromEpochString(m.Timestamp) + " " + m.Value! + "\n"
-                    tempChat += line
-                }
-            } else {
-                let line = "Could not load the chat"
-                tempChat += line
-            }
-            
-            self.chat = tempChat
-        }
-        super.viewDidLoad()
-    }
-    
-    //UITextFieldDelegate
-    func textFieldShouldReturn(textField: UITextField) -> Bool {
-        if let text = textField.text where text.isEmpty {
-            return false
+    //Actions
+    @IBAction func sendPressed(sender: AnyObject) {
+        updater?.stop()
+        if let text = textMessageInput.text where text.isEmpty {
+            print("empty message not allowed in chat")
+            return
         }
         
         let msg = ChatMessage()
         msg.ByUserId = CurrentUser.sharedInstance._id
         msg.RoomId = roomId
         //message timestamp gets created on restApi
-        msg.Value = textField.text
-        
+        msg.Value = textMessageInput.text
         
         let msgJson = JSONSerializer.toJson(msg)
         let body = "ChatMessage=\(msgJson)"
         HttpHandler.requestWithResponse(action: "Chat/CreateChatMessage", type: "POST", body: body) { (data, response, error) in
             NSLog("Chat/CreateChatMessage Done")
+            
+            dispatch_async(dispatch_get_main_queue()) {
+                self.textMessageInput.text = ""
+                
+                //If the last message is not visible, scroll to bottom
+                if self.stickToBottom() {
+                    self.scrollToBottom()
+                }
+                self.updater?.start()
+                self.updater?.execute()
+            }
         }
-        
-        return true
     }
     
-    func textFieldDidBeginEditing(textField: UITextField) {
-        movePlate(textField, up: true)
+    //Lifecycle
+    override func viewDidLoad() {
+        print("ChatViewController instantiated, roomId: \(self.roomId)")
+        
+        textMessageInput.delegate = self
     }
-    func textFieldDidEndEditing(textField: UITextField) {
-        movePlate(textField, up: false)
+    
+    //Setup registering for keyboard events
+    override func viewWillAppear(animated: Bool) {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+        
+        updater = Updater(secondsDelay: 1) {
+            let body = "roomId=\(self.roomId!)"
+            HttpHandler.requestWithResponse(action: "Chat/GetAllByRoomId", type: "POST", body: body) { (data, response, error) in
+                let sticky = self.stickToBottom()
+                if let jsonArray = try? JSONSerializer.toArray(data)  {
+                    for chatMsg in jsonArray {
+                        let m = ChatMessage(jsonDictionary: chatMsg as! NSDictionary)
+                        
+                        if Double(m.Timestamp!) > self.oldestMessageEpochByIndex() {
+                            self.messages += [m]
+                        }
+                    }
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.tableView.reloadData()
+                        if sticky || self.firstLoad {
+                            self.scrollToBottom()
+                            self.firstLoad = false
+                        }
+                    }
+                }
+                else {
+                    print("could not update chat")
+                }
+            }
+        }
+        updater?.execute()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+        
+        updater?.stop()
     }
     
     //Utilities
     /**
-    Moves the view up/down when displaying the keyboard. This function is inspired heavely by http://stackoverflow.com/questions/1247113/iphone-keyboard-covers-uitextfield
-    - parameter field:	The text field the user entered which triggered this function
-    - parameter up:		Determines whether the plate should move up (true) or down (false)
+    Scrolls to the bottom of the table view presented on this page
     */
-    func movePlate(field: UITextField, up: Bool) {
-        
-        let movementDistance = 220 // tweak as needed
-        let movementDuration = 0.3 // tweak as needed
-        
-        let movement = (up ? -movementDistance : movementDistance)
-        
-        UIView.beginAnimations("anim", context: nil)
-        UIView.setAnimationBeginsFromCurrentState(true)
-        UIView.setAnimationDuration(NSTimeInterval(movementDuration))
-        self.view.frame = CGRectOffset(self.view.frame, 0, CGFloat(movement))
-        UIView.commitAnimations()
+    func scrollToBottom() {
+        let chatFieldHeight = self.MessageInputStack.frame.height + 10
+        dispatch_async(dispatch_get_main_queue()) {
+            if self.messages.count > 0 {
+                self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.messages.count-1, inSection: 0), atScrollPosition: UITableViewScrollPosition.Bottom, animated: false)
+                //self.tableView.setContentOffset(CGPoint(x: 0, y: self.tableView.contentOffset.y + chatFieldHeight), animated: true)
+            }
+        }
+    }
+
+    /**
+     Policy that determines whether updates to the chat should scroll the UITableView to the bottom. This is to ensure that the user can scroll up the list to look at older messages, without the UITableView scrolling down again.
+     - returns: Whether UITableView should scroll to bottom on updates.
+     */
+    func stickToBottom() -> Bool {
+        if self.messages.count > 1 {
+            return self.isMessageShown(self.messages.count-1) || self.isMessageShown(self.messages.count-2)
+        } else {
+            return false
+        }
     }
     
-    /*
-    in viewDidLoad:
-    //Todo remove observer
-    NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardShown:", name: UIKeyboardDidShowNotification, object: nil)
-    NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardHidden:", name: UIKeyboardDidHideNotification, object: nil)
+    /**
+     Determines whether the cell with index.row is shown on the UI
+     - parameter row:	The row of the cell to check if is visible
+     - returns: True if the cell with given row is shown on GUI. Else false.
+     */
+    func isMessageShown(row: Int) -> Bool {
+        var visible = false
+        if messages.count > 0 {
+            self.tableView.indexPathsForVisibleRows?.forEach({ (indexPath) -> () in
+                if indexPath.row == row {
+                    visible = true
+                }
+            })
+        } else {
+            return true
+        }
+       return visible
+    }
+    
+    /**
+     Looks through the downloaded messages and looks for the oldest message. Then returns its timestamp. Could probably just look at the message last in the array.
+     - returns: Timestamp as seconds since 1-1-1970.
+     */
+    func oldestMessageEpochByIteration() -> Double {
+        var oldestTime = 0.0
+        for m in self.messages {
+            if let timeStamp = m.Timestamp {
+                let timeStampDouble = Double(timeStamp.stringByReplacingOccurrencesOfString(",", withString: "."))
+                if timeStampDouble > oldestTime {
+                    oldestTime = timeStampDouble!
+                }
+            }
+        }
+        return oldestTime
+    }
+    
+    /**
+     Assumes the oldest message is the last one in the array.
+     - returns: Timestamp of the presumably oldest message as seconds sinde 1-1-1970
+     */
+    func oldestMessageEpochByIndex() -> Double {
+        if self.messages.count > 0 {
+            if let ts = self.messages[self.messages.count-1].Timestamp {
+                return Double(ts.stringByReplacingOccurrencesOfString(",", withString: "."))!
+            }
+        }
+        return Double(0)
+    }
     
     
-    var keyboardHeight = CGFloat(200)
-    var totalMovement = CGFloat(0)
-    //http://stackoverflow.com/questions/11284321/what-is-the-height-of-iphones-onscreen-keyboard
-    func getboardHeight(notification: NSNotification) -> CGFloat {
-        let info  = notification.userInfo!
-        let value: AnyObject = info[UIKeyboardFrameEndUserInfoKey]!
-        let rawFrame = value.CGRectValue
-        let keyboardFrame = view.convertRect(rawFrame, fromView: nil)
-        return keyboardFrame.height
+    //UITableViewController
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.messages.count
     }
-    func keyboardShown(notification: NSNotification) {
-        movePlate(chatMessageInput, up: true, movementDistance: getboardHeight(notification))
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = UITableViewCell()
+        cell.textLabel?.text = messages[indexPath.row].Value
+        return cell
     }
-    func keyboardHidden(notification: NSNotification) {
-        movePlate(chatMessageInput, up: false, movementDistance: getboardHeight(notification))
-    }*/
+    
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        print("scroll began")
+        updater?.stop()
+    }
+    
+    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        print("scroll ended")
+        updater?.start()
+    }
+    
+    
+    //UITextFieldDelegate
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        sendPressed(self)
+        return true
+    }
+    
+    //UIKeyboardWillShowNotification & UIKeyboardWillHideNotification
+    let kbOffset = CGFloat(30)
+    //Keyboard hide/show based upon https://github.com/Lightstreamer/Lightstreamer-example-Chat-client-ios-swift with modifications
+    func keyboardWillShow(notification: NSNotification) {
+        print("\(__FUNCTION__) has been called")
+        
+        // Reducing size of table
+        let baseView = self.view
+        let keyboardFrame = notification.userInfo![UIKeyboardFrameBeginUserInfoKey]!.CGRectValue
+        let animationDuration = notification.userInfo![UIKeyboardAnimationDurationUserInfoKey]!.doubleValue
+        
+        let visibleRows = tableView!.indexPathsForVisibleRows
+        var lastIndexPath : NSIndexPath? = nil
+        
+        if (visibleRows != nil) && visibleRows!.count > 0 {
+            lastIndexPath = visibleRows![visibleRows!.count-1] as NSIndexPath
+        }
+        
+        UIView.animateWithDuration(animationDuration, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+            baseView!.frame = CGRectMake(baseView!.frame.origin.x, baseView!.frame.origin.y, baseView!.frame.size.width, baseView!.frame.size.height - keyboardFrame.height + self.kbOffset)
+            }, completion: {
+                (finished: Bool) in
+                if lastIndexPath != nil {
+                    // Scroll down the table so that the last
+                    // visible row remains visible
+                    self.tableView.scrollToRowAtIndexPath(lastIndexPath!, atScrollPosition: UITableViewScrollPosition.Bottom, animated: true)
+                }
+        })
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        print("\(__FUNCTION__) has been called")
+        
+        // Expanding size of table
+        let baseView = self.view
+        let keyboardFrame = notification.userInfo![UIKeyboardFrameBeginUserInfoKey]!.CGRectValue
+        let animationDuration = notification.userInfo![UIKeyboardAnimationDurationUserInfoKey]!.doubleValue
+        
+        UIView.animateWithDuration(animationDuration, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
+            baseView!.frame = CGRectMake(baseView!.frame.origin.x, baseView!.frame.origin.y, baseView!.frame.size.width, baseView!.frame.size.height + keyboardFrame.height - self.kbOffset)
+            
+            }, completion: nil)
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

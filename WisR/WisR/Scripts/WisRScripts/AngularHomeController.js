@@ -29,13 +29,13 @@ app.controller("HomeController", [
         $scope.Radius = 50;
         /**
         * @ngdoc property
-        * @name .#UniqueTag
-        * @returns {String} UniqueTag
+        * @name .#UniqueSecret
+        * @returns {String} UniqueSecret
         * @propertyOf WisR.controller:HomeController
         * @description Property that is set when creating a new room in the modal window
         * Default is Empty string
         */
-        $scope.UniqueTag = "";
+        $scope.UniqueSecret = "";
         /**
         * @ngdoc property
         * @name .#Password
@@ -143,12 +143,12 @@ app.controller("HomeController", [
         $scope.roomsLoaded = null;
         /**
          * @ngdoc property
-         * @name .#uniqueRoomTag
-         * @returns {String} uniqueRoomTag
+         * @name .#uniqueRoomSecret
+         * @returns {String} uniqueRoomSecret
          * @propertyOf WisR.controller:HomeController
-         * @description Property that contains string written in the "UniqueTag" field when trying to connect to a room by unique tag.
+         * @description Property that contains string written in the "UniqueSecret" field when trying to connect to a room by unique secret.
          */
-        $scope.uniqueRoomTag = null;
+        $scope.uniqueRoomSecret = null;
         /**
          * @ngdoc property
          * @name .#Message
@@ -251,7 +251,7 @@ app.controller("HomeController", [
                     locationAccuracyMeters: $scope.currentLocation.coords.accuracy,
                     locationFormattedAddress: $scope.currentAddress,
                     radius: $scope.Radius,
-                    tag: $scope.UniqueTag,
+                    secret: $scope.UniqueSecret,
                     password: $scope.HashedPassword,
                     hasChat: $scope.HasChat,
                     userCanAsk: $scope.UserCanAsk,
@@ -262,12 +262,12 @@ app.controller("HomeController", [
                     ///Use response to send to REST API
                     $http.post(configs.restHostName + '/Room/CreateRoom', { Room: JSON.stringify(response.data) }).
                         then(function (response) {
-                           ///Check for error messages
+                            ///Check for error messages
                             if (response.data.ErrorMessage != undefined) {
                                $scope.RoomCreationError = "Error: " + response.data.ErrorMessage;
                                 return;
                             }
-                            
+
                             //Add roomId to connected rooms for the user
                             //TODO: error in message, handling?
                             var room = { _id: response.data.split(";")[0] }
@@ -336,7 +336,7 @@ app.controller("HomeController", [
         ///Changes to view to a new room
         $scope.changeViewToRoom = function (room) {
             if (!room.AllowAnonymous && $scope.userId == 'NoUser') {
-                $scope.Message = window.Resources.RoomTagRequiresLogin;
+                $scope.Message = Resources.RoomSecretRequiresLogin;
             } else {
                 $scope.RoomId = room._id;
                 var url = $("#RedirectTo").val() + "?RoomId=" + $scope.RoomId;
@@ -345,21 +345,21 @@ app.controller("HomeController", [
         }
         /**
       * @ngdoc method
-      * @name HomeController#connectWithUniqueTag
+      * @name HomeController#connectWithUniqueSecret
       * @methodOf WisR.controller:HomeController
       *
       * @description
-      * Function that changes view to a specific room, with the tag in the "uniqueRoomTag" property
+      * Function that changes view to a specific room, with the secret in the "uniqueRoomSecret" property
       */
 
-        ///Connects to a new room based on it's tag
-        $scope.connectWithUniqueTag = function () {
-            $http.post(configs.restHostName + '/Room/GetByUniqueTag', { tag: $scope.uniqueRoomTag }).then(function (response) {
+        ///Connects to a new room based on it's secret
+        $scope.connectWithUniqueSecret= function () {
+            $http.post(configs.restHostName + '/Room/GetByUniqueSecret', { secret: $scope.uniqueRoomSecret }).then(function (response) {
                 ///TODO verification of response
                 if (response.data._id != undefined) {
                     $scope.changeViewToRoom(response.data);
                 } else {
-                  $scope.Message = window.Resources.NoRoomWithThatTag + $scope.uniqueRoomTag;
+                    $scope.Message =Resources.NoRoomWithThatSecret + $scope.uniqueRoomSecret;
                 }
             });
         }

@@ -12,8 +12,12 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
         var hub = $.connection.chatHub;
         /// Create a function that the hub can call to broadcast messages.
         hub.client.broadcastChatMessage = function (chatMessageToAdd) {
-            $scope.ChatMessages.push(JSON.parse(chatMessageToAdd));
-            $scope.$apply();
+            //Only add the chatmessage if it is for the currentRoom
+            if (JSON.parse(chatMessageToAdd).RoomId === $scope.CurrentRoom._id) {
+                $scope.ChatMessages.push(JSON.parse(chatMessageToAdd));
+                $scope.$apply();
+            }
+            
         };
         $.connection.hub.start();
     });
@@ -137,14 +141,14 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
                 if (n != undefined) {
                     if (n.filesize > 1049000) {
                         $scope.imageTooBig = true;
-                        $scope.ImageMessage = "File is too big, resizing...";
+                        $scope.ImageMessage = Resources.FileTooBigResizing;
                         var img = new Image();
                         img.src = 'data:image/png;base64,' + n.base64;
                         img.onload=function ()
                         {
                             var resized = resizeImg(img, 800, 800, 0);
                             $scope.questionImage.base64 = resized.split('ata:image/png;base64,')[1];
-                            $scope.ImageMessage = "Image resized";
+                            $scope.ImageMessage = Resources.ImageResized;
                             $scope.imageTooBig =false;
                             $scope.$apply();                            
                             //$scope.questionImage.base64 = "R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==";
@@ -173,7 +177,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
     $scope.setImageMessage = function () {
         //start by assuming the picture is too big
         $scope.imageTooBig = true;
-        $scope.ImageMessage = "Loading image...";
+        $scope.ImageMessage = Resources.LoadingImage+"...";
         $scope.$apply();
     }
     ///#endregion
@@ -271,7 +275,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
             var min = (parseInt((timeLeftInmSec % 3600000) / 60000) + "").length == 1 ? "0" + parseInt((timeLeftInmSec % 3600000) / 60000) : parseInt((timeLeftInmSec % 3600000) / 60000);
             var sec = (parseInt(((timeLeftInmSec % 3600000) % 60000) / 1000) + "").length == 1 ? "0" + parseInt(((timeLeftInmSec % 3600000) % 60000) / 1000) : parseInt(((timeLeftInmSec % 3600000) % 60000) / 1000);
             if ((hours + ":" + min + ":" + sec).indexOf("-") > -1) {
-                $scope.timeLeft = "The time has run out!";
+                $scope.timeLeft = Resources.TimeHasRunOut;
                 $("#progressDiv").removeClass("active progress-striped").children().addClass("progress-bar-danger");
                 ///Stop timer
                 if (angular.isDefined($scope.progressCancel)) {
@@ -343,7 +347,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
             var marker2 = new google.maps.Marker({
                 map: map,
                 position: pos,
-                title: 'Your position',
+                title: Resources.PositionOfTheRoom,
                 icon: 'http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|fe7569',
                 animation: google.maps.Animation.BOUNCE
             });
@@ -516,7 +520,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
                 });
             }
         } else {
-            $scope.passwordMessage = "Incorrect password";
+            $scope.passwordMessage = Resources.IncorrectPassword;
         }
     }
     //#endregion
@@ -568,6 +572,9 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
                 return i;
             }
         }
+    }
+    $scope.toggleDropdown=function(questionId) {
+        $("#dropdown" + questionId).dropdown("toggle");
     }
 
     function resizeImg(img, maxWidth, maxHeight, degrees) {

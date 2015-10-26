@@ -22,7 +22,7 @@ class RoomTableViewController: UITableViewController {
         self.refreshControl = UIRefreshControl()
         self.refreshControl!.addTarget(self, action: "handleRefresh:", forControlEvents: UIControlEvents.ValueChanged)
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Use Tag", style: .Plain, target: self, action: "useTag")
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Use Secret", style: .Plain, target: self, action: "useSecret")
         
         fetchRooms(refreshControl)
         super.viewDidLoad()
@@ -69,6 +69,7 @@ class RoomTableViewController: UITableViewController {
         
         let start = NSDate()
         HttpHandler.requestWithResponse(action: "Room/GetAll", type: "GET", body: "") { (data, response, error) in
+            
             var tmpRooms = [Room]()
             
             if let jsonArray = try? JSONSerializer.toArray(data) {
@@ -92,22 +93,22 @@ class RoomTableViewController: UITableViewController {
     }
     
     /**
-    Function that runs when user chooses to use a tag to connect to a room
+    Function that runs when user chooses to use a secret to connect to a room
     */
-    func useTag() {
-        var tagInput: UITextField?
+    func useSecret() {
+        var secretInput: UITextField?
         
-        let alert = UIAlertController(title: "Connect with tag", message: "", preferredStyle: .Alert)
+        let alert = UIAlertController(title: "Connect with secret", message: "", preferredStyle: .Alert)
         alert.addAction(UIAlertAction(title: "Connect", style: .Default, handler: { action in
             
-            //Find room with tag
-            if let tag = tagInput?.text, foundRoom = (self.allRooms.filter(){ return $0.Tag == tag }).first {
+            //Find room with secret
+            if let secret = secretInput?.text, foundRoom = (self.allRooms.filter(){ return $0.Secret == secret }).first {
                 if self.shouldPerformSegueWithIdentifier("SelectRoom", sender: foundRoom) {
                     self.performSegueWithIdentifier("SelectRoom", sender: foundRoom)
                 }
             }
             else {
-                print("tag not found")
+                print("secret not found")
             }
             
             
@@ -116,8 +117,8 @@ class RoomTableViewController: UITableViewController {
             //Nothing
         }))
         alert.addTextFieldWithConfigurationHandler { (textField) -> Void in
-            tagInput = textField
-            textField.placeholder = "Enter room tag"
+            secretInput = textField
+            textField.placeholder = "Enter room secret"
         }
         
         dispatch_async(dispatch_get_main_queue()) {

@@ -2,7 +2,20 @@
     padding-top: 70px;
     padding-bottom: 20px;
 }
+.blink_me.ng-enter {
+    -webkit-animation: blinker 1.5s linear 2;
+    -moz-animation: blinker 1.5s linear 2;
+    -ms-animation: blinker 1.5s linear 2;
+    -o-animation: blinker 1.5s linear 2;
+    animation: blinker 1.5s linear 2;
+}
+.bootstrap-filestyle {
+    max-width: 280px;
+}
 
+@keyframes blinker {  
+  50% { opacity: 0.0; }
+}
 @media screen and (max-width: 768px) {
     body { padding-top: 0px; }
 }
@@ -26,7 +39,7 @@ textarea {
     max-width: 280px;
 }
 
-.votingBtn {
+.noBtn {
     background-color: white; 
     border: none; 
     outline: 0;

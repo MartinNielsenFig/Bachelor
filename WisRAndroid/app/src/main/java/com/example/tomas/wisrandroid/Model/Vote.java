@@ -13,4 +13,7 @@ public class Vote {
 
     public String get_createdById(){return CreatedById;}
     public void set_createdById(String createdById){this.CreatedById = createdById;}
+
+    public int get_value(){return Value;}
+    public void set_value(int value){this.Value = value;}
 }

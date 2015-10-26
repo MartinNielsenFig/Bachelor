@@ -59,7 +59,7 @@
           function _readerOnLoad (fReader, file, fileObject) {
 
             return function (e) {
-                scope.setImageMessage({ msg: "Loading image..." });
+                scope.setImageMessage({ msg: Resources.LoadingImage+"..." });
               var buffer = e.target.result;
               var promise;
 

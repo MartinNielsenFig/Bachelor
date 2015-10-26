@@ -48,15 +48,15 @@ namespace WisRRestAPI.Controllers
             //assign ID to room
             room.Id = ObjectId.GenerateNewId(DateTime.Now).ToString();
 
-            //Check that the tag doesn't already exist
-            var returnValue = GetByUniqueTag(room.Tag);
+            //Check that the secret doesn't already exist
+            var returnValue = GetByUniqueSecret(room.Secret);
             try
             {
                 var errorFromDb = BsonSerializer.Deserialize<Error>(returnValue);
             }
             catch (Exception e)
             {
-                var err = new Error("Room with that tag already exists", (int) ErrorCodes.RoomTagAlreadyInUse);
+                var err = new Error("Room with that secret already exists", (int) ErrorCodes.RoomSecretAlreadyInUse);
                 return err.ToJson();
             }
 
@@ -108,18 +108,18 @@ namespace WisRRestAPI.Controllers
             return item.ToJson();
         }
         [System.Web.Mvc.HttpPost]
-        public string GetByUniqueTag(string tag)
+        public string GetByUniqueSecret(string secret)
         {
             Room item;
             try
             {
-                item = _rr.GetRoomByTag(tag).Result;
+                item = _rr.GetRoomBySecret(secret).Result;
             }
             catch (Exception e)
             {
                 if (e.InnerException.Message == "Sequence contains no elements")
                 {
-                    var err = new Error("No room with that tag", 100, e.StackTrace);
+                    var err = new Error("No room with that secret", 100, e.StackTrace);
                     return err.ToJson();
                 }
                 var err2 = new Error("Something went wrong trying to find room with that id, check stacktrace", 100, e.StackTrace);
@@ -128,7 +128,7 @@ namespace WisRRestAPI.Controllers
 
             if (item == null)
             {
-                var err = new Error("No room with that tag", 100);
+                var err = new Error("No room with that secret", 100);
                 return err.ToJson();
             }
 

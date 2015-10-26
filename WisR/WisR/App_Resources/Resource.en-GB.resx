@@ -132,8 +132,8 @@
   <data name="CreateRoom" xml:space="preserve">
     <value>Create room</value>
   </data>
-  <data name="EnterUniqueTag" xml:space="preserve">
-    <value>Enter unique tag</value>
+  <data name="EnterUniqueSecret" xml:space="preserve">
+    <value>Enter unique secret</value>
   </data>
   <data name="HasChat" xml:space="preserve">
     <value>Chat</value>
@@ -162,8 +162,8 @@
   <data name="SeeRoomAndLocation" xml:space="preserve">
     <value>See room &amp; your location</value>
   </data>
-  <data name="UniqueTag" xml:space="preserve">
-    <value>Unique tag</value>
+  <data name="UniqueSecret" xml:space="preserve">
+    <value>Unique secret</value>
   </data>
   <data name="UseLocation" xml:space="preserve">
     <value>Use location</value>
@@ -267,13 +267,70 @@
   <data name="NoResultsFound" xml:space="preserve">
     <value>No Results found</value>
   </data>
-  <data name="NoRoomWithThatTag" xml:space="preserve">
-    <value>No room with the tag: </value>
+  <data name="NoRoomWithThatSecret" xml:space="preserve">
+    <value>No room with the secret: </value>
   </data>
   <data name="Precision" xml:space="preserve">
     <value>Precision: </value>
   </data>
-  <data name="RoomTagRequiresLogin" xml:space="preserve">
-    <value>The room-tag you have entered requires you to login</value>
+  <data name="RoomSecretRequiresLogin" xml:space="preserve">
+    <value>The room-secret you have entered requires you to login</value>
+  </data>
+  <data name="ChoosePicture" xml:space="preserve">
+    <value>Choose Picture</value>
+  </data>
+  <data name="FileTooBigResizing" xml:space="preserve">
+    <value>File is too big, resizing</value>
+  </data>
+  <data name="ImageResized" xml:space="preserve">
+    <value>Image resized</value>
+  </data>
+  <data name="IncorrectPassword" xml:space="preserve">
+    <value>Incorrect password</value>
+  </data>
+  <data name="PositionOfTheRoom" xml:space="preserve">
+    <value>Position of the room</value>
+  </data>
+  <data name="TimeHasRunOut" xml:space="preserve">
+    <value>Time has run out</value>
+  </data>
+  <data name="AnonymousUsersAllowed" xml:space="preserve">
+    <value>Anonymous users allowed</value>
+  </data>
+  <data name="ChatEnabled" xml:space="preserve">
+    <value>Chat enabled</value>
+  </data>
+  <data name="ClickToChangeImageSize" xml:space="preserve">
+    <value>Click to change image size</value>
+  </data>
+  <data name="LoginToEnable" xml:space="preserve">
+    <value>Login to enable</value>
+  </data>
+  <data name="NoAccessRequiresLogin" xml:space="preserve">
+    <value>No access, requires login</value>
+  </data>
+  <data name="PasswordProtected" xml:space="preserve">
+    <value>Password protected</value>
+  </data>
+  <data name="UsersCanAsk" xml:space="preserve">
+    <value>Users can ask questions</value>
+  </data>
+  <data name="AmountOfDownvotes" xml:space="preserve">
+    <value>Amount of downvotes</value>
+  </data>
+  <data name="AmountOfUpvotes" xml:space="preserve">
+    <value>Amount of upvotes</value>
+  </data>
+  <data name="Authenticating" xml:space="preserve">
+    <value>Authenticating, please wait</value>
+  </data>
+  <data name="AuthorOfQuestion" xml:space="preserve">
+    <value>Author of the question</value>
+  </data>
+  <data name="NoUserWithThatInformation" xml:space="preserve">
+    <value>No user with that information</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
   </data>
 </root>

@@ -132,7 +132,7 @@
   <data name="CreateRoom" xml:space="preserve">
     <value />
   </data>
-  <data name="EnterUniqueTag" xml:space="preserve">
+  <data name="EnterUniqueSecret" xml:space="preserve">
     <value />
   </data>
   <data name="HasChat" xml:space="preserve">
@@ -162,7 +162,7 @@
   <data name="SeeRoomAndLocation" xml:space="preserve">
     <value />
   </data>
-  <data name="UniqueTag" xml:space="preserve">
+  <data name="UniqueSecret" xml:space="preserve">
     <value />
   </data>
   <data name="UseLocation" xml:space="preserve">
@@ -267,13 +267,70 @@
   <data name="NoResultsFound" xml:space="preserve">
     <value />
   </data>
-  <data name="NoRoomWithThatTag" xml:space="preserve">
+  <data name="NoRoomWithThatSecret" xml:space="preserve">
     <value />
   </data>
   <data name="Precision" xml:space="preserve">
     <value />
   </data>
-  <data name="RoomTagRequiresLogin" xml:space="preserve">
+  <data name="RoomSecretRequiresLogin" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ChoosePicture" xml:space="preserve">
+    <value />
+  </data>
+  <data name="FileTooBigResizing" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ImageResized" xml:space="preserve">
+    <value />
+  </data>
+  <data name="IncorrectPassword" xml:space="preserve">
+    <value />
+  </data>
+  <data name="PositionOfTheRoom" xml:space="preserve">
+    <value />
+  </data>
+  <data name="TimeHasRunOut" xml:space="preserve">
+    <value />
+  </data>
+  <data name="AnonymousUsersAllowed" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ChatEnabled" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ClickToChangeImageSize" xml:space="preserve">
+    <value />
+  </data>
+  <data name="LoginToEnable" xml:space="preserve">
+    <value />
+  </data>
+  <data name="NoAccessRequiresLogin" xml:space="preserve">
+    <value />
+  </data>
+  <data name="PasswordProtected" xml:space="preserve">
+    <value />
+  </data>
+  <data name="UsersCanAsk" xml:space="preserve">
+    <value />
+  </data>
+  <data name="AmountOfDownvotes" xml:space="preserve">
+    <value />
+  </data>
+  <data name="AmountOfUpvotes" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Authenticating" xml:space="preserve">
+    <value />
+  </data>
+  <data name="AuthorOfQuestion" xml:space="preserve">
+    <value />
+  </data>
+  <data name="NoUserWithThatInformation" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Edit" xml:space="preserve">
     <value />
   </data>
 </root>

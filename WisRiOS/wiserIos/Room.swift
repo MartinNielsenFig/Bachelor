@@ -15,7 +15,7 @@ class Room {
     var CreatedById: String?
     var Location = Coordinate()
     var Radius: Int?
-    var Tag: String?
+    var Secret: String?
     var HasPassword: Bool?
     var EncryptedPassword: String?
     var HasChat: Bool?
@@ -40,7 +40,7 @@ class Room {
         }
         
         self.Radius = jsonDictionary["Radius"] as? Int
-        self.Tag = jsonDictionary["Tag"] as? String
+        self.Secret = jsonDictionary["Secret"] as? String
         self.HasPassword = jsonDictionary["HasPassword"] as? Bool
         self.EncryptedPassword = jsonDictionary["EncryptedPassword"] as? String
         self.HasChat = jsonDictionary["HasChat"] as? Bool
