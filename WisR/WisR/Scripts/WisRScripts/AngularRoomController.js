@@ -62,6 +62,14 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
 
             $scope.$apply();
         };
+        ////SignalR function call that the question should be deleted
+        hub.client.broadcastDeleteQuestion = function (questionToDelete) {
+            var index = findWithAttr($scope.Questions, "_id", questionToDelete);
+            if (index > -1) {
+                $scope.Questions.splice(index, 1);
+                $scope.$apply();
+            }
+        };
         ////SignalR function call that the question should be updated with new responses
         hub.client.broadcastUpdateResult = function (questionToUpdate) {
             var updateTemp = JSON.parse(questionToUpdate);
@@ -195,6 +203,13 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
     ///Function for creating a question
     $scope.postQuestion = function () {
         $("#myModalCreate").modal("hide");
+
+        //Check if this function call is an update or a create
+        if ($scope.UpdateQuestionBool) {
+            //Delete the old question
+            $scope.deleteQuestion($scope.SpecificQuestion);
+        }
+
         var newResponses = "";
         for (var i = 0; i < $scope.ResponseOptions.length; i++) {
             if (i != $scope.ResponseOptions.length - 1) {
@@ -302,6 +317,17 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
             $scope.progressCancel = undefined;
             $scope.showProgressBar = false;
         }
+    }
+    $scope.deleteQuestion=function(questionToDelete) {
+        $http.delete(configs.restHostName + '/Question/DeleteQuestion', { params: {id: questionToDelete._id} }).then(function (response) {
+            ///Check for errors on request
+            if (response.data.ErrorMessage != undefined) {
+                $scope.questionDeleteMessage = response.data.ErrorMessage;
+                return;
+            } else {
+                $("#deleteQuestionModal").modal("hide");
+            }
+        });
     }
     ///#endregion
 
@@ -572,6 +598,15 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
                 return i;
             }
         }
+    }
+    $scope.toggleModalWithQuestion=function(modal, question) {
+        $(modal).modal('toggle');
+        $scope.SpecificQuestion = question;
+        $scope.UpdateQuestionBool = true;// if called from here it is an update
+    }
+    $scope.toggleCreateModal = function (modal, question) {
+        $(modal).modal('toggle');
+        $scope.UpdateQuestionBool = false; //if called from here, it is a create
     }
     $scope.toggleDropdown=function(questionId) {
         $("#dropdown" + questionId).dropdown("toggle");

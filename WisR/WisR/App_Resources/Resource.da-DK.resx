@@ -330,7 +330,19 @@
   <data name="NoUserWithThatInformation" xml:space="preserve">
     <value>Ingen bruger med de oplysninger</value>
   </data>
+  <data name="AreYouSureDeleteQuestion" xml:space="preserve">
+    <value>Er du sikker på at du vil slette følgende spørgsmål?</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Slet</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>Ændr</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Opdatér</value>
+  </data>
+  <data name="UpdateQuestion" xml:space="preserve">
+    <value>Opdatér</value>
   </data>
 </root>

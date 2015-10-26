@@ -330,7 +330,19 @@
   <data name="NoUserWithThatInformation" xml:space="preserve">
     <value>No user with that information</value>
   </data>
+  <data name="AreYouSureDeleteQuestion" xml:space="preserve">
+    <value>Are you sure you want to delete the following question?</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="UpdateQuestion" xml:space="preserve">
+    <value>Update</value>
   </data>
 </root>

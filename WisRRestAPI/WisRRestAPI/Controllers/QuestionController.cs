@@ -241,12 +241,21 @@ namespace WisRRestAPI.Controllers
         [System.Web.Mvc.HttpDelete]
         public string DeleteQuestion(string id)
         {
-            var result = _qr.RemoveQuestion(id).Result;
+            var result = _qr.DeleteQuestion(id).Result;
             if (result.DeletedCount == 1)
             {
-                return "IQuestion was deleted";
+                try
+                {
+                    _irabbitPublisher.publishString("DeleteQuestion", id);
+                }
+                catch (Exception e)
+                {
+                    return "error " + e.StackTrace;
+                }
+                return "Question was deleted";
             }
-            return "Couldn't find question to delete";
+
+            return new Error("Couldn't find question to delete",100).ToJson();
         }
 
        

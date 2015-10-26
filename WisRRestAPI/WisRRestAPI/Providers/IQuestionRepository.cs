@@ -19,7 +19,7 @@ namespace WisRRestAPI.DomainModel
         Task<Question> GetImageByQuestionId(string questionId);
         void AddQuestion(Question item);
         void AddQuestionObject(object item);
-        Task<DeleteResult> RemoveQuestion(string id);
+        Task<DeleteResult> DeleteQuestion(string id);
         Task<Question> UpdateQuestion(string id, Question item);
         UpdateResult UpdateQuestionResults(string id, Question item);
         UpdateResult UpdateQuestionVotes(string id, Question item);

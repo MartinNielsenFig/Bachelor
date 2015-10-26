@@ -117,6 +117,15 @@ namespace WisR.App_Resources {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
+        public static string AreYouSureDeleteQuestion {
+            get {
+                return ResourceManager.GetString("AreYouSureDeleteQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
         public static string Authenticating {
             get {
                 return ResourceManager.GetString("Authenticating", resourceCulture);
@@ -219,6 +228,15 @@ namespace WisR.App_Resources {
         public static string CreateRoom {
             get {
                 return ResourceManager.GetString("CreateRoom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string Delete {
+            get {
+                return ResourceManager.GetString("Delete", resourceCulture);
             }
         }
         
@@ -639,9 +657,27 @@ namespace WisR.App_Resources {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
+        public static string Update {
+            get {
+                return ResourceManager.GetString("Update", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
         public static string UpdateLocation {
             get {
                 return ResourceManager.GetString("UpdateLocation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string UpdateQuestion {
+            get {
+                return ResourceManager.GetString("UpdateQuestion", resourceCulture);
             }
         }
         
