@@ -11,7 +11,7 @@
 
         <div class="row" ng-show="rightPassword">
             <div ng-hide="questionsLoaded" class="container text-center col-md-8" style="min-height: 800px">
-                <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span><label id="loadingLabel" class="">@WisR.App_Resources.Resource.LoadingQuestions...</label>
+                <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span><label id="loadingLabelGlobal" class="">@WisR.App_Resources.Resource.LoadingQuestions...</label>
             </div>
             <div ng-show="CurrentRoom.CreatedById == currentUser._id">
                 <div id="roomText" class="text-center">
@@ -103,8 +103,7 @@
                     </table>
                     <div ng-show="showProgressBar">
                         <div id="progressDiv" class="progress progress-striped active">
-                            <div class="progress-bar" role="progressbar" aria-valuenow="{{percen
-                                 e}}" aria-valuemin="0" aria-valuemax="100" ng-style="{width : ( percentage + '%' ) }">
+                            <div class="progress-bar" role="progressbar" aria-valuenow="{{percentage}}" aria-valuemin="0" aria-valuemax="100" ng-style="{width : ( percentage + '%' ) }">
                             </div>
                         </div>
                         <div>
