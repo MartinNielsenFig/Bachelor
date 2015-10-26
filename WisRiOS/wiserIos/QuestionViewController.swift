@@ -153,6 +153,39 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         }
     }
     
+    func loadImage() {
+        let indicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+        indicator.center = self.view.center
+        indicator.startAnimating()
+        self.view.addSubview(indicator)
+        
+        func updateImgGui(b64Img: String) {
+            let imageData = NSData(base64EncodedString: b64Img, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
+            let image = UIImage(data: imageData!)
+            
+            dispatch_async(dispatch_get_main_queue()) {
+                indicator.stopAnimating()
+                indicator.removeFromSuperview()
+                self.questionImage.image = image
+                self.questionImage.reloadInputViews()
+            }
+
+        }
+        
+        //Don't reload image if already loaded
+        if let b64Img = self.question.Img {
+            updateImgGui(b64Img)
+            return
+        }
+        
+        
+        HttpHandler.requestWithResponse(action: "Question/GetImageByQuestionId?questionId=\(self.question._id!)", type: "GET", body: "") {
+            (data, response, error) -> Void in
+            self.question.Img = data    //this saves the image for later use
+            updateImgGui(data)
+        }
+    }
+    
     //Lifecycle
     override func viewDidLoad() {
         
@@ -184,27 +217,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         questionText.text = question.QuestionText
         
         //Image
-        let indicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
-        indicator.center = self.view.center
-        indicator.startAnimating()
-        self.view.addSubview(indicator)
-        
-        HttpHandler.requestWithResponse(action: "Question/GetImageByQuestionId?questionId=\(self.question._id!)", type: "GET", body: "") {
-            (data, response, error) -> Void in
-            self.question.Img = data
-            
-            if let b64Img = self.question.Img {
-                let imageData = NSData(base64EncodedString: b64Img, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
-                let image = UIImage(data: imageData!)
-                
-                dispatch_async(dispatch_get_main_queue()) {
-                    indicator.stopAnimating()
-                    indicator.removeFromSuperview()
-                    self.questionImage.image = image
-                    self.questionImage.reloadInputViews()
-                }
-            }
-        }
+        loadImage()
     }
     
     override func viewDidAppear(animated: Bool) {
