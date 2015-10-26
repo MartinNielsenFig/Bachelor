@@ -175,6 +175,7 @@ app.controller("HomeController", [
             * The function adds the new room to the Rooms collection.
             * @param {Room} roomToAdd The room to add to the rooms collection
             */
+
             hub.client.broadcastRoom = function (roomToAdd) {
                 $scope.Rooms.push(JSON.parse(roomToAdd));
                 $scope.$apply();
@@ -187,6 +188,7 @@ app.controller("HomeController", [
             * @description
             * Function that is called when a room has been changed. This gets called by the function "Update" in the RoomHub.
             * The function adds the updates to the room in the Rooms collection.
+            * This function is used when the location of a room is updated.
             * @param {Room} roomToUpdate The room to update in the rooms collection
             */
             hub.client.broadcastUpdateRoom = function (roomToUpdate) {
@@ -260,13 +262,12 @@ app.controller("HomeController", [
                     ///Use response to send to REST API
                     $http.post(configs.restHostName + '/Room/CreateRoom', { Room: JSON.stringify(response.data) }).
                         then(function (response) {
-                            ///Check for error messages
+                           ///Check for error messages
                             if (response.data.ErrorMessage != undefined) {
-                                $("#RoomCreationError").text("Error: " + response.data.ErrorMessage);
+                               $scope.RoomCreationError = "Error: " + response.data.ErrorMessage;
                                 return;
                             }
-
-
+                            
                             //Add roomId to connected rooms for the user
                             //TODO: error in message, handling?
                             var room = { _id: response.data.split(";")[0] }
@@ -335,7 +336,7 @@ app.controller("HomeController", [
         ///Changes to view to a new room
         $scope.changeViewToRoom = function (room) {
             if (!room.AllowAnonymous && $scope.userId == 'NoUser') {
-                $scope.Message = Resources.RoomTagRequiresLogin;
+                $scope.Message = window.Resources.RoomTagRequiresLogin;
             } else {
                 $scope.RoomId = room._id;
                 var url = $("#RedirectTo").val() + "?RoomId=" + $scope.RoomId;
@@ -358,7 +359,7 @@ app.controller("HomeController", [
                 if (response.data._id != undefined) {
                     $scope.changeViewToRoom(response.data);
                 } else {
-                    $scope.Message =Resources.NoRoomWithThatTag + $scope.uniqueRoomTag;
+                  $scope.Message = window.Resources.NoRoomWithThatTag + $scope.uniqueRoomTag;
                 }
             });
         }
@@ -376,7 +377,7 @@ app.controller("HomeController", [
             ///Calls and get the currentlocation, and after that gets the rooms
             navigator.geolocation.getCurrentPosition(function (position) {
                 $scope.currentLocation = position;
-                $("#loadingLabel").text(Resources.LoadingRooms +"...");
+                $("#loadingLabel").text(window.Resources.LoadingRooms + "...");
                 $scope.getRooms();
                 var latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                 geocoder.geocode({ 'location': latLng }, function (results, status) {
@@ -384,10 +385,10 @@ app.controller("HomeController", [
                         if (results[1]) {
                             $scope.currentAddress = results[1].formatted_address;
                         } else {
-                            window.alert(Resources.NoResponseFound);
+                            window.alert(window.Resources.NoResponseFound);
                         }
                     } else {
-                        window.alert(Resources.GeoCoderFailedDueTo + status);
+                        window.alert(window.Resources.GeoCoderFailedDueTo + status);
                     }
                 });
             });

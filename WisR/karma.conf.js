@@ -15,19 +15,21 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+      'WisR.Tests/Scripts/jasmine/jasmine.js',
+      'WisR.Tests/Scripts/ResoursesForTest/en-GB.js',
       'WisR/Scripts/CryptoJS/rollups/sha512.js',
-      'WisR/Scripts/angular.js',
-      'WisR/Scripts/angular-mocks.js',
       'WisR/Scripts/jquery-1.11.3.js',
       'WisR/Scripts/jquery.signalR-2.2.0.js',
+      'WisR/Scripts/angular.js',
+      'WisR/Scripts/angular-mocks.js',
       'WisR/Scripts/angular-base64-upload.js',
       'WisR/Scripts/scrollglue.js',
       'WisR/Scripts/Chart.js',
       'WisR/Scripts/angular-chart.js',
-      'WisR.Tests/Scripts/server.js',
+      'WisR.Tests/Scripts/SignalRForTest/server.js',
       'WisR/Scripts/WisRScripts/AngularModule.js',
       'WisR/Scripts/WisRScripts/**.js',
-      'WisR.Tests/Scripts/Test/**.js'
+      'WisR.Tests/Scripts/Test/AngularHomeTest.js'
     ],
 
     
