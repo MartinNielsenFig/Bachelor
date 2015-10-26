@@ -1,4 +1,5 @@
 ﻿///<reference path="~/Scripts/jasmine/jasmine.js"/>
+///<reference path="~/Scripts/ResoursesForTest/en-GB.js"/>
 ///<reference path="~/../WisR/Scripts/CryptoJS/rollups/sha512.js"/>
 ///<reference path="~/../WisR/Scripts/jquery-1.11.3.js"/>
 ///<reference path="~/../WisR/Scripts/jquery.signalR-2.2.0.js"/>
@@ -17,35 +18,35 @@
 ///<reference path="~/../WisR/Scripts/WisRScripts/Config.js"/>
 ///<reference path="~/../WisR/Scripts/WisRScripts/AngularHomeController.js"/>
 
-describe("Homecontroller", function () {
+describe("English Test", function () {
 
     beforeEach(angular.mock.module('wisrApp'));
 
     describe("Home controller", function () {
 
-        var scope, controller, httpBackend, config;
+        var scope, controller, httpBackend, config, window;
 
-        beforeEach(inject(function ($rootScope, $controller, $httpBackend, configs) {
+        beforeEach(inject(function ($rootScope, $controller, $httpBackend, $window, configs) {
             scope = $rootScope.$new();
             config = configs;
             httpBackend = $httpBackend;
+            window = $window;
 
             //Setup for http request
             httpBackend.when('GET', 'http://localhost:1337/Room/GetAll').respond({});
             httpBackend.when('POST', 'http://localhost:7331/Home/toJsonRoom').respond({});
-            httpBackend.when('POST', 'http://localhost:1337/Room/CreateRoom').respond({});
             httpBackend.when('POST', 'http://localhost:7331/Home/toJsonUser').respond({});
             httpBackend.when('POST', 'http://localhost:1337/User/UpdateUser').respond({});
-           
+            httpBackend.when('POST', 'http://localhost:1337/User/GetById').respond({});
 
             //Setup for currentUser
-            scope.currentUser = {ConnectedRoomIds: [] }
+            scope.currentUser = {ConnectedRoomIds: ["12312312"] }
 
             //Setup for location
             scope.currentLocation = { coords: { latitude: 1 } };
             scope.currentLocation = { coords: { longitude: 1 } };
             
-            controller = $controller('HomeController', { $scope: scope });
+            controller = $controller('HomeController', { $scope: scope, $window: window});
         }));
 
 
@@ -61,7 +62,7 @@ describe("Homecontroller", function () {
             var room = { AllowAnonymous: false }
             scope.userId = 'NoUser';
             scope.changeViewToRoom(room);
-            expect(scope.Message).toBe('The room-tag you have entered requires you to be logged in');
+            expect(scope.Message).toBe('The room-tag you have entered requires you to login');
         });
     
         it('should change location to ?RoomId=1', function () {
@@ -78,12 +79,24 @@ describe("Homecontroller", function () {
         });
 
         it('should call toJsonRoom, CreateRoom, toJsonUser and UpdateUser', function () {
+            httpBackend.when('POST', 'http://localhost:1337/Room/CreateRoom').respond("562a1ae9c7f562790c95a505;");
             httpBackend.expectPOST('http://localhost:7331/Home/toJsonRoom');
             httpBackend.expectPOST('http://localhost:1337/Room/CreateRoom');
             httpBackend.expectPOST('http://localhost:7331/Home/toJsonUser');
+
             httpBackend.expectPOST('http://localhost:1337/User/UpdateUser');
             scope.postRoom();
             httpBackend.flush();
+        });
+
+        it('should call toJsonRoom, CreateRoom and then the an error message is promt', function () {
+            httpBackend.when('POST', 'http://localhost:1337/Room/CreateRoom').respond({ErrorMessage: "Error" });
+            httpBackend.expectPOST('http://localhost:7331/Home/toJsonRoom');
+            httpBackend.expectPOST('http://localhost:1337/Room/CreateRoom');
+            
+            scope.postRoom();
+            httpBackend.flush();
+            expect(scope.RoomCreationError).toBe("Error: Error");
         });
 
         it('password should have been encrypted', function() {
@@ -98,28 +111,45 @@ describe("Homecontroller", function () {
         });
 
         it('changeViewToRoom should have been called', function () {
-            httpBackend.when('POST', 'http://localhost:1337/Room/GetByUniqueTag').respond({ data: { _id: 1 } });
+            httpBackend.when('POST', 'http://localhost:1337/Room/GetByUniqueTag').respond({ _id: 1 });
             httpBackend.expectPOST('http://localhost:1337/Room/GetByUniqueTag');
             spyOn(scope, 'changeViewToRoom');
             scope.connectWithUniqueTag();
-            expect(scope.changeViewToRoom).toHaveBeenCalled();
+           
             httpBackend.flush();
+            expect(scope.changeViewToRoom).toHaveBeenCalled();
         });
 
         it('message should be "No room with the tag: 20"', function () {
-            httpBackend.when('POST', 'http://localhost:1337/Room/GetByUniqueTag').respond({ data: {_id: undefined} });
+            httpBackend.when('POST', 'http://localhost:1337/Room/GetByUniqueTag').respond({});
             httpBackend.expectPOST('http://localhost:1337/Room/GetByUniqueTag');
+            
             scope.uniqueRoomTag = 20;
-
             scope.connectWithUniqueTag();
-            expect(scope.Message).toBe("No room with the tag: 20");
+          
             httpBackend.flush();
+            expect(scope.Message).toBe("No room with the tag: 20");
         });
 
         it('should call GetByUniqueTag', function () {
-            httpBackend.when('POST', 'http://localhost:1337/Room/GetByUniqueTag').respond({ data: { _id: 1 } });
+            httpBackend.when('POST', 'http://localhost:1337/Room/GetByUniqueTag').respond({ _id: 1 });
             httpBackend.expectPOST('http://localhost:1337/Room/GetByUniqueTag');
             scope.connectWithUniqueTag();
+            httpBackend.flush();
+        });
+
+        it('anonymousUser should be true', function () {
+            window.userId = "NoUser";
+            scope.$apply();
+            expect(scope.anonymousUser).toBe(true);
+        });
+
+        it('should call User/GetById', function () {
+            httpBackend.expectPOST('http://localhost:1337/User/GetById');
+
+            window.userId = "Martin";
+            scope.$apply();
+
             httpBackend.flush();
         });
     });

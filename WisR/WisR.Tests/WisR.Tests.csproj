@@ -110,6 +110,8 @@
     <Content Include="Content\jasmine\jasmine.css" />
     <Content Include="Content\jasmine\jasmine_favicon.png" />
     <Content Include="Gruntfile.js" />
+    <Content Include="Scripts\ResoursesForTest\da-DK.js" />
+    <Content Include="Scripts\ResoursesForTest\en-GB.js" />
     <Content Include="Scripts\server.js" />
     <Content Include="Scripts\Test\AngularHomeTest.js" />
     <Content Include="Scripts\d3\d3.js" />
@@ -480,6 +482,8 @@
     <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.zu.js" />
     <Content Include="Scripts\jquery.globalize\cultures\globalize.cultures.js" />
     <Content Include="Scripts\jquery.globalize\globalize.js" />
+    <Content Include="Scripts\Test\LanguageTest.js" />
+    <Content Include="Scripts\Test\SignalRTests.js" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\fonts\fontawesome-webfont.eot" />
@@ -504,6 +508,7 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
