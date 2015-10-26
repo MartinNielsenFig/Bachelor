@@ -19,15 +19,15 @@ namespace WisR.DomainModels
         public Coordinate Location { get; set; }
         public int Radius { get; set; }
         
-        //The tag uniquely identities the room. If any user has the tag he'll be able to connect to the room. The room can still be password protected.
-        public string Tag { get; set; }
+        //The secret uniquely identities the room. If any user has the secret he'll be able to connect to the room. The room can still be password protected.
+        public string Secret { get; set; }
         public bool HasPassword { get; set; }
         public string EncryptedPassword { get; set; }
         public bool HasChat { get; set; }
         public bool UsersCanAsk { get; set; }
         public bool AllowAnonymous { get; set; }
         
-        //Indicates whether room should be findable by being near the room. If this is false, you'll need to room tag to join the room.
+        //Indicates whether room should be findable by being near the room. If this is false, you'll need the room secret to join the room.
         public bool UseLocation { get; set; }
     }
 }

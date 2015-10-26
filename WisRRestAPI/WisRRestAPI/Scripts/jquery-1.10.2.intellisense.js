@@ -1227,7 +1227,7 @@ intellisense.annotate(jQuery.fn, {
   },
   'element': function() {
     /// <signature>
-    ///   <summary>Selects all elements with the given tag name.</summary>
+    ///   <summary>Selects all elements with the given secret name.</summary>
     ///   <param name="element" type="String">An element to search for. Refers to the tagName of DOM nodes.</param>
     /// </signature>
   },
