@@ -13,11 +13,11 @@ import CryptoSwift  //CryptoSwift https://github.com/krzyzanowskim/CryptoSwift a
 /// Shows the rooms nearby in a list, enabling the user to join the room.
 class RoomTableViewController: UITableViewController {
     
-    //Properties
+    //MARK: Properties
     var rooms = [Room]()
     var allRooms = [Room]()
     
-    //Lifecycle
+    //MARK: Lifecycle
     override func viewDidLoad() {
         self.refreshControl = UIRefreshControl()
         self.refreshControl!.addTarget(self, action: "handleRefresh:", forControlEvents: UIControlEvents.ValueChanged)
@@ -28,7 +28,7 @@ class RoomTableViewController: UITableViewController {
         super.viewDidLoad()
     }
     
-    //UITableViewController
+    //MARK: UITableViewController
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
@@ -59,12 +59,12 @@ class RoomTableViewController: UITableViewController {
         return cell
     }
     
-    //UIRefreshControl
+    //MARK: UIRefreshControl
     func handleRefresh(refreshControl: UIRefreshControl) {
         fetchRooms(refreshControl)
     }
     
-    //Utilities
+    //MARK: Utilities
     func fetchRooms(refreshControl: UIRefreshControl? = nil) {
         
         let start = NSDate()
@@ -126,7 +126,7 @@ class RoomTableViewController: UITableViewController {
         }
     }
     
-    //Navigation
+    //MARK: Navigation
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
         var selectedRoom: Room?
         

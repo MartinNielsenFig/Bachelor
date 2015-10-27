@@ -11,7 +11,7 @@ import UIKit
 /// Container for the Room view. This ViewController basically has three sub-viewcontrollers: QuestionViewController, ChatViewController and QuestionListViewController. It enables the user to slide between these three views with a finger-flick. The implementation of this ViewController is influenced by this guide: https://www.veasoftware.com/tutorials/2015/4/2/uipageviewcontroller-in-swift-xcode-62-ios-82-tutorial
 class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     
-    //Properties
+    //MARK: Properties
     //Gets instantiated by previous caller
     var room: Room!
     var pageViewController: UIPageViewController!
@@ -20,7 +20,7 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     
     var viewControllerArray = [UIViewController?](count: 3, repeatedValue: nil)
     
-    //Lifecycle
+    //MARK: Lifecycle
     override func viewDidLoad() {
         
         self.title = room.Name
@@ -57,7 +57,7 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
         //Set initial page
         let startVC = viewControllerAtIndex(0, createNew: true)!
         pageViewController.setViewControllers([startVC], direction: .Forward, animated: true, completion: nil)
-        makeRoomForNavigationBar(orientationIsLandscape: !UIApplication.sharedApplication().statusBarOrientation.isLandscape)   //this is odd, but works
+        makeRoomForNavigationBar(orientationIsLandscape: !UIApplication.sharedApplication().statusBarOrientation.isLandscape)   //logic seems to be inverted, bug?
         
         //Add it to the current viewcontroller
         addChildViewController(pageViewController)
@@ -79,7 +79,7 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
         makeRoomForNavigationBar(orientationIsLandscape: fromInterfaceOrientation.isLandscape)
     }
     
-    //Navigation
+    //MARK: Navigation
     func logoutRoom() {
         let alert = UIAlertController(title: "Leaving Room", message: "Do you want to leave current room?", preferredStyle: .Alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { action in
@@ -100,15 +100,14 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "CreateQuestion" {
-            let createQuestionViewController = segue.destinationViewController as! CreateQuestionViewController
+            let createQuestionViewController = ((segue.destinationViewController as! UINavigationController).topViewController) as! CreateQuestionViewController
+            createQuestionViewController.questionListViewController = viewControllerAtIndex(0, createNew: false) as! QuestionListViewController
             createQuestionViewController.room = self.room
-            createQuestionViewController.previousNavigationController = self.navigationController
-            //assert(false)   //Todo check if ok
         }
 
     }
     
-    //Utilities
+    //MARK: Utilities
     /**
     Helper function for UIPageViewControllerDataSource. Returns the ViewController at a specific index. Initiates the roomId parameter.
     - parameter index:	The index of the viewcontroller.
@@ -144,7 +143,7 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
         return nil
     }
     
-    //UIPageViewControllerDataSource
+    //MARK: UIPageViewControllerDataSource
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
         if let pagedVC = viewController as? Paged {
             var index = pagedVC.pageIndex

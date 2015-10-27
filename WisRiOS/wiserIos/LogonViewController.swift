@@ -13,16 +13,16 @@ import FBSDKLoginKit
 /// Handles the logon view logic.
 class LogonViewController: UIViewController, FBSDKLoginButtonDelegate {
     
-    //Properties
+    //MARK: Properties
     var previousNavigationController: UINavigationController?
     var previousViewController: UIViewController?
     
-    //Utilities
+    //MARK: Utilities
     @IBAction func cancelLogonBtn() {
         previousNavigationController?.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    //Lifecycle
+    //MARK: Lifecycle
     override func viewDidLoad() {
         //Login button
         let loginBtn = FBSDKLoginButton()
@@ -32,7 +32,7 @@ class LogonViewController: UIViewController, FBSDKLoginButtonDelegate {
         self.view.addSubview(loginBtn)
     }
     
-    //FBSDKLoginButtonDelegate
+    //MARK: FBSDKLoginButtonDelegate
     func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
         
         if let granted = result.grantedPermissions {

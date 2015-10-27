@@ -585,6 +585,15 @@ namespace WisR.App_Resources {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
+        public static string QuestionWasDeletedMessage {
+            get {
+                return ResourceManager.GetString("QuestionWasDeletedMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
         public static string Remove {
             get {
                 return ResourceManager.GetString("Remove", resourceCulture);
@@ -642,6 +651,15 @@ namespace WisR.App_Resources {
         public static string RoomSecretRequiresLogin {
             get {
                 return ResourceManager.GetString("RoomSecretRequiresLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string RoomWasDeletedMsg {
+            get {
+                return ResourceManager.GetString("RoomWasDeletedMsg", resourceCulture);
             }
         }
         

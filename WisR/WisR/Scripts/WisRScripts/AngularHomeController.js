@@ -159,6 +159,32 @@ app.controller("HomeController", [
         $scope.Message = null;
         //#endregion
 
+        //#region Notification functions
+        /**
+           * @ngdoc method
+           * @name HomeController#spawnNotification
+           * @methodOf WisR.controller:HomeController
+           * @description
+           * Function that creates a browser notification if the user has allowed it, further documentation: https://developer.mozilla.org/en-US/docs/Web/API/Notification
+           * @param {String} theBody The body string of the notification as specified in the options parameter of the constructor.
+           * @param {String} theIcon The URL of the image used as an icon of the notification as specified in the options parameter of the constructor.
+           * @param {String} theTitle The title of the notification as specified in the options parameter of the constructor.
+           * @param {String} link redirect link for the onclick event
+           */
+        Notification.requestPermission();
+        var spawnNotification=function(theBody, theIcon, theTitle,link) {
+            var options = {
+                body: theBody,
+                icon: theIcon
+            }
+            var n = new Notification(theTitle, options);
+            n.onclick=function() {
+                $window.location.href = link;
+            }
+            setTimeout(n.close.bind(n), 4000);
+        }
+        //#endregion
+
         //#region SignalR functions
         ///Connect to SignalR hub and wait for new room
 
@@ -177,8 +203,30 @@ app.controller("HomeController", [
             */
 
             hub.client.broadcastRoom = function (roomToAdd) {
-                $scope.Rooms.push(JSON.parse(roomToAdd));
+                var parsedRoomToAdd = JSON.parse(roomToAdd);
+                $scope.Rooms.push(parsedRoomToAdd);
                 $scope.$apply();
+                //Spawn a notification if this is near the user and the user self didn't create it
+                if (($scope.currentUser==undefined||parsedRoomToAdd.CreatedById!=$scope.currentUser._id) && shouldBeAdded(parsedRoomToAdd,$scope)) {
+                    spawnNotification(parsedRoomToAdd.Name, null, "WisR", "/Room?RoomId="+parsedRoomToAdd._id);
+                }
+            };
+            /// Create a function that the hub can call to broadcast messages.
+            /**
+            * @ngdoc method
+            * @name HomeController#broadcastDeleteRoom
+            * @methodOf WisR.controller:HomeController
+            * @description
+            * Function that is called when a room should be deleted
+            * @param {Room} roomToAdd The room to delete
+            */
+
+            hub.client.broadcastDeleteRoom = function (roomToDelete) {
+                var index = findWithAttr($scope.Rooms, "_id", roomToDelete);
+                if (index > -1) {
+                    $scope.Rooms.splice(index, 1);
+                    $scope.$apply();
+                }
             };
             /**
             * @ngdoc method
@@ -443,6 +491,26 @@ app.controller("HomeController", [
         $scope.toggleModalWithRoom = function (modal, room) {
             $scope.SpecificRoom = room;
             $(modal).modal('toggle');        
+        }
+
+        /**
+       * @ngdoc method
+       * @name HomeController#findWithAttr
+       * @methodOf WisR.controller:HomeController
+       *
+       * @description
+       * Function that finds the index of a property with a specific value in an array. Returns -1 if the value is not found
+       * @param {Array} array the array to traverse
+       * @param {Attribute} attr the attribute to check for the given value
+       * @param {Attribute} value the value to check the attribute for
+       */
+        function findWithAttr(array, attr, value) {
+            for (var i = 0; i < array.length; i += 1) {
+                if (array[i][attr] === value) {
+                    return i;
+                }
+            }
+            return -1;
         }
         //#endregion
     }

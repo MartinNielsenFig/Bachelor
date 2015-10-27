@@ -354,7 +354,13 @@
   <data name="NoPictureText" xml:space="preserve">
     <value>No picture</value>
   </data>
+  <data name="QuestionWasDeletedMessage" xml:space="preserve">
+    <value>The specific question you were looking at was deleted</value>
+  </data>
   <data name="RoomAuthor" xml:space="preserve">
     <value>Room author</value>
+  </data>
+  <data name="RoomWasDeletedMsg" xml:space="preserve">
+    <value>Room was deleted, close this to go back</value>
   </data>
 </root>
