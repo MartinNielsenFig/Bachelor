@@ -42,9 +42,14 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
     //MARK: Lifecycle
     override func viewDidLoad() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "addQuestion")
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "cancelCreateQuestion")
     }
     
     //MARK: Utilities
+    func cancelCreateQuestion() {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
     func addQuestion() {
         
         var missingInformation = false
@@ -106,11 +111,7 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
                     indicator.stopAnimating()
                     indicator.removeFromSuperview()
                 }
-                
-                
-                
             }
-            
         }
     }
     

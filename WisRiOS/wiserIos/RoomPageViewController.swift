@@ -100,7 +100,7 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "CreateQuestion" {
-            let createQuestionViewController = segue.destinationViewController as! CreateQuestionViewController
+            let createQuestionViewController = ((segue.destinationViewController as! UINavigationController).topViewController) as! CreateQuestionViewController
             createQuestionViewController.room = self.room
             createQuestionViewController.previousNavigationController = self.navigationController
             //assert(false)   //Todo check if ok
