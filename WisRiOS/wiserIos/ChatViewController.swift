@@ -15,11 +15,13 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     //MARK: Properties
     let pageIndex = 2
+    let kbOffset = CGFloat(38)
+    let inputAccessoryViewId = 100  //id is given from storyboard
+    
     var roomId: String?
     var messages = [ChatMessage]()
     var updater: Updater?
     var firstLoad = true
-    let kbOffset = CGFloat(38)
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var textMessageInput: UITextField!
@@ -71,6 +73,8 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         border.frame = CGRectMake(0, 0, self.messageInputStackContainerView.frame.width, 0.5)
         self.messageInputStackContainerView.addSubview(border)
         
+        //tableView.keyboardDismissMode = .Interactive
+        
         //Add gesture recognizer to enable swipe keyboard down
         let swipe = UISwipeGestureRecognizer(target: self, action: "userSwipeDownKeyboard")
         swipe.direction = UISwipeGestureRecognizerDirection.Down
@@ -121,7 +125,9 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     //MARK: Utilities
     
-    
+    /**
+    Called when user swiped down on messageInputStackContainerView. Used to hide the keyboard.
+    */
     func userSwipeDownKeyboard() {
         print("user did swipe down keyboard")
         textMessageInput.resignFirstResponder()
@@ -230,17 +236,18 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return true
     }
     
-
-    
     //MARK: NSNotification
+    
+    /**
+    Called when the app goes to the background e.g. from user pressing home button or opening the multi task switcher. The purpose is to disable the keyboard from being pushed beyond the window bounds, as keyboardWillShow is called twice in a row if the observer is not removed.
+    - parameter notification:	The notification bound to this event.
+    */
     func appGoesToBackground(notification: NSNotification) {
         print("app goes to background")
         
-        //This is to disable the keyboard from being pushed far beyond, as pressing home button calls keyboardWillShow twice in a row
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationWillResignActiveNotification, object: nil)
-
     }
     
     //Keyboard hide/show based upon https://github.com/Lightstreamer/Lightstreamer-example-Chat-client-ios-swift with modifications
