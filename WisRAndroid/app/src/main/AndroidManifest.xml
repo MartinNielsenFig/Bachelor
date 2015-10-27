@@ -32,7 +32,8 @@
         <activity
             android:name=".Activities.CreateRoomActivity"
             android:label="@string/title_activity_create_room"
-            android:windowSoftInputMode="adjustPan">
+            android:windowSoftInputMode="adjustPan"
+            >
         </activity>
         <activity
             android:name=".Activities.SelectRoomActivity"
@@ -45,6 +46,11 @@
         <activity
             android:name=".Activities.LoginActivity"
             android:label="@string/title_activity_login" >
+        </activity>
+        <activity
+            android:name=".Activities.CreateQuestionActivity"
+            android:label="@string/title_activity_create_question">
+
         </activity>
 
         <!-- FaceBook Section -->

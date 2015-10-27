@@ -1,5 +1,6 @@
 package com.example.tomas.wisrandroid.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v4.view.ViewPager;
@@ -120,7 +121,7 @@ public class RoomActivity extends AppCompatActivity {
         actionBar.hide();
     }
 
-    public void Init() {
+    public void CreateQuestion() {
 
     }
 
