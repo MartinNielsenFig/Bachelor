@@ -625,8 +625,8 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
     //#region HelperFunction
     ///Helper function to find index of object in array
     function findWithAttr(array, attr, value) {
-        for (var i = 0; i < array.length; i += 1) {
-            if (array[i][attr] === value) {
+       for (var i = 0; i < array.length; i += 1) {
+           if (array[i][attr] === value) {
                 return i;
             }
         }
