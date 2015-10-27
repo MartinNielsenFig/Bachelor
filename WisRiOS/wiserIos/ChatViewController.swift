@@ -59,7 +59,6 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     //Lifecycle
     override func viewDidLoad() {
         print("ChatViewController instantiated, roomId: \(self.roomId)")
-        
         textMessageInput.delegate = self
     }
     
@@ -208,7 +207,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     //UIKeyboardWillShowNotification & UIKeyboardWillHideNotification
-    let kbOffset = CGFloat(30)
+    let kbOffset = CGFloat(38)
     //Keyboard hide/show based upon https://github.com/Lightstreamer/Lightstreamer-example-Chat-client-ios-swift with modifications
     func keyboardWillShow(notification: NSNotification) {
         print("\(__FUNCTION__) has been called")

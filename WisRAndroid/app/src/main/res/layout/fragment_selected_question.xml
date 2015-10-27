@@ -2,93 +2,98 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:tag="SelectedQuesitonTag">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/super_fragment"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/super_fragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="11">
+
+    <TextView
+        android:id="@+id/selected_fragment_questiontextview"
+        android:gravity="center"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
 
-        <TextView
-            android:id="@+id/selected_fragment_questiontextview"
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="6">
+
+        <ImageView
+            android:id="@+id/selected_fragment_imageview"
             android:layout_width="fill_parent"
-            android:layout_height="40dp" />
+            android:layout_height="fill_parent" />
 
-        <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="200dp">
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="visible" />
+    </RelativeLayout>
 
-            <ImageView
-                android:id="@+id/selected_fragment_imageview"
-                android:layout_width="fill_parent"
-                android:layout_height="200dp" />
+    <NumberPicker
+        android:id="@+id/selected_fragment_numberpicker"
+        android:layout_width="100dp"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:layout_gravity="center" />
 
-            <ProgressBar
-                android:id="@+id/progress"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:visibility="visible" />
-        </RelativeLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:layout_weight="1"
+        android:weightSum="100">
 
-        <NumberPicker
-            android:id="@+id/selected_fragment_numberpicker"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center" />
+        <Button
+            android:id="@+id/selected_fragment_sendresponse_button"
+            android:layout_width="150dp"
+            android:layout_height="fill_parent"
+            android:text="Send Response" />
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal"
-            android:weightSum="100">
-
-            <Button
-                android:id="@+id/selected_fragment_sendresponse_button"
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="50"
-                android:text="Send Response" />
-
-            <Button
-                android:id="@+id/selected_fragment_seeresult_button"
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="50"
-                android:text="See Result" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="50dp"
-            android:orientation="horizontal"
-            android:weightSum="100">
-
-            <ImageButton
-                android:id="@+id/downvote_button"
-                android:src="@drawable/thumb_down"
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="50"
-                android:text="Send Response" />
-
-            <ImageButton
-                android:id="@+id/upvote_button"
-                android:src="@drawable/thumb_up"
-                android:layout_width="0dp"
-                android:layout_height="fill_parent"
-                android:layout_weight="50"
-                android:text="See Result" />
-        </LinearLayout>
-
-        <!--android:theme="@style/Base.V11.Theme.AppCompat.Light.Dialog"-->
-
-        <!-- Debugging textview -->
-        <TextView
-            android:id="@+id/selected_fragment_debugtextview"
-            android:layout_width="fill_parent"
-            android:layout_height="300dp" />
-
+        <Button
+            android:id="@+id/selected_fragment_seeresult_button"
+            android:layout_width="150dp"
+            android:layout_height="fill_parent"
+            android:text="See Result" />
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/downvote_button"
+            android:layout_width="150dp"
+            android:layout_height="fill_parent"
+            android:src="@drawable/thumb_down"
+            android:text="Send Response" />
+
+        <ImageButton
+            android:id="@+id/upvote_button"
+            android:layout_width="150dp"
+            android:layout_height="fill_parent"
+            android:src="@drawable/thumb_up"
+            android:text="See Result" />
+    </LinearLayout>
+
+    <!--android:theme="@style/Base.V11.Theme.AppCompat.Light.Dialog"-->
+
+    <!-- Debugging textview -->
+    <!--<TextView-->
+        <!--android:id="@+id/selected_fragment_debugtextview"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="300dp" />-->
+
+</LinearLayout>
 </ScrollView>

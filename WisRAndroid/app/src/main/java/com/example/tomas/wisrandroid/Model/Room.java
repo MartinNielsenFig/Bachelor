@@ -12,7 +12,7 @@ public class Room {
     private String CreatedById;
     private Coordinate Location;
     private int Radius;
-    private String Tag;
+    private String Secret;
     private boolean HasPassword;
     private String EncryptedPassword;
     private boolean HasChat;
@@ -23,7 +23,7 @@ public class Room {
 
     //Constructors
     public Room(){}
-    public Room(String _id, String Name, String CreatedById, int Radius, String Tag,
+    public Room(String _id, String Name, String CreatedById, int Radius, String Secret,
                 boolean HasPassword, String EncryptedPassword, boolean HasChat,
                 boolean UsersCanAsk, boolean AllowAnonymous, boolean UseLocation, Coordinate Location)
     {
@@ -31,7 +31,7 @@ public class Room {
         this.Name = Name;
         this.CreatedById = CreatedById;
         this.Radius = Radius;
-        this.Tag = Tag;
+        this.Secret = Secret;
         this.HasPassword = HasPassword;
         this.EncryptedPassword = EncryptedPassword;
         this.HasChat = HasChat;
@@ -54,8 +54,8 @@ public class Room {
     public int get_Radius(){return this.Radius;}
     public void set_Radius(int Radius) {this.Radius = Radius;}
 
-    public String get_Tag(){return this.Tag;}
-    public void set_Tag(String Tag) {this.Tag = Tag;}
+    public String get_Secret(){return this.Secret;}
+    public void set_Secret(String Secret) {this.Secret = Secret;}
 
     public boolean get_HasPassword(){return this.HasPassword;}
     public void set_HasPassword(boolean HasPassword) {this.HasPassword = HasPassword;}

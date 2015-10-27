@@ -1,6 +1,8 @@
 package com.example.tomas.wisrandroid.Activities;
 
+import android.app.ActionBar;
 import android.content.Intent;
+import android.graphics.Rect;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -9,6 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
@@ -66,6 +70,8 @@ public class CreateRoomActivity extends AppCompatActivity implements GoogleApiCl
     private volatile ToggleButton mFirstRadiusToggleButton;
     private volatile ToggleButton mSecondRadiusToggleButton;
     private volatile ToggleButton mThirdRadiusToggleButton;
+
+    // View
 
 
     @Override
@@ -160,7 +166,7 @@ public class CreateRoomActivity extends AppCompatActivity implements GoogleApiCl
                 {
                     mRoom.set_Radius(Integer.parseInt(mThirdRadiusToggleButton.getTextOn().toString().replace("m","")));
                 }
-                mRoom.set_Tag(mRoomTagEditText.getText().toString());
+                mRoom.set_Secret(mRoomTagEditText.getText().toString());
                 mRoom.set_UseLocation(mEnableUseLocationSwitch.isChecked());
                 mRoom.set_UsersCanAsk(mEnableUserQuestionSwitch.isChecked());
 
@@ -230,6 +236,17 @@ public class CreateRoomActivity extends AppCompatActivity implements GoogleApiCl
     protected void onResume() {
         super.onResume();
         CheckPasswordSwitchState();
+//        final View mActivityRootView = findViewById(R.id.root);
+//        mActivityRootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+//            @Override
+//            public void onGlobalLayout() {
+//                int heightDiff = mActivityRootView.getRootView().getHeight() - mActivityRootView.getHeight();
+//                if (heightDiff > 40) { // if more than 100 pixels, its probably a keyboard...
+//                    mActivityRootView.getLayoutParams().height -= 120;
+//
+//                }
+//            }
+//        });
     }
 
     @Override
