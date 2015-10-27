@@ -71,6 +71,7 @@ public class MainActivity extends FragmentActivity implements GoogleApiClient.Co
                     MyUser.getMyuser().set_FacebookId(AccessToken.getCurrentAccessToken().getUserId());
                     setupMyUser();
                     Intent mCreateRoomIntent = new Intent(MainActivity.this, CreateRoomActivity.class);
+                    mCreateRoomIntent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                     startActivity(mCreateRoomIntent);
                 } else {
                     Intent mIntent = new Intent(MainActivity.this, LoginActivity.class);

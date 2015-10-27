@@ -65,7 +65,11 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                     self.question.Result += [answer]
                 }
                 
+                Toast.showToast("You voted \(answer.Value)", durationMs: 1000, presenter: self)
                 self.highlightSelectedAnswer(index)
+            } else {
+                print(error)
+                print(data)
             }
         }
     }
@@ -114,6 +118,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                 } else {
                     self.question.Votes += [vote]
                 }
+                
                 print(up ? "VOTED" : "DOWNVOTED")
             }
         }

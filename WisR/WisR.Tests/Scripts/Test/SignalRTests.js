@@ -74,5 +74,78 @@ describe("SignalR Tests", function () {
                 $.connection.questionHub.client.broadcastQuestion('{ "_t" : "MultipleChoiceQuestion", "_id" : "562e3b88c7f56237b8652b49", "RoomId" : "560e66bc16d23936284bf130", "CreatedById" : "NoUser", "Votes" : [], "Img" : "R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==", "QuestionText" : "askldjk", "ResponseOptions" : [{ "Value" : "adsa", "Weight" : 0 }, { "Value" : "dsadasd", "Weight" : 0 }], "Result" : [], "CreationTimestamp" : "1445870472559", "ExpireTimestamp" : "1473258372559" }');
                 expect(scope.Questions.length).toBe(1);
             });
-    });
+
+            it('should update currentRoom', function() {
+                scope.CurrentRoom = { _id: "562a2e8416d239241cb4c20e", Name: "JasmineRoom", CreatedById: "560e65f116d23914d4b08f74", Location: { Latitude: 56.1719015, Longitude: 10.189167500000002, AccuracyMeters: 20, FormattedAddress: "IT-byen, Aarhus, Danmark", Timestamp: "1445604940073" }, Radius: 50, Tag: "JasmineTag", HasPassword: true, EncryptedPassword: "a4a81d2d54e8deda9c7a1397413764851a6c5bb2b39d5a862d62c33d83683b1e96f2c99d8b9dacb5c9a9b502cd11f893b53c8ce520539cc5e7b8a4b37372090d", HasChat: true, UsersCanAsk: true, AllowAnonymous: true, UseLocation: true };
+
+                spyOn(scope, "toggleRoomLocation");
+
+                //The change is the position
+                $.connection.roomHub.client.broadcastUpdateRoom('{"_id": "562a2e8416d239241cb4c20e", "Name": "JasmineRoom", "CreatedById": "560e65f116d23914d4b08f74", "Location": { "Latitude": 0, "Longitude":0, "AccuracyMeters": 20, "FormattedAddress": "IT-byen, Aarhus, Danmark", "Timestamp": "1445604940073" }, "Radius": 50, "Tag": "JasmineTag", "HasPassword": true, "EncryptedPassword": "a4a81d2d54e8deda9c7a1397413764851a6c5bb2b39d5a862d62c33d83683b1e96f2c99d8b9dacb5c9a9b502cd11f893b53c8ce520539cc5e7b8a4b37372090d", "HasChat": true, "UsersCanAsk": true, "AllowAnonymous": true, "UseLocation": true}');
+
+                expect(scope.CurrentRoom.Location.Latitude).toBe(0);
+                expect(scope.CurrentRoom.Location.Longitude).toBe(0);
+                expect(scope.toggleRoomLocation).toHaveBeenCalled();
+            });
+
+            it('should update question', function() {
+                scope.Questions = [{_t:	"MultipleChoiceQuestion", _id:"562e3b88c7f56237b8652b49",RoomId:"560e66bc16d23936284bf130", CreatedById:	"NoUser", Votes:[0], Img:	"R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==",QuestionText	:	"askldjk", ResponseOptions:	[{ Value: "adsa", Weight: 0 }, { Value: "dsadasd", Weight: 0 }], Result:[0], CreationTimestamp:	"1445870472559", ExpireTimestamp:"1473258372559"}];
+                $.connection.questionHub.client.broadcastUpdateQuestion('{ "_t" : "MultipleChoiceQuestion", "_id" : "562e3b88c7f56237b8652b49", "RoomId" : "560e66bc16d23936284bf130", "CreatedById" : "NoUser", "Votes" : [{ "CreatedById" : "560e7203c7f562bd7cadd5f0", "Value" : -1 },{ "CreatedById" : "560e7203c7Asdasdd5f0", "Value" : 1 }], "Img" : "R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==", "QuestionText" : "askldjk", "ResponseOptions" : [{ "Value" : "adsa", "Weight" : 0 }, { "Value" : "dsadasd", "Weight" : 0 }], "Result" : [], "CreationTimestamp" : "1445870472559", "ExpireTimestamp" : "1473258372559" }');
+                expect(scope.Questions[0].Votes.length).toBe(2);
+            });
+
+            it('should update question and specific question', function () {
+                scope.Questions = [{ _t: "MultipleChoiceQuestion", _id: "562e3b88c7f56237b8652b49", RoomId: "560e66bc16d23936284bf130", CreatedById: "NoUser", Votes: [0], Img: "R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==", QuestionText: "askldjk", ResponseOptions: [{ Value: "adsa", Weight: 0 }, { Value: "dsadasd", Weight: 0 }], Result: [0], CreationTimestamp: "1445870472559", ExpireTimestamp: "1473258372559" }];
+                scope.SpecificQuestion = { _t: "MultipleChoiceQuestion", _id: "562e3b88c7f56237b8652b49", RoomId: "560e66bc16d23936284bf130", CreatedById: "NoUser", Votes: [0], Img: "R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==", QuestionText: "askldjk", ResponseOptions: [{ Value: "adsa", Weight: 0 }, { Value: "dsadasd", Weight: 0 }], Result: [0], CreationTimestamp: "1445870472559", ExpireTimestamp: "1473258372559" };
+
+                spyOn(scope, "createPieChart");
+
+                $.connection.questionHub.client.broadcastUpdateQuestion('{ "_t" : "MultipleChoiceQuestion", "_id" : "562e3b88c7f56237b8652b49", "RoomId" : "560e66bc16d23936284bf130", "CreatedById" : "NoUser", "Votes" : [-1,1], "Img" : "R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==", "QuestionText" : "askldjk", "ResponseOptions" : [{ "Value" : "adsa", "Weight" : 0 }, { "Value" : "dsadasd", "Weight" : 0 }], "Result" : [], "CreationTimestamp" : "1445870472559", "ExpireTimestamp" : "1473258372559" }');
+
+                expect(scope.Questions[0].Votes.length).toBe(2);
+                expect(scope.SpecificQuestion.Votes.length).toBe(2);
+            });
+
+            it('should delete question', function () {
+                scope.Questions = [{ _t: "MultipleChoiceQuestion", _id: "562e3b88c7f56237b8652b49", RoomId: "560e66bc16d23936284bf130", CreatedById: "NoUser", Votes: [0], Img: "R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==", QuestionText: "askldjk", ResponseOptions: [{ Value: "adsa", Weight: 0 }, { Value: "dsadasd", Weight: 0 }], Result: [0], CreationTimestamp: "1445870472559", ExpireTimestamp: "1473258372559" }];
+                $.connection.questionHub.client.broadcastDeleteQuestion('562e3b88c7f56237b8652b49');
+                expect(scope.Questions.length).toBe(0);
+            });
+
+            it('should update questions results', function () {
+                scope.Questions = [{ _t: "MultipleChoiceQuestion", _id: "562e3b88c7f56237b8652b49", RoomId: "560e66bc16d23936284bf130", CreatedById: "NoUser", Votes: [0], Img: "R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==", QuestionText: "askldjk", ResponseOptions: [{ Value: "adsa", Weight: 0 }, { Value: "dsadasd", Weight: 0 }], Result: [0], CreationTimestamp: "1445870472559", ExpireTimestamp: "1473258372559" }];
+                $.connection.questionHub.client.broadcastUpdateResult('{ "_t" : "MultipleChoiceQuestion", "_id" : "562e3b88c7f56237b8652b49", "RoomId" : "560e66bc16d23936284bf130", "CreatedById" : "NoUser", "Votes" : [], "Img" : "R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==", "QuestionText" : "askldjk", "ResponseOptions" : [{ "Value" : "adsa", "Weight" : 0 }, { "Value" : "dsadasd", "Weight" : 0 }], "Result" : [{ "Value" : "a", "UserId" : "560e65f116d23914d4b08f74" }], "CreationTimestamp" : "1445870472559", "ExpireTimestamp" : "1473258372559" }');
+                expect(scope.Questions[0].Result.length).toBe(1);
+            });
+
+            it('should update questions and specific questions results', function () {
+                scope.Questions = [{ _t: "MultipleChoiceQuestion", _id: "562e3b88c7f56237b8652b49", RoomId: "560e66bc16d23936284bf130", CreatedById: "NoUser", Votes: [0], Img: "R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==", QuestionText: "askldjk", ResponseOptions: [{ Value: "adsa", Weight: 0 }, { Value: "dsadasd", Weight: 0 }], Result: [0], CreationTimestamp: "1445870472559", ExpireTimestamp: "1473258372559" }];
+                scope.SpecificQuestion = { _t: "MultipleChoiceQuestion", _id: "562e3b88c7f56237b8652b49", RoomId: "560e66bc16d23936284bf130", CreatedById: "NoUser", Votes: [0], Img: "R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==", QuestionText: "askldjk", ResponseOptions: [{ Value: "adsa", Weight: 0 }, { Value: "dsadasd", Weight: 0 }], Result: [0], CreationTimestamp: "1445870472559", ExpireTimestamp: "1473258372559" };
+
+                spyOn(scope, "createPieChart");
+
+                $.connection.questionHub.client.broadcastUpdateResult('{ "_t" : "MultipleChoiceQuestion", "_id" : "562e3b88c7f56237b8652b49", "RoomId" : "560e66bc16d23936284bf130", "CreatedById" : "NoUser", "Votes" : [], "Img" : "R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==", "QuestionText" : "askldjk", "ResponseOptions" : [{ "Value" : "adsa", "Weight" : 0 }, { "Value" : "dsadasd", "Weight" : 0 }], "Result" : [{ "Value" : "a", "UserId" : "560e65f116d23914d4b08f74" }], "CreationTimestamp" : "1445870472559", "ExpireTimestamp" : "1473258372559" }');
+
+                expect(scope.Questions[0].Result.length).toBe(1);
+                expect(scope.SpecificQuestion.Result.length).toBe(1);
+            });
+
+            it('should update questions votes', function () {
+                scope.Questions = [{ _t: "MultipleChoiceQuestion", _id: "562e3b88c7f56237b8652b49", RoomId: "560e66bc16d23936284bf130", CreatedById: "NoUser", Votes: [0], Img: "R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==", QuestionText: "askldjk", ResponseOptions: [{ Value: "adsa", Weight: 0 }, { Value: "dsadasd", Weight: 0 }], Result: [0], CreationTimestamp: "1445870472559", ExpireTimestamp: "1473258372559" }];
+                $.connection.questionHub.client.broadcastUpdateVotes('{ "_t" : "MultipleChoiceQuestion", "_id" : "562e3b88c7f56237b8652b49", "RoomId" : "560e66bc16d23936284bf130", "CreatedById" : "NoUser", "Votes" :  [{ "CreatedById" : "560e7203c7f562bd7cadd5f0", "Value" : -1 },{ "CreatedById" : "560e7203c7Asdasdd5f0", "Value" : 1 }], "Img" : "R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==", "QuestionText" : "askldjk", "ResponseOptions" : [{ "Value" : "adsa", "Weight" : 0 }, { "Value" : "dsadasd", "Weight" : 0 }], "Result" : [], "CreationTimestamp" : "1445870472559", "ExpireTimestamp" : "1473258372559" }');
+                expect(scope.Questions[0].Votes.length).toBe(2);
+            });
+
+            it('should update questions and specific questions votes', function () {
+                scope.Questions = [{ _t: "MultipleChoiceQuestion", _id: "562e3b88c7f56237b8652b49", RoomId: "560e66bc16d23936284bf130", CreatedById: "NoUser", Votes: [0], Img: "R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==", QuestionText: "askldjk", ResponseOptions: [{ Value: "adsa", Weight: 0 }, { Value: "dsadasd", Weight: 0 }], Result: [0], CreationTimestamp: "1445870472559", ExpireTimestamp: "1473258372559" }];
+                scope.SpecificQuestion = { _t: "MultipleChoiceQuestion", _id: "562e3b88c7f56237b8652b49", RoomId: "560e66bc16d23936284bf130", CreatedById: "NoUser", Votes: [0], Img: "R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==", QuestionText: "askldjk", ResponseOptions: [{ Value: "adsa", Weight: 0 }, { Value: "dsadasd", Weight: 0 }], Result: [0], CreationTimestamp: "1445870472559", ExpireTimestamp: "1473258372559" };
+                
+                $.connection.questionHub.client.broadcastUpdateVotes('{ "_t" : "MultipleChoiceQuestion", "_id" : "562e3b88c7f56237b8652b49", "RoomId" : "560e66bc16d23936284bf130", "CreatedById" : "NoUser", "Votes" :  [{ "CreatedById" : "560e7203c7f562bd7cadd5f0", "Value" : -1 },{ "CreatedById" : "560e7203c7Asdasdd5f0", "Value" : 1 }], "Img" : "R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==", "QuestionText" : "askldjk", "ResponseOptions" : [{ "Value" : "adsa", "Weight" : 0 }, { "Value" : "dsadasd", "Weight" : 0 }], "Result" : [], "CreationTimestamp" : "1445870472559", "ExpireTimestamp" : "1473258372559" }');
+               
+                expect(scope.Questions[0].Votes.length).toBe(2);
+                expect(scope.SpecificQuestion.Votes.length).toBe(2);
+            });
+
+
+        });
 });

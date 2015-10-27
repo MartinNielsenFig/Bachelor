@@ -933,8 +933,8 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
  * @returns {Integer} index The index of the value in the array
  */
     function findWithAttr(array, attr, value) {
-        for (var i = 0; i < array.length; i += 1) {
-            if (array[i][attr] === value) {
+       for (var i = 0; i < array.length; i += 1) {
+           if (array[i][attr] === value) {
                 return i;
             }
         }

@@ -29,4 +29,5 @@
     <string name="room_userquestion_enable_textview">Enable User Questions</string>
     <string name="room_uselocation_enable_textview">Enable Uselocation</string>
     <string name="restapi_url">http://wisrrestapi.azurewebsites.net</string>
+    <string name="title_activity_create_question">CreateQuestionActivity</string>
 </resources>

@@ -19,10 +19,12 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var messages = [ChatMessage]()
     var updater: Updater?
     var firstLoad = true
+    let kbOffset = CGFloat(38)
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var textMessageInput: UITextField!
-    @IBOutlet weak var MessageInputStack: UIStackView!
+    @IBOutlet weak var messageInputStack: UIStackView!
+    @IBOutlet weak var messageInputStackContainerView: UIView!
     
     //MARK: Actions
     @IBAction func sendPressed(sender: AnyObject) {
@@ -60,12 +62,26 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func viewDidLoad() {
         print("ChatViewController instantiated, roomId: \(self.roomId)")
         textMessageInput.delegate = self
+        
+        //Add border to keyboard input field
+        //http://stackoverflow.com/questions/17355280/how-to-add-a-border-just-on-the-top-side-of-a-uiview
+        let border = UIView()
+        border.backgroundColor = UIColor.lightGrayColor()
+        border.autoresizingMask = [.FlexibleWidth, .FlexibleBottomMargin]
+        border.frame = CGRectMake(0, 0, self.messageInputStackContainerView.frame.width, 0.5)
+        self.messageInputStackContainerView.addSubview(border)
+        
+        //Add gesture recognizer to enable swipe keyboard down
+        let swipe = UISwipeGestureRecognizer(target: self, action: "userSwipeDownKeyboard")
+        swipe.direction = UISwipeGestureRecognizerDirection.Down
+        self.messageInputStackContainerView.addGestureRecognizer(swipe)
     }
     
     //Setup registering for keyboard events
     override func viewWillAppear(animated: Bool) {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "appGoesToBackground:", name: UIApplicationWillResignActiveNotification, object: nil)
         
         updater = Updater(secondsDelay: 1) {
             let body = "roomId=\(self.roomId!)"
@@ -98,16 +114,24 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func viewWillDisappear(animated: Bool) {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationWillResignActiveNotification, object: nil)
         
         updater?.stop()
     }
     
     //MARK: Utilities
+    
+    
+    func userSwipeDownKeyboard() {
+        print("user did swipe down keyboard")
+        textMessageInput.resignFirstResponder()
+    }
+    
     /**
     Scrolls to the bottom of the table view presented on this page
     */
     func scrollToBottom() {
-        let chatFieldHeight = self.MessageInputStack.frame.height + 10
+        let chatFieldHeight = self.messageInputStack.frame.height + 10
         dispatch_async(dispatch_get_main_queue()) {
             if self.messages.count > 0 {
                 self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.messages.count-1, inSection: 0), atScrollPosition: UITableViewScrollPosition.Bottom, animated: false)
@@ -206,8 +230,19 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return true
     }
     
-    //MARK: UIKeyboardWillShowNotification & UIKeyboardWillHideNotification
-    let kbOffset = CGFloat(38)
+
+    
+    //MARK: NSNotification
+    func appGoesToBackground(notification: NSNotification) {
+        print("app goes to background")
+        
+        //This is to disable the keyboard from being pushed far beyond, as pressing home button calls keyboardWillShow twice in a row
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationWillResignActiveNotification, object: nil)
+
+    }
+    
     //Keyboard hide/show based upon https://github.com/Lightstreamer/Lightstreamer-example-Chat-client-ios-swift with modifications
     func keyboardWillShow(notification: NSNotification) {
         print("\(__FUNCTION__) has been called")
