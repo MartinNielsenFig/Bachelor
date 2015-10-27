@@ -131,13 +131,13 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
         $scope.userId = n;
         if (n == "NoUser") {
             $scope.anonymousUser = true;
-            getRoom(false);
+            $scope.getRoom(false);
         }
         else if (n != undefined) {
             $http.post(configs.restHostName + '/User/GetById', { id: n }).then(function (response) {
                 $scope.anonymousUser = false;
                 $scope.currentUser = response.data;
-                getRoom(true);
+                $scope.getRoom(true);
             });
         }
     });
@@ -201,8 +201,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
             $scope.questionsLoaded = true;
         });
     };
-    getQuestions();
-
+    
     ///Function for creating a question
     $scope.postQuestion = function () {
         $("#myModalCreate").modal("hide");
@@ -359,12 +358,15 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
     ///#endregion
 
     //#region LocationFunction
-    ///Calls and get the currentlocation
-    navigator.geolocation.getCurrentPosition(function (position) {
-        $scope.currentLocation = position;
-    });
+    //this check is to make the tests excecuteable
+        if (navigator.geolocation != undefined) {
+            ///Calls and get the currentlocation
+            navigator.geolocation.getCurrentPosition(function(position) {
+                $scope.currentLocation = position;
+            });
+        }
 
-    //Code for rooms maps
+        //Code for rooms maps
     $scope.toggleRoomLocation = function () {
         $("#googlemapsRoom").toggle();
         $("#updateBtn").toggle();
@@ -430,8 +432,12 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
 
     //#region RoomFunctions
     ///Get the specific room
-    var getRoom = function (user) {
+    $scope.getRoom = function (user) {
         $http.post(configs.restHostName + '/Room/GetById', { id: MyRoomIdFromViewBag }).then(function (response) {
+            //Tried moving these since it makes better sense(also easiere to test)
+            getQuestions();
+            getChatMessages();
+            getAllUsers();
             $scope.specificRoomLoaded = true;
             ///Check for errors on request
             if (response.data.ErrorMessage != undefined) {
@@ -453,7 +459,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
             } else {
                 if ($scope.CurrentRoom.AllowAnonymous == false) {
                     var url = $("#RedirectToHome").val();
-                    location.href = url;
+                    $window.location.href = url;
                 }
                 else if ($scope.CurrentRoom.HasPassword) {
                     $('#myModalPassword').modal('show');
@@ -585,15 +591,14 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
             $scope.chatLoaded = true;
         });
     };
-    getChatMessages();
-
+    
     ///Function for retrieving userName by an id, used by the chat
     var getAllUsers = function () {
         $http.get(configs.restHostName + '/User/GetAll').then(function (result) {
             $scope.ActiveUsers = result.data;
         });
     }
-    getAllUsers();
+    
 
     //Get username, for the chat
     $scope.GetUsernameById = function (userId) {

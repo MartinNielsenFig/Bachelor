@@ -336,11 +336,11 @@ app.controller("HomeController", [
         ///Changes to view to a new room
         $scope.changeViewToRoom = function (room) {
             if (!room.AllowAnonymous && $scope.userId == 'NoUser') {
-                $scope.Message = Resources.RoomSecretRequiresLogin;
+                $scope.Message = window.Resources.RoomSecretRequiresLogin;
             } else {
                 $scope.RoomId = room._id;
                 var url = $("#RedirectTo").val() + "?RoomId=" + $scope.RoomId;
-                location.href = url;
+                $window.location.href = url;
             }
         }
         /**
@@ -359,7 +359,7 @@ app.controller("HomeController", [
                 if (response.data._id != undefined) {
                     $scope.changeViewToRoom(response.data);
                 } else {
-                    $scope.Message =Resources.NoRoomWithThatSecret + $scope.uniqueRoomSecret;
+                    $scope.Message = window.Resources.NoRoomWithThatSecret + $scope.uniqueRoomSecret;
                 }
             });
         }

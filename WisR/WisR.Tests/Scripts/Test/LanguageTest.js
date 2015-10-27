@@ -4,6 +4,7 @@
 ///<reference path="~/../WisR/Scripts/jquery-1.11.3.js"/>
 ///<reference path="~/../WisR/Scripts/jquery.signalR-2.2.0.js"/>
 ///<reference path="~/../WisR/Scripts/angular.js"/>
+///<reference path="~/../WisR/Scripts/angular-animate.js"/>
 ///<reference path="~/../WisR/Scripts/angular-mocks.js"/>
 ///<reference path="~/../WisR/Scripts/angular-base64-upload.js"/>
 ///<reference path="~/../WisR/Scripts/scrollglue.js"/>
@@ -55,7 +56,7 @@ describe("Danish Test", function () {
             var room = { AllowAnonymous: false }
             scope.userId = 'NoUser';
             scope.changeViewToRoom(room);
-            expect(scope.Message).toBe('Rummet med det tag, kræver at du logger ind');
+            expect(scope.Message).toBe('Rummet med den hemmelighed, kræver at du logger ind');
         });
     });
 });

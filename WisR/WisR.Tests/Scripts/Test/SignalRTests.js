@@ -4,6 +4,7 @@
 ///<reference path="~/../WisR/Scripts/jquery-1.11.3.js"/>
 ///<reference path="~/../WisR/Scripts/jquery.signalR-2.2.0.js"/>
 ///<reference path="~/../WisR/Scripts/angular.js"/>
+///<reference path="~/../WisR/Scripts/angular-animate.js"/>
 ///<reference path="~/../WisR/Scripts/angular-mocks.js"/>
 ///<reference path="~/../WisR/Scripts/angular-base64-upload.js"/>
 ///<reference path="~/../WisR/Scripts/scrollglue.js"/>
@@ -12,11 +13,13 @@
 
 ///<reference path="~/Scripts/GoogleForTest/googleForTest.js"/>
 ///<reference path="~/Scripts/SignalRForTest/server.js"/>
+///<reference path="~/Scripts/GlobalVarriablesForTest/GlobalVarriables.js"/>
 
 ///<reference path="~/../WisR/Scripts/WisRScripts/geolocationScripts.js"/>
 ///<reference path="~/../WisR/Scripts/WisRScripts/AngularModule.js"/>
 ///<reference path="~/../WisR/Scripts/WisRScripts/Config.js"/>
 ///<reference path="~/../WisR/Scripts/WisRScripts/AngularHomeController.js"/>
+///<reference path="~/../WisR/Scripts/WisRScripts/AngularRoomController.js"/>
 describe("SignalR Tests", function () {
 
     beforeEach(angular.mock.module('wisrApp'));
@@ -28,7 +31,7 @@ describe("SignalR Tests", function () {
         beforeEach(inject(function ($rootScope, $controller) {
             scope = $rootScope.$new();
  
-            controller = $controller('HomeController', { $scope: scope, window: window });
+           controller = $controller('HomeController', { $scope: scope, window: window });
         }));
 
         it('should add one room to rooms', function () {
@@ -47,5 +50,29 @@ describe("SignalR Tests", function () {
             expect(scope.Rooms[0].Location.Latitude).toBe(0);
             expect(scope.Rooms[0].Location.Longitude).toBe(0);
         });
+    });
+        describe("Room controller", function () {
+
+            var scope, controller;
+
+            beforeEach(inject(function ($rootScope, $controller) {
+                scope = $rootScope.$new();
+
+                scope.CurrentRoom = { _id: "560e66bc16d23936284bf130" };
+
+                controller = $controller('RoomController', { $scope: scope, window: window });
+            }));
+
+            it('should add one chat message to ChatMessages', function () {
+                scope.ChatMessages = [];
+                $.connection.chatHub.client.broadcastChatMessage('{ "_id" : "562e300dc7f56237b8652b48", "ByUserId" : "NoUser", "RoomId" : "560e66bc16d23936284bf130", "Value" : "Jasmin Test", "Timestamp" : "1445867533701" }');
+                expect(scope.ChatMessages.length).toBe(1);
+            });
+
+            it('should add question to questions', function () {
+                scope.Questions = [];
+                $.connection.questionHub.client.broadcastQuestion('{ "_t" : "MultipleChoiceQuestion", "_id" : "562e3b88c7f56237b8652b49", "RoomId" : "560e66bc16d23936284bf130", "CreatedById" : "NoUser", "Votes" : [], "Img" : "R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==", "QuestionText" : "askldjk", "ResponseOptions" : [{ "Value" : "adsa", "Weight" : 0 }, { "Value" : "dsadasd", "Weight" : 0 }], "Result" : [], "CreationTimestamp" : "1445870472559", "ExpireTimestamp" : "1473258372559" }');
+                expect(scope.Questions.length).toBe(1);
+            });
     });
 });
