@@ -345,4 +345,7 @@
   <data name="UpdateQuestion" xml:space="preserve">
     <value>Update</value>
   </data>
+  <data name="NoPictureText" xml:space="preserve">
+    <value>No picture</value>
+  </data>
 </root>
