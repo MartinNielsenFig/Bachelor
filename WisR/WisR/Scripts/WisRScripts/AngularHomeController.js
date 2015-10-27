@@ -159,6 +159,32 @@ app.controller("HomeController", [
         $scope.Message = null;
         //#endregion
 
+        //#region Notification functions
+        /**
+           * @ngdoc method
+           * @name HomeController#spawnNotification
+           * @methodOf WisR.controller:HomeController
+           * @description
+           * Function that creates a browser notification if the user has allowed it, further documentation: https://developer.mozilla.org/en-US/docs/Web/API/Notification
+           * @param {String} theBody The body string of the notification as specified in the options parameter of the constructor.
+           * @param {String} theIcon The URL of the image used as an icon of the notification as specified in the options parameter of the constructor.
+           * @param {String} theTitle The title of the notification as specified in the options parameter of the constructor.
+           * @param {String} link redirect link for the onclick event
+           */
+        Notification.requestPermission();
+        var spawnNotification=function(theBody, theIcon, theTitle,link) {
+            var options = {
+                body: theBody,
+                icon: theIcon
+            }
+            var n = new Notification(theTitle, options);
+            n.onclick=function() {
+                $window.location.href = link;
+            }
+            setTimeout(n.close.bind(n), 4000);
+        }
+        //#endregion
+
         //#region SignalR functions
         ///Connect to SignalR hub and wait for new room
 
@@ -177,8 +203,13 @@ app.controller("HomeController", [
             */
 
             hub.client.broadcastRoom = function (roomToAdd) {
-                $scope.Rooms.push(JSON.parse(roomToAdd));
+                var parsedRoomToAdd = JSON.parse(roomToAdd);
+                $scope.Rooms.push(parsedRoomToAdd);
                 $scope.$apply();
+                //Spawn a notification if this is near the user and the user self didn't create it
+                if (($scope.currentUser==undefined||parsedRoomToAdd.CreatedById!=$scope.currentUser._id) && shouldBeAdded(parsedRoomToAdd,$scope)) {
+                    spawnNotification(parsedRoomToAdd.Name, null, "WisR", "/Room?RoomId="+parsedRoomToAdd._id);
+                }
             };
             /// Create a function that the hub can call to broadcast messages.
             /**
