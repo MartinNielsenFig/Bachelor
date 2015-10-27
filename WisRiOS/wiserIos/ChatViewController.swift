@@ -122,7 +122,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
      */
     func stickToBottom() -> Bool {
         if self.messages.count > 1 {
-            return self.isMessageShown(self.messages.count-1) || self.isMessageShown(self.messages.count-2)
+            return self.isMessageShown(self.messages.count-1)
         } else {
             return false
         }

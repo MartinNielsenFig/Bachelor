@@ -47,11 +47,38 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
     //MARK: Utilities
     func addQuestion() {
         
-        if durationInput?.inputField.text == "" {
-            print("tell user to input a duration")
+        var missingInformation = false
+        var informationText = String()
+        
+        if self.questionText?.inputField.text == "" {
+            missingInformation = true
+            informationText += "Question text cannot be empty. "
+        }
+        if self.durationInput?.inputField.text == "" || Double((self.durationInput?.inputField.text)!) == nil {
+            missingInformation = true
+            informationText += "Enter a number in duration. "
+        }
+        if responseOptions.count <= 0 {
+            missingInformation = true
+            informationText += "Need at least one response option."
+        }
+        if missingInformation {
+            let alert = UIAlertController(title: "Missing information", message: informationText, preferredStyle: .Alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: { action in
+                //Do nothing
+            }))
+            self.presentViewController(alert, animated: true, completion: nil)
             return
         }
         
+        //Upload indicator
+        let indicator = UIActivityIndicatorView(activityIndicatorStyle: .WhiteLarge)
+        indicator.color = UIColor.blackColor()
+        indicator.center = self.view.center
+        indicator.startAnimating()
+        self.view.addSubview(indicator)
+        
+        //Create question object and send it
         let q = Question()
         q.CreatedById = CurrentUser.sharedInstance._id
         
@@ -59,18 +86,10 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
         if let selectedImage = selectedImage {
             let imageData = UIImageJPEGRepresentation(selectedImage, 0.8)
             if let imageData = imageData {
-                let imageSizeMb = (imageData.length)/(1024*1024)
-                print("IMAGE SIZE: \(imageSizeMb) MB")
-                
                 let b64 = imageData.base64EncodedStringWithOptions(NSDataBase64EncodingOptions.EncodingEndLineWithCarriageReturn)
-                
-                let b64ImageSizeMb = b64.lengthOfBytesUsingEncoding(NSUTF8StringEncoding)/(1024*1024)
-                print("BASE64 IMAGE SIZE \(b64ImageSizeMb) MB")
-                
                 q.Img = b64
             }
         }
-        
         q.ResponseOptions = responseOptions
         q.QuestionText = questionText?.inputField.text
         q.RoomId = room._id
@@ -78,11 +97,18 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
         
         let jsonQ = JSONSerializer.toJson(q)
         let body = "roomId=\(room._id!)&question=\(jsonQ)&type=MultipleChoiceQuestion"
+        
         HttpHandler.requestWithResponse(action: "Question/CreateQuestion", type: "POST", body: body) { (data, response, error) in
-            
             if error != nil {
                 NSLog("Question tried Created")
-                self.previousNavigationController!.parentViewController?.navigationController!.popViewControllerAnimated(true)
+                
+                dispatch_async(dispatch_get_main_queue()) {
+                    indicator.stopAnimating()
+                    indicator.removeFromSuperview()
+                }
+                
+                
+                
             }
             
         }
