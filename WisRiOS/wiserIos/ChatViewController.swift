@@ -22,7 +22,8 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var textMessageInput: UITextField!
-    @IBOutlet weak var MessageInputStack: UIStackView!
+    @IBOutlet weak var messageInputStack: UIStackView!
+    @IBOutlet weak var messageInputStackContainerView: UIView!
     
     //MARK: Actions
     @IBAction func sendPressed(sender: AnyObject) {
@@ -60,6 +61,15 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func viewDidLoad() {
         print("ChatViewController instantiated, roomId: \(self.roomId)")
         textMessageInput.delegate = self
+        
+        
+        //Add border to keyboard input field
+        //http://stackoverflow.com/questions/17355280/how-to-add-a-border-just-on-the-top-side-of-a-uiview
+        let border = UIView()
+        border.backgroundColor = UIColor.lightGrayColor()
+        border.autoresizingMask = [.FlexibleWidth, .FlexibleBottomMargin]
+        border.frame = CGRectMake(0, 0, self.messageInputStackContainerView.frame.width, 0.5)
+        self.messageInputStackContainerView.addSubview(border)
     }
     
     //Setup registering for keyboard events
@@ -107,7 +117,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     Scrolls to the bottom of the table view presented on this page
     */
     func scrollToBottom() {
-        let chatFieldHeight = self.MessageInputStack.frame.height + 10
+        let chatFieldHeight = self.messageInputStack.frame.height + 10
         dispatch_async(dispatch_get_main_queue()) {
             if self.messages.count > 0 {
                 self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.messages.count-1, inSection: 0), atScrollPosition: UITableViewScrollPosition.Bottom, animated: false)
