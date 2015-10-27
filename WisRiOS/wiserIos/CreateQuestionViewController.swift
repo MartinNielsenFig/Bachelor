@@ -112,8 +112,8 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
                     indicator.removeFromSuperview()
                 }
                 
-                Toast.showToast("Created", durationMs: 1500, presenter: self, imageName: "Checkmark") {
-                    self.questionListViewController.questions += [q]
+                Toast.showToast("Question created", durationMs: 1500, presenter: self, imageName: "Checkmark") {
+                    self.questionListViewController.fetchQuestions()
                     self.dismiss()
                 }
             }
