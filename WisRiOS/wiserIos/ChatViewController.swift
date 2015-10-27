@@ -63,7 +63,6 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         print("ChatViewController instantiated, roomId: \(self.roomId)")
         textMessageInput.delegate = self
         
-        
         //Add border to keyboard input field
         //http://stackoverflow.com/questions/17355280/how-to-add-a-border-just-on-the-top-side-of-a-uiview
         let border = UIView()
@@ -71,6 +70,11 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         border.autoresizingMask = [.FlexibleWidth, .FlexibleBottomMargin]
         border.frame = CGRectMake(0, 0, self.messageInputStackContainerView.frame.width, 0.5)
         self.messageInputStackContainerView.addSubview(border)
+        
+        //Add gesture recognizer to enable swipe keyboard down
+        let swipe = UISwipeGestureRecognizer(target: self, action: "userSwipeDownKeyboard")
+        swipe.direction = UISwipeGestureRecognizerDirection.Down
+        self.messageInputStackContainerView.addGestureRecognizer(swipe)
     }
     
     //Setup registering for keyboard events
@@ -116,6 +120,13 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     //MARK: Utilities
+    
+    
+    func userSwipeDownKeyboard() {
+        print("user did swipe down keyboard")
+        textMessageInput.resignFirstResponder()
+    }
+    
     /**
     Scrolls to the bottom of the table view presented on this page
     */
