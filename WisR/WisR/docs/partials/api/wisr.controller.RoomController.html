@@ -6,4 +6,239 @@
 <div><h2 id="description">Description</h2>
 <div class="description"><div class="wisr-controller-page wisr-controller-roomcontroller-page"><p>Controller for the Room View of the application</p>
 </div></div>
+<div class="member method"><h2 id="methods">Methods</h2>
+<ul class="methods"><li><h3 id="methods_addanswer">AddAnswer()</h3>
+<div class="addanswer"><div class="roomcontroller-addanswer-page"><p>Function for answering a question. Takes the answerchosen and the userId and sends it to the rest-api for validation and persisting</p>
+</div></div>
+</li>
+<li><h3 id="methods_addresponseoption">AddResponseOption()</h3>
+<div class="addresponseoption"><div class="roomcontroller-addresponseoption-page"><p>Function for adding a response option to a question that the user is creating</p>
+</div></div>
+</li>
+<li><h3 id="methods_getusernamebyid">GetUsernameById(userId)</h3>
+<div class="getusernamebyid"><div class="roomcontroller-getusernamebyid-page"><p>Function that checks the collection of ActiveUsers for a user with the given userId, then returns the name of the user or Anonymous if it is not found</p>
+</div><h5 id="methods_getusernamebyid_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>userId</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="roomcontroller-getusernamebyid-page"><p>The userId to look for in the ActiveUsers collection</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_removeresponseoption">RemoveResponseOption()</h3>
+<div class="removeresponseoption"><div class="roomcontroller-removeresponseoption-page"><p>Function for removing a response option to a question that the user is creating</p>
+</div></div>
+</li>
+<li><h3 id="methods_showspecificquestion">ShowSpecificQuestion(question)</h3>
+<div class="showspecificquestion"><div class="roomcontroller-showspecificquestion-page"><p>Function for changing view to a specific question. This function loads the image for the question and starts a timer for the progress bar.
+The function also creates the piechart</p>
+</div><h5 id="methods_showspecificquestion_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>question</td><td><a href="" class="label type-hint type-hint-question">Question</a></td><td><div class="roomcontroller-showspecificquestion-page"><p>The question to change view to.</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_toggleshowquestiontables">ToggleShowQuestionTables()</h3>
+<div class="toggleshowquestiontables"><div class="roomcontroller-toggleshowquestiontables-page"><p>Function that toggles the view between two tables of questions and a specific question. If going from specific question it stops the progress timer</p>
+</div></div>
+</li>
+<li><h3 id="methods_vote">Vote(direction)</h3>
+<div class="vote"><div class="roomcontroller-vote-page"><p>Function for up/downvoting</p>
+</div><h5 id="methods_vote_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>direction</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="roomcontroller-vote-page"><p>Has two possible values &quot;up&quot; and &quot;down&quot;, states whether it is an up- or downvote</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_broadcastchatmessage">broadcastChatMessage(chatMessageToAdd)</h3>
+<div class="broadcastchatmessage"><div class="roomcontroller-broadcastchatmessage-page"><p>SignalR function that is called when a new chat message is created</p>
+</div><h5 id="methods_broadcastchatmessage_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>chatMessageToAdd</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="roomcontroller-broadcastchatmessage-page"><p>The chatmessage that is to be added to the chat</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_broadcastdeletequestion">broadcastDeleteQuestion(questionToDelete)</h3>
+<div class="broadcastdeletequestion"><div class="roomcontroller-broadcastdeletequestion-page"><p>SignalR function call that the question should be deleted</p>
+</div><h5 id="methods_broadcastdeletequestion_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>questionToDelete</td><td><a href="" class="label type-hint type-hint-question">Question</a></td><td><div class="roomcontroller-broadcastdeletequestion-page"><p>The question to delete</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_broadcastdeleteroom">broadcastDeleteRoom(roomToAdd)</h3>
+<div class="broadcastdeleteroom"><div class="roomcontroller-broadcastdeleteroom-page"><p>Function that is called when a room should be deleted, if it is the current room inform the user that the room has been deleted and redirect him to the front page</p>
+</div><h5 id="methods_broadcastdeleteroom_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>roomToAdd</td><td><a href="" class="label type-hint type-hint-room">Room</a></td><td><div class="roomcontroller-broadcastdeleteroom-page"><p>The room to delete</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_broadcastquestion">broadcastQuestion(questionToAdd)</h3>
+<div class="broadcastquestion"><div class="roomcontroller-broadcastquestion-page"><p>SignalR function that a question should be added to the array of questions($scope.Questions)</p>
+</div><h5 id="methods_broadcastquestion_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>questionToAdd</td><td><a href="" class="label type-hint type-hint-question">Question</a></td><td><div class="roomcontroller-broadcastquestion-page"><p>The question to add</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_broadcastupdatequestion">broadcastUpdateQuestion(questionToUpdate)</h3>
+<div class="broadcastupdatequestion"><div class="roomcontroller-broadcastupdatequestion-page"><p>SignalR function that a question should be updated with new information</p>
+</div><h5 id="methods_broadcastupdatequestion_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>questionToUpdate</td><td><a href="" class="label type-hint type-hint-question">Question</a></td><td><div class="roomcontroller-broadcastupdatequestion-page"><p>The question with the new information</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_broadcastupdateresult">broadcastUpdateResult(questionToUpdate)</h3>
+<div class="broadcastupdateresult"><div class="roomcontroller-broadcastupdateresult-page"><p>SignalR function call that the result of a question be updated with new responses</p>
+</div><h5 id="methods_broadcastupdateresult_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>questionToUpdate</td><td><a href="" class="label type-hint type-hint-question">Question</a></td><td><div class="roomcontroller-broadcastupdateresult-page"><p>The question with the new information</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_broadcastupdateroom">broadcastUpdateRoom(roomToUpdate)</h3>
+<div class="broadcastupdateroom"><div class="roomcontroller-broadcastupdateroom-page"><p>SignalR function that is called when the location of a room is changed</p>
+</div><h5 id="methods_broadcastupdateroom_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>roomToUpdate</td><td><a href="" class="label type-hint type-hint-room">Room</a></td><td><div class="roomcontroller-broadcastupdateroom-page"><p>The room where the updated location should happen</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_broadcastupdatevotes">broadcastUpdateVotes(questionToUpdate)</h3>
+<div class="broadcastupdatevotes"><div class="roomcontroller-broadcastupdatevotes-page"><p>SignalR function call that the question should be updated with new votes</p>
+</div><h5 id="methods_broadcastupdatevotes_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>questionToUpdate</td><td><a href="" class="label type-hint type-hint-question">Question</a></td><td><div class="roomcontroller-broadcastupdatevotes-page"><p>The question with the new information</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_createpiechart">createPieChart()</h3>
+<div class="createpiechart"><div class="roomcontroller-createpiechart-page"><p>Function for creating result chart with chartjs and angularjs</p>
+</div></div>
+</li>
+<li><h3 id="methods_deletequestion">deleteQuestion(questionToDelete)</h3>
+<div class="deletequestion"><div class="roomcontroller-deletequestion-page"><p>Function for deleting a specific question</p>
+</div><h5 id="methods_deletequestion_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>questionToDelete</td><td><a href="" class="label type-hint type-hint-question">Question</a></td><td><div class="roomcontroller-deletequestion-page"><p>The question that the user wishes to delete, this can only be done by the user who made the question</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_findwithattr">findWithAttr(array, attr, value)</h3>
+<div class="findwithattr"><div class="roomcontroller-findwithattr-page"><p>Helper function to find index of object in array</p>
+</div><h5 id="methods_findwithattr_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>array</td><td><a href="" class="label type-hint type-hint-array">Array</a></td><td><div class="roomcontroller-findwithattr-page"><p>the array to traverse</p>
+</div></td></tr><tr><td>attr</td><td><a href="" class="label type-hint type-hint-attribute">Attribute</a></td><td><div class="roomcontroller-findwithattr-page"><p>the attribute to check for the value</p>
+</div></td></tr><tr><td>value</td><td><a href="" class="label type-hint type-hint-value">Value</a></td><td><div class="roomcontroller-findwithattr-page"><p>the value to check for in the array property</p>
+</div></td></tr></tbody></table><h5 id="methods_findwithattr_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-integer">Integer</a></td><td><div class="roomcontroller-findwithattr-page"><p>index The index of the value in the array</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="methods_getallusers">getAllUsers()</h3>
+<div class="getallusers"><div class="roomcontroller-getallusers-page"><p>Function that fetches all users</p>
+</div></div>
+</li>
+<li><h3 id="methods_getchatmessages">getChatMessages()</h3>
+<div class="getchatmessages"><div class="roomcontroller-getchatmessages-page"><p>Function that fetches all the chatmessages for the room and sets chatLoaded to true so we can update the view accordingly</p>
+</div></div>
+</li>
+<li><h3 id="methods_getpercentage">getPercentage()</h3>
+<div class="getpercentage"><div class="roomcontroller-getpercentage-page"><p>Function that calculates the percentage time spent since the question was created and until it finishes.</p>
+</div></div>
+</li>
+<li><h3 id="methods_getquestions">getQuestions()</h3>
+<div class="getquestions"><div class="roomcontroller-getquestions-page"><p>Function that fetches all the questions from the database and sets questionsLoaded to true, so that we can change the view accordingly</p>
+</div></div>
+</li>
+<li><h3 id="methods_getroom">getRoom(userIsNotAnonymous)</h3>
+<div class="getroom"><div class="roomcontroller-getroom-page"><p>Function for fetching the room that the user has joined, after we get the response we start fetching the questions, chatmessages and all the users</p>
+</div><h5 id="methods_getroom_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>userIsNotAnonymous</td><td><a href="" class="label type-hint type-hint-boolean">Boolean</a></td><td><div class="roomcontroller-getroom-page"><p>Boolean value that states whether or not the user is anonymous</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_getspecificanswer">getSpecificAnswer(question)</h3>
+<div class="getspecificanswer"><div class="roomcontroller-getspecificanswer-page"><p>Function for figuring out what a specifc user answered on a specific question</p>
+</div><h5 id="methods_getspecificanswer_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>question</td><td><a href="" class="label type-hint type-hint-question">Question</a></td><td><div class="roomcontroller-getspecificanswer-page"><p>The question from which we find the given answer by the user.</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_hasvotes">hasVotes(questionvotes, checkForUpvote)</h3>
+<div class="hasvotes"><div class="roomcontroller-hasvotes-page"><p>Function that checks if user has up/downvoted</p>
+</div><h5 id="methods_hasvotes_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>questionvotes</td><td><a href="" class="label type-hint type-hint-array">Array&lt;Votes&gt;</a></td><td><div class="roomcontroller-hasvotes-page"><p>Array with all the up and downvotes for the question</p>
+</div></td></tr><tr><td>checkForUpvote</td><td><a href="" class="label type-hint type-hint-boolean">Boolean</a></td><td><div class="roomcontroller-hasvotes-page"><p>Boolean value that states whether the function should check for up or downvotes</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_onchartcreate">onChartCreate()</h3>
+<div class="onchartcreate"><div class="roomcontroller-onchartcreate-page"><p>Function that checks if we already have a chart, if we do, destroys it. This is done to get rid of overlapping charts</p>
+</div></div>
+</li>
+<li><h3 id="methods_postchatmessage">postChatMessage(message)</h3>
+<div class="postchatmessage"><div class="roomcontroller-postchatmessage-page"><p>Function for creating a chatMessage</p>
+</div><h5 id="methods_postchatmessage_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>message</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="roomcontroller-postchatmessage-page"><p>The message to pos to the rest-api</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_postquestion">postQuestion()</h3>
+<div class="postquestion"><div class="roomcontroller-postquestion-page"><p>Function for creating a question, this is also used when updating already existing questions. This function takes parameters from scope variables to create the question and sends it all to the roomcontroller where it gets validated and turned into a json object.
+That json object is then sent to the rest-api</p>
+</div></div>
+</li>
+<li><h3 id="methods_resizeimg">resizeImg(img, maxWidth, maxHeight, degress)</h3>
+<div class="resizeimg"><div class="roomcontroller-resizeimg-page"><p>Function to resize image</p>
+</div><h5 id="methods_resizeimg_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>img</td><td><a href="" class="label type-hint type-hint-image">Image</a></td><td><div class="roomcontroller-resizeimg-page"><p>the img that is to be resized</p>
+</div></td></tr><tr><td>maxWidth</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="roomcontroller-resizeimg-page"><p>the max width after resizing</p>
+</div></td></tr><tr><td>maxHeight</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="roomcontroller-resizeimg-page"><p>the max height after resizing</p>
+</div></td></tr><tr><td>degress</td><td><a href="" class="label type-hint type-hint-integer">Integer</a></td><td><div class="roomcontroller-resizeimg-page"><p>the degress to rotate the picture(not used at the moment)</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_setimagemessage">setImageMessage()</h3>
+<div class="setimagemessage"><div class="roomcontroller-setimagemessage-page"><p>Function that sets the image message to loading</p>
+</div></div>
+</li>
+<li><h3 id="methods_setquestioninputs">setQuestionInputs(question)</h3>
+<div class="setquestioninputs"><div class="roomcontroller-setquestioninputs-page"><p>Function to fill information from a question into the update modal window field</p>
+</div><h5 id="methods_setquestioninputs_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>question</td><td><a href="" class="label type-hint type-hint-question">Question</a></td><td><div class="roomcontroller-setquestioninputs-page"><p>the question to fill into the input fields</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_togglecreatemodal">toggleCreateModal(questionid)</h3>
+<div class="togglecreatemodal"><div class="roomcontroller-togglecreatemodal-page"><p>Function to toggle dropdown</p>
+</div><h5 id="methods_togglecreatemodal_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>questionid</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="roomcontroller-togglecreatemodal-page"><p>id for the dropdown to toggle</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_togglecreatemodal">toggleCreateModal(modal)</h3>
+<div class="togglecreatemodal"><div class="roomcontroller-togglecreatemodal-page"><p>Function to fill information from a question into the update modal window field. Also sets the UpdateQuestionBool to false since this is a create call</p>
+</div><h5 id="methods_togglecreatemodal_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>modal</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="roomcontroller-togglecreatemodal-page"><p>the jquery id string for the modal window to toggle</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_toggleimagesize">toggleImageSize()</h3>
+<div class="toggleimagesize"><div class="roomcontroller-toggleimagesize-page"><p>Function that toggles the image size between 500px and 100px</p>
+</div></div>
+</li>
+<li><h3 id="methods_togglemodalwithquestion">toggleModalWithQuestion(modal, question)</h3>
+<div class="togglemodalwithquestion"><div class="roomcontroller-togglemodalwithquestion-page"><p>Function to fill information from a question into the update modal window field</p>
+</div><h5 id="methods_togglemodalwithquestion_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>modal</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="roomcontroller-togglemodalwithquestion-page"><p>the jquery id string for the modal window to toggle</p>
+</div></td></tr><tr><td>question</td><td><a href="" class="label type-hint type-hint-question">Question</a></td><td><div class="roomcontroller-togglemodalwithquestion-page"><p>the question to put into a scope variable so that we can work with it</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_toggleroomlocation">toggleRoomLocation()</h3>
+<div class="toggleroomlocation"><div class="roomcontroller-toggleroomlocation-page"><p>Function for updating the location of the room this can only be done by the roomowner</p>
+</div></div>
+</li>
+<li><h3 id="methods_toggleroomlocation">toggleRoomLocation()</h3>
+<div class="toggleroomlocation"><div class="roomcontroller-toggleroomlocation-page"><p>Function that toggles the view of the google map</p>
+</div></div>
+</li>
+<li><h3 id="methods_validatepassword">validatePassword()</h3>
+<div class="validatepassword"><div class="roomcontroller-validatepassword-page"><p>Function for validating the password. Hashes the users input with SHA512 and checks if it collides with the saved password for the room</p>
+</div></div>
+</li>
+<li><h3 id="methods_watchquestionimage">watchQuestionImage(questionIage)</h3>
+<div class="watchquestionimage"><div class="roomcontroller-watchquestionimage-page"><p>Function that watches the questionImage. This is done so that we can check whether the filesize exceeds our limits. If it does we resize the picture
+After retrieving the userId we fetch the userid from the database.</p>
+</div><h5 id="methods_watchquestionimage_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>questionIage</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="roomcontroller-watchquestionimage-page"><p>The variable that we want to watch</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_watchuserid">watchUserId(userId)</h3>
+<div class="watchuserid"><div class="roomcontroller-watchuserid-page"><p>Function that watches the userId variable, this is done so we can determine whether or not the user is anonymous.
+After retrieving the userId we fetch the userid from the database.</p>
+</div><h5 id="methods_watchuserid_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>userId</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="roomcontroller-watchuserid-page"><p>The variable that we want to watch</p>
+</div></td></tr></tbody></table></div>
+</li>
+</ul>
+</div>
+<div class="member property"><h2 id="properties">Properties</h2>
+<ul class="properties"><li><h3 id="properties_activeusers">ActiveUsers</h3>
+<div class="activeusers"><div class="-activeusers-page"><p>Array that contains all the active users, so that we can fetch their username</p>
+</div><h5 id="properties_activeusers_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-array">Array&lt;ResponseOption&gt;</a></td><td><div class="-activeusers-page"><p>ActiveUsers</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="properties_questiontypes">QuestionTypes</h3>
+<div class="questiontypes"><div class="-questiontypes-page"><p>Array with the different types of questions</p>
+</div><h5 id="properties_questiontypes_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-array">Array&lt;QuestionType&gt;</a></td><td><div class="-questiontypes-page"><p>QuestionTypes</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="properties_responseoptions">ResponseOptions</h3>
+<div class="responseoptions"><div class="-responseoptions-page"><p>Array that contains the response options for a specific question</p>
+</div><h5 id="properties_responseoptions_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-array">Array&lt;ResponseOption&gt;</a></td><td><div class="-responseoptions-page"><p>ResponseOptions</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="properties_specificquestionshown">SpecificQuestionShown</h3>
+<div class="specificquestionshown"><div class="-specificquestionshown-page"><p>Boolean that determines whether a specific question is shown or the two tables with all the questions are shown
+Default is false</p>
+</div><h5 id="properties_specificquestionshown_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-boolean">Boolean</a></td><td><div class="-specificquestionshown-page"><p>SpecificQuestionShown</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="properties_charttype">chartType</h3>
+<div class="charttype"><div class="-charttype-page"><p>Property that determines which kind of chart is created for the results of the question
+Default is &quot;Pie&quot;</p>
+</div><h5 id="properties_charttype_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="-charttype-page"><p>chartType</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="properties_userishost">userIsHost</h3>
+<div class="userishost"><div class="-userishost-page"><p>Boolean that determines whether the user is host of the room
+Default is false</p>
+</div><h5 id="properties_userishost_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-boolean">Boolean</a></td><td><div class="-userishost-page"><p>userIsHost</p>
+</div></td></tr></table></div>
+</li>
+</ul>
+</div>
 </div>

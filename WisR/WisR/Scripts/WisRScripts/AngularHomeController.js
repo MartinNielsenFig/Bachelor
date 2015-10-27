@@ -180,6 +180,7 @@ app.controller("HomeController", [
             var n = new Notification(theTitle, options);
             n.onclick=function() {
                 $window.location.href = link;
+                $window.focus();
             }
             setTimeout(n.close.bind(n), 4000);
         }

@@ -12,3 +12,4 @@ Grunt(herunder ngDocs)
 LDAP login
 Image Resizing
 Rest funktioner uden billeder
+Notifications
