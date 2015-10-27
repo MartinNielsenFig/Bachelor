@@ -345,7 +345,16 @@
   <data name="UpdateQuestion" xml:space="preserve">
     <value>Update</value>
   </data>
+  <data name="AreYouSureDeleteRoom" xml:space="preserve">
+    <value>Are you sure you want to delete the following room?</value>
+  </data>
+  <data name="Disabled" xml:space="preserve">
+    <value>You did not create this</value>
+  </data>
   <data name="NoPictureText" xml:space="preserve">
     <value>No picture</value>
+  </data>
+  <data name="RoomAuthor" xml:space="preserve">
+    <value>Room author</value>
   </data>
 </root>

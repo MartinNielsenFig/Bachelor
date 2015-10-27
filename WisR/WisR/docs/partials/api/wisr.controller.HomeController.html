@@ -15,7 +15,8 @@ The function adds the new room to the Rooms collection.</p>
 </li>
 <li><h3 id="methods_broadcastupdateroom">broadcastUpdateRoom(roomToUpdate)</h3>
 <div class="broadcastupdateroom"><div class="homecontroller-broadcastupdateroom-page"><p>Function that is called when a room has been changed. This gets called by the function &quot;Update&quot; in the RoomHub.
-The function adds the updates to the room in the Rooms collection.</p>
+The function adds the updates to the room in the Rooms collection.
+This function is used when the location of a room is updated.</p>
 </div><h5 id="methods_broadcastupdateroom_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>roomToUpdate</td><td><a href="" class="label type-hint type-hint-room">Room</a></td><td><div class="homecontroller-broadcastupdateroom-page"><p>The room to update in the rooms collection</p>
 </div></td></tr></tbody></table></div>
 </li>
@@ -24,9 +25,14 @@ The function adds the updates to the room in the Rooms collection.</p>
 </div><h5 id="methods_changeviewtoroom_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>room</td><td><a href="" class="label type-hint type-hint-room">Room</a></td><td><div class="homecontroller-changeviewtoroom-page"><p>The room that the view changes to</p>
 </div></td></tr></tbody></table></div>
 </li>
-<li><h3 id="methods_connectwithuniquetag">connectWithUniqueTag()</h3>
-<div class="connectwithuniquetag"><div class="homecontroller-connectwithuniquetag-page"><p>Function that changes view to a specific room, with the tag in the &quot;uniqueRoomTag&quot; property</p>
+<li><h3 id="methods_connectwithuniquesecret">connectWithUniqueSecret()</h3>
+<div class="connectwithuniquesecret"><div class="homecontroller-connectwithuniquesecret-page"><p>Function that changes view to a specific room, with the secret in the &quot;uniqueRoomSecret&quot; property</p>
 </div></div>
+</li>
+<li><h3 id="methods_deleteroom">deleteRoom(roomToDelete)</h3>
+<div class="deleteroom"><div class="homecontroller-deleteroom-page"><p>Function for deleting room</p>
+</div><h5 id="methods_deleteroom_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>roomToDelete</td><td><a href="" class="label type-hint type-hint-room">Room</a></td><td><div class="homecontroller-deleteroom-page"><p>The room to delete</p>
+</div></td></tr></tbody></table></div>
 </li>
 <li><h3 id="methods_getcurrentposition">getCurrentPosition()</h3>
 <div class="getcurrentposition"><div class="homecontroller-getcurrentposition-page"><p>Geolocation function that gets called at load of the home index page to get the location of the user. When the location is fetched the property currentLocation is set with the value and the getRooms function is called.
@@ -41,6 +47,17 @@ At this point the function calls geocode to get the formatted address</p>
 <div class="postroom"><div class="homecontroller-postroom-page"><p>Function to create a new room on the database with the entered information from the modal window.
 If no error is returned, this function calls &quot;changeViewToRoom&quot; and adds room to connected rooms(so that user doesn&#39;t have to enter password)</p>
 </div></div>
+</li>
+<li><h3 id="methods_toggledropdown">toggleDropdown(roomId)</h3>
+<div class="toggledropdown"><div class="homecontroller-toggledropdown-page"><p>Function that toggles the visibility of the dropdown</p>
+</div><h5 id="methods_toggledropdown_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>roomId</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="homecontroller-toggledropdown-page"><p>id used to uniquely identify the dropdown</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_togglemodalwithroom">toggleModalWithRoom(modal, room)</h3>
+<div class="togglemodalwithroom"><div class="homecontroller-togglemodalwithroom-page"><p>Function that toggles the visibility of the modal window and adds the room to a scope variable so that we can show specific information on the modal window</p>
+</div><h5 id="methods_togglemodalwithroom_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>modal</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="homecontroller-togglemodalwithroom-page"><p>id used to uniquely identify the modal</p>
+</div></td></tr><tr><td>room</td><td><a href="" class="label type-hint type-hint-room">Room</a></td><td><div class="homecontroller-togglemodalwithroom-page"><p>room that is being sent to the modal window</p>
+</div></td></tr></tbody></table></div>
 </li>
 <li><h3 id="methods_useridwatch">userIdWatch(room)</h3>
 <div class="useridwatch"><div class="homecontroller-useridwatch-page"><p>Function that watches the userId variable and fetches user from restAPI when it changes</p>
@@ -97,10 +114,10 @@ Default is empty string</p>
 </div><h5 id="properties_rooms_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-array">Array&lt;Room&gt;</a></td><td><div class="-rooms-page"><p>Rooms</p>
 </div></td></tr></table></div>
 </li>
-<li><h3 id="properties_uniquetag">UniqueTag</h3>
-<div class="uniquetag"><div class="-uniquetag-page"><p>Property that is set when creating a new room in the modal window
+<li><h3 id="properties_uniquesecret">UniqueSecret</h3>
+<div class="uniquesecret"><div class="-uniquesecret-page"><p>Property that is set when creating a new room in the modal window
 Default is Empty string</p>
-</div><h5 id="properties_uniquetag_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="-uniquetag-page"><p>UniqueTag</p>
+</div><h5 id="properties_uniquesecret_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="-uniquesecret-page"><p>UniqueSecret</p>
 </div></td></tr></table></div>
 </li>
 <li><h3 id="properties_uselocation">UseLocation</h3>
@@ -137,9 +154,9 @@ Default is true</p>
 </div><h5 id="properties_roomsloaded_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-boolean">Boolean</a></td><td><div class="-roomsloaded-page"><p>roomsLoaded</p>
 </div></td></tr></table></div>
 </li>
-<li><h3 id="properties_uniqueroomtag">uniqueRoomTag</h3>
-<div class="uniqueroomtag"><div class="-uniqueroomtag-page"><p>Property that contains string written in the &quot;UniqueTag&quot; field when trying to connect to a room by unique tag.</p>
-</div><h5 id="properties_uniqueroomtag_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="-uniqueroomtag-page"><p>uniqueRoomTag</p>
+<li><h3 id="properties_uniqueroomsecret">uniqueRoomSecret</h3>
+<div class="uniqueroomsecret"><div class="-uniqueroomsecret-page"><p>Property that contains string written in the &quot;UniqueSecret&quot; field when trying to connect to a room by unique secret.</p>
+</div><h5 id="properties_uniqueroomsecret_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="-uniqueroomsecret-page"><p>uniqueRoomSecret</p>
 </div></td></tr></table></div>
 </li>
 <li><h3 id="properties_userid">userId</h3>

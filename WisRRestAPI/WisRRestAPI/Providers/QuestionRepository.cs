@@ -68,6 +68,12 @@ namespace WisRRestAPI.DomainModel
             return task;
 
         }
+        public Task<DeleteResult> DeleteAllQuestionsForRoomWithRoomId(string roomId)
+        {
+            var task = _database.GetCollection<Question>("question").DeleteManyAsync(x => x.RoomId == roomId);
+            return task;
+
+        }
 
         public Task<Question> UpdateQuestion(string id, Question item)
         {

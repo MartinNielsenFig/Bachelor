@@ -114,6 +114,11 @@ namespace WisR.Providers
                     var ruHub = new RoomHub();
                     ruHub.Update(message);
                     break;
+                case "DeleteRoom":
+                    var rumHub = new RoomHub();
+                    rumHub.Delete(message);
+                    break;
+                    
             }
             lock (_model)
             {

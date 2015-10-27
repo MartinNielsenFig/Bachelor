@@ -18,11 +18,15 @@ namespace WisRRestAPI.Controllers
     public class RoomController : Controller
     {
         private readonly IRoomRepository _rr;
+        private readonly IQuestionRepository _qr;
+        private readonly IChatRepository _cr;
         private IRabbitPublisher _irabbitPublisher;
 
-        public RoomController(IRoomRepository rr, IRabbitPublisher irabbitPublisher)
+        public RoomController(IRoomRepository rr,IChatRepository cr,IQuestionRepository qr, IRabbitPublisher irabbitPublisher)
         {
             _rr = rr;
+            _cr = cr;
+            _qr = qr;
             _irabbitPublisher = irabbitPublisher;
         }
 
@@ -137,9 +141,14 @@ namespace WisRRestAPI.Controllers
         [System.Web.Mvc.HttpDelete]
         public string DeleteRoom(string id)
         {
-            var result = _rr.RemoveRoom(id).Result;
+            //Todo error checking on all these
+            var chatDeleteResult = _cr.DeleteAllChatMessageForRoomWithRoomId(id).Result;
+            var questionDeleteResult = _qr.DeleteAllQuestionsForRoomWithRoomId(id).Result;
+
+            var result = _rr.DeleteRoom(id).Result;
             if (result.DeletedCount == 1)
             {
+                _irabbitPublisher.publishString("DeleteRoom",id);
                 return "Room was deleted";
             }
             var err = new Error("Couldn't find the room to delete", 100);

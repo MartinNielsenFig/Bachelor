@@ -394,6 +394,56 @@ app.controller("HomeController", [
             });
 
         }
+        /**
+      * @ngdoc method
+      * @name HomeController#deleteRoom
+      * @methodOf WisR.controller:HomeController
+      *
+      * @description
+      * Function for deleting room
+      * @param {Room} roomToDelete The room to delete
+      */
+        $scope.deleteRoom = function (roomToDelete) {
+            $http.delete(configs.restHostName + '/Room/DeleteRoom', { params: { id: roomToDelete._id } }).then(function (response) {
+                ///Check for errors on request
+                if (response.data.ErrorMessage != undefined) {
+                    $scope.roomDeleteMessage = response.data.ErrorMessage;
+                    return;
+                } else {
+                    $("#deleteRoomModal").modal("hide");
+                }
+            });
+        }
+
+        //#endregion
+
+        //#region Helper Functions
+        /**
+       * @ngdoc method
+       * @name HomeController#toggleDropdown
+       * @methodOf WisR.controller:HomeController
+       *
+       * @description
+       * Function that toggles the visibility of the dropdown
+       * @param {String} roomId id used to uniquely identify the dropdown
+       */
+        $scope.toggleDropdown = function (roomId) {
+            $("#dropdown" + roomId).dropdown("toggle");
+        }
+        /**
+       * @ngdoc method
+       * @name HomeController#toggleModalWithRoom
+       * @methodOf WisR.controller:HomeController
+       *
+       * @description
+       * Function that toggles the visibility of the modal window and adds the room to a scope variable so that we can show specific information on the modal window
+       * @param {String} modal id used to uniquely identify the modal
+       * @param {Room} room room that is being sent to the modal window
+       */
+        $scope.toggleModalWithRoom = function (modal, room) {
+            $scope.SpecificRoom = room;
+            $(modal).modal('toggle');        
+        }
         //#endregion
     }
 ]);

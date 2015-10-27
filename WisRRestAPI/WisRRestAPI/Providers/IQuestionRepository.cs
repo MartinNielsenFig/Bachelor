@@ -20,6 +20,7 @@ namespace WisRRestAPI.DomainModel
         void AddQuestion(Question item);
         void AddQuestionObject(object item);
         Task<DeleteResult> DeleteQuestion(string id);
+        Task<DeleteResult> DeleteAllQuestionsForRoomWithRoomId(string roomId);
         Task<Question> UpdateQuestion(string id, Question item);
         UpdateResult UpdateQuestionResults(string id, Question item);
         UpdateResult UpdateQuestionVotes(string id, Question item);

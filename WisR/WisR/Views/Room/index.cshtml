@@ -37,6 +37,9 @@
                                     <td title="@WisR.App_Resources.Resource.AuthorOfQuestion">{{GetUsernameById(question.CreatedById)}}</td>
                                     <td title="@WisR.App_Resources.Resource.AmountOfUpvotes">{{question.Votes | CountVotes: 1}}<span ng-class="{'upvoted':hasVoted({{question.Votes}},true)}" class="glyphicon glyphicon-thumbs-up"></span></td>
                                     <td title="@WisR.App_Resources.Resource.AmountOfDownvotes">{{question.Votes | CountVotes: -1}}<span ng-class="{'downvoted':hasVoted({{question.Votes}},false)}" class="glyphicon glyphicon-thumbs-down"></span></td>
+                                    <td ng-show="question.CreatedById!=currentUser._id" title="@WisR.App_Resources.Resource.Disabled">
+                                        <span class="glyphicon glyphicon-option-vertical text-muted"></span>
+                                    </td>
                                     <td ng-hide="question.CreatedById!=currentUser._id" title="@WisR.App_Resources.Resource.Edit" ng-click="toggleDropdown(question._id);$event.stopPropagation();">
                                         <span class="glyphicon glyphicon-option-vertical"></span>
                                         <div class="dropdown" style="margin-left:-150px">
@@ -65,6 +68,9 @@
                                         <td title="@WisR.App_Resources.Resource.AuthorOfQuestion">{{GetUsernameById(question.CreatedById)}}</td>
                                         <td title="@WisR.App_Resources.Resource.AmountOfUpvotes">{{question.Votes | CountVotes: 1}}<span ng-class="{'upvoted':hasVoted({{question.Votes}},true)}" class="glyphicon glyphicon-thumbs-up"></span></td>
                                         <td title="@WisR.App_Resources.Resource.AmountOfDownvotes">{{question.Votes | CountVotes: -1}}<span ng-class="{'downvoted':hasVoted({{question.Votes}},false)}" class="glyphicon glyphicon-thumbs-down"></span></td>
+                                        <td ng-show="question.CreatedById!=currentUser._id" title="@WisR.App_Resources.Resource.Disabled">
+                                            <span class="glyphicon glyphicon-option-vertical text-muted"></span>
+                                        </td>
                                         <td ng-hide="question.CreatedById!=currentUser._id" title="@WisR.App_Resources.Resource.Edit" ng-click="toggleDropdown(question._id);$event.stopPropagation();">
                                             <span class="glyphicon glyphicon-option-vertical"></span>
                                             <div class="dropdown" style="margin-left:-150px">
@@ -258,7 +264,7 @@
                 </div>
             </div>
         </div>
-    <!--Modal end-->
+        <!--Modal end-->
         <!-- Modal for deleting question --> <!--Stops modal from closing-->
         <div class="modal fade" id="deleteQuestionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false" data-keyboard="false">
             <div class="modal-dialog center">
@@ -267,7 +273,7 @@
                         <form>
                             <div class="row">
                                 <h4 class="col-md-12 text-center">@WisR.App_Resources.Resource.AreYouSureDeleteQuestion</h4>
-                                <br/>
+                                <br />
                                 <label class="col-md-6 text-center">@WisR.App_Resources.Resource.QuestionText</label>
                                 <p class="col-md-6">{{SpecificQuestion.QuestionText}}</p>
                                 <label class="col-md-6 text-center">@WisR.App_Resources.Resource.AuthorOfQuestion</label>
@@ -287,7 +293,7 @@
                 </div>
             </div>
         </div>
-    <!--Modal end-->
+        <!--Modal end-->
 
         <script type="text/javascript">
             var MyRoomIdFromViewBag = '@ViewBag.roomId';

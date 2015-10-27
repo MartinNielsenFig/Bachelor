@@ -83,7 +83,7 @@ namespace WisRRestAPI.Controllers
         [System.Web.Mvc.HttpDelete]
         public string DeleteChatMessage(string id)
         {
-            var result = _cr.RemoveChatMessage(id).Result;
+            var result = _cr.DeleteChatMessage(id).Result;
             if (result.DeletedCount == 1)
             {
                 return "ChatMessage was deleted";

@@ -345,7 +345,16 @@
   <data name="UpdateQuestion" xml:space="preserve">
     <value>Opdatér</value>
   </data>
+  <data name="AreYouSureDeleteRoom" xml:space="preserve">
+    <value>Er du sikker på du vil slette følgende rum?</value>
+  </data>
+  <data name="Disabled" xml:space="preserve">
+    <value>Du har ikke oprettet dette</value>
+  </data>
   <data name="NoPictureText" xml:space="preserve">
     <value>Intet billede</value>
+  </data>
+  <data name="RoomAuthor" xml:space="preserve">
+    <value>Rumopretter</value>
   </data>
 </root>

@@ -14,7 +14,7 @@ namespace WisRRestAPI.DomainModel
         Task<Room> GetRoom(string id);
         Task<Room> GetRoomBySecret(string secret);
         string AddRoom(Room item);
-        Task<DeleteResult> RemoveRoom(string id);
+        Task<DeleteResult> DeleteRoom(string id);
         Task<Room> UpdateRoom(string id, Room item);
     }
 }

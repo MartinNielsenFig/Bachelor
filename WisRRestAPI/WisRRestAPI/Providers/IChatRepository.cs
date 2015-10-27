@@ -13,7 +13,8 @@ namespace WisRRestAPI.Providers
         Task<List<ChatMessage>> GetAllChatMessagesByRoomId(string roomId);
         Task<ChatMessage> GetChatMessage(string id);
         string AddChatMessage(ChatMessage item);
-        Task<DeleteResult> RemoveChatMessage(string id);
+        Task<DeleteResult> DeleteChatMessage(string id);
+        Task<DeleteResult> DeleteAllChatMessageForRoomWithRoomId(string roomId);
         Task<ChatMessage> UpdateChatMessage(string id, ChatMessage item);
     }
 }

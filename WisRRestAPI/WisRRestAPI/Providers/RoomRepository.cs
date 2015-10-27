@@ -42,7 +42,7 @@ namespace WisRRestAPI.DomainModel
 
         }
 
-        public Task<DeleteResult> RemoveRoom(string id)
+        public Task<DeleteResult> DeleteRoom(string id)
         {
             var task = _database.GetCollection<Room>("room").DeleteOneAsync(x => x.Id == id);
             return task;

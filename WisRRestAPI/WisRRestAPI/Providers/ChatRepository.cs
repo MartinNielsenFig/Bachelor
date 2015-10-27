@@ -39,9 +39,15 @@ namespace WisRRestAPI.Providers
             return item.Id.ToString();
         }
 
-        public Task<DeleteResult> RemoveChatMessage(string id)
+        public Task<DeleteResult> DeleteChatMessage(string id)
         {
             var task = _database.GetCollection<ChatMessage>("chatmessage").DeleteOneAsync(x => x.Id == id);
+            return task;
+        }
+
+        public Task<DeleteResult> DeleteAllChatMessageForRoomWithRoomId(string roomId)
+        {
+            var task = _database.GetCollection<ChatMessage>("chatmessage").DeleteManyAsync(x => x.RoomId == roomId);
             return task;
         }
 

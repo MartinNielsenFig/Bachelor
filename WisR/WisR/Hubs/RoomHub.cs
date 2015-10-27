@@ -24,5 +24,12 @@ namespace WisR.Hubs
             var context = GlobalHost.ConnectionManager.GetHubContext<RoomHub>();
             context.Clients.All.broadcastUpdateRoom(room);
         }
+
+        public void Delete(string room)
+        {
+            // Call the broadcastMessage method to update clients.
+            var context = GlobalHost.ConnectionManager.GetHubContext<RoomHub>();
+            context.Clients.All.broadcastDeleteRoom(room);
+        }
     }
 }

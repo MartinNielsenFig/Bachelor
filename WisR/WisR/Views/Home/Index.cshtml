@@ -39,6 +39,21 @@
                                 <span ng-show="room.UsersCanAsk" title="@WisR.App_Resources.Resource.UsersCanAsk" class="glyphicon glyphicon-question-sign right"></span>
                                 <span ng-show="room.AllowAnonymous" title="@WisR.App_Resources.Resource.AnonymousUsersAllowed" class="glyphicon glyphicon-eye-close"></span>
                             </td>
+                            <td ng-show="room.CreatedById!=currentUser._id" title="@WisR.App_Resources.Resource.Disabled">
+                                <span class="glyphicon glyphicon-option-vertical text-muted"></span>
+                            </td>
+                            <td ng-hide="room.CreatedById!=currentUser._id" title="@WisR.App_Resources.Resource.Edit" ng-click="toggleDropdown(room._id);$event.stopPropagation();">
+                                <span class="glyphicon glyphicon-option-vertical"></span>
+                                <div class="dropdown" style="margin-left:-150px">
+                                    <button ng-hide="true" class="btn btn-default dropdown-toggle" type="button" id="dropdown{{room._id}}" data-toggle="dropdown">
+                                        Dropdown
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                        <li ng-click="toggleModalWithRoom('#deleteRoomModal',room)"><a>@WisR.App_Resources.Resource.Delete</a></li>
+                                    </ul>
+                                </div>
+                            </td>
 
                         </tr>
                     </table>
@@ -88,7 +103,7 @@
                         <label class="col-md-6">@WisR.App_Resources.Resource.UseLocation</label> <input ng-model="UseLocation" class="col-md-6" type="checkbox" />
                     </div>
                     <div ng-show="UseLocation" class="row">
-                        <label class="col-md-6">Radius</label> <input ng-model="Radius" class="col-md-6" type="range" max="200" step="75" min="50"/>
+                        <label class="col-md-6">Radius</label> <input ng-model="Radius" class="col-md-6" type="range" max="200" step="75" min="50" />
                         <div class="col-md-6"></div><p>{{Radius}} Meters</p>
                     </div>
                     <div class="row">
@@ -111,6 +126,33 @@
 
         </div>
 
+    </div>
+</div>
+<!--Modal end-->
+<!-- Modal for deleting question --> <!--Stops modal from closing-->
+<div class="modal fade" id="deleteRoomModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false" data-keyboard="false">
+    <div class="modal-dialog center">
+        <div class="modal-content modal-heigh">
+            <div class="modal-body">
+                <form>
+                    <div class="row">
+                        <h4 class="col-md-12 text-center">@WisR.App_Resources.Resource.AreYouSureDeleteRoom</h4>
+                        <br />
+                        <label class="col-md-6 text-center">@WisR.App_Resources.Resource.RoomName</label>
+                        <p class="col-md-6">{{SpecificRoom.Name}}</p>
+                        <div class="col-md-12 text-center">
+                            <button id="DeleteSubmitButton" type="submit" ng-click="deleteRoom(SpecificRoom)" class="btn btn-primary">@WisR.App_Resources.Resource.Delete</button>
+                            <span>
+                                <button id="DeleteCancelButton" type="button" class="btn btn-primary" data-dismiss="modal">@WisR.App_Resources.Resource.Cancel</button>
+                            </span>
+                        </div>
+                        <div class="col-md-12 text-center">
+                            {{roomDeleteMessage}}
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 <!--Modal end-->
