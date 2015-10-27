@@ -12,10 +12,10 @@ public class ActivityLayoutHelper {
 
     public static void HideLayout(Window myWindow, ActionBar actionbar)
     {
-        myWindow.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        View decorView = myWindow.getDecorView();
-        int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
-        decorView.setSystemUiVisibility(uiOptions);
+        //myWindow.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        //View decorView = myWindow.getDecorView();
+        //int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
+        //decorView.setSystemUiVisibility(uiOptions);
         actionbar.hide();
     }
 }

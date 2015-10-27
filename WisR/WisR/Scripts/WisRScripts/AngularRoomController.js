@@ -62,6 +62,14 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
 
             $scope.$apply();
         };
+        ////SignalR function call that the question should be deleted
+        hub.client.broadcastDeleteQuestion = function (questionToDelete) {
+            var index = findWithAttr($scope.Questions, "_id", questionToDelete);
+            if (index > -1) {
+                $scope.Questions.splice(index, 1);
+                $scope.$apply();
+            }
+        };
         ////SignalR function call that the question should be updated with new responses
         hub.client.broadcastUpdateResult = function (questionToUpdate) {
             var updateTemp = JSON.parse(questionToUpdate);
@@ -153,7 +161,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
                             $scope.$apply();                            
                             //$scope.questionImage.base64 = "R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==";
                         }           
-                    } else {
+                    } else {                   
                         $scope.imageTooBig = false;
                         $scope.ImageMessage = null;
                     }
@@ -164,6 +172,9 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
     //#region ImageFunctions
     ///Image toggle functions
     $scope.toggleImageSize = function () {
+        if ($scope.NoPicture) {
+            return;
+        }
         if ($scope.imageSize == undefined || $scope.imageSize == "100px") {
             $scope.imageSize = "500px";
         } else {
@@ -194,20 +205,43 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
     ///Function for creating a question
     $scope.postQuestion = function () {
         $("#myModalCreate").modal("hide");
+
         var newResponses = "";
         for (var i = 0; i < $scope.ResponseOptions.length; i++) {
             if (i != $scope.ResponseOptions.length - 1) {
-                newResponses = newResponses + $scope.ResponseOptions[i].val + ',';
+                newResponses = newResponses + $scope.ResponseOptions[i].Value + ',';
             } else {
-                newResponses = newResponses + $scope.ResponseOptions[i].val;
+                newResponses = newResponses + $scope.ResponseOptions[i].Value;
             }
 
         }
+        var image;
+
+        if ($scope.UpdateQuestionBool) {
+            //if this is an update question, the image will be in $scope.questionImage instead of $scope.questionImage.base64, but only if the picture hasn't changed
+            if ($scope.questionImage.base64 == undefined) {
+                image = $scope.questionImage;
+            } else {
+                image = $scope.questionImage.base64;
+            }
+
+        } else {
+            if ($scope.questionImage == undefined) {
+                image = null;
+            } else {
+                image = $scope.questionImage.base64;
+            }
+        }
         ///Make get request for json object conversion
-        $http.post('/Room/toJsonQuestion', { CreatedBy: $window.userId, RoomId: MyRoomIdFromViewBag, Image: $scope.questionImage != undefined ? $scope.questionImage.base64 : "R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==", QuestionText: $scope.QuestionText, ResponseOptions: newResponses, ExpireTimestamp: $scope.ExpirationTime, QuetionsType: $scope.QuestionType }).
+        $http.post('/Room/toJsonQuestion', { CreatedBy: $window.userId, RoomId: MyRoomIdFromViewBag, Image: image, QuestionText: $scope.QuestionText, ResponseOptions: newResponses, ExpireTimestamp: $scope.ExpirationTime, QuetionsType: $scope.QuestionType }).
             then(function (response) {
                 ///Use response to send to REST API
-                $http.post(configs.restHostName + '/Question/CreateQuestion', { question: JSON.stringify(response.data), type: $scope.QuestionType.val });
+                $http.post(configs.restHostName + '/Question/CreateQuestion', { question: JSON.stringify(response.data), type: $scope.QuestionType });
+                //Check if this function call is an update or a create
+                if ($scope.UpdateQuestionBool) {
+                    //Delete the old question
+                    $scope.deleteQuestion($scope.SpecificQuestion);
+                }
             });
     }
 
@@ -256,7 +290,15 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
         $scope.progressCancel = $interval($scope.getPercentage, 1000);
         ///Start getting the image for the specific question
         $http.get(configs.restHostName + '/Question/GetImageByQuestionId?questionId=' + question._id).then(function (response) {
-            $scope.SpecificQuestion.Img = response.data;
+            if (response.data === "") {
+                $scope.SpecificQuestion.Img = configs.noImgBase64;
+                $("#specificQuestionImage").prop('title', Resources.NoPictureText);
+                $scope.NoPicture = true;
+            } else {
+                $scope.SpecificQuestion.Img = response.data;
+                $("#specificQuestionImage").prop('title', Resources.ClickToChangeImageSize);
+                $scope.NoPicture = false;
+            }
             $scope.specificImageLoaded = true;
         });
         $scope.createPieChart();
@@ -301,6 +343,17 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
             $scope.progressCancel = undefined;
             $scope.showProgressBar = false;
         }
+    }
+    $scope.deleteQuestion=function(questionToDelete) {
+        $http.delete(configs.restHostName + '/Question/DeleteQuestion', { params: {id: questionToDelete._id} }).then(function (response) {
+            ///Check for errors on request
+            if (response.data.ErrorMessage != undefined) {
+                $scope.questionDeleteMessage = response.data.ErrorMessage;
+                return;
+            } else {
+                $("#deleteQuestionModal").modal("hide");
+            }
+        });
     }
     ///#endregion
 
@@ -577,6 +630,33 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
                 return i;
             }
         }
+        return -1;
+    }
+    var setQuestionInputs = function (question) {
+        $scope.QuestionText = question.QuestionText;
+        $scope.QuestionType = question._t;
+        $(function () {
+            $("#questionTypeId option[value='"+question._t+"']").prop('selected', true);
+            //$("#questionTypeId").val(question._t);
+        });
+        
+        $scope.ResponseOptions = question.ResponseOptions;
+        $scope.questionImage = question.Img;
+        $scope.ExpirationTime = 0;
+    }
+    $scope.toggleModalWithQuestion=function(modal, question) {
+        $(modal).modal('toggle');
+        $scope.SpecificQuestion = question;
+        if (modal === '#myModalCreate') {
+            $scope.UpdateQuestionBool = true;// if called from here it is an update
+            setQuestionInputs(question);
+        }
+        
+    }
+    
+    $scope.toggleCreateModal = function (modal, question) {
+        $(modal).modal('toggle');
+        $scope.UpdateQuestionBool = false; //if called from here, it is a create
     }
     $scope.toggleDropdown=function(questionId) {
         $("#dropdown" + questionId).dropdown("toggle");

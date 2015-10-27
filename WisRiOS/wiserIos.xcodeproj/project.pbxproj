@@ -37,14 +37,14 @@
 		CB9FF7D21B8F2B70003A193B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9FF7D11B8F2B70003A193B /* User.swift */; };
 		CBA4372C1B8DEA8E00EF3E01 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBA4372B1B8DEA8E00EF3E01 /* CoreLocation.framework */; };
 		CBA437301B8DF5A500EF3E01 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBA4372F1B8DF5A500EF3E01 /* MapKit.framework */; };
-		CBB34B091BAF549C00CA98DD /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBB34B071BAF549C00CA98DD /* FBSDKCoreKit.framework */; };
-		CBB34B0A1BAF549C00CA98DD /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBB34B081BAF549C00CA98DD /* FBSDKLoginKit.framework */; };
 		CBB4D7D71BA189EC001C531D /* LogonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB4D7D61BA189EC001C531D /* LogonViewController.swift */; };
 		CBB4D7D91BA1A567001C531D /* RoomPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB4D7D81BA1A567001C531D /* RoomPageViewController.swift */; };
 		CBB4D7DB1BA1A664001C531D /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB4D7DA1BA1A664001C531D /* QuestionViewController.swift */; };
 		CBB4D7DD1BA1A887001C531D /* Paged.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB4D7DC1BA1A887001C531D /* Paged.swift */; };
 		CBB60B2F1B9718EC0007A47B /* CreateRoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB60B2E1B9718EC0007A47B /* CreateRoomViewController.swift */; };
 		CBB60B311B97253A0007A47B /* SegmentedInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBB60B301B97253A0007A47B /* SegmentedInputCell.swift */; };
+		CBBB0C651BDEE5C700AC6F5C /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBBB0C581BDEE5B600AC6F5C /* FBSDKCoreKit.framework */; };
+		CBBB0C661BDEE5CD00AC6F5C /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBBB0C621BDEE5BC00AC6F5C /* FBSDKLoginKit.framework */; };
 		CBBE94901BD9171B007C0EB7 /* Updater.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBBE948F1BD9171B007C0EB7 /* Updater.swift */; };
 		CBCD3F481BB96F0100E53F76 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBCD3F471BB96EF800E53F76 /* Charts.framework */; };
 		CBCD3F491BB96F0100E53F76 /* Charts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CBCD3F471BB96EF800E53F76 /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -92,6 +92,34 @@
 			proxyType = 1;
 			remoteGlobalIDString = CB371ED51BCD1D8A004D0E12;
 			remoteInfo = JsonSerializerSwift;
+		};
+		CBBB0C571BDEE5B600AC6F5C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CBBB0C4E1BDEE5B600AC6F5C /* FBSDKCoreKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9D2697471A5DF40700143BFC;
+			remoteInfo = FBSDKCoreKit;
+		};
+		CBBB0C591BDEE5B600AC6F5C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CBBB0C4E1BDEE5B600AC6F5C /* FBSDKCoreKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9D2697521A5DF40700143BFC;
+			remoteInfo = FBSDKCoreKitTests;
+		};
+		CBBB0C611BDEE5BC00AC6F5C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CBBB0C5B1BDEE5BC00AC6F5C /* FBSDKLoginKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9D9DB8D91A114E500086167B;
+			remoteInfo = FBSDKLoginKit;
+		};
+		CBBB0C631BDEE5BC00AC6F5C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CBBB0C5B1BDEE5BC00AC6F5C /* FBSDKLoginKit.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 9D9DB8E41A114E500086167B;
+			remoteInfo = FBSDKLoginKitTests;
 		};
 		CBCD3F461BB96EF800E53F76 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -180,14 +208,14 @@
 		CB9FF7D11B8F2B70003A193B /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		CBA4372B1B8DEA8E00EF3E01 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		CBA4372F1B8DF5A500EF3E01 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
-		CBB34B071BAF549C00CA98DD /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = "../../../FacebookSDKs-iOS-20150910/FBSDKCoreKit.framework"; sourceTree = "<group>"; };
-		CBB34B081BAF549C00CA98DD /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = "../../../FacebookSDKs-iOS-20150910/FBSDKLoginKit.framework"; sourceTree = "<group>"; };
 		CBB4D7D61BA189EC001C531D /* LogonViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogonViewController.swift; sourceTree = "<group>"; };
 		CBB4D7D81BA1A567001C531D /* RoomPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomPageViewController.swift; sourceTree = "<group>"; };
 		CBB4D7DA1BA1A664001C531D /* QuestionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionViewController.swift; sourceTree = "<group>"; };
 		CBB4D7DC1BA1A887001C531D /* Paged.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Paged.swift; sourceTree = "<group>"; };
 		CBB60B2E1B9718EC0007A47B /* CreateRoomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CreateRoomViewController.swift; path = Assets.xcassets/CreateRoomViewController.swift; sourceTree = "<group>"; };
 		CBB60B301B97253A0007A47B /* SegmentedInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SegmentedInputCell.swift; sourceTree = "<group>"; };
+		CBBB0C4E1BDEE5B600AC6F5C /* FBSDKCoreKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FBSDKCoreKit.xcodeproj; path = "../../facebook-ios-sdk/FBSDKCoreKit/FBSDKCoreKit.xcodeproj"; sourceTree = "<group>"; };
+		CBBB0C5B1BDEE5BC00AC6F5C /* FBSDKLoginKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FBSDKLoginKit.xcodeproj; path = "../../facebook-ios-sdk/FBSDKLoginKit/FBSDKLoginKit.xcodeproj"; sourceTree = "<group>"; };
 		CBBE948F1BD9171B007C0EB7 /* Updater.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Updater.swift; sourceTree = "<group>"; };
 		CBCD3F421BB96EF800E53F76 /* Charts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Charts.xcodeproj; path = "../../ios-charts/Charts/Charts.xcodeproj"; sourceTree = "<group>"; };
 		CBCD8B281BB409C0002ACBC4 /* QuestionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionViewCell.swift; sourceTree = "<group>"; };
@@ -203,11 +231,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CBBB0C661BDEE5CD00AC6F5C /* FBSDKLoginKit.framework in Frameworks */,
+				CBBB0C651BDEE5C700AC6F5C /* FBSDKCoreKit.framework in Frameworks */,
 				CBA437301B8DF5A500EF3E01 /* MapKit.framework in Frameworks */,
-				CBB34B091BAF549C00CA98DD /* FBSDKCoreKit.framework in Frameworks */,
 				CBCD3F481BB96F0100E53F76 /* Charts.framework in Frameworks */,
 				CBF51C9F1BC54EA2002F2732 /* CryptoSwift.framework in Frameworks */,
-				CBB34B0A1BAF549C00CA98DD /* FBSDKLoginKit.framework in Frameworks */,
 				CB4D73471BCD1FE70004A896 /* JsonSerializerSwift.framework in Frameworks */,
 				CBA4372C1B8DEA8E00EF3E01 /* CoreLocation.framework in Frameworks */,
 			);
@@ -310,11 +338,11 @@
 		CB847E811B9EC0CC00D1C230 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CBBB0C4E1BDEE5B600AC6F5C /* FBSDKCoreKit.xcodeproj */,
+				CBBB0C5B1BDEE5BC00AC6F5C /* FBSDKLoginKit.xcodeproj */,
 				CB4D733B1BCD1FDE0004A896 /* JsonSerializerSwift.xcodeproj */,
 				CBF51C941BC54E78002F2732 /* CryptoSwift.xcodeproj */,
 				CBCD3F421BB96EF800E53F76 /* Charts.xcodeproj */,
-				CBB34B071BAF549C00CA98DD /* FBSDKCoreKit.framework */,
-				CBB34B081BAF549C00CA98DD /* FBSDKLoginKit.framework */,
 				CBA4372B1B8DEA8E00EF3E01 /* CoreLocation.framework */,
 				CBA4372F1B8DF5A500EF3E01 /* MapKit.framework */,
 			);
@@ -349,6 +377,24 @@
 				CB84F8B21BB13FA400CD07AD /* ReturnMessage.swift */,
 			);
 			name = Models;
+			sourceTree = "<group>";
+		};
+		CBBB0C4F1BDEE5B600AC6F5C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CBBB0C581BDEE5B600AC6F5C /* FBSDKCoreKit.framework */,
+				CBBB0C5A1BDEE5B600AC6F5C /* FBSDKCoreKitTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CBBB0C5C1BDEE5BC00AC6F5C /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CBBB0C621BDEE5BC00AC6F5C /* FBSDKLoginKit.framework */,
+				CBBB0C641BDEE5BC00AC6F5C /* FBSDKLoginKitTests.xctest */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		CBCD3F431BB96EF800E53F76 /* Products */ = {
@@ -453,6 +499,14 @@
 					ProjectRef = CBF51C941BC54E78002F2732 /* CryptoSwift.xcodeproj */;
 				},
 				{
+					ProductGroup = CBBB0C4F1BDEE5B600AC6F5C /* Products */;
+					ProjectRef = CBBB0C4E1BDEE5B600AC6F5C /* FBSDKCoreKit.xcodeproj */;
+				},
+				{
+					ProductGroup = CBBB0C5C1BDEE5BC00AC6F5C /* Products */;
+					ProjectRef = CBBB0C5B1BDEE5BC00AC6F5C /* FBSDKLoginKit.xcodeproj */;
+				},
+				{
 					ProductGroup = CB4D733C1BCD1FDE0004A896 /* Products */;
 					ProjectRef = CB4D733B1BCD1FDE0004A896 /* JsonSerializerSwift.xcodeproj */;
 				},
@@ -485,6 +539,34 @@
 			fileType = wrapper.cfbundle;
 			path = JsonSerializerSwiftTests.xctest;
 			remoteRef = CB4D73451BCD1FDE0004A896 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CBBB0C581BDEE5B600AC6F5C /* FBSDKCoreKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = FBSDKCoreKit.framework;
+			remoteRef = CBBB0C571BDEE5B600AC6F5C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CBBB0C5A1BDEE5B600AC6F5C /* FBSDKCoreKitTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = FBSDKCoreKitTests.xctest;
+			remoteRef = CBBB0C591BDEE5B600AC6F5C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CBBB0C621BDEE5BC00AC6F5C /* FBSDKLoginKit.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = FBSDKLoginKit.framework;
+			remoteRef = CBBB0C611BDEE5BC00AC6F5C /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CBBB0C641BDEE5BC00AC6F5C /* FBSDKLoginKitTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = FBSDKLoginKitTests.xctest;
+			remoteRef = CBBB0C631BDEE5BC00AC6F5C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		CBCD3F471BB96EF800E53F76 /* Charts.framework */ = {

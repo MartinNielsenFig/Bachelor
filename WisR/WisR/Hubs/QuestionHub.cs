@@ -34,5 +34,12 @@ namespace WisR.Hubs
             var context = GlobalHost.ConnectionManager.GetHubContext<QuestionHub>();
             context.Clients.All.broadcastUpdateVotes(question);
         }
+
+        public void Delete(string message)
+        {
+            // Call the broadcastdeletemessage method to delete question.
+            var context = GlobalHost.ConnectionManager.GetHubContext<QuestionHub>();
+            context.Clients.All.broadcastDeleteQuestion(message);
+        }
     }
 }

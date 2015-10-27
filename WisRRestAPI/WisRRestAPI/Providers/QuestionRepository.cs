@@ -62,7 +62,7 @@ namespace WisRRestAPI.DomainModel
             _database.GetCollection<Question>("question").InsertOneAsync(item);
         }
 
-        public Task<DeleteResult> RemoveQuestion(string id)
+        public Task<DeleteResult> DeleteQuestion(string id)
         {
             var task = _database.GetCollection<Question>("question").DeleteOneAsync(x => x.Id == id);
             return task;

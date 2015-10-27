@@ -94,6 +94,10 @@ namespace WisR.Providers
                     var updateQuestionHub = new QuestionHub();
                     updateQuestionHub.Update(message);
                     break;
+                case "DeleteQuestion":
+                    var qqhub = new QuestionHub();
+                    qqhub.Delete(message);
+                    break;
                 case "CreateChatMessage":
                     var chatHub = new ChatHub();
                     chatHub.Send(message);

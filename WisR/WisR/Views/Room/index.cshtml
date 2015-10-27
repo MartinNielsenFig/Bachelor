@@ -28,8 +28,8 @@
                 <div class="col-md-8">
                     <h4>@WisR.App_Resources.Resource.HostQuestions</h4>
 
-                    <div style="overflow-y: auto; overflow-x: visible; max-height: 200px; min-height: 200px">
-                        <table id="hostQuestionsTable" class="table table-hover table-responsive">
+                    <div style="overflow-y: auto; max-height: 200px; min-height: 200px">
+                        <table id="hostQuestionsTable" class="table table-hover table-responsive" style="overflow:visible">
                             @*The ng-if Disables the initial animation of the rows *@
                             <tbody ng-if="specificRoomLoaded && questionsLoaded">
                                 <tr style="cursor: pointer" ng-class="{blink_me:!question.Votes.length}" ng-repeat="question in Questions|filter: { RoomId: '@ViewBag.roomId',CreatedById: CurrentRoom.CreatedById }" ng-click="ShowSpecificQuestion(question)">
@@ -39,14 +39,14 @@
                                     <td title="@WisR.App_Resources.Resource.AmountOfDownvotes">{{question.Votes | CountVotes: -1}}<span ng-class="{'downvoted':hasVoted({{question.Votes}},false)}" class="glyphicon glyphicon-thumbs-down"></span></td>
                                     <td ng-hide="question.CreatedById!=currentUser._id" title="@WisR.App_Resources.Resource.Edit" ng-click="toggleDropdown(question._id);$event.stopPropagation();">
                                         <span class="glyphicon glyphicon-option-vertical"></span>
-                                        <div class="dropdown">
+                                        <div class="dropdown" style="margin-left:-150px">
                                             <button ng-hide="true" class="btn btn-default dropdown-toggle" type="button" id="dropdown{{question._id}}" data-toggle="dropdown">
                                                 Dropdown
                                                 <span class="caret"></span>
                                             </button>
-                                            <ul class="dropdown-menu" style="position: relative;z-index: 1" aria-labelledby="dropdownMenu1">
-                                                <li><a href="#">Update</a></li>
-                                                <li><a href="#">Delete</a></li>
+                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                                <li ng-click="toggleModalWithQuestion('#myModalCreate',question)"><a>@WisR.App_Resources.Resource.Update</a></li>
+                                                <li ng-click="toggleModalWithQuestion('#deleteQuestionModal',question)"><a>@WisR.App_Resources.Resource.Delete</a></li>
                                             </ul>
                                         </div>
                                     </td>
@@ -65,13 +65,25 @@
                                         <td title="@WisR.App_Resources.Resource.AuthorOfQuestion">{{GetUsernameById(question.CreatedById)}}</td>
                                         <td title="@WisR.App_Resources.Resource.AmountOfUpvotes">{{question.Votes | CountVotes: 1}}<span ng-class="{'upvoted':hasVoted({{question.Votes}},true)}" class="glyphicon glyphicon-thumbs-up"></span></td>
                                         <td title="@WisR.App_Resources.Resource.AmountOfDownvotes">{{question.Votes | CountVotes: -1}}<span ng-class="{'downvoted':hasVoted({{question.Votes}},false)}" class="glyphicon glyphicon-thumbs-down"></span></td>
-                                        <td title="@WisR.App_Resources.Resource.Edit" ng-hide="question.CreatedById!=currentUser._id" ng-click="toggleRoomLocation();$event.stopPropagation();"><span class="glyphicon glyphicon-option-vertical"></span></td>
+                                        <td ng-hide="question.CreatedById!=currentUser._id" title="@WisR.App_Resources.Resource.Edit" ng-click="toggleDropdown(question._id);$event.stopPropagation();">
+                                            <span class="glyphicon glyphicon-option-vertical"></span>
+                                            <div class="dropdown" style="margin-left:-150px">
+                                                <button ng-hide="true" class="btn btn-default dropdown-toggle" type="button" id="dropdown{{question._id}}" data-toggle="dropdown">
+                                                    Dropdown
+                                                    <span class="caret"></span>
+                                                </button>
+                                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                                    <li ng-click="toggleModalWithQuestion('#myModalCreate',question)"><a>@WisR.App_Resources.Resource.Update</a></li>
+                                                    <li ng-click="toggleModalWithQuestion('#deleteQuestionModal',question)"><a>@WisR.App_Resources.Resource.Delete</a></li>
+                                                </ul>
+                                            </div>
+                                        </td>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                     <div class="col-md-3" id="createQuestionDiv">
-                        <button id="createQuestionButton" ng-disabled="userId!=CurrentRoom.CreatedById&&!CurrentRoom.UsersCanAsk" title="{{ userId!=CurrentRoom.CreatedById&&!CurrentRoom.UsersCanAsk ? 'User Questions are disabled' : ''}}" style="pointer-events: auto;" class="btn btn-primary" onclick="$('#myModalCreate').modal('toggle')">@WisR.App_Resources.Resource.CreateQuestion</button>
+                        <button id="createQuestionButton" ng-disabled="userId!=CurrentRoom.CreatedById&&!CurrentRoom.UsersCanAsk" title="{{ userId!=CurrentRoom.CreatedById&&!CurrentRoom.UsersCanAsk ? 'User Questions are disabled' : ''}}" style="pointer-events: auto;" class="btn btn-primary" ng-click="toggleCreateModal('#myModalCreate')">@WisR.App_Resources.Resource.CreateQuestion</button>
                     </div>
                 </div>
 
@@ -140,7 +152,7 @@
             <div ng-show="chatLoaded && CurrentRoom.HasChat" class="col-md-4">
                 <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
                 @*Scroll glue keeps scroll bar at same location, found at: https://github.com/Luegg/angularjs-scroll-glue*@
-                <div class="fa-border fa" style="overflow-x: hidden; overflow-y: auto; max-height: 400px; min-height: 400px;min-width: 100%" scroll-glue>
+                <div class="fa-border fa" style="overflow-x: hidden; overflow-y: auto; max-height: 400px; min-height: 400px; -moz-min-width: 100%; -ms-min-width: 100%; -o-min-width: 100%; -webkit-min-width: 100%; min-width: 100%" scroll-glue>
                     <div class="row">
                         <div class="message-wrap col-lg-12">
                             <div ng-if="ChatMessages.length" class="msg-wrap">
@@ -168,26 +180,26 @@
 
         </div>
 
-        <!-- Modal --> <!--Stops modal from closing-->
+        <!-- Modal for creating question --> <!--Stops modal from closing-->
         <div class="modal fade" id="myModalCreate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="true" data-keyboard="true">
             <div class="modal-dialog center">
                 <div class="modal-content modal-heigh">
                     <div class="modal-body">
-                        <form ng-submit="postQuestion()">
+                        <form name="postQuestionForm" ng-submit="postQuestion()">
                             <div class="row">
                                 <label class="col-md-6">@WisR.App_Resources.Resource.QuestionText</label> <input required ng-model="QuestionText" type="text" class="col-md-6 form-control" placeholder="@WisR.App_Resources.Resource.EnterQuestionText" />
                             </div>
                             <div class="row">
                                 <label class="col-md-6">@WisR.App_Resources.Resource.QuestionType</label>
-                                <select class="col-md-6 form-control" ng-model="QuestionType" required ng-options="Type.name for Type in QuestionTypes">
+                                <select id="questionTypeId" class="col-md-6 form-control" ng-model="QuestionType" required ng-options="Type.val as Type.name for Type in QuestionTypes">
                                     <option value="" disabled selected> @WisR.App_Resources.Resource.ChooseType </option>
                                 </select>
                             </div>
-                            <div ng-show="QuestionType != undefined && QuestionType.val != 'TextualQuestion'" class="row">
+                            <div ng-show="QuestionType != undefined && QuestionType != 'TextualQuestion'" class="row">
                                 <label class="col-md-6">@WisR.App_Resources.Resource.ResponseOptions</label>
                                 <div class="col-md-6 input-group">
                                     <div ng-repeat="option in ResponseOptions" class="col-md-12 input-group has-feedback" style="max-width: 280px">
-                                        <input required ng-model="ResponseOptions[option.id].val" class="form-control" type="text" placeholder="@WisR.App_Resources.Resource.AddResponseOptions" />
+                                        <input required ng-model="option.Value" class="form-control" type="text" placeholder="@WisR.App_Resources.Resource.AddResponseOptions" />
                                         <span type="button" class="input-group-addon" ng-click="RemoveResponseOption(option)" value="@WisR.App_Resources.Resource.Remove">
                                             <i class="glyphicon glyphicon-minus"></i>
                                         </span>
@@ -207,7 +219,8 @@
                             </div>
                             <br />
                             <div class="row text-center">
-                                <button ng-disabled="imageTooBig" id="ModalCreateQuestionButton" type="submit" class="btn btn-primary">@WisR.App_Resources.Resource.CreateQuestion</button>
+                                <button ng-hide="UpdateQuestionBool" ng-disabled="imageTooBig" id="ModalCreateQuestionButton" type="submit" class="btn btn-primary">@WisR.App_Resources.Resource.CreateQuestion</button>
+                                <button ng-show="UpdateQuestionBool" ng-disabled="imageTooBig" id="ModalUpdateQuestionButton" type="submit" class="btn btn-primary">@WisR.App_Resources.Resource.UpdateQuestion</button>
                                 <button id="ModalCancelButton" type="button" class="btn btn-primary" data-dismiss="modal">@WisR.App_Resources.Resource.Cancel</button>
                             </div>
                         </form>
@@ -218,7 +231,7 @@
             </div>
         </div>
         <!--Modal end-->
-        <!-- Modal --> <!--Stops modal from closing-->
+        <!-- Modal for entering password --> <!--Stops modal from closing-->
         <div class="modal fade" id="myModalPassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false" data-keyboard="false">
             <div class="modal-dialog center">
                 <div class="modal-content modal-heigh">
@@ -245,7 +258,36 @@
                 </div>
             </div>
         </div>
-
+    <!--Modal end-->
+        <!-- Modal for deleting question --> <!--Stops modal from closing-->
+        <div class="modal fade" id="deleteQuestionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false" data-keyboard="false">
+            <div class="modal-dialog center">
+                <div class="modal-content modal-heigh">
+                    <div class="modal-body">
+                        <form>
+                            <div class="row">
+                                <h4 class="col-md-12 text-center">@WisR.App_Resources.Resource.AreYouSureDeleteQuestion</h4>
+                                <br/>
+                                <label class="col-md-6 text-center">@WisR.App_Resources.Resource.QuestionText</label>
+                                <p class="col-md-6">{{SpecificQuestion.QuestionText}}</p>
+                                <label class="col-md-6 text-center">@WisR.App_Resources.Resource.AuthorOfQuestion</label>
+                                <p class="col-md-6">{{GetUsernameById(SpecificQuestion.CreatedById)}}</p>
+                                <div class="col-md-12 text-center">
+                                    <button id="DeleteSubmitButton" type="submit" ng-click="deleteQuestion(SpecificQuestion)" class="btn btn-primary">@WisR.App_Resources.Resource.Delete</button>
+                                    <span>
+                                        <button id="DeleteCancelButton" type="button" class="btn btn-primary" data-dismiss="modal">@WisR.App_Resources.Resource.Cancel</button>
+                                    </span>
+                                </div>
+                                <div class="col-md-12 text-center">
+                                    {{questionDeleteMessage}}
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!--Modal end-->
 
         <script type="text/javascript">
             var MyRoomIdFromViewBag = '@ViewBag.roomId';

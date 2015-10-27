@@ -23,7 +23,6 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     var question = Question()
     
     var timeLabel = UILabel()
-
     @IBOutlet weak var questionText: UILabel!
     @IBOutlet weak var answerPicker: UIPickerView!
     @IBOutlet weak var questionImage: UIImageView!
@@ -110,7 +109,6 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         
         HttpHandler.requestWithResponse(action: "Question/AddVote", type: "POST", body: body) { (data, response, error) in
             if error == "nil" && data == "" {
-                //If Vote already exists, update it. Else add it.
                 if let myVote = (self.question.Votes.filter() { $0.CreatedById == CurrentUser.sharedInstance._id }.first) {
                     myVote.Value = voteValue
                 } else {
@@ -155,6 +153,38 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         }
     }
     
+    func loadImage() {
+        let indicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+        indicator.center = self.view.center
+        indicator.startAnimating()
+        self.view.addSubview(indicator)
+        
+        func updateImgGui(b64Img: String) {
+            let imageData = NSData(base64EncodedString: b64Img, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
+            let image = UIImage(data: imageData!)
+            
+            dispatch_async(dispatch_get_main_queue()) {
+                indicator.stopAnimating()
+                indicator.removeFromSuperview()
+                self.questionImage.image = image
+                self.questionImage.reloadInputViews()
+            }
+
+        }
+        
+        //Don't reload image if already loaded
+        if let b64Img = self.question.Img {
+            updateImgGui(b64Img)
+            return
+        }
+        
+        HttpHandler.requestWithResponse(action: "Question/GetImageByQuestionId?questionId=\(self.question._id!)", type: "GET", body: "") {
+            (data, response, error) -> Void in
+            self.question.Img = data    //this saves the image for later use
+            updateImgGui(data)
+        }
+    }
+    
     //Lifecycle
     override func viewDidLoad() {
         
@@ -162,6 +192,10 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         
         answerPicker.delegate = self
         answerPicker.dataSource = self
+        
+    }
+    
+    override func viewDidAppear(animated: Bool) {
         
         //Show UI
         if self.question._id == nil {
@@ -186,32 +220,9 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         questionText.text = question.QuestionText
         
         //Image
-        let indicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
-        indicator.center = self.questionImage.center
-        
-        indicator.startAnimating()
-        self.view.addSubview(indicator)
-        
-        HttpHandler.requestWithResponse(action: "Question/GetImageByQuestionId?questionId=\(self.question._id!)", type: "GET", body: "") {
-            (data, response, error) -> Void in
-            self.question.Img = data
-            
-            if let b64Img = self.question.Img {
-                let imageData = NSData(base64EncodedString: b64Img, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
-                let image = UIImage(data: imageData!)
-                
-                dispatch_async(dispatch_get_main_queue()) {
-                    indicator.stopAnimating()
-                    indicator.removeFromSuperview()
-                    self.questionImage.image = image
-                    self.questionImage.reloadInputViews()
-                }
-            }
-        }
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        
+        loadImage()
+
+        //Answer
         highlightSelectedAnswer()
         
         //Vote btns
@@ -224,6 +235,10 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         super.viewDidAppear(animated)
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        self.questionImage.image = nil
+        super.viewWillDisappear(animated)
+    }
     
     //UIPickerViewDelegate
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {

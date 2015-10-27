@@ -4,33 +4,56 @@
 
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
-    "B5CE4A7F04D33ED0E4610F3EEAB8460F40260E8E" : 0,
     "FF9950B1C453BBC546F1A28E9A187E4F73239CE3" : 0,
+    "38C2A0D4F62B675E8C16C8BC1437C7753846C8AC" : 0,
     "9025163822AAEA7A2D8AC9210D0874A56F62B462" : 0,
+    "B5CE4A7F04D33ED0E4610F3EEAB8460F40260E8E" : 0,
+    "A20D666FF4B08EFE53F147818C2D4D17E2242912" : 0,
+    "54023E5A69A8ACBF4248AE90064E6E1B8A22CC88" : 0,
+    "61C4B9E3B61282127C102C87B46B8CDE985974AE" : 0,
     "C3D8ED1CB28D809ADCE2C0DE74935E8A502ACD53" : 0,
-    "54023E5A69A8ACBF4248AE90064E6E1B8A22CC88" : 0
+    "E4BCE3AE6B24E41B9BCE312FF3B0B6CD0B8B8025" : 0
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "3FBBDDBC-97A9-44CD-8E52-DD22C6A786AF",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "B5CE4A7F04D33ED0E4610F3EEAB8460F40260E8E" : "WisR\/",
     "FF9950B1C453BBC546F1A28E9A187E4F73239CE3" : "JsonSerializerSwift\/",
+    "38C2A0D4F62B675E8C16C8BC1437C7753846C8AC" : "facebook-ios-sdk\/vendor\/OHHTTPStubs\/",
     "9025163822AAEA7A2D8AC9210D0874A56F62B462" : "ios-charts\/",
+    "B5CE4A7F04D33ED0E4610F3EEAB8460F40260E8E" : "WisR\/",
+    "A20D666FF4B08EFE53F147818C2D4D17E2242912" : "facebook-ios-sdk\/",
+    "54023E5A69A8ACBF4248AE90064E6E1B8A22CC88" : "PNChart-Swift\/",
+    "61C4B9E3B61282127C102C87B46B8CDE985974AE" : "facebook-ios-sdk\/Bolts-IOS\/",
     "C3D8ED1CB28D809ADCE2C0DE74935E8A502ACD53" : "CryptoSwift\/",
-    "54023E5A69A8ACBF4248AE90064E6E1B8A22CC88" : "PNChart-Swift\/"
+    "E4BCE3AE6B24E41B9BCE312FF3B0B6CD0B8B8025" : "facebook-ios-sdk\/vendor\/OCMock\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "wiserIos",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
   "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "WisRiOS\/wiserIos.xcodeproj",
   "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
     {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "git:\/\/github.com\/AliSoftware\/OHHTTPStubs.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "38C2A0D4F62B675E8C16C8BC1437C7753846C8AC"
+    },
+    {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/kevinzhow\/PNChart-Swift.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "54023E5A69A8ACBF4248AE90064E6E1B8A22CC88"
     },
     {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/BoltsFramework\/Bolts-iOS.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "61C4B9E3B61282127C102C87B46B8CDE985974AE"
+    },
+    {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/danielgindi\/ios-charts.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "9025163822AAEA7A2D8AC9210D0874A56F62B462"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/facebook\/facebook-ios-sdk.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "A20D666FF4B08EFE53F147818C2D4D17E2242912"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/Aceipse\/Bachelor.git",
@@ -41,6 +64,11 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/krzyzanowskim\/CryptoSwift.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "C3D8ED1CB28D809ADCE2C0DE74935E8A502ACD53"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "git:\/\/github.com\/erikdoe\/ocmock",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "E4BCE3AE6B24E41B9BCE312FF3B0B6CD0B8B8025"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/peheje\/JsonSerializerSwift.git",

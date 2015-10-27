@@ -146,7 +146,8 @@ class RoomTableViewController: UITableViewController {
             alert.addAction(UIAlertAction(title: "Connect", style: .Default, handler: { action in
                 
                 //Do some encryption here on user input
-                if let pw = pwTextField!.text, inputEncryptedPw = pw.sha512(), roomEncryptedPw = room.EncryptedPassword where roomEncryptedPw == inputEncryptedPw {
+                if let pw = pwTextField!.text, roomEncryptedPw = room.EncryptedPassword where pw.sha512() == roomEncryptedPw {
+                    
                     print("CORRECT PASSWORD")
                     self.performSegueWithIdentifier("SelectRoom", sender: room)
                 }

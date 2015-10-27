@@ -7,14 +7,17 @@ import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -28,6 +31,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
+import com.example.tomas.wisrandroid.Activities.RoomActivity;
 import com.example.tomas.wisrandroid.Helpers.HttpHelper;
 import com.example.tomas.wisrandroid.Model.Answer;
 import com.example.tomas.wisrandroid.Model.MultipleChoiceQuestion;
@@ -83,12 +87,20 @@ public class SelectedQuestionFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_selected_question, container, false);
-        mDebugTextView = (TextView) view.findViewById(R.id.selected_fragment_debugtextview);
+
+//        String mQuestionString = savedInstanceState.getString("Question");
+//        if(mQuestionString.contains("MultipleChoiceQuestion"))
+//        {
+//            mQuestion = gson.fromJson(mQuestionString,MultipleChoiceQuestion.class);
+//        }else{
+//        }
+        //mDebugTextView = (TextView) view.findViewById(R.id.selected_fragment_debugtextview);
         mQuestionTextView = (TextView) view.findViewById(R.id.selected_fragment_questiontextview);
         mImageView = (ImageView) view.findViewById(R.id.selected_fragment_imageview);
         mProgressBar = (ProgressBar) view.findViewById(R.id.progress);
@@ -123,16 +135,6 @@ public class SelectedQuestionFragment extends Fragment {
         });
         Log.w("SelectedQuestion", "View Created");
 
-//        if (savedInstanceState != null)
-//        {
-//            String Question = savedInstanceState.getString("Question","");
-//            if(Question.contains("MultipleChoiceQuestion")) {
-//                mQuestion = gson.fromJson(Question, Question.class);
-//            }else {
-//                mQuestion = gson.fromJson(Question, Question.class);
-//            }
-//        }
-
         return view;
     }
 
@@ -144,6 +146,8 @@ public class SelectedQuestionFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        if(mQuestion != null)
+            initView();
     }
 
     @Override
@@ -211,40 +215,81 @@ public class SelectedQuestionFragment extends Fragment {
 
     public void GetPicture()
     {
-        mProgressBar.setVisibility(View.VISIBLE);
-        Response.Listener<String> mListener = new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                if(!response.isEmpty()) {
-                    mQuestion.set_Img(response);
-                    byte[] bytesDecoded = Base64.decode(response, Base64.DEFAULT);
-                    mPicture = BitmapFactory.decodeByteArray(bytesDecoded, 0, bytesDecoded.length);
-                    mImageView.setImageBitmap(mPicture);
-                    mProgressBar.setVisibility(View.INVISIBLE);
-                } else {
-                    mImageView.setImageResource(R.mipmap.ic_noimage);
-                    mProgressBar.setVisibility(View.INVISIBLE);
+        if(mQuestion.get_Img() == null) {
+            mProgressBar.setVisibility(View.VISIBLE);
+            Response.Listener<String> mListener = new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    if (!response.isEmpty()) {
+                        mQuestion.set_Img(response);
+                        mImageView.setImageBitmap(DecodeImage(mQuestion.get_Img()));
+                        mProgressBar.setVisibility(View.INVISIBLE);
+                        mPicture = null;
+                    } else {
+                        mImageView.setImageResource(R.mipmap.ic_noimage);
+                        mProgressBar.setVisibility(View.INVISIBLE);
+                    }
+
                 }
+            };
+
+            Response.ErrorListener mErrorListener = new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    Toast.makeText(getContext(), String.valueOf(volleyError.networkResponse.statusCode), Toast.LENGTH_LONG).show();
+                }
+            };
+
+            RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+            HttpHelper jsObjRequest = new HttpHelper(getString(R.string.restapi_url) + "/Question/GetImageByQuestionId?questionId=" + mQuestion.get_Id(), null, mListener, mErrorListener);
+
+            try {
+                requestQueue.add(jsObjRequest);
+            } catch (Exception e) {
 
             }
-        };
-
-        Response.ErrorListener mErrorListener = new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                Toast.makeText(getContext(), String.valueOf(volleyError.networkResponse.statusCode), Toast.LENGTH_LONG).show();
-            }
-        };
-
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        HttpHelper jsObjRequest = new HttpHelper(getString(R.string.restapi_url) + "/Question/GetImageByQuestionId?questionId=" + mQuestion.get_Id(), null, mListener, mErrorListener);
-
-        try {
-            requestQueue.add(jsObjRequest);
-        } catch (Exception e) {
-
+        }else{
+            mImageView.setImageBitmap(DecodeImage(mQuestion.get_Img()));
+            mPicture = null;
+            System.gc();
         }
 
+    }
+
+    private Bitmap DecodeImage(String Image)
+    {
+        Display display = ((RoomActivity)getActivity()).getWindowManager().getDefaultDisplay();
+        int width = display.getWidth();
+        BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
+        bitmapOptions.inJustDecodeBounds = true;
+        byte[] bytesDecoded = Base64.decode(Image, Base64.DEFAULT);
+        mPicture = BitmapFactory.decodeByteArray(bytesDecoded, 0, bytesDecoded.length,bitmapOptions);
+        bitmapOptions.inSampleSize = bitmapOptions.outWidth / width;
+        bitmapOptions.inJustDecodeBounds = false;
+        mPicture = BitmapFactory.decodeByteArray(bytesDecoded, 0, bytesDecoded.length,bitmapOptions);
+        return mPicture;
+    }
+
+    public int calculateInSampleSize( BitmapFactory.Options options, int reqWidth, int reqHeight) {
+        // Raw height and width of image
+        final int height = options.outHeight;
+        final int width = options.outWidth;
+        int inSampleSize = 1;
+
+        if (height > reqHeight || width > reqWidth) {
+
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
+            // height and width larger than the requested height and width.
+            while ((halfHeight / inSampleSize) > reqHeight
+                    && (halfWidth / inSampleSize) > reqWidth) {
+                inSampleSize *= 2;
+            }
+        }
+
+        return inSampleSize;
     }
 
     private void SendResponse()
@@ -440,5 +485,11 @@ public class SelectedQuestionFragment extends Fragment {
             }
         }
     }
+
+    public void ClearImage()
+    {
+        mImageView.setImageBitmap(null);
+    }
+
 }
 

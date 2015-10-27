@@ -35,7 +35,7 @@ class ResultViewController: UIViewController {
                 }
             }
             
-            let percentage = Int(((values[index]/totalVotes)*100))
+            let percentage = totalVotes == 0 ? 0 : Int(((values[index]/totalVotes)*100))
             options += [ "\(option.Value) (\(percentage)%)" ]
         }
         

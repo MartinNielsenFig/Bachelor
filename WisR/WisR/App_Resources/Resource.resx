@@ -330,7 +330,22 @@
   <data name="NoUserWithThatInformation" xml:space="preserve">
     <value />
   </data>
+  <data name="AreYouSureDeleteQuestion" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value />
+  </data>
   <data name="Edit" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Update" xml:space="preserve">
+    <value />
+  </data>
+  <data name="UpdateQuestion" xml:space="preserve">
+    <value />
+  </data>
+  <data name="NoPictureText" xml:space="preserve">
     <value />
   </data>
 </root>

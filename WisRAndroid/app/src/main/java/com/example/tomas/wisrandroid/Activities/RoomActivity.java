@@ -1,6 +1,7 @@
 package com.example.tomas.wisrandroid.Activities;
 
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +23,7 @@ public class RoomActivity extends AppCompatActivity {
 
     private CustomPagerAdapter mPagerAdapter;
     private ViewPager mViewPager;
+    private Room mRoom;
     private final Gson gson = new Gson();
 
     @Override
@@ -29,7 +31,48 @@ public class RoomActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room);
         HideUI();
-        Init();
+        if (savedInstanceState == null)
+        {
+            // Getting Room From Intent
+            String roomString = getIntent().getBundleExtra("CurrentRoom").getString("Room");
+            mRoom = gson.fromJson(roomString, Room.class);
+        } else {
+            String roomString = savedInstanceState.getString("Room");
+            mRoom = gson.fromJson(roomString, Room.class);
+        }
+
+        // Setting up the viewpager for RoomActivity
+        mViewPager = (ViewPager) findViewById(R.id.pager);
+        mViewPager.setOffscreenPageLimit(3);
+        mPagerAdapter = new CustomPagerAdapter(this,getSupportFragmentManager(), mRoom,mViewPager);
+        mViewPager.setAdapter(mPagerAdapter);
+        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 0) {
+                    ((SelectedQuestionFragment)mPagerAdapter.getItem(1)).ClearImage();
+                    Toast.makeText(RoomActivity.this, "Questions", Toast.LENGTH_SHORT).show();
+                } else if (position == 1) {
+                    ((SelectedQuestionFragment)mPagerAdapter.getItem(1)).initView();
+                    Toast.makeText(RoomActivity.this, "Selected Question", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(RoomActivity.this, "Chat", Toast.LENGTH_SHORT).show();
+                }
+
+                mViewPager.setCurrentItem(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
     }
 
     @Override
@@ -64,56 +107,27 @@ public class RoomActivity extends AppCompatActivity {
         //startActivity(mIntent);
     }
 
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("Room",gson.toJson(mRoom));
+    }
+
     public void HideUI() {
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        //getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
     }
 
     public void Init() {
-        // Getting Room From Intent
-        String roomString = getIntent().getBundleExtra("CurrentRoom").getString("Room");
-        Room mRoom = gson.fromJson(roomString, Room.class);
 
-        // Setting up the viewpager for RoomActivity
-        mPagerAdapter = new CustomPagerAdapter(getSupportFragmentManager(), mRoom.get_id());
-        mViewPager = (ViewPager) findViewById(R.id.pager);
-        mViewPager.setAdapter(mPagerAdapter);
-        //mViewPager.getAdapter().getItemPosition(1);
-        mViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                if(position == 0)
-                {
-                    Toast.makeText(RoomActivity.this, "Questions", Toast.LENGTH_SHORT).show();
-                }else if(position == 1)
-                {
-                    Toast.makeText(RoomActivity.this, "Selected Question", Toast.LENGTH_SHORT).show();
-                }else
-                {
-                    Toast.makeText(RoomActivity.this, "Chat", Toast.LENGTH_SHORT).show();
-                }
-
-                mViewPager.setCurrentItem(position);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
     }
 
     public void TransferCurrentQuestion(Question curQuestion)
     {
-        mViewPager.setCurrentItem(1);
         ((SelectedQuestionFragment)mPagerAdapter.getItem(1)).setCurrentQuestion(curQuestion);
+        mViewPager.setCurrentItem(1);
     }
 
 }
