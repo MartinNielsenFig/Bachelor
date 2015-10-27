@@ -19,6 +19,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var messages = [ChatMessage]()
     var updater: Updater?
     var firstLoad = true
+    let kbOffset = CGFloat(38)
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var textMessageInput: UITextField!
@@ -76,6 +77,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func viewWillAppear(animated: Bool) {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "appGoesToBackground:", name: UIApplicationWillResignActiveNotification, object: nil)
         
         updater = Updater(secondsDelay: 1) {
             let body = "roomId=\(self.roomId!)"
@@ -108,6 +110,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func viewWillDisappear(animated: Bool) {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationWillResignActiveNotification, object: nil)
         
         updater?.stop()
     }
@@ -216,8 +219,19 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return true
     }
     
-    //MARK: UIKeyboardWillShowNotification & UIKeyboardWillHideNotification
-    let kbOffset = CGFloat(38)
+
+    
+    //MARK: NSNotification
+    func appGoesToBackground(notification: NSNotification) {
+        print("app goes to background")
+        
+        //This is to disable the keyboard from being pushed far beyond, as pressing home button calls keyboardWillShow twice in a row
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationWillResignActiveNotification, object: nil)
+
+    }
+    
     //Keyboard hide/show based upon https://github.com/Lightstreamer/Lightstreamer-example-Chat-client-ios-swift with modifications
     func keyboardWillShow(notification: NSNotification) {
         print("\(__FUNCTION__) has been called")
