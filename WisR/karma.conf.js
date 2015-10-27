@@ -21,6 +21,7 @@ module.exports = function(config) {
       'WisR/Scripts/jquery-1.11.3.js',
       'WisR/Scripts/jquery.signalR-2.2.0.js',
       'WisR/Scripts/angular.js',
+      'WisR/Scripts/angular-animate.js',
       'WisR/Scripts/angular-mocks.js',
       'WisR/Scripts/angular-base64-upload.js',
       'WisR/Scripts/scrollglue.js',
@@ -29,7 +30,9 @@ module.exports = function(config) {
       'WisR.Tests/Scripts/SignalRForTest/server.js',
       'WisR/Scripts/WisRScripts/AngularModule.js',
       'WisR/Scripts/WisRScripts/**.js',
-      'WisR.Tests/Scripts/Test/AngularHomeTest.js'
+      'WisR.Tests/Scripts/Test/AngularControllerTest.js',
+      'WisR.Tests/Scripts/Test/SignalRTests.js'
+
     ],
 
     

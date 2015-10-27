@@ -4,6 +4,7 @@
 ///<reference path="~/../WisR/Scripts/jquery-1.11.3.js"/>
 ///<reference path="~/../WisR/Scripts/jquery.signalR-2.2.0.js"/>
 ///<reference path="~/../WisR/Scripts/angular.js"/>
+///<reference path="~/../WisR/Scripts/angular-animate.js"/>
 ///<reference path="~/../WisR/Scripts/angular-mocks.js"/>
 ///<reference path="~/../WisR/Scripts/angular-base64-upload.js"/>
 ///<reference path="~/../WisR/Scripts/scrollglue.js"/>
@@ -12,11 +13,13 @@
 
 ///<reference path="~/Scripts/GoogleForTest/googleForTest.js"/>
 ///<reference path="~/Scripts/SignalRForTest/server.js"/>
+///<reference path="~/Scripts/GlobalVarriablesForTest/GlobalVarriables.js"/>
 
 ///<reference path="~/../WisR/Scripts/WisRScripts/geolocationScripts.js"/>
 ///<reference path="~/../WisR/Scripts/WisRScripts/AngularModule.js"/>
 ///<reference path="~/../WisR/Scripts/WisRScripts/Config.js"/>
 ///<reference path="~/../WisR/Scripts/WisRScripts/AngularHomeController.js"/>
+///<reference path="~/../WisR/Scripts/WisRScripts/AngularRoomController.js"/>
 
 describe("English Test", function () {
 
@@ -30,6 +33,7 @@ describe("English Test", function () {
             scope = $rootScope.$new();
             config = configs;
             httpBackend = $httpBackend;
+            $window = { location: { replace: jasmine.createSpy() } };
             window = $window;
 
             //Setup for http request
@@ -62,7 +66,7 @@ describe("English Test", function () {
             var room = { AllowAnonymous: false }
             scope.userId = 'NoUser';
             scope.changeViewToRoom(room);
-            expect(scope.Message).toBe('The room-tag you have entered requires you to login');
+            expect(scope.Message).toBe('The room-secret you have entered requires you to login');
         });
     
         it('should change location to ?RoomId=1', function () {
@@ -111,30 +115,30 @@ describe("English Test", function () {
         });
 
         it('changeViewToRoom should have been called', function () {
-            httpBackend.when('POST', 'http://localhost:1337/Room/GetByUniqueTag').respond({ _id: 1 });
-            httpBackend.expectPOST('http://localhost:1337/Room/GetByUniqueTag');
+            httpBackend.when('POST', 'http://localhost:1337/Room/GetByUniqueSecret').respond({ _id: 1 });
+            httpBackend.expectPOST('http://localhost:1337/Room/GetByUniqueSecret');
             spyOn(scope, 'changeViewToRoom');
-            scope.connectWithUniqueTag();
+            scope.connectWithUniqueSecret();
            
             httpBackend.flush();
             expect(scope.changeViewToRoom).toHaveBeenCalled();
         });
 
-        it('message should be "No room with the tag: 20"', function () {
-            httpBackend.when('POST', 'http://localhost:1337/Room/GetByUniqueTag').respond({});
-            httpBackend.expectPOST('http://localhost:1337/Room/GetByUniqueTag');
+        it('message should be "No room with the Secret: 20"', function () {
+            httpBackend.when('POST', 'http://localhost:1337/Room/GetByUniqueSecret').respond({});
+            httpBackend.expectPOST('http://localhost:1337/Room/GetByUniqueSecret');
             
-            scope.uniqueRoomTag = 20;
-            scope.connectWithUniqueTag();
+            scope.uniqueRoomSecret = 20;
+            scope.connectWithUniqueSecret();
           
             httpBackend.flush();
-            expect(scope.Message).toBe("No room with the tag: 20");
+            expect(scope.Message).toBe("No room with the secret: 20");
         });
 
-        it('should call GetByUniqueTag', function () {
-            httpBackend.when('POST', 'http://localhost:1337/Room/GetByUniqueTag').respond({ _id: 1 });
-            httpBackend.expectPOST('http://localhost:1337/Room/GetByUniqueTag');
-            scope.connectWithUniqueTag();
+        it('should call GetByUniqueSecret', function () {
+            httpBackend.when('POST', 'http://localhost:1337/Room/GetByUniqueSecret').respond({ _id: 1 });
+            httpBackend.expectPOST('http://localhost:1337/Room/GetByUniqueSecret');
+            scope.connectWithUniqueSecret();
             httpBackend.flush();
         });
 
@@ -151,6 +155,52 @@ describe("English Test", function () {
             scope.$apply();
 
             httpBackend.flush();
+        });
+    });
+
+    describe("Room controller", function() {
+        var scope, controller, httpBackend, config, window;
+
+        beforeEach(inject(function ($rootScope, $controller, $httpBackend, $window, configs) {
+            scope = $rootScope.$new();
+            config = configs;
+            httpBackend = $httpBackend;
+            $window = { location: { replace: jasmine.createSpy() } };
+            window = $window;
+
+            //Setup for http request
+            httpBackend.when('POST','http://localhost:1337/User/GetById').respond({});
+
+            //Setup for currentUser
+            scope.currentUser = { ConnectedRoomIds: ["12312312"] }
+
+            //Setup for location
+            scope.currentLocation = { coords: { latitude: 1 } };
+            scope.currentLocation = { coords: { longitude: 1 } };
+
+            controller = $controller('RoomController', { $scope: scope, $window: window});
+        }));
+
+        it('should set chartType to "Pie";', function () {
+            expect(scope.chartType).toBe("Pie");
+        });
+
+        it('should have called getRoom with false', function() {
+            spyOn(scope, 'getRoom');
+            window.userId = "NoUser";
+            scope.$apply();
+            expect(scope.getRoom).toHaveBeenCalledWith(false);
+        });
+
+        it('should have called getRoom with true, and called /User/GetById', function () {
+            spyOn(scope, 'getRoom');
+            httpBackend.expectPOST('http://localhost:1337/User/GetById');
+
+            window.userId = "Martin";
+            scope.$apply();
+
+            httpBackend.flush();
+            expect(scope.getRoom).toHaveBeenCalledWith(true);
         });
     });
 });
