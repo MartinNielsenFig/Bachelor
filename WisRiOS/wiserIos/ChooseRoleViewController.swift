@@ -14,7 +14,7 @@ import JsonSerializerSwift
 /// This is the application start ViewController. Handles the user choices between joining a room or creating a room. Also handles the MapView which collects the user position in a singleton for the application to use, and shows the rooms nearby. This is also where the user can log out.
 class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
-    //Properties
+    //MARK: Properties
     @IBOutlet var mapView: MKMapView!
     var location = CLLocation()
     var rooms = [Room]()
@@ -35,7 +35,7 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
 
     }
     
-    //Utility
+    //MARK: Utility
     func addLoginLogoutButtons() {
         if CurrentUser.sharedInstance.FacebookId != nil {
             navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Log out", style: .Plain, target: self, action: "logOffFacebook")
@@ -44,7 +44,26 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
         }
     }
     
-    //Lifecycle
+    /**
+     Shows a UI Alert so user can confirm logging out of Facebook.
+     */
+    func logOffFacebook() {
+        
+        //http://stackoverflow.com/questions/24022479/how-would-i-create-a-uialertview-in-swift
+        let alert = UIAlertController(title: "Confirm logout", message: "Confirm logging out", preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { action in
+            //Do nothing
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Logout", style: .Default, handler: { action in
+            FacebookHelper.logOff()
+            self.addLoginLogoutButtons()
+        }))
+        
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    //MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -67,8 +86,6 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
         
         super.viewDidAppear(animated)
     }
-    
-
     
     func loadRoomsBasedOnLocation() {
         //Show nearby rooms
@@ -115,7 +132,7 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
         }
     }
     
-    //MKMapViewDelegate
+    //MARK: MKMapViewDelegate
     //http://stackoverflow.com/questions/24523702/stuck-on-using-mkpinannotationview-within-swift-and-mapkit/24532551#24532551
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         let reuseId = "pin"
@@ -145,7 +162,7 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
         }
     }
     
-    //CLLocationManagerDelegate
+    //MARK: CLLocationManagerDelegate
     let locationManager = CLLocationManager()
     var bestAccuracy = Double.init(Int.max)
     var maxPositionUpdatesThisSession = Int()
@@ -200,7 +217,7 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
         NSLog("Error while updating location \(error.localizedDescription)")
     }
     
-    //Navigation
+    //MARK: Navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "CreateRoom" {
             //let createRoomViewController = segue.destinationViewController as! CreateRoomViewController
@@ -214,27 +231,6 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
             let roomTableViewController = segue.destinationViewController as! RoomTableViewController
             //no need for initilizing
         }
-    }
-    
-    //Facebook
-    
-    /**
-    Shows a UI Alert so user can confirm logging out of Facebook.
-    */
-    func logOffFacebook() {
-        
-        //http://stackoverflow.com/questions/24022479/how-would-i-create-a-uialertview-in-swift
-        let alert = UIAlertController(title: "Confirm logout", message: "Confirm logging out", preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { action in
-            //Do nothing
-        }))
-        
-        alert.addAction(UIAlertAction(title: "Logout", style: .Default, handler: { action in
-            FacebookHelper.logOff()
-            self.addLoginLogoutButtons()
-        }))
-        
-        self.presentViewController(alert, animated: true, completion: nil)
     }
 }
 

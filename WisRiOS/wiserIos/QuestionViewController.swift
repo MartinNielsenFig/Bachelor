@@ -12,7 +12,7 @@ import JsonSerializerSwift
 /// A sub-ViewController of RoomPageViewController. This shows the selected Question that the user can answer.
 class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, Paged {
     
-    //Properties
+    //MARK: Properties
     let pageIndex = 1
     var roomId: String?
     var firstProgressBarUpdate = true
@@ -32,7 +32,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     
     var pickerData = [String]()
     
-    //Actions
+    //MARK: Actions
     @IBAction func upvoteBtnPressed(sender: AnyObject) {
         vote(true, button: sender as! UIButton)
     }
@@ -41,7 +41,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         vote(false, button: sender as! UIButton)
     }
     
-    //Utilities
+    //MARK: Utilities
     /**
     Sends a response to the Question to the RestAPI. The answer has the users ID to ensure that he can only respond once (handled by RestAPI)
     - parameter sender:	The button pressed
@@ -185,7 +185,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         }
     }
     
-    //Lifecycle
+    //MARK: Lifecycle
     override func viewDidLoad() {
         
         print("QuestionViewController instantiated, roomId: \(self.roomId)")
@@ -240,7 +240,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         super.viewWillDisappear(animated)
     }
     
-    //UIPickerViewDelegate
+    //MARK: UIPickerViewDelegate
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -262,7 +262,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         return nil
     }
     
-    //Navigation
+    //MARK: Navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "ShowResult" {
             let resultViewController = segue.destinationViewController as! ResultViewController
