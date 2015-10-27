@@ -57,7 +57,7 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
         //Set initial page
         let startVC = viewControllerAtIndex(0, createNew: true)!
         pageViewController.setViewControllers([startVC], direction: .Forward, animated: true, completion: nil)
-        makeRoomForNavigationBar(orientationIsLandscape: !UIApplication.sharedApplication().statusBarOrientation.isLandscape)   //this is odd, but works
+        makeRoomForNavigationBar(orientationIsLandscape: !UIApplication.sharedApplication().statusBarOrientation.isLandscape)   //logic seems to be inverted, bug?
         
         //Add it to the current viewcontroller
         addChildViewController(pageViewController)
@@ -101,9 +101,8 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "CreateQuestion" {
             let createQuestionViewController = ((segue.destinationViewController as! UINavigationController).topViewController) as! CreateQuestionViewController
+            createQuestionViewController.questionListViewController = viewControllerAtIndex(0, createNew: false) as! QuestionListViewController
             createQuestionViewController.room = self.room
-            createQuestionViewController.previousNavigationController = self.navigationController
-            //assert(false)   //Todo check if ok
         }
 
     }

@@ -12,6 +12,7 @@
 		CB1B7B901BB966B400EB637E /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1B7B8F1BB966B400EB637E /* ResultViewController.swift */; };
 		CB1FBA001B983C3A00B1FCF8 /* BooleanInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1FB9FF1B983C3A00B1FCF8 /* BooleanInputCell.swift */; };
 		CB2A1B881BB9DA0F00821087 /* RoomFilterHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A1B871BB9DA0F00821087 /* RoomFilterHelper.swift */; };
+		CB2AD54E1BDF8FE600E50ACF /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2AD54D1BDF8FE600E50ACF /* Toast.swift */; };
 		CB2EF9C31B8DE7260098871B /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2EF9C21B8DE7260098871B /* Room.swift */; };
 		CB39A97B1B986B7F0014F818 /* StringExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB39A97A1B986B7F0014F818 /* StringExtractor.swift */; };
 		CB3C37721B8DBF5000897344 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3C37711B8DBF5000897344 /* AppDelegate.swift */; };
@@ -64,6 +65,27 @@
 			proxyType = 2;
 			remoteGlobalIDString = A52C5C371BAC5CA400594CDD;
 			remoteInfo = ChartsTV;
+		};
+		CB2AD5541BDF8FE700E50ACF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CBF51C941BC54E78002F2732 /* CryptoSwift.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5596BDBB1BC8F220007E38D5;
+			remoteInfo = "CryptoSwift watchOS";
+		};
+		CB2AD5561BDF8FE700E50ACF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CBF51C941BC54E78002F2732 /* CryptoSwift.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 75D614BF1BD844F2001358B2;
+			remoteInfo = "CryptoSwift tvOS";
+		};
+		CB2AD5581BDF8FE700E50ACF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CBF51C941BC54E78002F2732 /* CryptoSwift.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 75DF77721BC8EB59006E9520;
+			remoteInfo = "CryptoSwift OSX";
 		};
 		CB3C37831B8DBF5000897344 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -180,6 +202,7 @@
 		CB1B7B8F1BB966B400EB637E /* ResultViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		CB1FB9FF1B983C3A00B1FCF8 /* BooleanInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BooleanInputCell.swift; sourceTree = "<group>"; };
 		CB2A1B871BB9DA0F00821087 /* RoomFilterHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomFilterHelper.swift; sourceTree = "<group>"; };
+		CB2AD54D1BDF8FE600E50ACF /* Toast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		CB2EF9C21B8DE7260098871B /* Room.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
 		CB39A97A1B986B7F0014F818 /* StringExtractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtractor.swift; sourceTree = "<group>"; };
 		CB3C376E1B8DBF5000897344 /* wiserIos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = wiserIos.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -359,6 +382,7 @@
 				CB2A1B871BB9DA0F00821087 /* RoomFilterHelper.swift */,
 				CBF51C901BC5254A002F2732 /* ErrorCodes.swift */,
 				CBBE948F1BD9171B007C0EB7 /* Updater.swift */,
+				CB2AD54D1BDF8FE600E50ACF /* Toast.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -410,6 +434,9 @@
 			isa = PBXGroup;
 			children = (
 				CBF51C9C1BC54E78002F2732 /* CryptoSwift.framework */,
+				CB2AD5551BDF8FE700E50ACF /* CryptoSwift.framework */,
+				CB2AD5571BDF8FE700E50ACF /* CryptoSwift.framework */,
+				CB2AD5591BDF8FE700E50ACF /* CryptoSwift.framework */,
 				CBF51C9E1BC54E78002F2732 /* CryptoSwiftTests.xctest */,
 			);
 			name = Products;
@@ -525,6 +552,27 @@
 			fileType = wrapper.framework;
 			path = ChartsTV.framework;
 			remoteRef = CB0D255E1BC400F100825945 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CB2AD5551BDF8FE700E50ACF /* CryptoSwift.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = CryptoSwift.framework;
+			remoteRef = CB2AD5541BDF8FE700E50ACF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CB2AD5571BDF8FE700E50ACF /* CryptoSwift.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = CryptoSwift.framework;
+			remoteRef = CB2AD5561BDF8FE700E50ACF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CB2AD5591BDF8FE700E50ACF /* CryptoSwift.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = CryptoSwift.framework;
+			remoteRef = CB2AD5581BDF8FE700E50ACF /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		CB4D73441BCD1FDE0004A896 /* JsonSerializerSwift.framework */ = {
@@ -644,6 +692,7 @@
 				CB9FF7C61B8F1401003A193B /* HTTPHandler.swift in Sources */,
 				CB2A1B881BB9DA0F00821087 /* RoomFilterHelper.swift in Sources */,
 				CB9FF7CC1B8F28B4003A193B /* Answer.swift in Sources */,
+				CB2AD54E1BDF8FE600E50ACF /* Toast.swift in Sources */,
 				CB9FF7D21B8F2B70003A193B /* User.swift in Sources */,
 				CBB60B311B97253A0007A47B /* SegmentedInputCell.swift in Sources */,
 				CB84802D1B9EE0DC00D1C230 /* FacebookHelper.swift in Sources */,

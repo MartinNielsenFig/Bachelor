@@ -15,7 +15,7 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
     //MARK: Properties
     //Gets instantiated by RoomPageViewController in prepareForSegue
     var room: Room!
-    var previousNavigationController: UINavigationController?
+    var questionListViewController: QuestionListViewController!
     
     var responseOptions = [ResponseOption]() {
         didSet {
@@ -42,11 +42,11 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
     //MARK: Lifecycle
     override func viewDidLoad() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "addQuestion")
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "cancelCreateQuestion")
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "dismiss:")
     }
     
     //MARK: Utilities
-    func cancelCreateQuestion() {
+    func dismiss() {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -111,6 +111,11 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
                     indicator.stopAnimating()
                     indicator.removeFromSuperview()
                 }
+                
+                Toast.showToast("Created", durationMs: 1500, presenter: self, imageName: "Checkmark") {
+                    self.questionListViewController.questions += [q]
+                    self.dismiss()
+                }
             }
         }
     }
@@ -125,7 +130,7 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
         if numberOfRows > 0 {
             tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: numberOfRows-1, inSection: 1), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
         }
-
+        
     }
     
     //MARK: UITableViewController
@@ -167,7 +172,7 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
                 let cellIdentifier = "NumberInputCell"
                 let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! NumberInputCell
                 cell.label.text = "Duration"
-                cell.inputField.placeholder = "Duration in seconds"
+                cell.inputField.placeholder = "Duration in minutes"
                 durationInput = cell
                 cell.selectionStyle = .None
                 return cell
@@ -186,7 +191,7 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
                 let cellIdentifier = "TextInputCell"
                 let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! TextInputCell
                 cell.label.text = "Add Response"
-                cell.inputField.placeholder = "A response to question"
+                cell.inputField.placeholder = "A response option"
                 cell.inputField.delegate = self
                 cell.inputField.returnKeyType = .Done
                 cell.inputField.clearsOnBeginEditing = true
