@@ -35,6 +35,22 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
             $scope.toggleRoomLocation();
             $scope.$apply();
         };
+
+        /**
+           * @ngdoc method
+           * @name HomeController#broadcastDeleteRoom
+           * @methodOf WisR.controller:HomeController
+           * @description
+           * Function that is called when a room should be deleted, if it is the current room inform the user that the room has been deleted
+           * @param {Room} roomToAdd The room to delete
+           */
+
+        hub.client.broadcastDeleteRoom = function (roomToDelete) {
+            if (roomToDelete === $scope.CurrentRoom._id) {
+                alert(Resources.RoomWasDeletedMsg);
+                $window.location.href = "/";
+            }
+        };
         $.connection.hub.start();
     });
 
@@ -68,6 +84,15 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
             if (index > -1) {
                 $scope.Questions.splice(index, 1);
                 $scope.$apply();
+            }
+            //if the user is currently working with this question
+            if (questionToDelete === $scope.SpecificQuestion._id) {
+                if ($scope.SpecificQuestionShown) {
+                    $scope.ToggleShowQuestionTables();
+                }                
+                $("#myModalCreate").modal("hide");
+                $("#deleteQuestionModal").modal("hide");
+                alert(Resources.QuestionWasDeletedMessage);
             }
         };
         ////SignalR function call that the question should be updated with new responses
@@ -344,7 +369,8 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
             $scope.showProgressBar = false;
         }
     }
-    $scope.deleteQuestion=function(questionToDelete) {
+    $scope.deleteQuestion = function (questionToDelete) {
+        $scope.SpecificQuestion = null;
         $http.delete(configs.restHostName + '/Question/DeleteQuestion', { params: {id: questionToDelete._id} }).then(function (response) {
             ///Check for errors on request
             if (response.data.ErrorMessage != undefined) {

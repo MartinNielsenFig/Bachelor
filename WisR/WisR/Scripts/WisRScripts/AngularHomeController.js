@@ -180,6 +180,23 @@ app.controller("HomeController", [
                 $scope.Rooms.push(JSON.parse(roomToAdd));
                 $scope.$apply();
             };
+            /// Create a function that the hub can call to broadcast messages.
+            /**
+            * @ngdoc method
+            * @name HomeController#broadcastDeleteRoom
+            * @methodOf WisR.controller:HomeController
+            * @description
+            * Function that is called when a room should be deleted
+            * @param {Room} roomToAdd The room to delete
+            */
+
+            hub.client.broadcastDeleteRoom = function (roomToDelete) {
+                var index = findWithAttr($scope.Rooms, "_id", roomToDelete);
+                if (index > -1) {
+                    $scope.Rooms.splice(index, 1);
+                    $scope.$apply();
+                }
+            };
             /**
             * @ngdoc method
             * @name HomeController#broadcastUpdateRoom
@@ -443,6 +460,26 @@ app.controller("HomeController", [
         $scope.toggleModalWithRoom = function (modal, room) {
             $scope.SpecificRoom = room;
             $(modal).modal('toggle');        
+        }
+
+        /**
+       * @ngdoc method
+       * @name HomeController#findWithAttr
+       * @methodOf WisR.controller:HomeController
+       *
+       * @description
+       * Function that finds the index of a property with a specific value in an array. Returns -1 if the value is not found
+       * @param {Array} array the array to traverse
+       * @param {Attribute} attr the attribute to check for the given value
+       * @param {Attribute} value the value to check the attribute for
+       */
+        function findWithAttr(array, attr, value) {
+            for (var i = 0; i < array.length; i += 1) {
+                if (array[i][attr] === value) {
+                    return i;
+                }
+            }
+            return -1;
         }
         //#endregion
     }
