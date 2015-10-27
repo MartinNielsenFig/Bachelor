@@ -13,7 +13,7 @@ import JsonSerializerSwift
 /// Handles creation of a room with all its settings.
 class CreateRoomViewController: UITableViewController {
     
-    //Properties
+    //MARK: Properties
     var roomNameInputCell: TextInputCell?
     var roomSecretInputCell: TextInputCell?
     var pwSwitchCell: BooleanInputCell?
@@ -29,14 +29,14 @@ class CreateRoomViewController: UITableViewController {
     
     let onDefault = true
     
-    //Lifecycle
+    //MARK: Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addRoomButtonPressed:")
     }
     
-    //Tableview
+    //MARK: Tableview
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
@@ -141,7 +141,7 @@ class CreateRoomViewController: UITableViewController {
         return UITableViewCell()
     }
     
-    //Utilities
+    //MARK: Utilities
     func enablePwSwitchChanged(uiSwitch: UISwitch) {
         pwInputCell?.inputField.enabled = uiSwitch.on
         pwLabel?.enabled = uiSwitch.on
@@ -221,7 +221,7 @@ class CreateRoomViewController: UITableViewController {
         }
     }
     
-    //Navigation
+    //MARK: Navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "RoomCreated" {
             let roomPageViewController = segue.destinationViewController as! RoomPageViewController

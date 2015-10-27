@@ -12,7 +12,7 @@ import JsonSerializerSwift
 /// A sub-ViewController of RoomPageViewController. This shows the available questions for the room.
 class QuestionListViewController: UITableViewController, Paged {
     
-    //Properties
+    //MARK: Properties
     let pageIndex = 0
     var roomId: String?
     var questions = [Question]() {
@@ -25,7 +25,7 @@ class QuestionListViewController: UITableViewController, Paged {
         }
     }
     
-    //Utility
+    //MARK: Utilities
     /**
     Filters the questions in the room by concatenated up-/downvotes. So that upvotes are positive, and downvotes are negative.
     - parameter questions:	The questions array to be filtered in-place.
@@ -96,7 +96,7 @@ class QuestionListViewController: UITableViewController, Paged {
         }
     }
     
-    //Lifetime
+    //MARK: Lifetime
     override func viewDidLoad() {
         
         print("QuestionListViewController instantiated, roomId: \(self.roomId)")
@@ -121,12 +121,12 @@ class QuestionListViewController: UITableViewController, Paged {
     }
     
     
-    //UIRefreshControl
+    //MARK: UIRefreshControl
     func handleRefresh(refreshControl: UIRefreshControl) {
         fetchQuestions(refreshControl)
     }
     
-    //UITableViewController
+    //MARK: UITableViewController
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }

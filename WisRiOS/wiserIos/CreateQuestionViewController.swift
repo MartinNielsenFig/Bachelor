@@ -12,7 +12,7 @@ import JsonSerializerSwift
 /// The ViewController which handles the creation of a question inside a room.
 class CreateQuestionViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
     
-    //Properties
+    //MARK: Properties
     //Gets instantiated by RoomPageViewController in prepareForSegue
     var room: Room!
     var previousNavigationController: UINavigationController?
@@ -39,12 +39,12 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
         }
     }
     
-    //Lifecycle
+    //MARK: Lifecycle
     override func viewDidLoad() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "addQuestion")
     }
     
-    //Utilities
+    //MARK: Utilities
     func addQuestion() {
         
         if durationInput?.inputField.text == "" {
@@ -101,7 +101,7 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
 
     }
     
-    //UITableViewController
+    //MARK: UITableViewController
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 2
     }
@@ -230,7 +230,7 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
         }
     }
     
-    //UIImagePickerControllerDelegate
+    //MARK: UIImagePickerControllerDelegate
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         dismissViewControllerAnimated(true, completion: nil)
     }
@@ -242,7 +242,7 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
         dismissViewControllerAnimated(true, completion: nil)
     }
     
-    //UITextFieldDelegate
+    //MARK: UITextFieldDelegate
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         print("returning form textfield add choice")
         addResponseOption()

@@ -13,7 +13,7 @@ import JsonSerializerSwift
 /// A sub-ViewController of RoomPageViewController. This handles the chat logic for the room.
 class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, Paged {
     
-    //Properties
+    //MARK: Properties
     let pageIndex = 2
     var roomId: String?
     var messages = [ChatMessage]()
@@ -24,7 +24,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet weak var textMessageInput: UITextField!
     @IBOutlet weak var MessageInputStack: UIStackView!
     
-    //Actions
+    //MARK: Actions
     @IBAction func sendPressed(sender: AnyObject) {
         updater?.stop()
         if let text = textMessageInput.text where text.isEmpty {
@@ -56,7 +56,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
-    //Lifecycle
+    //MARK: Lifecycle
     override func viewDidLoad() {
         print("ChatViewController instantiated, roomId: \(self.roomId)")
         textMessageInput.delegate = self
@@ -102,7 +102,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         updater?.stop()
     }
     
-    //Utilities
+    //MARK: Utilities
     /**
     Scrolls to the bottom of the table view presented on this page
     */
@@ -178,7 +178,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     
-    //UITableViewController
+    //MARK: UITableViewController
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.messages.count
     }
@@ -200,13 +200,13 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     
-    //UITextFieldDelegate
+    //MARK: UITextFieldDelegate
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         sendPressed(self)
         return true
     }
     
-    //UIKeyboardWillShowNotification & UIKeyboardWillHideNotification
+    //MARK: UIKeyboardWillShowNotification & UIKeyboardWillHideNotification
     let kbOffset = CGFloat(38)
     //Keyboard hide/show based upon https://github.com/Lightstreamer/Lightstreamer-example-Chat-client-ios-swift with modifications
     func keyboardWillShow(notification: NSNotification) {
