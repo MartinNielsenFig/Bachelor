@@ -7,6 +7,9 @@
 /* No comment provided by engineer. */
 "Add Response" = "Tilføj svar";
 
+/* No comment provided by engineer. */
+"An error has occurred" = "Der er sket en fejl";
+
 /* Question to confirm logging out message */
 "Are you sure?" = "Er du sikker?";
 
@@ -18,6 +21,9 @@
 
 /* Cancel an action dismissing an alert */
 "Cancel" = "Annuller";
+
+/* No comment provided by engineer. */
+"Cannot respond to a question where timer has run out" = "Kan ikke svare på et spørgsmål som er udløbet";
 
 /* Confirm logging out title */
 "Confirm Logout" = "Bekræft log ud";

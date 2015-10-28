@@ -143,7 +143,7 @@ class RoomTableViewController: UITableViewController {
             var pwTextField: UITextField?
             
             let alert = UIAlertController(title: NSLocalizedString("Enter password", comment: ""), message: NSLocalizedString("The room you selected is password protected. Enter the password for the room.", comment: ""), preferredStyle: .Alert)
-            alert.addAction(UIAlertAction(title: "Connect", style: .Default, handler: { action in
+            alert.addAction(UIAlertAction(title: NSLocalizedString("Connect", comment: ""), style: .Default, handler: { action in
                 
                 //Do some encryption here on user input
                 if let pw = pwTextField!.text, roomEncryptedPw = room.EncryptedPassword where pw.sha512() == roomEncryptedPw {

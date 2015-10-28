@@ -66,12 +66,13 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                     self.question.Result += [answer]
                 }
                 
-                Toast.showToast("You voted \(answer.Value)", durationMs: 1000, presenter: self)
+                let youVoted = NSLocalizedString("You voted", comment: "")
+                Toast.showToast(youVoted + " \(answer.Value)", durationMs: 1000, presenter: self)
                 self.highlightSelectedAnswer(index)
             } else {
                 
                 dispatch_async(dispatch_get_main_queue()) {
-                    let alert = UIAlertController(title: "An error has occurred", message: data, preferredStyle: .Alert)
+                    let alert = UIAlertController(title: NSLocalizedString("An error has occurred", comment: ""), message: NSLocalizedString("Cannot respond to a question where timer has run out", comment: ""), preferredStyle: .Alert)
                     alert.addAction(UIAlertAction(title: "Ok", style: .Cancel) { action in
                         //Do nothing
                         })
@@ -148,14 +149,14 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             
             //Text
             timeLabel.removeFromSuperview()
-            timeLabel = UILabel(frame: CGRectMake(0, 0, progressBar.frame.size.width, 20))
+            timeLabel = UILabel(frame: CGRectMake(0, 0, progressBar.frame.size.width, progressBar.frame.size.height))
             timeLabel.textAlignment = .Center
             
             let tLeftS = NSTimeInterval(tLeftMs/1000)
             let tLeftComponents = DateTimeHelper.getComponents(tLeftS, flags: [.Hour, .Minute, .Second])
             
             let timeLeft = NSLocalizedString("Time left: ", comment: "")
-            timeLabel.text = timeLeft + "\(tLeftComponents.hour):\(tLeftComponents.minute):\(tLeftComponents.second)"
+            timeLabel.text = "\(tLeftComponents.hour):\(tLeftComponents.minute):\(tLeftComponents.second)"
             progressBar.clipsToBounds = false
             progressBar.addSubview(timeLabel)
             

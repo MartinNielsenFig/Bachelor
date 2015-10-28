@@ -86,7 +86,7 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
             //Do nothing
         }))
         
-        alert.addAction(UIAlertAction(title: "Logout", style: .Default, handler: { action in
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Logout", comment: ""), style: .Default, handler: { action in
             self.navigationController?.popToRootViewControllerAnimated(true)
         }))
         

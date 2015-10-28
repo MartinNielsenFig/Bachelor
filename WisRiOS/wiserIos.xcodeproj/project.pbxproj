@@ -13,6 +13,7 @@
 		CB1FBA001B983C3A00B1FCF8 /* BooleanInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB1FB9FF1B983C3A00B1FCF8 /* BooleanInputCell.swift */; };
 		CB2A1B881BB9DA0F00821087 /* RoomFilterHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2A1B871BB9DA0F00821087 /* RoomFilterHelper.swift */; };
 		CB2A2E371BE0DC9000BA54F0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CB2A2E391BE0DC9000BA54F0 /* InfoPlist.strings */; };
+		CB2A2E411BE10AB300BA54F0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CB2A2E431BE10AB300BA54F0 /* InfoPlist.strings */; };
 		CB2AD54E1BDF8FE600E50ACF /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2AD54D1BDF8FE600E50ACF /* Toast.swift */; };
 		CB2EF9C31B8DE7260098871B /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2EF9C21B8DE7260098871B /* Room.swift */; };
 		CB39A97B1B986B7F0014F818 /* StringExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB39A97A1B986B7F0014F818 /* StringExtractor.swift */; };
@@ -205,6 +206,7 @@
 		CB1FB9FF1B983C3A00B1FCF8 /* BooleanInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BooleanInputCell.swift; sourceTree = "<group>"; };
 		CB2A1B871BB9DA0F00821087 /* RoomFilterHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoomFilterHelper.swift; sourceTree = "<group>"; };
 		CB2A2E381BE0DC9000BA54F0 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CB2A2E421BE10AB300BA54F0 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CB2AD54D1BDF8FE600E50ACF /* Toast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		CB2EF9C21B8DE7260098871B /* Room.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
 		CB39A97A1B986B7F0014F818 /* StringExtractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtractor.swift; sourceTree = "<group>"; };
@@ -320,6 +322,7 @@
 		CB3C37701B8DBF5000897344 /* wiserIos */ = {
 			isa = PBXGroup;
 			children = (
+				CB2A2E431BE10AB300BA54F0 /* InfoPlist.strings */,
 				CB57059B1B98342700A4E17C /* Cells */,
 				CB0218221B947B9E00DFC9DD /* ViewControllers */,
 				CB9FF7C81B8F1864003A193B /* Models */,
@@ -658,6 +661,7 @@
 				CBECDCC31BE0D8720023EDF0 /* Localizable.strings in Resources */,
 				CB3C377C1B8DBF5000897344 /* LaunchScreen.storyboard in Resources */,
 				CB3C37791B8DBF5000897344 /* Assets.xcassets in Resources */,
+				CB2A2E411BE10AB300BA54F0 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -752,6 +756,14 @@
 			isa = PBXVariantGroup;
 			children = (
 				CB2A2E381BE0DC9000BA54F0 /* da */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		CB2A2E431BE10AB300BA54F0 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CB2A2E421BE10AB300BA54F0 /* da */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";

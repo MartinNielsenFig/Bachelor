@@ -215,7 +215,7 @@ class CreateRoomViewController: UITableViewController {
                 }
             }
             else {
-                self.room._id = data
+                self.room._id = data.stringByReplacingOccurrencesOfString(";", withString: "")
                 dispatch_async(dispatch_get_main_queue()) {
                     self.performSegueWithIdentifier("RoomCreated", sender: self)
                 }
