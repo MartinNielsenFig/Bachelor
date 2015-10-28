@@ -153,7 +153,9 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             
             let tLeftS = NSTimeInterval(tLeftMs/1000)
             let tLeftComponents = DateTimeHelper.getComponents(tLeftS, flags: [.Hour, .Minute, .Second])
-            timeLabel.text = "Time left: \(tLeftComponents.hour):\(tLeftComponents.minute):\(tLeftComponents.second)"
+            
+            let timeLeft = NSLocalizedString("Time left: ", comment: "")
+            timeLabel.text = timeLeft + "\(tLeftComponents.hour):\(tLeftComponents.minute):\(tLeftComponents.second)"
             progressBar.clipsToBounds = false
             progressBar.addSubview(timeLabel)
             

@@ -81,8 +81,8 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     
     //MARK: Navigation
     func logoutRoom() {
-        let alert = UIAlertController(title: "Leaving Room", message: "Do you want to leave current room?", preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { action in
+        let alert = UIAlertController(title: NSLocalizedString("Leaving Room", comment: ""), message: NSLocalizedString("Do you want to leave current room?", comment: ""), preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .Cancel, handler: { action in
             //Do nothing
         }))
         

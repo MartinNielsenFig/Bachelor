@@ -1,5 +1,5 @@
 /* No comment provided by engineer. */
-"(distance) meters away" = "(distance) meter væk";
+"%d meters away" = "%d meter væk";
 
 /* No comment provided by engineer. */
 "A response option" = "En svarmulighed";
@@ -17,7 +17,7 @@
 "Camera" = "Kamera";
 
 /* Cancel an action dismissing an alert */
-"Cancel" = "Annuler";
+"Cancel" = "Annuller";
 
 /* Confirm logging out title */
 "Confirm Logout" = "Bekræft log ud";
@@ -29,7 +29,13 @@
 "Connect with secret" = "Forbind med hemmelighed";
 
 /* No comment provided by engineer. */
+"Could not load questions" = "Kunne ikke hente spørgsmål";
+
+/* No comment provided by engineer. */
 "Could not load rooms" = "Kunne ikke indlæse rum";
+
+/* No comment provided by engineer. */
+"Do you want to leave current room?" = "Ønsker du at forlade rummet?";
 
 /* No comment provided by engineer. */
 "Duration" = "Varighed";
@@ -65,7 +71,13 @@
 "Enter room secret" = "Indtast rummets hemmelighed";
 
 /* No comment provided by engineer. */
+"Leaving Room" = "Forlader Rum";
+
+/* No comment provided by engineer. */
 "Let others join with secret" = "Lad andre forbinde med hemmelighed";
+
+/* No comment provided by engineer. */
+"Loading questions..." = "Indlæser spørgsmål...";
 
 /* Log in button */
 "Log in" = "Log ind";
@@ -80,10 +92,16 @@
 "Missing information" = "Manglende information";
 
 /* No comment provided by engineer. */
+"Name" = "Navn";
+
+/* No comment provided by engineer. */
 "Name of the room" = "Rummets navn";
 
 /* No comment provided by engineer. */
 "Need at least one response option." = "Angiv mindst en svarmulighed";
+
+/* No comment provided by engineer. */
+"No questions for room" = "Ingen spørgsmål for rummet";
 
 /* No comment provided by engineer. */
 "No rooms nearby" = "Ingen rum i nærheden";
@@ -107,12 +125,6 @@
 "Question text cannot be empty. " = "Spørgsmålsteksten må ikke være tom. ";
 
 /* No comment provided by engineer. */
-"Room Name" = "Rummets navn";
-
-/* No comment provided by engineer. */
-"Room Secret" = "Rummets hemmelighed";
-
-/* No comment provided by engineer. */
 "Room name cannot be empty. " = "Rummets navn må ikke være tomt. ";
 
 /* No comment provided by engineer. */
@@ -120,6 +132,9 @@
 
 /* No comment provided by engineer. */
 "Room secret cannot be empty. " = "Rummets hemmelighed må ikke være tomt. ";
+
+/* No comment provided by engineer. */
+"Secret" = "Hemmelighed";
 
 /* No comment provided by engineer. */
 "Secret in use" = "Hemmelighed bruges allerede";
@@ -134,5 +149,11 @@
 "The room you selected is password protected. Enter the password for the room." = "Det valgte rum er beskyttet med adgangskode. Skriv adgangskoden for rummet.";
 
 /* No comment provided by engineer. */
-"Uses location" = "Bruger lokation";
+"Time left: " = "Tid tilbage: ";
+
+/* No comment provided by engineer. */
+"Use Secret" = "Benyt hemmelighed";
+
+/* No comment provided by engineer. */
+"Use location" = "Brug lokation";
 

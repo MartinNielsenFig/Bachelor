@@ -242,6 +242,11 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
             }
             
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+            
+            alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .Cancel, handler: { (action) -> Void in
+                //Do nothing
+            }))
+            
             alert.addAction(UIAlertAction(title: NSLocalizedString("Photo Library", comment: ""), style: .Default, handler: { action in
                 imagePickerController.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
                 self.presentViewController(imagePickerController, animated: true, completion: nil)

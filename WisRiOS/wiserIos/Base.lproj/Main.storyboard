@@ -83,7 +83,6 @@
                                 <rect key="frame" x="20" y="20" width="90" height="30"/>
                                 <animations/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="90" id="A4p-Wm-gVB"/>
                                     <constraint firstAttribute="height" constant="30" id="yqY-x6-uHA"/>
                                 </constraints>
                                 <state key="normal" title="Cancel logon"/>
@@ -95,8 +94,8 @@
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="el8-jx-tDm" firstAttribute="top" secondItem="M5B-c8-jLD" secondAttribute="bottom" id="fTx-F6-knr"/>
-                            <constraint firstItem="el8-jx-tDm" firstAttribute="leading" secondItem="iAn-mS-Evj" secondAttribute="leadingMargin" id="sxv-k4-Efk"/>
+                            <constraint firstItem="el8-jx-tDm" firstAttribute="top" secondItem="M5B-c8-jLD" secondAttribute="bottom" id="2qa-Bb-Ofu"/>
+                            <constraint firstItem="el8-jx-tDm" firstAttribute="leading" secondItem="iAn-mS-Evj" secondAttribute="leadingMargin" id="BeC-J1-Sya"/>
                         </constraints>
                     </view>
                 </viewController>

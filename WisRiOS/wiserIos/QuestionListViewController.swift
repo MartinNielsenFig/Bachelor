@@ -75,14 +75,14 @@ class QuestionListViewController: UITableViewController, Paged {
                 
                 if tmpQuestions.count <= 0 {
                     let q = Question()
-                    q.QuestionText = "No questions for room"
+                    q.QuestionText = NSLocalizedString("No questions for room", comment: "")
                     q.CreatedById = "system"
                     tmpQuestions += [q]
                 }
                 
             } else {
                 let qError = Question()
-                qError.QuestionText = "Could not load questions"
+                qError.QuestionText = NSLocalizedString("Could not load questions", comment: "")
                 qError.CreatedById = "system"
                 tmpQuestions = [qError]
             }
@@ -105,7 +105,7 @@ class QuestionListViewController: UITableViewController, Paged {
         self.refreshControl!.addTarget(self, action: "handleRefresh:", forControlEvents: UIControlEvents.ValueChanged)
         
         let loadingQuestion = Question()
-        loadingQuestion.QuestionText = "Loading questions..."
+        loadingQuestion.QuestionText = NSLocalizedString("Loading questions...", comment: "")
         questions += [loadingQuestion]
         
         //Load questions for room

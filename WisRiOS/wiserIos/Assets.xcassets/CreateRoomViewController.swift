@@ -51,7 +51,7 @@ class CreateRoomViewController: UITableViewController {
             let cellIdentifier = "TextInputCell"
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! TextInputCell
             
-            cell.label.text = NSLocalizedString("Room Name", comment: "")
+            cell.label.text = NSLocalizedString("Name", comment: "")
             cell.inputField.placeholder = NSLocalizedString("Name of the room", comment: "")
             roomNameInputCell = cell
             return cell
@@ -61,7 +61,7 @@ class CreateRoomViewController: UITableViewController {
             let cellIdentifier = "TextInputCell"
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! TextInputCell
 
-            cell.label.text = NSLocalizedString("Room Secret", comment: "")
+            cell.label.text = NSLocalizedString("Secret", comment: "")
             cell.inputField.placeholder = NSLocalizedString("Let others join with secret", comment: "")
             roomSecretInputCell = cell
             return cell
@@ -135,7 +135,7 @@ class CreateRoomViewController: UITableViewController {
         else if indexPath.row == 8 {
             let cellIdentifier = "BooleanInputCell"
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! BooleanInputCell
-            cell.label.text = NSLocalizedString("Uses location", comment: "")
+            cell.label.text = NSLocalizedString("Use location", comment: "")
             roomUsesLocationInputCell = cell
             return cell
         }
