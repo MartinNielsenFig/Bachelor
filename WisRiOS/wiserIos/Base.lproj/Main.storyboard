@@ -141,7 +141,7 @@
                                 <rect key="frame" x="0.0" y="20" width="560" height="580"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Question text" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iGH-Ed-X4N">
-                                        <rect key="frame" x="0.0" y="0.0" width="560" height="21"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="560" height="20"/>
                                         <animations/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="fB2-rA-4Yv"/>
@@ -152,7 +152,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3Km-db-wSI">
-                                        <rect key="frame" x="0.0" y="21" width="560" height="423"/>
+                                        <rect key="frame" x="0.0" y="20" width="560" height="423"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OIc-BG-KSA" userLabel="Question Image">
                                                 <animations/>
@@ -174,14 +174,14 @@
                                             <outlet property="delegate" destination="ock-zx-gTK" id="jB0-nV-uvP"/>
                                         </connections>
                                     </scrollView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="nAF-KY-9zs" userLabel="AnswerPicker&amp;Buttons">
-                                        <rect key="frame" x="0.0" y="444" width="560" height="117"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="nAF-KY-9zs" userLabel="AnswerPicker&amp;Buttons">
+                                        <rect key="frame" x="0.0" y="443" width="560" height="117"/>
                                         <subviews>
-                                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KDW-Y0-aTM">
+                                            <pickerView contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KDW-Y0-aTM">
                                                 <rect key="frame" x="0.0" y="0.0" width="280" height="117"/>
                                                 <animations/>
                                             </pickerView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="-1" translatesAutoresizingMaskIntoConstraints="NO" id="3mO-eB-Cj7">
+                                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" alignment="center" spacing="-1" translatesAutoresizingMaskIntoConstraints="NO" id="3mO-eB-Cj7">
                                                 <rect key="frame" x="280" y="8" width="280" height="102"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cso-9D-u05">
