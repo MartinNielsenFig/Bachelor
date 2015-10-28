@@ -103,24 +103,28 @@ public class SelectedQuestionFragment extends Fragment {
         mNumberPicker = (NumberPicker) view.findViewById(R.id.selected_fragment_numberpicker);
         mNumberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
 
+
         // Virker ikke skal nok lige kigges på igen
-//        mNumberPicker.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//            @Override
-//            public void onFocusChange(View view, boolean b) {
-//                for (Answer answer : mQuestion.get_Result()) {
-//                    if (answer.get_UserId() == MyUser.getMyuser().get_Id()) {
-//                        int counter = 0;
-//                        for (String responseoption : mNumberPicker.getDisplayedValues()) {
-//                            if (responseoption == answer.get_Value()) {
-//                                EditText child = (EditText) mNumberPicker.getChildAt(counter);
-//                                child.setTextColor(Color.GREEN);
+        mNumberPicker.setOnScrollListener(new NumberPicker.OnScrollListener() {
+            @Override
+            public void onScrollStateChange(NumberPicker numberPicker, int i) {
+//                if (i == NumberPicker.OnScrollListener.SCROLL_STATE_IDLE)
+//                {
+//                    for (Answer answer : mQuestion.get_Result()) {
+//                        if (answer.get_UserId() == MyUser.getMyuser().get_Id()) {
+//                            int counter = 0;
+//                            for (String responseoption : mNumberPicker.getDisplayedValues()) {
+//                                if (responseoption == answer.get_Value()) {
+//                                    EditText child = (EditText) mNumberPicker.getChildAt(counter);
+//                                    child.setTextColor(Color.GREEN);
+//                                }
+//                                counter += 1;
 //                            }
-//                            counter += 1;
 //                        }
 //                    }
 //                }
-//            }
-//        });
+            }
+        });
 
         mSendResponseButton = (Button) view.findViewById(R.id.selected_fragment_sendresponse_button);
         mSendResponseButton.setOnClickListener(new View.OnClickListener() {
@@ -163,8 +167,7 @@ public class SelectedQuestionFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if(mQuestion != null)
-            initView();
+        initView();
     }
 
     @Override
@@ -180,8 +183,10 @@ public class SelectedQuestionFragment extends Fragment {
 
     public void initView()
     {
-        if(mQuestion.getClass().getName().equals(MultipleChoiceQuestion.class.toString().replace("class ", "")))
+        if(mQuestion != null && mQuestion.getClass().getName().equals(MultipleChoiceQuestion.class.toString().replace("class ", "")))
         {
+            mDownVoteButton.setEnabled(true);
+            mUpVoteButton.setEnabled(true);
             //mDebugTextView.setText(gson.toJson(mQuestion));
             mQuestionTextView.setText(mQuestion.get_QuestionText());
             for (Vote vote : mQuestion.get_Votes())
@@ -217,7 +222,7 @@ public class SelectedQuestionFragment extends Fragment {
                 mNumberPicker.setDisplayedValues(noResponse);
                 mNumberPicker.setEnabled(false);
             }
-
+            GetPicture();
 //            for (Answer answer : mQuestion.get_Result())
 //            {
 //                if(answer.get_UserId() == MyUser.getMyuser().get_Id())
@@ -238,7 +243,7 @@ public class SelectedQuestionFragment extends Fragment {
 
         }else{
         }
-        GetPicture();
+
     }
 
     @Override

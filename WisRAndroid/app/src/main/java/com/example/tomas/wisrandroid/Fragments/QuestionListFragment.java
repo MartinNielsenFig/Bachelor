@@ -104,13 +104,14 @@ public class QuestionListFragment extends android.support.v4.app.Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        InitQuestionList();
-        mTextView.setText(mRoom.get_Name() + " questions:");
+
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        InitQuestionList();
+        mTextView.setText(mRoom.get_Name() + " questions:");
 
     }
 
@@ -119,7 +120,7 @@ public class QuestionListFragment extends android.support.v4.app.Fragment {
         ((RoomActivity)getActivity()).TransferCurrentQuestion(curQuestion);
     }
 
-    private void InitQuestionList()
+    public void InitQuestionList()
     {
         mQuestions.clear();
         Response.Listener<String> mListener = new Response.Listener<String>() {

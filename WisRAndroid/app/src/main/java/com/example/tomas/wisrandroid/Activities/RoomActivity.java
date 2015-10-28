@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 
+import com.example.tomas.wisrandroid.Fragments.QuestionListFragment;
 import com.example.tomas.wisrandroid.Fragments.SelectedQuestionFragment;
 import com.example.tomas.wisrandroid.Helpers.CustomPagerAdapter;
 import com.example.tomas.wisrandroid.Model.Question;
@@ -57,6 +58,7 @@ public class RoomActivity extends AppCompatActivity {
             public void onPageSelected(int position) {
                 if (position == 0) {
                     ((SelectedQuestionFragment)mPagerAdapter.getItem(1)).ClearImage();
+                    ((QuestionListFragment)mPagerAdapter.getItem(0)).InitQuestionList();
                     Toast.makeText(RoomActivity.this, "Questions", Toast.LENGTH_SHORT).show();
                 } else if (position == 1) {
                     ((SelectedQuestionFragment)mPagerAdapter.getItem(1)).initView();

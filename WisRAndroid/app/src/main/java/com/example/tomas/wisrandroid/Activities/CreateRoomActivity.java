@@ -78,7 +78,10 @@ public class CreateRoomActivity extends AppCompatActivity implements GoogleApiCl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_room);
-        ActivityLayoutHelper.HideLayout(getWindow(), getSupportActionBar());
+        //ActivityLayoutHelper.HideLayout(getWindow(), getSupportActionBar());
+        if(getSupportActionBar() != null)
+            getSupportActionBar().hide();
+
         buildGoogleApiClient();
         mGoogleApiClient.connect();
 
@@ -89,11 +92,10 @@ public class CreateRoomActivity extends AppCompatActivity implements GoogleApiCl
 
         // Switch Logic
         mEnablePasswordSwitch = (Switch) findViewById(R.id.room_enable_password_switch);
+        //mEnablePasswordSwitch.setThumbResource(R.drawable.button_style);
         mEnablePasswordSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                CheckPasswordSwitchState();
-            }
+            public void onClick(View view) { CheckPasswordSwitchState();}
         });
         mEnableChatSwitch = (Switch) findViewById(R.id.room_enable_chat_switch);
         mEnableAnonymousSwitch = (Switch) findViewById(R.id.room_anonymous_switch);
@@ -189,15 +191,15 @@ public class CreateRoomActivity extends AppCompatActivity implements GoogleApiCl
 
                 mParams.put("Room", json);
 
-                final TextView mErr = (TextView) findViewById(R.id.errortext);
-                final TextView mResp = (TextView) findViewById(R.id.responsetext);
+                //final TextView mErr = (TextView) findViewById(R.id.errortext);
+                //final TextView mResp = (TextView) findViewById(R.id.responsetext);
 
                 Response.Listener<String> mListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         Toast.makeText(getApplicationContext(), "In Listener", Toast.LENGTH_LONG).show();
                         mRoom.set_id(response);
-                        mResp.setText(response);
+                        //mResp.setText(response);
 
                         Gson mGson = new Gson();
                         Bundle mBundle = new Bundle();
@@ -212,7 +214,7 @@ public class CreateRoomActivity extends AppCompatActivity implements GoogleApiCl
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
                         Toast.makeText(getApplicationContext(),"In ErrorListener" + volleyError.getMessage(),Toast.LENGTH_LONG).show();
-                        mErr.setText(volleyError.getMessage());
+                        //mErr.setText(volleyError.getMessage());
                     }
                 };
 

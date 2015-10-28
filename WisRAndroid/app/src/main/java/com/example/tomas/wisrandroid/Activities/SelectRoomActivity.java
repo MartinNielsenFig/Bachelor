@@ -1,5 +1,6 @@
 package com.example.tomas.wisrandroid.Activities;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -36,7 +37,10 @@ public class SelectRoomActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_room);
-        ActivityLayoutHelper.HideLayout(getWindow(), getSupportActionBar());
+        //ActivityLayoutHelper.HideLayout(getWindow(), getSupportActionBar());
+
+        if(getSupportActionBar() != null)
+            getSupportActionBar().hide();
 
         mListView = (ListView) findViewById(R.id.select_room_listview);
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

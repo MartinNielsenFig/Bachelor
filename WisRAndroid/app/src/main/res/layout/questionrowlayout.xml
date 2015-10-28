@@ -9,11 +9,13 @@
         android:layout_height="30dp"
         android:weightSum="10">
         <TextView
+            android:textColor="@color/primary_material_light"
             android:id="@+id/question_row_textview"
             android:layout_width="0dp"
             android:layout_height="30dp"
             android:layout_weight="7"/>
         <ImageView
+            android:textColor="@color/primary_material_light"
             android:id="@+id/question_row_imageview"
             android:layout_width="0dp"
             android:layout_height="30dp"

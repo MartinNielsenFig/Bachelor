@@ -16,6 +16,6 @@ public class ActivityLayoutHelper {
         //View decorView = myWindow.getDecorView();
         //int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN;
         //decorView.setSystemUiVisibility(uiOptions);
-        actionbar.hide();
+        //actionbar.hide();
     }
 }

@@ -19,7 +19,7 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_maps">Map</string>
     <string name="room_name_textview">Room Name</string>
-    <string name="room_tag_textview">Room Tag</string>
+    <string name="room_secret_textview">Room Secret</string>
     <string name="room_password_enable_textview">Enable Password</string>
     <string name="room_password_textview">Password</string>
     <string name="room_radius_textview">Radius</string>
@@ -30,4 +30,5 @@
     <string name="room_uselocation_enable_textview">Enable Uselocation</string>
     <string name="restapi_url">http://wisrrestapi.azurewebsites.net</string>
     <string name="title_activity_create_question">CreateQuestionActivity</string>
+    <string name="wisr_login_button_text">Log på med WISR</string>
 </resources>
