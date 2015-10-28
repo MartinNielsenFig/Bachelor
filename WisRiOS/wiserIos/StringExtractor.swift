@@ -11,10 +11,10 @@ import Foundation
 class StringExtractor {
     
     /**
-    Extracts the highest number in a string
-    - parameter aString:	string with e.g. text and numbers
-    - returns: The highest number represented in aString
-    */
+     Extracts the highest number in a string
+     - parameter aString:	string with e.g. text and numbers
+     - returns: The highest number represented in aString
+     */
     static func highestNumberInString (aString: String) -> Int {
         var alphanumerics = String()
         var highest = Int()
@@ -42,14 +42,14 @@ class StringExtractor {
     }
     
     /**
-    Shortens a string.
-    - parameter aString:		The string to be shortened
-    - parameter maxLength:	Max length of the string
-    - returns: The shortened string.
-    */
+     Shortens a string.
+     - parameter aString:		The string to be shortened
+     - parameter maxLength:	Max length of the string
+     - returns: The shortened string.
+     */
     static func shortenString(aString: String, maxLength: Int) -> String {
         var shortenedText = aString
-
+        
         if aString.characters.count > maxLength {
             let endIndex = aString.startIndex.advancedBy(maxLength)
             shortenedText = aString.substringToIndex(endIndex) + "..."

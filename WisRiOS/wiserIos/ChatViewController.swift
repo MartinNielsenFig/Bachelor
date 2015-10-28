@@ -134,8 +134,8 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     /**
-    Scrolls to the bottom of the table view presented on this page
-    */
+     Scrolls to the bottom of the table view presented on this page
+     */
     func scrollToBottom() {
         let chatFieldHeight = self.messageInputStack.frame.height + 10
         dispatch_async(dispatch_get_main_queue()) {
@@ -145,7 +145,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
             }
         }
     }
-
+    
     /**
      Policy that determines whether updates to the chat should scroll the UITableView to the bottom. This is to ensure that the user can scroll up the list to look at older messages, without the UITableView scrolling down again.
      - returns: Whether UITableView should scroll to bottom on updates.
@@ -174,7 +174,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         } else {
             return true
         }
-       return visible
+        return visible
     }
     
     /**

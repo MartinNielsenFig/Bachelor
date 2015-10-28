@@ -60,7 +60,7 @@ class CreateRoomViewController: UITableViewController {
         else if indexPath.row == 1 {
             let cellIdentifier = "TextInputCell"
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! TextInputCell
-
+            
             cell.label.text = NSLocalizedString("Secret", comment: "")
             cell.inputField.placeholder = NSLocalizedString("Let others join with secret", comment: "")
             roomSecretInputCell = cell
@@ -131,7 +131,7 @@ class CreateRoomViewController: UITableViewController {
             userQuestionInputCell = cell
             return cell
         }
-        
+            
         else if indexPath.row == 8 {
             let cellIdentifier = "BooleanInputCell"
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! BooleanInputCell
@@ -150,11 +150,11 @@ class CreateRoomViewController: UITableViewController {
     }
     
     /**
-    Method triggered by add room button. Fetches the data from the UI and instantiates the Room field. Then sends the room as JSON to the RestAPI which handles creation.
-    - parameter button:	The button that initated the function call.
-    */
+     Method triggered by add room button. Fetches the data from the UI and instantiates the Room field. Then sends the room as JSON to the RestAPI which handles creation.
+     - parameter button:	The button that initated the function call.
+     */
     func addRoomButtonPressed(button: UIBarButtonItem) {
-
+        
         if let name = roomNameInputCell?.inputField.text, secret = roomSecretInputCell?.inputField.text where name == "" || secret == "" {
             var msg = ""
             if name == "" {

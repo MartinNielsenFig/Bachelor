@@ -66,9 +66,9 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     }
     
     /**
-    Makes sure there's room enough for the navigation bar when presenting the sub-views. Needs a little offset when in landscape mode.
-    - parameter orientationIsLandscape:	Indicates the orientation of the device.
-    */
+     Makes sure there's room enough for the navigation bar when presenting the sub-views. Needs a little offset when in landscape mode.
+     - parameter orientationIsLandscape:	Indicates the orientation of the device.
+     */
     func makeRoomForNavigationBar(orientationIsLandscape orientationIsLandscape: Bool) {
         let offset = orientationIsLandscape ? CGFloat(16) : CGFloat(0)
         let cellHeight = self.navigationController!.navigationBar.frame.size.height + offset
@@ -104,7 +104,7 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
             createQuestionViewController.questionListViewController = viewControllerAtIndex(0, createNew: false) as! QuestionListViewController
             createQuestionViewController.room = self.room
         }
-
+        
     }
     
     //MARK: Utilities

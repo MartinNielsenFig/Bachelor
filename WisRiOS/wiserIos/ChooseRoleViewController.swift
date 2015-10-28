@@ -32,7 +32,7 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
         else {
             performSegueWithIdentifier("Login", sender: sender)
         }
-
+        
     }
     
     //MARK: Utility

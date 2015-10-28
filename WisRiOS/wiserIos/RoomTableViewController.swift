@@ -93,8 +93,8 @@ class RoomTableViewController: UITableViewController {
     }
     
     /**
-    Function that runs when user chooses to use a secret to connect to a room
-    */
+     Function that runs when user chooses to use a secret to connect to a room
+     */
     func useSecret() {
         var secretInput: UITextField?
         
@@ -114,8 +114,6 @@ class RoomTableViewController: UITableViewController {
             else {
                 print("secret not found")
             }
-            
-            
         }))
         
         alert.addTextFieldWithConfigurationHandler { (textField) -> Void in

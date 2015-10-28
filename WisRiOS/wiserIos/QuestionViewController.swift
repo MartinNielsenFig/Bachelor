@@ -74,7 +74,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                     let alert = UIAlertController(title: "An error has occurred", message: data, preferredStyle: .Alert)
                     alert.addAction(UIAlertAction(title: "Ok", style: .Cancel) { action in
                         //Do nothing
-                    })
+                        })
                     self.presentViewController(alert, animated: true, completion: nil)
                 }
                 
@@ -220,14 +220,14 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         imageScrollView.delegate = self
         imageScrollView.maximumZoomScale = 6
         imageScrollView.minimumZoomScale = 0.1
-                
+        
         answerPicker.delegate = self
         answerPicker.dataSource = self
         
     }
     
     override func viewDidAppear(animated: Bool) {
-
+        
         //Show UI
         if self.question._id == nil {
             return

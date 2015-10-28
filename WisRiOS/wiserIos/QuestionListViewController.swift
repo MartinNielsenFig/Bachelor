@@ -46,10 +46,10 @@ class QuestionListViewController: UITableViewController, Paged {
     }
     
     /**
-    Determines the number of up- and down-votes for a specific question.
-    - parameter question:	The question to count the down-upvotes for.
-    - returns: A tuple with down and upvotes.
-    */
+     Determines the number of up- and down-votes for a specific question.
+     - parameter question:	The question to count the down-upvotes for.
+     - returns: A tuple with down and upvotes.
+     */
     func upDownVotesCount(question: Question) -> (downvotes: Int, upvotes: Int) {
         let noDownvotes = question.Votes.filter { (element) -> Bool in
             return element.Value == -1
@@ -100,7 +100,7 @@ class QuestionListViewController: UITableViewController, Paged {
     override func viewDidLoad() {
         
         print("QuestionListViewController instantiated, roomId: \(self.roomId)")
-
+        
         self.refreshControl = UIRefreshControl()
         self.refreshControl!.addTarget(self, action: "handleRefresh:", forControlEvents: UIControlEvents.ValueChanged)
         
