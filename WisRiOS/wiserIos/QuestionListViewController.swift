@@ -143,7 +143,6 @@ class QuestionListViewController: UITableViewController, Paged {
         
         //If question string is too long shorten it
         cell.label.text = StringExtractor.shortenString(question.QuestionText!, maxLength: 30)
-        //cell.label.text = question.QuestionText
         
         let votesCount = upDownVotesCount(question)
         cell.upvoteCounter.text = String(votesCount.upvotes)

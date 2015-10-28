@@ -198,7 +198,7 @@
                                                     <action selector="upvoteBtnPressed:" destination="ock-zx-gTK" eventType="touchUpInside" id="lkD-RR-7WY"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cfJ-dB-iui" userLabel="Downvote Question">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cfJ-dB-iui" userLabel="Downvote Question">
                                                 <rect key="frame" x="44" y="0.0" width="44" height="44"/>
                                                 <animations/>
                                                 <accessibility key="accessibilityConfiguration">
@@ -213,7 +213,7 @@
                                                     <action selector="downvoteBtnPressed:" destination="ock-zx-gTK" eventType="touchUpInside" id="Cfj-8H-lIT"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uV7-tu-bL6">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uV7-tu-bL6">
                                                 <rect key="frame" x="88" y="7" width="256" height="30"/>
                                                 <animations/>
                                                 <state key="normal" title="See Results"/>

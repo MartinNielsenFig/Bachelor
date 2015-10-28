@@ -1,0 +1,105 @@
+/* Class = "UILabel"; text = "Down"; ObjectID = "0rz-3b-Eqk"; */
+"0rz-3b-Eqk.text" = "Ned";
+
+/* Class = "UITableViewController"; title = "Create Room"; ObjectID = "4Nu-Oe-NI9"; */
+"4Nu-Oe-NI9.title" = "Opret rum";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "5NO-sa-sYn"; */
+"5NO-sa-sYn.text" = "Mærke";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "6FR-RU-hBX"; */
+"6FR-RU-hBX.text" = "Mærke";
+
+/* Class = "UISegmentedControl"; 8UD-o4-2mj.segmentTitles[0] = "10 m"; ObjectID = "8UD-o4-2mj"; */
+"8UD-o4-2mj.segmentTitles[0]" = "10 m";
+
+/* Class = "UISegmentedControl"; 8UD-o4-2mj.segmentTitles[1] = "40 m"; ObjectID = "8UD-o4-2mj"; */
+"8UD-o4-2mj.segmentTitles[1]" = "40 m";
+
+/* Class = "UISegmentedControl"; 8UD-o4-2mj.segmentTitles[2] = "80 m"; ObjectID = "8UD-o4-2mj"; */
+"8UD-o4-2mj.segmentTitles[2]" = "80 m";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "A7D-Ha-dtg"; */
+"A7D-Ha-dtg.text" = "Mærke";
+
+/* Class = "UIViewController"; title = "Choose Role"; ObjectID = "BYZ-38-t0r"; */
+"BYZ-38-t0r.title" = "Vælg Rolle";
+
+/* Class = "UITableViewController"; title = "RoomList"; ObjectID = "C4H-el-owm"; */
+"C4H-el-owm.title" = "Rum liste";
+
+/* Class = "UILabel"; text = "Subtitle"; ObjectID = "DE0-LC-cvC"; */
+"DE0-LC-cvC.text" = "Undertekst";
+
+/* Class = "UIButton"; normalTitle = "Create Room"; ObjectID = "IaR-K2-F17"; */
+"IaR-K2-F17.normalTitle" = "Opret Rum";
+
+/* Class = "UITableViewController"; title = "Create Question"; ObjectID = "J7j-bt-NRW"; */
+"J7j-bt-NRW.title" = "Opret Spørgsmål";
+
+/* Class = "UILabel"; text = "Up"; ObjectID = "QqM-Zw-jue"; */
+"QqM-Zw-jue.text" = "Op";
+
+/* Class = "UINavigationItem"; title = "Choose Role"; ObjectID = "U7C-Jw-GTH"; */
+"U7C-Jw-GTH.title" = "Vælg Rolle";
+
+/* Class = "UITableViewCell"; accessibilityIdentifier = "SubtitleCell"; ObjectID = "UAs-uy-Rnt"; */
+"UAs-uy-Rnt.accessibilityIdentifier" = "Undertekst celle";
+
+/* Class = "UIButton"; normalTitle = "Send"; ObjectID = "X0D-To-bsu"; */
+"X0D-To-bsu.normalTitle" = "Send";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "XIb-Ds-DyA"; */
+"XIb-Ds-DyA.text" = "Titel";
+
+/* Class = "UIButton"; normalTitle = "Add"; ObjectID = "YDx-ul-GZM"; */
+"YDx-ul-GZM.normalTitle" = "Tilføj";
+
+/* Class = "UIViewController"; title = "Result"; ObjectID = "beQ-E0-jbN"; */
+"beQ-E0-jbN.title" = "Resultat";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "cyz-Ce-jS7"; */
+"cyz-Ce-jS7.text" = "Mærke";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "d0c-mP-k52"; */
+"d0c-mP-k52.text" = "Mærke";
+
+/* Class = "UIButton"; normalTitle = "Cancel logon"; ObjectID = "el8-jx-tDm"; */
+"el8-jx-tDm.normalTitle" = "Annuler logon";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "ela-hN-nwq"; */
+"ela-hN-nwq.text" = "Mærke";
+
+/* Class = "UIViewController"; title = "Login"; ObjectID = "hcQ-8x-btj"; */
+"hcQ-8x-btj.title" = "Log ind";
+
+/* Class = "UILabel"; text = "Question text"; ObjectID = "iGH-Ed-X4N"; */
+"iGH-Ed-X4N.text" = "Spørgsmålstekst";
+
+/* Class = "UIViewController"; title = "ChatViewController"; ObjectID = "jMD-EN-WVm"; */
+"jMD-EN-WVm.title" = "ChatViewController";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "kyd-b5-ZYD"; */
+"kyd-b5-ZYD.text" = "Mærke";
+
+/* Class = "UIViewController"; title = "Question"; ObjectID = "ock-zx-gTK"; */
+"ock-zx-gTK.title" = "Spørgsmål";
+
+/* Class = "UIButton"; normalTitle = "Send Response"; ObjectID = "tGJ-Gn-5Xl"; */
+"tGJ-Gn-5Xl.normalTitle" = "Send Svar";
+
+/* Class = "UITableViewController"; title = "Question List"; ObjectID = "tN6-yc-Uu8"; */
+"tN6-yc-Uu8.title" = "Spørgsmålsliste";
+
+/* Class = "UITextField"; placeholder = "Enter your textmessage"; ObjectID = "tuD-VA-PhF"; */
+"tuD-VA-PhF.placeholder" = "Skriv din besked";
+
+/* Class = "UIButton"; normalTitle = "See Results"; ObjectID = "uV7-tu-bL6"; */
+"uV7-tu-bL6.normalTitle" = "Se Resultater";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "ytR-Gq-AnO"; */
+"ytR-Gq-AnO.text" = "Mærke";
+
+/* Class = "UIButton"; normalTitle = "Join Room"; ObjectID = "zXc-jJ-l7g"; */
+"zXc-jJ-l7g.normalTitle" = "Forbind til Rum";
+

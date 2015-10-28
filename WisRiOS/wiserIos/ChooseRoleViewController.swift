@@ -38,9 +38,11 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
     //MARK: Utility
     func addLoginLogoutButtons() {
         if CurrentUser.sharedInstance.FacebookId != nil {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Log out", style: .Plain, target: self, action: "logOffFacebook")
+            let logoutTitle = NSLocalizedString("Log out", comment: "Log out button")
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: logoutTitle, style: .Plain, target: self, action: "logOffFacebook")
         } else {
-            navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Log in", style: .Plain, target: self, action: "clickCreateRoomBtn:")
+            let loginTitle = NSLocalizedString("Log in", comment: "Log in button")
+            navigationItem.rightBarButtonItem = UIBarButtonItem(title: loginTitle, style: .Plain, target: self, action: "clickCreateRoomBtn:")
         }
     }
     
@@ -49,13 +51,18 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
      */
     func logOffFacebook() {
         
+        let confirmTitle = NSLocalizedString("Confirm Logout", comment: "Confirm logging out title")
+        let confirmMessage = NSLocalizedString("Are you sure?", comment: "Question to confirm logging out message")
+        let cancel = NSLocalizedString("Cancel", comment: "Cancel an action dismissing an alert")
+        let logout = NSLocalizedString("Logout", comment: "Logout Button")
+        
         //http://stackoverflow.com/questions/24022479/how-would-i-create-a-uialertview-in-swift
-        let alert = UIAlertController(title: "Confirm logout", message: "Confirm logging out", preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { action in
+        let alert = UIAlertController(title: confirmTitle, message: confirmMessage, preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: cancel, style: .Cancel, handler: { action in
             //Do nothing
         }))
         
-        alert.addAction(UIAlertAction(title: "Logout", style: .Default, handler: { action in
+        alert.addAction(UIAlertAction(title: logout, style: .Default, handler: { action in
             FacebookHelper.logOff()
             self.addLoginLogoutButtons()
         }))
@@ -101,7 +108,9 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
                 if filteredRooms.count <= 0 {
                     let noRooms = Room()
                     noRooms._id = "system"
-                    noRooms.Name = "No nearby rooms"
+                    
+                    let noRoomsNearby = NSLocalizedString("No rooms nearby", comment: "")
+                    noRooms.Name = noRoomsNearby
                     tmpRooms = [noRooms]
                 }
                 else {
@@ -109,7 +118,8 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
                 }
             } else {
                 let errorRoom = Room()
-                errorRoom.Name = "Could not load rooms"
+                let couldNotLoadRooms = NSLocalizedString("Could not load rooms", comment: "")
+                errorRoom.Name = couldNotLoadRooms
                 errorRoom._id = "system"
                 tmpRooms = [errorRoom]
             }

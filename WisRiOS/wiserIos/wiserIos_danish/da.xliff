@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 http://docs.oasis-open.org/xliff/v1.2/os/xliff-core-1.2-strict.xsd">
+  <file original="wiserIos/Base.lproj/LaunchScreen.storyboard" source-language="en" datatype="plaintext" target-language="da">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="7.1" build-num="7B91b"/>
+    </header>
+    <body/>
+  </file>
+  <file original="wiserIos/Base.lproj/Main.storyboard" source-language="en" datatype="plaintext" target-language="da">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="7.1" build-num="7B91b"/>
+    </header>
+    <body>
+      <trans-unit id="0rz-3b-Eqk.text">
+        <source>Down</source>
+        <target>Ned</target>
+        <note>Class = "UILabel"; text = "Down"; ObjectID = "0rz-3b-Eqk";</note>
+      </trans-unit>
+      <trans-unit id="4Nu-Oe-NI9.title">
+        <source>Create Room</source>
+        <target>Opret rum</target>
+        <note>Class = "UITableViewController"; title = "Create Room"; ObjectID = "4Nu-Oe-NI9";</note>
+      </trans-unit>
+      <trans-unit id="5NO-sa-sYn.text">
+        <source>Label</source>
+        <target>Mærke</target>
+        <note>Class = "UILabel"; text = "Label"; ObjectID = "5NO-sa-sYn";</note>
+      </trans-unit>
+      <trans-unit id="6FR-RU-hBX.text">
+        <source>Label</source>
+        <target>Mærke</target>
+        <note>Class = "UILabel"; text = "Label"; ObjectID = "6FR-RU-hBX";</note>
+      </trans-unit>
+      <trans-unit id="8UD-o4-2mj.segmentTitles[0]">
+        <source>10 m</source>
+        <target>10 m</target>
+        <note>Class = "UISegmentedControl"; 8UD-o4-2mj.segmentTitles[0] = "10 m"; ObjectID = "8UD-o4-2mj";</note>
+      </trans-unit>
+      <trans-unit id="8UD-o4-2mj.segmentTitles[1]">
+        <source>40 m</source>
+        <target>40 m</target>
+        <note>Class = "UISegmentedControl"; 8UD-o4-2mj.segmentTitles[1] = "40 m"; ObjectID = "8UD-o4-2mj";</note>
+      </trans-unit>
+      <trans-unit id="8UD-o4-2mj.segmentTitles[2]">
+        <source>80 m</source>
+        <target>80 m</target>
+        <note>Class = "UISegmentedControl"; 8UD-o4-2mj.segmentTitles[2] = "80 m"; ObjectID = "8UD-o4-2mj";</note>
+      </trans-unit>
+      <trans-unit id="A7D-Ha-dtg.text">
+        <source>Label</source>
+        <target>Mærke</target>
+        <note>Class = "UILabel"; text = "Label"; ObjectID = "A7D-Ha-dtg";</note>
+      </trans-unit>
+      <trans-unit id="BYZ-38-t0r.title">
+        <source>Choose Role</source>
+        <target>Vælg Rolle</target>
+        <note>Class = "UIViewController"; title = "Choose Role"; ObjectID = "BYZ-38-t0r";</note>
+      </trans-unit>
+      <trans-unit id="C4H-el-owm.title">
+        <source>RoomList</source>
+        <target>Rum liste</target>
+        <note>Class = "UITableViewController"; title = "RoomList"; ObjectID = "C4H-el-owm";</note>
+      </trans-unit>
+      <trans-unit id="DE0-LC-cvC.text">
+        <source>Subtitle</source>
+        <target>Undertekst</target>
+        <note>Class = "UILabel"; text = "Subtitle"; ObjectID = "DE0-LC-cvC";</note>
+      </trans-unit>
+      <trans-unit id="IaR-K2-F17.normalTitle">
+        <source>Create Room</source>
+        <target>Opret Rum</target>
+        <note>Class = "UIButton"; normalTitle = "Create Room"; ObjectID = "IaR-K2-F17";</note>
+      </trans-unit>
+      <trans-unit id="J7j-bt-NRW.title">
+        <source>Create Question</source>
+        <target>Opret Spørgsmål</target>
+        <note>Class = "UITableViewController"; title = "Create Question"; ObjectID = "J7j-bt-NRW";</note>
+      </trans-unit>
+      <trans-unit id="QqM-Zw-jue.text">
+        <source>Up</source>
+        <target>Op</target>
+        <note>Class = "UILabel"; text = "Up"; ObjectID = "QqM-Zw-jue";</note>
+      </trans-unit>
+      <trans-unit id="U7C-Jw-GTH.title">
+        <source>Choose Role</source>
+        <target>Vælg Rolle</target>
+        <note>Class = "UINavigationItem"; title = "Choose Role"; ObjectID = "U7C-Jw-GTH";</note>
+      </trans-unit>
+      <trans-unit id="UAs-uy-Rnt.accessibilityIdentifier">
+        <source>SubtitleCell</source>
+        <target>Undertekst celle</target>
+        <note>Class = "UITableViewCell"; accessibilityIdentifier = "SubtitleCell"; ObjectID = "UAs-uy-Rnt";</note>
+      </trans-unit>
+      <trans-unit id="X0D-To-bsu.normalTitle">
+        <source>Send</source>
+        <target>Send</target>
+        <note>Class = "UIButton"; normalTitle = "Send"; ObjectID = "X0D-To-bsu";</note>
+      </trans-unit>
+      <trans-unit id="XIb-Ds-DyA.text">
+        <source>Title</source>
+        <target>Titel</target>
+        <note>Class = "UILabel"; text = "Title"; ObjectID = "XIb-Ds-DyA";</note>
+      </trans-unit>
+      <trans-unit id="YDx-ul-GZM.normalTitle">
+        <source>Add</source>
+        <target>Tilføj</target>
+        <note>Class = "UIButton"; normalTitle = "Add"; ObjectID = "YDx-ul-GZM";</note>
+      </trans-unit>
+      <trans-unit id="beQ-E0-jbN.title">
+        <source>Result</source>
+        <target>Resultat</target>
+        <note>Class = "UIViewController"; title = "Result"; ObjectID = "beQ-E0-jbN";</note>
+      </trans-unit>
+      <trans-unit id="cyz-Ce-jS7.text">
+        <source>Label</source>
+        <target>Mærke</target>
+        <note>Class = "UILabel"; text = "Label"; ObjectID = "cyz-Ce-jS7";</note>
+      </trans-unit>
+      <trans-unit id="d0c-mP-k52.text">
+        <source>Label</source>
+        <target>Mærke</target>
+        <note>Class = "UILabel"; text = "Label"; ObjectID = "d0c-mP-k52";</note>
+      </trans-unit>
+      <trans-unit id="el8-jx-tDm.normalTitle">
+        <source>Cancel logon</source>
+        <target>Annuler logon</target>
+        <note>Class = "UIButton"; normalTitle = "Cancel logon"; ObjectID = "el8-jx-tDm";</note>
+      </trans-unit>
+      <trans-unit id="ela-hN-nwq.text">
+        <source>Label</source>
+        <target>Mærke</target>
+        <note>Class = "UILabel"; text = "Label"; ObjectID = "ela-hN-nwq";</note>
+      </trans-unit>
+      <trans-unit id="hcQ-8x-btj.title">
+        <source>Login</source>
+        <target>Log ind</target>
+        <note>Class = "UIViewController"; title = "Login"; ObjectID = "hcQ-8x-btj";</note>
+      </trans-unit>
+      <trans-unit id="iGH-Ed-X4N.text">
+        <source>Question text</source>
+        <target>Spørgsmålstekst</target>
+        <note>Class = "UILabel"; text = "Question text"; ObjectID = "iGH-Ed-X4N";</note>
+      </trans-unit>
+      <trans-unit id="jMD-EN-WVm.title">
+        <source>ChatViewController</source>
+        <target>ChatViewController</target>
+        <note>Class = "UIViewController"; title = "ChatViewController"; ObjectID = "jMD-EN-WVm";</note>
+      </trans-unit>
+      <trans-unit id="kyd-b5-ZYD.text">
+        <source>Label</source>
+        <target>Mærke</target>
+        <note>Class = "UILabel"; text = "Label"; ObjectID = "kyd-b5-ZYD";</note>
+      </trans-unit>
+      <trans-unit id="ock-zx-gTK.title">
+        <source>Question</source>
+        <target>Spørgsmål</target>
+        <note>Class = "UIViewController"; title = "Question"; ObjectID = "ock-zx-gTK";</note>
+      </trans-unit>
+      <trans-unit id="tGJ-Gn-5Xl.normalTitle">
+        <source>Send Response</source>
+        <target>Send Svar</target>
+        <note>Class = "UIButton"; normalTitle = "Send Response"; ObjectID = "tGJ-Gn-5Xl";</note>
+      </trans-unit>
+      <trans-unit id="tN6-yc-Uu8.title">
+        <source>Question List</source>
+        <target>Spørgsmålsliste</target>
+        <note>Class = "UITableViewController"; title = "Question List"; ObjectID = "tN6-yc-Uu8";</note>
+      </trans-unit>
+      <trans-unit id="tuD-VA-PhF.placeholder">
+        <source>Enter your textmessage</source>
+        <target>Skriv din besked</target>
+        <note>Class = "UITextField"; placeholder = "Enter your textmessage"; ObjectID = "tuD-VA-PhF";</note>
+      </trans-unit>
+      <trans-unit id="uV7-tu-bL6.normalTitle">
+        <source>See Results</source>
+        <target>Se Resultater</target>
+        <note>Class = "UIButton"; normalTitle = "See Results"; ObjectID = "uV7-tu-bL6";</note>
+      </trans-unit>
+      <trans-unit id="ytR-Gq-AnO.text">
+        <source>Label</source>
+        <target>Mærke</target>
+        <note>Class = "UILabel"; text = "Label"; ObjectID = "ytR-Gq-AnO";</note>
+      </trans-unit>
+      <trans-unit id="zXc-jJ-l7g.normalTitle">
+        <source>Join Room</source>
+        <target>Forbind til Rum</target>
+        <note>Class = "UIButton"; normalTitle = "Join Room"; ObjectID = "zXc-jJ-l7g";</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="wiserIos/Info.plist" source-language="en" datatype="plaintext" target-language="da">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="7.1" build-num="7B91b"/>
+    </header>
+    <body>
+      <trans-unit id="CFBundleName">
+        <source>$(PRODUCT_NAME)</source>
+      </trans-unit>
+      <trans-unit id="CFBundleShortVersionString">
+        <source>1.0</source>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="wiserIos/Localizable.strings" source-language="en" datatype="plaintext" target-language="da">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="7.1" build-num="7B91b"/>
+    </header>
+    <body>
+      <trans-unit id="(distance) meters away">
+        <source>(distance) meters away</source>
+        <target>(distance) meter væk</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="A response option">
+        <source>A response option</source>
+        <target>En svarmulighed</target>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Add Response">
+        <source>Add Response</source>
+        <target>Tilføj svar</taget>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Are you sure?">
+        <source>Are you sure?</source>
+        <target>Er du sikker?</taget>
+        <note>Question to confirm logging out message</note>
+      </trans-unit>
+      <trans-unit id="Ask a question">
+        <source>Ask a question</source>
+        <target>Stil et spørgsmål</taget>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Camera">
+        <source>Camera</source>
+        <target>Kamera</taget>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Cancel">
+        <source>Cancel</source>
+        <target>Annuler</taget>
+        <note>Cancel an action dismissing an alert</note>
+      </trans-unit>
+      <trans-unit id="Confirm Logout">
+        <source>Confirm Logout</source>
+        <target>Bekræft log ud</target>
+        <note>Confirm logging out title</note>
+      </trans-unit>
+      <trans-unit id="Connect">
+        <source>Connect</source>
+        <target>Forbind</taget>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Connect with secret">
+        <source>Connect with secret</source>
+        <target>Forbind med hemmelighed</taget>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Could not load rooms">
+        <source>Could not load rooms</source>
+        <target>Kunne ikke indlæse rum</taget>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Duration">
+        <source>Duration</source>
+        <target>Varighed</taget>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Duration in minutes">
+        <source>Duration in minutes</source>
+        <target>Varighed i minutter</taget>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Empty values">
+        <source>Empty values</source>
+        <target>Tomme værdier</taget>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Enable anonymous">
+        <source>Enable anonymous</source>
+        <target>Tillad anonyme</taget>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Enable chat">
+        <source>Enable chat</source>
+        <target>Tillad chat</taget>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Enable password">
+        <source>Enable password</source>
+        <target>Brug adgangskode</taget>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Enable user questions">
+        <source>Enable user questions</source>
+        <target>Tillad brugerspørgsmål</taget>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Enter a number in duration. ">
+        <source>Enter a number in duration. </source>
+        <target>Skriv et tal i varighed</taget>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Enter password">
+        <source>Enter password</source>
+        <target>Indtast adgangskode</taget>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Enter room password">
+        <source>Enter room password</source>
+        <target>Indtast rummets adgangskode</taget>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Enter room secret">
+        <source>Enter room secret</source>
+        <target>Indtast rummets hemmelighed</taget>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Let others join with secret">
+        <source>Let others join with secret</source>
+        <target>Lad andre forbinde med hemmelighed</taget>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Log in">
+        <source>Log in</source>
+        <target>Log ind</taget>
+        <note>Log in button</note>
+      </trans-unit>
+      <trans-unit id="Log out">
+        <source>Log out</source>
+        <target>Log ud</taget>
+        <note>Log out button</note>
+      </trans-unit>
+      <trans-unit id="Logout">
+        <source>Logout</source>
+        <target>Log ud</taget>
+        <note>Logout Button</note>
+      </trans-unit>
+      <trans-unit id="Missing information">
+        <source>Missing information</source>
+        <target>Manglende information</taget>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Name of the room">
+        <source>Name of the room</source>
+        <target>Rummets navn</taget>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Need at least one response option.">
+        <source>Need at least one response option.</source>
+        <target>Angiv mindst en svarmulighed</taget>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="No rooms nearby">
+        <source>No rooms nearby</source>
+        <target>Ingen rum i nærheden</taget>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Ok">
+        <source>Ok</source>
+        <target>Ok</taget>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Optional password for room">
+        <source>Optional password for room</source>
+        <target>Valgfri adgangskode til rummet</taget>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Password">
+        <source>Password</source>
+        <target>Adgangskode</taget>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Photo Library">
+        <source>Photo Library</source>
+        <target>Foto bibliotek</taget>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Question text">
+        <source>Question text</source>
+        <target>Spørgsmålstekst</taget>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Question text cannot be empty. ">
+        <source>Question text cannot be empty. </source>
+        <target>Spørgsmålsteksten må ikke være tom. </taget>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Room Name">
+        <source>Room Name</source>
+        <target>Rummets navn</taget>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Room Secret">
+        <source>Room Secret</source>
+        <target>Rummets hemmelighed</taget>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Room name cannot be empty. ">
+        <source>Room name cannot be empty. </source>
+        <target>Rummets navn må ikke være tomt. </taget>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Room radius">
+        <source>Room radius</source>
+        <target>Rummets radius</taget>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Room secret cannot be empty. ">
+        <source>Room secret cannot be empty. </source>
+        <target>Rummets hemmelighed må ikke være tomt. </taget>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Secret in use">
+        <source>Secret in use</source>
+        <target>Hemmelighed bruges allerede</taget>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Secret is already in use, choose another.">
+        <source>Secret is already in use, choose another.</source>
+        <target>Hemmeligheden er allerede i brug, vælg et andet.</taget>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Select image or take photo">
+        <source>Select image or take photo</source>
+        <target>Vælg billede eller tag billede</taget>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="The room you selected is password protected. Enter the password for the room.">
+        <source>The room you selected is password protected. Enter the password for the room.</source>
+        <target>Det valgte rum er beskyttet med adgangskode. Skriv adgangskoden for rummet.</taget>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Use Secret">
+        <source>Use secret</source>
+        <target>Brug hemmelighed</taget>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+      <trans-unit id="Uses location">
+        <source>Uses location</source>
+        <target>Bruger lokation</taget>
+        <note>No comment provided by engineer.</note>
+      </trans-unit>
+    </body>
+  </file>
+  <file original="wiserIosTests/Info.plist" source-language="en" datatype="plaintext" target-language="da">
+    <header>
+      <tool tool-id="com.apple.dt.xcode" tool-name="Xcode" tool-version="7.1" build-num="7B91b"/>
+    </header>
+    <body>
+      <trans-unit id="CFBundleName">
+        <source>$(PRODUCT_NAME)</source>
+      </trans-unit>
+      <trans-unit id="CFBundleShortVersionString">
+        <source>1.0</source>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

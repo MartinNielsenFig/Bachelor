@@ -50,8 +50,9 @@ class CreateRoomViewController: UITableViewController {
         if indexPath.row == 0 {
             let cellIdentifier = "TextInputCell"
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! TextInputCell
-            cell.label.text = "Room name"
-            cell.inputField.placeholder = "Name of the room"
+            
+            cell.label.text = NSLocalizedString("Room Name", comment: "")
+            cell.inputField.placeholder = NSLocalizedString("Name of the room", comment: "")
             roomNameInputCell = cell
             return cell
         }
@@ -59,8 +60,9 @@ class CreateRoomViewController: UITableViewController {
         else if indexPath.row == 1 {
             let cellIdentifier = "TextInputCell"
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! TextInputCell
-            cell.label.text = "Room Secret"
-            cell.inputField.placeholder = "Let others join with secret"
+
+            cell.label.text = NSLocalizedString("Room Secret", comment: "")
+            cell.inputField.placeholder = NSLocalizedString("Let others join with secret", comment: "")
             roomSecretInputCell = cell
             return cell
         }
@@ -69,7 +71,7 @@ class CreateRoomViewController: UITableViewController {
             let cellIdentifier = "BooleanInputCell"
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! BooleanInputCell
             
-            cell.label.text = "Enable password"
+            cell.label.text = NSLocalizedString("Enable password", comment: "")
             pwSwitchCell = cell
             
             //Save as field and add a delegate function to this viewcontroller with name enablePwSwitchChanged
@@ -82,8 +84,8 @@ class CreateRoomViewController: UITableViewController {
             
             let cellIdentifier = "TextInputCell"
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! TextInputCell
-            cell.label.text = "Password"
-            cell.inputField.placeholder = "Optional password for room"
+            cell.label.text = NSLocalizedString("Password", comment: "")
+            cell.inputField.placeholder = NSLocalizedString("Optional password for room", comment: "")
             cell.inputField.secureTextEntry = true
             
             pwLabel = cell.label
@@ -100,7 +102,7 @@ class CreateRoomViewController: UITableViewController {
         else if indexPath.row == 4 {
             let cellIdentifier = "SegmentedInputCell"
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! SegmentedInputCell
-            cell.label.text = "Room radius"
+            cell.label.text = NSLocalizedString("Room radius", comment: "")
             radiusInputCell = cell
             return cell
             
@@ -109,7 +111,7 @@ class CreateRoomViewController: UITableViewController {
         else if indexPath.row == 5 {
             let cellIdentifier = "BooleanInputCell"
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! BooleanInputCell
-            cell.label.text = "Enable chat"
+            cell.label.text = NSLocalizedString("Enable chat", comment: "")
             chatInputCell = cell
             return cell
         }
@@ -117,7 +119,7 @@ class CreateRoomViewController: UITableViewController {
         else if indexPath.row == 6 {
             let cellIdentifier = "BooleanInputCell"
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! BooleanInputCell
-            cell.label.text = "Enable anonymous"
+            cell.label.text = NSLocalizedString("Enable anonymous", comment: "")
             anonymousInputCell = cell
             return cell
         }
@@ -125,7 +127,7 @@ class CreateRoomViewController: UITableViewController {
         else if indexPath.row == 7 {
             let cellIdentifier = "BooleanInputCell"
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! BooleanInputCell
-            cell.label.text = "Enable user questions"
+            cell.label.text = NSLocalizedString("Enable user questions", comment: "")
             userQuestionInputCell = cell
             return cell
         }
@@ -133,7 +135,7 @@ class CreateRoomViewController: UITableViewController {
         else if indexPath.row == 8 {
             let cellIdentifier = "BooleanInputCell"
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! BooleanInputCell
-            cell.label.text = "Uses location"
+            cell.label.text = NSLocalizedString("Uses location", comment: "")
             roomUsesLocationInputCell = cell
             return cell
         }
@@ -156,14 +158,14 @@ class CreateRoomViewController: UITableViewController {
         if let name = roomNameInputCell?.inputField.text, secret = roomSecretInputCell?.inputField.text where name == "" || secret == "" {
             var msg = ""
             if name == "" {
-                msg += "Room name cannot be empty. "
+                msg += NSLocalizedString("Room name cannot be empty. ", comment: "")
             }
             if secret == "" {
-                msg += "Room secret cannot be empty. "
+                msg += NSLocalizedString("Room secret cannot be empty. ", comment: "")
             }
             
-            let alert = UIAlertController(title: "Empty values", message: msg, preferredStyle: .Alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { action in
+            let alert = UIAlertController(title: NSLocalizedString("Empty values", comment: ""), message: msg, preferredStyle: .Alert)
+            alert.addAction(UIAlertAction(title: NSLocalizedString("Ok", comment: ""), style: .Default, handler: { action in
                 self.roomSecretInputCell?.inputField.becomeFirstResponder()
             }))
             dispatch_async(dispatch_get_main_queue()) {
@@ -203,7 +205,7 @@ class CreateRoomViewController: UITableViewController {
                 if error.ErrorCode == ErrorCodes.RoomSecretAlreadyInUse.rawValue {
                     print("SECRET ALREADY IN USE")
                     
-                    let alert = UIAlertController(title: "Secret in use", message: "Secret is already in use, choose another.", preferredStyle: .Alert)
+                    let alert = UIAlertController(title: NSLocalizedString("Secret in use", comment: ""), message: NSLocalizedString("Secret is already in use, choose another.", comment: ""), preferredStyle: .Alert)
                     alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { action in
                         self.roomSecretInputCell?.inputField.becomeFirstResponder()
                     }))
