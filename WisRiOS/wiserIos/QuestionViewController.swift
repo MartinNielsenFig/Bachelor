@@ -69,6 +69,15 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                 Toast.showToast("You voted \(answer.Value)", durationMs: 1000, presenter: self)
                 self.highlightSelectedAnswer(index)
             } else {
+                
+                dispatch_async(dispatch_get_main_queue()) {
+                    let alert = UIAlertController(title: "An error has occurred", message: data, preferredStyle: .Alert)
+                    alert.addAction(UIAlertAction(title: "Ok", style: .Cancel) { action in
+                        //Do nothing
+                    })
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
+                
                 print(error)
                 print(data)
             }
