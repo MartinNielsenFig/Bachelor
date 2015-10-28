@@ -10,7 +10,7 @@ import UIKit
 import JsonSerializerSwift
 
 /// A sub-ViewController of RoomPageViewController. This shows the selected Question that the user can answer.
-class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, Paged {
+class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIScrollViewDelegate, Paged {
     
     //MARK: Properties
     let pageIndex = 1
@@ -25,10 +25,11 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     var timeLabel = UILabel()
     @IBOutlet weak var questionText: UILabel!
     @IBOutlet weak var answerPicker: UIPickerView!
-    @IBOutlet weak var questionImage: UIImageView!
     @IBOutlet weak var progressBar: UIProgressView!
     @IBOutlet weak var upvoteButton: UIButton!
     @IBOutlet weak var downvoteButton: UIButton!
+    @IBOutlet weak var imageScrollView: UIScrollView!
+    @IBOutlet weak var questionImageView: UIImageView!
     
     var pickerData = [String]()
     
@@ -101,9 +102,9 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     
     /**
-    Up- or downvotes the current showing question.
-    - parameter up:	If true upvotes, if false downvotes.
-    */
+     Up- or downvotes the current showing question.
+     - parameter up:	If true upvotes, if false downvotes.
+     */
     func vote(up: Bool, button: UIButton) {
         updateVoteUI(up)
         let voteValue = up ? 1 : -1
@@ -123,7 +124,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             }
         }
     }
-
+    
     func updateProgressbar() {
         
         if let startStr = question.CreationTimestamp?.stringByReplacingOccurrencesOfString(",", withString: "."), endStr = question.ExpireTimestamp?.stringByReplacingOccurrencesOfString(",", withString: "."), start = Double(startStr), end = Double(endStr) {
@@ -166,15 +167,25 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         
         func updateImgGui(b64Img: String) {
             let imageData = NSData(base64EncodedString: b64Img, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
-            let image = UIImage(data: imageData!)
+            let questionImage = UIImage(data: imageData!)
             
             dispatch_async(dispatch_get_main_queue()) {
                 indicator.stopAnimating()
                 indicator.removeFromSuperview()
-                self.questionImage.image = image
-                self.questionImage.reloadInputViews()
+                
+                //Add image to image scroll view
+                if let questionImage = questionImage where questionImage.size != CGSize(width: 0, height: 0) {
+                    self.questionImageView.image = questionImage
+                    self.imageScrollView.contentSize = questionImage.size
+                    
+                    let minimumZoomLevel = self.imageScrollView.frame.size.width/questionImage.size.width
+                    self.imageScrollView.minimumZoomScale = minimumZoomLevel
+                    self.imageScrollView.zoomScale = minimumZoomLevel
+                    
+                    self.questionImageView!.reloadInputViews()
+                }
             }
-
+            
         }
         
         //Don't reload image if already loaded
@@ -192,16 +203,20 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     
     //MARK: Lifecycle
     override func viewDidLoad() {
-        
         print("QuestionViewController instantiated, roomId: \(self.roomId)")
+        super.viewDidLoad()
         
+        imageScrollView.delegate = self
+        imageScrollView.maximumZoomScale = 6
+        imageScrollView.minimumZoomScale = 0.1
+                
         answerPicker.delegate = self
         answerPicker.dataSource = self
         
     }
     
     override func viewDidAppear(animated: Bool) {
-        
+
         //Show UI
         if self.question._id == nil {
             return
@@ -226,7 +241,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         
         //Image
         loadImage()
-
+        
         //Answer
         highlightSelectedAnswer()
         
@@ -241,7 +256,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     
     override func viewWillDisappear(animated: Bool) {
-        self.questionImage.image = nil
+        self.questionImageView.image = nil
         super.viewWillDisappear(animated)
     }
     
@@ -265,6 +280,11 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             return attributedTitle
         }
         return nil
+    }
+    
+    //MARK: UIScrollViewDelegate
+    func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
+        return questionImageView
     }
     
     //MARK: Navigation
