@@ -7,7 +7,12 @@
 <div class="description"><div class="wisr-controller-page wisr-controller-homecontroller-page"><p>Controller for the Home View of the application</p>
 </div></div>
 <div class="member method"><h2 id="methods">Methods</h2>
-<ul class="methods"><li><h3 id="methods_broadcastroom">broadcastRoom(roomToAdd)</h3>
+<ul class="methods"><li><h3 id="methods_broadcastdeleteroom">broadcastDeleteRoom(roomToAdd)</h3>
+<div class="broadcastdeleteroom"><div class="homecontroller-broadcastdeleteroom-page"><p>Function that is called when a room should be deleted</p>
+</div><h5 id="methods_broadcastdeleteroom_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>roomToAdd</td><td><a href="" class="label type-hint type-hint-room">Room</a></td><td><div class="homecontroller-broadcastdeleteroom-page"><p>The room to delete</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_broadcastroom">broadcastRoom(roomToAdd)</h3>
 <div class="broadcastroom"><div class="homecontroller-broadcastroom-page"><p>Function that is called when a new room has been created. This gets called by the function &quot;Send&quot; in the RoomHub.
 The function adds the new room to the Rooms collection.</p>
 </div><h5 id="methods_broadcastroom_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>roomToAdd</td><td><a href="" class="label type-hint type-hint-room">Room</a></td><td><div class="homecontroller-broadcastroom-page"><p>The room to add to the rooms collection</p>
@@ -34,6 +39,13 @@ This function is used when the location of a room is updated.</p>
 </div><h5 id="methods_deleteroom_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>roomToDelete</td><td><a href="" class="label type-hint type-hint-room">Room</a></td><td><div class="homecontroller-deleteroom-page"><p>The room to delete</p>
 </div></td></tr></tbody></table></div>
 </li>
+<li><h3 id="methods_findwithattr">findWithAttr(array, attr, value)</h3>
+<div class="findwithattr"><div class="homecontroller-findwithattr-page"><p>Function that finds the index of a property with a specific value in an array. Returns -1 if the value is not found</p>
+</div><h5 id="methods_findwithattr_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>array</td><td><a href="" class="label type-hint type-hint-array">Array</a></td><td><div class="homecontroller-findwithattr-page"><p>the array to traverse</p>
+</div></td></tr><tr><td>attr</td><td><a href="" class="label type-hint type-hint-attribute">Attribute</a></td><td><div class="homecontroller-findwithattr-page"><p>the attribute to check for the given value</p>
+</div></td></tr><tr><td>value</td><td><a href="" class="label type-hint type-hint-attribute">Attribute</a></td><td><div class="homecontroller-findwithattr-page"><p>the value to check the attribute for</p>
+</div></td></tr></tbody></table></div>
+</li>
 <li><h3 id="methods_getcurrentposition">getCurrentPosition()</h3>
 <div class="getcurrentposition"><div class="homecontroller-getcurrentposition-page"><p>Geolocation function that gets called at load of the home index page to get the location of the user. When the location is fetched the property currentLocation is set with the value and the getRooms function is called.
 At this point the function calls geocode to get the formatted address</p>
@@ -47,6 +59,14 @@ At this point the function calls geocode to get the formatted address</p>
 <div class="postroom"><div class="homecontroller-postroom-page"><p>Function to create a new room on the database with the entered information from the modal window.
 If no error is returned, this function calls &quot;changeViewToRoom&quot; and adds room to connected rooms(so that user doesn&#39;t have to enter password)</p>
 </div></div>
+</li>
+<li><h3 id="methods_spawnnotification">spawnNotification(theBody, theIcon, theTitle, link)</h3>
+<div class="spawnnotification"><div class="homecontroller-spawnnotification-page"><p>Function that creates a browser notification if the user has allowed it, further documentation: <a href="https://developer.mozilla.org/en-US/docs/Web/API/Notification">https://developer.mozilla.org/en-US/docs/Web/API/Notification</a></p>
+</div><h5 id="methods_spawnnotification_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>theBody</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="homecontroller-spawnnotification-page"><p>The body string of the notification as specified in the options parameter of the constructor.</p>
+</div></td></tr><tr><td>theIcon</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="homecontroller-spawnnotification-page"><p>The URL of the image used as an icon of the notification as specified in the options parameter of the constructor.</p>
+</div></td></tr><tr><td>theTitle</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="homecontroller-spawnnotification-page"><p>The title of the notification as specified in the options parameter of the constructor.</p>
+</div></td></tr><tr><td>link</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="homecontroller-spawnnotification-page"><p>redirect link for the onclick event</p>
+</div></td></tr></tbody></table></div>
 </li>
 <li><h3 id="methods_toggledropdown">toggleDropdown(roomId)</h3>
 <div class="toggledropdown"><div class="homecontroller-toggledropdown-page"><p>Function that toggles the visibility of the dropdown</p>

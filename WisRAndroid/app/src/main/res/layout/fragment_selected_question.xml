@@ -3,21 +3,24 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:tag="SelectedQuesitonTag">
+    android:tag="SelectedQuesitonTag"
+    android:background="@android:color/darker_gray">
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/super_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="11">
+    android:weightSum="12">
 
     <TextView
+        android:textColor="@color/primary_material_light"
+        android:textSize="20sp"
         android:id="@+id/selected_fragment_questiontextview"
         android:gravity="center"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="2"/>
 
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -34,11 +37,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:visibility="visible" />
+            android:visibility="invisible" />
     </RelativeLayout>
 
     <NumberPicker
         android:id="@+id/selected_fragment_numberpicker"
+        android:background="@android:color/darker_gray"
+        android:clickable="false"
         android:layout_width="100dp"
         android:layout_height="0dp"
         android:layout_weight="2"
@@ -53,12 +58,18 @@
         android:weightSum="100">
 
         <Button
+            android:textColor="@color/primary_material_light"
+            android:background="@drawable/button_style"
+            android:layout_margin="5dp"
             android:id="@+id/selected_fragment_sendresponse_button"
             android:layout_width="150dp"
             android:layout_height="fill_parent"
             android:text="Send Response" />
 
         <Button
+            android:textColor="@color/primary_material_light"
+            android:background="@drawable/button_style"
+            android:layout_margin="5dp"
             android:id="@+id/selected_fragment_seeresult_button"
             android:layout_width="150dp"
             android:layout_height="fill_parent"
@@ -74,6 +85,8 @@
 
         <ImageButton
             android:id="@+id/downvote_button"
+            android:background="@drawable/button_style"
+            android:layout_margin="5dp"
             android:layout_width="150dp"
             android:layout_height="fill_parent"
             android:src="@drawable/thumb_down"
@@ -81,6 +94,8 @@
 
         <ImageButton
             android:id="@+id/upvote_button"
+            android:background="@drawable/button_style"
+            android:layout_margin="5dp"
             android:layout_width="150dp"
             android:layout_height="fill_parent"
             android:src="@drawable/thumb_up"

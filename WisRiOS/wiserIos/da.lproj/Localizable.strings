@@ -1,0 +1,165 @@
+/* No comment provided by engineer. */
+"%d meters away" = "%d meter væk";
+
+/* No comment provided by engineer. */
+"A response option" = "En svarmulighed";
+
+/* No comment provided by engineer. */
+"Add Response" = "Tilføj svar";
+
+/* No comment provided by engineer. */
+"An error has occurred" = "Der er sket en fejl";
+
+/* Question to confirm logging out message */
+"Are you sure?" = "Er du sikker?";
+
+/* No comment provided by engineer. */
+"Ask a question" = "Stil et spørgsmål";
+
+/* No comment provided by engineer. */
+"Camera" = "Kamera";
+
+/* Cancel an action dismissing an alert */
+"Cancel" = "Annuller";
+
+/* No comment provided by engineer. */
+"Cannot respond to a question where timer has run out" = "Kan ikke svare på et spørgsmål som er udløbet";
+
+/* Confirm logging out title */
+"Confirm Logout" = "Bekræft log ud";
+
+/* No comment provided by engineer. */
+"Connect" = "Forbind";
+
+/* No comment provided by engineer. */
+"Connect with secret" = "Forbind med hemmelighed";
+
+/* No comment provided by engineer. */
+"Could not load questions" = "Kunne ikke hente spørgsmål";
+
+/* No comment provided by engineer. */
+"Could not load rooms" = "Kunne ikke indlæse rum";
+
+/* No comment provided by engineer. */
+"Do you want to leave current room?" = "Ønsker du at forlade rummet?";
+
+/* No comment provided by engineer. */
+"Duration" = "Varighed";
+
+/* No comment provided by engineer. */
+"Duration in minutes" = "Varighed i minutter";
+
+/* No comment provided by engineer. */
+"Empty values" = "Tomme værdier";
+
+/* No comment provided by engineer. */
+"Enable anonymous" = "Tillad anonyme";
+
+/* No comment provided by engineer. */
+"Enable chat" = "Tillad chat";
+
+/* No comment provided by engineer. */
+"Enable password" = "Brug adgangskode";
+
+/* No comment provided by engineer. */
+"Enable user questions" = "Tillad brugerspørgsmål";
+
+/* No comment provided by engineer. */
+"Enter a number in duration. " = "Skriv et tal i varighed";
+
+/* No comment provided by engineer. */
+"Enter password" = "Indtast adgangskode";
+
+/* No comment provided by engineer. */
+"Enter room password" = "Indtast rummets adgangskode";
+
+/* No comment provided by engineer. */
+"Enter room secret" = "Indtast rummets hemmelighed";
+
+/* No comment provided by engineer. */
+"Leaving Room" = "Forlader Rum";
+
+/* No comment provided by engineer. */
+"Let others join with secret" = "Lad andre forbinde med hemmelighed";
+
+/* No comment provided by engineer. */
+"Loading questions..." = "Indlæser spørgsmål...";
+
+/* Log in button */
+"Log in" = "Log ind";
+
+/* Log out button */
+"Log out" = "Log ud";
+
+/* Logout Button */
+"Logout" = "Log ud";
+
+/* No comment provided by engineer. */
+"Missing information" = "Manglende information";
+
+/* No comment provided by engineer. */
+"Name" = "Navn";
+
+/* No comment provided by engineer. */
+"Name of the room" = "Rummets navn";
+
+/* No comment provided by engineer. */
+"Need at least one response option." = "Angiv mindst en svarmulighed";
+
+/* No comment provided by engineer. */
+"No questions for room" = "Ingen spørgsmål for rummet";
+
+/* No comment provided by engineer. */
+"No rooms nearby" = "Ingen rum i nærheden";
+
+/* No comment provided by engineer. */
+"Ok" = "Ok";
+
+/* No comment provided by engineer. */
+"Optional password for room" = "Valgfri adgangskode til rummet";
+
+/* No comment provided by engineer. */
+"Password" = "Adgangskode";
+
+/* No comment provided by engineer. */
+"Photo Library" = "Foto bibliotek";
+
+/* No comment provided by engineer. */
+"Question text" = "Spørgsmålstekst";
+
+/* No comment provided by engineer. */
+"Question text cannot be empty. " = "Spørgsmålsteksten må ikke være tom. ";
+
+/* No comment provided by engineer. */
+"Room name cannot be empty. " = "Rummets navn må ikke være tomt. ";
+
+/* No comment provided by engineer. */
+"Room radius" = "Rummets radius";
+
+/* No comment provided by engineer. */
+"Room secret cannot be empty. " = "Rummets hemmelighed må ikke være tomt. ";
+
+/* No comment provided by engineer. */
+"Secret" = "Hemmelighed";
+
+/* No comment provided by engineer. */
+"Secret in use" = "Hemmelighed bruges allerede";
+
+/* No comment provided by engineer. */
+"Secret is already in use, choose another." = "Hemmeligheden er allerede i brug, vælg et andet.";
+
+/* No comment provided by engineer. */
+"Select image or take photo" = "Vælg billede eller tag billede";
+
+/* No comment provided by engineer. */
+"The room you selected is password protected. Enter the password for the room." = "Det valgte rum er beskyttet med adgangskode. Skriv adgangskoden for rummet.";
+
+/* No comment provided by engineer. */
+"Time left: " = "Tid tilbage: ";
+
+/* No comment provided by engineer. */
+"Use Secret" = "Benyt hemmelighed";
+
+/* No comment provided by engineer. */
+"Use location" = "Brug lokation";
+

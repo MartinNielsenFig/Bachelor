@@ -1,6 +1,7 @@
 package com.example.tomas.wisrandroid.Activities;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.media.session.MediaSession;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -43,8 +44,13 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        ActivityLayoutHelper.HideLayout(getWindow(), getSupportActionBar());
+        //ActivityLayoutHelper.HideLayout(getWindow(), getSupportActionBar());
+        if(getSupportActionBar() != null)
+        {
+            getSupportActionBar().hide();
+        }
 
+        Resources.Theme mtheme = getTheme();
         final Gson gson = new Gson();
         cbm = CallbackManager.Factory.create();
 

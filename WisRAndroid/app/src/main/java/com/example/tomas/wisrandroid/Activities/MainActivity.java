@@ -2,10 +2,12 @@ package com.example.tomas.wisrandroid.Activities;
 
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.location.Location;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,7 +38,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-public class MainActivity extends FragmentActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClient;
@@ -54,6 +56,8 @@ public class MainActivity extends FragmentActivity implements GoogleApiClient.Co
         setContentView(R.layout.activity_main);
         //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         //getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+        if(getSupportActionBar() != null)
+            getSupportActionBar().hide();
 
         buildGoogleApiClient();
 
@@ -71,6 +75,7 @@ public class MainActivity extends FragmentActivity implements GoogleApiClient.Co
                     MyUser.getMyuser().set_FacebookId(AccessToken.getCurrentAccessToken().getUserId());
                     setupMyUser();
                     Intent mCreateRoomIntent = new Intent(MainActivity.this, CreateRoomActivity.class);
+                    mCreateRoomIntent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                     startActivity(mCreateRoomIntent);
                 } else {
                     Intent mIntent = new Intent(MainActivity.this, LoginActivity.class);

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -14,11 +15,13 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Display;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
@@ -94,17 +97,35 @@ public class SelectedQuestionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_selected_question, container, false);
 
-//        String mQuestionString = savedInstanceState.getString("Question");
-//        if(mQuestionString.contains("MultipleChoiceQuestion"))
-//        {
-//            mQuestion = gson.fromJson(mQuestionString,MultipleChoiceQuestion.class);
-//        }else{
-//        }
-        //mDebugTextView = (TextView) view.findViewById(R.id.selected_fragment_debugtextview);
         mQuestionTextView = (TextView) view.findViewById(R.id.selected_fragment_questiontextview);
         mImageView = (ImageView) view.findViewById(R.id.selected_fragment_imageview);
         mProgressBar = (ProgressBar) view.findViewById(R.id.progress);
         mNumberPicker = (NumberPicker) view.findViewById(R.id.selected_fragment_numberpicker);
+        mNumberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
+
+
+        // Virker ikke skal nok lige kigges på igen
+        mNumberPicker.setOnScrollListener(new NumberPicker.OnScrollListener() {
+            @Override
+            public void onScrollStateChange(NumberPicker numberPicker, int i) {
+//                if (i == NumberPicker.OnScrollListener.SCROLL_STATE_IDLE)
+//                {
+//                    for (Answer answer : mQuestion.get_Result()) {
+//                        if (answer.get_UserId() == MyUser.getMyuser().get_Id()) {
+//                            int counter = 0;
+//                            for (String responseoption : mNumberPicker.getDisplayedValues()) {
+//                                if (responseoption == answer.get_Value()) {
+//                                    EditText child = (EditText) mNumberPicker.getChildAt(counter);
+//                                    child.setTextColor(Color.GREEN);
+//                                }
+//                                counter += 1;
+//                            }
+//                        }
+//                    }
+//                }
+            }
+        });
+
         mSendResponseButton = (Button) view.findViewById(R.id.selected_fragment_sendresponse_button);
         mSendResponseButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,8 +167,7 @@ public class SelectedQuestionFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if(mQuestion != null)
-            initView();
+        initView();
     }
 
     @Override
@@ -163,8 +183,10 @@ public class SelectedQuestionFragment extends Fragment {
 
     public void initView()
     {
-        if(mQuestion.getClass().getName().equals(MultipleChoiceQuestion.class.toString().replace("class ", "")))
+        if(mQuestion != null && mQuestion.getClass().getName().equals(MultipleChoiceQuestion.class.toString().replace("class ", "")))
         {
+            mDownVoteButton.setEnabled(true);
+            mUpVoteButton.setEnabled(true);
             //mDebugTextView.setText(gson.toJson(mQuestion));
             mQuestionTextView.setText(mQuestion.get_QuestionText());
             for (Vote vote : mQuestion.get_Votes())
@@ -200,11 +222,28 @@ public class SelectedQuestionFragment extends Fragment {
                 mNumberPicker.setDisplayedValues(noResponse);
                 mNumberPicker.setEnabled(false);
             }
+            GetPicture();
+//            for (Answer answer : mQuestion.get_Result())
+//            {
+//                if(answer.get_UserId() == MyUser.getMyuser().get_Id())
+//                {
+//                    int counter = 0;
+//                    for (String responseoption : mNumberPicker.getDisplayedValues())
+//                    {
+//                        if(responseoption == answer.get_Value())
+//                        {
+//                            EditText child = (EditText)mNumberPicker.getChildAt(counter);
+//                            child.setTextColor(Color.GREEN);
+//                        }
+//                        counter +=1;
+//                    }
+//                }
+//            }
 
 
         }else{
         }
-        GetPicture();
+
     }
 
     @Override
@@ -250,60 +289,51 @@ public class SelectedQuestionFragment extends Fragment {
             }
         }else{
             mImageView.setImageBitmap(DecodeImage(mQuestion.get_Img()));
-            mPicture = null;
-            System.gc();
+            //mPicture.recycle();
         }
 
     }
 
     private Bitmap DecodeImage(String Image)
     {
+        // Getting width of the current display
         Display display = ((RoomActivity)getActivity()).getWindowManager().getDefaultDisplay();
         int width = display.getWidth();
+
+        // Getting width of the current picture
         BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
         bitmapOptions.inJustDecodeBounds = true;
         byte[] bytesDecoded = Base64.decode(Image, Base64.DEFAULT);
         mPicture = BitmapFactory.decodeByteArray(bytesDecoded, 0, bytesDecoded.length,bitmapOptions);
-        bitmapOptions.inSampleSize = bitmapOptions.outWidth / width;
+
+        // Calculating scaling factor to compress the picture to desireable size
+        if (bitmapOptions.outWidth > width) {
+            bitmapOptions.inSampleSize = (bitmapOptions.outWidth / width) + 2;
+        }
         bitmapOptions.inJustDecodeBounds = false;
         mPicture = BitmapFactory.decodeByteArray(bytesDecoded, 0, bytesDecoded.length,bitmapOptions);
+
         return mPicture;
-    }
-
-    public int calculateInSampleSize( BitmapFactory.Options options, int reqWidth, int reqHeight) {
-        // Raw height and width of image
-        final int height = options.outHeight;
-        final int width = options.outWidth;
-        int inSampleSize = 1;
-
-        if (height > reqHeight || width > reqWidth) {
-
-            final int halfHeight = height / 2;
-            final int halfWidth = width / 2;
-
-            // Calculate the largest inSampleSize value that is a power of 2 and keeps both
-            // height and width larger than the requested height and width.
-            while ((halfHeight / inSampleSize) > reqHeight
-                    && (halfWidth / inSampleSize) > reqWidth) {
-                inSampleSize *= 2;
-            }
-        }
-
-        return inSampleSize;
     }
 
     private void SendResponse()
     {
         Map<String,String> mParams = new HashMap<String, String>();
-        Answer mAnswer = new Answer(mNumberPicker.getDisplayedValues()[mNumberPicker.getValue()], MyUser.getMyuser().get_Id());
+        final Answer mAnswer = new Answer(mNumberPicker.getDisplayedValues()[mNumberPicker.getValue()], MyUser.getMyuser().get_Id());
         mParams.put("response",gson.toJson(mAnswer));
         mParams.put("questionId", mQuestion.get_Id());
 
         Response.Listener<String> mListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                int whatisvalue = mNumberPicker.getValue();
+                if (response.isEmpty())
+                {
+                    //mQuestion.get_Result().add(mAnswer);
+                    //EditText child = ((EditText) mNumberPicker.getChildAt(mNumberPicker.getValue()));
+                    //child.setTextColor(Color.GREEN);
+                }
                 Toast.makeText(getContext(),response,Toast.LENGTH_LONG).show();
-
             }
         };
 

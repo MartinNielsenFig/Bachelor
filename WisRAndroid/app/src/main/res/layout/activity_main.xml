@@ -1,41 +1,57 @@
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainActivityRelativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    tools:context=".MainActivity"
-    android:id="@+id/mainActivityRelativeLayout"
     android:orientation="vertical"
-    android:weightSum="10">
+    android:weightSum="10"
+    tools:context=".MainActivity"
+    android:background="@android:color/darker_gray">
 
-    <LinearLayout
-        android:layout_marginTop="10dp"
-        android:gravity="center_horizontal|bottom"
+    <TextView
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight="3"
+        android:layout_weight="1"
+        android:text="Choose Role"
+        android:textSize="28sp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textColor="@color/primary_material_light"/>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_weight="2"
+        android:gravity="center_horizontal|bottom"
         android:orientation="horizontal">
-    <Button
-        android:layout_margin="5dp"
-        android:id="@+id/button_create_room"
-        android:text="Create Room"
-        android:layout_width="120dp"
-        android:layout_height="50dp" />
 
-    <Button
-        android:id="@+id/button_find_room"
-        android:layout_margin="5dp"
-        android:text="Find Room"
-        android:layout_width="120dp"
-        android:layout_height="50dp" />
+        <Button
+            android:id="@+id/button_create_room"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:text="Create Room"
+            android:textColor="@color/primary_material_light"
+            android:background="@drawable/button_style"
+            />
 
+        <Button
+            android:id="@+id/button_find_room"
+            android:layout_width="120dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:text="Find Room"
+            android:textColor="@color/primary_material_light"
+            android:background="@drawable/button_style"
+            />
         <!--<Button-->
-            <!--android:id="@+id/button_logout"-->
-            <!--android:layout_margin="5dp"-->
-            <!--android:text="Logout"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="fill_parent" />-->
+        <!--android:id="@+id/button_logout"-->
+        <!--android:layout_margin="5dp"-->
+        <!--android:text="Logout"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="fill_parent" />-->
 
         <!--style="?android:attr/buttonBarStyle"-->
 
@@ -44,13 +60,12 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight="7"
         android:layout_margin="20dp"
+        android:layout_weight="7"
         android:background="@android:color/black"
         android:padding="2dp">
 
-        <fragment
-            xmlns:android="http://schemas.android.com/apk/res/android"
+        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/map"
             android:name="com.google.android.gms.maps.SupportMapFragment"

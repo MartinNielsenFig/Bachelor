@@ -1,6 +1,8 @@
 package com.example.tomas.wisrandroid.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.PopupWindowCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -15,6 +18,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
+import com.example.tomas.wisrandroid.Activities.CreateQuestionActivity;
 import com.example.tomas.wisrandroid.Activities.RoomActivity;
 import com.example.tomas.wisrandroid.Helpers.CustomQuestionAdapter;
 import com.example.tomas.wisrandroid.Helpers.HttpHelper;
@@ -75,7 +79,8 @@ public class QuestionListFragment extends android.support.v4.app.Fragment {
         mImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent mIntent = new Intent(getActivity(), CreateQuestionActivity.class);
+                getActivity().startActivity(mIntent);
             }
         });
         mAdapter = new CustomQuestionAdapter(getContext(), mQuestions);
@@ -99,13 +104,14 @@ public class QuestionListFragment extends android.support.v4.app.Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        InitQuestionList();
-        mTextView.setText(mRoom.get_Name() + " questions:");
+
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        InitQuestionList();
+        mTextView.setText(mRoom.get_Name() + " questions:");
 
     }
 
@@ -114,7 +120,7 @@ public class QuestionListFragment extends android.support.v4.app.Fragment {
         ((RoomActivity)getActivity()).TransferCurrentQuestion(curQuestion);
     }
 
-    private void InitQuestionList()
+    public void InitQuestionList()
     {
         mQuestions.clear();
         Response.Listener<String> mListener = new Response.Listener<String>() {

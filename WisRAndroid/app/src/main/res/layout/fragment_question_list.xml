@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.tomas.wisrandroid.Fragments.QuestionListFragment"
-    android:tag="QuestionListTag">
+    android:tag="QuestionListTag"
+    android:background="@android:color/darker_gray">
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -13,13 +14,15 @@
             android:layout_width="fill_parent"
             android:layout_height="60dp"
             android:orientation="horizontal"
-            android:weightSum="10">
+            android:weightSum="10"
+            android:background="@android:color/darker_gray">
 
             <TextView
+                android:textColor="@color/primary_material_light"
                 android:layout_marginLeft="16dp"
                 android:layout_gravity="center_vertical"
                 android:textStyle="bold"
-                android:textSize="28sp"
+                android:textSize="16sp"
                 android:id="@+id/questionlistfragment_textview"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
@@ -27,6 +30,7 @@
 
             <ImageButton
                 android:id="@+id/ask_question_button"
+                android:background="@drawable/imagebutton_style"
                 android:layout_width="0dp"
                 android:layout_height="60dp"
                 android:layout_gravity="right"
@@ -36,6 +40,7 @@
         </LinearLayout>
 
         <ListView
+            android:background="@android:color/darker_gray"
             android:id="@+id/question_listview"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"

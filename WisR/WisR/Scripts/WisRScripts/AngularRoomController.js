@@ -10,7 +10,14 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
     $(function () {
         /// Declare a proxy to reference the hub. 
         var hub = $.connection.chatHub;
-        /// Create a function that the hub can call to broadcast messages.
+        /**
+           * @ngdoc method
+           * @name RoomController#broadcastChatMessage
+           * @methodOf WisR.controller:RoomController
+           * @description
+           * SignalR function that is called when a new chat message is created
+           * @param {String} chatMessageToAdd The chatmessage that is to be added to the chat
+           */
         hub.client.broadcastChatMessage = function (chatMessageToAdd) {
             //Only add the chatmessage if it is for the currentRoom
             if (JSON.parse(chatMessageToAdd).RoomId === $scope.CurrentRoom._id) {
@@ -26,22 +33,33 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
     $(function () {
         /// Declare a proxy to reference the hub. 
         var hub = $.connection.roomHub;
-        //// Create a function that the hub can call to broadcast messages.
+        /**
+           * @ngdoc method
+           * @name RoomController#broadcastUpdateRoom
+           * @methodOf WisR.controller:RoomController
+           * @description
+           * SignalR function that is called when the location of a room is changed
+           * @param {Room} roomToUpdate The room where the updated location should happen
+           */
         hub.client.broadcastUpdateRoom = function (roomToUpdate) {
-            $scope.CurrentRoom = JSON.parse(roomToUpdate);
+            var jsonParsedRoom = JSON.parse(roomToUpdate);
+
+            if (jsonParsedRoom._id === $scope.CurrentRoom._id) {
+                $scope.CurrentRoom = jsonParsedRoom;
 
             ////trick to update the map
             $scope.toggleRoomLocation();
             $scope.toggleRoomLocation();
             $scope.$apply();
+            }         
         };
 
         /**
            * @ngdoc method
-           * @name HomeController#broadcastDeleteRoom
-           * @methodOf WisR.controller:HomeController
+           * @name RoomController#broadcastDeleteRoom
+           * @methodOf WisR.controller:RoomController
            * @description
-           * Function that is called when a room should be deleted, if it is the current room inform the user that the room has been deleted
+           * Function that is called when a room should be deleted, if it is the current room inform the user that the room has been deleted and redirect him to the front page
            * @param {Room} roomToAdd The room to delete
            */
 
@@ -58,12 +76,26 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
     $(function () {
         //// Declare a proxy to reference the hub. 
         var hub = $.connection.questionHub;
-        //// Create a function that the hub can call to broadcast messages.
+        /**
+           * @ngdoc method
+           * @name RoomController#broadcastQuestion
+           * @methodOf WisR.controller:RoomController
+           * @description
+           * SignalR function that a question should be added to the array of questions($scope.Questions)
+           * @param {Question} questionToAdd The question to add
+           */
         hub.client.broadcastQuestion = function (questionToAdd) {
             $scope.Questions.push(JSON.parse(questionToAdd));
             $scope.$apply();
         };
-        ////SignalR function call that the question should be updated
+        /**
+          * @ngdoc method
+          * @name RoomController#broadcastUpdateQuestion
+          * @methodOf WisR.controller:RoomController
+          * @description
+          * SignalR function that a question should be updated with new information
+          * @param {Question} questionToUpdate The question with the new information
+          */
         hub.client.broadcastUpdateQuestion = function (questionToUpdate) {
             var updateTemp = JSON.parse(questionToUpdate);
             var index = findWithAttr($scope.Questions, "_id", updateTemp._id);
@@ -78,7 +110,14 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
 
             $scope.$apply();
         };
-        ////SignalR function call that the question should be deleted
+        /**
+          * @ngdoc method
+          * @name RoomController#broadcastDeleteQuestion
+          * @methodOf WisR.controller:RoomController
+          * @description
+          * SignalR function call that the question should be deleted
+          * @param {Question} questionToDelete The question to delete
+          */
         hub.client.broadcastDeleteQuestion = function (questionToDelete) {
             var index = findWithAttr($scope.Questions, "_id", questionToDelete);
             if (index > -1) {
@@ -95,7 +134,14 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
                 alert(Resources.QuestionWasDeletedMessage);
             }
         };
-        ////SignalR function call that the question should be updated with new responses
+        /**
+          * @ngdoc method
+          * @name RoomController#broadcastUpdateResult
+          * @methodOf WisR.controller:RoomController
+          * @description
+          * SignalR function call that the result of a question be updated with new responses
+          * @param {Question} questionToUpdate The question with the new information
+          */
         hub.client.broadcastUpdateResult = function (questionToUpdate) {
             var updateTemp = JSON.parse(questionToUpdate);
             var index = findWithAttr($scope.Questions, "_id", updateTemp._id);
@@ -112,7 +158,14 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
 
             $scope.$apply();
         };
-        ////SignalR function call that the question should be updated with new votes
+        /**
+          * @ngdoc method
+          * @name RoomController#broadcastUpdateVotes
+          * @methodOf WisR.controller:RoomController
+          * @description
+          * SignalR function call that the question should be updated with new votes
+          * @param {Question} questionToUpdate The question with the new information
+          */
         hub.client.broadcastUpdateVotes = function (questionToUpdate) {
             var updateTemp = JSON.parse(questionToUpdate);
             var index = findWithAttr($scope.Questions, "_id", updateTemp._id);
@@ -139,17 +192,69 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
     ///#endregion
 
     //#region Defaultvalues
-    ///default charttype as pie
+    /**
+        * @ngdoc property
+        * @name .#chartType
+        * @returns {String} chartType
+        * @propertyOf WisR.controller:RoomController 
+        * @description Property that determines which kind of chart is created for the results of the question
+        * Default is "Pie"
+        */
     $scope.chartType = "Pie";
+    /**
+        * @ngdoc property
+        * @name .#userIsHost
+        * @returns {Boolean} userIsHost
+        * @propertyOf WisR.controller:RoomController 
+        * @description Boolean that determines whether the user is host of the room
+        * Default is false
+        */
     $scope.userIsHost = false;
+    /**
+       * @ngdoc property
+       * @name .#SpecificQuestionShown
+       * @returns {Boolean} SpecificQuestionShown
+       * @propertyOf WisR.controller:RoomController 
+       * @description Boolean that determines whether a specific question is shown or the two tables with all the questions are shown
+       * Default is false
+       */
     $scope.SpecificQuestionShown = false;
+    /**
+       * @ngdoc property
+       * @name .#QuestionTypes
+       * @returns {Array<QuestionType>} QuestionTypes
+       * @propertyOf WisR.controller:RoomController 
+       * @description Array with the different types of questions
+       */
     $scope.QuestionTypes = [{ name: 'Multiple Choice Question', val: 'MultipleChoiceQuestion' }, { name: 'Textual Question', val: 'TextualQuestion' }];
+    /**
+     * @ngdoc property
+     * @name .#ResponseOptions
+     * @returns {Array<ResponseOption>} ResponseOptions
+     * @propertyOf WisR.controller:RoomController 
+     * @description Array that contains the response options for a specific question
+     */
     $scope.ResponseOptions = [{ id: 0, val: undefined }, { id: 1, val: undefined }];
+    /**
+     * @ngdoc property
+     * @name .#ActiveUsers
+     * @returns {Array<ResponseOption>} ActiveUsers
+     * @propertyOf WisR.controller:RoomController 
+     * @description Array that contains all the active users, so that we can fetch their username
+     */
     $scope.ActiveUsers = [];
     ///#endregion
 
     //#region Watches
-    ///watch the window.userId variable
+    /**
+          * @ngdoc method
+          * @name RoomController#watchUserId
+          * @methodOf WisR.controller:RoomController
+          * @description
+          * Function that watches the userId variable, this is done so we can determine whether or not the user is anonymous.
+          * After retrieving the userId we fetch the userid from the database.
+          * @param {String} userId The variable that we want to watch
+          */
     $scope.$watch(function () {
         return $window.userId;
     }, function (n, o) {
@@ -166,13 +271,22 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
             });
         }
     });
+    /**
+         * @ngdoc method
+         * @name RoomController#watchQuestionImage
+         * @methodOf WisR.controller:RoomController
+         * @description
+         * Function that watches the questionImage. This is done so that we can check whether the filesize exceeds our limits. If it does we resize the picture
+         * After retrieving the userId we fetch the userid from the database.
+         * @param {String} questionIage The variable that we want to watch
+         */
     ///watch the questionImage.filesize variable
     $scope.$watch(
             function () {
                 return $scope.questionImage;
             }, function (n, o) {
                 if (n != undefined) {
-                   if (n.filesize > 1049000) {
+                    if (n.filesize > 1049000) {
                         $scope.imageTooBig = true;
                         $scope.ImageMessage = Resources.FileTooBigResizing;
                         var img = new Image();
@@ -195,6 +309,13 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
     ///#endregion
 
     //#region ImageFunctions
+    /**
+        * @ngdoc method
+        * @name RoomController#toggleImageSize
+        * @methodOf WisR.controller:RoomController
+        * @description
+        * Function that toggles the image size between 500px and 100px
+        */
     ///Image toggle functions
     $scope.toggleImageSize = function () {
         if ($scope.NoPicture) {
@@ -209,6 +330,13 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
         $("#specificQuestionImage").css("width", $scope.imageSize);
         $("#specificQuestionImage").css("height", $scope.imageSize);
     };
+    /**
+        * @ngdoc method
+        * @name RoomController#setImageMessage
+        * @methodOf WisR.controller:RoomController
+        * @description
+        * Function that sets the image message to loading
+        */
     //image message function that can be called from outside the controller
     $scope.setImageMessage = function () {
         //start by assuming the picture is too big
@@ -219,15 +347,27 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
     ///#endregion
 
     //#region QuestionFunctions
-    ///Get all questions
+    /**
+        * @ngdoc method
+        * @name RoomController#getQuestions
+        * @methodOf WisR.controller:RoomController
+        * @description
+        * Function that fetches all the questions from the database and sets questionsLoaded to true, so that we can change the view accordingly
+        */
     $scope.getQuestions = function () {
         $http.get(configs.restHostName + '/Question/GetQuestionsForRoomWithoutImages?roomId=' + MyRoomIdFromViewBag).then(function (response) {
             $scope.Questions = response.data;
             $scope.questionsLoaded = true;
         });
     };
-    
-    ///Function for creating a question
+    /**
+       * @ngdoc method
+       * @name RoomController#postQuestion
+       * @methodOf WisR.controller:RoomController
+       * @description
+       * Function for creating a question, this is also used when updating already existing questions. This function takes parameters from scope variables to create the question and sends it all to the roomcontroller where it gets validated and turned into a json object.
+       * That json object is then sent to the rest-api
+       */
     $scope.postQuestion = function () {
         $scope.modalChanger("myModalCreate", "hide");
 
@@ -270,6 +410,14 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
             });
     }
 
+    /**
+       * @ngdoc method
+       * @name RoomController#getSpecificAnswer
+       * @methodOf WisR.controller:RoomController
+       * @description
+       * Function for figuring out what a specifc user answered on a specific question
+       * @param {Question} question The question from which we find the given answer by the user.
+       */
     ///Get answer that current user made.
     $scope.getSpecificAnswer = function (question) {
         if ($scope.currentUser == undefined)
@@ -280,18 +428,35 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
         }
         return null;
     }
-
-    ///adds answer to specificQuestion
+    /**
+      * @ngdoc method
+      * @name RoomController#AddAnswer
+      * @methodOf WisR.controller:RoomController
+      * @description
+      * Function for answering a question. Takes the answerchosen and the userId and sends it to the rest-api for validation and persisting
+      */
     $scope.AddAnswer = function () {
         ///Use response to send to REST API string response
         var Obj = {Value:$scope.answerChoosen.Value,UserId:$window.userId}
         $http.post(configs.restHostName + '/Question/AddQuestionResponse', {response:JSON.stringify(Obj), questionId:$scope.SpecificQuestion._id});
     }
-
+    /**
+     * @ngdoc method
+     * @name RoomController#AddResponseOption
+     * @methodOf WisR.controller:RoomController
+     * @description
+     * Function for adding a response option to a question that the user is creating
+     */
     $scope.AddResponseOption = function () {
         $scope.ResponseOptions.push({ id: $scope.ResponseOptions.length, val: undefined });
     }
-
+    /**
+     * @ngdoc method
+     * @name RoomController#RemoveResponseOption
+     * @methodOf WisR.controller:RoomController
+     * @description
+     * Function for removing a response option to a question that the user is creating
+     */
     $scope.RemoveResponseOption = function (item) {
         var temp = [];
         var counter = 0;
@@ -303,7 +468,15 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
         }
         $scope.ResponseOptions = temp;
     }
-
+    /**
+    * @ngdoc method
+    * @name RoomController#ShowSpecificQuestion
+    * @methodOf WisR.controller:RoomController
+    * @description
+    * Function for changing view to a specific question. This function loads the image for the question and starts a timer for the progress bar.
+    * The function also creates the piechart
+    * @param {Question} question The question to change view to.
+    */
     ///function for showing a specific question
     $scope.ShowSpecificQuestion = function (question) {
         $scope.ToggleShowQuestionTables();
@@ -328,7 +501,13 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
         });
         $scope.createPieChart();
     }
-
+    /**
+    * @ngdoc method
+    * @name RoomController#getPercentage
+    * @methodOf WisR.controller:RoomController
+    * @description
+    * Function that calculates the percentage time spent since the question was created and until it finishes.
+    */
     ///Get percentage for loading bar
     $scope.getPercentage = function () {
         if ($scope.SpecificQuestion != undefined) {
@@ -350,7 +529,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
                 if (angular.isDefined($scope.progressCancel)) {
                     $interval.cancel($scope.progressCancel);
                     $scope.progressCancel = undefined;
-                 }
+                }
             } else {
                 $scope.timeLeft = hours + ":" + min + ":" + sec;
                 $("#progressDiv").addClass("active progress-striped").children().removeClass("progress-bar-danger");
@@ -361,7 +540,13 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
             $scope.showProgressBar = true;
         }
     }
-
+    /**
+    * @ngdoc method
+    * @name RoomController#ToggleShowQuestionTables
+    * @methodOf WisR.controller:RoomController
+    * @description
+    * Function that toggles the view between two tables of questions and a specific question. If going from specific question it stops the progress timer
+    */
     $scope.ToggleShowQuestionTables = function () {
         $scope.SpecificQuestionShown = !$scope.SpecificQuestionShown;
         ///Stop the timer for the progress bar if it is running
@@ -371,6 +556,14 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
             $scope.showProgressBar = false;
         }
     }
+    /**
+    * @ngdoc method
+    * @name RoomController#deleteQuestion
+    * @methodOf WisR.controller:RoomController
+    * @description
+    * Function for deleting a specific question
+    * @param {Question} questionToDelete The question that the user wishes to delete, this can only be done by the user who made the question
+    */
     $scope.deleteQuestion = function (questionToDelete) {
         $scope.SpecificQuestion = null;
         $http.delete(configs.restHostName + '/Question/DeleteQuestion', { params: {id: questionToDelete._id} }).then(function (response) {
@@ -394,6 +587,13 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
             });
         }
 
+    /**
+   * @ngdoc method
+   * @name RoomController#toggleRoomLocation
+   * @methodOf WisR.controller:RoomController
+   * @description
+   * Function that toggles the view of the google map
+   */
         //Code for rooms maps
     $scope.toggleRoomLocation = function () {
         $("#googlemapsRoom").toggle();
@@ -440,7 +640,13 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
             map.fitBounds(bounds);
         });
     }
-
+    /**
+  * @ngdoc method
+  * @name RoomController#toggleRoomLocation
+  * @methodOf WisR.controller:RoomController
+  * @description
+  * Function for updating the location of the room this can only be done by the roomowner
+  */
     ///Updates the room's current location
     $scope.updateLocation = function () {
         var pos;
@@ -459,8 +665,16 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
     //#endregion
 
     //#region RoomFunctions
+    /**
+  * @ngdoc method
+  * @name RoomController#getRoom
+  * @methodOf WisR.controller:RoomController
+  * @description
+  * Function for fetching the room that the user has joined, after we get the response we start fetching the questions, chatmessages and all the users
+  * @param {Boolean} userIsNotAnonymous Boolean value that states whether or not the user is anonymous
+  */
     ///Get the specific room
-    $scope.getRoom = function (user) {
+    $scope.getRoom = function (userIsNotAnonymous) {
         $http.post(configs.restHostName + '/Room/GetById', { id: MyRoomIdFromViewBag }).then(function (response) {
             //Tried moving these since it makes better sense(also easiere to test)
             $scope.getQuestions();
@@ -474,7 +688,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
             }
 
             $scope.CurrentRoom = response.data;
-            if (user) {
+            if (userIsNotAnonymous) {
                 if ($scope.currentUser.ConnectedRoomIds != undefined) {
                     if ($scope.CurrentRoom.HasPassword && $scope.currentUser.ConnectedRoomIds.indexOf(MyRoomIdFromViewBag) == -1) {
                         $('#myModalPassword').modal('show');
@@ -501,7 +715,15 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
     //#endregion
 
     //#region VoteFunctions
-    ///Function that checks if user has up/downvoted
+    /**
+  * @ngdoc method
+  * @name RoomController#hasVotes
+  * @methodOf WisR.controller:RoomController
+  * @description
+  * Function that checks if user has up/downvoted
+  * @param {Array<Votes>} questionvotes Array with all the up and downvotes for the question
+  * @param {Boolean} checkForUpvote Boolean value that states whether the function should check for up or downvotes
+  */
     $scope.hasVoted = function (questionvotes, checkForUpvote) {
         ///if we are anonymous user never look for votes
         if ($scope.currentUser == undefined || questionvotes == "" || questionvotes == undefined) {
@@ -521,7 +743,14 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
         });
         return testbool;
     }
-    ///Used to vote, parameter, is direction
+    /**
+  * @ngdoc method
+  * @name RoomController#Vote
+  * @methodOf WisR.controller:RoomController
+  * @description
+  * Function for up/downvoting
+  * @param {String} direction Has two possible values "up" and "down", states whether it is an up- or downvote
+  */
     $scope.Vote = function (direction) {
         if (direction == "Up") {
             ///Use response to send to REST API
@@ -537,15 +766,26 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
     //#endregion
 
     //#region ChartFunctions
-    ///If there is allready a chart, destroy it
+    /**
+ * @ngdoc method
+ * @name RoomController#onChartCreate
+ * @methodOf WisR.controller:RoomController
+ * @description
+ * Function that checks if we already have a chart, if we do, destroys it. This is done to get rid of overlapping charts
+ */
     $scope.$on('create', function (event, chart) {
         if ($scope.chart != undefined) {
             $scope.chart.destroy();
         }
         $scope.chart = chart;
     });
-
-    ///Function for creating result chart with d3js
+    /**
+ * @ngdoc method
+ * @name RoomController#createPieChart
+ * @methodOf WisR.controller:RoomController
+ * @description
+ * Function for creating result chart with chartjs and angularjs
+ */
     $scope.createPieChart = function () {
         var labels = [];
         var values = [];
@@ -574,6 +814,13 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
     //#endregion
 
     //#region Password
+    /**
+ * @ngdoc method
+ * @name RoomController#validatePassword
+ * @methodOf WisR.controller:RoomController
+ * @description
+ * Function for validating the password. Hashes the users input with SHA512 and checks if it collides with the saved password for the room
+ */
     $scope.validatePassword = function () {
         //Check if the inputted password with hash is the same as the rooms password
         if (CryptoJS.SHA512($scope.inputPassword).toString() == $scope.CurrentRoom.EncryptedPassword) {
@@ -613,21 +860,40 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
     //#endregion
 
     //#region ChatFunctions
+    /**
+ * @ngdoc method
+ * @name RoomController#getChatMessages
+ * @methodOf WisR.controller:RoomController
+ * @description
+ * Function that fetches all the chatmessages for the room and sets chatLoaded to true so we can update the view accordingly
+ */
     var getChatMessages = function () {
         $http.post(configs.restHostName + '/Chat/GetAllByRoomId', { roomId: MyRoomIdFromViewBag }).then(function (response) {
             $scope.ChatMessages = response.data;
             $scope.chatLoaded = true;
         });
     };
-    
-    ///Function for retrieving userName by an id, used by the chat
+    /**
+ * @ngdoc method
+ * @name RoomController#getAllUsers
+ * @methodOf WisR.controller:RoomController
+ * @description
+ * Function that fetches all users
+ */
     var getAllUsers = function () {
         $http.get(configs.restHostName + '/User/GetAll').then(function (result) {
             $scope.ActiveUsers = result.data;
         });
     }
     
-
+    /**
+ * @ngdoc method
+ * @name RoomController#GetUsernameById
+ * @methodOf WisR.controller:RoomController
+ * @description
+ * Function that checks the collection of ActiveUsers for a user with the given userId, then returns the name of the user or Anonymous if it is not found
+ * @param {String} userId The userId to look for in the ActiveUsers collection
+ */
     //Get username, for the chat
     $scope.GetUsernameById = function (userId) {
         var result = $.grep($scope.ActiveUsers, function (e) { return e._id == userId; });
@@ -635,8 +901,14 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
             return "Anonymous";
         return result[0].DisplayName;
     }
-
-    ///Function for creating a chatMessage
+    /**
+ * @ngdoc method
+ * @name RoomController#postChatMessage
+ * @methodOf WisR.controller:RoomController
+ * @description
+ * Function for creating a chatMessage
+ * @param {String} message The message to pos to the rest-api
+ */
     $scope.postChatMessage = function (message) {
         ///Clear text area, so that it is ready for a new message
         $scope.textAreaModel = "";
@@ -651,6 +923,17 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
     //#endregion
 
     //#region HelperFunction
+    /**
+ * @ngdoc method
+ * @name RoomController#findWithAttr
+ * @methodOf WisR.controller:RoomController
+ * @description
+ * Helper function to find index of object in array
+ * @param {Array} array the array to traverse
+ * @param {Attribute} attr the attribute to check for the value
+ * @param {Value} value the value to check for in the array property
+ * @returns {Integer} index The index of the value in the array
+ */
     ///Modal state changer
     $scope.modalChanger = function(id, state) {
         $("#"+id).modal(state);
@@ -665,6 +948,14 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
         }
         return -1;
     }
+    /**
+* @ngdoc method
+* @name RoomController#setQuestionInputs
+* @methodOf WisR.controller:RoomController
+* @description
+* Function to fill information from a question into the update modal window field
+* @param {Question} question the question to fill into the input fields
+*/
     var setQuestionInputs = function (question) {
         $scope.QuestionText = question.QuestionText;
         $scope.QuestionType = question._t;
@@ -677,6 +968,15 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
         $scope.questionImage = question.Img;
         $scope.ExpirationTime = 0;
     }
+    /**
+* @ngdoc method
+* @name RoomController#toggleModalWithQuestion
+* @methodOf WisR.controller:RoomController
+* @description
+* Function to fill information from a question into the update modal window field
+* @param {String} modal the jquery id string for the modal window to toggle
+* @param {Question} question the question to put into a scope variable so that we can work with it
+*/
     $scope.toggleModalWithQuestion=function(modal, question) {
         $(modal).modal('toggle');
         $scope.SpecificQuestion = question;
@@ -686,15 +986,40 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
         }
         
     }
-    
-    $scope.toggleCreateModal = function (modal, question) {
+    /**
+* @ngdoc method
+* @name RoomController#toggleCreateModal
+* @methodOf WisR.controller:RoomController
+* @description
+* Function to fill information from a question into the update modal window field. Also sets the UpdateQuestionBool to false since this is a create call
+* @param {String} modal the jquery id string for the modal window to toggle
+*/
+    $scope.toggleCreateModal = function (modal) {
         $(modal).modal('toggle');
         $scope.UpdateQuestionBool = false; //if called from here, it is a create
     }
+    /**
+* @ngdoc method
+* @name RoomController#toggleCreateModal
+* @methodOf WisR.controller:RoomController
+* @description
+* Function to toggle dropdown
+* @param {String} questionid id for the dropdown to toggle
+*/
     $scope.toggleDropdown=function(questionId) {
         $("#dropdown" + questionId).dropdown("toggle");
     }
-
+    /**
+* @ngdoc method
+* @name RoomController#resizeImg
+* @methodOf WisR.controller:RoomController
+* @description
+* Function to resize image
+* @param {Image} img the img that is to be resized
+* @param {String} maxWidth the max width after resizing
+* @param {String} maxHeight the max height after resizing
+* @param {Integer} degress the degress to rotate the picture(not used at the moment)
+*/
     function resizeImg(img, maxWidth, maxHeight, degrees) {
         
         var imgWidth = img.width,

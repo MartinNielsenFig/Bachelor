@@ -46,10 +46,10 @@ class QuestionListViewController: UITableViewController, Paged {
     }
     
     /**
-    Determines the number of up- and down-votes for a specific question.
-    - parameter question:	The question to count the down-upvotes for.
-    - returns: A tuple with down and upvotes.
-    */
+     Determines the number of up- and down-votes for a specific question.
+     - parameter question:	The question to count the down-upvotes for.
+     - returns: A tuple with down and upvotes.
+     */
     func upDownVotesCount(question: Question) -> (downvotes: Int, upvotes: Int) {
         let noDownvotes = question.Votes.filter { (element) -> Bool in
             return element.Value == -1
@@ -75,14 +75,14 @@ class QuestionListViewController: UITableViewController, Paged {
                 
                 if tmpQuestions.count <= 0 {
                     let q = Question()
-                    q.QuestionText = "No questions for room"
+                    q.QuestionText = NSLocalizedString("No questions for room", comment: "")
                     q.CreatedById = "system"
                     tmpQuestions += [q]
                 }
                 
             } else {
                 let qError = Question()
-                qError.QuestionText = "Could not load questions"
+                qError.QuestionText = NSLocalizedString("Could not load questions", comment: "")
                 qError.CreatedById = "system"
                 tmpQuestions = [qError]
             }
@@ -100,12 +100,12 @@ class QuestionListViewController: UITableViewController, Paged {
     override func viewDidLoad() {
         
         print("QuestionListViewController instantiated, roomId: \(self.roomId)")
-
+        
         self.refreshControl = UIRefreshControl()
         self.refreshControl!.addTarget(self, action: "handleRefresh:", forControlEvents: UIControlEvents.ValueChanged)
         
         let loadingQuestion = Question()
-        loadingQuestion.QuestionText = "Loading questions..."
+        loadingQuestion.QuestionText = NSLocalizedString("Loading questions...", comment: "")
         questions += [loadingQuestion]
         
         //Load questions for room
@@ -143,7 +143,6 @@ class QuestionListViewController: UITableViewController, Paged {
         
         //If question string is too long shorten it
         cell.label.text = StringExtractor.shortenString(question.QuestionText!, maxLength: 30)
-        //cell.label.text = question.QuestionText
         
         let votesCount = upDownVotesCount(question)
         cell.upvoteCounter.text = String(votesCount.upvotes)

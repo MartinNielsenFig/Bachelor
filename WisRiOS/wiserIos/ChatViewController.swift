@@ -15,6 +15,9 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     //MARK: Properties
     let pageIndex = 2
+    let kbOffset = CGFloat(38)
+    let inputAccessoryViewId = 100  //id is given from storyboard
+    
     var roomId: String?
     var messages = [ChatMessage]()
     var updater: Updater?
@@ -22,7 +25,8 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var textMessageInput: UITextField!
-    @IBOutlet weak var MessageInputStack: UIStackView!
+    @IBOutlet weak var messageInputStack: UIStackView!
+    @IBOutlet weak var messageInputStackContainerView: UIView!
     
     //MARK: Actions
     @IBAction func sendPressed(sender: AnyObject) {
@@ -60,12 +64,28 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func viewDidLoad() {
         print("ChatViewController instantiated, roomId: \(self.roomId)")
         textMessageInput.delegate = self
+        
+        //Add border to keyboard input field
+        //http://stackoverflow.com/questions/17355280/how-to-add-a-border-just-on-the-top-side-of-a-uiview
+        let border = UIView()
+        border.backgroundColor = UIColor.lightGrayColor()
+        border.autoresizingMask = [.FlexibleWidth, .FlexibleBottomMargin]
+        border.frame = CGRectMake(0, 0, self.messageInputStackContainerView.frame.width, 0.5)
+        self.messageInputStackContainerView.addSubview(border)
+        
+        //tableView.keyboardDismissMode = .Interactive
+        
+        //Add gesture recognizer to enable swipe keyboard down
+        let swipe = UISwipeGestureRecognizer(target: self, action: "userSwipeDownKeyboard")
+        swipe.direction = UISwipeGestureRecognizerDirection.Down
+        self.messageInputStackContainerView.addGestureRecognizer(swipe)
     }
     
     //Setup registering for keyboard events
     override func viewWillAppear(animated: Bool) {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "appGoesToBackground:", name: UIApplicationWillResignActiveNotification, object: nil)
         
         updater = Updater(secondsDelay: 1) {
             let body = "roomId=\(self.roomId!)"
@@ -98,16 +118,26 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func viewWillDisappear(animated: Bool) {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationWillResignActiveNotification, object: nil)
         
         updater?.stop()
     }
     
     //MARK: Utilities
+    
     /**
-    Scrolls to the bottom of the table view presented on this page
+    Called when user swiped down on messageInputStackContainerView. Used to hide the keyboard.
     */
+    func userSwipeDownKeyboard() {
+        print("user did swipe down keyboard")
+        textMessageInput.resignFirstResponder()
+    }
+    
+    /**
+     Scrolls to the bottom of the table view presented on this page
+     */
     func scrollToBottom() {
-        let chatFieldHeight = self.MessageInputStack.frame.height + 10
+        let chatFieldHeight = self.messageInputStack.frame.height + 10
         dispatch_async(dispatch_get_main_queue()) {
             if self.messages.count > 0 {
                 self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.messages.count-1, inSection: 0), atScrollPosition: UITableViewScrollPosition.Bottom, animated: false)
@@ -115,7 +145,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
             }
         }
     }
-
+    
     /**
      Policy that determines whether updates to the chat should scroll the UITableView to the bottom. This is to ensure that the user can scroll up the list to look at older messages, without the UITableView scrolling down again.
      - returns: Whether UITableView should scroll to bottom on updates.
@@ -144,7 +174,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         } else {
             return true
         }
-       return visible
+        return visible
     }
     
     /**
@@ -206,8 +236,20 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return true
     }
     
-    //MARK: UIKeyboardWillShowNotification & UIKeyboardWillHideNotification
-    let kbOffset = CGFloat(38)
+    //MARK: NSNotification
+    
+    /**
+    Called when the app goes to the background e.g. from user pressing home button or opening the multi task switcher. The purpose is to disable the keyboard from being pushed beyond the window bounds, as keyboardWillShow is called twice in a row if the observer is not removed.
+    - parameter notification:	The notification bound to this event.
+    */
+    func appGoesToBackground(notification: NSNotification) {
+        print("app goes to background")
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationWillResignActiveNotification, object: nil)
+    }
+    
     //Keyboard hide/show based upon https://github.com/Lightstreamer/Lightstreamer-example-Chat-client-ios-swift with modifications
     func keyboardWillShow(notification: NSNotification) {
         print("\(__FUNCTION__) has been called")

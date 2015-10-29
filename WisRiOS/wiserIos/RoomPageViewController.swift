@@ -66,9 +66,9 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     }
     
     /**
-    Makes sure there's room enough for the navigation bar when presenting the sub-views. Needs a little offset when in landscape mode.
-    - parameter orientationIsLandscape:	Indicates the orientation of the device.
-    */
+     Makes sure there's room enough for the navigation bar when presenting the sub-views. Needs a little offset when in landscape mode.
+     - parameter orientationIsLandscape:	Indicates the orientation of the device.
+     */
     func makeRoomForNavigationBar(orientationIsLandscape orientationIsLandscape: Bool) {
         let offset = orientationIsLandscape ? CGFloat(16) : CGFloat(0)
         let cellHeight = self.navigationController!.navigationBar.frame.size.height + offset
@@ -81,12 +81,12 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     
     //MARK: Navigation
     func logoutRoom() {
-        let alert = UIAlertController(title: "Leaving Room", message: "Do you want to leave current room?", preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: { action in
+        let alert = UIAlertController(title: NSLocalizedString("Leaving Room", comment: ""), message: NSLocalizedString("Do you want to leave current room?", comment: ""), preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .Cancel, handler: { action in
             //Do nothing
         }))
         
-        alert.addAction(UIAlertAction(title: "Logout", style: .Default, handler: { action in
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Logout", comment: ""), style: .Default, handler: { action in
             self.navigationController?.popToRootViewControllerAnimated(true)
         }))
         
@@ -104,7 +104,7 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
             createQuestionViewController.questionListViewController = viewControllerAtIndex(0, createNew: false) as! QuestionListViewController
             createQuestionViewController.room = self.room
         }
-
+        
     }
     
     //MARK: Utilities

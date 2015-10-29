@@ -39,9 +39,7 @@ public final class MyUser extends User {
     }
 
     @Override
-    public void set_ConnectedRooms(List<String> ConnectedRooms) {
-        super.set_ConnectedRooms(ConnectedRooms);
-    }
+    public void set_ConnectedRooms(List<String> ConnectedRooms) { super.set_ConnectedRooms(ConnectedRooms); }
 
     @Override
     public String get_Id() {
