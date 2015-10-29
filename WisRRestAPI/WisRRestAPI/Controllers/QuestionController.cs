@@ -88,7 +88,7 @@ namespace WisRRestAPI.Controllers
             {
                 return "New question should have id of null";
             }
-            if (!_rr.DoesRoomExist(q.Id)) {
+            if (!_rr.DoesRoomExist(q.RoomId)) {
                 return "Room doesn't exist;";
             }
 
