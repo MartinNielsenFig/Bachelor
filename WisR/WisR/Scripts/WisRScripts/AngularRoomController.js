@@ -1006,7 +1006,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
 * @name RoomController#resizeImg
 * @methodOf WisR.controller:RoomController
 * @description
-* Function to resize image
+* Function to resize image, found at:http://stackoverflow.com/questions/18922880/html5-canvas-resize-downscale-image-high-quality
 * @param {Image} img the img that is to be resized
 * @param {String} maxWidth the max width after resizing
 * @param {String} maxHeight the max height after resizing
