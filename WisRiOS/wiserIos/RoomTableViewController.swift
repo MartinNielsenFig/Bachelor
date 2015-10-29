@@ -14,7 +14,7 @@ import CryptoSwift  //CryptoSwift https://github.com/krzyzanowskim/CryptoSwift a
 class RoomTableViewController: UITableViewController {
     
     //MARK: Properties
-    var rooms = [Room]()
+    var rooms = [Room]()    //is the one being represented by the tableView
     var allRooms = [Room]()
     
     //MARK: Lifecycle
@@ -29,6 +29,38 @@ class RoomTableViewController: UITableViewController {
     }
     
     //MARK: UITableViewController
+    
+    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        let roomAtRow = self.rooms[indexPath.row]
+        return roomAtRow.CreatedById == CurrentUser.sharedInstance._id
+    }
+    
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+        let roomId = self.rooms[indexPath.row]._id
+        HttpHandler.requestWithResponse(action: "Room/DeleteRoom?id=\(roomId!)", type: "DELETE", body: "") { (data, response, error) -> Void in
+            if data.containsString("deleted") {
+                print("Did delete room")
+                let roomAtRow = self.rooms[indexPath.row]
+                
+                var indexInAllRooms = -1
+                for (index, room) in self.allRooms.enumerate() {
+                    if room._id == roomAtRow._id {
+                        indexInAllRooms = index
+                    }
+                }
+                
+                assert(self.rooms[indexPath.row]._id == self.allRooms[indexInAllRooms]._id)
+                self.rooms.removeAtIndex(indexPath.row)
+                self.allRooms.removeAtIndex(indexInAllRooms)
+                
+                self.fetchRooms()
+            } else {
+                print("Could not delete room")
+            }
+        }
+    }
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
@@ -65,6 +97,11 @@ class RoomTableViewController: UITableViewController {
     }
     
     //MARK: Utilities
+    
+    /**
+    Removes current loaded rooms and loads new rooms from the database
+    - parameter refreshControl:	A refreshcontrol
+    */
     func fetchRooms(refreshControl: UIRefreshControl? = nil) {
         
         let start = NSDate()
@@ -85,7 +122,7 @@ class RoomTableViewController: UITableViewController {
             self.rooms = RoomFilterHelper.filterRoomsByLocation(self.allRooms, metersRadius: 1000)
             refreshControl?.endRefreshing()
             
-            dispatch_async(dispatch_get_main_queue()) { //fixes rare bug, where list wouldn't refresh if slow internet connection (> 2 sec)
+            dispatch_async(dispatch_get_main_queue()) {
                 self.tableView.reloadData()
             }
             print("duration of \(__FUNCTION__) took \(NSDate().timeIntervalSinceDate(start))")
