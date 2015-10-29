@@ -7,7 +7,7 @@
     </div>
     <div ng-show="specificRoomLoaded" ng-cloak>
         <h2>{{CurrentRoom.Name}}</h2>
-        <div id="RoomErrorDiv"></div>@*Used to insert error message*@
+        <div id="RoomErrorDiv" class="text-danger"></div>@*Used to insert error message*@
 
         <div class="row" ng-show="rightPassword">
             <div ng-hide="questionsLoaded" class="container text-center col-md-8" style="min-height: 800px">
@@ -221,7 +221,7 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <label class="col-md-6">@WisR.App_Resources.Resource.ExpirationTime</label> <input required ng-model="ExpirationTime" class="col-md-6 form-control" type="number" />
+                                <label class="col-md-6">@WisR.App_Resources.Resource.ExpirationTime</label> <input required ng-model="ExpirationTime" class="col-md-6 form-control" type="number" min="1" />
                             </div>
                             <br />
                             <div class="row text-center">
