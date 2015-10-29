@@ -14,12 +14,14 @@ namespace WisRRestAPI.Controllers
 {
     public class ChatController : Controller
     {
+        private readonly IRoomRepository _rr;
         private readonly IChatRepository _cr;
         private readonly JavaScriptSerializer _jsSerializer;
         private IRabbitPublisher _irabbitPublisher;
 
-        public ChatController(IChatRepository cr, IRabbitPublisher irabbitPublisher)
+        public ChatController(IChatRepository cr, IRabbitPublisher irabbitPublisher, IRoomRepository rr)
         {
+            _rr = rr;
             _cr = cr;
             _jsSerializer = new JavaScriptSerializer();
             _irabbitPublisher = irabbitPublisher;
@@ -50,6 +52,10 @@ namespace WisRRestAPI.Controllers
             catch (Exception e)
             {
                 return "Could not deserialize chatMessage with json: " + ChatMessage;
+            }
+
+            if (!_rr.DoesRoomExist(chatMsg.RoomId)) {
+                return "Room doesn't exist;";
             }
 
             //Assign date to ChatMessage
