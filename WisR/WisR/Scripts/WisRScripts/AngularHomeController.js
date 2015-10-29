@@ -172,7 +172,7 @@ app.controller("HomeController", [
            * @param {String} link redirect link for the onclick event
            */
         Notification.requestPermission();
-        var spawnNotification=function(theBody, theIcon, theTitle,link) {
+        $scope.spawnNotification=function(theBody, theIcon, theTitle,link) {
             var options = {
                 body: theBody,
                 icon: theIcon
@@ -208,7 +208,7 @@ app.controller("HomeController", [
                 $scope.$apply();
                 //Spawn a notification if this is near the user and the user self didn't create it
                 if (($scope.currentUser==undefined||parsedRoomToAdd.CreatedById!=$scope.currentUser._id) && shouldBeAdded(parsedRoomToAdd,$scope)) {
-                    spawnNotification(parsedRoomToAdd.Name, null, "WisR", "/Room?RoomId="+parsedRoomToAdd._id);
+                    $scope.spawnNotification(parsedRoomToAdd.Name, null, "WisR", "/Room?RoomId="+parsedRoomToAdd._id);
                 }
             };
             /// Create a function that the hub can call to broadcast messages.

@@ -169,7 +169,11 @@ describe("English Test", function () {
             window = $window;
 
             //Setup for http request
-            httpBackend.when('POST','http://localhost:1337/User/GetById').respond({});
+            httpBackend.when('POST', 'http://localhost:1337/User/GetById').respond({});
+            httpBackend.when('GET', 'http://localhost:1337/Question/GetQuestionsForRoomWithoutImages?roomId=1').respond({});
+            httpBackend.when('POST','/Room/toJsonQuestion').respond({});
+            httpBackend.when('POST', 'http://localhost:1337/Question/CreateQuestion').respond({});
+            httpBackend.when('POST', "http://localhost:1337/Question/AddQuestionResponse").respond({});
 
             //Setup for currentUser
             scope.currentUser = { ConnectedRoomIds: ["12312312"] }
@@ -201,6 +205,189 @@ describe("English Test", function () {
 
             httpBackend.flush();
             expect(scope.getRoom).toHaveBeenCalledWith(true);
+        });
+
+        it('Image should not be to big', function () {
+            scope.questionImage = { filesize: 2000, base64: "R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" };
+            scope.$apply();
+           
+            expect(scope.imageTooBig).toBe(false);
+        });
+
+        it('Image should be to big', function () {
+            scope.questionImage = { filesize: 2000000000, base64: "R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" };
+            scope.$apply();
+
+            expect(scope.imageTooBig).toBe(true);
+        });
+
+        it('should change the imageMessage to "Loading image..."', function () {
+            scope.setImageMessage();
+
+            expect(scope.ImageMessage).toBe("Loading image...");
+        });
+
+        it('should call /GetQuestionsForRoomWithoutImages?roomId=1', function() {
+            httpBackend.expectGET('http://localhost:1337/Question/GetQuestionsForRoomWithoutImages?roomId=1');
+
+            scope.getQuestions();
+
+            httpBackend.flush();
+        });
+
+        it('should call /Room/toJsonQuestion and /Question/CreateQuestion, updated and no image', function () {
+            httpBackend.expectPOST('/Room/toJsonQuestion', '{"RoomId":1,"ResponseOptions":"undefined,undefined"}');
+            httpBackend.expectPOST('http://localhost:1337/Question/CreateQuestion');
+
+            scope.UpdateQuestionBool = true;
+            spyOn(scope, "modalChanger");
+            spyOn(scope, "deleteQuestion");
+
+            scope.postQuestion();
+
+            httpBackend.flush();
+
+            expect(scope.deleteQuestion).toHaveBeenCalled();
+        });
+
+        it('should call /Room/toJsonQuestion and /Question/CreateQuestion, updated and image', function () {
+            httpBackend.expectPOST('/Room/toJsonQuestion', '{"RoomId":1,"Image":"R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==","ResponseOptions":"undefined,undefined"}');
+            httpBackend.expectPOST('http://localhost:1337/Question/CreateQuestion');
+
+            scope.UpdateQuestionBool = true;
+            scope.questionImage = { base64: "R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" }
+            spyOn(scope, "modalChanger");
+            spyOn(scope, "deleteQuestion");
+
+            scope.postQuestion();
+
+            httpBackend.flush();
+
+            expect(scope.deleteQuestion).toHaveBeenCalled();
+        });
+
+
+        it('should call /Room/toJsonQuestion and /Question/CreateQuestion, not update and no image', function () {
+            httpBackend.expectPOST('/Room/toJsonQuestion', '{"RoomId":1,"Image":null,"ResponseOptions":"undefined,undefined"}');
+            httpBackend.expectPOST('http://localhost:1337/Question/CreateQuestion');
+
+            scope.UpdateQuestionBool = false;
+            spyOn(scope, "modalChanger");
+           
+            scope.postQuestion();
+
+            httpBackend.flush();
+            });
+
+        it('should call /Room/toJsonQuestion and /Question/CreateQuestion, not update and image', function () {
+            httpBackend.expectPOST('/Room/toJsonQuestion', '{"RoomId":1,"Image":"R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==","ResponseOptions":"undefined,undefined"}');
+            httpBackend.expectPOST('http://localhost:1337/Question/CreateQuestion');
+
+            scope.UpdateQuestionBool = false;
+            scope.questionImage = { base64: "R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" }
+            spyOn(scope, "modalChanger");
+            
+            scope.postQuestion();
+
+            httpBackend.flush();
+        });
+
+        it('should get the users answer', function() {
+            scope.currentUser = { _id: "Martin" };
+            
+            var question = { Result: [{ UserId: "Martin", Value: 1 }, { UserId: "Nikolaj", Value: 2 }] }
+
+            expect(scope.getSpecificAnswer(question)).toBe(1);
+        });
+
+        it('should get the null', function () {
+            scope.currentUser = { _id:"Peter" };
+
+            var question = { Result: [{ UserId: "Martin", Value: 1 }, { UserId: "Nikolaj", Value: 2 }] }
+
+            expect(scope.getSpecificAnswer(question)).toBe(null);
+        });
+
+        it('should call /Question/AddQuestionResponse', function() {
+            httpBackend.expectPOST("http://localhost:1337/Question/AddQuestionResponse");
+
+            scope.answerChoosen = {Value: "Yes"};
+            scope.SpecificQuestion= {_id:1};
+        
+            scope.AddAnswer();
+
+            httpBackend.flush();
+        });
+
+        it('should increase responseoptions with 1', function() {
+            scope.ResponseOptions = [];
+            scope.AddResponseOption();
+
+            expect(scope.ResponseOptions.length).toBe(1);
+        });
+
+        it('should decrease responseoptions with 1', function () {
+            scope.ResponseOptions = [{ id: 0, val: "Test" },{ id: 1, val: "Test2" }];
+            scope.RemoveResponseOption(scope.ResponseOptions[0]);
+
+            expect(scope.ResponseOptions.length).toBe(1);
+        });
+
+        it('should call /Question/GetImageByQuestionId?questionId=1, image found', function () {
+            httpBackend.when('GET', "http://localhost:1337/Question/GetImageByQuestionId?questionId=1").respond({});
+            httpBackend.expectGET("http://localhost:1337/Question/GetImageByQuestionId?questionId=1");
+
+            spyOn(scope, "getSpecificAnswer");
+            spyOn(scope, "createPieChart");
+
+            var question = { _id: 1 };
+            scope.ShowSpecificQuestion(question);
+
+            httpBackend.flush();
+
+            expect(scope.NoPicture).toBe(false);
+            expect(scope.getSpecificAnswer).toHaveBeenCalled();
+            expect(scope.createPieChart).toHaveBeenCalled();
+        });
+
+        it('should call /Question/GetImageByQuestionId?questionId=1, image not found', function () {
+            httpBackend.when('GET', "http://localhost:1337/Question/GetImageByQuestionId?questionId=1").respond("");
+            httpBackend.expectGET("http://localhost:1337/Question/GetImageByQuestionId?questionId=1");
+
+            spyOn(scope, "getSpecificAnswer");
+            spyOn(scope, "createPieChart");
+
+            var question = { _id: 1 };
+            scope.ShowSpecificQuestion(question);
+
+            httpBackend.flush();
+
+            expect(scope.NoPicture).toBe(true);
+            expect(scope.getSpecificAnswer).toHaveBeenCalled();
+            expect(scope.createPieChart).toHaveBeenCalled();
+        });
+
+        it('timeLeft should be 00:10:00', function () {
+            spyOn(Date, "now").and.returnValue(0);
+            scope.SpecificQuestion = { CreationTimestamp: "0", ExpireTimestamp: "600000" }
+
+            scope.getPercentage();
+
+            expect(scope.timeLeft).toBe("00:10:00");
+        });
+
+        it('timeLeft should be "Time has run out" and scope.progressCancel should be undefined', function () {
+            spyOn(Date, "now").and.returnValue(650000);
+            scope.SpecificQuestion = { CreationTimestamp: "0", ExpireTimestamp: "600000" }
+            scope.progressCancel = true;
+            scope.getPercentage();
+
+            expect(scope.timeLeft).toBe("Time has run out");
+            expect(scope.progressCancel).toBe(undefined);
+        });
+
+        it('',function() {
+            
         });
     });
 });

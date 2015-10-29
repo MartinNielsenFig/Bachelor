@@ -90,8 +90,8 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
                 if ($scope.SpecificQuestionShown) {
                     $scope.ToggleShowQuestionTables();
                 }                
-                $("#myModalCreate").modal("hide");
-                $("#deleteQuestionModal").modal("hide");
+                $scope.modalChanger("myModalCreate","hide");
+                $scope.modalChanger("deleteQuestionModal","hide");
                 alert(Resources.QuestionWasDeletedMessage);
             }
         };
@@ -104,7 +104,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
             if ($scope.SpecificQuestion != undefined) {
                 var indexOfSpecificQuestion = findWithAttr($scope.Questions, "_id", $scope.SpecificQuestion._id);
                 $scope.SpecificQuestion = $scope.Questions[indexOfSpecificQuestion];
-                $scope.specificAnswer = getSpecificAnswer($scope.SpecificQuestion);
+                $scope.specificAnswer = $scope.getSpecificAnswer($scope.SpecificQuestion);
 
                 ////Redraw the result chart
                 $scope.createPieChart();
@@ -172,7 +172,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
                 return $scope.questionImage;
             }, function (n, o) {
                 if (n != undefined) {
-                    if (n.filesize > 1049000) {
+                   if (n.filesize > 1049000) {
                         $scope.imageTooBig = true;
                         $scope.ImageMessage = Resources.FileTooBigResizing;
                         var img = new Image();
@@ -213,14 +213,14 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
     $scope.setImageMessage = function () {
         //start by assuming the picture is too big
         $scope.imageTooBig = true;
-        $scope.ImageMessage = Resources.LoadingImage+"...";
+        $scope.ImageMessage = window.Resources.LoadingImage+"...";
         $scope.$apply();
     }
     ///#endregion
 
     //#region QuestionFunctions
     ///Get all questions
-    var getQuestions = function () {
+    $scope.getQuestions = function () {
         $http.get(configs.restHostName + '/Question/GetQuestionsForRoomWithoutImages?roomId=' + MyRoomIdFromViewBag).then(function (response) {
             $scope.Questions = response.data;
             $scope.questionsLoaded = true;
@@ -229,7 +229,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
     
     ///Function for creating a question
     $scope.postQuestion = function () {
-        $("#myModalCreate").modal("hide");
+        $scope.modalChanger("myModalCreate", "hide");
 
         var newResponses = "";
         for (var i = 0; i < $scope.ResponseOptions.length; i++) {
@@ -244,7 +244,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
 
         if ($scope.UpdateQuestionBool) {
             //if this is an update question, the image will be in $scope.questionImage instead of $scope.questionImage.base64, but only if the picture hasn't changed
-            if ($scope.questionImage.base64 == undefined) {
+            if ($scope.questionImage == undefined || $scope.questionImage.base64 == undefined) {
                 image = $scope.questionImage;
             } else {
                 image = $scope.questionImage.base64;
@@ -271,7 +271,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
     }
 
     ///Get answer that current user made.
-    var getSpecificAnswer = function (question) {
+    $scope.getSpecificAnswer = function (question) {
         if ($scope.currentUser == undefined)
             return null;
         for (i = 0; i < question.Result.length; i++) {
@@ -284,8 +284,8 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
     ///adds answer to specificQuestion
     $scope.AddAnswer = function () {
         ///Use response to send to REST API string response
-        var Obj = { Value: $scope.answerChoosen.Value, UserId: $window.userId }
-        $http.post(configs.restHostName + '/Question/AddQuestionResponse', { response: JSON.stringify(Obj), questionId: $scope.SpecificQuestion._id });
+        var Obj = {Value:$scope.answerChoosen.Value,UserId:$window.userId}
+        $http.post(configs.restHostName + '/Question/AddQuestionResponse', {response:JSON.stringify(Obj), questionId:$scope.SpecificQuestion._id});
     }
 
     $scope.AddResponseOption = function () {
@@ -296,7 +296,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
         var temp = [];
         var counter = 0;
         for (var i = 0; i < $scope.ResponseOptions.length; i++) {
-            if ($scope.ResponseOptions[i] != item) {
+           if ($scope.ResponseOptions[i] !== item) {
                 temp.push({ id: counter, val: $scope.ResponseOptions[i].val });
                 counter = counter + 1;
             }
@@ -309,7 +309,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
         $scope.ToggleShowQuestionTables();
         $scope.specificImageLoaded = false;
         $scope.SpecificQuestion = question;
-        $scope.specificAnswer = getSpecificAnswer(question);
+        $scope.specificAnswer = $scope.getSpecificAnswer(question);
         ///Get percentage once and start timer to fire once every second
         $scope.getPercentage();
         $scope.progressCancel = $interval($scope.getPercentage, 1000);
@@ -334,9 +334,12 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
         if ($scope.SpecificQuestion != undefined) {
             $scope.timerOverflow = false;
             var nominater = Date.now() - parseInt($scope.SpecificQuestion.CreationTimestamp);
+            console.log(nominater);
             var denominater = parseInt($scope.SpecificQuestion.ExpireTimestamp) - parseInt($scope.SpecificQuestion.CreationTimestamp);
+            console.log(denominater);
             $scope.percentage = (nominater / denominater) * 100;
             var timeLeftInmSec = parseInt($scope.SpecificQuestion.ExpireTimestamp) - Date.now();
+            console.log(timeLeftInmSec);
             var hours = (parseInt(timeLeftInmSec / 3600000) + "").length == 1 ? "0" + parseInt(timeLeftInmSec / 3600000) : parseInt(timeLeftInmSec / 3600000);
             var min = (parseInt((timeLeftInmSec % 3600000) / 60000) + "").length == 1 ? "0" + parseInt((timeLeftInmSec % 3600000) / 60000) : parseInt((timeLeftInmSec % 3600000) / 60000);
             var sec = (parseInt(((timeLeftInmSec % 3600000) % 60000) / 1000) + "").length == 1 ? "0" + parseInt(((timeLeftInmSec % 3600000) % 60000) / 1000) : parseInt(((timeLeftInmSec % 3600000) % 60000) / 1000);
@@ -347,8 +350,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
                 if (angular.isDefined($scope.progressCancel)) {
                     $interval.cancel($scope.progressCancel);
                     $scope.progressCancel = undefined;
-                    $scope.showProgressBar = false;
-                }
+                 }
             } else {
                 $scope.timeLeft = hours + ":" + min + ":" + sec;
                 $("#progressDiv").addClass("active progress-striped").children().removeClass("progress-bar-danger");
@@ -461,7 +463,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
     $scope.getRoom = function (user) {
         $http.post(configs.restHostName + '/Room/GetById', { id: MyRoomIdFromViewBag }).then(function (response) {
             //Tried moving these since it makes better sense(also easiere to test)
-            getQuestions();
+            $scope.getQuestions();
             getChatMessages();
             getAllUsers();
             $scope.specificRoomLoaded = true;
@@ -649,6 +651,11 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
     //#endregion
 
     //#region HelperFunction
+    ///Modal state changer
+    $scope.modalChanger = function(id, state) {
+        $("#"+id).modal(state);
+    }
+
     ///Helper function to find index of object in array
     function findWithAttr(array, attr, value) {
        for (var i = 0; i < array.length; i += 1) {
