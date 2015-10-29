@@ -29,11 +29,11 @@ class ReturnMessage {
     }
     
     /**
-    Given any string, determines whether that string is a JSON representation of the Error class. If it is, returns that error, else throws an NSError.
-    - parameter dataString:	The string to be determined wheter it's an Error.
-    - throws: Rethrows either JSONSerializer.toDictionary (see documentation for that) or an NSError describing the error further.
-    - returns: The given string as an Error class
-    */
+     Given any string, determines whether that string is a JSON representation of the Error class. If it is, returns that error, else throws an NSError.
+     - parameter dataString:	The string to be determined wheter it's an Error.
+     - throws: Rethrows either JSONSerializer.toDictionary (see documentation for that) or an NSError describing the error further.
+     - returns: The given string as an Error class
+     */
     static func parse(dataString: String) throws -> ReturnMessage {
         do {
             let dictionary = try JSONSerializer.toDictionary(dataString)

@@ -6,6 +6,7 @@
 
     <TextView
         android:textSize="24sp"
+        android:textColor="@color/primary_material_light"
         android:textStyle="bold"
         android:id="@+id/custom_name"
         android:layout_width="fill_parent"
@@ -17,18 +18,21 @@
         android:weightSum="9">
         <TextView
             android:gravity="center"
+            android:textColor="@color/primary_material_light"
             android:id="@+id/custom_tag"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="3"/>
         <TextView
             android:gravity="center"
+            android:textColor="@color/primary_material_light"
             android:id="@+id/custom_anonymous"
             android:layout_width="0dp"
             android:layout_height="fill_parent"
             android:layout_weight="3"/>
         <TextView
             android:gravity="center"
+            android:textColor="@color/primary_material_light"
             android:id="@+id/custom_radius"
             android:layout_width="0dp"
             android:layout_height="fill_parent"

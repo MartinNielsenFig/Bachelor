@@ -28,6 +28,7 @@ module.exports = function(config) {
       'WisR/Scripts/Chart.js',
       'WisR/Scripts/angular-chart.js',
       'WisR.Tests/Scripts/SignalRForTest/server.js',
+      'WisR.Tests/Scripts/GlobalVarriablesForTest/GlobalVarriables.js',
       'WisR/Scripts/WisRScripts/AngularModule.js',
       'WisR/Scripts/WisRScripts/**.js',
       'WisR.Tests/Scripts/Test/AngularControllerTest.js',

@@ -10,11 +10,11 @@ import Foundation
 
 class RoomFilterHelper {
     /**
-    Returns a new array of Room containing only the rooms that are within a specified radius of the current user that is logged on. Required that CurrentUser.sharedInstance.location is set.
-    - parameter rooms:				An array of Room to be filtered.
-    - parameter metersRadius:	The radius in which the room has to be in proximity to the user. Adds the accuracy of the room location and user location to this.
-    - returns: New array of filtered rooms.
-    */
+     Returns a new array of Room containing only the rooms that are within a specified radius of the current user that is logged on. Required that CurrentUser.sharedInstance.location is set.
+     - parameter rooms:				An array of Room to be filtered.
+     - parameter metersRadius:	The radius in which the room has to be in proximity to the user. Adds the accuracy of the room location and user location to this.
+     - returns: New array of filtered rooms.
+     */
     static func filterRoomsByLocation(rooms: [Room], metersRadius: Double) -> [Room] {
         let start = NSDate()
         var filteredRooms = [Room]()
@@ -43,13 +43,13 @@ class RoomFilterHelper {
     
     
     /**
-    Calculation based upon http://www.movable-type.co.uk/scripts/latlong.html Calculates the distance between to latitude-longitude pairs.
-    - parameter lat1:	latitude of the first coordinate
-    - parameter long1:	longitude of the first coordinate
-    - parameter lat2:	latitude of the second coordinate
-    - parameter long2:	longitude of the second coordinate
-    - returns: Distance between the two coordinates
-    */
+     Calculation based upon http://www.movable-type.co.uk/scripts/latlong.html Calculates the distance between to latitude-longitude pairs.
+     - parameter lat1:	latitude of the first coordinate
+     - parameter long1:	longitude of the first coordinate
+     - parameter lat2:	latitude of the second coordinate
+     - parameter long2:	longitude of the second coordinate
+     - returns: Distance between the two coordinates
+     */
     static func distanceBetweenTwoCoordinatesMeters(lat1: Double, _ long1: Double, _ lat2: Double, _ long2: Double) -> Double {
         let r = 6371000.0
         let dLat = degreesToRadians(lat2-lat1)
@@ -62,10 +62,10 @@ class RoomFilterHelper {
     }
     
     /**
-    Converts degrees to radians.
-    - parameter degree:	Angle in degree
-    - returns: Angle in radians
-    */
+     Converts degrees to radians.
+     - parameter degree:	Angle in degree
+     - returns: Angle in radians
+     */
     static func degreesToRadians(degree: Double) -> Double {
         return (degree*M_PI)/180
     }

@@ -22,7 +22,7 @@ class RoomTableViewController: UITableViewController {
         self.refreshControl = UIRefreshControl()
         self.refreshControl!.addTarget(self, action: "handleRefresh:", forControlEvents: UIControlEvents.ValueChanged)
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Use Secret", style: .Plain, target: self, action: "useSecret")
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: NSLocalizedString("Use Secret", comment: ""), style: .Plain, target: self, action: "useSecret")
         
         fetchRooms(refreshControl)
         super.viewDidLoad()
@@ -53,7 +53,7 @@ class RoomTableViewController: UITableViewController {
         else if let cLong = CurrentUser.sharedInstance.location.Longitude, cLat = CurrentUser.sharedInstance.location.Latitude, rLong = room.Location.Longitude, rLat = room.Location.Latitude {
             
             let distance = Int(RoomFilterHelper.distanceBetweenTwoCoordinatesMeters(cLat, cLong, rLat, rLong))
-            cell.detailTextLabel?.text = "\(distance) meters away"
+            cell.detailTextLabel?.text = String(format: NSLocalizedString("%d meters away", comment: ""), distance)
         }
         
         return cell
@@ -93,13 +93,17 @@ class RoomTableViewController: UITableViewController {
     }
     
     /**
-    Function that runs when user chooses to use a secret to connect to a room
-    */
+     Function that runs when user chooses to use a secret to connect to a room
+     */
     func useSecret() {
         var secretInput: UITextField?
         
-        let alert = UIAlertController(title: "Connect with secret", message: "", preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: "Connect", style: .Default, handler: { action in
+        let alert = UIAlertController(title: NSLocalizedString("Connect with secret", comment: ""), message: "", preferredStyle: .Alert)
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .Destructive, handler: { (action) -> Void in
+            //Nothing
+        }))
+        
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Connect", comment: ""), style: .Default, handler: { action in
             
             //Find room with secret
             if let secret = secretInput?.text, foundRoom = (self.allRooms.filter(){ return $0.Secret == secret }).first {
@@ -110,15 +114,11 @@ class RoomTableViewController: UITableViewController {
             else {
                 print("secret not found")
             }
-            
-            
         }))
-        alert.addAction(UIAlertAction(title: "Cancel", style: .Destructive, handler: { (action) -> Void in
-            //Nothing
-        }))
+        
         alert.addTextFieldWithConfigurationHandler { (textField) -> Void in
             secretInput = textField
-            textField.placeholder = "Enter room secret"
+            textField.placeholder = NSLocalizedString("Enter room secret", comment: "")
         }
         
         dispatch_async(dispatch_get_main_queue()) {
@@ -142,8 +142,8 @@ class RoomTableViewController: UITableViewController {
             print("ROOM HAS PW")
             var pwTextField: UITextField?
             
-            let alert = UIAlertController(title: "Enter password", message: "The room you selected is password protected. Enter the password for the room.", preferredStyle: .Alert)
-            alert.addAction(UIAlertAction(title: "Connect", style: .Default, handler: { action in
+            let alert = UIAlertController(title: NSLocalizedString("Enter password", comment: ""), message: NSLocalizedString("The room you selected is password protected. Enter the password for the room.", comment: ""), preferredStyle: .Alert)
+            alert.addAction(UIAlertAction(title: NSLocalizedString("Connect", comment: ""), style: .Default, handler: { action in
                 
                 //Do some encryption here on user input
                 if let pw = pwTextField!.text, roomEncryptedPw = room.EncryptedPassword where pw.sha512() == roomEncryptedPw {
@@ -155,12 +155,12 @@ class RoomTableViewController: UITableViewController {
                     print("WRONG PASSWORD")
                 }
             }))
-            alert.addAction(UIAlertAction(title: "Cancel", style: .Destructive, handler: { (action) -> Void in
+            alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .Destructive, handler: { (action) -> Void in
                 //Nothing
             }))
             alert.addTextFieldWithConfigurationHandler { (textField) -> Void in
                 pwTextField = textField
-                textField.placeholder = "Enter room password"
+                textField.placeholder = NSLocalizedString("Enter room password", comment: "")
             }
             
             self.presentViewController(alert, animated: true, completion: nil)

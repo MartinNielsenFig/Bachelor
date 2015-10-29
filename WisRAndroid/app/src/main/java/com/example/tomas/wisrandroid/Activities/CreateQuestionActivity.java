@@ -14,7 +14,11 @@ public class CreateQuestionActivity extends AppCompatActivity {
     protected void onCreate( Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_question);
-        ActivityLayoutHelper.HideLayout(getWindow(), getSupportActionBar());
+        //ActivityLayoutHelper.HideLayout(getWindow(), getSupportActionBar());
+        if(getSupportActionBar() != null)
+        {
+            getSupportActionBar().hide();
+        }
 
     }
 

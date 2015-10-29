@@ -42,7 +42,7 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
     //MARK: Lifecycle
     override func viewDidLoad() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "addQuestion")
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "dismiss:")
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "dismiss")
     }
     
     //MARK: Utilities
@@ -57,18 +57,18 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
         
         if self.questionText?.inputField.text == "" {
             missingInformation = true
-            informationText += "Question text cannot be empty. "
+            informationText += NSLocalizedString("Question text cannot be empty. ", comment: "")
         }
         if self.durationInput?.inputField.text == "" || Double((self.durationInput?.inputField.text)!) == nil {
             missingInformation = true
-            informationText += "Enter a number in duration. "
+            informationText += NSLocalizedString("Enter a number in duration. ", comment: "")
         }
         if responseOptions.count <= 0 {
             missingInformation = true
-            informationText += "Need at least one response option."
+            informationText += NSLocalizedString("Need at least one response option.", comment: "")
         }
         if missingInformation {
-            let alert = UIAlertController(title: "Missing information", message: informationText, preferredStyle: .Alert)
+            let alert = UIAlertController(title: NSLocalizedString("Missing information", comment: ""), message: informationText, preferredStyle: .Alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: { action in
                 //Do nothing
             }))
@@ -112,7 +112,7 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
                     indicator.removeFromSuperview()
                 }
                 
-                Toast.showToast("Question created", durationMs: 1500, presenter: self, imageName: "Checkmark") {
+                Toast.showToast(NSLocalizedString("Question created", comment: ""), durationMs: 1500, presenter: self, imageName: "Checkmark") {
                     self.questionListViewController.fetchQuestions()
                     self.dismiss()
                 }
@@ -162,8 +162,8 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
                 
                 let cellIdentifier = "TextInputCell"
                 let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! TextInputCell
-                cell.label.text = "Question text"
-                cell.inputField.placeholder = "Ask a question"
+                cell.label.text = NSLocalizedString("Question text", comment: "")
+                cell.inputField.placeholder = NSLocalizedString("Ask a question", comment: "")
                 questionText = cell
                 cell.selectionStyle = .None
                 return cell
@@ -171,8 +171,8 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
             else if indexPath.row == 1 {
                 let cellIdentifier = "NumberInputCell"
                 let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! NumberInputCell
-                cell.label.text = "Duration"
-                cell.inputField.placeholder = "Duration in minutes"
+                cell.label.text = NSLocalizedString("Duration", comment: "")
+                cell.inputField.placeholder = NSLocalizedString("Duration in minutes", comment: "")
                 durationInput = cell
                 cell.selectionStyle = .None
                 return cell
@@ -180,7 +180,7 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
             else if indexPath.row == 2 {
                 let cell = UITableViewCell()
                 imageTableCell = cell
-                cell.textLabel?.text = "Select image"
+                cell.textLabel?.text = NSLocalizedString("Select image or take photo", comment: "")
                 if selectedImage != nil {
                     cell.imageView?.image = selectedImage
                 }
@@ -190,8 +190,8 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
             else if indexPath.row == 3 {
                 let cellIdentifier = "TextInputCell"
                 let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! TextInputCell
-                cell.label.text = "Add Response"
-                cell.inputField.placeholder = "A response option"
+                cell.label.text = NSLocalizedString("Add Response", comment: "")
+                cell.inputField.placeholder = NSLocalizedString("A response option", comment: "")
                 cell.inputField.delegate = self
                 cell.inputField.returnKeyType = .Done
                 cell.inputField.clearsOnBeginEditing = true
@@ -242,12 +242,17 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
             }
             
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
-            alert.addAction(UIAlertAction(title: "Photo Library", style: .Default, handler: { action in
+            
+            alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .Cancel, handler: { (action) -> Void in
+                //Do nothing
+            }))
+            
+            alert.addAction(UIAlertAction(title: NSLocalizedString("Photo Library", comment: ""), style: .Default, handler: { action in
                 imagePickerController.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
                 self.presentViewController(imagePickerController, animated: true, completion: nil)
             }))
             
-            alert.addAction(UIAlertAction(title: "Camera", style: .Default, handler: { action in
+            alert.addAction(UIAlertAction(title: NSLocalizedString("Camera", comment: ""), style: .Default, handler: { action in
                 imagePickerController.sourceType = UIImagePickerControllerSourceType.Camera
                 self.presentViewController(imagePickerController, animated: true, completion: nil)
             }))

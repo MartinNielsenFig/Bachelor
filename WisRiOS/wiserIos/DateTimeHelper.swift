@@ -12,10 +12,10 @@ import Foundation
 class DateTimeHelper {
     
     /**
-    Returns a human readable string of the time from a epoch string.
-    - parameter secSince1970:	Seconds since 1970. Aka Epoch.
-    - returns: A string representing the time.
-    */
+     Returns a human readable string of the time from a epoch string.
+     - parameter secSince1970:	Seconds since 1970. Aka Epoch.
+     - returns: A string representing the time.
+     */
     static func getTimeStringFromEpochString(secSince1970: String?) -> String {
         
         var sec = Float()
@@ -34,21 +34,21 @@ class DateTimeHelper {
     }
     
     /**
-    Given a duration in seconds, calculates the components of that time duration from a given set of wished components. E.g. 86400 seconds in a day could be represented as 1 days 0 minutes 0 seconds, or 0 days, 1440 minutes, 0 seconds etc.
-    - parameter durationSec:	Duration in seconds.
-    - parameter flags:				Describes which kind of components you wish you distribute the seconds into.
-    - returns: NSDateComponent representation of the duration with the specified components available
-    */
+     Given a duration in seconds, calculates the components of that time duration from a given set of wished components. E.g. 86400 seconds in a day could be represented as 1 days 0 minutes 0 seconds, or 0 days, 1440 minutes, 0 seconds etc.
+     - parameter durationSec:	Duration in seconds.
+     - parameter flags:				Describes which kind of components you wish you distribute the seconds into.
+     - returns: NSDateComponent representation of the duration with the specified components available
+     */
     static func getComponents(durationSec: NSTimeInterval, flags: NSCalendarUnit) -> NSDateComponents {
         let cal = NSCalendar.currentCalendar()
         
         let now = NSDate()
         let date = NSDate(timeIntervalSinceNow: durationSec)
-
+        
         let components = cal.components(flags, fromDate: now, toDate: date, options: .MatchFirst)
         return components
     }
     
-        
-
+    
+    
 }

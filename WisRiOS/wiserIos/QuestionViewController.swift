@@ -10,7 +10,7 @@ import UIKit
 import JsonSerializerSwift
 
 /// A sub-ViewController of RoomPageViewController. This shows the selected Question that the user can answer.
-class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, Paged {
+class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIScrollViewDelegate, Paged {
     
     //MARK: Properties
     let pageIndex = 1
@@ -25,10 +25,11 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     var timeLabel = UILabel()
     @IBOutlet weak var questionText: UILabel!
     @IBOutlet weak var answerPicker: UIPickerView!
-    @IBOutlet weak var questionImage: UIImageView!
     @IBOutlet weak var progressBar: UIProgressView!
     @IBOutlet weak var upvoteButton: UIButton!
     @IBOutlet weak var downvoteButton: UIButton!
+    @IBOutlet weak var imageScrollView: UIScrollView!
+    @IBOutlet weak var questionImageView: UIImageView!
     
     var pickerData = [String]()
     
@@ -65,9 +66,19 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                     self.question.Result += [answer]
                 }
                 
-                Toast.showToast("You voted \(answer.Value)", durationMs: 1000, presenter: self)
+                let youVoted = NSLocalizedString("You voted", comment: "")
+                Toast.showToast(youVoted + " \(answer.Value)", durationMs: 1000, presenter: self)
                 self.highlightSelectedAnswer(index)
             } else {
+                
+                dispatch_async(dispatch_get_main_queue()) {
+                    let alert = UIAlertController(title: NSLocalizedString("An error has occurred", comment: ""), message: NSLocalizedString("Cannot respond to a question where timer has run out", comment: ""), preferredStyle: .Alert)
+                    alert.addAction(UIAlertAction(title: "Ok", style: .Cancel) { action in
+                        //Do nothing
+                        })
+                    self.presentViewController(alert, animated: true, completion: nil)
+                }
+                
                 print(error)
                 print(data)
             }
@@ -101,9 +112,9 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     
     /**
-    Up- or downvotes the current showing question.
-    - parameter up:	If true upvotes, if false downvotes.
-    */
+     Up- or downvotes the current showing question.
+     - parameter up:	If true upvotes, if false downvotes.
+     */
     func vote(up: Bool, button: UIButton) {
         updateVoteUI(up)
         let voteValue = up ? 1 : -1
@@ -123,7 +134,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             }
         }
     }
-
+    
     func updateProgressbar() {
         
         if let startStr = question.CreationTimestamp?.stringByReplacingOccurrencesOfString(",", withString: "."), endStr = question.ExpireTimestamp?.stringByReplacingOccurrencesOfString(",", withString: "."), start = Double(startStr), end = Double(endStr) {
@@ -138,12 +149,14 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             
             //Text
             timeLabel.removeFromSuperview()
-            timeLabel = UILabel(frame: CGRectMake(0, 0, progressBar.frame.size.width, 20))
+            timeLabel = UILabel(frame: CGRectMake(0, 0, progressBar.frame.size.width, progressBar.frame.size.height))
             timeLabel.textAlignment = .Center
             
             let tLeftS = NSTimeInterval(tLeftMs/1000)
             let tLeftComponents = DateTimeHelper.getComponents(tLeftS, flags: [.Hour, .Minute, .Second])
-            timeLabel.text = "Time left: \(tLeftComponents.hour):\(tLeftComponents.minute):\(tLeftComponents.second)"
+            
+            let timeLeft = NSLocalizedString("Time left: ", comment: "")
+            timeLabel.text = "\(tLeftComponents.hour):\(tLeftComponents.minute):\(tLeftComponents.second)"
             progressBar.clipsToBounds = false
             progressBar.addSubview(timeLabel)
             
@@ -166,15 +179,25 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         
         func updateImgGui(b64Img: String) {
             let imageData = NSData(base64EncodedString: b64Img, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
-            let image = UIImage(data: imageData!)
+            let questionImage = UIImage(data: imageData!)
             
             dispatch_async(dispatch_get_main_queue()) {
                 indicator.stopAnimating()
                 indicator.removeFromSuperview()
-                self.questionImage.image = image
-                self.questionImage.reloadInputViews()
+                
+                //Add image to image scroll view
+                if let questionImage = questionImage where questionImage.size != CGSize(width: 0, height: 0) {
+                    self.questionImageView.image = questionImage
+                    self.imageScrollView.contentSize = questionImage.size
+                    
+                    let minimumZoomLevel = self.imageScrollView.frame.size.width/questionImage.size.width
+                    self.imageScrollView.minimumZoomScale = minimumZoomLevel
+                    self.imageScrollView.zoomScale = minimumZoomLevel
+                    
+                    self.questionImageView!.reloadInputViews()
+                }
             }
-
+            
         }
         
         //Don't reload image if already loaded
@@ -192,8 +215,12 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     
     //MARK: Lifecycle
     override func viewDidLoad() {
-        
         print("QuestionViewController instantiated, roomId: \(self.roomId)")
+        super.viewDidLoad()
+        
+        imageScrollView.delegate = self
+        imageScrollView.maximumZoomScale = 6
+        imageScrollView.minimumZoomScale = 0.1
         
         answerPicker.delegate = self
         answerPicker.dataSource = self
@@ -226,7 +253,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         
         //Image
         loadImage()
-
+        
         //Answer
         highlightSelectedAnswer()
         
@@ -241,7 +268,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     
     override func viewWillDisappear(animated: Bool) {
-        self.questionImage.image = nil
+        self.questionImageView.image = nil
         super.viewWillDisappear(animated)
     }
     
@@ -265,6 +292,11 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             return attributedTitle
         }
         return nil
+    }
+    
+    //MARK: UIScrollViewDelegate
+    func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
+        return questionImageView
     }
     
     //MARK: Navigation
