@@ -125,10 +125,16 @@
 "Photo Library" = "Foto bibliotek";
 
 /* No comment provided by engineer. */
+"Question parameters" = "Spørgsmåls parametre";
+
+/* No comment provided by engineer. */
 "Question text" = "Spørgsmålstekst";
 
 /* No comment provided by engineer. */
 "Question text cannot be empty. " = "Spørgsmålsteksten må ikke være tom. ";
+
+/* No comment provided by engineer. */
+"Response options" = "Svarmuligheder";
 
 /* No comment provided by engineer. */
 "Room name cannot be empty. " = "Rummets navn må ikke være tomt. ";

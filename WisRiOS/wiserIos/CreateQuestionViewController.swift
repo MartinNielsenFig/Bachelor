@@ -140,10 +140,10 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
     
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {
-            return "Question parameters"
+            return NSLocalizedString("Question parameters", comment: "")
         }
         else {
-            return "Reponse options"
+            return NSLocalizedString("Response options", comment: "")
         }
     }
     
@@ -181,6 +181,7 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
                 let cell = UITableViewCell()
                 imageTableCell = cell
                 cell.textLabel?.text = NSLocalizedString("Select image or take photo", comment: "")
+                cell.textLabel?.textAlignment = .Center
                 if selectedImage != nil {
                     cell.imageView?.image = selectedImage
                 }
