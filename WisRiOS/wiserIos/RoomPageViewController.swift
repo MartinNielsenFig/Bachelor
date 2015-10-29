@@ -17,15 +17,25 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     var pageViewController: UIPageViewController!
     let pageCount = 3
     var currentPage = 0
+    var updater: Updater?
     
     var viewControllerArray = [UIViewController?](count: 3, repeatedValue: nil)
     
     //MARK: Lifecycle
     override func viewDidLoad() {
-        
+        print("RoomPageViewController instantiated with roomId \(room._id)")
         self.title = room.Name
         
-        print("RoomPageViewController instantiated with roomId \(room._id)")
+        //Check if room exists, else log out
+        updater = Updater(secondsDelay: 5, function: { () -> Void in
+            let body = "roomId=\(self.room._id!)"
+            HttpHandler.requestWithResponse(action: "Room/RoomExists", type: "POST", body: body) { (data, response, error) -> Void in
+                if data.lowercaseString == "false" {
+                    self.updater?.stop()
+                    self.logoutRoom(forced: true)
+                }
+            }
+        })
         
         //http://stackoverflow.com/questions/18844681/how-to-make-custom-uibarbuttonitem-with-image-and-label
         let askQBtn = UIButton(type: .Custom)
@@ -80,11 +90,25 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     }
     
     //MARK: Navigation
-    func logoutRoom() {
-        let alert = UIAlertController(title: NSLocalizedString("Leaving Room", comment: ""), message: NSLocalizedString("Do you want to leave current room?", comment: ""), preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .Cancel, handler: { action in
-            //Do nothing
-        }))
+    
+    /**
+    Log out of the room.
+    - parameter forced:	If forced is true, the logout will be forced and the user will not be able to cancel.
+    */
+    func logoutRoom(forced forced: Bool = false) {
+        
+        let leavingTitle = NSLocalizedString("Leaving Room", comment: "")
+        let leavingComment = NSLocalizedString("Do you want to leave room?", comment: "")
+        let forcedTitle = NSLocalizedString("Logged out", comment: "")
+        let forcedComment = NSLocalizedString("The room was deleted", comment: "")
+        
+        let alert = UIAlertController(title: forced ? forcedTitle : leavingTitle, message: forced ? forcedComment : leavingComment, preferredStyle: .Alert)
+        
+        if !forced {
+            alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .Cancel, handler: { action in
+                //Do nothing
+            }))
+        }
         
         alert.addAction(UIAlertAction(title: NSLocalizedString("Logout", comment: ""), style: .Default, handler: { action in
             self.navigationController?.popToRootViewControllerAnimated(true)

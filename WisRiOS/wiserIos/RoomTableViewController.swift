@@ -31,32 +31,37 @@ class RoomTableViewController: UITableViewController {
     //MARK: UITableViewController
     
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        if rooms.count > 0 {
         let roomAtRow = self.rooms[indexPath.row]
-        return roomAtRow.CreatedById == CurrentUser.sharedInstance._id
+            return roomAtRow.CreatedById == CurrentUser.sharedInstance._id
+        } else {
+            return false
+        }
     }
     
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        
-        let roomId = self.rooms[indexPath.row]._id
-        HttpHandler.requestWithResponse(action: "Room/DeleteRoom?id=\(roomId!)", type: "DELETE", body: "") { (data, response, error) -> Void in
-            if data.containsString("deleted") {
-                print("Did delete room")
-                let roomAtRow = self.rooms[indexPath.row]
-                
-                var indexInAllRooms = -1
-                for (index, room) in self.allRooms.enumerate() {
-                    if room._id == roomAtRow._id {
-                        indexInAllRooms = index
+        if rooms.count > 0 {
+            let roomId = self.rooms[indexPath.row]._id
+            HttpHandler.requestWithResponse(action: "Room/DeleteRoom?id=\(roomId!)", type: "DELETE", body: "") { (data, response, error) -> Void in
+                if data.containsString("deleted") {
+                    print("Did delete room")
+                    let roomAtRow = self.rooms[indexPath.row]
+                    
+                    var indexInAllRooms = -1
+                    for (index, room) in self.allRooms.enumerate() {
+                        if room._id == roomAtRow._id {
+                            indexInAllRooms = index
+                        }
                     }
+                    
+                    assert(self.rooms[indexPath.row]._id == self.allRooms[indexInAllRooms]._id)
+                    self.rooms.removeAtIndex(indexPath.row)
+                    self.allRooms.removeAtIndex(indexInAllRooms)
+                    
+                    self.fetchRooms()
+                } else {
+                    print("Could not delete room")
                 }
-                
-                assert(self.rooms[indexPath.row]._id == self.allRooms[indexInAllRooms]._id)
-                self.rooms.removeAtIndex(indexPath.row)
-                self.allRooms.removeAtIndex(indexInAllRooms)
-                
-                self.fetchRooms()
-            } else {
-                print("Could not delete room")
             }
         }
     }
