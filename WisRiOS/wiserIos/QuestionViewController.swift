@@ -268,6 +268,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     
     override func viewWillDisappear(animated: Bool) {
+        self.progressTimerUpdater?.stop()
         self.questionImageView.image = nil
         super.viewWillDisappear(animated)
     }

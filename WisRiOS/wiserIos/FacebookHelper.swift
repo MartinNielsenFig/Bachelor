@@ -21,7 +21,7 @@ class FacebookHelper {
         CurrentUser.sharedInstance.FacebookId = nil
     }
     
-    static func requestWisrUserFrom(facebookId: String) {
+    static func requestWisrUserFrom(facebookId facebookId: String) {
         let body = "facebookId=\(facebookId)"
         
         HttpHandler.requestWithResponse(action: "User/GetWisrIdFromFacebookId", type: "POST", body: body) { (data, response, error) in
@@ -40,7 +40,7 @@ class FacebookHelper {
                 let name = result["name"] as? String
                 
                 if let fbId = fbId {
-                    requestWisrUserFrom(fbId)
+                    requestWisrUserFrom(facebookId: fbId)
                 }
                 
                 CurrentUser.sharedInstance.FacebookId = fbId

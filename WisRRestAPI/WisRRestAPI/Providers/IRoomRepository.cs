@@ -16,5 +16,6 @@ namespace WisRRestAPI.DomainModel
         string AddRoom(Room item);
         Task<DeleteResult> DeleteRoom(string id);
         Task<Room> UpdateRoom(string id, Room item);
+        bool DoesRoomExist(string id);
     }
 }
