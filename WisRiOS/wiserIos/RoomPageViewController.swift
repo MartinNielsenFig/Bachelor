@@ -17,7 +17,7 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     var pageViewController: UIPageViewController!
     let pageCount = 3
     var currentPage = 0
-    var updater: Updater?
+    var checkRoomExistsUpdater: Updater?
     
     var viewControllerArray = [UIViewController?](count: 3, repeatedValue: nil)
     
@@ -25,17 +25,6 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     override func viewDidLoad() {
         print("RoomPageViewController instantiated with roomId \(room._id)")
         self.title = room.Name
-        
-        //Check if room exists, else log out
-        updater = Updater(secondsDelay: 5, function: { () -> Void in
-            let body = "roomId=\(self.room._id!)"
-            HttpHandler.requestWithResponse(action: "Room/RoomExists", type: "POST", body: body) { (data, response, error) -> Void in
-                if data.lowercaseString == "false" {
-                    self.updater?.stop()
-                    self.logoutRoom(forced: true)
-                }
-            }
-        })
         
         //http://stackoverflow.com/questions/18844681/how-to-make-custom-uibarbuttonitem-with-image-and-label
         let askQBtn = UIButton(type: .Custom)
@@ -55,7 +44,7 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
         //Handle back button on UINavigation Bar
         let exitBtn = UIButton(type: .Custom)
         exitBtn.setImage(UIImage(named: "Exit"), forState: .Normal)
-        exitBtn.addTarget(self, action: "logoutRoom", forControlEvents: .TouchUpInside)
+        exitBtn.addTarget(self, action: "logoutRoom:", forControlEvents: .TouchUpInside)
         exitBtn.frame = CGRectMake(0, 0, 22, 22)
         let exitRoomBtn = UIBarButtonItem(customView: exitBtn)
         self.navigationItem.leftBarButtonItem = exitRoomBtn
@@ -75,6 +64,31 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
         pageViewController.didMoveToParentViewController(self)
     }
     
+    override func viewDidAppear(animated: Bool) {
+        
+        //Check if room exists, else log out
+        checkRoomExistsUpdater = Updater(secondsDelay: 5, function: { () -> Void in
+            print("updater check room exist")
+            let body = "roomId=\(self.room._id!)"
+            HttpHandler.requestWithResponse(action: "Room/RoomExists", type: "POST", body: body) { (data, response, error) -> Void in
+                if data.lowercaseString == "false" {
+                    self.checkRoomExistsUpdater?.stop()
+                    self.logoutRoom(true)
+                }
+            }
+        })
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        checkRoomExistsUpdater?.stop()
+    }
+    
+    //MARK: Rotation
+    override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation) {
+        makeRoomForNavigationBar(orientationIsLandscape: fromInterfaceOrientation.isLandscape)
+    }
+    
     /**
      Makes sure there's room enough for the navigation bar when presenting the sub-views. Needs a little offset when in landscape mode.
      - parameter orientationIsLandscape:	Indicates the orientation of the device.
@@ -85,17 +99,13 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
         pageViewController.view.frame = CGRect(x: 0, y: cellHeight, width: view.frame.size.width, height: view.frame.size.height - cellHeight)
     }
     
-    override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation) {
-        makeRoomForNavigationBar(orientationIsLandscape: fromInterfaceOrientation.isLandscape)
-    }
-    
     //MARK: Navigation
     
     /**
     Log out of the room.
     - parameter forced:	If forced is true, the logout will be forced and the user will not be able to cancel.
     */
-    func logoutRoom(forced forced: Bool = false) {
+    func logoutRoom(forced: Bool = false) {
         
         let leavingTitle = NSLocalizedString("Leaving Room", comment: "")
         let leavingComment = NSLocalizedString("Do you want to leave room?", comment: "")
