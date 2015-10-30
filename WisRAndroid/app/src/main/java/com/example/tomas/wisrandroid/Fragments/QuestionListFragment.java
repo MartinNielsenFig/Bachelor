@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.PopupWindow;
@@ -43,7 +44,7 @@ public class QuestionListFragment extends android.support.v4.app.Fragment {
     private final Gson gson = new Gson();
     private ListView mListView;
     private TextView mTextView;
-    private ImageButton mImageButton;
+    private Button mButton;
     private CustomQuestionAdapter mAdapter;
     private ArrayList<Question> mQuestions = new ArrayList<Question>();
 
@@ -75,8 +76,8 @@ public class QuestionListFragment extends android.support.v4.app.Fragment {
 
         Log.w("QuestionListFragment","View Created");
         mTextView = (TextView) view.findViewById(R.id.questionlistfragment_textview);
-        mImageButton = (ImageButton) view.findViewById(R.id.ask_question_button);
-        mImageButton.setOnClickListener(new View.OnClickListener() {
+        mButton = (Button) view.findViewById(R.id.ask_question_button);
+        mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent mIntent = new Intent(getActivity(), CreateQuestionActivity.class);

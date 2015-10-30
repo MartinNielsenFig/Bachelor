@@ -15,22 +15,21 @@
         android:layout_weight="1"
         android:text="Choose Role"
         android:textSize="28sp"
-        android:gravity="center"
+        android:gravity="center_horizontal|bottom"
         android:textStyle="bold"
         android:textColor="@color/primary_material_light"/>
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="10dp"
-        android:layout_weight="2"
+        android:layout_weight="3"
         android:gravity="center_horizontal|bottom"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/button_create_room"
             android:layout_width="120dp"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:layout_margin="5dp"
             android:text="Create Room"
             android:textColor="@color/primary_material_light"
@@ -40,7 +39,7 @@
         <Button
             android:id="@+id/button_find_room"
             android:layout_width="120dp"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:layout_margin="5dp"
             android:text="Find Room"
             android:textColor="@color/primary_material_light"
@@ -60,8 +59,10 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_margin="20dp"
-        android:layout_weight="7"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_weight="6"
         android:background="@android:color/black"
         android:padding="2dp">
 

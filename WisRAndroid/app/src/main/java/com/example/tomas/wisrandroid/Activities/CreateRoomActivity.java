@@ -1,12 +1,15 @@
 package com.example.tomas.wisrandroid.Activities;
 
 import android.app.ActionBar;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Rect;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.preference.DialogPreference;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -14,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Switch;
@@ -93,10 +97,13 @@ public class CreateRoomActivity extends AppCompatActivity implements GoogleApiCl
         // Switch Logic
         mEnablePasswordSwitch = (Switch) findViewById(R.id.room_enable_password_switch);
         //mEnablePasswordSwitch.setThumbResource(R.drawable.button_style);
-        mEnablePasswordSwitch.setOnClickListener(new View.OnClickListener() {
+        mEnablePasswordSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View view) { CheckPasswordSwitchState();}
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                CheckPasswordSwitchState();
+            }
         });
+
         mEnableChatSwitch = (Switch) findViewById(R.id.room_enable_chat_switch);
         mEnableAnonymousSwitch = (Switch) findViewById(R.id.room_anonymous_switch);
         mEnableUserQuestionSwitch = (Switch) findViewById(R.id.room_enable_userquestions_switch);
@@ -112,6 +119,7 @@ public class CreateRoomActivity extends AppCompatActivity implements GoogleApiCl
                         mSecondRadiusToggleButton.setChecked(false);
                         mThirdRadiusToggleButton.setChecked(false);
                     }
+                    mFirstRadiusToggleButton.setChecked(true);
                 }
 
             }
@@ -125,6 +133,7 @@ public class CreateRoomActivity extends AppCompatActivity implements GoogleApiCl
                         mFirstRadiusToggleButton.setChecked(false);
                         mThirdRadiusToggleButton.setChecked(false);
                     }
+                    mSecondRadiusToggleButton.setChecked(true);
                 }
             }
         });
@@ -139,6 +148,7 @@ public class CreateRoomActivity extends AppCompatActivity implements GoogleApiCl
                         mFirstRadiusToggleButton.setChecked(false);
                         mSecondRadiusToggleButton.setChecked(false);
                     }
+                    mThirdRadiusToggleButton.setChecked(true);
                 }
             }
         });
@@ -304,5 +314,26 @@ public class CreateRoomActivity extends AppCompatActivity implements GoogleApiCl
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
                 .build();
+    }
+
+    @Override
+    public void onBackPressed() {
+        final AlertDialog.Builder mBackPressedAlertDialog = new AlertDialog.Builder(this);
+        mBackPressedAlertDialog.setTitle("Are you sure ?");
+        mBackPressedAlertDialog.setMessage("You're about to cancel room creation!");
+        mBackPressedAlertDialog.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                ((AlertDialog) dialogInterface).cancel();
+            }
+        });
+        mBackPressedAlertDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                finish();
+            }
+        });
+        mBackPressedAlertDialog.show();
+
     }
 }
