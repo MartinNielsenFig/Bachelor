@@ -28,7 +28,6 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
         
         //Title for users, room owner sees an edit button
         if self.room.CreatedById == CurrentUser.sharedInstance._id {
-            
             let editbtnContainer = UIView(frame: CGRectMake(0, 0, 44, 44))
             editbtnContainer.backgroundColor = UIColor.clearColor()
             let btn = UIButton(type: .DetailDisclosure)
@@ -159,8 +158,8 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
         print("edit room called")
         
         
-        let message = String(format: NSLocalizedString("Secret of room: %d", comment: ""), self.room.Secret!)
-        let alert = UIAlertController(title: NSLocalizedString("Room Settings", comment: ""), message: message, preferredStyle: .ActionSheet)
+        let message = String(format: NSLocalizedString("Name of room: %@\nSecret of room: %@", comment: ""), self.room.Secret!, self.room.Name!)
+        let alert = UIAlertController(title: NSLocalizedString("Room Information", comment: ""), message: message, preferredStyle: .ActionSheet)
         
         alert.addAction(UIAlertAction(title: NSLocalizedString("Ok", comment: ""), style: .Default, handler: { (action) in
             //do nothing
