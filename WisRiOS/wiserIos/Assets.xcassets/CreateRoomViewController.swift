@@ -72,6 +72,7 @@ class CreateRoomViewController: UITableViewController {
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! BooleanInputCell
             
             cell.label.text = NSLocalizedString("Enable password", comment: "")
+            cell.uiSwitch.on = false
             pwSwitchCell = cell
             
             //Save as field and add a delegate function to this viewcontroller with name enablePwSwitchChanged
