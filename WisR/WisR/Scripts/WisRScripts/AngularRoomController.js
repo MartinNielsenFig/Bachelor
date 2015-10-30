@@ -436,6 +436,8 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
       * Function for answering a question. Takes the answerchosen and the userId and sends it to the rest-api for validation and persisting
       */
     $scope.AddAnswer = function () {
+        if ($window.userId == "NoUser")
+            return;
         ///Use response to send to REST API string response
         var Obj = {Value:$scope.answerChoosen.Value,UserId:$window.userId}
         $http.post(configs.restHostName + '/Question/AddQuestionResponse', {response:JSON.stringify(Obj), questionId:$scope.SpecificQuestion._id});
