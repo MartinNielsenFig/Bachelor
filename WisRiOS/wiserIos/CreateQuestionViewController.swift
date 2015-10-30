@@ -180,7 +180,7 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
             else if indexPath.row == 2 {
                 let cell = UITableViewCell()
                 imageTableCell = cell
-                cell.textLabel?.text = NSLocalizedString("Select image or take photo", comment: "")
+                cell.textLabel?.text = photoSelected ? "" : NSLocalizedString("Select image or take photo", comment: "")
                 cell.textLabel?.textAlignment = .Center
                 if selectedImage != nil {
                     cell.imageView?.image = selectedImage
@@ -276,7 +276,8 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         self.photoSelected = true
         selectedImage = (info[UIImagePickerControllerOriginalImage] as! UIImage)
-        imageTableCell?.imageView?.image = selectedImage
+        imageTableCell?.backgroundView = UIImageView(image: selectedImage)
+        //imageTableCell?.imageView?.image = selectedImage
         dismissViewControllerAnimated(true, completion: nil)
     }
     
