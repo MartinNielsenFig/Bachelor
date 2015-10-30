@@ -129,7 +129,7 @@
                         </div>
                     </div>
                     <form>
-                        <div ng-repeat="responseOption in SpecificQuestion.ResponseOptions">
+                        <div ng-show="SpecificQuestion._t==" ng-repeat="responseOption in SpecificQuestion.ResponseOptions">
                             <label>
                                 <input type="radio" ng-model="$parent.answerChoosen" ng-value="{{responseOption}}">
                                 {{responseOption.Value}}
@@ -205,7 +205,7 @@
                                 <label class="col-md-6">@WisR.App_Resources.Resource.ResponseOptions</label>
                                 <div class="col-md-6 input-group">
                                     <div ng-repeat="option in ResponseOptions" class="col-md-12 input-group has-feedback" style="max-width: 280px">
-                                        <input required ng-model="option.Value" class="form-control" type="text" placeholder="@WisR.App_Resources.Resource.AddResponseOptions" />
+                                        <input ng-required="QuestionType != undefined && QuestionType != 'TextualQuestion'" ng-model="option.Value" class="form-control" type="text" placeholder="@WisR.App_Resources.Resource.AddResponseOptions" />
                                         <span type="button" class="input-group-addon" ng-click="RemoveResponseOption(option)" value="@WisR.App_Resources.Resource.Remove">
                                             <i class="glyphicon glyphicon-minus"></i>
                                         </span>

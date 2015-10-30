@@ -489,7 +489,9 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
         ///Start getting the image for the specific question
         $http.get(configs.restHostName + '/Question/GetImageByQuestionId?questionId=' + question._id).then(function (response) {
             if (response.data === "") {
-                $scope.SpecificQuestion.Img = configs.noImgBase64;
+                //set image to noImage
+                $scope.questionImage = configs.noImgBase64;
+                //$scope.SpecificQuestion.Img = configs.noImgBase64;
                 $("#specificQuestionImage").prop('title', Resources.NoPictureText);
                 $scope.NoPicture = true;
             } else {
