@@ -44,13 +44,13 @@ describe("English Test", function () {
             httpBackend.when('POST', 'http://localhost:1337/User/GetById').respond({});
 
             //Setup for currentUser
-            scope.currentUser = {ConnectedRoomIds: ["12312312"] }
+            scope.currentUser = { ConnectedRoomIds: ["12312312"] }
 
             //Setup for location
             scope.currentLocation = { coords: { latitude: 1 } };
             scope.currentLocation = { coords: { longitude: 1 } };
-            
-            controller = $controller('HomeController', { $scope: scope, $window: window});
+
+            controller = $controller('HomeController', { $scope: scope, $window: window });
         }));
 
 
@@ -62,13 +62,13 @@ describe("English Test", function () {
             expect(scope.Radius).toBe(50);
         });
 
-        it('should change $scope.message to "The room-tag you have entered requires you to be logged in"', function() {
+        it('should change $scope.message to "The room-tag you have entered requires you to be logged in"', function () {
             var room = { AllowAnonymous: false }
             scope.userId = 'NoUser';
             scope.changeViewToRoom(room);
             expect(scope.Message).toBe('The room-secret you have entered requires you to login');
         });
-    
+
         it('should change location to ?RoomId=1', function () {
             var room = { _id: 1, AllowAnonymous: true }
             scope.userId = 'Martin';
@@ -76,7 +76,7 @@ describe("English Test", function () {
             expect(scope.RoomId).toBe(1);
         });
 
-        it('should give call GetAll', function() {
+        it('should give call GetAll', function () {
             httpBackend.expectGET('http://localhost:1337/Room/GetAll');
             scope.getRooms();
             httpBackend.flush();
@@ -94,16 +94,16 @@ describe("English Test", function () {
         });
 
         it('should call toJsonRoom, CreateRoom and then the an error message is promt', function () {
-            httpBackend.when('POST', 'http://localhost:1337/Room/CreateRoom').respond({ErrorMessage: "Error" });
+            httpBackend.when('POST', 'http://localhost:1337/Room/CreateRoom').respond({ ErrorMessage: "Error" });
             httpBackend.expectPOST('http://localhost:7331/Home/toJsonRoom');
             httpBackend.expectPOST('http://localhost:1337/Room/CreateRoom');
-            
+
             scope.postRoom();
             httpBackend.flush();
             expect(scope.RoomCreationError).toBe("Error: Error");
         });
 
-        it('password should have been encrypted', function() {
+        it('password should have been encrypted', function () {
             scope.Password = "Martin";
             scope.postRoom();
             expect(scope.HashedPassword.length === 128);
@@ -119,7 +119,7 @@ describe("English Test", function () {
             httpBackend.expectPOST('http://localhost:1337/Room/GetByUniqueSecret');
             spyOn(scope, 'changeViewToRoom');
             scope.connectWithUniqueSecret();
-           
+
             httpBackend.flush();
             expect(scope.changeViewToRoom).toHaveBeenCalled();
         });
@@ -127,10 +127,10 @@ describe("English Test", function () {
         it('message should be "No room with the Secret: 20"', function () {
             httpBackend.when('POST', 'http://localhost:1337/Room/GetByUniqueSecret').respond({});
             httpBackend.expectPOST('http://localhost:1337/Room/GetByUniqueSecret');
-            
+
             scope.uniqueRoomSecret = 20;
             scope.connectWithUniqueSecret();
-          
+
             httpBackend.flush();
             expect(scope.Message).toBe("No room with the secret: 20");
         });
@@ -158,7 +158,7 @@ describe("English Test", function () {
         });
     });
 
-    describe("Room controller", function() {
+    describe("Room controller", function () {
         var scope, controller, httpBackend, config, window;
 
         beforeEach(inject(function ($rootScope, $controller, $httpBackend, $window, configs) {
@@ -171,9 +171,9 @@ describe("English Test", function () {
             //Setup for http request
             httpBackend.when('POST', 'http://localhost:1337/User/GetById').respond({});
             httpBackend.when('GET', 'http://localhost:1337/Question/GetQuestionsForRoomWithoutImages?roomId=1').respond({});
-            httpBackend.when('POST','/Room/toJsonQuestion').respond({});
+            httpBackend.when('POST', '/Room/toJsonQuestion').respond({});
             httpBackend.when('POST', 'http://localhost:1337/Question/CreateQuestion').respond({});
-            httpBackend.when('POST', "http://localhost:1337/Question/AddQuestionResponse").respond({});
+            httpBackend.when('POST', 'http://localhost:1337/Question/AddQuestionResponse').respond({});
 
             //Setup for currentUser
             scope.currentUser = { ConnectedRoomIds: ["12312312"] }
@@ -182,14 +182,14 @@ describe("English Test", function () {
             scope.currentLocation = { coords: { latitude: 1 } };
             scope.currentLocation = { coords: { longitude: 1 } };
 
-            controller = $controller('RoomController', { $scope: scope, $window: window});
+            controller = $controller('RoomController', { $scope: scope, $window: window });
         }));
 
         it('should set chartType to "Pie";', function () {
             expect(scope.chartType).toBe("Pie");
         });
 
-        it('should have called getRoom with false', function() {
+        it('should have called getRoom with false', function () {
             spyOn(scope, 'getRoom');
             window.userId = "NoUser";
             scope.$apply();
@@ -210,7 +210,7 @@ describe("English Test", function () {
         it('Image should not be to big', function () {
             scope.questionImage = { filesize: 2000, base64: "R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" };
             scope.$apply();
-           
+
             expect(scope.imageTooBig).toBe(false);
         });
 
@@ -227,7 +227,7 @@ describe("English Test", function () {
             expect(scope.ImageMessage).toBe("Loading image...");
         });
 
-        it('should call /GetQuestionsForRoomWithoutImages?roomId=1', function() {
+        it('should call /GetQuestionsForRoomWithoutImages?roomId=1', function () {
             httpBackend.expectGET('http://localhost:1337/Question/GetQuestionsForRoomWithoutImages?roomId=1');
 
             scope.getQuestions();
@@ -273,11 +273,11 @@ describe("English Test", function () {
 
             scope.UpdateQuestionBool = false;
             spyOn(scope, "modalChanger");
-           
+
             scope.postQuestion();
 
             httpBackend.flush();
-            });
+        });
 
         it('should call /Room/toJsonQuestion and /Question/CreateQuestion, not update and image', function () {
             httpBackend.expectPOST('/Room/toJsonQuestion', '{"RoomId":1,"Image":"R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==","ResponseOptions":"undefined,undefined"}');
@@ -286,40 +286,40 @@ describe("English Test", function () {
             scope.UpdateQuestionBool = false;
             scope.questionImage = { base64: "R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" }
             spyOn(scope, "modalChanger");
-            
+
             scope.postQuestion();
 
             httpBackend.flush();
         });
 
-        it('should get the users answer', function() {
+        it('should get the users answer', function () {
             scope.currentUser = { _id: "Martin" };
-            
+
             var question = { Result: [{ UserId: "Martin", Value: 1 }, { UserId: "Nikolaj", Value: 2 }] }
 
             expect(scope.getSpecificAnswer(question)).toBe(1);
         });
 
         it('should get the null', function () {
-            scope.currentUser = { _id:"Peter" };
+            scope.currentUser = { _id: "Peter" };
 
             var question = { Result: [{ UserId: "Martin", Value: 1 }, { UserId: "Nikolaj", Value: 2 }] }
 
             expect(scope.getSpecificAnswer(question)).toBe(null);
         });
 
-        it('should call /Question/AddQuestionResponse', function() {
+        it('should call /Question/AddQuestionResponse', function () {
             httpBackend.expectPOST("http://localhost:1337/Question/AddQuestionResponse");
 
-            scope.answerChoosen = {Value: "Yes"};
-            scope.SpecificQuestion= {_id:1};
-        
+            scope.answerChoosen = { Value: "Yes" };
+            scope.SpecificQuestion = { _id: 1 };
+
             scope.AddAnswer();
 
             httpBackend.flush();
         });
 
-        it('should increase responseoptions with 1', function() {
+        it('should increase responseoptions with 1', function () {
             scope.ResponseOptions = [];
             scope.AddResponseOption();
 
@@ -327,7 +327,7 @@ describe("English Test", function () {
         });
 
         it('should decrease responseoptions with 1', function () {
-            scope.ResponseOptions = [{ id: 0, val: "Test" },{ id: 1, val: "Test2" }];
+            scope.ResponseOptions = [{ id: 0, val: "Test" }, { id: 1, val: "Test2" }];
             scope.RemoveResponseOption(scope.ResponseOptions[0]);
 
             expect(scope.ResponseOptions.length).toBe(1);
@@ -386,8 +386,163 @@ describe("English Test", function () {
             expect(scope.progressCancel).toBe(undefined);
         });
 
-        it('',function() {
-            
+        it('showProgressBar should be false', function () {
+            scope.progressCancel = true;
+            scope.ToggleShowQuestionTables();
+
+            expect(scope.showProgressBar).toBe(false);
+        });
+
+        it('should call Question/DeleteQuestion and call modalchanger, no error', function () {
+            httpBackend.when('DELETE', 'http://localhost:1337/Question/DeleteQuestion?id=1').respond({});
+            httpBackend.expectDELETE("http://localhost:1337/Question/DeleteQuestion?id=1");
+
+            var q = { _id: 1 };
+
+            spyOn(scope, "modalChanger");
+
+            scope.deleteQuestion(q);
+            httpBackend.flush();
+
+            expect(scope.modalChanger).toHaveBeenCalled();
+        });
+
+        it('should call Question/DeleteQuestion and call modalchanger, with error', function () {
+            httpBackend.when('DELETE', 'http://localhost:1337/Question/DeleteQuestion?id=1').respond({ ErrorMessage: "Error" });
+            httpBackend.expectDELETE("http://localhost:1337/Question/DeleteQuestion?id=1");
+
+            var q = { _id: 1 };
+            spyOn(scope, "modalChanger");
+
+            scope.deleteQuestion(q);
+            httpBackend.flush();
+
+            expect(scope.questionDeleteMessage).toBe("Error");
+        });
+
+        it('should call /Room/GetById and location changed', function () {
+            httpBackend.when('POST', 'http://localhost:1337/Room/GetById').respond({ AllowAnonymous: false });
+            httpBackend.expectPOST("http://localhost:1337/Room/GetById");
+
+            spyOn(scope, "getQuestions");
+            spyOn(scope, "getChatMessages");
+            spyOn(scope, "getAllUsers");
+            scope.getRoom(false);
+
+            httpBackend.flush();
+            expect(window.location.href).toBe("/");
+        });
+
+        it('should call /Room/GetById and rightPassword should be true', function () {
+            httpBackend.when('POST', 'http://localhost:1337/Room/GetById').respond({});
+            httpBackend.expectPOST("http://localhost:1337/Room/GetById");
+
+            spyOn(scope, "getQuestions");
+            spyOn(scope, "getChatMessages");
+            spyOn(scope, "getAllUsers");
+            scope.getRoom(false);
+
+            httpBackend.flush();
+            expect(scope.rightPassword).toBe(true);
+        });
+
+        it('should call /Room/GetById and modalChanger should have been called', function () {
+            httpBackend.when('POST', 'http://localhost:1337/Room/GetById').respond({ HasPassword: true });
+            httpBackend.expectPOST("http://localhost:1337/Room/GetById");
+
+            spyOn(scope, "modalChanger");
+            spyOn(scope, "getQuestions");
+            spyOn(scope, "getChatMessages");
+            spyOn(scope, "getAllUsers");
+            scope.getRoom(false);
+
+            httpBackend.flush();
+            expect(scope.modalChanger).toHaveBeenCalled();
+        });
+
+        it('should call /Room/GetById and modalChanger should have been called', function () {
+            httpBackend.when('POST', 'http://localhost:1337/Room/GetById').respond({ HasPassword: true });
+            httpBackend.expectPOST("http://localhost:1337/Room/GetById");
+
+            spyOn(scope, "modalChanger");
+            spyOn(scope, "getQuestions");
+            spyOn(scope, "getChatMessages");
+            spyOn(scope, "getAllUsers");
+            scope.getRoom(false);
+
+            httpBackend.flush();
+            expect(scope.modalChanger).toHaveBeenCalled();
+        });
+
+        it('should call /Room/GetById and Error gotten', function () {
+            httpBackend.when('POST', 'http://localhost:1337/Room/GetById').respond({ ErrorMessage: "Error" });
+            httpBackend.expectPOST("http://localhost:1337/Room/GetById");
+
+            spyOn(scope, "modalChanger");
+            spyOn(scope, "getQuestions");
+            spyOn(scope, "getChatMessages");
+            spyOn(scope, "getAllUsers");
+            scope.getRoom(false);
+
+            httpBackend.flush();
+            expect(scope.RoomErrorDiv).toBe("Error");
+        });
+
+        it('should call /Room/GetById,User is not anonymous, and modalChanger should have been called', function () {
+            httpBackend.when('POST', 'http://localhost:1337/Room/GetById').respond({ HasPassword: true });
+            httpBackend.expectPOST("http://localhost:1337/Room/GetById");
+
+            spyOn(scope, "modalChanger");
+            spyOn(scope, "getQuestions");
+            spyOn(scope, "getChatMessages");
+            spyOn(scope, "getAllUsers");
+            scope.getRoom(true);
+
+            httpBackend.flush();
+            expect(scope.modalChanger).toHaveBeenCalled();
+        });
+
+        it('should call /Room/GetById,User is not anonymous, and rightpassword should be true', function () {
+            httpBackend.when('POST', 'http://localhost:1337/Room/GetById').respond({ HasPassword: true,});
+            httpBackend.expectPOST("http://localhost:1337/Room/GetById");
+
+            scope.currentUser = {ConnectedRoomIds: [1]}
+            spyOn(scope, "modalChanger");
+            spyOn(scope, "getQuestions");
+            spyOn(scope, "getChatMessages");
+            spyOn(scope, "getAllUsers");
+            scope.getRoom(true);
+
+            httpBackend.flush();
+            expect(scope.rightPassword).toBe(true);
+        });
+
+        it('should call /Room/GetById,User is not anonymous, and modalChanger should have been called', function () {
+            httpBackend.when('POST', 'http://localhost:1337/Room/GetById').respond({ HasPassword: true });
+            httpBackend.expectPOST("http://localhost:1337/Room/GetById");
+
+            scope.currentUser = {};
+
+            spyOn(scope, "modalChanger");
+            spyOn(scope, "getQuestions");
+            spyOn(scope, "getChatMessages");
+            spyOn(scope, "getAllUsers");
+            scope.getRoom(true);
+
+            httpBackend.flush();
+            expect(scope.modalChanger).toHaveBeenCalled();
+        });
+
+        it('should return false, because of usernot voted', function() {
+
+            expect(scope.hasVoted([{ CreatedById: "Martin", Value: 1 }, { CreatedById: "Nikolaj", Value: 1 }, { CreatedById: "Peter", Value: -1 }], true)).toBe(false);
+
+        });
+
+        it('should return false, because of no user', function () {
+            scope.currentUser = undefined;
+            expect(scope.hasVoted([{ CreatedById: "Martin", Value: 1 }, { CreatedById: "Nikolaj", Value: 1 }, { CreatedById: "Peter", Value: -1 }], true)).toBe(false);
+
         });
     });
 });
