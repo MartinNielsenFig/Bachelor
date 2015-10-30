@@ -483,6 +483,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
         $scope.specificImageLoaded = false;
         $scope.SpecificQuestion = question;
         $scope.specificAnswer = $scope.getSpecificAnswer(question);
+        $("#answerTextarea").val($scope.specificAnswer);
         ///Get percentage once and start timer to fire once every second
         $scope.getPercentage();
         $scope.progressCancel = $interval($scope.getPercentage, 1000);
@@ -491,7 +492,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
             if (response.data === "") {
                 //set image to noImage
                 $scope.questionImage = configs.noImgBase64;
-                //$scope.SpecificQuestion.Img = configs.noImgBase64;
+                $scope.SpecificQuestion.Img = configs.noImgBase64;
                 $("#specificQuestionImage").prop('title', Resources.NoPictureText);
                 $scope.NoPicture = true;
             } else {

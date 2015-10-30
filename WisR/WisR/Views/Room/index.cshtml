@@ -129,26 +129,39 @@
                         </div>
                     </div>
                     <form>
-                        <div ng-show="SpecificQuestion._t==" ng-repeat="responseOption in SpecificQuestion.ResponseOptions">
+                        <div ng-hide="SpecificQuestion._t=='TextualQuestion'" ng-repeat="responseOption in SpecificQuestion.ResponseOptions">
                             <label>
                                 <input type="radio" ng-model="$parent.answerChoosen" ng-value="{{responseOption}}">
                                 {{responseOption.Value}}
                             </label>
                         </div>
 
+                        <div ng-show="SpecificQuestion._t=='TextualQuestion'" class="send-wrap">
+                            <textarea id="answerTextarea" ng-enter="AddAnswer()" ng-model="answerChoosen.Value" class="form-control send-message" rows="3" style="-moz-min-width: 100%; -ms-min-width: 100%; -o-min-width: 100%; -webkit-min-width: 100%; min-width: 100%" placeholder="@WisR.App_Resources.Resource.WriteAReply..."></textarea>
+                        </div>
+
                         <button class="btn btn-primary" ng-click="AddAnswer()" ng-disabled="timerOverflow || answerChoosen == undefined||anonymousUser" title="{{{true: '@WisR.App_Resources.Resource.LoginToEnable', false: ''}[anonymousUser]}}" style="pointer-events: auto;">@WisR.App_Resources.Resource.Submit</button><button style="float: right" class="btn btn-primary" ng-click="ToggleShowQuestionTables()">@WisR.App_Resources.Resource.BackToQuestions</button>
                     </form>
-                    <label ng-show="specificAnswer!=null" id="specificAnswerLabel">@WisR.App_Resources.Resource.YouAnswered: {{specificAnswer}}</label>
-                    <label ng-hide="showResults">@WisR.App_Resources.Resource.NoResultsYet</label>
-                    <div id="chartDiv" ng-hide="!showResults">
+                    <div ng-show="showResults">
                         <h3>@WisR.App_Resources.Resource.Results</h3>
-                        <select ng-model="chartType">
-                            <option>Pie</option>
-                            <option>Doughnut</option>
-                            <option>PolarArea</option>
-                        </select>
-                        <canvas id="pie" class="chart chart-base" chart-options="options" chart-type="chartType" chart-legend="true" chart-colors="colors" chart-data="data" chart-labels="labels"></canvas>
                     </div>
+                    <label ng-hide="showResults">@WisR.App_Resources.Resource.NoResultsYet</label>
+                    <div ng-show="SpecificQuestion._t=='TextualQuestion'" class="row" ng-repeat="answer in SpecificQuestion.Result">
+                        <h5 class="media-heading">{{GetUsernameById(answer.UserId)}}</h5>
+                        <small class="col-lg-10">{{answer.Value}}</small>
+                    </div>
+                    <div ng-show="SpecificQuestion._t=='MultipleChoiceQuestion'">
+                        <label ng-show="specificAnswer!=null" id="specificAnswerLabel">@WisR.App_Resources.Resource.YouAnswered: {{specificAnswer}}</label>                    
+                        <div id="chartDiv" ng-hide="!showResults">
+                            <select ng-model="chartType">
+                                <option>Pie</option>
+                                <option>Doughnut</option>
+                                <option>PolarArea</option>
+                            </select>
+                            <canvas id="pie" class="chart chart-base" chart-options="options" chart-type="chartType" chart-legend="true" chart-colors="colors" chart-data="data" chart-labels="labels"></canvas>
+                        </div>
+                    </div>
+
                 </div>
             </div>
             <div ng-hide="chatLoaded" class="container text-center col-md-4">
