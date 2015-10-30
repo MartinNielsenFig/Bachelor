@@ -141,7 +141,7 @@ class RoomTableViewController: UITableViewController {
         var secretInput: UITextField?
         
         let alert = UIAlertController(title: NSLocalizedString("Connect with secret", comment: ""), message: "", preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .Destructive, handler: { (action) -> Void in
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .Cancel, handler: { (action) -> Void in
             //Nothing
         }))
         
@@ -155,6 +155,7 @@ class RoomTableViewController: UITableViewController {
             }
             else {
                 print("secret not found")
+                Toast.showToast(NSLocalizedString("Secret doesn't exist", comment: ""), durationMs: 2000, presenter: self)
             }
         }))
         
@@ -187,7 +188,7 @@ class RoomTableViewController: UITableViewController {
             
             let alert = UIAlertController(title: NSLocalizedString("Enter password", comment: ""), message: NSLocalizedString("The room you selected is password protected. Enter the password for the room.", comment: ""), preferredStyle: .Alert)
             
-            alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .Destructive, handler: { (action) -> Void in
+            alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .Cancel, handler: { (action) -> Void in
                 //Nothing
             }))
             
