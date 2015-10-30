@@ -921,6 +921,19 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
     //#region HelperFunction
     /**
  * @ngdoc method
+ * @name RoomController#modalChanger
+ * @methodOf WisR.controller:RoomController
+ * @description
+ * Helper function to change the state of a modal window
+ * @param {String} id the id of the modal to change
+ * @param {String} state the state we wish to change to
+ */
+    ///Modal state changer
+    $scope.modalChanger = function(id, state) {
+        $("#"+id).modal(state);
+    }
+    /**
+ * @ngdoc method
  * @name RoomController#findWithAttr
  * @methodOf WisR.controller:RoomController
  * @description
@@ -930,11 +943,6 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
  * @param {Value} value the value to check for in the array property
  * @returns {Integer} index The index of the value in the array
  */
-    ///Modal state changer
-    $scope.modalChanger = function(id, state) {
-        $("#"+id).modal(state);
-    }
-
     ///Helper function to find index of object in array
     function findWithAttr(array, attr, value) {
        for (var i = 0; i < array.length; i += 1) {
@@ -1010,7 +1018,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
 * @name RoomController#resizeImg
 * @methodOf WisR.controller:RoomController
 * @description
-* Function to resize image
+* Function to resize image, found at:http://stackoverflow.com/questions/18922880/html5-canvas-resize-downscale-image-high-quality
 * @param {Image} img the img that is to be resized
 * @param {String} maxWidth the max width after resizing
 * @param {String} maxHeight the max height after resizing

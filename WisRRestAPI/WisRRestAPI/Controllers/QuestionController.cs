@@ -21,10 +21,12 @@ namespace WisRRestAPI.Controllers
     //Todo handle errors with Error() class.
     public class QuestionController : Controller
     {
+        private readonly IRoomRepository _rr;
         private readonly IQuestionRepository _qr;
         private readonly IRabbitPublisher _irabbitPublisher;
-        public QuestionController(IQuestionRepository qr, IRabbitPublisher irabbitPublisher)
+        public QuestionController(IQuestionRepository qr, IRabbitPublisher irabbitPublisher, IRoomRepository rr)
         {
+            _rr = rr;
             _qr = qr;
             _irabbitPublisher = irabbitPublisher;
         }
@@ -86,7 +88,10 @@ namespace WisRRestAPI.Controllers
             {
                 return "New question should have id of null";
             }
-            
+            if (!_rr.DoesRoomExist(q.RoomId)) {
+                return "Room doesn't exist;";
+            }
+
             q.Id = ObjectId.GenerateNewId(DateTime.Now).ToString();
 
             q.CreationTimestamp = TimeHelper.timeSinceEpoch();

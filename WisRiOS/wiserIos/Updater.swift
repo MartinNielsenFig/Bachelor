@@ -21,6 +21,10 @@ class Updater: NSObject {
         timer = NSTimer.scheduledTimerWithTimeInterval(secondsDelay, target: self, selector: "execute", userInfo: nil, repeats: true)
     }
     
+    deinit {
+        self.stop()
+    }
+    
     func execute() {
         userFunction!()
     }

@@ -81,6 +81,15 @@ namespace WisR.App_Resources {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
+        public static string AllowAnonymousHelp {
+            get {
+                return ResourceManager.GetString("AllowAnonymousHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
         public static string AllowAnonymousUsers {
             get {
                 return ResourceManager.GetString("AllowAnonymousUsers", resourceCulture);
@@ -342,6 +351,15 @@ namespace WisR.App_Resources {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
+        public static string HasChatHelp {
+            get {
+                return ResourceManager.GetString("HasChatHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
         public static string HostQuestions {
             get {
                 return ResourceManager.GetString("HostQuestions", resourceCulture);
@@ -531,6 +549,15 @@ namespace WisR.App_Resources {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
+        public static string PasswordHelp {
+            get {
+                return ResourceManager.GetString("PasswordHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
         public static string PasswordProtected {
             get {
                 return ResourceManager.GetString("PasswordProtected", resourceCulture);
@@ -594,6 +621,15 @@ namespace WisR.App_Resources {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
+        public static string RadiusHelp {
+            get {
+                return ResourceManager.GetString("RadiusHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
         public static string Remove {
             get {
                 return ResourceManager.GetString("Remove", resourceCulture);
@@ -633,6 +669,15 @@ namespace WisR.App_Resources {
         public static string RoomName {
             get {
                 return ResourceManager.GetString("RoomName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string RoomNameHelp {
+            get {
+                return ResourceManager.GetString("RoomNameHelp", resourceCulture);
             }
         }
         
@@ -711,6 +756,15 @@ namespace WisR.App_Resources {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
+        public static string UniqueSecretHelp {
+            get {
+                return ResourceManager.GetString("UniqueSecretHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
         public static string Update {
             get {
                 return ResourceManager.GetString("Update", resourceCulture);
@@ -747,6 +801,15 @@ namespace WisR.App_Resources {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
+        public static string UseLocationHelp {
+            get {
+                return ResourceManager.GetString("UseLocationHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
         public static string UserQuestions {
             get {
                 return ResourceManager.GetString("UserQuestions", resourceCulture);
@@ -759,6 +822,15 @@ namespace WisR.App_Resources {
         public static string UsersCanAsk {
             get {
                 return ResourceManager.GetString("UsersCanAsk", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string UsersCanAskHelp {
+            get {
+                return ResourceManager.GetString("UsersCanAskHelp", resourceCulture);
             }
         }
         

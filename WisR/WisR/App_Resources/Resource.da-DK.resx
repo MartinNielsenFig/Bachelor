@@ -363,4 +363,28 @@
   <data name="RoomWasDeletedMsg" xml:space="preserve">
     <value>Rummet blev slettet, luk denne for at gå tilbage til forsiden</value>
   </data>
+  <data name="AllowAnonymousHelp" xml:space="preserve">
+    <value>Kryds af hvis du ønsker at brugere der ikke er logget ind skal kunne komme ind i dit rum.</value>
+  </data>
+  <data name="HasChatHelp" xml:space="preserve">
+    <value>Kryds af hvis du ønsker rummet skal have en chat.</value>
+  </data>
+  <data name="PasswordHelp" xml:space="preserve">
+    <value>Kodeord der beskytter mod uønskede bruger(denne er valgfri, udfyld kun hvis du ønsker der skal være et kodeord)</value>
+  </data>
+  <data name="RadiusHelp" xml:space="preserve">
+    <value>Den radius man skal være indenfor for at kunne forbinde til rummet.</value>
+  </data>
+  <data name="RoomNameHelp" xml:space="preserve">
+    <value>Navnet på det rum som du opretter, dette navn bliver vist både i rummet og tabellen over rum</value>
+  </data>
+  <data name="UniqueSecretHelp" xml:space="preserve">
+    <value>Hemmeligheden der unikt skal kunne identificere dit rum, denne hemmelighed kan bruges til at finde rummet, selvom man ikke er i nærheden af rummet</value>
+  </data>
+  <data name="UseLocationHelp" xml:space="preserve">
+    <value>Kryds af hvis du ønsker man skal kunne finde dette rum, hvis man er i nærheden af rummet.(Geografisk)</value>
+  </data>
+  <data name="UsersCanAskHelp" xml:space="preserve">
+    <value>Kryds af hvis du ønsker at brugere kan stille spørgsmål, ellers er det kun muligt for rumejeren at stille spørgsmål</value>
+  </data>
 </root>

@@ -363,4 +363,28 @@
   <data name="RoomWasDeletedMsg" xml:space="preserve">
     <value />
   </data>
+  <data name="AllowAnonymousHelp" xml:space="preserve">
+    <value />
+  </data>
+  <data name="HasChatHelp" xml:space="preserve">
+    <value />
+  </data>
+  <data name="PasswordHelp" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RadiusHelp" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RoomNameHelp" xml:space="preserve">
+    <value />
+  </data>
+  <data name="UniqueSecretHelp" xml:space="preserve">
+    <value />
+  </data>
+  <data name="UseLocationHelp" xml:space="preserve">
+    <value />
+  </data>
+  <data name="UsersCanAskHelp" xml:space="preserve">
+    <value />
+  </data>
 </root>

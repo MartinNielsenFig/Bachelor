@@ -189,7 +189,7 @@
                             <div class="row col-md-12">
                                 <label class="col-md-6">@WisR.App_Resources.Resource.Password:</label> <input name="password" required type="password" class="col-md-6"/>
                             </div>
-                            <p ng-show="showLdapLoginText" class="text-center col-md-12" id="ldapErrorMsg">@WisR.App_Resources.Resource.Authenticating...</p>
+                            <p ng-show="showLdapLoginText" class="text-center text-danger col-md-12" id="ldapErrorMsg">@WisR.App_Resources.Resource.Authenticating...</p>
                             <div class="col-md-12 text-center">
                                 <button id="ModalSubmitButton" type="submit" ng-click="showLdapLoginText=true" class="btn btn-primary">@WisR.App_Resources.Resource.LogIn</button>
                                 <span>

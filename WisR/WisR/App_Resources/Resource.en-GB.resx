@@ -363,4 +363,28 @@
   <data name="RoomWasDeletedMsg" xml:space="preserve">
     <value>Room was deleted, close this to go back</value>
   </data>
+  <data name="AllowAnonymousHelp" xml:space="preserve">
+    <value>Tick off if you want to allow users inside the room, even if they are not logged in</value>
+  </data>
+  <data name="HasChatHelp" xml:space="preserve">
+    <value>Tick off if you want the room to have a chat</value>
+  </data>
+  <data name="PasswordHelp" xml:space="preserve">
+    <value>Password that protects the room against undesired users(this is optional, only fill out if you want a password for the room)</value>
+  </data>
+  <data name="RadiusHelp" xml:space="preserve">
+    <value>The radius for which you want users to be able to find the room</value>
+  </data>
+  <data name="RoomNameHelp" xml:space="preserve">
+    <value>The name of the room that you are creating, this will be shown both inside the room and on the table with rooms</value>
+  </data>
+  <data name="UniqueSecretHelp" xml:space="preserve">
+    <value>The unique secret that uniquely identifies the room, this secret can be used to connect to the room, even if the user is not near the room.</value>
+  </data>
+  <data name="UseLocationHelp" xml:space="preserve">
+    <value>Tick off if you want this room to be found by being nearby(Geographically)</value>
+  </data>
+  <data name="UsersCanAskHelp" xml:space="preserve">
+    <value>Tick off if you want to allow users inside the room to ask questions. If this is not ticked off, it is only the creator of the room who is able to make questions.</value>
+  </data>
 </root>

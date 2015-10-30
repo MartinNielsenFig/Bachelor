@@ -91,29 +91,29 @@
                 <form ng-submit="postRoom()">
 
                     <div class="row">
-                        <label class="col-md-6">@WisR.App_Resources.Resource.RoomName</label>  <input required ng-model="RoomName" type="text" class="form-control col-md-6" />
+                        <label class="col-md-6">@WisR.App_Resources.Resource.RoomName <span title="@WisR.App_Resources.Resource.RoomNameHelp" class="glyphicon glyphicon-question-sign" style="color:#4582ec" aria-hidden="true"/></label>  <input required ng-model="RoomName" type="text" class="form-control col-md-6" />
                     </div>
                     <div class="row">
-                        <label class="col-md-6">@WisR.App_Resources.Resource.UniqueSecret</label> <input required ng-model="UniqueSecret" class="form-control col-md-6" type="text" />
+                        <label class="col-md-6">@WisR.App_Resources.Resource.UniqueSecret <span title="@WisR.App_Resources.Resource.UniqueSecretHelp" class="glyphicon glyphicon-question-sign" style="color:#4582ec" aria-hidden="true" /></label> <input required ng-model="UniqueSecret" class="form-control col-md-6" type="text" />
                     </div>
                     <div class="row">
-                        <label class="col-md-6">@WisR.App_Resources.Resource.Password</label> <input ng-model="Password" class="form-control col-md-6" type="password" />
+                        <label class="col-md-6">@WisR.App_Resources.Resource.Password <span title="@WisR.App_Resources.Resource.PasswordHelp" class="glyphicon glyphicon-question-sign" style="color:#4582ec" aria-hidden="true" /></label> <input ng-model="Password" class="form-control col-md-6" type="password" />
                     </div>
                     <div class="row">
-                        <label class="col-md-6">@WisR.App_Resources.Resource.UseLocation</label> <input ng-model="UseLocation" class="col-md-6" type="checkbox" />
+                        <label class="col-md-6">@WisR.App_Resources.Resource.UseLocation <span title="@WisR.App_Resources.Resource.UseLocationHelp" class="glyphicon glyphicon-question-sign" style="color:#4582ec" aria-hidden="true" /></label> <input ng-model="UseLocation" class="col-md-6" type="checkbox" />
                     </div>
                     <div ng-show="UseLocation" class="row">
-                        <label class="col-md-6">Radius</label> <input ng-model="Radius" class="col-md-6" type="range" max="200" step="75" min="50" />
-                        <div class="col-md-6"></div><p>{{Radius}} Meters</p>
+                        <label class="col-md-6">Radius<span title="@WisR.App_Resources.Resource.RadiusHelp" class="glyphicon glyphicon-question-sign" style="color:#4582ec" aria-hidden="true" /></label> <input ng-model="Radius" class="col-md-6" type="range" max="200" step="75" min="50" />
+                        <div class="col-md-6"></div><p>{{Radius}} @WisR.App_Resources.Resource.Meters</p>
                     </div>
                     <div class="row">
-                        <label class="col-md-6">@WisR.App_Resources.Resource.HasChat</label> <input ng-model="HasChat" class="col-md-6" type="checkbox" />
+                        <label class="col-md-6">@WisR.App_Resources.Resource.HasChat <span title="@WisR.App_Resources.Resource.HasChatHelp" class="glyphicon glyphicon-question-sign" style="color:#4582ec" aria-hidden="true" /></label> <input ng-model="HasChat" class="col-md-6" type="checkbox" />
                     </div>
                     <div class="row">
-                        <label class="col-md-6">@WisR.App_Resources.Resource.AllowAnonymousUsers</label> <input ng-model="AllowAnonymous" class="col-md-6" type="checkbox" />
+                        <label class="col-md-6">@WisR.App_Resources.Resource.AllowAnonymousUsers <span title="@WisR.App_Resources.Resource.AllowAnonymousHelp" class="glyphicon glyphicon-question-sign" style="color:#4582ec" aria-hidden="true" /></label> <input ng-model="AllowAnonymous" class="col-md-6" type="checkbox" />
                     </div>
                     <div class="row">
-                        <label class="col-md-6">@WisR.App_Resources.Resource.CanUsersAsk</label> <input ng-model="UserCanAsk" class="col-md-6" type="checkbox" />
+                        <label class="col-md-6">@WisR.App_Resources.Resource.CanUsersAsk <span title="@WisR.App_Resources.Resource.UsersCanAskHelp" class="glyphicon glyphicon-question-sign" style="color:#4582ec" aria-hidden="true" /></label> <input ng-model="UserCanAsk" class="col-md-6" type="checkbox" />
                     </div>
                     <div class="row text-center">
                         <button id="ModalCreateRoomButton" type="submit" class="btn btn-primary">@WisR.App_Resources.Resource.CreateRoom</button>
@@ -121,7 +121,7 @@
                         <button id="ModalCancelButton" class="btn btn-primary" data-dismiss="modal">@WisR.App_Resources.Resource.Cancel</button>
                     </div>
                 </form>
-                <div ng-model="RoomCreationError"></div>
+                <div class="text-center text-danger">{{RoomCreationError}}</div>
             </div>
 
         </div>
@@ -146,7 +146,7 @@
                                 <button id="DeleteCancelButton" type="button" class="btn btn-primary" data-dismiss="modal">@WisR.App_Resources.Resource.Cancel</button>
                             </span>
                         </div>
-                        <div class="col-md-12 text-center">
+                        <div class="col-md-12 text-center text-danger">
                             {{roomDeleteMessage}}
                         </div>
                     </div>

@@ -204,5 +204,15 @@ namespace WisRRestAPI.Controllers
             }
             return "";
         }
+
+        /// <summary>
+        /// Determine whether a room is present in a given moment. Used to check that you are not inside a room that has been deleted.  
+        /// </summary>
+        /// <param name="roomId">The id of the room to check if exists.</param>
+        /// <returns>Whether or not the room exists.</returns>
+        [HttpPost]
+        public bool RoomExists(string roomId) {
+            return _rr.DoesRoomExist(roomId);
+        }
     }
 }

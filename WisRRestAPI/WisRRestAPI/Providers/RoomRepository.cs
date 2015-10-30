@@ -53,5 +53,9 @@ namespace WisRRestAPI.DomainModel
             var task = _database.GetCollection<Room>("room").FindOneAndReplaceAsync(x => x.Id == id, item);
             return task;
         }
+
+        public bool DoesRoomExist(string id) {
+            return _database.GetCollection<Room>("room").Find(x => x.Id == id).ToListAsync().Result.Count == 1;
+        }
     }
 }
