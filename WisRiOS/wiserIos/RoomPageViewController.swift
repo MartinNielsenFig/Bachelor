@@ -16,7 +16,7 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     //Gets instantiated by previous caller
     var room: Room!
     var pageViewController: UIPageViewController!
-    let pageCount = 3
+    var pageCount = 3
     var currentPage = 0
     var checkRoomExistsUpdater: Updater?
     
@@ -25,6 +25,11 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     //MARK: Lifecycle
     override func viewDidLoad() {
         print("RoomPageViewController instantiated with roomId \(room._id)")
+        
+        //Disable chat?
+        if !room.HasChat! {
+            pageCount = 2
+        }
         
         //Title for users, room owner sees an edit button
         if self.room.CreatedById == CurrentUser.sharedInstance._id {
@@ -40,8 +45,6 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
         } else {
             self.title = room.Name
         }
-        
-        
         
         //Ask button
         //http://stackoverflow.com/questions/18844681/how-to-make-custom-uibarbuttonitem-with-image-and-label
@@ -215,7 +218,7 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
             (viewControllerArray[i] as! QuestionViewController).roomId = self.room._id
             return viewControllerArray[i]
         }
-        else if i == 2 {
+        else if i == 2 && room.HasChat! {
             if viewControllerArray[i] == nil || createNew {
                 viewControllerArray[i] = storyboard?.instantiateViewControllerWithIdentifier("ChatViewController") as! ChatViewController
             }
