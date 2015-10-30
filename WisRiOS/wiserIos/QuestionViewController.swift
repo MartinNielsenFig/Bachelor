@@ -67,7 +67,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                 }
                 
                 let youVoted = NSLocalizedString("You voted", comment: "")
-                Toast.showToast(youVoted + " \(answer.Value)", durationMs: 1000, presenter: self)
+                Toast.showToast(youVoted + " \(answer.Value)", durationMs: 2000, presenter: self)
                 self.highlightSelectedAnswer(index)
             } else {
                 

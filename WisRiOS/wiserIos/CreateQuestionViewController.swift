@@ -112,7 +112,7 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
                     indicator.removeFromSuperview()
                 }
                 
-                Toast.showToast(NSLocalizedString("Question created", comment: ""), durationMs: 1500, presenter: self, imageName: "Checkmark") {
+                Toast.showToast(NSLocalizedString("Question created", comment: ""), durationMs: 2000, presenter: self, imageName: "Checkmark") {
                     self.questionListViewController.fetchQuestions()
                     self.dismiss()
                 }

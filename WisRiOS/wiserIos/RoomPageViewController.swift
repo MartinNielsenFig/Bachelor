@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import JsonSerializerSwift
 
 /// Container for the Room view. This ViewController basically has three sub-viewcontrollers: QuestionViewController, ChatViewController and QuestionListViewController. It enables the user to slide between these three views with a finger-flick. The implementation of this ViewController is influenced by this guide: https://www.veasoftware.com/tutorials/2015/4/2/uipageviewcontroller-in-swift-xcode-62-ios-82-tutorial
 class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
@@ -24,20 +25,30 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     //MARK: Lifecycle
     override func viewDidLoad() {
         print("RoomPageViewController instantiated with roomId \(room._id)")
-        self.title = room.Name
         
+        //Title for users, room owner sees an edit button
+        if self.room.CreatedById == CurrentUser.sharedInstance._id {
+            let editbtnContainer = UIView(frame: CGRectMake(0, 0, 44, 44))
+            editbtnContainer.backgroundColor = UIColor.clearColor()
+            let btn = UIButton(type: .DetailDisclosure)
+            btn.frame = CGRectMake(0, 0, 44, 44)
+            btn.addTarget(self, action: "editRoom", forControlEvents: .TouchUpInside)
+            
+            editbtnContainer.addSubview(btn)
+            self.navigationItem.titleView = editbtnContainer
+            
+        } else {
+            self.title = room.Name
+        }
+        
+        
+        
+        //Ask button
         //http://stackoverflow.com/questions/18844681/how-to-make-custom-uibarbuttonitem-with-image-and-label
         let askQBtn = UIButton(type: .Custom)
         askQBtn.setImage(UIImage(named: "AskQuestion"), forState: .Normal)
         askQBtn.addTarget(self, action: "addQuestion", forControlEvents: .TouchUpInside)
         askQBtn.frame = CGRectMake(0, 0, 22, 22)
-        /*let askQLabel = UILabel(frame: CGRectMake(-10, -10, 50, 20))
-        askQLabel.text = "Ask"
-        askQLabel.font = UIFont(name: "Arial-BoldMT", size: 13)
-        askQLabel.textColor = UIColor(red: 52, green: 152, blue: 219, alpha: 0)
-        askQLabel.textAlignment = .Center
-        askQLabel.backgroundColor = UIColor.clearColor()
-        askQBtn.addSubview(askQLabel)*/
         let askQBarBtn = UIBarButtonItem(customView: askQBtn)
         navigationItem.rightBarButtonItem = askQBarBtn
         
@@ -142,6 +153,44 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     }
     
     //MARK: Utilities
+    
+    func editRoom() {
+        print("edit room called")
+        
+        
+        let message = String(format: NSLocalizedString("Name of room: %@\nSecret of room: %@", comment: ""), self.room.Secret!, self.room.Name!)
+        let alert = UIAlertController(title: NSLocalizedString("Room Information", comment: ""), message: message, preferredStyle: .ActionSheet)
+        
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Ok", comment: ""), style: .Default, handler: { (action) in
+            //do nothing
+        }))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Update Location", comment: ""), style: .Destructive, handler: { (action) in
+            //get location
+            //update the rooms lat long and accuracy
+            
+            self.room.Location.AccuracyMeters = CurrentUser.sharedInstance.location.AccuracyMeters
+            self.room.Location.Latitude = CurrentUser.sharedInstance.location.Latitude
+            self.room.Location.Longitude = CurrentUser.sharedInstance.location.Longitude
+            
+            let location = Coordinate()
+            location.AccuracyMeters = CurrentUser.sharedInstance.location.AccuracyMeters
+            location.Latitude = CurrentUser.sharedInstance.location.Latitude
+            location.Longitude = CurrentUser.sharedInstance.location.Longitude
+            let locationJson = JSONSerializer.toJson(location)
+            
+            let body = "id=\(self.room._id!)&location=\(locationJson)"
+            HttpHandler.requestWithResponse(action: "Room/UpdateLocation", type: "POST", body: body, completionHandler: { (data, response, error) in
+                if data == "" {
+                    Toast.showToast(NSLocalizedString("Location updated", comment: ""), durationMs: 2000, presenter: self)
+                } else {
+                    Toast.showToast(NSLocalizedString("Could not update room location", comment: ""), durationMs: 2000, presenter: self)
+                }
+            })
+        }))
+
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
     /**
     Helper function for UIPageViewControllerDataSource. Returns the ViewController at a specific index. Initiates the roomId parameter.
     - parameter index:	The index of the viewcontroller.
