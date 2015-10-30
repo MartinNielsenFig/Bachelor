@@ -513,12 +513,9 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
         if ($scope.SpecificQuestion != undefined) {
             $scope.timerOverflow = false;
             var nominater = Date.now() - parseInt($scope.SpecificQuestion.CreationTimestamp);
-            console.log(nominater);
             var denominater = parseInt($scope.SpecificQuestion.ExpireTimestamp) - parseInt($scope.SpecificQuestion.CreationTimestamp);
-            console.log(denominater);
             $scope.percentage = (nominater / denominater) * 100;
             var timeLeftInmSec = parseInt($scope.SpecificQuestion.ExpireTimestamp) - Date.now();
-            console.log(timeLeftInmSec);
             var hours = (parseInt(timeLeftInmSec / 3600000) + "").length == 1 ? "0" + parseInt(timeLeftInmSec / 3600000) : parseInt(timeLeftInmSec / 3600000);
             var min = (parseInt((timeLeftInmSec % 3600000) / 60000) + "").length == 1 ? "0" + parseInt((timeLeftInmSec % 3600000) / 60000) : parseInt((timeLeftInmSec % 3600000) / 60000);
             var sec = (parseInt(((timeLeftInmSec % 3600000) % 60000) / 1000) + "").length == 1 ? "0" + parseInt(((timeLeftInmSec % 3600000) % 60000) / 1000) : parseInt(((timeLeftInmSec % 3600000) % 60000) / 1000);
@@ -569,10 +566,10 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
         $http.delete(configs.restHostName + '/Question/DeleteQuestion', { params: {id: questionToDelete._id} }).then(function (response) {
             ///Check for errors on request
             if (response.data.ErrorMessage != undefined) {
-                $scope.questionDeleteMessage = response.data.ErrorMessage;
+               $scope.questionDeleteMessage = response.data.ErrorMessage;
                 return;
             } else {
-                $("#deleteQuestionModal").modal("hide");
+                $scope.modalChanger("deleteQuestionModal", "hide");
             }
         });
     }
@@ -678,12 +675,12 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
         $http.post(configs.restHostName + '/Room/GetById', { id: MyRoomIdFromViewBag }).then(function (response) {
             //Tried moving these since it makes better sense(also easiere to test)
             $scope.getQuestions();
-            getChatMessages();
-            getAllUsers();
+            $scope.getChatMessages();
+            $scope.getAllUsers();
             $scope.specificRoomLoaded = true;
             ///Check for errors on request
             if (response.data.ErrorMessage != undefined) {
-                $("#RoomErrorDiv").html("<h3>" + response.data.ErrorMessage + "</h3>");
+                $scope.RoomErrorDiv = response.data.ErrorMessage;
                 return;
             }
 
@@ -691,20 +688,19 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
             if (userIsNotAnonymous) {
                 if ($scope.currentUser.ConnectedRoomIds != undefined) {
                     if ($scope.CurrentRoom.HasPassword && $scope.currentUser.ConnectedRoomIds.indexOf(MyRoomIdFromViewBag) == -1) {
-                        $('#myModalPassword').modal('show');
+                        $scope.modalChanger("myModalPassword", "show");
                     } else {
                         $scope.rightPassword = true;
                     }
                 } else {
-                    $('#myModalPassword').modal('show');
+                    $scope.modalChanger("myModalPassword", "show");
                 }
             } else {
                 if ($scope.CurrentRoom.AllowAnonymous == false) {
-                    var url = $("#RedirectToHome").val();
-                    $window.location.href = url;
+                    $window.location.href = "/";
                 }
                 else if ($scope.CurrentRoom.HasPassword) {
-                    $('#myModalPassword').modal('show');
+                    $scope.modalChanger("myModalPassword", "show");
                 } else {
                     $scope.rightPassword = true;
                 }
@@ -867,7 +863,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
  * @description
  * Function that fetches all the chatmessages for the room and sets chatLoaded to true so we can update the view accordingly
  */
-    var getChatMessages = function () {
+    $scope.getChatMessages = function () {
         $http.post(configs.restHostName + '/Chat/GetAllByRoomId', { roomId: MyRoomIdFromViewBag }).then(function (response) {
             $scope.ChatMessages = response.data;
             $scope.chatLoaded = true;
@@ -880,7 +876,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
  * @description
  * Function that fetches all users
  */
-    var getAllUsers = function () {
+    $scope.getAllUsers = function () {
         $http.get(configs.restHostName + '/User/GetAll').then(function (result) {
             $scope.ActiveUsers = result.data;
         });
