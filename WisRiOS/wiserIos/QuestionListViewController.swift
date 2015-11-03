@@ -25,6 +25,26 @@ class QuestionListViewController: UITableViewController, Paged {
         }
     }
     
+    //MARK: Lifetime
+    override func viewDidLoad() {
+        
+        print("QuestionListViewController instantiated, roomId: \(self.roomId)")
+        
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl!.addTarget(self, action: "handleRefresh:", forControlEvents: UIControlEvents.ValueChanged)
+        
+        //Load questions for room
+        fetchQuestions(refreshControl)
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        filter(&self.questions)
+        dispatch_async(dispatch_get_main_queue()) {
+            self.tableView.reloadData()
+        }
+        super.viewDidAppear(true)
+    }
+    
     //MARK: Utilities
     /**
     Filters the questions in the room by concatenated up-/downvotes. So that upvotes are positive, and downvotes are negative.
@@ -63,6 +83,12 @@ class QuestionListViewController: UITableViewController, Paged {
     }
     
     func fetchQuestions(refreshControl: UIRefreshControl? = nil) {
+        
+        if let rc = refreshControl {
+            rc.beginRefreshing()
+            self.tableView.setContentOffset(CGPoint(x: 0, y: -rc.frame.size.height), animated: true)
+        }
+        
         //"Swift Trailing Closure" syntax
         let action = "Question/GetQuestionsForRoomWithoutImages?roomId=\(self.roomId!)"
         HttpHandler.requestWithResponse(action: action, type: "GET", body: "") { (data, response, error) -> Void in
@@ -95,31 +121,6 @@ class QuestionListViewController: UITableViewController, Paged {
             }
         }
     }
-    
-    //MARK: Lifetime
-    override func viewDidLoad() {
-        
-        print("QuestionListViewController instantiated, roomId: \(self.roomId)")
-        
-        self.refreshControl = UIRefreshControl()
-        self.refreshControl!.addTarget(self, action: "handleRefresh:", forControlEvents: UIControlEvents.ValueChanged)
-        
-        let loadingQuestion = Question()
-        loadingQuestion.QuestionText = NSLocalizedString("Loading questions...", comment: "")
-        questions += [loadingQuestion]
-        
-        //Load questions for room
-        fetchQuestions()
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        filter(&self.questions)
-        dispatch_async(dispatch_get_main_queue()) {
-            self.tableView.reloadData()
-        }
-        super.viewDidAppear(true)
-    }
-    
     
     //MARK: UIRefreshControl
     func handleRefresh(refreshControl: UIRefreshControl) {

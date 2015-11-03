@@ -88,9 +88,7 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
     override func viewDidAppear(animated: Bool) {
         locationManager.startUpdatingLocation()
         maxPositionUpdatesThisSession = 10
-        
         addLoginLogoutButtons()
-        
         super.viewDidAppear(animated)
     }
     
@@ -112,8 +110,7 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
                     let noRoomsNearby = NSLocalizedString("No rooms nearby", comment: "")
                     noRooms.Name = noRoomsNearby
                     tmpRooms = [noRooms]
-                }
-                else {
+                } else {
                     tmpRooms = filteredRooms
                 }
             } else {
