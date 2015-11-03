@@ -14,6 +14,7 @@ import JsonSerializerSwift
 class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, Paged {
     
     //MARK: Properties
+    
     let pageIndex = 2
     let kbOffset = CGFloat(38)
     let inputAccessoryViewId = 100  //id is given from storyboard
@@ -29,6 +30,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet weak var messageInputStackContainerView: UIView!
     
     //MARK: Actions
+    
     @IBAction func sendPressed(sender: AnyObject) {
         updater?.stop()
         if let text = textMessageInput.text where text.isEmpty {
@@ -61,6 +63,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     //MARK: Lifecycle
+    
     override func viewDidLoad() {
         print("ChatViewController instantiated, roomId: \(self.roomId)")
         textMessageInput.delegate = self
@@ -209,6 +212,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     
     //MARK: UITableViewController
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.messages.count
     }
@@ -231,6 +235,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     
     //MARK: UITextFieldDelegate
+    
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         sendPressed(self)
         return true

@@ -13,6 +13,7 @@ import JsonSerializerSwift
 class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIScrollViewDelegate, Paged {
     
     //MARK: Properties
+    
     let pageIndex = 1
     var roomId: String?
     var firstProgressBarUpdate = true
@@ -33,7 +34,69 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     
     var pickerData = [String]()
     
+    //MARK: Lifecycle
+    
+    override func viewDidLoad() {
+        print("QuestionViewController instantiated, roomId: \(self.roomId)")
+        super.viewDidLoad()
+        
+        imageScrollView.delegate = self
+        imageScrollView.maximumZoomScale = 6
+        imageScrollView.minimumZoomScale = 0.1
+        
+        answerPicker.delegate = self
+        answerPicker.dataSource = self
+        
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        //Show UI
+        if self.question._id == nil {
+            return
+            //todo display something nice to user :-)
+        }
+        
+        //Progress bar
+        updateProgressbar()
+        progressTimerUpdater = Updater(secondsDelay: 0.75, function: {
+            self.updateProgressbar()
+        })
+        
+        //Picker
+        pickerData.removeAll()
+        for r in question.ResponseOptions {
+            pickerData.append(r.Value)
+        }
+        answerPicker.reloadAllComponents()
+        
+        //Text
+        questionText.text = question.QuestionText
+        
+        //Image
+        loadImage()
+        
+        //Answer
+        highlightSelectedAnswer()
+        
+        //Vote btns
+        for v in question.Votes {
+            if v.CreatedById == CurrentUser.sharedInstance._id {
+                updateVoteUI(v.Value == 1)
+                break
+            }
+        }
+        super.viewDidAppear(animated)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        self.progressTimerUpdater?.stop()
+        self.questionImageView.image = nil
+        super.viewWillDisappear(animated)
+    }
+
+    
     //MARK: Actions
+    
     @IBAction func upvoteBtnPressed(sender: AnyObject) {
         vote(true, button: sender as! UIButton)
     }
@@ -43,6 +106,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     
     //MARK: Utilities
+    
     /**
     Sends a response to the Question to the RestAPI. The answer has the users ID to ensure that he can only respond once (handled by RestAPI)
     - parameter sender:	The button pressed
@@ -218,67 +282,8 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         }
     }
     
-    //MARK: Lifecycle
-    override func viewDidLoad() {
-        print("QuestionViewController instantiated, roomId: \(self.roomId)")
-        super.viewDidLoad()
-        
-        imageScrollView.delegate = self
-        imageScrollView.maximumZoomScale = 6
-        imageScrollView.minimumZoomScale = 0.1
-        
-        answerPicker.delegate = self
-        answerPicker.dataSource = self
-        
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        
-        //Show UI
-        if self.question._id == nil {
-            return
-            //todo display something nice to user :-)
-        }
-        
-        //Progress bar
-        updateProgressbar()
-        progressTimerUpdater = Updater(secondsDelay: 0.75, function: {
-            self.updateProgressbar()
-        })
-        
-        //Picker
-        pickerData.removeAll()
-        for r in question.ResponseOptions {
-            pickerData.append(r.Value)
-        }
-        answerPicker.reloadAllComponents()
-        
-        //Text
-        questionText.text = question.QuestionText
-        
-        //Image
-        loadImage()
-        
-        //Answer
-        highlightSelectedAnswer()
-        
-        //Vote btns
-        for v in question.Votes {
-            if v.CreatedById == CurrentUser.sharedInstance._id {
-                updateVoteUI(v.Value == 1)
-                break
-            }
-        }
-        super.viewDidAppear(animated)
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        self.progressTimerUpdater?.stop()
-        self.questionImageView.image = nil
-        super.viewWillDisappear(animated)
-    }
-    
     //MARK: UIPickerViewDelegate
+    
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -301,11 +306,13 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     
     //MARK: UIScrollViewDelegate
+    
     func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
         return questionImageView
     }
     
     //MARK: Navigation
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "ShowResult" {
             let resultViewController = segue.destinationViewController as! ResultViewController

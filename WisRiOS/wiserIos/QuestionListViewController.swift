@@ -13,6 +13,7 @@ import JsonSerializerSwift
 class QuestionListViewController: UITableViewController, Paged {
     
     //MARK: Properties
+    
     let pageIndex = 0
     var roomId: String?
     var questions = [Question]() {
@@ -26,7 +27,8 @@ class QuestionListViewController: UITableViewController, Paged {
     }
     
     
-    //MARK: Lifetime
+    //MARK: Lifecycle
+    
     override func viewDidLoad() {
         
         print("QuestionListViewController instantiated, roomId: \(self.roomId)")
@@ -195,11 +197,13 @@ class QuestionListViewController: UITableViewController, Paged {
     }
     
     //MARK: UIRefreshControl
+    
     func handleRefresh(refreshControl: UIRefreshControl) {
         fetchQuestions(refreshControl, manualRefresh: true)
     }
     
     //MARK: UITableViewController
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }

@@ -11,13 +11,16 @@ import Charts
 
 /// Manages the resultview and uses external charts module https://github.com/danielgindi/ios-charts Based upon http://www.appcoda.com/ios-charts-api-tutorial/
 class ResultViewController: UIViewController {
+    
     //MARK: Properties
+    
     @IBOutlet var pieChartView: PieChartView!
     
     //Instantiated by previous ViewController
     var question: Question!
     
     //MARK: Lifecycle
+    
     override func viewDidLoad() {
         
         pieChartView.descriptionText = ""
@@ -45,6 +48,7 @@ class ResultViewController: UIViewController {
     }
     
     //MARK: Utilities
+    
     func updateChart(dataPoints: [String], values: [Double]) {
         var dataEntries = [BarChartDataEntry]()
         for i in 0..<dataPoints.count {

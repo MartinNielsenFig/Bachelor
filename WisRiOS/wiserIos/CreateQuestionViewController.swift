@@ -13,6 +13,7 @@ import JsonSerializerSwift
 class CreateQuestionViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
     
     //MARK: Properties
+    
     //Gets instantiated by RoomPageViewController in prepareForSegue
     var room: Room!
     var questionListViewController: QuestionListViewController!
@@ -43,6 +44,7 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
     var oldQuestion: Question?
     
     //MARK: Lifecycle
+    
     override func viewDidLoad() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "addQuestion")
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "dismiss")
@@ -169,6 +171,7 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
     }
     
     //MARK: UITableViewController
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 2
     }
@@ -302,6 +305,7 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
     }
     
     //MARK: UIImagePickerControllerDelegate
+    
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         dismissViewControllerAnimated(true, completion: nil)
     }
@@ -315,6 +319,7 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
     }
     
     //MARK: UITextFieldDelegate
+    
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         print("returning form textfield add choice")
         addResponseOption()

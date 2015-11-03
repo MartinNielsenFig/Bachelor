@@ -13,6 +13,7 @@ import JsonSerializerSwift
 class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     
     //MARK: Properties
+    
     //Gets instantiated by previous caller
     var room: Room!
     var pageViewController: UIPageViewController!
@@ -23,6 +24,7 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     var viewControllerArray = [UIViewController?](count: 3, repeatedValue: nil)
     
     //MARK: Lifecycle
+    
     override func viewDidLoad() {
         print("RoomPageViewController instantiated with roomId \(room._id)")
         
@@ -99,6 +101,7 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     }
     
     //MARK: Rotation
+    
     override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation) {
         makeRoomForNavigationBar(orientationIsLandscape: fromInterfaceOrientation.isLandscape)
     }
@@ -246,12 +249,12 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     }
     
     //MARK: UIPageViewControllerDataSource
+    
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
         if let pagedVC = viewController as? Paged {
             var index = pagedVC.pageIndex
             return self.viewControllerAtIndex(--index, createNew: false)
-        }
-        else {
+        } else {
             return nil
         }
     }
@@ -260,8 +263,7 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
         if let pagedVC = viewController as? Paged {
             var index = pagedVC.pageIndex
             return self.viewControllerAtIndex(++index, createNew: false)
-        }
-        else {
+        } else {
             return nil
         }
     }

@@ -14,6 +14,7 @@ import JsonSerializerSwift
 class CreateRoomViewController: UITableViewController {
     
     //MARK: Properties
+    
     var roomNameInputCell: TextInputCell?
     var roomSecretInputCell: TextInputCell?
     var pwSwitchCell: BooleanInputCell?
@@ -30,6 +31,7 @@ class CreateRoomViewController: UITableViewController {
     let onDefault = true
     
     //MARK: Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -39,6 +41,7 @@ class CreateRoomViewController: UITableViewController {
     }
     
     //MARK: Tableview
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
@@ -232,6 +235,7 @@ class CreateRoomViewController: UITableViewController {
     }
     
     //MARK: Navigation
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "RoomCreated" {
             let roomPageViewController = segue.destinationViewController as! RoomPageViewController
