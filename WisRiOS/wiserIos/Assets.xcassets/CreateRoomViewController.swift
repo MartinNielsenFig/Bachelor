@@ -34,6 +34,8 @@ class CreateRoomViewController: UITableViewController {
         super.viewDidLoad()
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addRoomButtonPressed:")
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "dismiss")
+        
     }
     
     //MARK: Tableview
@@ -72,6 +74,7 @@ class CreateRoomViewController: UITableViewController {
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! BooleanInputCell
             
             cell.label.text = NSLocalizedString("Enable password", comment: "")
+            cell.uiSwitch.on = false
             pwSwitchCell = cell
             
             //Save as field and add a delegate function to this viewcontroller with name enablePwSwitchChanged
@@ -144,6 +147,11 @@ class CreateRoomViewController: UITableViewController {
     }
     
     //MARK: Utilities
+    
+    func dismiss() {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
     func enablePwSwitchChanged(uiSwitch: UISwitch) {
         pwInputCell?.inputField.enabled = uiSwitch.on
         pwLabel?.enabled = uiSwitch.on

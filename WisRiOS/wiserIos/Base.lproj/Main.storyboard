@@ -60,7 +60,7 @@
                     <connections>
                         <outlet property="mapView" destination="1Bg-Rj-sGb" id="NyD-qT-gBd"/>
                         <segue destination="hcQ-8x-btj" kind="presentation" identifier="Login" id="lPv-hn-iRa"/>
-                        <segue destination="4Nu-Oe-NI9" kind="show" identifier="CreateRoom" id="qrw-ga-YxV"/>
+                        <segue destination="fHx-sM-p4l" kind="presentation" identifier="CreateRoom" id="qrw-ga-YxV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -285,7 +285,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7vm-I6-Bgi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4576" y="-841"/>
+            <point key="canvasLocation" x="5388" y="-841"/>
         </scene>
         <!--Create Question-->
         <scene sceneID="t8G-ob-Dw6">
@@ -497,7 +497,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8vI-dz-Z8B" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3934" y="-841"/>
+            <point key="canvasLocation" x="4746" y="-841"/>
         </scene>
         <!--Result-->
         <scene sceneID="6f4-NU-xUV">
@@ -870,13 +870,14 @@
                             <outlet property="delegate" destination="4Nu-Oe-NI9" id="E5Q-Nd-Xdf"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" id="sD6-pQ-RYT"/>
                     <connections>
                         <segue destination="FJI-Ne-eCo" kind="show" identifier="RoomCreated" id="AfI-hH-bll"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ON3-ey-VAx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2456" y="-841"/>
+            <point key="canvasLocation" x="3268" y="-841"/>
         </scene>
         <!--RoomList-->
         <scene sceneID="DFv-wp-ugX">
@@ -968,7 +969,26 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="glp-rQ-kjA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3122" y="-841"/>
+            <point key="canvasLocation" x="3934" y="-841"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="suo-gX-X2W">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="fHx-sM-p4l" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="U4m-ta-Pe2">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="4Nu-Oe-NI9" kind="relationship" relationship="rootViewController" id="ZyR-d4-VeI"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Aci-fg-cJA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2456" y="-841"/>
         </scene>
     </scenes>
     <resources>

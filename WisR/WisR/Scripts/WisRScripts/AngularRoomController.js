@@ -436,6 +436,8 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
       * Function for answering a question. Takes the answerchosen and the userId and sends it to the rest-api for validation and persisting
       */
     $scope.AddAnswer = function () {
+        if ($window.userId == "NoUser")
+            return;
         ///Use response to send to REST API string response
         var Obj = {Value:$scope.answerChoosen.Value,UserId:$window.userId}
         $http.post(configs.restHostName + '/Question/AddQuestionResponse', {response:JSON.stringify(Obj), questionId:$scope.SpecificQuestion._id});
@@ -483,12 +485,15 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
         $scope.specificImageLoaded = false;
         $scope.SpecificQuestion = question;
         $scope.specificAnswer = $scope.getSpecificAnswer(question);
+        $("#answerTextarea").val($scope.specificAnswer);
         ///Get percentage once and start timer to fire once every second
         $scope.getPercentage();
         $scope.progressCancel = $interval($scope.getPercentage, 1000);
         ///Start getting the image for the specific question
         $http.get(configs.restHostName + '/Question/GetImageByQuestionId?questionId=' + question._id).then(function (response) {
             if (response.data === "") {
+                //set image to noImage
+                $scope.questionImage = configs.noImgBase64;
                 $scope.SpecificQuestion.Img = configs.noImgBase64;
                 $("#specificQuestionImage").prop('title', Resources.NoPictureText);
                 $scope.NoPicture = true;
