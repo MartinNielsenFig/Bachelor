@@ -32,7 +32,8 @@ module.exports = function(config) {
       'WisR/Scripts/WisRScripts/AngularModule.js',
       'WisR/Scripts/WisRScripts/**.js',
       'WisR.Tests/Scripts/Test/AngularControllerTest.js',
-      'WisR.Tests/Scripts/Test/SignalRTests.js'
+      'WisR.Tests/Scripts/Test/SignalRTests.js',
+      'WisR.Tests/Scripts/Test/FilterTest.js'
 
     ],
 

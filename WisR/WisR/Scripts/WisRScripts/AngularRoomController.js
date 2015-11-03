@@ -825,7 +825,8 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
     $scope.validatePassword = function () {
         //Check if the inputted password with hash is the same as the rooms password
         if (CryptoJS.SHA512($scope.inputPassword).toString() == $scope.CurrentRoom.EncryptedPassword) {
-            $('#myModalPassword').modal('hide');
+            $scope.modalChanger("myModalPassword", "hide");
+            
             $scope.rightPassword = true;
             if ($scope.currentUser.ConnectedRoomIds != undefined) {
                 $scope.currentUser.ConnectedRoomIds.push(MyRoomIdFromViewBag);
@@ -855,7 +856,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
                 });
             }
         } else {
-            $scope.passwordMessage = Resources.IncorrectPassword;
+            $scope.passwordMessage = window.Resources.IncorrectPassword;
         }
     }
     //#endregion

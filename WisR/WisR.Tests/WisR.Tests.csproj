@@ -483,6 +483,7 @@
     <Content Include="Scripts\jquery.globalize\cultures\globalize.culture.zu.js" />
     <Content Include="Scripts\jquery.globalize\cultures\globalize.cultures.js" />
     <Content Include="Scripts\jquery.globalize\globalize.js" />
+    <Content Include="Scripts\Test\FilterTest.js" />
     <Content Include="Scripts\Test\LanguageTest.js" />
     <Content Include="Scripts\Test\SignalRTests.js" />
   </ItemGroup>

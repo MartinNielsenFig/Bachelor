@@ -56,6 +56,14 @@ describe("SignalR Tests", function () {
             expect(scope.Rooms[0].Location.Latitude).toBe(0);
             expect(scope.Rooms[0].Location.Longitude).toBe(0);
         });
+
+        it('should delete room with id 1', function() {
+            scope.Rooms = [{ _id: 1 }, { _id: 2 }];
+
+            $.connection.roomHub.client.broadcastDeleteRoom(1);
+
+            expect(scope.Rooms.length).toBe(1);
+        });
     });
 
     describe("Room controller", function () {
