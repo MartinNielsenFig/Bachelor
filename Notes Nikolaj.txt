@@ -7,7 +7,7 @@ CryptoJS
 Scrollglue
 ChartJS og Angular-chart
 RestAPI
-Localization på webapp(ResourceHelper klasse) - Language er ikke oversat
+Localization på webapp(ResourceHelper klasse,herunder også tilføjelse af basecontroller) - "Language" er ikke oversat
 Grunt(herunder ngDocs)
 LDAP login
 Image Resizing
