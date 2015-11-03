@@ -39,13 +39,48 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
         }
     }
     
+    //If this is set, then represent that question in the editing
+    var oldQuestion: Question?
+    
     //MARK: Lifecycle
     override func viewDidLoad() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "addQuestion")
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "dismiss")
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        //Load old question
+        loadOldQuestion(self.oldQuestion)
+    }
+    
     //MARK: Utilities
+    
+    /**
+    Loads an old question to be represented on the GUI if the user wanted to replace and already updated question. This basically allows the user to ask the same question again
+    - parameter oldQuestion:	The old question to be represented. Is injected into CreateQuestionViewController before showing it if it should edit.
+    */
+    func loadOldQuestion(oldQuestion: Question?) {
+        
+        if let oldQuestion = oldQuestion {
+            if oldQuestion.ResponseOptions.count > 0 {
+                self.responseOptions += oldQuestion.ResponseOptions
+            }
+            questionText?.inputField.text = oldQuestion.QuestionText
+            if let b64Img = oldQuestion.Img where !b64Img.isEmpty {
+                let imageData = NSData(base64EncodedString: b64Img, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
+                
+                if imageData != nil {
+                    self.selectedImage = UIImage(data: imageData!)
+                    imageTableCell?.backgroundView = UIImageView(image: selectedImage)
+                    self.photoSelected = true
+                }
+            }
+        }
+    }
+
+
     func dismiss() {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
@@ -88,7 +123,7 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
         q.CreatedById = CurrentUser.sharedInstance._id
         
         //http://stackoverflow.com/questions/11251340/convert-uiimage-to-base64-string-in-objective-c-and-swift
-        if let selectedImage = selectedImage {
+        if let selectedImage = self.selectedImage {
             let imageData = UIImageJPEGRepresentation(selectedImage, 0.8)
             if let imageData = imageData {
                 let b64 = imageData.base64EncodedStringWithOptions(NSDataBase64EncodingOptions.EncodingEndLineWithCarriageReturn)
@@ -113,7 +148,7 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
                 }
                 
                 Toast.showToast(NSLocalizedString("Question created", comment: ""), durationMs: 2000, presenter: self, imageName: "Checkmark") {
-                    self.questionListViewController.fetchQuestions()
+                    self.questionListViewController.fetchQuestions(manualRefresh: false)
                     self.dismiss()
                 }
             }
@@ -237,13 +272,11 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
             
             if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera) {
                 imagePickerController.sourceType = .Camera
-            }
-            else {
+            } else {
                 imagePickerController.sourceType = .PhotoLibrary
             }
             
             let alert = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
-            
             alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .Cancel, handler: { (action) -> Void in
                 //Do nothing
             }))

@@ -179,6 +179,11 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         
         func updateImgGui(b64Img: String) {
             let imageData = NSData(base64EncodedString: b64Img, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
+            
+            if imageData == nil {
+                return
+            }
+            
             let questionImage = UIImage(data: imageData!)
             
             dispatch_async(dispatch_get_main_queue()) {

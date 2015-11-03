@@ -25,6 +25,7 @@ class QuestionListViewController: UITableViewController, Paged {
         }
     }
     
+    
     //MARK: Lifetime
     override func viewDidLoad() {
         
@@ -34,7 +35,7 @@ class QuestionListViewController: UITableViewController, Paged {
         self.refreshControl!.addTarget(self, action: "handleRefresh:", forControlEvents: UIControlEvents.ValueChanged)
         
         //Load questions for room
-        fetchQuestions(refreshControl)
+        fetchQuestions(refreshControl, manualRefresh: false)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -46,6 +47,7 @@ class QuestionListViewController: UITableViewController, Paged {
     }
     
     //MARK: Utilities
+    
     /**
     Filters the questions in the room by concatenated up-/downvotes. So that upvotes are positive, and downvotes are negative.
     - parameter questions:	The questions array to be filtered in-place.
@@ -82,9 +84,9 @@ class QuestionListViewController: UITableViewController, Paged {
         return (noDownvotes, noUpvotes)
     }
     
-    func fetchQuestions(refreshControl: UIRefreshControl? = nil) {
+    func fetchQuestions(refreshControl: UIRefreshControl? = nil, manualRefresh: Bool) {
         
-        if let rc = refreshControl {
+        if let rc = refreshControl where !manualRefresh {
             rc.beginRefreshing()
             self.tableView.setContentOffset(CGPoint(x: 0, y: -rc.frame.size.height), animated: true)
         }
@@ -124,7 +126,7 @@ class QuestionListViewController: UITableViewController, Paged {
     
     //MARK: UIRefreshControl
     func handleRefresh(refreshControl: UIRefreshControl) {
-        fetchQuestions(refreshControl)
+        fetchQuestions(refreshControl, manualRefresh: true)
     }
     
     //MARK: UITableViewController
@@ -149,6 +151,58 @@ class QuestionListViewController: UITableViewController, Paged {
         let cellIdentifier = "QuestionCell"
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! QuestionViewCell
         
+        //Enable long press for editing
+        //Inspired by http://stackoverflow.com/questions/3924446/long-press-on-uitableview
+        if question.CreatedById == CurrentUser.sharedInstance._id {
+            cell.enableLongPressMenu { (gesture) -> Void in
+                
+                if cell.highlighted {
+                    print("long press on cell with text \(cell.label.text)")
+                    
+                    let q = question
+                    
+                    //Build alert
+                    let deleteTitle = NSLocalizedString("Delete question", comment: "")
+                    let deleteMessage = NSLocalizedString("Editing a question will delete currently active question and its responses.", comment: "")
+                    let cancel = NSLocalizedString("Cancel", comment: "")
+                    let deleteAndEdit = NSLocalizedString("Delete current and edit", comment: "")
+                    let couldNotDelete = NSLocalizedString("Could not delete question", comment: "")
+                    let deleted = NSLocalizedString("Question was deleted", comment: "")
+                    
+                    let alert = UIAlertController(title: deleteTitle, message: deleteMessage, preferredStyle: .Alert)
+                    alert.addAction(UIAlertAction(title: cancel, style: .Cancel, handler: { action in
+                        //Do nothing
+                    }))
+                    alert.addAction(UIAlertAction(title: deleteAndEdit, style: .Destructive, handler: { action in
+                        if let parent = (self.parentViewController?.parentViewController as? RoomPageViewController) {
+                            HttpHandler.requestWithResponse(action: "Question/DeleteQuestion?id=\(q._id!)", type: "DELETE", body: "", completionHandler: { (data, response, error) -> Void in
+                                if data.lowercaseString.containsString("was deleted") {
+                                    parent.editQuestion(q)
+                                } else {
+                                    Toast.showToast(couldNotDelete, durationMs: 2000, presenter: self)
+                                }
+                            }) }
+                        else {
+                            print("could not get roompageviewcontroller as parent")
+                        }
+                    }))
+                    alert.addAction(UIAlertAction(title: NSLocalizedString("Delete only", comment: ""), style: .Destructive, handler: { (action)in
+                        HttpHandler.requestWithResponse(action: "Question/DeleteQuestion?id=\(q._id!)", type: "DELETE", body: "", completionHandler: { (data, response, error) -> Void in
+                            if data.lowercaseString.containsString("was deleted") {
+                                Toast.showToast(deleted, durationMs: 2000, presenter: self)
+                            } else {
+                                Toast.showToast(couldNotDelete, durationMs: 2000, presenter: self)
+                            }
+                        })
+                    }))
+                    
+                    self.presentViewController(alert, animated: true, completion: nil)
+                } else {
+                    print("did not long press any cell with question")
+                }
+            }
+        }
+        
         //If question string is too long shorten it
         cell.label.text = StringExtractor.shortenString(question.QuestionText!, maxLength: 30)
         
@@ -164,7 +218,7 @@ class QuestionListViewController: UITableViewController, Paged {
             cell.defaultImage()
         }
         
-        //Todo cleaner?
+        //Mark questions made by room creator
         if let parent = (parentViewController?.parentViewController as? RoomPageViewController) {
             cell.textLabel?.textColor = UIColor.blackColor()
             if question.CreatedById == parent.room?.CreatedById {
@@ -181,5 +235,4 @@ class QuestionListViewController: UITableViewController, Paged {
         questionPage.question = questions[indexPath.row]
         roomPageViewController.pageViewController.setViewControllers([questionPage], direction: .Forward, animated: true, completion: nil)
     }
-    
 }

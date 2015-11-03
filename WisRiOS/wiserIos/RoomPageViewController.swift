@@ -144,6 +144,11 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     func addQuestion() {
         NSLog("add question pressed")
         performSegueWithIdentifier("CreateQuestion", sender: self)
+        
+    }
+    
+    func editQuestion(oldQuestion: Question) {
+        performSegueWithIdentifier("CreateQuestion", sender: oldQuestion)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -151,6 +156,10 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
             let createQuestionViewController = ((segue.destinationViewController as! UINavigationController).topViewController) as! CreateQuestionViewController
             createQuestionViewController.questionListViewController = viewControllerAtIndex(0, createNew: false) as! QuestionListViewController
             createQuestionViewController.room = self.room
+            
+            if let oldQuestion = sender as? Question {
+                createQuestionViewController.oldQuestion = oldQuestion
+            }
         }
         
     }
