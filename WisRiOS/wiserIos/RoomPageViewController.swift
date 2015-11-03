@@ -58,7 +58,7 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
         //Handle exit button on UINavigation Bar
         let exitBtn = UIButton(type: .Custom)
         exitBtn.setImage(UIImage(named: "Exit"), forState: .Normal)
-        exitBtn.addTarget(self, action: "logoutRoom:", forControlEvents: .TouchUpInside)
+        exitBtn.addTarget(self, action: "logoutRoomGracefully", forControlEvents: .TouchUpInside)
         exitBtn.frame = CGRectMake(0, 0, 22, 22)
         let exitRoomBtn = UIBarButtonItem(customView: exitBtn)
         self.navigationItem.leftBarButtonItem = exitRoomBtn
@@ -139,6 +139,13 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
         }))
         
         self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    /**
+     Simply there doesn't seem to be a way to pass arguments to selectors exit button click.
+     */
+    func logoutRoomGracefully() {
+        logoutRoom(false)
     }
     
     func addQuestion() {

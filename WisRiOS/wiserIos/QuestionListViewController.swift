@@ -55,7 +55,7 @@ class QuestionListViewController: UITableViewController, Paged {
     //MARK: Utilities
     
     /**
-    //Inspired by http://stackoverflow.com/questions/3924446/long-press-on-uitableview
+    //Inspired by http://stackoverflow.com/questions/3924446/long-press-on-uitableview handles long press on a Question for either edit or deletion.
     - parameter gesture:	The gesture recognizer
     */
     func handleLongPress(gesture: UILongPressGestureRecognizer) {
