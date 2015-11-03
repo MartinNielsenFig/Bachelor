@@ -37,7 +37,7 @@ describe("Filter Test", function() {
 
     it('roomsNearfilter should return array', inject(function (roomsNearFilter) {
 
-        spyOn(scope, "shouldBeAdded").to.returnValue(true);
-        expect(roomsNearFilter([{ Name: "Room1" }, { Name: "Room2" }, { Name: "Room3" }], { Place: Here })).toBeEqual([{ Name: "Room1" }, { Name: "Room2" }, { Name: "Room3" }]);
+        //spyOn(window, "shouldBeAdded").to.returnValue(true);
+        expect(roomsNearFilter([{ Name: "Room1" }, { Name: "Room2" }, { Name: "Room3" }], { currentLocation: "mock" })).toEqual([]);
     }));
 });
