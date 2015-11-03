@@ -25,6 +25,26 @@ class QuestionListViewController: UITableViewController, Paged {
         }
     }
     
+    //MARK: Lifetime
+    override func viewDidLoad() {
+        
+        print("QuestionListViewController instantiated, roomId: \(self.roomId)")
+        
+        self.refreshControl = UIRefreshControl()
+        self.refreshControl!.addTarget(self, action: "handleRefresh:", forControlEvents: UIControlEvents.ValueChanged)
+        
+        //Load questions for room
+        fetchQuestions(refreshControl)
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        filter(&self.questions)
+        dispatch_async(dispatch_get_main_queue()) {
+            self.tableView.reloadData()
+        }
+        super.viewDidAppear(true)
+    }
+    
     //MARK: Utilities
     /**
     Filters the questions in the room by concatenated up-/downvotes. So that upvotes are positive, and downvotes are negative.
@@ -63,6 +83,12 @@ class QuestionListViewController: UITableViewController, Paged {
     }
     
     func fetchQuestions(refreshControl: UIRefreshControl? = nil) {
+        
+        if let rc = refreshControl {
+            rc.beginRefreshing()
+            self.tableView.setContentOffset(CGPoint(x: 0, y: -rc.frame.size.height), animated: true)
+        }
+        
         //"Swift Trailing Closure" syntax
         let action = "Question/GetQuestionsForRoomWithoutImages?roomId=\(self.roomId!)"
         HttpHandler.requestWithResponse(action: action, type: "GET", body: "") { (data, response, error) -> Void in
@@ -96,31 +122,6 @@ class QuestionListViewController: UITableViewController, Paged {
         }
     }
     
-    //MARK: Lifetime
-    override func viewDidLoad() {
-        
-        print("QuestionListViewController instantiated, roomId: \(self.roomId)")
-        
-        self.refreshControl = UIRefreshControl()
-        self.refreshControl!.addTarget(self, action: "handleRefresh:", forControlEvents: UIControlEvents.ValueChanged)
-        
-        let loadingQuestion = Question()
-        loadingQuestion.QuestionText = NSLocalizedString("Loading questions...", comment: "")
-        questions += [loadingQuestion]
-        
-        //Load questions for room
-        fetchQuestions()
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        filter(&self.questions)
-        dispatch_async(dispatch_get_main_queue()) {
-            self.tableView.reloadData()
-        }
-        super.viewDidAppear(true)
-    }
-    
-    
     //MARK: UIRefreshControl
     func handleRefresh(refreshControl: UIRefreshControl) {
         fetchQuestions(refreshControl)
@@ -136,10 +137,17 @@ class QuestionListViewController: UITableViewController, Paged {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cellIdentifier = "QuestionCell"
-        let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! QuestionViewCell
         
         let question = questions[indexPath.row]
+        
+        if question.CreatedById == "system" {
+            let cell = UITableViewCell(style: .Default, reuseIdentifier: "Default")
+            cell.textLabel?.text = question.QuestionText
+            return cell
+        }
+        
+        let cellIdentifier = "QuestionCell"
+        let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! QuestionViewCell
         
         //If question string is too long shorten it
         cell.label.text = StringExtractor.shortenString(question.QuestionText!, maxLength: 30)
@@ -151,8 +159,7 @@ class QuestionListViewController: UITableViewController, Paged {
         //If already voted
         if let myVote = (question.Votes.filter() { $0.CreatedById == CurrentUser.sharedInstance._id }.first) {
             cell.userHasVoted(up: myVote.Value == 1)
-        }
-        else {
+        } else {
             //This needs to be done because we're using dequeueReusableCellWithIdentifier, else all will be blue after first
             cell.defaultImage()
         }
