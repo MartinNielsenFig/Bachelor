@@ -35,19 +35,37 @@
 "Connect with secret" = "Forbind med hemmelighed";
 
 /* No comment provided by engineer. */
+"Could not delete question" = "Kunne ikke slette spørgsmål";
+
+/* No comment provided by engineer. */
 "Could not load questions" = "Kunne ikke hente spørgsmål";
 
 /* No comment provided by engineer. */
 "Could not load rooms" = "Kunne ikke indlæse rum";
 
 /* No comment provided by engineer. */
-"Do you want to leave current room?" = "Ønsker du at forlade rummet?";
+"Could not update room location" = "Kunne ikke opdatere rummets lokation";
+
+/* No comment provided by engineer. */
+"Delete current and edit" = "Slet nuværende og rediger";
+
+/* No comment provided by engineer. */
+"Delete only" = "Slet kun";
+
+/* No comment provided by engineer. */
+"Delete question" = "Slet spørgsmål";
+
+/* No comment provided by engineer. */
+"Do you want to leave room?" = "Ønsker du at forlade rummet?";
 
 /* No comment provided by engineer. */
 "Duration" = "Varighed";
 
 /* No comment provided by engineer. */
 "Duration in minutes" = "Varighed i minutter";
+
+/* No comment provided by engineer. */
+"Editing a question will delete currently active question and its responses." = "Redigering af spørgsmål vil slette det nuværende aktive spørgsmål og svar";
 
 /* No comment provided by engineer. */
 "Empty values" = "Tomme værdier";
@@ -65,7 +83,7 @@
 "Enable user questions" = "Tillad brugerspørgsmål";
 
 /* No comment provided by engineer. */
-"Enter a number in duration. " = "Skriv et tal i varighed";
+"Enter a number in duration. " = "Skriv et tal i varighed. ";
 
 /* No comment provided by engineer. */
 "Enter password" = "Indtast adgangskode";
@@ -83,13 +101,16 @@
 "Let others join with secret" = "Lad andre forbinde med hemmelighed";
 
 /* No comment provided by engineer. */
-"Loading questions..." = "Indlæser spørgsmål...";
+"Location updated" = "Lokation opdateret";
 
 /* Log in button */
 "Log in" = "Log ind";
 
 /* Log out button */
 "Log out" = "Log ud";
+
+/* No comment provided by engineer. */
+"Logged out" = "Loggede ud";
 
 /* Logout Button */
 "Logout" = "Log ud";
@@ -99,6 +120,11 @@
 
 /* No comment provided by engineer. */
 "Name" = "Navn";
+
+/* No comment provided by engineer. */
+"Name of room: %@
+Secret of room: %@" = "Rummets navn: %1$@
+Rummets hemmelighed: %2$@";
 
 /* No comment provided by engineer. */
 "Name of the room" = "Rummets navn";
@@ -125,6 +151,9 @@
 "Photo Library" = "Foto bibliotek";
 
 /* No comment provided by engineer. */
+"Question created" = "Spørgsmål oprettet";
+
+/* No comment provided by engineer. */
 "Question parameters" = "Spørgsmåls parametre";
 
 /* No comment provided by engineer. */
@@ -134,7 +163,13 @@
 "Question text cannot be empty. " = "Spørgsmålsteksten må ikke være tom. ";
 
 /* No comment provided by engineer. */
+"Question was deleted" = "Spørgsmålet blev slettet";
+
+/* No comment provided by engineer. */
 "Response options" = "Svarmuligheder";
+
+/* No comment provided by engineer. */
+"Room Information" = "Rum informationer";
 
 /* No comment provided by engineer. */
 "Room name cannot be empty. " = "Rummets navn må ikke være tomt. ";
@@ -149,6 +184,9 @@
 "Secret" = "Hemmelighed";
 
 /* No comment provided by engineer. */
+"Secret doesn't exist" = "Hemmelighed eksisterer ikke";
+
+/* No comment provided by engineer. */
 "Secret in use" = "Hemmelighed bruges allerede";
 
 /* No comment provided by engineer. */
@@ -158,14 +196,23 @@
 "Select image or take photo" = "Vælg billede eller tag billede";
 
 /* No comment provided by engineer. */
+"The room was deleted" = "Rummet blev slettet";
+
+/* No comment provided by engineer. */
 "The room you selected is password protected. Enter the password for the room." = "Det valgte rum er beskyttet med adgangskode. Skriv adgangskoden for rummet.";
 
 /* No comment provided by engineer. */
 "Time left: " = "Tid tilbage: ";
 
 /* No comment provided by engineer. */
+"Update Location" = "Opdater Lokation";
+
+/* No comment provided by engineer. */
 "Use Secret" = "Benyt hemmelighed";
 
 /* No comment provided by engineer. */
 "Use location" = "Brug lokation";
+
+/* No comment provided by engineer. */
+"Wrong password" = "Forkert adgangskode";
 

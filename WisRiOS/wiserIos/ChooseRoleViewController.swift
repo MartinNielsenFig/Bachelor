@@ -194,8 +194,8 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
                 NSLog("stopped updating location")
                 locationManager.stopUpdatingLocation()
             }
-            NSLog("\(maxPositionUpdatesThisSession) tries left")
-            NSLog("didUpdateLocations accuracy was \(currentAccuracy)")
+            //NSLog("\(maxPositionUpdatesThisSession) tries left")
+            //NSLog("didUpdateLocations accuracy was \(currentAccuracy)")
             
             if currentAccuracy < bestAccuracy {
                 bestAccuracy = currentAccuracy

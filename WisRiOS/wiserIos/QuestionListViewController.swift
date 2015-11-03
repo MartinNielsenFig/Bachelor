@@ -41,7 +41,7 @@ class QuestionListViewController: UITableViewController, Paged {
         
         //Add gesture recognizer for long press
         let gesture = UILongPressGestureRecognizer(target: self, action: "handleLongPress:")
-        gesture.minimumPressDuration = 2
+        gesture.minimumPressDuration = 0.5
         self.tableView.addGestureRecognizer(gesture)
         
     }
@@ -256,5 +256,6 @@ class QuestionListViewController: UITableViewController, Paged {
         let questionPage = roomPageViewController.viewControllerAtIndex(1, createNew: false)! as! QuestionViewController
         questionPage.question = questions[indexPath.row]
         roomPageViewController.pageViewController.setViewControllers([questionPage], direction: .Forward, animated: true, completion: nil)
+        questionPage.viewDidAppear(true)
     }
 }
