@@ -172,13 +172,13 @@ app.controller("HomeController", [
            * @param {String} link redirect link for the onclick event
            */
         Notification.requestPermission();
-        $scope.spawnNotification=function(theBody, theIcon, theTitle,link) {
+        $scope.spawnNotification = function (theBody, theIcon, theTitle, link) {
             var options = {
                 body: theBody,
                 icon: theIcon
             }
             var n = new Notification(theTitle, options);
-            n.onclick=function() {
+            n.onclick = function () {
                 $window.location.href = link;
                 $window.focus();
             }
@@ -208,8 +208,8 @@ app.controller("HomeController", [
                 $scope.Rooms.push(parsedRoomToAdd);
                 $scope.$apply();
                 //Spawn a notification if this is near the user and the user self didn't create it
-                if (($scope.currentUser==undefined||parsedRoomToAdd.CreatedById!=$scope.currentUser._id) && shouldBeAdded(parsedRoomToAdd,$scope)) {
-                    $scope.spawnNotification(parsedRoomToAdd.Name, null, "WisR", "/Room?RoomId="+parsedRoomToAdd._id);
+                if (($scope.currentUser == undefined || parsedRoomToAdd.CreatedById != $scope.currentUser._id) && shouldBeAdded(parsedRoomToAdd, $scope)) {
+                    $scope.spawnNotification(parsedRoomToAdd.Name, null, "WisR", "/Room?RoomId=" + parsedRoomToAdd._id);
                 }
             };
             /// Create a function that the hub can call to broadcast messages.
@@ -286,9 +286,9 @@ app.controller("HomeController", [
         ///Creates a new room, and connects to it
         $scope.postRoom = function () {
             if ($scope.Password.length !== 0) {
-            $scope.HashedPassword = CryptoJS.SHA512($scope.Password).toString();
+                $scope.HashedPassword = CryptoJS.SHA512($scope.Password).toString();
             }
-            
+
             ///Make get request for json object conversion
             $http.post(configs.baseHostName + '/Home/toJsonRoom',
                 {
@@ -313,7 +313,7 @@ app.controller("HomeController", [
                         then(function (response) {
                             ///Check for error messages
                             if (response.data.ErrorMessage != undefined) {
-                               $scope.RoomCreationError = "Error: " + response.data.ErrorMessage;
+                                $scope.RoomCreationError = "Error: " + response.data.ErrorMessage;
                                 return;
                             }
 
@@ -345,7 +345,7 @@ app.controller("HomeController", [
 
                                     });
                             });
-                            
+
                             $scope.changeViewToRoom(room);
                         });
                 });
@@ -402,7 +402,7 @@ app.controller("HomeController", [
       */
 
         ///Connects to a new room based on it's secret
-        $scope.connectWithUniqueSecret= function () {
+        $scope.connectWithUniqueSecret = function () {
             $http.post(configs.restHostName + '/Room/GetByUniqueSecret', { secret: $scope.uniqueRoomSecret }).then(function (response) {
                 ///TODO verification of response
                 if (response.data._id != undefined) {
@@ -459,7 +459,7 @@ app.controller("HomeController", [
                     $scope.roomDeleteMessage = response.data.ErrorMessage;
                     return;
                 } else {
-                    $("#deleteRoomModal").modal("hide");
+                    $scope.modalChanger("deleteRoomModal","hide");
                 }
             });
         }
@@ -467,6 +467,19 @@ app.controller("HomeController", [
         //#endregion
 
         //#region Helper Functions
+        /**
+        * @ngdoc method
+        * @name RoomController#modalChanger
+        * @methodOf WisR.controller:RoomController
+        * @description
+        * Helper function to change the state of a modal window
+        * @param {String} id the id of the modal to change
+        * @param {String} state the state we wish to change to
+        */
+        ///Modal state changer
+        $scope.modalChanger = function (id, state) {
+            $("#" + id).modal(state);
+        }
         /**
        * @ngdoc method
        * @name HomeController#toggleDropdown
@@ -491,7 +504,7 @@ app.controller("HomeController", [
        */
         $scope.toggleModalWithRoom = function (modal, room) {
             $scope.SpecificRoom = room;
-            $(modal).modal('toggle');        
+            $(modal).modal('toggle');
         }
 
         /**

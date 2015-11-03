@@ -42,7 +42,7 @@ describe("English Test", function () {
             httpBackend.when('POST', 'http://localhost:7331/Home/toJsonUser').respond({});
             httpBackend.when('POST', 'http://localhost:1337/User/UpdateUser').respond({});
             httpBackend.when('POST', 'http://localhost:1337/User/GetById').respond({});
-
+         
             //Setup for currentUser
             scope.currentUser = { ConnectedRoomIds: ["12312312"] }
 
@@ -156,6 +156,28 @@ describe("English Test", function () {
 
             httpBackend.flush();
         });
+
+        it('should call /Room/DeleteRoom', function () {
+            httpBackend.when('DELETE', 'http://localhost:1337/Room/DeleteRoom?id=1').respond({});
+            httpBackend.expectDELETE('http://localhost:1337/Room/DeleteRoom?id=1');
+
+            spyOn(scope, "modalChanger");
+            scope.deleteRoom({_id: 1});
+
+            httpBackend.flush();
+            expect(scope.modalChanger).toHaveBeenCalled();
+        });
+
+        it('should call /Room/DeleteRoom, and gets error', function () {
+            httpBackend.when('DELETE', 'http://localhost:1337/Room/DeleteRoom?id=1').respond({ ErrorMessage: "Error"});
+            httpBackend.expectDELETE('http://localhost:1337/Room/DeleteRoom?id=1');
+
+            scope.deleteRoom({ _id: 1 });
+
+            httpBackend.flush();
+            expect(scope.roomDeleteMessage).toBe("Error");
+        });
+        
     });
 
     describe("Room controller", function () {
@@ -174,6 +196,10 @@ describe("English Test", function () {
             httpBackend.when('POST', '/Room/toJsonQuestion').respond({});
             httpBackend.when('POST', 'http://localhost:1337/Question/CreateQuestion').respond({});
             httpBackend.when('POST', 'http://localhost:1337/Question/AddQuestionResponse').respond({});
+            httpBackend.when('POST', "http://localhost:1337/Question/AddVote").respond({});
+            httpBackend.when('POST', "http://localhost:7331/Home/toJsonUser").respond({});
+            httpBackend.when('POST', "http://localhost:1337/User/UpdateUser").respond({});
+            httpBackend.when('POST',"http://localhost:1337/Chat/GetAllByRoomId").respond({});
 
             //Setup for currentUser
             scope.currentUser = { ConnectedRoomIds: ["12312312"] }
@@ -542,6 +568,107 @@ describe("English Test", function () {
         it('should return false, because of no user', function () {
             scope.currentUser = undefined;
             expect(scope.hasVoted([{ CreatedById: "Martin", Value: 1 }, { CreatedById: "Nikolaj", Value: 1 }, { CreatedById: "Peter", Value: -1 }], true)).toBe(false);
+
+        });
+
+        it('should return true, because of no user', function () {
+            scope.currentUser = undefined;
+            scope.currentUser = {_id:"Martin"}
+            expect(scope.hasVoted([{ CreatedById: "Martin", Value: 1 }, { CreatedById: "Nikolaj", Value: 1 }, { CreatedById: "Peter", Value: -1 }], true)).toBe(true);
+
+        });
+
+        it('should return false, because of error in value', function () {
+            scope.currentUser = undefined;
+            scope.currentUser = { _id: "Nikolaj" }
+            expect(scope.hasVoted([{ CreatedById: "Martin", Value: 1 }, { CreatedById: "Nikolaj", Value: 0 }, { CreatedById: "Peter", Value: -1 }], true)).toBe(false);
+
+        });
+
+        it('should call /Question/AddVote with upvote', function () {
+            httpBackend.expectPOST("http://localhost:1337/Question/AddVote", { "vote": "{\"Value\":1}", "type": "Multi", "id": 1 });
+
+            scope.SpecificQuestion = { _t: "Multi", _id: 1 };
+
+            scope.Vote("Up");
+
+            httpBackend.flush();
+        });
+
+        it('should call /Question/AddVote with downvote', function () {
+            httpBackend.expectPOST("http://localhost:1337/Question/AddVote", { "vote": "{\"Value\":-1}", "type": "Multi", "id": 1 });
+
+            scope.SpecificQuestion = { _t: "Multi", _id: 1 };
+
+            scope.Vote("Down");
+
+            httpBackend.flush();
+        });
+
+        it('should shown results, and data be equal [4, 15, 1, 1, 4, 5]', function () {
+            scope.SpecificQuestion = { Result: [{ "Value": "4", "UserId": "560e6a12e385c61374a4aa3f" }, { "Value": "1", "UserId": "560e6a12e385c61374a4aa3f" }, { "Value": "1", "UserId": "560e6a12e385c61374a4aa3f" }, { "Value": "2", "UserId": "560e6a12e385c61374a4aa3f" }, { "Value": "3", "UserId": "560e6a12e385c61374a4aa3f" }, { "Value": "4", "UserId": "560e6a12e385c61374a4aa3f" }, { "Value": "4", "UserId": "560e6a12e385c61374a4aa3f" }, { "Value": "4", "UserId": "560e6a12e385c61374a4aa3f" }, { "Value": "5", "UserId": "560e6a12e385c61374a4aa3f" }, { "Value": "5", "UserId": "560e6a12e385c61374a4aa3f" }, { "Value": "5", "UserId": "560e6a12e385c61374a4aa3f" }, { "Value": "5", "UserId": "560e6a12e385c61374a4aa3f" }, { "Value": "6", "UserId": "560e6a12e385c61374a4aa3f" }, { "Value": "6", "UserId": "560e6a12e385c61374a4aa3f" }, { "Value": "6", "UserId": "560e6a12e385c61374a4aa3f" }, { "Value": "1", "UserId": "560e6a12e385c61374a4aa3f" }, { "Value": "1", "UserId": "560e6a12e385c61374a4aa3f" }, { "Value": "1", "UserId": "560e6a12e385c61374a4aa3f" }, { "Value": "1", "UserId": "560e6a12e385c61374a4aa3f" }, { "Value": "1", "UserId": "560e6a12e385c61374a4aa3f" }, { "Value": "1", "UserId": "560e6a12e385c61374a4aa3f" }, { "Value": "6", "UserId": "560e65f116d23914d4b08f74" }, { "Value": "1", "UserId": "560e6a12e385c61374a4aa3f" }, { "Value": "1", "UserId": "560e6a12e385c61374a4aa3f" }, { "Value": "1", "UserId": "560e6a12e385c61374a4aa3f" }, { "Value": "1", "UserId": "560e6a12e385c61374a4aa3f" }, { "Value": "1", "UserId": "560e6a12e385c61374a4aa3f" }, { "Value": "1", "UserId": "560e6a12e385c61374a4aa3f" }, { "Value": "1", "UserId": "560e6a12e385c61374a4aa3f" }, { "Value": "6", "UserId": "560e7203c7f562bd7cadd5f0" }] };
+        
+            scope.createPieChart();
+            expect(scope.data).toEqual([4, 15, 1, 1, 4, 5]);
+            expect(scope.showResults).toBe(true);
+        });
+
+        it('should not shown results', function () {
+            scope.SpecificQuestion = { Result: []};
+
+            scope.createPieChart();
+          
+            expect(scope.showResults).toBe(false);
+        });
+
+        it('should set scope.passwordMessage to "Incorrect password"', function () {
+            scope.CurrentRoom = {EncryptedPassword: CryptoJS.SHA512("Martin").toString()}
+            scope.validatePassword();
+            expect(scope.passwordMessage).toBe("Incorrect password");
+        });
+
+        it('should call "modalChanger"', function () {
+            scope.CurrentRoom = { EncryptedPassword: CryptoJS.SHA512("Martin").toString() }
+            scope.inputPassword = "Martin";
+
+            spyOn(scope, "modalChanger");
+
+            scope.validatePassword();
+            expect(scope.modalChanger).toHaveBeenCalled();
+        });
+
+        it('should call "modalChanger" and call /Home/toJsonUser and /User/UpdateUser', function () {
+            httpBackend.expectPOST("http://localhost:7331/Home/toJsonUser");
+            httpBackend.expectPOST("http://localhost:1337/User/UpdateUser");
+
+            scope.CurrentRoom = { EncryptedPassword: CryptoJS.SHA512("Martin").toString() }
+            scope.inputPassword = "Martin";
+
+            spyOn(scope, "modalChanger");
+
+            scope.validatePassword();
+
+            httpBackend.flush();
+            expect(scope.modalChanger).toHaveBeenCalled();
+        });
+
+        it('should call /Chat/GetAllByRoomId and set chatLoaded to true', function () {
+            httpBackend.expectPOST("http://localhost:1337/Chat/GetAllByRoomId");
+
+            scope.getChatMessages();
+
+            httpBackend.flush();
+            expect(scope.chatLoaded).toBe(true);
+        });
+        it('', function () {
+
+        });
+
+        it('', function () {
+
+        });
+
+        it('', function () {
 
         });
     });
