@@ -55,7 +55,7 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
         let askQBarBtn = UIBarButtonItem(customView: askQBtn)
         navigationItem.rightBarButtonItem = askQBarBtn
         
-        //Handle back button on UINavigation Bar
+        //Handle exit button on UINavigation Bar
         let exitBtn = UIButton(type: .Custom)
         exitBtn.setImage(UIImage(named: "Exit"), forState: .Normal)
         exitBtn.addTarget(self, action: "logoutRoom:", forControlEvents: .TouchUpInside)

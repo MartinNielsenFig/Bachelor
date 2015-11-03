@@ -236,7 +236,6 @@ class CreateRoomViewController: UITableViewController {
         if segue.identifier == "RoomCreated" {
             let roomPageViewController = segue.destinationViewController as! RoomPageViewController
             roomPageViewController.room = self.room
-            //assert(false)   //Fix yo shit dawg
         }
     }
 }
