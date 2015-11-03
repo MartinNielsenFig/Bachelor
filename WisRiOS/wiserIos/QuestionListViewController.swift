@@ -168,32 +168,36 @@ class QuestionListViewController: UITableViewController, Paged {
                     let deleteAndEdit = NSLocalizedString("Delete current and edit", comment: "")
                     let couldNotDelete = NSLocalizedString("Could not delete question", comment: "")
                     let deleted = NSLocalizedString("Question was deleted", comment: "")
+                    let deleteOnly = NSLocalizedString("Delete only", comment: "")
+                    
+                    func delete(edit: Bool) {
+                        if let parent = (self.parentViewController?.parentViewController as? RoomPageViewController) {
+                            HttpHandler.requestWithResponse(action: "Question/DeleteQuestion?id=\(q._id!)", type: "DELETE", body: "", completionHandler: { (data, response, error) -> Void in
+                                if data.lowercaseString.containsString("was deleted") {
+                                    if edit {
+                                        parent.editQuestion(q)
+                                    } else {
+                                        Toast.showToast(deleted, durationMs: 2000, presenter: self)
+                                        self.fetchQuestions(manualRefresh: false)
+                                    }
+                                } else {
+                                    Toast.showToast(couldNotDelete, durationMs: 2000, presenter: self)
+                                }
+                            })
+                        } else {
+                            print("could not retrieve parent as roompageviewcontroller")
+                        }
+                    }
                     
                     let alert = UIAlertController(title: deleteTitle, message: deleteMessage, preferredStyle: .Alert)
                     alert.addAction(UIAlertAction(title: cancel, style: .Cancel, handler: { action in
                         //Do nothing
                     }))
                     alert.addAction(UIAlertAction(title: deleteAndEdit, style: .Destructive, handler: { action in
-                        if let parent = (self.parentViewController?.parentViewController as? RoomPageViewController) {
-                            HttpHandler.requestWithResponse(action: "Question/DeleteQuestion?id=\(q._id!)", type: "DELETE", body: "", completionHandler: { (data, response, error) -> Void in
-                                if data.lowercaseString.containsString("was deleted") {
-                                    parent.editQuestion(q)
-                                } else {
-                                    Toast.showToast(couldNotDelete, durationMs: 2000, presenter: self)
-                                }
-                            }) }
-                        else {
-                            print("could not get roompageviewcontroller as parent")
-                        }
+                        delete(true)
                     }))
-                    alert.addAction(UIAlertAction(title: NSLocalizedString("Delete only", comment: ""), style: .Destructive, handler: { (action)in
-                        HttpHandler.requestWithResponse(action: "Question/DeleteQuestion?id=\(q._id!)", type: "DELETE", body: "", completionHandler: { (data, response, error) -> Void in
-                            if data.lowercaseString.containsString("was deleted") {
-                                Toast.showToast(deleted, durationMs: 2000, presenter: self)
-                            } else {
-                                Toast.showToast(couldNotDelete, durationMs: 2000, presenter: self)
-                            }
-                        })
+                    alert.addAction(UIAlertAction(title: deleteOnly, style: .Destructive, handler: { (action) in
+                        delete(false)
                     }))
                     
                     self.presentViewController(alert, animated: true, completion: nil)
