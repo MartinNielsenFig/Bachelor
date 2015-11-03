@@ -36,6 +36,12 @@ class QuestionListViewController: UITableViewController, Paged {
         
         //Load questions for room
         fetchQuestions(refreshControl, manualRefresh: false)
+        
+        //Add gesture recognizer for long press
+        let gesture = UILongPressGestureRecognizer(target: self, action: "handleLongPress:")
+        gesture.minimumPressDuration = 2
+        self.tableView.addGestureRecognizer(gesture)
+        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -49,9 +55,73 @@ class QuestionListViewController: UITableViewController, Paged {
     //MARK: Utilities
     
     /**
-    Filters the questions in the room by concatenated up-/downvotes. So that upvotes are positive, and downvotes are negative.
-    - parameter questions:	The questions array to be filtered in-place.
+    //Inspired by http://stackoverflow.com/questions/3924446/long-press-on-uitableview
+    - parameter gesture:	The gesture recognizer
     */
+    func handleLongPress(gesture: UILongPressGestureRecognizer) {
+        print("long press detected")
+        
+        if gesture.state != .Began {
+            return
+        }
+        
+        let p = gesture.locationInView(self.tableView)
+        let indexPath = tableView.indexPathForRowAtPoint(p)
+        
+        if let indexPath = indexPath, cell = tableView.cellForRowAtIndexPath(indexPath) {
+            
+            let q = questions[indexPath.row]
+            if q.CreatedById != CurrentUser.sharedInstance._id {
+                return
+            }
+            
+            //Build alert
+            let deleteTitle = NSLocalizedString("Delete question", comment: "")
+            let deleteMessage = NSLocalizedString("Editing a question will delete currently active question and its responses.", comment: "")
+            let cancel = NSLocalizedString("Cancel", comment: "")
+            let deleteAndEdit = NSLocalizedString("Delete current and edit", comment: "")
+            let couldNotDelete = NSLocalizedString("Could not delete question", comment: "")
+            let deleted = NSLocalizedString("Question was deleted", comment: "")
+            let deleteOnly = NSLocalizedString("Delete only", comment: "")
+            
+            func delete(edit: Bool) {
+                if let parent = (self.parentViewController?.parentViewController as? RoomPageViewController) {
+                    HttpHandler.requestWithResponse(action: "Question/DeleteQuestion?id=\(q._id!)", type: "DELETE", body: "", completionHandler: { (data, response, error) -> Void in
+                        if data.lowercaseString.containsString("was deleted") {
+                            if edit {
+                                parent.editQuestion(q)
+                            } else {
+                                Toast.showToast(deleted, durationMs: 2000, presenter: self)
+                                self.fetchQuestions(manualRefresh: false)
+                            }
+                        } else {
+                            Toast.showToast(couldNotDelete, durationMs: 2000, presenter: self)
+                        }
+                    })
+                } else {
+                    print("could not retrieve parent as roompageviewcontroller")
+                }
+            }
+            
+            let alert = UIAlertController(title: deleteTitle, message: deleteMessage, preferredStyle: .Alert)
+            alert.addAction(UIAlertAction(title: cancel, style: .Cancel, handler: { action in
+                //Do nothing
+            }))
+            alert.addAction(UIAlertAction(title: deleteAndEdit, style: .Destructive, handler: { action in
+                delete(true)
+            }))
+            alert.addAction(UIAlertAction(title: deleteOnly, style: .Destructive, handler: { (action) in
+                delete(false)
+            }))
+            
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
+    }
+    
+    /**
+     Filters the questions in the room by concatenated up-/downvotes. So that upvotes are positive, and downvotes are negative.
+     - parameter questions:	The questions array to be filtered in-place.
+     */
     func filter(inout questions: [Question]) {
         if questions.count <= 1 {
             return
@@ -150,63 +220,7 @@ class QuestionListViewController: UITableViewController, Paged {
         
         let cellIdentifier = "QuestionCell"
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! QuestionViewCell
-        
-        //Enable long press for editing
-        //Inspired by http://stackoverflow.com/questions/3924446/long-press-on-uitableview
-        if question.CreatedById == CurrentUser.sharedInstance._id {
-            cell.enableLongPressMenu { (gesture) -> Void in
-                
-                if cell.highlighted {
-                    print("long press on cell with text \(cell.label.text)")
-                    
-                    let q = question
-                    
-                    //Build alert
-                    let deleteTitle = NSLocalizedString("Delete question", comment: "")
-                    let deleteMessage = NSLocalizedString("Editing a question will delete currently active question and its responses.", comment: "")
-                    let cancel = NSLocalizedString("Cancel", comment: "")
-                    let deleteAndEdit = NSLocalizedString("Delete current and edit", comment: "")
-                    let couldNotDelete = NSLocalizedString("Could not delete question", comment: "")
-                    let deleted = NSLocalizedString("Question was deleted", comment: "")
-                    let deleteOnly = NSLocalizedString("Delete only", comment: "")
-                    
-                    func delete(edit: Bool) {
-                        if let parent = (self.parentViewController?.parentViewController as? RoomPageViewController) {
-                            HttpHandler.requestWithResponse(action: "Question/DeleteQuestion?id=\(q._id!)", type: "DELETE", body: "", completionHandler: { (data, response, error) -> Void in
-                                if data.lowercaseString.containsString("was deleted") {
-                                    if edit {
-                                        parent.editQuestion(q)
-                                    } else {
-                                        Toast.showToast(deleted, durationMs: 2000, presenter: self)
-                                        self.fetchQuestions(manualRefresh: false)
-                                    }
-                                } else {
-                                    Toast.showToast(couldNotDelete, durationMs: 2000, presenter: self)
-                                }
-                            })
-                        } else {
-                            print("could not retrieve parent as roompageviewcontroller")
-                        }
-                    }
-                    
-                    let alert = UIAlertController(title: deleteTitle, message: deleteMessage, preferredStyle: .Alert)
-                    alert.addAction(UIAlertAction(title: cancel, style: .Cancel, handler: { action in
-                        //Do nothing
-                    }))
-                    alert.addAction(UIAlertAction(title: deleteAndEdit, style: .Destructive, handler: { action in
-                        delete(true)
-                    }))
-                    alert.addAction(UIAlertAction(title: deleteOnly, style: .Destructive, handler: { (action) in
-                        delete(false)
-                    }))
-                    
-                    self.presentViewController(alert, animated: true, completion: nil)
-                } else {
-                    print("did not long press any cell with question")
-                }
-            }
-        }
-        
+
         //If question string is too long shorten it
         cell.label.text = StringExtractor.shortenString(question.QuestionText!, maxLength: 30)
         
