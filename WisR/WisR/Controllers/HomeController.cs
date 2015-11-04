@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
-using System.Web.Script.Serialization;
 using Microsoft.Ajax.Utilities;
 using MongoDB.Bson;
-using MongoDB.Bson.Serialization;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Bson;
 using WisR.DomainModels;
 using WisR.Helper;
 using WisR.Providers;
@@ -18,7 +10,7 @@ namespace WisR.Controllers
 {
     public class HomeController : BaseController
     {
-        private IRabbitSubscriber _rabbitHandler;
+        private readonly IRabbitSubscriber _rabbitHandler;
 
         public HomeController(IRabbitSubscriber rabbitHandler)
         {
@@ -27,25 +19,12 @@ namespace WisR.Controllers
         }
 
         public ActionResult Index()
-        {      
-            return View();
-        }
-
-        public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
         /// <summary>
-        /// Function that takes all room parameters and creates a room based on the parameters
+        ///     Function that takes all room parameters and creates a room based on the parameters
         /// </summary>
         /// <param name="RoomName">Name of the room.</param>
         /// <param name="CreatedBy">The created by.</param>
@@ -62,7 +41,10 @@ namespace WisR.Controllers
         /// <param name="locationAccuracyMeters">The location accuracy meters.</param>
         /// <param name="locationFormattedAddress">The location formatted address.</param>
         /// <returns></returns>
-        public string toJsonRoom(string RoomName, string CreatedBy, int radius, string secret, string password, bool hasChat, bool userCanAsk, bool allowAnonymous, bool useLocation, string locationTimestamp, double locationLatitude, double locationLongitude, int locationAccuracyMeters, string locationFormattedAddress)
+        public string toJsonRoom(string RoomName, string CreatedBy, int radius, string secret, string password,
+            bool hasChat, bool userCanAsk, bool allowAnonymous, bool useLocation, string locationTimestamp,
+            double locationLatitude, double locationLongitude, int locationAccuracyMeters,
+            string locationFormattedAddress)
         {
             var room = new Room();
             room.Name = RoomName;
@@ -85,8 +67,9 @@ namespace WisR.Controllers
             room.UseLocation = useLocation;
             return room.ToJson();
         }
+
         /// <summary>
-        /// To the json user.
+        ///     To the json user.
         /// </summary>
         /// <param name="encryptedPassword">The encrypted password.</param>
         /// <param name="facebookId">The facebook identifier.</param>
@@ -95,29 +78,31 @@ namespace WisR.Controllers
         /// <param name="email">The email.</param>
         /// <param name="connectedRoomIds">The connected room ids.</param>
         /// <returns></returns>
-        public string toJsonUser(string encryptedPassword, string facebookId, string lDAPUserName, string displayName, string email, string connectedRoomIds)
+        public string toJsonUser(string encryptedPassword, string facebookId, string lDAPUserName, string displayName,
+            string email, string connectedRoomIds)
         {
             var user = new User();
 
             var tempList = new List<string>();
 
-            if (connectedRoomIds !=null)
+            if (connectedRoomIds != null)
             {
                 foreach (var id in connectedRoomIds.Split(','))
                 {
                     tempList.Add(id);
                 }
             }
-           
+
             user.FacebookId = facebookId;
             user.LDAPUserName = lDAPUserName;
             user.DisplayName = displayName;
             user.Email = email;
             user.EncryptedPassword = encryptedPassword;
             user.ConnectedRoomIds = tempList;
-           
+
             return user.ToJson();
         }
+
         public ActionResult ChangeCurrentCulture(int id)
         {
             //  

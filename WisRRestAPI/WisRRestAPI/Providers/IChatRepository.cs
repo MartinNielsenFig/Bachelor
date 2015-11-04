@@ -17,5 +17,6 @@ namespace WisRRestAPI.Providers
         Task<DeleteResult> DeleteChatMessage(string id);
         Task<DeleteResult> DeleteAllChatMessageForRoomWithRoomId(string roomId);
         Task<ChatMessage> UpdateChatMessage(string id, ChatMessage item);
+        List<ChatMessage> GetNewerMessages(ChatMessage msg);
     }
 }
