@@ -102,10 +102,12 @@ namespace WisRRestAPI.Controllers
 
             return new Notification(roomId, errorType, errors).ToJson();
         }
-
         [System.Web.Mvc.HttpPost]
         public string GetById(string id)
         {
+            List<ErrorCodes> errors = new List<ErrorCodes>();
+            ErrorTypes errorType = ErrorTypes.Ok;
+
             var item = new Room();
             try
             {
@@ -113,8 +115,8 @@ namespace WisRRestAPI.Controllers
             }
             catch (Exception e)
             {
-                //var err = new Error("Couldn't get room by that id", 100, e.StackTrace);
-                return "";//err.ToJson();
+                errors.Add(ErrorCodes.RoomSecretAlreadyInUse);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
             }
 
             if (item == null)
