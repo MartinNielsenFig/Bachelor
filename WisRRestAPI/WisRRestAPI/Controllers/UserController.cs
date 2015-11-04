@@ -71,7 +71,14 @@ namespace WisRRestAPI.Controllers
             {
                 return "No user with null as id";
             }
-            var item = _ur.GetUser(id).Result;
+
+            User item;
+            try {
+                item = _ur.GetUser(id).Result;
+            }
+            catch (Exception e) {
+                return e.StackTrace;
+            }
             if (item == null)
             {
                 return "Not found";
