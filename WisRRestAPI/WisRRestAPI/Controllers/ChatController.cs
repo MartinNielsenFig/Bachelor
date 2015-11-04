@@ -40,6 +40,28 @@ namespace WisRRestAPI.Controllers
             return ChatMessages.Result.ToJson();
         }
 
+
+        /// <summary>
+        /// Fetches messages for the room specified in the msg parameter that is newer than that message.
+        /// </summary>
+        /// <param name="msg">A JSON representation of the ChatMessage with room id and timestamp</param>
+        /// <returns>A JSON Array with messages newer than parameter message</returns>
+        [System.Web.Mvc.HttpPost]
+        public string GetNewerMessages(string msg) {
+            ChatMessage chatMsg;
+            string errorMsg = String.Empty;
+            try {
+                chatMsg = BsonSerializer.Deserialize<ChatMessage>(msg);
+            } catch (Exception e) {
+                return e.StackTrace;
+            }
+            if (!_rr.DoesRoomExist(chatMsg.RoomId)) {
+                return "Room doesn't exist;";
+            }
+            var newerMessages = _cr.GetNewerMessages(chatMsg);
+            return newerMessages.ToJson();
+        }
+
         [System.Web.Mvc.HttpPost]
         public string CreateChatMessage(string ChatMessage)
         {
