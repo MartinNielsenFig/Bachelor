@@ -106,6 +106,7 @@
     <Compile Include="Controllers\JasmineController.cs" />
     <Compile Include="Controllers\LoginControllerTests.cs" />
     <Compile Include="Controllers\MvcMockHelpers.cs" />
+    <Compile Include="Controllers\RoomControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
