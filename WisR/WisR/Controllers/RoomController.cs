@@ -1,18 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Script.Serialization;
 using Microsoft.Ajax.Utilities;
 using MongoDB.Bson;
-using MongoDB.Bson.IO;
-using MongoDB.Bson.Serialization;
-using Newtonsoft.Json.Linq;
 using WisR.DomainModels;
 using WisR.Providers;
 using WisRRestAPI.DomainModel;
@@ -21,7 +11,7 @@ namespace WisR.Controllers
 {
     public class RoomController : BaseController
     {
-        private IRabbitSubscriber _rabbitSubscriber;
+        private readonly IRabbitSubscriber _rabbitSubscriber;
 
         public RoomController(IRabbitSubscriber rabbitSubscriber)
         {
@@ -29,27 +19,28 @@ namespace WisR.Controllers
             _rabbitSubscriber.subscribe("CreateChatMessage");
             _rabbitSubscriber.subscribe("CreateQuestion");
         }
+
         // GET: Room
         public ActionResult Index(string roomId)
         {
             ViewBag.roomId = roomId;
             return View();
         }
-        public string toJsonQuestion(string CreatedBy, string RoomId, string Image, string QuestionText, string ResponseOptions, string QuestionResult, string CreationTimestamp, string ExpireTimestamp, string QuetionsType, string Votes)
-        {
 
+        public string toJsonQuestion(string CreatedBy, string RoomId, string Image, string QuestionText,
+            string ResponseOptions, string QuestionResult, string CreationTimestamp, string ExpireTimestamp,
+            string QuetionsType, string Votes)
+        {
             var question = new MultipleChoiceQuestion();
 
             var tempList = new List<ResponseOption>();
 
             if (!ResponseOptions.IsNullOrWhiteSpace())
             {
-
                 foreach (var response in ResponseOptions.Split(','))
                 {
-                    tempList.Add(new ResponseOption() { Value = response });
+                    tempList.Add(new ResponseOption {Value = response});
                 }
-
             }
             var tempListResult = new List<Answer>();
             if (!QuestionResult.IsNullOrWhiteSpace())
@@ -57,7 +48,7 @@ namespace WisR.Controllers
                 foreach (var result in QuestionResult.Split(','))
                 {
                     var tempResult = result.Split('-');
-                    tempListResult.Add(new Answer() { Value = tempResult[0], UserId = tempResult[1] });
+                    tempListResult.Add(new Answer {Value = tempResult[0], UserId = tempResult[1]});
                 }
             }
 
@@ -67,7 +58,7 @@ namespace WisR.Controllers
                 foreach (var vote in Votes.Split(','))
                 {
                     var tempVote = vote.Split(':');
-                    tempListVotes.Add(new Vote() { CreatedById = tempVote[1], Value = Convert.ToInt16(tempVote[0])});
+                    tempListVotes.Add(new Vote {CreatedById = tempVote[1], Value = Convert.ToInt16(tempVote[0])});
                 }
             }
 
@@ -81,18 +72,19 @@ namespace WisR.Controllers
             question.Result = tempListResult;
             question.ExpireTimestamp = ExpireTimestamp;
 
-            return question.ToJson(); ;
+            return question.ToJson();
+            ;
         }
+
         public string toJsonChatMessage(string userId, string roomId, string text)
         {
             var chatMessage = new ChatMessage();
             chatMessage.ByUserId = userId;
             chatMessage.RoomId = roomId;
             chatMessage.Value = text;
-            chatMessage.Timestamp = (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalMilliseconds.ToString().Replace(",", ".");
+            chatMessage.Timestamp =
+                (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalMilliseconds.ToString().Replace(",", ".");
             return chatMessage.ToJson();
         }
-        
     }
-
 }

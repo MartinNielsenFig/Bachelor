@@ -1,20 +1,12 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using WisR.Controllers;
-using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Mvc;
 using Moq;
 
 namespace WisR.Controllers.Tests
 {
-    [TestClass()]
+    [TestClass]
     public class LoginControllerTests
     {
-        [TestMethod()]
+        [TestMethod]
         public void LoginWithFacebookShouldRedirect()
         {
             //Arrange
@@ -29,7 +21,7 @@ namespace WisR.Controllers.Tests
             controller.getResponseMock().Verify(m => m.Redirect(It.IsAny<string>()), Times.Exactly(1));
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void LoginCheckShouldRedirectWithoutAccessToken()
         {
             // Arrange
@@ -42,6 +34,5 @@ namespace WisR.Controllers.Tests
             //Assert
             Assert.AreEqual(null, controller.Session["AccessToken"]);
         }
-
     }
 }

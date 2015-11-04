@@ -8,41 +8,12 @@ using Moq;
 
 namespace WisR.Controllers.Tests
 {
-
     //Helper class found at: http://www.hanselman.com/blog/ASPNETMVCSessionAtMix08TDDAndMvcMockHelpers.aspx
     //And at: http://stackoverflow.com/questions/524457/how-do-you-mock-the-session-object-collection-using-moq
     public static class MvcMockHelpers
     {
         public static Mock<HttpContextBase> mockContext { get; set; }
         public static Mock<HttpResponseBase> response { get; set; }
-        /// <summary>
-        /// A Class to allow simulation of SessionObject
-        /// </summary>
-        public class MockHttpSession : HttpSessionStateBase
-        {
-            Dictionary<string, object> m_SessionStorage = new Dictionary<string, object>();
-
-            public override object this[string name]
-            {
-                get
-                {
-                    try
-                    {
-
-                        return m_SessionStorage[name];
-                    }
-                    catch (Exception e)
-                    {
-                        return null;
-                    }
-                }
-                set { m_SessionStorage[name] = value; }
-            }
-
-            public override void RemoveAll()
-            {
-            }
-        }
 
         //In the MVCMockHelpers I modified the FakeHttpContext() method as shown below
         public static HttpContextBase FakeHttpContext()
@@ -63,11 +34,9 @@ namespace WisR.Controllers.Tests
         }
 
 
-
-
         public static HttpContextBase FakeHttpContext(string url)
         {
-            HttpContextBase context = FakeHttpContext();
+            var context = FakeHttpContext();
             context.Request.SetupRequestUrl(url);
             return context;
         }
@@ -76,46 +45,44 @@ namespace WisR.Controllers.Tests
         {
             return mockContext;
         }
+
         public static Mock<HttpResponseBase> getResponseMock(this Controller controller)
         {
             return response;
         }
+
         public static void SetFakeControllerContext(this Controller controller)
         {
             var httpContext = FakeHttpContext();
-            ControllerContext context = new ControllerContext(new RequestContext(httpContext, new RouteData()), controller);
+            var context = new ControllerContext(new RequestContext(httpContext, new RouteData()), controller);
             controller.ControllerContext = context;
         }
 
-        static string GetUrlFileName(string url)
+        private static string GetUrlFileName(string url)
         {
             if (url.Contains("?"))
                 return url.Substring(0, url.IndexOf("?"));
-            else
-                return url;
+            return url;
         }
 
-        static NameValueCollection GetQueryStringParameters(string url)
+        private static NameValueCollection GetQueryStringParameters(string url)
         {
             if (url.Contains("?"))
             {
-                NameValueCollection parameters = new NameValueCollection();
+                var parameters = new NameValueCollection();
 
-                string[] parts = url.Split("?".ToCharArray());
-                string[] keys = parts[1].Split("&".ToCharArray());
+                var parts = url.Split("?".ToCharArray());
+                var keys = parts[1].Split("&".ToCharArray());
 
-                foreach (string key in keys)
+                foreach (var key in keys)
                 {
-                    string[] part = key.Split("=".ToCharArray());
+                    var part = key.Split("=".ToCharArray());
                     parameters.Add(part[0], part[1]);
                 }
 
                 return parameters;
             }
-            else
-            {
-                return null;
-            }
+            return null;
         }
 
         public static void SetHttpMethodResult(this HttpRequestBase request, string httpMethod)
@@ -141,6 +108,34 @@ namespace WisR.Controllers.Tests
                 .Returns(GetUrlFileName(url));
             mock.Expect(req => req.PathInfo)
                 .Returns(string.Empty);
+        }
+
+        /// <summary>
+        ///     A Class to allow simulation of SessionObject
+        /// </summary>
+        public class MockHttpSession : HttpSessionStateBase
+        {
+            private readonly Dictionary<string, object> m_SessionStorage = new Dictionary<string, object>();
+
+            public override object this[string name]
+            {
+                get
+                {
+                    try
+                    {
+                        return m_SessionStorage[name];
+                    }
+                    catch (Exception e)
+                    {
+                        return null;
+                    }
+                }
+                set { m_SessionStorage[name] = value; }
+            }
+
+            public override void RemoveAll()
+            {
+            }
         }
     }
 }

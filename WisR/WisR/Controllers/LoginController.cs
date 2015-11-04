@@ -1,16 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.DirectoryServices;
-using System.DirectoryServices.ActiveDirectory;
-using System.Linq;
-using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Script.Serialization;
 using Facebook;
-using System.DirectoryServices.AccountManagement;
-using WisR.Controllers;
 
 namespace WisR.Controllers
 {
@@ -29,23 +21,21 @@ namespace WisR.Controllers
                 redirecturi = "http://wisr.azurewebsites.net";
             }
         }
+
         public void LoginWithFacebook()
         {
             //Save culture information before deleting session
-            var culture = (int)this.Session["CurrentCulture"];
+            var culture = (int) Session["CurrentCulture"];
             Session.RemoveAll();
-            this.Session["CurrentCulture"] = culture;
+            Session["CurrentCulture"] = culture;
 
             var fb = new FacebookClient();
 
             var loginUrl = fb.GetLoginUrl(new
             {
                 client_id = "389473737909264",
-
                 redirect_uri = redirecturi + "/Login/LoginCheck",
-
                 response_type = "code",
-
                 scope = "email" // Add other permissions as needed)
             });
             Response.Redirect(loginUrl.AbsoluteUri);
@@ -53,22 +43,22 @@ namespace WisR.Controllers
 
         public string LoginWithLDAP(string email, string password)
         {
-            bool authenticated = false;
+            var authenticated = false;
             try
             {
-                DirectoryEntry entry = new DirectoryEntry("LDAP://ldap.iha.dk", email, password);
+                var entry = new DirectoryEntry("LDAP://ldap.iha.dk", email, password);
                 entry.RefreshCache();
-                object nativeObject = entry.NativeObject;
+                var nativeObject = entry.NativeObject;
                 authenticated = true;
             }
             catch (DirectoryServicesCOMException cex)
             {
-                return "a"+cex.ToString();
+                return "a" + cex;
                 //Console.WriteLine(cex);
             }
             catch (Exception ex)
             {
-                return "b"+ex.Message;
+                return "b" + ex.Message;
                 //Console.WriteLine(ex);
             }
             if (authenticated)
@@ -82,18 +72,15 @@ namespace WisR.Controllers
                 return RedirectToAction("Index", "Home");
 
             //Get new access code
-            string accessCode = Request.QueryString["code"].ToString();
+            var accessCode = Request.QueryString["code"];
 
             var fb = new FacebookClient();
 
             dynamic result = fb.Post("oauth/access_token", new
             {
                 client_id = "389473737909264",
-
                 client_secret = "be14709def182d9b073a51301a722c1e",
-
                 redirect_uri = redirecturi + "/Login/LoginCheck",
-
                 code = accessCode
             });
             Session["AccessToken"] = result.access_token;
@@ -116,9 +103,9 @@ namespace WisR.Controllers
 
             //Response.Redirect(logoutUrl.AbsoluteUri);
             //Save culture information before deleting session
-            var culture = (int)this.Session["CurrentCulture"];
+            var culture = (int) Session["CurrentCulture"];
             Session.RemoveAll();
-            this.Session["CurrentCulture"] = culture;
+            Session["CurrentCulture"] = culture;
             //}
 
             return RedirectToAction("Index", "Home");
