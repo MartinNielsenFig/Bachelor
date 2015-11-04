@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http.Cors;
 using System.Web.Mvc;
@@ -34,8 +35,20 @@ namespace WisRRestAPI.Controllers
         [System.Web.Mvc.HttpGet]
         public string GetAll()
         {
-            var Rooms = _rr.GetAllRooms();
-            return Rooms.Result.ToJson();
+            List<ErrorCodes> errors = new List<ErrorCodes>();
+            ErrorTypes errorType = ErrorTypes.Ok;
+            Task<List<Room>> Rooms;
+            try
+            {
+                Rooms = _rr.GetAllRooms();
+            }
+            catch (Exception)
+            {
+                errors.Add(ErrorCodes.CouldNotGetRoomsFromDatabase);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
+            }
+          
+            return new Notification(Rooms.Result.ToJson(), ErrorTypes.Ok, errors).ToJson(); ;
         }
         [System.Web.Mvc.HttpPost]
         public string CreateRoom(string Room)
