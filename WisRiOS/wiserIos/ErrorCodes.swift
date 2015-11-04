@@ -8,10 +8,14 @@
 
 import Foundation
 
-enum ErrorCodes: Int {
+enum ErrorCode: Int {
     case NothingReceived = -100
+    
     case RoomSecretAlreadyInUse = 0
+    case NoRoomWithThatSecret
     case RabbitMqError
     case StringIsNotJsonFormat
     case CouldNotParseJsonToClass
+    case CouldNotAddRoomToDatabase
+    case CouldNotGetRoomsFromDatabase
 }
