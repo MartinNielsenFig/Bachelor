@@ -12,7 +12,7 @@ using Facebook;
 using System.DirectoryServices.AccountManagement;
 using WisR.Controllers;
 
-namespace Web.Controllers
+namespace WisR.Controllers
 {
     public class LoginController : BaseController
     {
