@@ -312,14 +312,13 @@ app.controller("HomeController", [
                     $http.post(configs.restHostName + '/Room/CreateRoom', { Room: JSON.stringify(response.data) }).
                         then(function (response) {
                             ///Check for error messages
-                            if (response.data.ErrorMessage != undefined) {
-                                $scope.RoomCreationError = "Error: " + response.data.ErrorMessage;
+                            if (response.data.ErrorType !== 0) {
+                                $scope.RoomCreationError = $scope.GetErrorOutput(response.data.Errors);
                                 return;
                             }
 
                             //Add roomId to connected rooms for the user
-                            //TODO: error in message, handling?
-                            var room = { _id: response.data.split(";")[0] }
+                            var room = response.data.Data; 
                             $scope.currentUser.ConnectedRoomIds.push(room._id);
 
                             var newIds = "";
@@ -467,6 +466,29 @@ app.controller("HomeController", [
         //#endregion
 
         //#region Helper Functions
+        /**
+       * @ngdoc method
+       * @name RoomController#GetErrorOutput
+       * @methodOf WisR.controller:RoomController
+       * @description
+       * Helper function toget the error outputs
+       * @param {Array<ErrorCode>} array of errors
+       */
+        $scope.GetErrorOutput = function(errors) {
+            var output = Resources.Error + ": ";
+            for (var i = 0; i < errors.length; i++) {
+                var error = "";
+                switch(errors[i]) {
+                    case 0:
+                        error = Resources.RoomSecretAlreadyInUse;
+                        break;
+                    default:
+                        error = "ERROR NOT HANDLED YET";
+                }
+                output = output + error;
+            }
+            return output;
+        }
         /**
         * @ngdoc method
         * @name RoomController#modalChanger

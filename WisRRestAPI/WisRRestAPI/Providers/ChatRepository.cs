@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using WisR.DomainModel;
 using WisRRestAPI.DomainModel;
 using MongoDB.Bson.Serialization;
 

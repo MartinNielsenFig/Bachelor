@@ -387,7 +387,13 @@
   <data name="UsersCanAskHelp" xml:space="preserve">
     <value>Tick off if you want to allow users inside the room to ask questions. If this is not ticked off, it is only the creator of the room who is able to make questions.</value>
   </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
   <data name="ResponseOptionTitle" xml:space="preserve">
     <value>Can't have less than two options for multiple choice</value>
+  </data>
+  <data name="RoomSecretAlreadyInUse" xml:space="preserve">
+    <value>There already exist a room with that secret</value>
   </data>
 </root>

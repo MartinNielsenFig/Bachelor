@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
+using WisR.DomainModel;
 using WisR.DomainModels;
 using WisRRestAPI.DomainModel;
 using WisRRestAPI.Providers;

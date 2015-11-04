@@ -387,7 +387,25 @@
   <data name="UsersCanAskHelp" xml:space="preserve">
     <value />
   </data>
+  <data name="CouldNotAddRoomToDatabase" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CouldNotParseJsonToClass" xml:space="preserve">
+    <value />
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RabbitMqError" xml:space="preserve">
+    <value />
+  </data>
   <data name="ResponseOptionTitle" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RoomSecretAlreadyInUse" xml:space="preserve">
+    <value />
+  </data>
+  <data name="StringIsNotJsonFormat" xml:space="preserve">
     <value />
   </data>
 </root>

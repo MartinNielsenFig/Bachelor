@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MongoDB.Driver;
+using WisR.DomainModel;
 using WisRRestAPI.DomainModel;
 
 namespace WisRRestAPI.Providers

@@ -5,7 +5,7 @@ using System.Web;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace WisRRestAPI.DomainModel
+namespace WisR.DomainModel
 {
     public class ChatMessage
     {

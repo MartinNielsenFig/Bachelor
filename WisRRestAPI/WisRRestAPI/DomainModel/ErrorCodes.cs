@@ -8,8 +8,10 @@ namespace WisRRestAPI {
     //Use describing names.
     public enum ErrorCodes {
         RoomSecretAlreadyInUse,
+        NoRoomWithThatSecret,
         RabbitMqError,
         StringIsNotJsonFormat,
-        CouldNotParseJsonToClass
+        CouldNotParseJsonToClass,
+        CouldNotAddRoomToDatabase
     }
 }

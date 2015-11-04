@@ -5,7 +5,7 @@ using Microsoft.Ajax.Utilities;
 using MongoDB.Bson;
 using WisR.DomainModels;
 using WisR.Providers;
-using WisRRestAPI.DomainModel;
+using WisR.DomainModel;
 
 namespace WisR.Controllers
 {

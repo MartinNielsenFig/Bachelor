@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using WisRRestAPI.DomainModel;
+using WisR.DomainModel;
 
 namespace WisR.DomainModels
 {
