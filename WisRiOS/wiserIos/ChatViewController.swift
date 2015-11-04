@@ -93,7 +93,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         //"Resolving Strong Reference Cycles for Closures" Apple swift documentation
         chatUpdater = Updater(secondsDelay: 2, function: { [unowned self] () in
             self.updateChatPoll()
-        }, debugName: "ChatPoll")
+            }, debugName: "ChatPoll")
         chatUpdater?.execute()
     }
     
@@ -113,7 +113,6 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         let start = NSDate()
         HttpHandler.requestWithResponse(action: "Chat/GetNewerMessages", type: "POST", body: body) { (data, response, error) in
-            
             print("time for \(__FUNCTION__) is \(NSDate().timeIntervalSinceDate(start)) s")
             
             let sticky = self.stickToBottom()
@@ -127,6 +126,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 }
                 
                 dispatch_async(dispatch_get_main_queue()) {
+                    
                     if newMessages {
                         self.tableView.reloadData()
                     }
