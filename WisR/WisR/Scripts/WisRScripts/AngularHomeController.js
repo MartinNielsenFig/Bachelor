@@ -157,6 +157,14 @@ app.controller("HomeController", [
          * @description Property that contains string written in the message div. Used for error messages when connecting to a room
          */
         $scope.Message = null;
+        /**
+                 * @ngdoc property
+                 * @name .#RoomsMessage
+                 * @returns {String} RoomsMessage
+                 * @propertyOf WisR.controller:HomeController
+                 * @description Property that contains string written in the rooms
+                 */
+        $scope.RoomsMessage = Resources.NoRoomsNearby;
         //#endregion
 
         //#region Notification functions
@@ -267,7 +275,11 @@ app.controller("HomeController", [
         */
         $scope.getRooms = function () {
             $http.get(configs.restHostName + '/Room/GetAll').then(function (response) {
-                $scope.Rooms = response.data;
+                if (response.data.ErrorType != 0) {
+                    $scope.RoomsMessage = $scope.GetErrorOutput(response.data.Errors);
+                }
+
+                $scope.Rooms = JSON.parse(response.data.Data);
                 $scope.userId = window.userId;
                 $scope.locationLatitude = $scope.currentLocation.coords.latitude;
                 $scope.locationLongitude = $scope.currentLocation.coords.longitude;

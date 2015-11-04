@@ -21,7 +21,7 @@
                 </div>
                 <div ng-show="roomsLoaded">
                     <div style="height: 300px; text-align: center" ng-hide="(Rooms|roomsNear:this).length>0">
-                        <h3>@WisR.App_Resources.Resource.NoRoomsNearby</h3>
+                        <h3>{{RoomsMessage}}</h3>
                     </div>
                 </div>
                 <div ng-show="(Rooms|roomsNear:this).length>0" style="height: 300px; overflow: auto">
