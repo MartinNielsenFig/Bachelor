@@ -15,6 +15,7 @@ import JsonSerializerSwift
 class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     
     //MARK: Properties
+    
     @IBOutlet var mapView: MKMapView!
     var location = CLLocation()
     var rooms = [Room]()
@@ -36,6 +37,7 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
     }
     
     //MARK: Utility
+    
     func addLoginLogoutButtons() {
         if CurrentUser.sharedInstance.FacebookId != nil {
             let logoutTitle = NSLocalizedString("Log out", comment: "Log out button")
@@ -71,6 +73,7 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
     }
     
     //MARK: Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -140,6 +143,7 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
     }
     
     //MARK: MKMapViewDelegate
+    
     //http://stackoverflow.com/questions/24523702/stuck-on-using-mkpinannotationview-within-swift-and-mapkit/24532551#24532551
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         let reuseId = "pin"
@@ -170,6 +174,7 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
     }
     
     //MARK: CLLocationManagerDelegate
+    
     let locationManager = CLLocationManager()
     var bestAccuracy = Double.init(Int.max)
     var maxPositionUpdatesThisSession = Int()
@@ -189,8 +194,8 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
                 NSLog("stopped updating location")
                 locationManager.stopUpdatingLocation()
             }
-            NSLog("\(maxPositionUpdatesThisSession) tries left")
-            NSLog("didUpdateLocations accuracy was \(currentAccuracy)")
+            //NSLog("\(maxPositionUpdatesThisSession) tries left")
+            //NSLog("didUpdateLocations accuracy was \(currentAccuracy)")
             
             if currentAccuracy < bestAccuracy {
                 bestAccuracy = currentAccuracy
@@ -225,6 +230,7 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
     }
     
     //MARK: Navigation
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "CreateRoom" {
             //let createRoomViewController = segue.destinationViewController as! CreateRoomViewController

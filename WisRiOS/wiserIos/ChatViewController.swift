@@ -14,6 +14,7 @@ import JsonSerializerSwift
 class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, Paged {
     
     //MARK: Properties
+    
     let pageIndex = 2
     let kbOffset = CGFloat(38)
     let inputAccessoryViewId = 100  //id is given from storyboard
@@ -29,6 +30,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet weak var messageInputStackContainerView: UIView!
     
     //MARK: Actions
+    
     @IBAction func sendPressed(sender: AnyObject) {
         updater?.stop()
         if let text = textMessageInput.text where text.isEmpty {
@@ -61,6 +63,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     //MARK: Lifecycle
+    
     override func viewDidLoad() {
         print("ChatViewController instantiated, roomId: \(self.roomId)")
         textMessageInput.delegate = self
@@ -88,29 +91,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "appGoesToBackground:", name: UIApplicationWillResignActiveNotification, object: nil)
         
         updater = Updater(secondsDelay: 1) {
-            let body = "roomId=\(self.roomId!)"
-            HttpHandler.requestWithResponse(action: "Chat/GetAllByRoomId", type: "POST", body: body) { (data, response, error) in
-                let sticky = self.stickToBottom()
-                if let jsonArray = try? JSONSerializer.toArray(data)  {
-                    for chatMsg in jsonArray {
-                        let m = ChatMessage(jsonDictionary: chatMsg as! NSDictionary)
-                        
-                        if Double(m.Timestamp!) > self.oldestMessageEpochByIndex() {
-                            self.messages += [m]
-                        }
-                    }
-                    dispatch_async(dispatch_get_main_queue()) {
-                        self.tableView.reloadData()
-                        if sticky || self.firstLoad {
-                            self.scrollToBottom()
-                            self.firstLoad = false
-                        }
-                    }
-                }
-                else {
-                    print("could not update chat")
-                }
-            }
+            self.updateChatPoll()
         }
         updater?.execute()
     }
@@ -124,6 +105,41 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     //MARK: Utilities
+    
+    func updateChatPoll() {
+        let body = "roomId=\(self.roomId!)"
+        HttpHandler.requestWithResponse(action: "Chat/GetAllByRoomId", type: "POST", body: body) { (data, response, error) in
+            let sticky = self.stickToBottom()
+            var newMessages = false
+            if let jsonArray = try? JSONSerializer.toArray(data)  {
+                
+                for chatMsg in jsonArray {
+                    let m = ChatMessage(jsonDictionary: chatMsg as! NSDictionary)
+                    
+                    if Double(m.Timestamp!) > self.oldestMessageEpochByIndex() {
+                        self.messages += [m]
+                        newMessages = true
+                    }
+                }
+                
+                dispatch_async(dispatch_get_main_queue()) {
+                    
+                    if newMessages {
+                        self.tableView.reloadData()
+                    }
+                    
+                    if sticky || self.firstLoad {
+                        self.scrollToBottom()
+                        self.firstLoad = false
+                    }
+                }
+            }
+            else {
+                print("could not update chat")
+            }
+        }
+
+    }
     
     /**
     Called when user swiped down on messageInputStackContainerView. Used to hide the keyboard.
@@ -209,14 +225,39 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     
     //MARK: UITableViewController
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.messages.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        cell.textLabel?.text = messages[indexPath.row].Value
+        let cell = UITableViewCell(style: .Default, reuseIdentifier: "Cell")
+        
+        cell.textLabel?.numberOfLines = 0
+        let msg = messages[indexPath.row]
+        cell.textLabel?.text = msg.Value
+        
+        cell.layer.cornerRadius = 20
+        cell.layer.borderWidth = 2
+        cell.layer.borderColor = UIColor.whiteColor().CGColor
+        
+        if msg.ByUserId == CurrentUser.sharedInstance._id {
+            cell.backgroundColor = UIColor(red: 35/255, green: 213/255, blue: 22/255, alpha: 1)
+            cell.textLabel?.textAlignment = .Right
+        } else {
+            cell.backgroundColor = UIColor(red: 25/255, green: 140/255, blue: 240/255, alpha: 1)
+            cell.textLabel?.textAlignment = .Left
+        }
+        
         return cell
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return UITableViewAutomaticDimension
+    }
+    
+    func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return UITableViewAutomaticDimension
     }
     
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
@@ -231,6 +272,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     
     //MARK: UITextFieldDelegate
+    
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         sendPressed(self)
         return true

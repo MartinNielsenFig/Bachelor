@@ -13,6 +13,7 @@ import JsonSerializerSwift
 class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     
     //MARK: Properties
+    
     //Gets instantiated by previous caller
     var room: Room!
     var pageViewController: UIPageViewController!
@@ -23,6 +24,7 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     var viewControllerArray = [UIViewController?](count: 3, repeatedValue: nil)
     
     //MARK: Lifecycle
+    
     override func viewDidLoad() {
         print("RoomPageViewController instantiated with roomId \(room._id)")
         
@@ -55,10 +57,10 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
         let askQBarBtn = UIBarButtonItem(customView: askQBtn)
         navigationItem.rightBarButtonItem = askQBarBtn
         
-        //Handle back button on UINavigation Bar
+        //Handle exit button on UINavigation Bar
         let exitBtn = UIButton(type: .Custom)
         exitBtn.setImage(UIImage(named: "Exit"), forState: .Normal)
-        exitBtn.addTarget(self, action: "logoutRoom:", forControlEvents: .TouchUpInside)
+        exitBtn.addTarget(self, action: "logoutRoomGracefully", forControlEvents: .TouchUpInside)
         exitBtn.frame = CGRectMake(0, 0, 22, 22)
         let exitRoomBtn = UIBarButtonItem(customView: exitBtn)
         self.navigationItem.leftBarButtonItem = exitRoomBtn
@@ -81,7 +83,7 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     override func viewDidAppear(animated: Bool) {
         
         //Check if room exists, else log out
-        checkRoomExistsUpdater = Updater(secondsDelay: 5, function: { () -> Void in
+        checkRoomExistsUpdater = Updater(secondsDelay: 30, function: { () -> Void in
             print("updater check room exist")
             let body = "roomId=\(self.room._id!)"
             HttpHandler.requestWithResponse(action: "Room/RoomExists", type: "POST", body: body) { (data, response, error) -> Void in
@@ -99,6 +101,7 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     }
     
     //MARK: Rotation
+    
     override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation) {
         makeRoomForNavigationBar(orientationIsLandscape: fromInterfaceOrientation.isLandscape)
     }
@@ -141,9 +144,21 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
         self.presentViewController(alert, animated: true, completion: nil)
     }
     
+    /**
+     Simply there doesn't seem to be a way to pass arguments to selectors exit button click.
+     */
+    func logoutRoomGracefully() {
+        logoutRoom(false)
+    }
+    
     func addQuestion() {
         NSLog("add question pressed")
         performSegueWithIdentifier("CreateQuestion", sender: self)
+        
+    }
+    
+    func editQuestion(oldQuestion: Question) {
+        performSegueWithIdentifier("CreateQuestion", sender: oldQuestion)
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -151,6 +166,10 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
             let createQuestionViewController = ((segue.destinationViewController as! UINavigationController).topViewController) as! CreateQuestionViewController
             createQuestionViewController.questionListViewController = viewControllerAtIndex(0, createNew: false) as! QuestionListViewController
             createQuestionViewController.room = self.room
+            
+            if let oldQuestion = sender as? Question {
+                createQuestionViewController.oldQuestion = oldQuestion
+            }
         }
         
     }
@@ -230,12 +249,12 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     }
     
     //MARK: UIPageViewControllerDataSource
+    
     func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
         if let pagedVC = viewController as? Paged {
             var index = pagedVC.pageIndex
             return self.viewControllerAtIndex(--index, createNew: false)
-        }
-        else {
+        } else {
             return nil
         }
     }
@@ -244,8 +263,7 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
         if let pagedVC = viewController as? Paged {
             var index = pagedVC.pageIndex
             return self.viewControllerAtIndex(++index, createNew: false)
-        }
-        else {
+        } else {
             return nil
         }
     }

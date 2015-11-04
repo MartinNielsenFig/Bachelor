@@ -14,10 +14,12 @@ import CryptoSwift  //CryptoSwift https://github.com/krzyzanowskim/CryptoSwift a
 class RoomTableViewController: UITableViewController {
     
     //MARK: Properties
+    
     var rooms = [Room]()    //is the one being represented by the tableView
     var allRooms = [Room]()
     
     //MARK: Lifecycle
+    
     override func viewDidLoad() {
         self.refreshControl = UIRefreshControl()
         self.refreshControl!.addTarget(self, action: "handleRefresh:", forControlEvents: UIControlEvents.ValueChanged)
@@ -29,6 +31,7 @@ class RoomTableViewController: UITableViewController {
     }
     
     //MARK: UITableViewController
+    
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         if rooms.count <= 0 {
             return false
@@ -85,11 +88,13 @@ class RoomTableViewController: UITableViewController {
     }
     
     //MARK: UIRefreshControl
+    
     func handleRefresh(refreshControl: UIRefreshControl) {
         fetchRooms(refreshControl)
     }
     
     //MARK: Utilities
+    
     /**
     Removes current loaded rooms both in self.rooms and self.allRooms and loads new rooms from the database.
     - parameter refreshControl:	An optional refreshcontrol indicating loading.
@@ -160,6 +165,7 @@ class RoomTableViewController: UITableViewController {
     }
     
     //MARK: Navigation
+    
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
         var selectedRoom: Room?
         
