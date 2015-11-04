@@ -12,6 +12,7 @@ namespace WisRRestAPI {
         RabbitMqError,
         StringIsNotJsonFormat,
         CouldNotParseJsonToClass,
-        CouldNotAddRoomToDatabase
+        CouldNotAddRoomToDatabase,
+        CouldNotGetRoomsFromDatabase
     }
 }
