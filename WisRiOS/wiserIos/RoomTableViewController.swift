@@ -14,10 +14,12 @@ import CryptoSwift  //CryptoSwift https://github.com/krzyzanowskim/CryptoSwift a
 class RoomTableViewController: UITableViewController {
     
     //MARK: Properties
+    
     var rooms = [Room]()    //is the one being represented by the tableView
     var allRooms = [Room]()
     
     //MARK: Lifecycle
+    
     override func viewDidLoad() {
         self.refreshControl = UIRefreshControl()
         self.refreshControl!.addTarget(self, action: "handleRefresh:", forControlEvents: UIControlEvents.ValueChanged)
@@ -31,37 +33,26 @@ class RoomTableViewController: UITableViewController {
     //MARK: UITableViewController
     
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        if rooms.count > 0 {
-        let roomAtRow = self.rooms[indexPath.row]
-            return roomAtRow.CreatedById == CurrentUser.sharedInstance._id
-        } else {
+        if rooms.count <= 0 {
             return false
         }
+        let roomAtRow = self.rooms[indexPath.row]
+        return roomAtRow.CreatedById == CurrentUser.sharedInstance._id
     }
-    
+
+
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if rooms.count > 0 {
-            let roomId = self.rooms[indexPath.row]._id
-            HttpHandler.requestWithResponse(action: "Room/DeleteRoom?id=\(roomId!)", type: "DELETE", body: "") { (data, response, error) -> Void in
-                if data.containsString("deleted") {
-                    print("Did delete room")
-                    let roomAtRow = self.rooms[indexPath.row]
-                    
-                    var indexInAllRooms = -1
-                    for (index, room) in self.allRooms.enumerate() {
-                        if room._id == roomAtRow._id {
-                            indexInAllRooms = index
-                        }
-                    }
-                    
-                    assert(self.rooms[indexPath.row]._id == self.allRooms[indexInAllRooms]._id)
-                    self.rooms.removeAtIndex(indexPath.row)
-                    self.allRooms.removeAtIndex(indexInAllRooms)
-                    
-                    self.fetchRooms()
-                } else {
-                    print("Could not delete room")
-                }
+        
+        if rooms.count <= 0 {
+            return
+        }
+        let roomId = self.rooms[indexPath.row]._id
+        HttpHandler.requestWithResponse(action: "Room/DeleteRoom?id=\(roomId!)", type: "DELETE", body: "") { (data, response, error) -> Void in
+            if data.containsString("deleted") {
+                print("Did delete room")
+                self.fetchRooms()
+            } else {
+                print("Could not delete room")
             }
         }
     }
@@ -97,6 +88,7 @@ class RoomTableViewController: UITableViewController {
     }
     
     //MARK: UIRefreshControl
+    
     func handleRefresh(refreshControl: UIRefreshControl) {
         fetchRooms(refreshControl)
     }
@@ -104,10 +96,14 @@ class RoomTableViewController: UITableViewController {
     //MARK: Utilities
     
     /**
-    Removes current loaded rooms and loads new rooms from the database
-    - parameter refreshControl:	A refreshcontrol
+    Removes current loaded rooms both in self.rooms and self.allRooms and loads new rooms from the database.
+    - parameter refreshControl:	An optional refreshcontrol indicating loading.
     */
     func fetchRooms(refreshControl: UIRefreshControl? = nil) {
+        if let rc = refreshControl {
+            rc.beginRefreshing()
+            self.tableView.setContentOffset(CGPoint(x: 0, y: -rc.frame.size.height), animated: true)
+        }
         
         let start = NSDate()
         HttpHandler.requestWithResponse(action: "Room/GetAll", type: "GET", body: "") { (data, response, error) in
@@ -152,8 +148,7 @@ class RoomTableViewController: UITableViewController {
                 if self.shouldPerformSegueWithIdentifier("SelectRoom", sender: foundRoom) {
                     self.performSegueWithIdentifier("SelectRoom", sender: foundRoom)
                 }
-            }
-            else {
+            } else {
                 print("secret not found")
                 Toast.showToast(NSLocalizedString("Secret doesn't exist", comment: ""), durationMs: 2000, presenter: self)
             }
@@ -170,6 +165,7 @@ class RoomTableViewController: UITableViewController {
     }
     
     //MARK: Navigation
+    
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
         var selectedRoom: Room?
         
@@ -193,13 +189,13 @@ class RoomTableViewController: UITableViewController {
             }))
             
             alert.addAction(UIAlertAction(title: NSLocalizedString("Connect", comment: ""), style: .Default, handler: { action in
-                //Do some encryption here on user input
                 if let pw = pwTextField!.text, roomEncryptedPw = room.EncryptedPassword where pw.sha512() == roomEncryptedPw {
                     print("CORRECT PASSWORD")
                     self.performSegueWithIdentifier("SelectRoom", sender: room)
                 }
                 else {
                     print("WRONG PASSWORD")
+                    Toast.showToast(NSLocalizedString("Wrong password", comment: ""), durationMs: 2000, presenter: self, imageName: "Lock", callback: nil)
                 }
             }))
             
@@ -210,10 +206,8 @@ class RoomTableViewController: UITableViewController {
             }
             
             self.presentViewController(alert, animated: true, completion: nil)
-            
             return false
         }
-        
         return true
     }
     

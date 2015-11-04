@@ -18,6 +18,8 @@ class QuestionViewCell: UITableViewCell {
     @IBOutlet weak var upvoteCounter: UILabel!
     @IBOutlet weak var upvoteImage: UIImageView!
     
+    var callback: ((UILongPressGestureRecognizer) -> Void)?
+    
     override func awakeFromNib() {
         defaultImage()
         
@@ -31,6 +33,21 @@ class QuestionViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
         
         // Configure the view for the selected state
+    }
+    
+    /**
+     Enables this cell to have long press action. Takes a callback that is called when the long press on this cell is triggered.
+     - parameter callback:	The function to call when this cell is long pressed
+     */
+    func enableLongPressMenu(callback: (UILongPressGestureRecognizer) -> Void) {
+        self.callback = callback
+        let gesture = UILongPressGestureRecognizer(target: self, action: "gestureCall:")
+        gesture.minimumPressDuration = 2
+        self.addGestureRecognizer(gesture)
+    }
+    
+    func gestureCall(gesture: UILongPressGestureRecognizer) {
+        self.callback!(gesture)
     }
     
     func defaultImage() {

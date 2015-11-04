@@ -44,7 +44,24 @@ namespace WisR.Controllers
 
             return View();
         }
-
+        /// <summary>
+        /// Function that takes all room parameters and creates a room based on the parameters
+        /// </summary>
+        /// <param name="RoomName">Name of the room.</param>
+        /// <param name="CreatedBy">The created by.</param>
+        /// <param name="radius">The radius.</param>
+        /// <param name="secret">The secret.</param>
+        /// <param name="password">The password.</param>
+        /// <param name="hasChat">if set to <c>true</c> [has chat].</param>
+        /// <param name="userCanAsk">if set to <c>true</c> [user can ask].</param>
+        /// <param name="allowAnonymous">if set to <c>true</c> [allow anonymous].</param>
+        /// <param name="useLocation">if set to <c>true</c> [use location].</param>
+        /// <param name="locationTimestamp">The location timestamp.</param>
+        /// <param name="locationLatitude">The location latitude.</param>
+        /// <param name="locationLongitude">The location longitude.</param>
+        /// <param name="locationAccuracyMeters">The location accuracy meters.</param>
+        /// <param name="locationFormattedAddress">The location formatted address.</param>
+        /// <returns></returns>
         public string toJsonRoom(string RoomName, string CreatedBy, int radius, string secret, string password, bool hasChat, bool userCanAsk, bool allowAnonymous, bool useLocation, string locationTimestamp, double locationLatitude, double locationLongitude, int locationAccuracyMeters, string locationFormattedAddress)
         {
             var room = new Room();
@@ -68,6 +85,16 @@ namespace WisR.Controllers
             room.UseLocation = useLocation;
             return room.ToJson();
         }
+        /// <summary>
+        /// To the json user.
+        /// </summary>
+        /// <param name="encryptedPassword">The encrypted password.</param>
+        /// <param name="facebookId">The facebook identifier.</param>
+        /// <param name="lDAPUserName">Name of the l dap user.</param>
+        /// <param name="displayName">The display name.</param>
+        /// <param name="email">The email.</param>
+        /// <param name="connectedRoomIds">The connected room ids.</param>
+        /// <returns></returns>
         public string toJsonUser(string encryptedPassword, string facebookId, string lDAPUserName, string displayName, string email, string connectedRoomIds)
         {
             var user = new User();

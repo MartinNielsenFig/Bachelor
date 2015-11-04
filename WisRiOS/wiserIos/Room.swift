@@ -25,7 +25,6 @@ class Room {
     
     convenience init(jsonDictionary: NSDictionary) {
         self.init()
-        
         self._id = jsonDictionary["_id"] as? String
         self.Name = jsonDictionary["Name"] as? String
         self.CreatedById = jsonDictionary["CreatedById"] as? String

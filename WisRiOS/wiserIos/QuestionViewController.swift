@@ -13,6 +13,7 @@ import JsonSerializerSwift
 class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIScrollViewDelegate, Paged {
     
     //MARK: Properties
+    
     let pageIndex = 1
     var roomId: String?
     var firstProgressBarUpdate = true
@@ -33,7 +34,76 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     
     var pickerData = [String]()
     
+    //MARK: Lifecycle
+    
+    override func viewDidLoad() {
+        print("QuestionViewController instantiated, roomId: \(self.roomId)")
+        super.viewDidLoad()
+        
+        imageScrollView.delegate = self
+        imageScrollView.maximumZoomScale = 6
+        imageScrollView.minimumZoomScale = 0.1
+        
+        answerPicker.delegate = self
+        answerPicker.dataSource = self
+        
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        
+        print("QuestionViewController viewDidAppear")
+        
+        //Show UI
+        if self.question._id == nil {
+            return
+            //todo display something nice to user :-)
+        }
+        
+        //Progress bar
+        updateProgressbar()
+        progressTimerUpdater = Updater(secondsDelay: 0.75, function: {
+            self.updateProgressbar()
+        })
+        
+        //Picker
+        pickerData.removeAll()
+        for r in question.ResponseOptions {
+            pickerData.append(r.Value)
+        }
+        answerPicker.reloadAllComponents()
+        
+        //Text
+        questionText.text = question.QuestionText
+        
+        //Image
+        loadImage()
+        
+        //Answer
+        highlightSelectedAnswer()
+        
+        //Vote btns
+        var hasVote = false
+        for v in question.Votes {
+            if v.CreatedById == CurrentUser.sharedInstance._id {
+                hasVote = true
+                updateVoteUI(v.Value == 1)
+                break
+            }
+        }
+        if !hasVote {
+            resetVoteUI()
+        }
+        super.viewDidAppear(animated)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        self.progressTimerUpdater?.stop()
+        super.viewWillDisappear(animated)
+    }
+
+    
     //MARK: Actions
+    
     @IBAction func upvoteBtnPressed(sender: AnyObject) {
         vote(true, button: sender as! UIButton)
     }
@@ -43,6 +113,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     
     //MARK: Utilities
+    
     /**
     Sends a response to the Question to the RestAPI. The answer has the users ID to ensure that he can only respond once (handled by RestAPI)
     - parameter sender:	The button pressed
@@ -91,10 +162,12 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
      */
     func highlightSelectedAnswer(index: Int? = nil) {
         if let index = index {
-            self.selectedAnswerPickerIndex = index
+            selectedAnswerPickerIndex = index
         } else {
             if let myAnswer = (question.Result.filter() { $0.UserId == CurrentUser.sharedInstance._id }.first) {
-                self.selectedAnswerPickerIndex = pickerData.indexOf(myAnswer.Value) ?? -1
+                selectedAnswerPickerIndex = pickerData.indexOf(myAnswer.Value) ?? -1
+            } else {
+                selectedAnswerPickerIndex = -1
             }
         }
         
@@ -109,6 +182,11 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             self.upvoteButton.imageView!.image = up ? UIImage(named: "ThumbsUpBlue") : UIImage(named: "ThumbsUp")
             self.downvoteButton.imageView!.image = !up ? UIImage(named: "ThumbsDownBlue") : UIImage(named: "ThumbsDown")
         }
+    }
+    
+    func resetVoteUI() {
+        self.upvoteButton.imageView?.image = UIImage(named: "ThumbsUp")
+        self.downvoteButton.imageView?.image = UIImage(named: "ThumbsDown")
     }
     
     /**
@@ -179,6 +257,11 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         
         func updateImgGui(b64Img: String) {
             let imageData = NSData(base64EncodedString: b64Img, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
+            
+            if imageData == nil {
+                return
+            }
+            
             let questionImage = UIImage(data: imageData!)
             
             dispatch_async(dispatch_get_main_queue()) {
@@ -204,6 +287,8 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         if let b64Img = self.question.Img {
             updateImgGui(b64Img)
             return
+        } else {
+            self.questionImageView.image = nil
         }
         
         HttpHandler.requestWithResponse(action: "Question/GetImageByQuestionId?questionId=\(self.question._id!)", type: "GET", body: "") {
@@ -213,67 +298,8 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         }
     }
     
-    //MARK: Lifecycle
-    override func viewDidLoad() {
-        print("QuestionViewController instantiated, roomId: \(self.roomId)")
-        super.viewDidLoad()
-        
-        imageScrollView.delegate = self
-        imageScrollView.maximumZoomScale = 6
-        imageScrollView.minimumZoomScale = 0.1
-        
-        answerPicker.delegate = self
-        answerPicker.dataSource = self
-        
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        
-        //Show UI
-        if self.question._id == nil {
-            return
-            //todo display something nice to user :-)
-        }
-        
-        //Progress bar
-        updateProgressbar()
-        progressTimerUpdater = Updater(secondsDelay: 0.75, function: {
-            self.updateProgressbar()
-        })
-        
-        //Picker
-        pickerData.removeAll()
-        for r in question.ResponseOptions {
-            pickerData.append(r.Value)
-        }
-        answerPicker.reloadAllComponents()
-        
-        //Text
-        questionText.text = question.QuestionText
-        
-        //Image
-        loadImage()
-        
-        //Answer
-        highlightSelectedAnswer()
-        
-        //Vote btns
-        for v in question.Votes {
-            if v.CreatedById == CurrentUser.sharedInstance._id {
-                updateVoteUI(v.Value == 1)
-                break
-            }
-        }
-        super.viewDidAppear(animated)
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        self.progressTimerUpdater?.stop()
-        self.questionImageView.image = nil
-        super.viewWillDisappear(animated)
-    }
-    
     //MARK: UIPickerViewDelegate
+    
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
         return 1
     }
@@ -296,11 +322,13 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     
     //MARK: UIScrollViewDelegate
+    
     func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
         return questionImageView
     }
     
     //MARK: Navigation
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "ShowResult" {
             let resultViewController = segue.destinationViewController as! ResultViewController
