@@ -1,6 +1,7 @@
 package com.example.tomas.wisrandroid.Model;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 public final class MyUser extends User {
@@ -34,12 +35,12 @@ public final class MyUser extends User {
     }
 
     @Override
-    public List<String> get_ConnectedRooms() {
+    public ArrayList<String> get_ConnectedRooms() {
         return super.get_ConnectedRooms();
     }
 
     @Override
-    public void set_ConnectedRooms(List<String> ConnectedRooms) { super.set_ConnectedRooms(ConnectedRooms); }
+    public void set_ConnectedRooms(ArrayList<String> ConnectedRooms) { super.set_ConnectedRooms(ConnectedRooms); }
 
     @Override
     public String get_Id() {

@@ -28,6 +28,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.tomas.wisrandroid.Helpers.ActivityLayoutHelper;
 import com.example.tomas.wisrandroid.Helpers.HttpHelper;
 import com.example.tomas.wisrandroid.Helpers.CustomRoomAdapter;
+import com.example.tomas.wisrandroid.Model.Coordinate;
 import com.example.tomas.wisrandroid.Model.Room;
 import com.example.tomas.wisrandroid.R;
 import com.google.gson.Gson;
@@ -43,6 +44,7 @@ public class SelectRoomActivity extends AppCompatActivity {
     private final Gson mGson = new Gson();
     private ListView mListView;
     private Button mButton;
+    private Coordinate mCurrentCoordinate = new Coordinate();
 
 
     @Override
@@ -53,6 +55,11 @@ public class SelectRoomActivity extends AppCompatActivity {
 
         if(getSupportActionBar() != null)
             getSupportActionBar().hide();
+
+        Bundle mTEmpBundle = getIntent().getBundleExtra("Bundle");
+
+        mCurrentCoordinate.set_Latitude(getIntent().getBundleExtra("Bundle").getDouble("Lat"));
+        mCurrentCoordinate.set_Longitude(getIntent().getBundleExtra("Bundle").getDouble("Long"));
 
         mButton = (Button) findViewById(R.id.use_secret_button_select_room_activity);
         mButton.setOnClickListener(new View.OnClickListener() {
@@ -263,7 +270,8 @@ public class SelectRoomActivity extends AppCompatActivity {
                 Room[] mRooms = mGson.fromJson(response, Room[].class);
                 for(Room room : mRooms)
                 {
-                    mRoomList.add(room);
+                    if( distanceBetweenTwoCoordinatesMeters(mCurrentCoordinate.get_Latitude(),mCurrentCoordinate.get_Longitude(), room.get_Location().get_Latitude(), room.get_Location().get_Longitude()) < room.get_Radius())
+                        mRoomList.add(room);
                 }
                 CustomRoomAdapter temp = (CustomRoomAdapter)mListView.getAdapter();
                 temp.notifyDataSetChanged();
@@ -292,6 +300,24 @@ public class SelectRoomActivity extends AppCompatActivity {
         catch (Exception e){
 
         }
+    }
+
+    //Calculation based upon http://www.movable-type.co.uk/scripts/latlong.html Calculates the distance between to latitude-longitude pairs.
+    //- parameter lat1: latitude of the first coordinate
+    //- parameter long1: longitude of the first coordinate
+    //- parameter lat2: latitude of the second coordinate
+    //- parameter long2: longitude of the second coordinate
+    //- returns: Distance between the two coordinates
+    //
+    static Double distanceBetweenTwoCoordinatesMeters( Double lat1,  Double long1, Double lat2, Double long2) {
+        Double r = 6371000.0;
+        Double dLat = Math.toRadians(lat2-lat1);
+        Double dLong = Math.toRadians(long2 - long1);
+
+        Double a = Math.sin(dLat / 2)*Math.sin(dLat / 2) + Math.cos(Math.toRadians(lat1))*Math.cos(Math.toRadians(lat2)) * Math.sin(dLong / 2)*Math.sin(dLong / 2);
+        Double c = 2*Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        Double d = r*c;
+        return d;
     }
 
     @Override

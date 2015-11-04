@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -223,22 +224,6 @@ public class SelectedQuestionFragment extends Fragment {
                 mNumberPicker.setEnabled(false);
             }
             GetPicture();
-//            for (Answer answer : mQuestion.get_Result())
-//            {
-//                if(answer.get_UserId() == MyUser.getMyuser().get_Id())
-//                {
-//                    int counter = 0;
-//                    for (String responseoption : mNumberPicker.getDisplayedValues())
-//                    {
-//                        if(responseoption == answer.get_Value())
-//                        {
-//                            EditText child = (EditText)mNumberPicker.getChildAt(counter);
-//                            child.setTextColor(Color.GREEN);
-//                        }
-//                        counter +=1;
-//                    }
-//                }
-//            }
 
 
         }else{
@@ -304,14 +289,16 @@ public class SelectedQuestionFragment extends Fragment {
         BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
         bitmapOptions.inJustDecodeBounds = true;
         byte[] bytesDecoded = Base64.decode(Image, Base64.DEFAULT);
-        mPicture = BitmapFactory.decodeByteArray(bytesDecoded, 0, bytesDecoded.length,bitmapOptions);
+        BitmapFactory.decodeByteArray(bytesDecoded, 0, bytesDecoded.length, bitmapOptions);
 
-        // Calculating scaling factor to compress the picture to desireable size
+        // Calculating scaling factor to compress the picture to desired size
         if (bitmapOptions.outWidth > width) {
             bitmapOptions.inSampleSize = (bitmapOptions.outWidth / width) + 2;
         }
         bitmapOptions.inJustDecodeBounds = false;
         mPicture = BitmapFactory.decodeByteArray(bytesDecoded, 0, bytesDecoded.length,bitmapOptions);
+
+
 
         return mPicture;
     }
@@ -486,7 +473,6 @@ public class SelectedQuestionFragment extends Fragment {
             mParams.put("vote",gson.toJson(mVote));
             mParams.put("type", mQuestion.getClass().getName());
             mParams.put("id", mQuestion.get_Id());
-
 
             Response.Listener<String> mListener = new Response.Listener<String>() {
                 @Override
