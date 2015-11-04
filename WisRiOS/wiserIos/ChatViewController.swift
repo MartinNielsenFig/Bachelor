@@ -21,7 +21,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     var roomId: String?
     var messages = [ChatMessage]()
-    var updater: Updater?
+    var chatUpdater: Updater?
     var firstLoad = true
     
     @IBOutlet weak var tableView: UITableView!
@@ -32,7 +32,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     //MARK: Actions
     
     @IBAction func sendPressed(sender: AnyObject) {
-        updater?.stop()
+        chatUpdater?.stop()
         if let text = textMessageInput.text where text.isEmpty {
             print("empty message not allowed in chat")
             return
@@ -56,8 +56,8 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 if self.stickToBottom() {
                     self.scrollToBottom()
                 }
-                self.updater?.start()
-                self.updater?.execute()
+                self.chatUpdater?.start()
+                self.chatUpdater?.execute()
             }
         }
     }
@@ -90,10 +90,11 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "appGoesToBackground:", name: UIApplicationWillResignActiveNotification, object: nil)
         
-        updater = Updater(secondsDelay: 1) {
+        //"Resolving Strong Reference Cycles for Closures" Apple swift documentation
+        chatUpdater = Updater(secondsDelay: 2, function: { [unowned self] () in
             self.updateChatPoll()
-        }
-        updater?.execute()
+        }, debugName: "ChatPoll")
+        chatUpdater?.execute()
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -101,49 +102,48 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationWillResignActiveNotification, object: nil)
         
-        updater?.stop()
+        chatUpdater?.stop()
     }
     
     //MARK: Utilities
     
     func updateChatPoll() {
-        let body = "roomId=\(self.roomId!)"
-        HttpHandler.requestWithResponse(action: "Chat/GetAllByRoomId", type: "POST", body: body) { (data, response, error) in
+        let newestMsg = self.newestMessageByIndex()
+        let body = "msg=\(JSONSerializer.toJson(newestMsg))"
+        
+        let start = NSDate()
+        HttpHandler.requestWithResponse(action: "Chat/GetNewerMessages", type: "POST", body: body) { (data, response, error) in
+            
+            print("time for \(__FUNCTION__) is \(NSDate().timeIntervalSinceDate(start)) s")
+            
             let sticky = self.stickToBottom()
             var newMessages = false
             if let jsonArray = try? JSONSerializer.toArray(data)  {
                 
                 for chatMsg in jsonArray {
                     let m = ChatMessage(jsonDictionary: chatMsg as! NSDictionary)
-                    
-                    if Double(m.Timestamp!) > self.oldestMessageEpochByIndex() {
-                        self.messages += [m]
-                        newMessages = true
-                    }
+                    self.messages += [m]
+                    newMessages = true
                 }
                 
                 dispatch_async(dispatch_get_main_queue()) {
-                    
                     if newMessages {
                         self.tableView.reloadData()
                     }
-                    
-                    if sticky || self.firstLoad {
+                    if (newMessages && sticky) || self.firstLoad {
                         self.scrollToBottom()
                         self.firstLoad = false
                     }
                 }
-            }
-            else {
+            } else {
                 print("could not update chat")
             }
         }
-
     }
     
     /**
-    Called when user swiped down on messageInputStackContainerView. Used to hide the keyboard.
-    */
+     Called when user swiped down on messageInputStackContainerView. Used to hide the keyboard.
+     */
     func userSwipeDownKeyboard() {
         print("user did swipe down keyboard")
         textMessageInput.resignFirstResponder()
@@ -194,7 +194,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     /**
-     Looks through the downloaded messages and looks for the oldest message. Then returns its timestamp. Could probably just look at the message last in the array.
+     Looks through the downloaded messages and looks for the newest message. Then returns its timestamp. Could probably just look at the message last in the array.
      - returns: Timestamp as seconds since 1-1-1970.
      */
     func oldestMessageEpochByIteration() -> Double {
@@ -211,16 +211,18 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     /**
-     Assumes the oldest message is the last one in the array.
+     Assumes the newest message is the last one in the array.
      - returns: Timestamp of the presumably oldest message as seconds sinde 1-1-1970
      */
-    func oldestMessageEpochByIndex() -> Double {
+    func newestMessageByIndex() -> ChatMessage {
         if self.messages.count > 0 {
-            if let ts = self.messages[self.messages.count-1].Timestamp {
-                return Double(ts.stringByReplacingOccurrencesOfString(",", withString: "."))!
-            }
+            return self.messages[self.messages.count-1]
+        } else {
+            let noMsgs = ChatMessage()
+            noMsgs.RoomId = self.roomId
+            noMsgs.Timestamp = "0"
+            return noMsgs
         }
-        return Double(0)
     }
     
     
@@ -262,12 +264,12 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
         print("scroll began")
-        updater?.stop()
+        chatUpdater?.stop()
     }
     
     func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         print("scroll ended")
-        updater?.start()
+        chatUpdater?.start()
     }
     
     
