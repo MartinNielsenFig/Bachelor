@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using WisRRestAPI.DomainModel;
+using MongoDB.Bson.Serialization;
 
 namespace WisRRestAPI.Providers
 {
@@ -55,6 +56,20 @@ namespace WisRRestAPI.Providers
         {
             var task = _database.GetCollection<ChatMessage>("chatmessage").FindOneAndReplaceAsync(x => x.Id == id, item);
             return task;
+        }
+
+        public List<ChatMessage> GetNewerMessages(ChatMessage msg) {
+
+            //Gt = GreaterThan
+            var filter = Builders<BsonDocument>.Filter.Gt("Timestamp", msg.Timestamp);
+            var bsonDocumentList = _database.GetCollection<BsonDocument>("chatmessage").Find(filter).ToListAsync();
+
+            List<ChatMessage> chatMessagesList = new List<ChatMessage>();
+            foreach (BsonDocument doc in bsonDocumentList.Result) {
+                chatMessagesList.Add(BsonSerializer.Deserialize<ChatMessage>(doc));
+            }
+
+            return chatMessagesList;
         }
     }
 }
