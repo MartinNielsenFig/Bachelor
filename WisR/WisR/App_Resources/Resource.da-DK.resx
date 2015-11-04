@@ -387,7 +387,13 @@
   <data name="UsersCanAskHelp" xml:space="preserve">
     <value>Kryds af hvis du ønsker at brugere kan stille spørgsmål, ellers er det kun muligt for rumejeren at stille spørgsmål</value>
   </data>
+  <data name="Error" xml:space="preserve">
+    <value>Fejl</value>
+  </data>
   <data name="ResponseOptionTitle" xml:space="preserve">
     <value>Man kan ikke have mindre end to svarmuligheder til et multiple choice spørgsmål</value>
+  </data>
+  <data name="RoomSecretAlreadyInUse" xml:space="preserve">
+    <value>Denne hemmelighed er allerede i brug</value>
   </data>
 </root>

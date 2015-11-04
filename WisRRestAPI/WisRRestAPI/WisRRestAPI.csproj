@@ -269,11 +269,12 @@
     <Compile Include="DomainModel\Answer.cs" />
     <Compile Include="DomainModel\ChatMessage.cs" />
     <Compile Include="DomainModel\Coordinate.cs" />
+    <Compile Include="DomainModel\ErrorTypes.cs" />
     <Compile Include="DomainModel\MultipleChoiceQuestion.cs" />
-    <Compile Include="DomainModel\Error.cs" />
+    <Compile Include="DomainModel\Notification.cs" />
     <Compile Include="DomainModel\IQuestion.cs" />
     <Compile Include="DomainModel\TextualQuestion.cs" />
-    <Compile Include="ErrorCodes.cs" />
+    <Compile Include="DomainModel\ErrorCodes.cs" />
     <Compile Include="Providers\ChatRepository.cs" />
     <Compile Include="Providers\dbHandler.cs" />
     <Compile Include="Providers\IChatRepository.cs" />

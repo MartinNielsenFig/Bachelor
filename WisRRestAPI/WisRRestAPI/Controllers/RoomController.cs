@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
+using WisR.DomainModel;
 using WisR.DomainModels;
 using WisRRestAPI.DomainModel;
 using WisRRestAPI.Providers;
@@ -22,7 +23,7 @@ namespace WisRRestAPI.Controllers
         private readonly IChatRepository _cr;
         private IRabbitPublisher _irabbitPublisher;
 
-        public RoomController(IRoomRepository rr,IChatRepository cr,IQuestionRepository qr, IRabbitPublisher irabbitPublisher)
+        public RoomController(IRoomRepository rr, IChatRepository cr, IQuestionRepository qr, IRabbitPublisher irabbitPublisher)
         {
             _rr = rr;
             _cr = cr;
@@ -39,6 +40,9 @@ namespace WisRRestAPI.Controllers
         [System.Web.Mvc.HttpPost]
         public string CreateRoom(string Room)
         {
+            List<ErrorCodes> errors = new List<ErrorCodes>();
+            ErrorTypes errorType = ErrorTypes.Ok;
+
             Room room;
             try
             {
@@ -46,22 +50,18 @@ namespace WisRRestAPI.Controllers
             }
             catch (Exception e)
             {
-                var err = new Error("Could not deserialize room with json: " + Room, 100, e.StackTrace);
-                return err.ToJson();
+                errors.Add(ErrorCodes.StringIsNotJsonFormat);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
             }
             //assign ID to room
             room.Id = ObjectId.GenerateNewId(DateTime.Now).ToString();
 
             //Check that the secret doesn't already exist
-            var returnValue = GetByUniqueSecret(room.Secret);
-            try
+            var returnValue = BsonSerializer.Deserialize<Notification>(GetByUniqueSecret(room.Secret));
+            if (returnValue.ErrorType == ErrorTypes.Ok)
             {
-                var errorFromDb = BsonSerializer.Deserialize<Error>(returnValue);
-            }
-            catch (Exception e)
-            {
-                var err = new Error("Room with that secret already exists", (int) ErrorCodes.RoomSecretAlreadyInUse);
-                return err.ToJson();
+                errors.Add(ErrorCodes.RoomSecretAlreadyInUse);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
             }
 
             string roomId;
@@ -71,8 +71,8 @@ namespace WisRRestAPI.Controllers
             }
             catch (Exception e)
             {
-                var err = new Error("Could not add room", 100, e.StackTrace);
-                return err.ToJson();
+                errors.Add(ErrorCodes.CouldNotAddRoomToDatabase);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
 
             }
             //Publish to rabbitMQ after, because we need the id
@@ -83,10 +83,11 @@ namespace WisRRestAPI.Controllers
             }
             catch (Exception e)
             {
-                error = new Error("Could not publish to RabbitMq", (int) ErrorCodes.RabbitMqError, e.StackTrace).ToJson();
+                errors.Add(ErrorCodes.RabbitMqError);
+                errorType = ErrorTypes.Complicated;
             }
 
-            return roomId + ";" + error;
+            return new Notification(roomId, errorType, errors).ToJson();
         }
 
         [System.Web.Mvc.HttpPost]
@@ -99,14 +100,14 @@ namespace WisRRestAPI.Controllers
             }
             catch (Exception e)
             {
-                var err = new Error("Couldn't get room by that id", 100, e.StackTrace);
-                return err.ToJson();
+                //var err = new Error("Couldn't get room by that id", 100, e.StackTrace);
+                return "";//err.ToJson();
             }
 
             if (item == null)
             {
-                var err = new Error("Not found", 100);
-                return err.ToJson();
+                //var err = new Error("Not found", 100);
+                return "";// err.ToJson();
             }
 
             return item.ToJson();
@@ -114,6 +115,8 @@ namespace WisRRestAPI.Controllers
         [System.Web.Mvc.HttpPost]
         public string GetByUniqueSecret(string secret)
         {
+            List<ErrorCodes> errors = new List<ErrorCodes>();
+            ErrorTypes errorType = ErrorTypes.Ok;
             Room item;
             try
             {
@@ -121,22 +124,17 @@ namespace WisRRestAPI.Controllers
             }
             catch (Exception e)
             {
-                if (e.InnerException.Message == "Sequence contains no elements")
-                {
-                    var err = new Error("No room with that secret", 100, e.StackTrace);
-                    return err.ToJson();
-                }
-                var err2 = new Error("Something went wrong trying to find room with that id, check stacktrace", 100, e.StackTrace);
-                return err2.ToJson();
+                errors.Add(ErrorCodes.NoRoomWithThatSecret);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
             }
 
             if (item == null)
             {
-                var err = new Error("No room with that secret", 100);
-                return err.ToJson();
+                errors.Add(ErrorCodes.NoRoomWithThatSecret);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
             }
 
-            return item.ToJson();
+            return new Notification(item.ToJson(), ErrorTypes.Ok, errors).ToJson();
         }
         [System.Web.Mvc.HttpDelete]
         public string DeleteRoom(string id)
@@ -148,11 +146,11 @@ namespace WisRRestAPI.Controllers
             var result = _rr.DeleteRoom(id).Result;
             if (result.DeletedCount == 1)
             {
-                _irabbitPublisher.publishString("DeleteRoom",id);
+                _irabbitPublisher.publishString("DeleteRoom", id);
                 return "Room was deleted";
             }
-            var err = new Error("Couldn't find the room to delete", 100);
-            return err.ToJson();
+            //var err = new Error("Couldn't find the room to delete", 100);
+            return "";//err.ToJson();
         }
 
         public string UpdateLocation(string id, string location)
@@ -165,8 +163,8 @@ namespace WisRRestAPI.Controllers
             }
             catch (Exception e)
             {
-                var err = new Error("Couldn't get room by that id", 100, e.StackTrace);
-                return err.ToJson();
+                //var err = new Error("Couldn't get room by that id", 100, e.StackTrace);
+                return "";// err.ToJson();
             }
 
             Coordinate tempCoord = null;
@@ -176,10 +174,10 @@ namespace WisRRestAPI.Controllers
             }
             catch (Exception e)
             {
-                var err = new Error("Could not deserialize", 100, e.StackTrace);
-                return err.ToJson();
+                //var err = new Error("Could not deserialize", 100, e.StackTrace);
+                return "";// err.ToJson();
             }
-           
+
 
             item.Location = tempCoord;
 
@@ -189,8 +187,8 @@ namespace WisRRestAPI.Controllers
             }
             catch (Exception e)
             {
-                var err = new Error("Could not update", 100, e.StackTrace);
-                return err.ToJson();
+                //var err = new Error("Could not update", 100, e.StackTrace);
+                return "";// err.ToJson();
             }
             //Publish to rabbitMQ after, because we need the id
             try
@@ -199,8 +197,8 @@ namespace WisRRestAPI.Controllers
             }
             catch (Exception e)
             {
-                var err = new Error("Could not publish to RabbitMq", 100, e.StackTrace);
-                return err.ToJson();
+                //var err = new Error("Could not publish to RabbitMq", 100, e.StackTrace);
+                return "";// err.ToJson();
             }
             return "";
         }
@@ -211,7 +209,8 @@ namespace WisRRestAPI.Controllers
         /// <param name="roomId">The id of the room to check if exists.</param>
         /// <returns>Whether or not the room exists.</returns>
         [HttpPost]
-        public bool RoomExists(string roomId) {
+        public bool RoomExists(string roomId)
+        {
             return _rr.DoesRoomExist(roomId);
         }
     }

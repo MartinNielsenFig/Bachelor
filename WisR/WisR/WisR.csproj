@@ -222,8 +222,11 @@
     <Compile Include="..\..\WisRRestAPI\WisRRestAPI\DomainModel\Coordinate.cs">
       <Link>DomainModels\Coordinate.cs</Link>
     </Compile>
-    <Compile Include="..\..\WisRRestAPI\WisRRestAPI\DomainModel\Error.cs">
-      <Link>DomainModels\Error.cs</Link>
+    <Compile Include="..\..\WisRRestAPI\WisRRestAPI\DomainModel\ErrorCodes.cs">
+      <Link>DomainModels\ErrorCodes.cs</Link>
+    </Compile>
+    <Compile Include="..\..\WisRRestAPI\WisRRestAPI\DomainModel\ErrorTypes.cs">
+      <Link>DomainModels\ErrorTypes.cs</Link>
     </Compile>
     <Compile Include="..\..\WisRRestAPI\WisRRestAPI\DomainModel\IQuestion.cs">
       <Link>DomainModels\IQuestion.cs</Link>
@@ -242,6 +245,9 @@
     </Compile>
     <Compile Include="..\..\WisRRestAPI\WisRRestAPI\DomainModel\User.cs">
       <Link>DomainModels\User.cs</Link>
+    </Compile>
+    <Compile Include="..\..\WisRRestAPI\WisRRestAPI\DomainModel\Vote.cs">
+      <Link>DomainModels\Vote.cs</Link>
     </Compile>
     <Compile Include="App_Resources\Resource.da-DK.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -267,7 +273,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\RoomController.cs" />
-    <Compile Include="DomainModels\Vote.cs" />
+    <Compile Include="DomainModels\Notification.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

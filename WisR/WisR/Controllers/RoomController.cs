@@ -15,7 +15,7 @@ using MongoDB.Bson.Serialization;
 using Newtonsoft.Json.Linq;
 using WisR.DomainModels;
 using WisR.Providers;
-using WisRRestAPI.DomainModel;
+using WisR.DomainModel;
 
 namespace WisR.Controllers
 {

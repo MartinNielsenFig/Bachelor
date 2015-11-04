@@ -70,7 +70,7 @@ namespace WisRRestAPI.Controllers
             }
             catch (Exception e)
             {
-                return new Error("Could not determine type from string: " + type, 100, e.StackTrace).ToJson();
+                return"";// new Error("Could not determine type from string: " + type, 100, e.StackTrace).ToJson();
             }
 
             object b;
@@ -82,7 +82,7 @@ namespace WisRRestAPI.Controllers
             }
             catch (Exception e)
             {
-                return new Error("Could not deserialize the JSON string: " + question, 100, e.StackTrace).ToJson();
+                return "";//new Error("Could not deserialize the JSON string: " + question, 100, e.StackTrace).ToJson();
             }
             if (q.Id != null)
             {
@@ -260,7 +260,7 @@ namespace WisRRestAPI.Controllers
                 return "Question was deleted";
             }
 
-            return new Error("Couldn't find question to delete",100).ToJson();
+            return "";//new Error("Couldn't find question to delete",100).ToJson();
         }
 
        
