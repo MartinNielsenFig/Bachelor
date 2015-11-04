@@ -221,9 +221,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\WisR\WisR\DomainModels\Vote.cs">
-      <Link>DomainModel\Vote.cs</Link>
-    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -275,6 +272,7 @@
     <Compile Include="DomainModel\IQuestion.cs" />
     <Compile Include="DomainModel\TextualQuestion.cs" />
     <Compile Include="DomainModel\ErrorCodes.cs" />
+    <Compile Include="DomainModel\Vote.cs" />
     <Compile Include="Providers\ChatRepository.cs" />
     <Compile Include="Providers\dbHandler.cs" />
     <Compile Include="Providers\IChatRepository.cs" />
