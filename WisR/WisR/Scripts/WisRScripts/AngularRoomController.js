@@ -236,6 +236,14 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
      */
     $scope.ResponseOptions = [{ id: 0, val: undefined }, { id: 1, val: undefined }];
     /**
+        * @ngdoc property
+        * @name .#ResponseOptionTitle
+        * @returns {String>} ResponseOptionTitle
+        * @propertyOf WisR.controller:RoomController 
+        * @description Title of remove ResponseOption button
+        */
+    $scope.ResponseOptionTitle = Resources.ResponseOptionTitle;
+    /**
      * @ngdoc property
      * @name .#ActiveUsers
      * @returns {Array<ResponseOption>} ActiveUsers
@@ -273,12 +281,30 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
     });
     /**
          * @ngdoc method
+         * @name RoomController#watchResponseOptions.length
+         * @methodOf WisR.controller:RoomController
+         * @description
+         * Function that watches the responseOptions.length. This is done to set the title correctly on the remove responseOption button.
+         * @param {int} ResponseOptions.length The variable that we want to watch
+         */
+    ///watch the questionImage.filesize variable
+    $scope.$watch(function () {
+        return $scope.ResponseOptions.length;
+    }, function (n, o) {
+        if (n == 2 && ($scope.QuestionType == "MultipleChoiceQuestion" || $scope.QuestionType == undefined)) {
+            $scope.ResponseOptionTitle = Resources.ResponseOptionTitle;
+        } else {
+            $scope.ResponseOptionTitle = null;
+        }
+    });
+    /**
+         * @ngdoc method
          * @name RoomController#watchQuestionImage
          * @methodOf WisR.controller:RoomController
          * @description
          * Function that watches the questionImage. This is done so that we can check whether the filesize exceeds our limits. If it does we resize the picture
          * After retrieving the userId we fetch the userid from the database.
-         * @param {String} questionIage The variable that we want to watch
+         * @param {String} questionImage The variable that we want to watch
          */
     ///watch the questionImage.filesize variable
     $scope.$watch(
@@ -460,6 +486,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
      * Function for removing a response option to a question that the user is creating
      */
     $scope.RemoveResponseOption = function (item) {
+        if ($scope.ResponseOptions.length > 2 || $scope.QuestionType !== "MultipleChoiceQuestion") {
         var temp = [];
         var counter = 0;
         for (var i = 0; i < $scope.ResponseOptions.length; i++) {
@@ -469,6 +496,8 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
             }
         }
         $scope.ResponseOptions = temp;
+
+        }
     }
     /**
     * @ngdoc method

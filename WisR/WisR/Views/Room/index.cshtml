@@ -219,8 +219,8 @@
                                 <div class="col-md-6 input-group">
                                     <div ng-repeat="option in ResponseOptions" class="col-md-12 input-group has-feedback" style="max-width: 280px">
                                         <input ng-required="QuestionType != undefined && QuestionType != 'TextualQuestion'" ng-model="option.Value" class="form-control" type="text" placeholder="@WisR.App_Resources.Resource.AddResponseOptions" />
-                                        <span type="button" class="input-group-addon" ng-click="RemoveResponseOption(option)" value="@WisR.App_Resources.Resource.Remove">
-                                            <i class="glyphicon glyphicon-minus"></i>
+                                        <span type="button" ng-attr-title="{{ResponseOptionTitle}}" class="input-group-addon" ng-click="RemoveResponseOption(option)" value="@WisR.App_Resources.Resource.Remove">
+                                            <i ng-class="{'text-muted': (ResponseOptions.length == 2 && QuestionType == 'MultipleChoiceQuestion')}" class="glyphicon glyphicon-minus"></i>
                                         </span>
                                     </div>
                                     <span type="button" ng-click="AddResponseOption()" class="glyphicon glyphicon-plus" value="@WisR.App_Resources.Resource.AddResponseOption" />

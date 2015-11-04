@@ -387,4 +387,7 @@
   <data name="UsersCanAskHelp" xml:space="preserve">
     <value />
   </data>
+  <data name="ResponseOptionTitle" xml:space="preserve">
+    <value />
+  </data>
 </root>

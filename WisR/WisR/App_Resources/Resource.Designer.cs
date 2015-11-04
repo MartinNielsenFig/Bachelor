@@ -648,6 +648,15 @@ namespace WisR.App_Resources {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
+        public static string ResponseOptionTitle {
+            get {
+                return ResourceManager.GetString("ResponseOptionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
         public static string Results {
             get {
                 return ResourceManager.GetString("Results", resourceCulture);
