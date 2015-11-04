@@ -1,6 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using WisR.Controllers;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -59,7 +58,22 @@ namespace WisR.Controllers.Tests
             var myTestUser = controller.toJsonUser(encryptedPassword, facebookId, LDAPUserName, displayName, email,
                 connectedRoomIds);
             //Assert
-            Assert.AreEqual("'{ \"_id\" : null, \"FacebookId\" : \"Facebook test id\", \"ConnectedRoomIds\" : [\"A\", \"B\", \"C\", \"D\"], \"LDAPUserName\" : \"LDAP test user name\", \"DisplayName\" : \"Displayname\", \"Email\" : \"Testemail@test.com\", \"EncryptedPassword\" : \"Test password\" }'", "'"+myTestUser+"'");
+            Assert.AreEqual("'{ \"_id\" : null, \"FacebookId\" : \"Facebook test id\", \"ConnectedRoomIds\" : [\"A\", \"B\", \"C\", \"D\"], \"LDAPUserName\" : \"LDAP test user name\", \"DisplayName\" : \"Displayname\", \"Email\" : \"Testemail@test.com\", \"EncryptedPassword\" : \"Test password\" }'", "'" + myTestUser + "'");
+        }
+        [TestMethod()]
+        public void ChangeCurrentCultureTest()
+        {
+            //Arrange
+            Mock<IRabbitSubscriber> rabbitMock = new Mock<IRabbitSubscriber>();
+            var controller = new HomeController(rabbitMock.Object);
+            //Mock the context of the controller so that the function can redirect
+            controller.SetFakeControllerContext();
+
+            int cultureid = 1;
+            //Act
+            var request=controller.ChangeCurrentCulture(cultureid);
+            //Assert
+            Assert.AreEqual(1,controller.Session["CurrentCulture"]);
         }
     }
 }

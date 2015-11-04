@@ -1,0 +1,47 @@
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using WisR.Controllers;
+using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web.Mvc;
+using Moq;
+
+namespace WisR.Controllers.Tests
+{
+    [TestClass()]
+    public class LoginControllerTests
+    {
+        [TestMethod()]
+        public void LoginWithFacebookShouldRedirect()
+        {
+            //Arrange
+            var controller = new LoginController();
+            //Mock the context of the controller so that the function can redirect
+            controller.SetFakeControllerContext();
+            controller.Session["CurrentCulture"] = 1;
+
+            //Act
+            controller.LoginWithFacebook();
+            //Assert
+            controller.getResponseMock().Verify(m => m.Redirect(It.IsAny<string>()), Times.Exactly(1));
+        }
+
+        [TestMethod()]
+        public void LoginCheckShouldRedirectWithoutAccessToken()
+        {
+            // Arrange
+            var controller = new LoginController();
+            //Mock the context of the controller so that the function can redirect
+            controller.SetFakeControllerContext();
+
+            //Act
+            var actionresult = controller.LoginCheck();
+            //Assert
+            Assert.AreEqual(null, controller.Session["AccessToken"]);
+        }
+
+    }
+}
