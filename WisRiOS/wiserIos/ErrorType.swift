@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum ErrorTypes: Int {
+public enum ErrorTypes: Int {
     case Ok = 0
     case Error
     case OkWithError

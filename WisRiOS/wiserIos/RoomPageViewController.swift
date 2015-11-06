@@ -86,10 +86,16 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
         checkRoomExistsUpdater = Updater(secondsDelay: 30, function: { () -> Void in
             print("updater check room exist")
             let body = "roomId=\(self.room._id!)"
-            HttpHandler.requestWithResponse(action: "Room/RoomExists", type: "POST", body: body) { (data, response, error) -> Void in
-                if data.lowercaseString == "false" {
-                    self.checkRoomExistsUpdater?.stop()
-                    self.logoutRoom(true)
+            HttpHandler.requestWithResponse(action: "Room/RoomExists", type: "POST", body: body) {
+                (notification, response, error) in
+                
+                if notification.ErrorType == .Ok || notification.ErrorType == .OkWithError {
+                    if let data = notification.Data where data.lowercaseString == "false" {
+                        self.checkRoomExistsUpdater?.stop()
+                        self.logoutRoom(true)
+                    }
+                } else {
+                    print(notification.Errors)
                 }
             }
         })
