@@ -12,6 +12,7 @@ using System.Web.Script.Serialization;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Conventions;
+using WisR.DomainModel;
 using WisR.DomainModels;
 using WisRRestAPI.DomainModel;
 using WisRRestAPI.Providers;
@@ -34,34 +35,110 @@ namespace WisRRestAPI.Controllers
         [System.Web.Mvc.HttpGet]
         public string GetAll()
         {
-            var questions = _qr.GetAllQuestions();
-            var temp= questions.Result.ToJson();
-            return temp;
+            List<ErrorCodes> errors = new List<ErrorCodes>();
+            ErrorTypes errorType = ErrorTypes.Ok;
+            Task<List<Question>> questions;
+            try
+            {
+
+                questions = _qr.GetAllQuestions();
+            }
+            catch (Exception)
+            {
+                errors.Add(ErrorCodes.CouldNotGetQuestions);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
+            }
+
+            string temp;
+            try
+            {
+temp= questions.Result.ToJson();
+            }
+            catch (Exception)
+            {
+                errors.Add(ErrorCodes.StringIsNotJsonFormat);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
+            }
+            
+            return new Notification(temp, errorType, errors).ToJson();
         }
 
         [System.Web.Mvc.HttpGet]
         public string GetQuestionsForRoom(string roomId) {
-            var qList = _qr.GetQuestionsForRoom(roomId);
-            return qList.Result.ToJson();
+            List<ErrorCodes> errors = new List<ErrorCodes>();
+            ErrorTypes errorType = ErrorTypes.Ok;
+
+            Task<List<Question>> qList;
+            try
+            {
+                qList = _qr.GetQuestionsForRoom(roomId);
+            }
+            catch (Exception)
+            {
+                errors.Add(ErrorCodes.CouldNotGetQuestions);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
+            }
+            
+            return new Notification(qList.Result.ToJson(), errorType, errors).ToJson();
         }
         [System.Web.Mvc.HttpGet]
         public string GetQuestionsForRoomWithoutImages(string roomId)
         {
-            var qList = _qr.GetQuestionsForRoomWithoutImages(roomId);           
-            var result= qList.Result.ToJson();
-            return result;
+            List<ErrorCodes> errors = new List<ErrorCodes>();
+            ErrorTypes errorType = ErrorTypes.Ok;
+
+            Task<List<Question>> qList;
+            try
+            {
+                qList = _qr.GetQuestionsForRoomWithoutImages(roomId);
+            }
+            catch (Exception)
+            {
+                errors.Add(ErrorCodes.CouldNotGetQuestions);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
+            }
+
+            string result;
+            try
+            {
+                result = qList.Result.ToJson();
+            }
+            catch (Exception)
+            {
+                errors.Add(ErrorCodes.StringIsNotJsonFormat);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
+            }
+            
+            return new Notification(result, errorType, errors).ToJson();
         }
         [System.Web.Mvc.HttpGet]
         public string GetImageByQuestionId(string questionId)
         {
-            var qList = _qr.GetImageByQuestionId(questionId);
+            List<ErrorCodes> errors = new List<ErrorCodes>();
+            ErrorTypes errorType = ErrorTypes.Ok;
+
+            Task<Question> qList;
+            try
+            {
+                qList = _qr.GetImageByQuestionId(questionId);
+            }
+            catch (Exception)
+            {
+                errors.Add(ErrorCodes.CouldNotGetQuestions);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
+            }
+           
             var result = qList.Result;
-            return result.Img;
+
+            return new Notification(result.Img, errorType, errors).ToJson();
         }
 
         [System.Web.Mvc.HttpPost]
         public string CreateQuestion(string question, string type)
         {
+            List<ErrorCodes> errors = new List<ErrorCodes>();
+            ErrorTypes errorType = ErrorTypes.Ok;
+
             Type questionType;
             try
             {
@@ -70,7 +147,8 @@ namespace WisRRestAPI.Controllers
             }
             catch (Exception e)
             {
-                return"";// new Error("Could not determine type from string: " + type, 100, e.StackTrace).ToJson();
+                errors.Add(ErrorCodes.CouldNotGetQuestionType);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
             }
 
             object b;
@@ -82,7 +160,8 @@ namespace WisRRestAPI.Controllers
             }
             catch (Exception e)
             {
-                return "";//new Error("Could not deserialize the JSON string: " + question, 100, e.StackTrace).ToJson();
+                errors.Add(ErrorCodes.CouldNotParseJsonToClass);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
             }
             if (q.Id != null)
             {

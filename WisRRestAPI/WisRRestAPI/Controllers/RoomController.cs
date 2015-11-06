@@ -47,8 +47,9 @@ namespace WisRRestAPI.Controllers
                 errors.Add(ErrorCodes.CouldNotGetRoomsFromDatabase);
                 return new Notification(null, ErrorTypes.Error, errors).ToJson();
             }
-          
-            return (new Notification(Rooms.Result.ToJson(), ErrorTypes.Ok, errors)).ToJson(); ;
+
+
+            return (new Notification(Rooms.Result.ToJson(), errorType, errors)).ToJson(); ;
         }
         [System.Web.Mvc.HttpPost]
         public string CreateRoom(string Room)
@@ -115,17 +116,17 @@ namespace WisRRestAPI.Controllers
             }
             catch (Exception e)
             {
-                errors.Add(ErrorCodes.RoomSecretAlreadyInUse);
+                errors.Add(ErrorCodes.CouldNotGetRoomsFromDatabase);
                 return new Notification(null, ErrorTypes.Error, errors).ToJson();
             }
 
             if (item == null)
             {
-                //var err = new Error("Not found", 100);
-                return "";// err.ToJson();
+                errors.Add(ErrorCodes.CouldNotGetRoomsFromDatabase);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
             }
 
-            return item.ToJson();
+            return new Notification(item.ToJson(), errorType, errors).ToJson();
         }
         [System.Web.Mvc.HttpPost]
         public string GetByUniqueSecret(string secret)
@@ -149,27 +150,59 @@ namespace WisRRestAPI.Controllers
                 return new Notification(null, ErrorTypes.Error, errors).ToJson();
             }
 
-            return new Notification(item.ToJson(), ErrorTypes.Ok, errors).ToJson();
+            return new Notification(item.ToJson(), errorType, errors).ToJson();
         }
         [System.Web.Mvc.HttpDelete]
         public string DeleteRoom(string id)
         {
-            //Todo error checking on all these
-            var chatDeleteResult = _cr.DeleteAllChatMessageForRoomWithRoomId(id).Result;
-            var questionDeleteResult = _qr.DeleteAllQuestionsForRoomWithRoomId(id).Result;
+            List<ErrorCodes> errors = new List<ErrorCodes>();
+            ErrorTypes errorType = ErrorTypes.Ok;
+            try
+            {
+                var chatDeleteResult = _cr.DeleteAllChatMessageForRoomWithRoomId(id).Result;
+            }
+            catch (Exception)
+            {
+                errors.Add(ErrorCodes.CouldNotDeleteAllChatMessages);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
+            }
+
+            try
+            {
+                var questionDeleteResult = _qr.DeleteAllQuestionsForRoomWithRoomId(id).Result;
+            }
+            catch (Exception)
+            {
+                errors.Add(ErrorCodes.CouldNotDeleteAllQuestions);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
+            }
+
 
             var result = _rr.DeleteRoom(id).Result;
+
             if (result.DeletedCount == 1)
             {
-                _irabbitPublisher.publishString("DeleteRoom", id);
-                return "Room was deleted";
+                try
+                {
+                    _irabbitPublisher.publishString("DeleteRoom", id);
+                }
+                catch (Exception)
+                {
+                    errors.Add(ErrorCodes.RabbitMqError);
+                    errorType = ErrorTypes.Complicated;
+                }
+
+                return new Notification("Room was deleted", errorType, errors).ToJson(); ;
             }
-            //var err = new Error("Couldn't find the room to delete", 100);
-            return "";//err.ToJson();
+            errors.Add(ErrorCodes.CouldNotDeleteRoom);
+            return new Notification(null, ErrorTypes.Error, errors).ToJson();
         }
 
         public string UpdateLocation(string id, string location)
         {
+            List<ErrorCodes> errors = new List<ErrorCodes>();
+            ErrorTypes errorType = ErrorTypes.Ok;
+
             var item = new Room();
 
             try
@@ -178,8 +211,8 @@ namespace WisRRestAPI.Controllers
             }
             catch (Exception e)
             {
-                //var err = new Error("Couldn't get room by that id", 100, e.StackTrace);
-                return "";// err.ToJson();
+                errors.Add(ErrorCodes.CouldNotGetRoomsFromDatabase);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
             }
 
             Coordinate tempCoord = null;
@@ -189,8 +222,8 @@ namespace WisRRestAPI.Controllers
             }
             catch (Exception e)
             {
-                //var err = new Error("Could not deserialize", 100, e.StackTrace);
-                return "";// err.ToJson();
+                errors.Add(ErrorCodes.CouldNotParseJsonToClass);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
             }
 
 
@@ -202,8 +235,8 @@ namespace WisRRestAPI.Controllers
             }
             catch (Exception e)
             {
-                //var err = new Error("Could not update", 100, e.StackTrace);
-                return "";// err.ToJson();
+                errors.Add(ErrorCodes.CouldNotUpdateRoom);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
             }
             //Publish to rabbitMQ after, because we need the id
             try
@@ -212,10 +245,10 @@ namespace WisRRestAPI.Controllers
             }
             catch (Exception e)
             {
-                //var err = new Error("Could not publish to RabbitMq", 100, e.StackTrace);
-                return "";// err.ToJson();
+                errors.Add(ErrorCodes.RabbitMqError);
+                errorType = ErrorTypes.Complicated;
             }
-            return "";
+            return new Notification(null, errorType, errors).ToJson();
         }
 
         /// <summary>
@@ -224,9 +257,21 @@ namespace WisRRestAPI.Controllers
         /// <param name="roomId">The id of the room to check if exists.</param>
         /// <returns>Whether or not the room exists.</returns>
         [HttpPost]
-        public bool RoomExists(string roomId)
+        public string RoomExists(string roomId)
         {
-            return _rr.DoesRoomExist(roomId);
+            List<ErrorCodes> errors = new List<ErrorCodes>();
+            ErrorTypes errorType = ErrorTypes.Ok;
+            var returnValue =false;
+            try
+            {
+                returnValue = _rr.DoesRoomExist(roomId);
+            }
+            catch (Exception)
+            {
+                errors.Add(ErrorCodes.CouldNotUpdateRoom);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
+            }
+            return new Notification(returnValue.ToString(), ErrorTypes.Error, errors).ToJson();
         }
     }
 }

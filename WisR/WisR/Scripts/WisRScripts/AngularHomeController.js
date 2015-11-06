@@ -284,6 +284,8 @@ app.controller("HomeController", [
                 $scope.locationLatitude = $scope.currentLocation.coords.latitude;
                 $scope.locationLongitude = $scope.currentLocation.coords.longitude;
                 $scope.roomsLoaded = true;
+            }, function(error) {
+                alert(Resources.NoConnectionToServer);
             });
         };
         /**
@@ -355,10 +357,16 @@ app.controller("HomeController", [
                                     then(function (response) {
 
                                     });
+                            }, function (error) {
+                                alert(Resources.NoConnectionToServer);
                             });
 
                             $scope.changeViewToRoom(room);
+                        }, function (error) {
+                            alert(Resources.NoConnectionToServer);
                         });
+                }, function(error) {
+                    alert(Resources.NoConnectionToServer);
                 });
         }
         /**
@@ -380,6 +388,8 @@ app.controller("HomeController", [
             else if (n != undefined) {
                 $http.post(configs.restHostName + '/User/GetById', { id: n }).then(function (response) {
                     $scope.currentUser = response.data;
+                }, function (error) {
+                    alert(Resources.NoConnectionToServer);
                 });
             }
         });
@@ -421,6 +431,8 @@ app.controller("HomeController", [
                 } else {
                     $scope.Message = window.Resources.NoRoomWithThatSecret + $scope.uniqueRoomSecret;
                 }
+            }, function (error) {
+                alert(Resources.NoConnectionToServer);
             });
         }
         /**
@@ -472,6 +484,8 @@ app.controller("HomeController", [
                 } else {
                     $scope.modalChanger("deleteRoomModal","hide");
                 }
+            }, function (error) {
+                alert(Resources.NoConnectionToServer);
             });
         }
 
@@ -484,7 +498,7 @@ app.controller("HomeController", [
        * @methodOf WisR.controller:RoomController
        * @description
        * Helper function toget the error outputs
-       * @param {Array<ErrorCode>} array of errors
+       * @param {Array<ErrorCode>} errors array of errors
        */
         $scope.GetErrorOutput = function(errors) {
             var output = Resources.Error + ": ";
