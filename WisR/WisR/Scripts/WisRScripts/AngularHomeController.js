@@ -284,9 +284,7 @@ app.controller("HomeController", [
                 $scope.locationLatitude = $scope.currentLocation.coords.latitude;
                 $scope.locationLongitude = $scope.currentLocation.coords.longitude;
                 $scope.roomsLoaded = true;
-            }, function(error) {
-                alert(Resources.NoConnectionToServer);
-            });
+            }, $scope.onErrorAlert);
         };
         /**
         * @ngdoc method
@@ -357,17 +355,11 @@ app.controller("HomeController", [
                                     then(function (response) {
 
                                     });
-                            }, function (error) {
-                                alert(Resources.NoConnectionToServer);
-                            });
+                            }, $scope.onErrorAlert);
 
                             $scope.changeViewToRoom(room);
-                        }, function (error) {
-                            alert(Resources.NoConnectionToServer);
-                        });
-                }, function(error) {
-                    alert(Resources.NoConnectionToServer);
-                });
+                        }, $scope.onErrorAlert);
+                }, $scope.onErrorAlert);
         }
         /**
        * @ngdoc watch
@@ -387,10 +379,12 @@ app.controller("HomeController", [
             }
             else if (n != undefined) {
                 $http.post(configs.restHostName + '/User/GetById', { id: n }).then(function (response) {
-                    $scope.currentUser = response.data;
-                }, function (error) {
-                    alert(Resources.NoConnectionToServer);
-                });
+                    if (response.data.ErrorType != 0) {
+                        alert($scope.GetErrorOutput(response.data.Errors));
+                    } else {
+                        $scope.currentUser = response.data.Data;
+                    }
+                }, $scope.onErrorAlert);
             }
         });
         /**
@@ -425,15 +419,12 @@ app.controller("HomeController", [
         ///Connects to a new room based on it's secret
         $scope.connectWithUniqueSecret = function () {
             $http.post(configs.restHostName + '/Room/GetByUniqueSecret', { secret: $scope.uniqueRoomSecret }).then(function (response) {
-                ///TODO verification of response
-                if (response.data._id != undefined) {
-                    $scope.changeViewToRoom(response.data);
-                } else {
-                    $scope.Message = window.Resources.NoRoomWithThatSecret + $scope.uniqueRoomSecret;
+                if (response.data.ErrorType != 0) {
+                    $scope.Message = $scope.GetErrorOutput(response.data.Errors);
+                }else if (response.data.Data._id != undefined) {
+                    $scope.changeViewToRoom(response.data.Data);
                 }
-            }, function (error) {
-                alert(Resources.NoConnectionToServer);
-            });
+            }, $scope.onErrorAlert);
         }
         /**
       * @ngdoc method
@@ -484,9 +475,7 @@ app.controller("HomeController", [
                 } else {
                     $scope.modalChanger("deleteRoomModal","hide");
                 }
-            }, function (error) {
-                alert(Resources.NoConnectionToServer);
-            });
+            }, $scope.onErrorAlert);
         }
 
         //#endregion
@@ -495,7 +484,7 @@ app.controller("HomeController", [
         /**
        * @ngdoc method
        * @name RoomController#GetErrorOutput
-       * @methodOf WisR.controller:RoomController
+       * @methodOf WisR.controller:HomeController
        * @description
        * Helper function toget the error outputs
        * @param {Array<ErrorCode>} errors array of errors
@@ -516,9 +505,20 @@ app.controller("HomeController", [
             return output;
         }
         /**
+                * @ngdoc method
+                * @name RoomController#monErrorAlert
+                * @methodOf WisR.controller:HomeController
+                * @description
+                * Helper function to alert that error has occured when communicating with restapi
+                * @param {Error} error the error that has occured
+                */
+        $scope.onErrorAlert = function (error) {
+            alert(Resources.NoConnectionToServer);
+        }
+        /**
         * @ngdoc method
         * @name RoomController#modalChanger
-        * @methodOf WisR.controller:RoomController
+        * @methodOf WisR.controller:HomeController
         * @description
         * Helper function to change the state of a modal window
         * @param {String} id the id of the modal to change
