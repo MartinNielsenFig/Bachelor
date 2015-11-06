@@ -548,7 +548,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
                     $("#specificQuestionImage").prop('title', Resources.NoPictureText);
                     $scope.NoPicture = true;
                 } else {
-                    $scope.SpecificQuestion.Img = JSON.parse(response.data.Data);
+                    $scope.SpecificQuestion.Img = response.data.Data;
                     $("#specificQuestionImage").prop('title', Resources.ClickToChangeImageSize);
                     $scope.NoPicture = false;
                 }
