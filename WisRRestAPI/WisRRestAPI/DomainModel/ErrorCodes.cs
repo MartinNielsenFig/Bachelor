@@ -13,6 +13,17 @@ namespace WisRRestAPI {
         StringIsNotJsonFormat,
         CouldNotParseJsonToClass,
         CouldNotAddRoomToDatabase,
-        CouldNotGetRoomsFromDatabase
+        CouldNotGetRoomsFromDatabase,
+        CouldNotDeleteAllChatMessages,
+        CouldNotDeleteAllQuestions,
+        CouldNotDeleteRoom,
+        CouldNotUpdateRoom,
+        CouldNotGetUsers,
+        CouldNotAddUser,
+        CouldNotUpdateUser,
+        UserNotFound,
+        CouldNotDeleteUser,
+        CouldNotGetQuestions,
+        CouldNotGetQuestionType
     }
 }

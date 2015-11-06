@@ -126,14 +126,14 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
             }
             //if the user is currently working with this question
             if ($scope.SpecificQuestion != null) {
-                if (questionToDelete === $scope.SpecificQuestion._id) {
-                    if ($scope.SpecificQuestionShown) {
-                        $scope.ToggleShowQuestionTables();
-                    }
+            if (questionToDelete === $scope.SpecificQuestion._id) {
+                if ($scope.SpecificQuestionShown) {
+                    $scope.ToggleShowQuestionTables();
+                }                
                     $scope.modalChanger("myModalCreate", "hide");
                     $scope.modalChanger("deleteQuestionModal", "hide");
-                    alert(Resources.QuestionWasDeletedMessage);
-                }
+                alert(Resources.QuestionWasDeletedMessage);
+            }
             }
             
         };
@@ -279,6 +279,8 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
                 $scope.anonymousUser = false;
                 $scope.currentUser = response.data;
                 $scope.getRoom(true);
+            }, function (error) {
+                alert(Resources.NoConnectionToServer);
             });
         }
     });
@@ -387,6 +389,8 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
         $http.get(configs.restHostName + '/Question/GetQuestionsForRoomWithoutImages?roomId=' + MyRoomIdFromViewBag).then(function (response) {
             $scope.Questions = response.data;
             $scope.questionsLoaded = true;
+        }, function (error) {
+            alert(Resources.NoConnectionToServer);
         });
     };
     /**
@@ -436,6 +440,8 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
                     //Delete the old question
                     $scope.deleteQuestion($scope.SpecificQuestion);
                 }
+            }, function (error) {
+                alert(Resources.NoConnectionToServer);
             });
     }
 
@@ -469,7 +475,11 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
             return;
         ///Use response to send to REST API string response
         var Obj = { Value: $scope.answerChoosen.Value, UserId: $window.userId, UserDisplayName: $scope.anonymousUser ? null : $scope.currentUser.DisplayName }
-        $http.post(configs.restHostName + '/Question/AddQuestionResponse', {response:JSON.stringify(Obj), questionId:$scope.SpecificQuestion._id});
+        $http.post(configs.restHostName + '/Question/AddQuestionResponse', {response:JSON.stringify(Obj), questionId:$scope.SpecificQuestion._id}).then(function(succes) {
+           
+        }, function (error) {
+            alert(Resources.NoConnectionToServer);
+        });
     }
     /**
      * @ngdoc method
@@ -535,6 +545,8 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
                 $scope.NoPicture = false;
             }
             $scope.specificImageLoaded = true;
+        }, function (error) {
+            alert(Resources.NoConnectionToServer);
         });
         $scope.createPieChart();
     }
@@ -611,6 +623,8 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
             } else {
                 $scope.modalChanger("deleteQuestionModal", "hide");
             }
+        }, function (error) {
+            alert(Resources.NoConnectionToServer);
         });
     }
     ///#endregion
@@ -696,7 +710,11 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
             tempLocation.Latitude = position.coords.latitude;
             tempLocation.Longitude = position.coords.longitude;
 
-            $http.post(configs.restHostName + '/Room/UpdateLocation', { id: $scope.CurrentRoom._id, location: JSON.stringify(tempLocation) });
+            $http.post(configs.restHostName + '/Room/UpdateLocation', { id: $scope.CurrentRoom._id, location: JSON.stringify(tempLocation) }).then(function(succes) {
+              
+            }, function(error) {
+                alert(Resources.NoConnectionToServer);
+            });
         });
     }
     //#endregion
@@ -746,6 +764,8 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
                 }
             }
 
+        }, function (error) {
+            alert(Resources.NoConnectionToServer);
         });
     };
     //#endregion
@@ -791,12 +811,20 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
         if (direction == "Up") {
             ///Use response to send to REST API
             var Obj = { Value: 1, CreatedById: $window.userId }
-            $http.post(configs.restHostName + '/Question/AddVote', { vote: JSON.stringify(Obj), type: $scope.SpecificQuestion._t, id: $scope.SpecificQuestion._id });
+            $http.post(configs.restHostName + '/Question/AddVote', { vote: JSON.stringify(Obj), type: $scope.SpecificQuestion._t, id: $scope.SpecificQuestion._id }).then(function(success) {
+                
+            }, function(error) {
+                alert(Resources.NoConnectionToServer);
+            });
         }
         if (direction == "Down") {
             ///Use response to send to REST API
             var Obj = { Value: -1, CreatedById: $window.userId }
-            $http.post(configs.restHostName + '/Question/AddVote', { vote: JSON.stringify(Obj), type: $scope.SpecificQuestion._t, id: $scope.SpecificQuestion._id });
+            $http.post(configs.restHostName + '/Question/AddVote', { vote: JSON.stringify(Obj), type: $scope.SpecificQuestion._t, id: $scope.SpecificQuestion._id }).then(function (success) {
+
+            }, function (error) {
+                alert(Resources.NoConnectionToServer);
+            });
         }
     }
     //#endregion
@@ -888,6 +916,8 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
                         then(function (response) {
 
                         });
+                }, function(error) {
+                    alert(Resources.NoConnectionToServer);
                 });
             }
         } else {
@@ -952,11 +982,11 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
     /**
 * @ngdoc method
 * @name RoomController#GetAnswerUserName
-* @methodOf WisR.controller:RoomController
-* @description
+ * @methodOf WisR.controller:RoomController
+ * @description
 * Function that gets the display name of the answer
 * @param {Answer} answer The answer to check for displayname
-*/
+ */
     $scope.getAnswerUserName = function (answer) {
         if (answer == null)
             return null;

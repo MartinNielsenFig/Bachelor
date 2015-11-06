@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
+using MongoDB.Driver;
+using WisR.DomainModel;
 using WisR.DomainModels;
 using WisRRestAPI.DomainModel;
 
@@ -22,8 +25,20 @@ namespace WisRRestAPI.Controllers
         [System.Web.Mvc.HttpGet]
         public string GetAll()
         {
-            var Users = _ur.GetAllUsers();
-            return Users.Result.ToJson();
+            List<ErrorCodes> errors = new List<ErrorCodes>();
+            ErrorTypes errorType = ErrorTypes.Ok;
+            Task<List<User>> Users;
+            try
+            {
+                Users = _ur.GetAllUsers();
+        }
+            catch (Exception)
+            {
+                errors.Add(ErrorCodes.CouldNotGetUsers);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
+            }
+            errors.Add(ErrorCodes.CouldNotUpdateRoom);
+            return new Notification(Users.Result.ToJson(), errorType, errors).ToJson();
         }
 
         //Creates an user on MongoDB from User with facebook ID, then returns MongoDB ID.
@@ -31,76 +46,175 @@ namespace WisRRestAPI.Controllers
         [System.Web.Mvc.HttpPost]
         public string CreateUser(string User)
         {
-            var userToAdd = BsonSerializer.Deserialize<User>(User);
+            List<ErrorCodes> errors = new List<ErrorCodes>();
+            ErrorTypes errorType = ErrorTypes.Ok;
+
+            User userToAdd;
+            try
+            {
+                userToAdd = BsonSerializer.Deserialize<User>(User);
+            }
+            catch (Exception)
+            {
+                errors.Add(ErrorCodes.StringIsNotJsonFormat);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
+            }
+
 
             //Add more for other systems than facebook
             IEnumerable<User> user = null;
             if (userToAdd.FacebookId != null)
             {
+                try
+                {
                     user = _ur.GetAllUsers().Result.Where(x => x.FacebookId == userToAdd.FacebookId);               
-                
-            }else if (userToAdd.LDAPUserName!=null)
+                }
+                catch (Exception)
             {
+                    errors.Add(ErrorCodes.CouldNotGetUsers);
+                    return new Notification(null, ErrorTypes.Error, errors).ToJson();
+                }
+            }
+            else if (userToAdd.LDAPUserName != null)
+            {
+                try
+                {
                 user = _ur.GetAllUsers().Result.Where(x => x.LDAPUserName == userToAdd.LDAPUserName);
             }
+                catch (Exception)
+                {
+                    errors.Add(ErrorCodes.CouldNotGetUsers);
+                    return new Notification(null, ErrorTypes.Error, errors).ToJson();
+                }
+            }
            
-            if (user==null||!user.Any())
+            if (user == null || !user.Any())
             {
                 userToAdd.Id = ObjectId.GenerateNewId(DateTime.Now).ToString();
-                return _ur.AddUser(userToAdd);
+
+                var userId = "";
+                try
+                {
+                    userId = _ur.AddUser(userToAdd);
+            }
+                catch (Exception)
+                {
+                    errors.Add(ErrorCodes.CouldNotAddUser);
+                    return new Notification(null, ErrorTypes.Error, errors).ToJson();
+                }
+                return new Notification(userId, errorType, errors).ToJson();
             }
             else
             {
-                return user.First().Id;
+                return new Notification(user.First().Id, errorType, errors).ToJson();
             }
             
         }
 
         [System.Web.Mvc.HttpPost]
-        public void UpdateUser(string User,string Id)
+        public string UpdateUser(string User, string Id)
         {
-            var user = BsonSerializer.Deserialize<User>(User);
+            List<ErrorCodes> errors = new List<ErrorCodes>();
+            ErrorTypes errorType = ErrorTypes.Ok;
+
+            User user;
+            try
+            {
+                user = BsonSerializer.Deserialize<User>(User);
+            }
+            catch (Exception)
+        {
+                errors.Add(ErrorCodes.CouldNotParseJsonToClass);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
+            }
+
             user.Id = Id;
+            try
+            {
             _ur.UpdateUser(user.Id, user);
+        }
+            catch (Exception)
+            {
+                errors.Add(ErrorCodes.CouldNotUpdateUser);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
+            }
+            return new Notification(null, errorType, errors).ToJson();
         }
 
         [System.Web.Mvc.HttpPost]
         public string GetById(string id)
         {
+            List<ErrorCodes> errors = new List<ErrorCodes>();
+            ErrorTypes errorType = ErrorTypes.Ok;
+
             if (id == null)
             {
-                return "No user with null as id";
+                errors.Add(ErrorCodes.UserNotFound);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
             }
 
             User item;
-            try {
+            try
+            {
                 item = _ur.GetUser(id).Result;
             }
-            catch (Exception e) {
-                return e.StackTrace;
-            }
-            if (item == null)
+            catch (Exception)
             {
-                return "Not found";
+                errors.Add(ErrorCodes.UserNotFound);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
             }
 
-            return item.ToJson();
+            if (item == null)
+            {
+                errors.Add(ErrorCodes.UserNotFound);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
+            }
+
+            return new Notification(item.ToJson(), errorType, errors).ToJson();
         }
         [System.Web.Mvc.HttpDelete]
         public string DeleteUser(string id)
         {
-            var result = _ur.RemoveUser(id).Result;
+            List<ErrorCodes> errors = new List<ErrorCodes>();
+            ErrorTypes errorType = ErrorTypes.Ok;
+            DeleteResult result;
+            try
+            {
+                result = _ur.RemoveUser(id).Result;
+            }
+            catch (Exception)
+            {
+                errors.Add(ErrorCodes.CouldNotDeleteUser);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
+            }
+           
             if (result.DeletedCount == 1)
             {
-                return "User was deleted";
+                return new Notification("User was deleted", errorType, errors).ToJson();
             }
-            return "Couldn't find User to delete";
+
+            errors.Add(ErrorCodes.CouldNotGetUsers);
+            return new Notification(null, ErrorTypes.Error, errors).ToJson();
         }
 
         [System.Web.Mvc.HttpPost]
         public string GetWisrIdFromFacebookId(string facebookId)
         {
-            return _ur.GetWisrIdFromFacebookId(facebookId);
+            List<ErrorCodes> errors = new List<ErrorCodes>();
+            ErrorTypes errorType = ErrorTypes.Ok;
+
+            string id;
+            try
+            {
+                id = _ur.GetWisrIdFromFacebookId(facebookId);
+            }
+            catch (Exception)
+            {
+
+                errors.Add(ErrorCodes.CouldNotGetUsers);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
+            }
+            return new Notification(id, errorType, errors).ToJson();
         }
     }
 }

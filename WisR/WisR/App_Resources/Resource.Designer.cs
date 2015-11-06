@@ -522,6 +522,15 @@ namespace WisR.App_Resources {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
+        public static string NoConnectionToServer {
+            get {
+                return ResourceManager.GetString("NoConnectionToServer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
         public static string NoPictureText {
             get {
                 return ResourceManager.GetString("NoPictureText", resourceCulture);
