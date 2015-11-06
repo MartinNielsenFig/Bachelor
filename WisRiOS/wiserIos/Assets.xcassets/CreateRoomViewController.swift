@@ -210,6 +210,8 @@ class CreateRoomViewController: UITableViewController {
         let jsonRoom = JSONSerializer.toJson(self.room)
         let body = "room=\(jsonRoom)"
         HttpHandler.requestWithResponse(action: "Room/CreateRoom", type: "POST", body: body) { (data, response, error) in
+            assert(false)
+            /*
             if let error = try? ReturnMessage.parse(data) {
                 print(error.ErrorMessage)
                 
@@ -230,7 +232,7 @@ class CreateRoomViewController: UITableViewController {
                 dispatch_async(dispatch_get_main_queue()) {
                     self.performSegueWithIdentifier("RoomCreated", sender: self)
                 }
-            }
+            }*/
         }
     }
     

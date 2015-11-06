@@ -34,7 +34,6 @@
 		CB785FB01BE23FF1001DA19E /* LoginProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB785FAF1BE23FF1001DA19E /* LoginProvider.swift */; };
 		CB84802B1B9EDB5400D1C230 /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB84802A1B9EDB5400D1C230 /* CurrentUser.swift */; };
 		CB84802D1B9EE0DC00D1C230 /* FacebookHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB84802C1B9EE0DC00D1C230 /* FacebookHelper.swift */; };
-		CB84F8B31BB13FA400CD07AD /* ReturnMessage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB84F8B21BB13FA400CD07AD /* ReturnMessage.swift */; };
 		CB9FF7C61B8F1401003A193B /* HTTPHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9FF7C51B8F1401003A193B /* HTTPHandler.swift */; };
 		CB9FF7CA1B8F27EC003A193B /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9FF7C91B8F27EC003A193B /* Coordinate.swift */; };
 		CB9FF7CC1B8F28B4003A193B /* Answer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9FF7CB1B8F28B4003A193B /* Answer.swift */; };
@@ -233,7 +232,6 @@
 		CB785FAF1BE23FF1001DA19E /* LoginProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginProvider.swift; sourceTree = "<group>"; };
 		CB84802A1B9EDB5400D1C230 /* CurrentUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentUser.swift; sourceTree = "<group>"; };
 		CB84802C1B9EE0DC00D1C230 /* FacebookHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookHelper.swift; sourceTree = "<group>"; };
-		CB84F8B21BB13FA400CD07AD /* ReturnMessage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReturnMessage.swift; sourceTree = "<group>"; };
 		CB9FF7C51B8F1401003A193B /* HTTPHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPHandler.swift; sourceTree = "<group>"; };
 		CB9FF7C91B8F27EC003A193B /* Coordinate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
 		CB9FF7CB1B8F28B4003A193B /* Answer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Answer.swift; sourceTree = "<group>"; };
@@ -426,7 +424,6 @@
 				CB9FF7D11B8F2B70003A193B /* User.swift */,
 				CB02181F1B9462C400DFC9DD /* ChatMessage.swift */,
 				CBF19CDD1BB03D5800A906B3 /* Vote.swift */,
-				CB84F8B21BB13FA400CD07AD /* ReturnMessage.swift */,
 				CB116F5D1BEA7E1D00DD7DD3 /* Notification.swift */,
 			);
 			name = Models;
@@ -732,7 +729,6 @@
 				CB116F6C1BEA7F0E00DD7DD3 /* ErrorType.swift in Sources */,
 				CB84802D1B9EE0DC00D1C230 /* FacebookHelper.swift in Sources */,
 				CB1FBA001B983C3A00B1FCF8 /* BooleanInputCell.swift in Sources */,
-				CB84F8B31BB13FA400CD07AD /* ReturnMessage.swift in Sources */,
 				CB39A97B1B986B7F0014F818 /* StringExtractor.swift in Sources */,
 				CB1B7B901BB966B400EB637E /* ResultViewController.swift in Sources */,
 			);

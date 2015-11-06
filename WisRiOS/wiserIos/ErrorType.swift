@@ -1,5 +1,5 @@
 //
-//  ErrorType.swift
+//  ErrorTypes.swift
 //  wiserIos
 //
 //  Created by Peter Helstrup Jensen on 04/11/2015.
