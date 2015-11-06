@@ -284,9 +284,7 @@ app.controller("HomeController", [
                 $scope.locationLatitude = $scope.currentLocation.coords.latitude;
                 $scope.locationLongitude = $scope.currentLocation.coords.longitude;
                 $scope.roomsLoaded = true;
-            }, function(error) {
-                alert(Resources.NoConnectionToServer);
-            });
+            }, $scope.onErrorAlert);
         };
         /**
         * @ngdoc method
@@ -357,17 +355,11 @@ app.controller("HomeController", [
                                     then(function (response) {
 
                                     });
-                            }, function (error) {
-                                alert(Resources.NoConnectionToServer);
-                            });
+                            }, $scope.onErrorAlert);
 
                             $scope.changeViewToRoom(room);
-                        }, function (error) {
-                            alert(Resources.NoConnectionToServer);
-                        });
-                }, function(error) {
-                    alert(Resources.NoConnectionToServer);
-                });
+                        }, $scope.onErrorAlert);
+                }, $scope.onErrorAlert);
         }
         /**
        * @ngdoc watch
@@ -392,9 +384,7 @@ app.controller("HomeController", [
                     } else {
                         $scope.currentUser = response.data.Data;
                     }
-                }, function (error) {
-                    alert(Resources.NoConnectionToServer);
-                });
+                }, $scope.onErrorAlert);
             }
         });
         /**
@@ -434,9 +424,7 @@ app.controller("HomeController", [
                 }else if (response.data.Data._id != undefined) {
                     $scope.changeViewToRoom(response.data.Data);
                 }
-            }, function (error) {
-                alert(Resources.NoConnectionToServer);
-            });
+            }, $scope.onErrorAlert);
         }
         /**
       * @ngdoc method
@@ -487,9 +475,7 @@ app.controller("HomeController", [
                 } else {
                     $scope.modalChanger("deleteRoomModal","hide");
                 }
-            }, function (error) {
-                alert(Resources.NoConnectionToServer);
-            });
+            }, $scope.onErrorAlert);
         }
 
         //#endregion
@@ -517,6 +503,17 @@ app.controller("HomeController", [
                 output = output + error;
             }
             return output;
+        }
+        /**
+                * @ngdoc method
+                * @name RoomController#monErrorAlert
+                * @methodOf WisR.controller:RoomController
+                * @description
+                * Helper function to alert that error has occured when communicating with restapi
+                * @param {Error} error the error that has occured
+                */
+        $scope.onErrorAlert = function (error) {
+            alert(Resources.NoConnectionToServer);
         }
         /**
         * @ngdoc method
