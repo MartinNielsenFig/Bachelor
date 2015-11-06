@@ -47,8 +47,10 @@ class RoomTableViewController: UITableViewController {
             return
         }
         let roomId = self.rooms[indexPath.row]._id
-        HttpHandler.requestWithResponse(action: "Room/DeleteRoom?id=\(roomId!)", type: "DELETE", body: "") { (data, response, error) -> Void in
-            if data.containsString("deleted") {
+        HttpHandler.requestWithResponse(action: "Room/DeleteRoom?id=\(roomId!)", type: "DELETE", body: "") {
+            (notification, response, error) -> Void in
+            
+            if notification.ErrorType == .Ok || notification.ErrorType == .OkWithError {
                 print("Did delete room")
                 self.fetchRooms()
             } else {
