@@ -9,6 +9,7 @@ namespace WisR.DomainModels
         public override string Id { get; set; }
         public override string RoomId { get; set; }
         public override string CreatedById { get; set; }
+        public override string CreatedByUserDisplayName { get; set; }
         public override List<Vote> Votes { get; set; }
         public override string Img { get; set; }
         public override string QuestionText { get; set; }

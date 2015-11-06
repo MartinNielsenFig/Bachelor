@@ -396,4 +396,7 @@
   <data name="RoomSecretAlreadyInUse" xml:space="preserve">
     <value>Denne hemmelighed er allerede i brug</value>
   </data>
+  <data name="Anonymous" xml:space="preserve">
+    <value>Anonym</value>
+  </data>
 </root>

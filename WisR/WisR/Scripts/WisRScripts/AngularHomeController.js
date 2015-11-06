@@ -330,7 +330,7 @@ app.controller("HomeController", [
                             }
 
                             //Add roomId to connected rooms for the user
-                            var room = response.data.Data; 
+                            var room = {_id:response.data.Data} 
                             $scope.currentUser.ConnectedRoomIds.push(room._id);
 
                             var newIds = "";

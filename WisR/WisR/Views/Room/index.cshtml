@@ -34,7 +34,7 @@
                             <tbody ng-if="specificRoomLoaded && questionsLoaded">
                                 <tr style="cursor: pointer" ng-class="{blink_me:!question.Votes.length}" ng-repeat="question in Questions|filter: { RoomId: '@ViewBag.roomId',CreatedById: CurrentRoom.CreatedById }" ng-click="ShowSpecificQuestion(question)">
                                     <td title="@WisR.App_Resources.Resource.QuestionText">{{question.QuestionText}}</td>
-                                    <td title="@WisR.App_Resources.Resource.AuthorOfQuestion">{{GetUsernameById(question.CreatedById)}}</td>
+                                    <td title="@WisR.App_Resources.Resource.AuthorOfQuestion">{{getQuestionUserName(question)}}</td>
                                     <td title="@WisR.App_Resources.Resource.AmountOfUpvotes">{{question.Votes | CountVotes: 1}}<span ng-class="{'upvoted':hasVoted({{question.Votes}},true)}" class="glyphicon glyphicon-thumbs-up"></span></td>
                                     <td title="@WisR.App_Resources.Resource.AmountOfDownvotes">{{question.Votes | CountVotes: -1}}<span ng-class="{'downvoted':hasVoted({{question.Votes}},false)}" class="glyphicon glyphicon-thumbs-down"></span></td>
                                     <td ng-show="question.CreatedById!=currentUser._id" title="@WisR.App_Resources.Resource.Disabled">
@@ -65,7 +65,7 @@
                                 <tbody ng-if="specificRoomLoaded && questionsLoaded">
                                     <tr style="cursor: pointer" ng-class="{blink_me:!question.Votes.length}" ng-repeat="question in Questions|filter: { RoomId: '@ViewBag.roomId',CreatedById: '!'+CurrentRoom.CreatedById  }|orderBy:'-((Votes|CountVotes: 1)-(Votes|CountVotes:-1))' " ng-click="ShowSpecificQuestion(question)">
                                         <td title="@WisR.App_Resources.Resource.QuestionText">{{question.QuestionText}}</td>
-                                        <td title="@WisR.App_Resources.Resource.AuthorOfQuestion">{{GetUsernameById(question.CreatedById)}}</td>
+                                        <td title="@WisR.App_Resources.Resource.AuthorOfQuestion">{{getQuestionUserName(question)}}</td>
                                         <td title="@WisR.App_Resources.Resource.AmountOfUpvotes">{{question.Votes | CountVotes: 1}}<span ng-class="{'upvoted':hasVoted({{question.Votes}},true)}" class="glyphicon glyphicon-thumbs-up"></span></td>
                                         <td title="@WisR.App_Resources.Resource.AmountOfDownvotes">{{question.Votes | CountVotes: -1}}<span ng-class="{'downvoted':hasVoted({{question.Votes}},false)}" class="glyphicon glyphicon-thumbs-down"></span></td>
                                         <td ng-show="question.CreatedById!=currentUser._id" title="@WisR.App_Resources.Resource.Disabled">
@@ -105,7 +105,7 @@
                                 <img ng-show="specificImageLoaded" ng-click="toggleImageSize()" id="specificQuestionImage" ng-src="data:image/png;base64,{{SpecificQuestion.Img}}" title="@WisR.App_Resources.Resource.ClickToChangeImageSize" style="cursor: pointer; width: 100px; height: 100px" />
                             </td>
                             <td title="@WisR.App_Resources.Resource.QuestionText">{{SpecificQuestion.QuestionText}}</td>
-                            <td title="@WisR.App_Resources.Resource.AuthorOfQuestion">{{GetUsernameById(SpecificQuestion.CreatedById)}}</td>
+                            <td title="@WisR.App_Resources.Resource.AuthorOfQuestion">{{getQuestionUserName(SpecificQuestion)}}</td>
                             <td>
                                 <span title="@WisR.App_Resources.Resource.AmountOfUpvotes">{{SpecificQuestion.Votes | CountVotes: 1}}</span>
                                 <button class="noBtn" ng-click="Vote('Up')" title="{{{true: '@WisR.App_Resources.Resource.LoginToEnable', false: ''}[anonymousUser]}}" style="pointer-events: auto;" ng-disabled="anonymousUser"> <span ng-class="{'upvoted':hasVoted('{{SpecificQuestion.Votes}}' != undefined? SpecificQuestion.Votes: 'undefined',true)}" class="glyphicon glyphicon-thumbs-up"></span></button>
@@ -147,10 +147,10 @@
                     </div>
                     <label ng-hide="showResults">@WisR.App_Resources.Resource.NoResultsYet</label>
                     <div ng-show="SpecificQuestion._t=='TextualQuestion'" class="row" ng-repeat="answer in SpecificQuestion.Result">
-                        <h5 class="media-heading">{{GetUsernameById(answer.UserId)}}</h5>
+                        <h5 class="media-heading">{{getAnswerUserName(answer)}}</h5>
                         <small class="col-lg-10">{{answer.Value}}</small>
                     </div>
-                    <div ng-show="SpecificQuestion._t=='MultipleChoiceQuestion'">
+                    <div ng-if="SpecificQuestion._t=='MultipleChoiceQuestion'">
                         <label ng-show="specificAnswer!=null" id="specificAnswerLabel">@WisR.App_Resources.Resource.YouAnswered: {{specificAnswer}}</label>                    
                         <div id="chartDiv" ng-hide="!showResults">
                             <select ng-model="chartType">
@@ -178,7 +178,7 @@
                                 <div ng-repeat="chatMessage in ChatMessages" class="media msg blink_me">
                                     <div class="media-body">
                                         <small class="pull-right time"><i class="fa fa-clock-o"></i> {{chatMessage.Timestamp*1| date:'HH:mm:ss dd/MM-yyyy'}}</small>
-                                        <h5 class="media-heading">{{GetUsernameById(chatMessage.ByUserId)}}</h5>
+                                        <h5 class="media-heading">{{getChatMessageUserName(chatMessage)}}</h5>
                                         <small class="col-lg-10">{{chatMessage.Value}}</small>
                                     </div>
                                 </div>
@@ -290,7 +290,7 @@
                                 <label class="col-md-6 text-center">@WisR.App_Resources.Resource.QuestionText</label>
                                 <p class="col-md-6">{{SpecificQuestion.QuestionText}}</p>
                                 <label class="col-md-6 text-center">@WisR.App_Resources.Resource.AuthorOfQuestion</label>
-                                <p class="col-md-6">{{GetUsernameById(SpecificQuestion.CreatedById)}}</p>
+                                <p class="col-md-6">{{getQuestionUserName(SpecificQuestion)}}</p>
                                 <div class="col-md-12 text-center">
                                     <button id="DeleteSubmitButton" type="submit" ng-click="deleteQuestion(SpecificQuestion)" class="btn btn-primary">@WisR.App_Resources.Resource.Delete</button>
                                     <span>

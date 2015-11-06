@@ -125,14 +125,17 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
                 $scope.$apply();
             }
             //if the user is currently working with this question
-            if (questionToDelete === $scope.SpecificQuestion._id) {
-                if ($scope.SpecificQuestionShown) {
-                    $scope.ToggleShowQuestionTables();
-                }                
-                $scope.modalChanger("myModalCreate","hide");
-                $scope.modalChanger("deleteQuestionModal","hide");
-                alert(Resources.QuestionWasDeletedMessage);
+            if ($scope.SpecificQuestion != null) {
+                if (questionToDelete === $scope.SpecificQuestion._id) {
+                    if ($scope.SpecificQuestionShown) {
+                        $scope.ToggleShowQuestionTables();
+                    }
+                    $scope.modalChanger("myModalCreate", "hide");
+                    $scope.modalChanger("deleteQuestionModal", "hide");
+                    alert(Resources.QuestionWasDeletedMessage);
+                }
             }
+            
         };
         /**
           * @ngdoc method
@@ -424,7 +427,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
             }
         }
         ///Make get request for json object conversion
-        $http.post('/Room/toJsonQuestion', { CreatedBy: $window.userId, RoomId: MyRoomIdFromViewBag, Image: image, QuestionText: $scope.QuestionText, ResponseOptions: newResponses, ExpireTimestamp: $scope.ExpirationTime, QuetionsType: $scope.QuestionType }).
+        $http.post('/Room/toJsonQuestion', { CreatedBy: $window.userId, CreatedByUserName: $scope.anonymousUser ? null : $scope.currentUser.DisplayName, RoomId: MyRoomIdFromViewBag, Image: image, QuestionText: $scope.QuestionText, ResponseOptions: newResponses, ExpireTimestamp: $scope.ExpirationTime, QuetionsType: $scope.QuestionType }).
             then(function (response) {
                 ///Use response to send to REST API
                 $http.post(configs.restHostName + '/Question/CreateQuestion', { question: JSON.stringify(response.data), type: $scope.QuestionType });
@@ -465,7 +468,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
         if ($window.userId == "NoUser")
             return;
         ///Use response to send to REST API string response
-        var Obj = {Value:$scope.answerChoosen.Value,UserId:$window.userId}
+        var Obj = { Value: $scope.answerChoosen.Value, UserId: $window.userId, UserDisplayName: $scope.anonymousUser ? null : $scope.currentUser.DisplayName }
         $http.post(configs.restHostName + '/Question/AddQuestionResponse', {response:JSON.stringify(Obj), questionId:$scope.SpecificQuestion._id});
     }
     /**
@@ -522,7 +525,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
         $http.get(configs.restHostName + '/Question/GetImageByQuestionId?questionId=' + question._id).then(function (response) {
             if (response.data === "") {
                 //set image to noImage
-                $scope.questionImage = configs.noImgBase64;
+                //$scope.questionImage = configs.noImgBase64;
                 $scope.SpecificQuestion.Img = configs.noImgBase64;
                 $("#specificQuestionImage").prop('title', Resources.NoPictureText);
                 $scope.NoPicture = true;
@@ -579,6 +582,9 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
     * Function that toggles the view between two tables of questions and a specific question. If going from specific question it stops the progress timer
     */
     $scope.ToggleShowQuestionTables = function () {
+        if ($scope.SpecificQuestionShown) {
+            $scope.SpecificQuestion = null;
+        }
         $scope.SpecificQuestionShown = !$scope.SpecificQuestionShown;
         ///Stop the timer for the progress bar if it is running
         if (angular.isDefined($scope.progressCancel)) {
@@ -919,18 +925,42 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
     
     /**
  * @ngdoc method
- * @name RoomController#GetUsernameById
+ * @name RoomController#GetChatMessageUserName
  * @methodOf WisR.controller:RoomController
  * @description
- * Function that checks the collection of ActiveUsers for a user with the given userId, then returns the name of the user or Anonymous if it is not found
- * @param {String} userId The userId to look for in the ActiveUsers collection
+ * Function that gets the display name of the chatmessage
+ * @param {ChatMessage} chatMessage The chatMessage to check for displayname
  */
-    //Get username, for the chat
-    $scope.GetUsernameById = function (userId) {
-        var result = $.grep($scope.ActiveUsers, function (e) { return e._id == userId; });
-        if (userId == undefined || result.length == 0)
-            return "Anonymous";
-        return result[0].DisplayName;
+    $scope.getChatMessageUserName = function (chatMessage) {
+        if (chatMessage == null)
+            return;
+        return chatMessage.ByUserDisplayName == null ? Resources.Anonymous : chatMessage.ByUserDisplayName;
+    }
+    /**
+* @ngdoc method
+* @name RoomController#GetQuestionUserName
+* @methodOf WisR.controller:RoomController
+* @description
+* Function that gets the display name of the question
+* @param {Question} question The question to check for displayname
+*/
+    $scope.getQuestionUserName = function (question) {
+        if (question == null)
+            return null;
+        return question.CreatedByUserDisplayName == null ? Resources.Anonymous : question.CreatedByUserDisplayName;
+    }
+    /**
+* @ngdoc method
+* @name RoomController#GetAnswerUserName
+* @methodOf WisR.controller:RoomController
+* @description
+* Function that gets the display name of the answer
+* @param {Answer} answer The answer to check for displayname
+*/
+    $scope.getAnswerUserName = function (answer) {
+        if (answer == null)
+            return null;
+        return answer.UserDisplayName == null ? Resources.Anonymous : answer.UserDisplayName;
     }
     /**
  * @ngdoc method
@@ -945,7 +975,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
         $scope.textAreaModel = "";
 
         ///Make get request for json object conversion
-        $http.post('/Room/toJsonChatMessage', { userId: window.userId, roomId: MyRoomIdFromViewBag, text: message }).
+        $http.post('/Room/toJsonChatMessage', { userId: window.userId, userDisplayName: $scope.anonymousUser?null:$scope.currentUser.DisplayName, roomId: MyRoomIdFromViewBag, text: message }).
             then(function (response) {
                 ///Use response to send to REST API
                 $http.post(configs.restHostName + '/Chat/CreateChatMessage', { ChatMessage: JSON.stringify(response.data) });

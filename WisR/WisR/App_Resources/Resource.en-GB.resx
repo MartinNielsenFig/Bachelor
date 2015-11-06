@@ -396,4 +396,7 @@
   <data name="RoomSecretAlreadyInUse" xml:space="preserve">
     <value>There already exist a room with that secret</value>
   </data>
+  <data name="Anonymous" xml:space="preserve">
+    <value>Anonymous</value>
+  </data>
 </root>

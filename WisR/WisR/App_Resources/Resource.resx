@@ -408,4 +408,7 @@
   <data name="StringIsNotJsonFormat" xml:space="preserve">
     <value />
   </data>
+  <data name="Anonymous" xml:space="preserve">
+    <value />
+  </data>
 </root>
