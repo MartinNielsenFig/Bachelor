@@ -24,6 +24,13 @@ namespace WisRRestAPI {
         UserNotFound,
         CouldNotDeleteUser,
         CouldNotGetQuestions,
-        CouldNotGetQuestionType
+        CouldNotGetQuestionType,
+        NewQuestionIdShouldBeNull,
+        RoomDoesNotExist,
+        CouldNotAddQuestion,
+        CouldNotUpdateQuestion,
+        QuestionExpired, 
+        ActiveDirctoryError,
+        CouldNotGetChatMessages
     }
 }

@@ -12,6 +12,7 @@ using System.Web.Script.Serialization;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Conventions;
+using MongoDB.Driver;
 using WisR.DomainModel;
 using WisR.DomainModels;
 using WisRRestAPI.DomainModel;
@@ -165,10 +166,12 @@ temp= questions.Result.ToJson();
             }
             if (q.Id != null)
             {
-                return "New question should have id of null";
+                errors.Add(ErrorCodes.NewQuestionIdShouldBeNull);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
             }
             if (!_rr.DoesRoomExist(q.RoomId)) {
-                return "Room doesn't exist;";
+                errors.Add(ErrorCodes.RoomDoesNotExist);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
             }
 
             q.Id = ObjectId.GenerateNewId(DateTime.Now).ToString();
@@ -176,23 +179,35 @@ temp= questions.Result.ToJson();
             q.CreationTimestamp = TimeHelper.timeSinceEpoch();
             q.ExpireTimestamp = Convert.ToString(Convert.ToInt64(TimeHelper.timeSinceEpoch()) + Convert.ToInt64(q.ExpireTimestamp) * 60000);
 
-            String error = "";
-            try
+           try
             {
                 _irabbitPublisher.publishString("CreateQuestion", q.ToJson());
             }
             catch (Exception e)
             {
-                error += "Could not publish to rabbitMQ";
+                errors.Add(ErrorCodes.RabbitMqError);
+                errorType = ErrorTypes.Complicated;
             }
-            _qr.AddQuestionObject(b);
-            return "Question saved with id: " + q.Id + " error: " + error;
-            
-            //Todo use Error() class instead of string.
+
+            try
+            {
+                _qr.AddQuestionObject(b);
+            }
+            catch (Exception)
+            {
+                errors.Add(ErrorCodes.CouldNotAddQuestion);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
+            }
+
+            return new Notification(null, errorType, errors).ToJson();
         }
+
         [System.Web.Mvc.HttpPost]
-        public void UpdateQuestion(string question, string type, string id)
+        public string UpdateQuestion(string question, string type, string id)
         {
+            List<ErrorCodes> errors = new List<ErrorCodes>();
+            ErrorTypes errorType = ErrorTypes.Ok;
+
             Type questionType;
 
             string typeString = "WisR.DomainModels." + type;
@@ -201,59 +216,75 @@ temp= questions.Result.ToJson();
             object b;
             Question q;
 
-            b = BsonSerializer.Deserialize(question, questionType);
+            try
+            {
+ b = BsonSerializer.Deserialize(question, questionType);
+            }
+            catch (Exception)
+            {
+                errors.Add(ErrorCodes.CouldNotParseJsonToClass);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
+            }
+           
             q = (Question)b;
             q.Id = id;
-            _qr.UpdateQuestion(id, q);
+            try
+            {
+                _qr.UpdateQuestion(id, q);
+            }
+            catch (Exception)
+            {
+                errors.Add(ErrorCodes.CouldNotUpdateQuestion);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
+            }
+            
             try
             {
                 _irabbitPublisher.publishString("UpdateQuestion", q.ToJson());
             }
             catch (Exception e)
             {
+                errors.Add(ErrorCodes.RabbitMqError);
+                errorType= ErrorTypes.Complicated;
             }
-            //TODO return something to the user
+            return new Notification(null, errorType, errors).ToJson();
         }
-
-        //[System.Web.Mvc.HttpPost]
-        //public void UpdateQuestionResponse(string question, string type, string id)
-        //{
-        //    Type questionType;
-
-        //    string typeString = "WisR.DomainModels." + type;
-        //    questionType = Type.GetType(typeString);
-
-        //    object b;
-        //    Question q;
-
-        //    b = BsonSerializer.Deserialize(question, questionType);
-        //    q = (Question)b;
-        //    if (Convert.ToDouble(q.ExpireTimestamp) > (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalMilliseconds)
-        //    {
-        //        q.Id = id;
-        //        _qr.UpdateQuestion(id, q);
-        //        try
-        //        {
-        //            _irabbitPublisher.publishString("UpdateQuestion", q.ToJson());
-        //        }
-        //        catch (Exception e)
-        //        {
-        //        }
-        //    }
-
-        //}
 
         [System.Web.Mvc.HttpPost]
         public string AddQuestionResponse(string response, string questionId)
         {
-            var q = _qr.GetQuestionWithoutImage(questionId).Result;
+            List<ErrorCodes> errors = new List<ErrorCodes>();
+            ErrorTypes errorType = ErrorTypes.Ok;
+
+            Question q;
+            try
+            {
+ q = _qr.GetQuestionWithoutImage(questionId).Result;
+            }
+            catch (Exception)
+            {
+                errors.Add(ErrorCodes.CouldNotGetQuestions);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
+            }
+        
+           
 
             if (Convert.ToDouble(q.ExpireTimestamp) >
                 (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalMilliseconds)
             {
                 q.Id = questionId;
 
-                var answer = BsonSerializer.Deserialize<Answer>(response);
+                Answer answer;
+                try
+                {
+ answer = BsonSerializer.Deserialize<Answer>(response);
+                }
+                catch (Exception)
+                {
+                    errors.Add(ErrorCodes.CouldNotParseJsonToClass);
+                    return new Notification(null, ErrorTypes.Error, errors).ToJson();
+                }
+               
                 if (q.Result.Exists(x => x.UserId == answer.UserId))
                 {
                     q.Result.Find(x => x.UserId == answer.UserId).Value = answer.Value;
@@ -263,69 +294,140 @@ temp= questions.Result.ToJson();
                     q.Result.Add(answer);
                 }
 
-                _qr.UpdateQuestionResults(questionId, q);
+                try
+                {
+_qr.UpdateQuestionResults(questionId, q);
+                }
+                catch (Exception)
+                {
+                    errors.Add(ErrorCodes.CouldNotUpdateQuestion);
+                    return new Notification(null, ErrorTypes.Error, errors).ToJson();
+                }
+                
                 try
                 {
                     _irabbitPublisher.publishString("AddQuestionResponse", q.ToJson());
                 }
                 catch (Exception e)
                 {
-                    return "error" + e.StackTrace;
+                    errors.Add(ErrorCodes.RabbitMqError);
+                    errorType = ErrorTypes.Complicated;
                 }
             }
             else
             {
-                return "Cannot respond to a question where timer has run out.";
+                errors.Add(ErrorCodes.QuestionExpired);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
             }
-            //Todo handle return with Error() class
-            return "";
+           
+            return new Notification(null, errorType, errors).ToJson();
         }
 
         public string AddVote(string vote, string type, string id) {
+            List<ErrorCodes> errors = new List<ErrorCodes>();
+            ErrorTypes errorType = ErrorTypes.Ok;
             Type questionType;
 
             string typeString = "WisR.DomainModels." + type;
             questionType = Type.GetType(typeString);
 
-            var q = _qr.GetQuestionWithoutImage(id).Result;
+            Question q;
+            try
+            {
+q = _qr.GetQuestionWithoutImage(id).Result;
+            }
+            catch (Exception)
+            {
+                errors.Add(ErrorCodes.CouldNotGetQuestions);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
+            }
+            
 
             q.Id = id;
 
-            var v = BsonSerializer.Deserialize<Vote>(vote);
+            Vote v;
+            try
+            {
+                v = BsonSerializer.Deserialize<Vote>(vote);
+            }
+            catch (Exception)
+            {
+                errors.Add(ErrorCodes.CouldNotParseJsonToClass);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
+            }
+            
 
             if (q.Votes.Exists(x => x.CreatedById == v.CreatedById)) {
                 q.Votes.Find(x => x.CreatedById == v.CreatedById).Value = v.Value;
             } else {
                 q.Votes.Add(v);
             }
-            //Todo: error handling?
-            _qr.UpdateQuestionVotes(id, q);
+
+            try
+            {
+                _qr.UpdateQuestionVotes(id, q);
+            }
+            catch (Exception)
+            {
+                errors.Add(ErrorCodes.CouldNotUpdateQuestion);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
+            }
+           
+
             try {
                 _irabbitPublisher.publishString("AddQuestionVote", q.ToJson());
             } catch (Exception e) {
-                return "error " + e.StackTrace;
+                errors.Add(ErrorCodes.RabbitMqError);
+                errorType = ErrorTypes.Complicated;
             }
 
-            return "";
+            return new Notification(null, errorType, errors).ToJson();
         }
 
         [System.Web.Mvc.HttpGet]
         public string GetById(string id)
         {
-            var item = _qr.GetQuestion(id);
+            List<ErrorCodes> errors = new List<ErrorCodes>();
+            ErrorTypes errorType = ErrorTypes.Ok;
+
+            Task<Question> item;
+            try
+            {
+                item = _qr.GetQuestion(id);
+            }
+            catch (Exception)
+            {
+                errors.Add(ErrorCodes.CouldNotGetQuestions);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
+            }
+            
             if (item == null)
             {
-                return "Not found";
+                errors.Add(ErrorCodes.CouldNotGetQuestions);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
             }
 
-            return item.ToJson();
+            return new Notification(item.ToJson(), errorType, errors).ToJson();
         }
 
 
         [System.Web.Mvc.HttpDelete]
         public string DeleteQuestion(string id)
         {
-            var result = _qr.DeleteQuestion(id).Result;
+            List<ErrorCodes> errors = new List<ErrorCodes>();
+            ErrorTypes errorType = ErrorTypes.Ok;
+
+            DeleteResult result;
+            try
+            {
+                result = _qr.DeleteQuestion(id).Result;
+            }
+            catch (Exception)
+            {
+                errors.Add(ErrorCodes.CouldNotDeleteAllQuestions);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
+            }
+           
             if (result.DeletedCount == 1)
             {
                 try
@@ -334,15 +436,14 @@ temp= questions.Result.ToJson();
                 }
                 catch (Exception e)
                 {
-                    return "error " + e.StackTrace;
+                    errors.Add(ErrorCodes.RabbitMqError);
+                    errorType = ErrorTypes.Complicated;
                 }
-                return "Question was deleted";
+                return new Notification(null, errorType, errors).ToJson();
             }
 
-            return "";//new Error("Couldn't find question to delete",100).ToJson();
+            errors.Add(ErrorCodes.CouldNotDeleteAllQuestions);
+            return new Notification(null, ErrorTypes.Error, errors).ToJson();
         }
-
-       
     }
-   
 }
