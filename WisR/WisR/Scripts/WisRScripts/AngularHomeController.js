@@ -379,7 +379,11 @@ app.controller("HomeController", [
             }
             else if (n != undefined) {
                 $http.post(configs.restHostName + '/User/GetById', { id: n }).then(function (response) {
-                    $scope.currentUser = response.data;
+                    if (response.data.ErrorType != 0) {
+                        alert($scope.GetErrorOutput(response.data.Errors));
+                    } else {
+                        $scope.currentUser = response.data.Data;
+                    }
                 });
             }
         });
@@ -415,11 +419,10 @@ app.controller("HomeController", [
         ///Connects to a new room based on it's secret
         $scope.connectWithUniqueSecret = function () {
             $http.post(configs.restHostName + '/Room/GetByUniqueSecret', { secret: $scope.uniqueRoomSecret }).then(function (response) {
-                ///TODO verification of response
-                if (response.data._id != undefined) {
-                    $scope.changeViewToRoom(response.data);
-                } else {
-                    $scope.Message = window.Resources.NoRoomWithThatSecret + $scope.uniqueRoomSecret;
+                if (response.data.ErrorType != 0) {
+                    $scope.Message = $scope.GetErrorOutput(response.data.Errors);
+                }else if (response.data.Data._id != undefined) {
+                    $scope.changeViewToRoom(response.data.Data);
                 }
             });
         }
