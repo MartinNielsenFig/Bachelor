@@ -541,7 +541,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
                 //TODO better error handling?
                 alert($scope.GetErrorOutput(response.data.Errors));
             } else {
-                if (JSON.parse(response.data.Data) === "") {
+                if (response.data.Data === null) {
                     //set image to noImage
                     //$scope.questionImage = configs.noImgBase64;
                     $scope.SpecificQuestion.Img = configs.noImgBase64;
@@ -935,8 +935,15 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
  */
     $scope.getChatMessages = function () {
         $http.post(configs.restHostName + '/Chat/GetAllByRoomId', { roomId: MyRoomIdFromViewBag }).then(function (response) {
-            $scope.ChatMessages = response.data;
-            $scope.chatLoaded = true;
+            if (response.data.ErrorType != 0) {
+                //TODO better error handling?
+                alert($scope.GetErrorOutput(response.data.Errors));
+                return;
+            } else {
+                $scope.ChatMessages = JSON.parse(response.data.Data);
+                $scope.chatLoaded = true;
+            }
+            
         });
     };
     /**

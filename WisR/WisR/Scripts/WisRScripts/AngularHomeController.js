@@ -382,7 +382,7 @@ app.controller("HomeController", [
                     if (response.data.ErrorType != 0) {
                         alert($scope.GetErrorOutput(response.data.Errors));
                     } else {
-                        $scope.currentUser = response.data.Data;
+                        $scope.currentUser = JSON.parse(response.data.Data);
                     }
                 }, $scope.onErrorAlert);
             }
@@ -421,8 +421,8 @@ app.controller("HomeController", [
             $http.post(configs.restHostName + '/Room/GetByUniqueSecret', { secret: $scope.uniqueRoomSecret }).then(function (response) {
                 if (response.data.ErrorType != 0) {
                     $scope.Message = $scope.GetErrorOutput(response.data.Errors);
-                }else if (response.data.Data._id != undefined) {
-                    $scope.changeViewToRoom(response.data.Data);
+                }else if (JSON.parse(response.data.Data)._id != undefined) {
+                    $scope.changeViewToRoom(JSON.parse(response.data.Data));
                 }
             }, $scope.onErrorAlert);
         }
