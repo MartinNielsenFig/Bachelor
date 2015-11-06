@@ -15,9 +15,24 @@
 <div class="addresponseoption"><div class="roomcontroller-addresponseoption-page"><p>Function for adding a response option to a question that the user is creating</p>
 </div></div>
 </li>
-<li><h3 id="methods_getusernamebyid">GetUsernameById(userId)</h3>
-<div class="getusernamebyid"><div class="roomcontroller-getusernamebyid-page"><p>Function that checks the collection of ActiveUsers for a user with the given userId, then returns the name of the user or Anonymous if it is not found</p>
-</div><h5 id="methods_getusernamebyid_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>userId</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="roomcontroller-getusernamebyid-page"><p>The userId to look for in the ActiveUsers collection</p>
+<li><h3 id="methods_getanswerusername">GetAnswerUserName(answer)</h3>
+<div class="getanswerusername"><div class="roomcontroller-getanswerusername-page"><p>Function that gets the display name of the answer</p>
+</div><h5 id="methods_getanswerusername_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>answer</td><td><a href="" class="label type-hint type-hint-answer">Answer</a></td><td><div class="roomcontroller-getanswerusername-page"><p>The answer to check for displayname</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_getchatmessageusername">GetChatMessageUserName(chatMessage)</h3>
+<div class="getchatmessageusername"><div class="roomcontroller-getchatmessageusername-page"><p>Function that gets the display name of the chatmessage</p>
+</div><h5 id="methods_getchatmessageusername_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>chatMessage</td><td><a href="" class="label type-hint type-hint-chatmessage">ChatMessage</a></td><td><div class="roomcontroller-getchatmessageusername-page"><p>The chatMessage to check for displayname</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_geterroroutput">GetErrorOutput(array)</h3>
+<div class="geterroroutput"><div class="roomcontroller-geterroroutput-page"><p>Helper function toget the error outputs</p>
+</div><h5 id="methods_geterroroutput_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>array</td><td><a href="" class="label type-hint type-hint-array">Array&lt;ErrorCode&gt;</a></td><td><div class="roomcontroller-geterroroutput-page"><p>of errors</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_getquestionusername">GetQuestionUserName(question)</h3>
+<div class="getquestionusername"><div class="roomcontroller-getquestionusername-page"><p>Function that gets the display name of the question</p>
+</div><h5 id="methods_getquestionusername_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>question</td><td><a href="" class="label type-hint type-hint-question">Question</a></td><td><div class="roomcontroller-getquestionusername-page"><p>The question to check for displayname</p>
 </div></td></tr></tbody></table></div>
 </li>
 <li><h3 id="methods_removeresponseoption">RemoveResponseOption()</h3>
@@ -128,6 +143,18 @@ The function also creates the piechart</p>
 </div></td></tr><tr><td>checkForUpvote</td><td><a href="" class="label type-hint type-hint-boolean">Boolean</a></td><td><div class="roomcontroller-hasvotes-page"><p>Boolean value that states whether the function should check for up or downvotes</p>
 </div></td></tr></tbody></table></div>
 </li>
+<li><h3 id="methods_modalchanger">modalChanger(id, state)</h3>
+<div class="modalchanger"><div class="roomcontroller-modalchanger-page"><p>Helper function to change the state of a modal window</p>
+</div><h5 id="methods_modalchanger_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>id</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="roomcontroller-modalchanger-page"><p>the id of the modal to change</p>
+</div></td></tr><tr><td>state</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="roomcontroller-modalchanger-page"><p>the state we wish to change to</p>
+</div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_modalchanger">modalChanger(id, state)</h3>
+<div class="modalchanger"><div class="roomcontroller-modalchanger-page"><p>Helper function to change the state of a modal window</p>
+</div><h5 id="methods_modalchanger_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>id</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="roomcontroller-modalchanger-page"><p>the id of the modal to change</p>
+</div></td></tr><tr><td>state</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="roomcontroller-modalchanger-page"><p>the state we wish to change to</p>
+</div></td></tr></tbody></table></div>
+</li>
 <li><h3 id="methods_onchartcreate">onChartCreate()</h3>
 <div class="onchartcreate"><div class="roomcontroller-onchartcreate-page"><p>Function that checks if we already have a chart, if we do, destroys it. This is done to get rid of overlapping charts</p>
 </div></div>
@@ -191,11 +218,15 @@ That json object is then sent to the rest-api</p>
 <div class="validatepassword"><div class="roomcontroller-validatepassword-page"><p>Function for validating the password. Hashes the users input with SHA512 and checks if it collides with the saved password for the room</p>
 </div></div>
 </li>
-<li><h3 id="methods_watchquestionimage">watchQuestionImage(questionIage)</h3>
+<li><h3 id="methods_watchquestionimage">watchQuestionImage(questionImage)</h3>
 <div class="watchquestionimage"><div class="roomcontroller-watchquestionimage-page"><p>Function that watches the questionImage. This is done so that we can check whether the filesize exceeds our limits. If it does we resize the picture
 After retrieving the userId we fetch the userid from the database.</p>
-</div><h5 id="methods_watchquestionimage_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>questionIage</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="roomcontroller-watchquestionimage-page"><p>The variable that we want to watch</p>
+</div><h5 id="methods_watchquestionimage_parameters">Parameters</h5><table class="variables-matrix table table-bordered table-striped"><thead><tr><th>Param</th><th>Type</th><th>Details</th></tr></thead><tbody><tr><td>questionImage</td><td><a href="" class="label type-hint type-hint-string">String</a></td><td><div class="roomcontroller-watchquestionimage-page"><p>The variable that we want to watch</p>
 </div></td></tr></tbody></table></div>
+</li>
+<li><h3 id="methods_watchresponseoptionslength">watchResponseOptions.length()</h3>
+<div class="watchresponseoptionslength"><div class="roomcontroller-watchresponseoptions-length-page"><p>Function that watches the responseOptions.length. This is done to set the title correctly on the remove responseOption button.</p>
+</div></div>
 </li>
 <li><h3 id="methods_watchuserid">watchUserId(userId)</h3>
 <div class="watchuserid"><div class="roomcontroller-watchuserid-page"><p>Function that watches the userId variable, this is done so we can determine whether or not the user is anonymous.
@@ -214,6 +245,11 @@ After retrieving the userId we fetch the userid from the database.</p>
 <li><h3 id="properties_questiontypes">QuestionTypes</h3>
 <div class="questiontypes"><div class="-questiontypes-page"><p>Array with the different types of questions</p>
 </div><h5 id="properties_questiontypes_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-array">Array&lt;QuestionType&gt;</a></td><td><div class="-questiontypes-page"><p>QuestionTypes</p>
+</div></td></tr></table></div>
+</li>
+<li><h3 id="properties_responseoptiontitle">ResponseOptionTitle</h3>
+<div class="responseoptiontitle"><div class="-responseoptiontitle-page"><p>Title of remove ResponseOption button</p>
+</div><h5 id="properties_responseoptiontitle_returns">Returns</h5><table class="variables-matrix"><tr><td><a href="" class="label type-hint type-hint-string">String&gt;</a></td><td><div class="-responseoptiontitle-page"><p>ResponseOptionTitle</p>
 </div></td></tr></table></div>
 </li>
 <li><h3 id="properties_responseoptions">ResponseOptions</h3>

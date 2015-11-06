@@ -27,7 +27,7 @@ namespace WisR.Controllers
             return View();
         }
 
-        public string toJsonQuestion(string CreatedBy, string RoomId, string Image, string QuestionText,
+        public string toJsonQuestion(string CreatedBy,string CreatedByUserName, string RoomId, string Image, string QuestionText,
             string ResponseOptions, string QuestionResult, string CreationTimestamp, string ExpireTimestamp,
             string QuetionsType, string Votes)
         {
@@ -63,6 +63,7 @@ namespace WisR.Controllers
             }
 
             question.CreatedById = CreatedBy;
+            question.CreatedByUserDisplayName = CreatedByUserName;
             question.RoomId = RoomId;
             question.Votes = tempListVotes;
             question.Img = Image;
@@ -76,10 +77,11 @@ namespace WisR.Controllers
             ;
         }
 
-        public string toJsonChatMessage(string userId, string roomId, string text)
+        public string toJsonChatMessage(string userId,string userDisplayName, string roomId, string text)
         {
             var chatMessage = new ChatMessage();
             chatMessage.ByUserId = userId;
+            chatMessage.ByUserDisplayName = userDisplayName;
             chatMessage.RoomId = roomId;
             chatMessage.Value = text;
             chatMessage.Timestamp =

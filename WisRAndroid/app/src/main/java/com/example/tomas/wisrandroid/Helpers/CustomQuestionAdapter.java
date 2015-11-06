@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.tomas.wisrandroid.Model.Question;
+import com.example.tomas.wisrandroid.Model.Vote;
 import com.example.tomas.wisrandroid.R;
 
 import java.util.ArrayList;
@@ -33,13 +34,32 @@ public class CustomQuestionAdapter extends ArrayAdapter<Question> {
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.questionrowlayout, parent, false);
-        TextView textView = (TextView) rowView.findViewById(R.id.question_row_textview);
-        textView.setText(values.get(position).get_QuestionText());
-//        ImageView imageView = (ImageView) rowView.findViewById(R.id.question_row_imageview);
-//        byte[] bytes = Base64.decode(values.get(position).get_Img(), Base64.NO_WRAP);
-//        Drawable image = new BitmapDrawable(BitmapFactory.decodeByteArray(bytes, 0, bytes.length));
-//       imageView.setImageDrawable(image);
+        TextView mQuestionTextTextView = (TextView) rowView.findViewById(R.id.question_row_textview);
+        mQuestionTextTextView.setText(values.get(position).get_QuestionText());
+        TextView mQuestionUpVotesTextView = (TextView) rowView.findViewById(R.id.question_row_thumbs_up_textview);
+        mQuestionUpVotesTextView.setText(CalculateVotes(values.get(position).get_Votes(), true));
+        TextView mQuestionDownVotesTextView = (TextView) rowView.findViewById(R.id.question_row_thumbs_down_textview);
+        mQuestionDownVotesTextView.setText(CalculateVotes(values.get(position).get_Votes(),false));
 
         return rowView;
+    }
+
+    private String CalculateVotes(ArrayList<Vote> votes, boolean voteType)
+    {
+        if(voteType) {
+            int upvotes = 0;
+            for (Vote vote : votes) {
+                if (vote.get_value() == 1)
+                    upvotes++;
+            }
+            return String.valueOf(upvotes);
+        } else {
+            int downvotes = 0;
+            for (Vote vote : votes) {
+                if (vote.get_value() == -1)
+                    downvotes++;
+            }
+            return String.valueOf(downvotes);
+        }
     }
 }

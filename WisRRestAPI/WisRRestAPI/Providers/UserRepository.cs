@@ -52,5 +52,12 @@ namespace WisRRestAPI.DomainModel
             var task = _database.GetCollection<User>("User").FindOneAndReplaceAsync(x => x.Id == id, item);
             return task;
         }
+
+        public string getUsersByRoomId(string roomid)
+        {
+            var task= _database.GetCollection<User>("User").Find(x => x.ConnectedRoomIds.Contains(roomid)).ToListAsync();
+            var result = task.Result;
+            return result.ToJson();
+        }
     }
 }

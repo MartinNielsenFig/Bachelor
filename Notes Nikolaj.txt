@@ -13,3 +13,4 @@ LDAP login
 Image Resizing
 Rest funktioner uden billeder
 Notifications
+denormalize

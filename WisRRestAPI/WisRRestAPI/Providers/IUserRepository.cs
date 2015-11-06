@@ -16,5 +16,6 @@ namespace WisRRestAPI.DomainModel
         string GetWisrIdFromFacebookId(string facebookId);
         Task<DeleteResult> RemoveUser(string id);
         Task<User> UpdateUser(string id, User item);
+        string getUsersByRoomId(string roomid);
     }
 }

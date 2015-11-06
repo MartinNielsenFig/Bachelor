@@ -396,6 +396,9 @@
   <data name="RoomSecretAlreadyInUse" xml:space="preserve">
     <value>There already exist a room with that secret</value>
   </data>
+  <data name="Anonymous" xml:space="preserve">
+    <value>Anonymous</value>
+  </data>
   <data name="NoConnectionToServer" xml:space="preserve">
     <value>Could not access REST API, contact system administrator</value>
   </data>

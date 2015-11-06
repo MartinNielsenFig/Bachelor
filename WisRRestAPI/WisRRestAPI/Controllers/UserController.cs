@@ -31,7 +31,7 @@ namespace WisRRestAPI.Controllers
             try
             {
                 Users = _ur.GetAllUsers();
-            }
+        }
             catch (Exception)
             {
                 errors.Add(ErrorCodes.CouldNotGetUsers);
@@ -67,10 +67,10 @@ namespace WisRRestAPI.Controllers
             {
                 try
                 {
-                    user = _ur.GetAllUsers().Result.Where(x => x.FacebookId == userToAdd.FacebookId);
+                    user = _ur.GetAllUsers().Result.Where(x => x.FacebookId == userToAdd.FacebookId);               
                 }
                 catch (Exception)
-                {
+            {
                     errors.Add(ErrorCodes.CouldNotGetUsers);
                     return new Notification(null, ErrorTypes.Error, errors).ToJson();
                 }
@@ -79,15 +79,15 @@ namespace WisRRestAPI.Controllers
             {
                 try
                 {
-                    user = _ur.GetAllUsers().Result.Where(x => x.LDAPUserName == userToAdd.LDAPUserName);
-                }
+                user = _ur.GetAllUsers().Result.Where(x => x.LDAPUserName == userToAdd.LDAPUserName);
+            }
                 catch (Exception)
                 {
                     errors.Add(ErrorCodes.CouldNotGetUsers);
                     return new Notification(null, ErrorTypes.Error, errors).ToJson();
                 }
             }
-
+           
             if (user == null || !user.Any())
             {
                 userToAdd.Id = ObjectId.GenerateNewId(DateTime.Now).ToString();
@@ -96,7 +96,7 @@ namespace WisRRestAPI.Controllers
                 try
                 {
                     userId = _ur.AddUser(userToAdd);
-                }
+            }
                 catch (Exception)
                 {
                     errors.Add(ErrorCodes.CouldNotAddUser);
@@ -108,7 +108,7 @@ namespace WisRRestAPI.Controllers
             {
                 return new Notification(user.First().Id, errorType, errors).ToJson();
             }
-
+            
         }
 
         [System.Web.Mvc.HttpPost]
@@ -123,7 +123,7 @@ namespace WisRRestAPI.Controllers
                 user = BsonSerializer.Deserialize<User>(User);
             }
             catch (Exception)
-            {
+        {
                 errors.Add(ErrorCodes.CouldNotParseJsonToClass);
                 return new Notification(null, ErrorTypes.Error, errors).ToJson();
             }
@@ -131,8 +131,8 @@ namespace WisRRestAPI.Controllers
             user.Id = Id;
             try
             {
-                _ur.UpdateUser(user.Id, user);
-            }
+            _ur.UpdateUser(user.Id, user);
+        }
             catch (Exception)
             {
                 errors.Add(ErrorCodes.CouldNotUpdateUser);
