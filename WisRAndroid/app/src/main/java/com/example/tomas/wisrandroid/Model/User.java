@@ -1,13 +1,14 @@
 package com.example.tomas.wisrandroid.Model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class User {
 
     //Fields
-    private String Id;
+    private String _id;
     private String FacebookId;
-    private List<String> ConnectedRooms;
+    private ArrayList<String> ConnectedRoomIds;
     private String LDAPUserName;
     private String DisplayName;
     private String Email;
@@ -15,12 +16,12 @@ public class User {
 
     //Constructors
     public User(){}
-    public User(String Id, String FacebookId, List<String> ConnectedRooms, String LDAPUserName
+    public User(String _id, String FacebookId, ArrayList<String> ConnectedRoomIds, String LDAPUserName
     , String DisplayName, String Email, String EncryptedPassword)
     {
-        this.Id = Id;
+        this._id = _id;
         this.FacebookId = FacebookId;
-        this.ConnectedRooms = ConnectedRooms;
+        this.ConnectedRoomIds = ConnectedRoomIds;
         this.LDAPUserName = LDAPUserName;
         this.DisplayName = DisplayName;
         this.Email = Email;
@@ -29,14 +30,14 @@ public class User {
     }
 
     //Properties
-    public String get_Id() { return Id; }
-    public void set_Id(String Id) {this.Id = Id;}
+    public String get_Id() { return _id; }
+    public void set_Id(String _id) {this._id = _id;}
 
     public String get_FacebookId() {return FacebookId;}
     public void set_FacebookId(String FacebookId){this.FacebookId = FacebookId;}
 
-    public List<String> get_ConnectedRooms() {return ConnectedRooms;}
-    public void set_ConnectedRooms(List<String> ConnectedRooms){this.ConnectedRooms = ConnectedRooms;}
+    public ArrayList<String> get_ConnectedRooms() {return ConnectedRoomIds;}
+    public void set_ConnectedRooms(ArrayList<String> ConnectedRoomIds){this.ConnectedRoomIds = ConnectedRoomIds;}
 
     public String get_ILDAPUserName() { return LDAPUserName; }
     public void set_LDAPUserName(String LDAPUserName) {this.LDAPUserName = LDAPUserName;}

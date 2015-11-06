@@ -100,28 +100,36 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
         HttpHandler.requestWithResponse(action: "Room/GetAll", type: "GET", body: "") { (data, response, error) in
             var tmpRooms = [Room]()
             
-            //try? operator makes roomsJson nil if .toArray throws instead of do try catch-pattern
-            if let jsonArray = try? JSONSerializer.toArray(data) {
-                for room in jsonArray {
-                    tmpRooms += [Room(jsonDictionary: room as! NSDictionary)]
-                }
-                let filteredRooms = RoomFilterHelper.filterRoomsByLocation(tmpRooms, metersRadius: 1000*1000)
-                if filteredRooms.count <= 0 {
-                    let noRooms = Room()
-                    noRooms._id = "system"
+            if let notificationDictionary = try? JSONSerializer.toDictionary(data) {
+                let n = Notification(jsonDictionary: notificationDictionary)
+                print(n)
+                if n.ErrorType == .Ok || n.ErrorType == .OkWithError {
                     
-                    let noRoomsNearby = NSLocalizedString("No rooms nearby", comment: "")
-                    noRooms.Name = noRoomsNearby
-                    tmpRooms = [noRooms]
-                } else {
-                    tmpRooms = filteredRooms
                 }
+            }
+            
+            /*//try? operator makes roomsJson nil if .toArray throws instead of do try catch-pattern
+            if let jsonArray = try? JSONSerializer.toArray(data) {
+            for room in jsonArray {
+            tmpRooms += [Room(jsonDictionary: room as! NSDictionary)]
+            }
+            let filteredRooms = RoomFilterHelper.filterRoomsByLocation(tmpRooms, metersRadius: 1000*1000)
+            if filteredRooms.count <= 0 {
+            let noRooms = Room()
+            noRooms._id = "system"
+            
+            let noRoomsNearby = NSLocalizedString("No rooms nearby", comment: "")
+            noRooms.Name = noRoomsNearby
+            tmpRooms = [noRooms]
             } else {
-                let errorRoom = Room()
-                let couldNotLoadRooms = NSLocalizedString("Could not load rooms", comment: "")
-                errorRoom.Name = couldNotLoadRooms
-                errorRoom._id = "system"
-                tmpRooms = [errorRoom]
+            tmpRooms = filteredRooms
+            }
+            } else {
+            let errorRoom = Room()
+            let couldNotLoadRooms = NSLocalizedString("Could not load rooms", comment: "")
+            errorRoom.Name = couldNotLoadRooms
+            errorRoom._id = "system"
+            tmpRooms = [errorRoom]
             }
             
             self.rooms = tmpRooms
@@ -129,16 +137,16 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
             //Show on map
             self.mapView.removeOverlays(self.mapView.overlays)
             for room in tmpRooms {
-                if let lat = room.Location.Latitude, long = room.Location.Longitude {
-                    let roomPosition = CLLocationCoordinate2D(latitude: lat, longitude: long)
-                    
-                    let circleRadius = (room.Location.AccuracyMeters ?? 0) + (room.Radius ?? 0)
-                    let circle = MKCircle(centerCoordinate: roomPosition, radius: CLLocationDistance(circleRadius))
-                    dispatch_async(dispatch_get_main_queue()) {
-                        self.mapView.addOverlay(circle)
-                    }
-                }
+            if let lat = room.Location.Latitude, long = room.Location.Longitude {
+            let roomPosition = CLLocationCoordinate2D(latitude: lat, longitude: long)
+            
+            let circleRadius = (room.Location.AccuracyMeters ?? 0) + (room.Radius ?? 0)
+            let circle = MKCircle(centerCoordinate: roomPosition, radius: CLLocationDistance(circleRadius))
+            dispatch_async(dispatch_get_main_queue()) {
+            self.mapView.addOverlay(circle)
             }
+            }
+            }*/
         }
     }
     

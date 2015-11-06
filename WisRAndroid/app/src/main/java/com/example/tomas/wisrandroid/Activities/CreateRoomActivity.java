@@ -319,6 +319,7 @@ public class CreateRoomActivity extends AppCompatActivity implements GoogleApiCl
     @Override
     public void onBackPressed() {
         final AlertDialog.Builder mBackPressedAlertDialog = new AlertDialog.Builder(this);
+        mBackPressedAlertDialog.setCancelable(false);
         mBackPressedAlertDialog.setTitle("Are you sure ?");
         mBackPressedAlertDialog.setMessage("You're about to cancel room creation!");
         mBackPressedAlertDialog.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
@@ -330,7 +331,7 @@ public class CreateRoomActivity extends AppCompatActivity implements GoogleApiCl
         mBackPressedAlertDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                finish();
+            finish();
             }
         });
         mBackPressedAlertDialog.show();

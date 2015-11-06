@@ -27,12 +27,14 @@ import com.example.tomas.wisrandroid.Model.MultipleChoiceQuestion;
 import com.example.tomas.wisrandroid.Model.Question;
 import com.example.tomas.wisrandroid.Model.Room;
 import com.example.tomas.wisrandroid.Model.TextualQuestion;
+import com.example.tomas.wisrandroid.Model.Vote;
 import com.example.tomas.wisrandroid.R;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
@@ -128,16 +130,17 @@ public class QuestionListFragment extends android.support.v4.app.Fragment {
             @Override
             public void onResponse(String response) {
 
+                ArrayList<Question> mTempQuestions = new ArrayList<>();
                 JsonElement e = new JsonParser().parse(response);
                 JsonArray array = e.getAsJsonArray();
                 for (JsonElement element : array) {
                     if(element.toString().contains("MultipleChoiceQuestion")){
-                        mQuestions.add(gson.fromJson(element,MultipleChoiceQuestion.class));
-                    }else
-                    {
-                        mQuestions.add(gson.fromJson(element, TextualQuestion.class));
+                        mTempQuestions.add(0,gson.fromJson(element, MultipleChoiceQuestion.class));
+                    }else {
+                        mTempQuestions.add(gson.fromJson(element, TextualQuestion.class));
                     }
                 }
+                RearrangeQuestions(mTempQuestions);
                 mAdapter.notifyDataSetChanged();
             }
         };
@@ -156,6 +159,41 @@ public class QuestionListFragment extends android.support.v4.app.Fragment {
             requestQueue.add(jsObjRequest);
         } catch (Exception e) {
 
+        }
+    }
+
+    private int CalculateVotes(ArrayList<Vote> votes)
+    {
+        int voteValue = 0;
+        for (Vote vote : votes) {
+            voteValue += vote.get_value();
+        }
+        return voteValue;
+    }
+
+    private void RearrangeQuestions(ArrayList<Question> mTempList)
+    {
+
+        for (Question question : mTempList) {
+            if (question.get_CreatedById() == mRoom.get_CreatedById()) {
+                mQuestions.add(0,question);
+            } else {
+                int index = 0;
+                while(true)
+                {
+                    if(index == mQuestions.size())
+                    {
+                        mQuestions.add(index,question);
+                        break;
+                    }
+                    if(!mQuestions.isEmpty() || (CalculateVotes(question.get_Votes()) > CalculateVotes(mQuestions.get(index).get_Votes()) && question.get_CreatedById() != mRoom.get_CreatedById()))
+                    {
+                        mQuestions.add(index,question);
+                        break;
+                    }
+                    index++;
+                }
+            }
         }
     }
 }

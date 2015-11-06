@@ -17,4 +17,17 @@ class User {
     var DisplayName: String?
     var Email: String?
     var EncryptedPassword: String?
+    
+    init(){}
+    
+    init(jsonDictionary: NSDictionary) {
+        self._id = jsonDictionary["_id"] as? String
+        self.FacebookId = jsonDictionary["FacebookId"] as? String
+        self.ConnectedRoomIds = jsonDictionary["ConnectedRoomIds"] as? [Int]
+        self.LDAPUserName = jsonDictionary["LDAPUserName"] as? String
+        self.DisplayName = jsonDictionary["DisplayName"] as? String
+        self.Email = jsonDictionary["Email"] as? String
+        self.EncryptedPassword = jsonDictionary["EncryptedPassword"] as? String
+    }
+    
 }

@@ -17,6 +17,9 @@ class ChatMessage {
     
     init(){}
     
+    //JsonSerializer wont map this
+    var notMapped_name = String()
+    
     init(jsonDictionary: NSDictionary) {
         
         _id = jsonDictionary["_id"] as? String
