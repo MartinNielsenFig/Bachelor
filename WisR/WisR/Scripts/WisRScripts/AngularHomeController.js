@@ -484,7 +484,7 @@ app.controller("HomeController", [
         /**
        * @ngdoc method
        * @name RoomController#GetErrorOutput
-       * @methodOf WisR.controller:RoomController
+       * @methodOf WisR.controller:HomeController
        * @description
        * Helper function toget the error outputs
        * @param {Array<ErrorCode>} errors array of errors
@@ -507,7 +507,7 @@ app.controller("HomeController", [
         /**
                 * @ngdoc method
                 * @name RoomController#monErrorAlert
-                * @methodOf WisR.controller:RoomController
+                * @methodOf WisR.controller:HomeController
                 * @description
                 * Helper function to alert that error has occured when communicating with restapi
                 * @param {Error} error the error that has occured
@@ -518,7 +518,7 @@ app.controller("HomeController", [
         /**
         * @ngdoc method
         * @name RoomController#modalChanger
-        * @methodOf WisR.controller:RoomController
+        * @methodOf WisR.controller:HomeController
         * @description
         * Helper function to change the state of a modal window
         * @param {String} id the id of the modal to change

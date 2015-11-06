@@ -110,10 +110,19 @@
                                             //Use response to send to REST API
                                             $http.post(configs.restHostName + '/User/CreateUser', { User: JSON.stringify(response.data) }).
                                                 then(function(response) {
-                                                    window.userId = response.data;
+                                                    if (response.data.ErrorType != 0) {
+                                                        //TODO better error handling?
+                                                        alert($scope.GetErrorOutput(response.data.Errors));
+                                                        return;
+                                                    } else {
+                                                        window.userId = response.data.Data;
 
-                                                    $('#createRoomButton').prop("disabled", false);
-                                                    $('#createRoomButton').prop("title", '');
+                                                        $('#createRoomButton').prop("disabled", false);
+                                                        $('#createRoomButton').prop("title", '');
+                                                    }
+                                                    
+                                                },function() {
+                                                    alert(Resources.NoConnectionToServer);
                                                 });
                                         });
                                     }

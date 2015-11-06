@@ -24,7 +24,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
                 $scope.ChatMessages.push(JSON.parse(chatMessageToAdd));
                 $scope.$apply();
             }
-            
+
         };
         $.connection.hub.start();
     });
@@ -47,11 +47,11 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
             if (jsonParsedRoom._id === $scope.CurrentRoom._id) {
                 $scope.CurrentRoom = jsonParsedRoom;
 
-            ////trick to update the map
-            $scope.toggleRoomLocation();
-            $scope.toggleRoomLocation();
-            $scope.$apply();
-            }         
+                ////trick to update the map
+                $scope.toggleRoomLocation();
+                $scope.toggleRoomLocation();
+                $scope.$apply();
+            }
         };
 
         /**
@@ -126,16 +126,16 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
             }
             //if the user is currently working with this question
             if ($scope.SpecificQuestion != null) {
-            if (questionToDelete === $scope.SpecificQuestion._id) {
-                if ($scope.SpecificQuestionShown) {
-                    $scope.ToggleShowQuestionTables();
-                }                
+                if (questionToDelete === $scope.SpecificQuestion._id) {
+                    if ($scope.SpecificQuestionShown) {
+                        $scope.ToggleShowQuestionTables();
+                    }
                     $scope.modalChanger("myModalCreate", "hide");
                     $scope.modalChanger("deleteQuestionModal", "hide");
-                alert(Resources.QuestionWasDeletedMessage);
+                    alert(Resources.QuestionWasDeletedMessage);
+                }
             }
-            }
-            
+
         };
         /**
           * @ngdoc method
@@ -276,12 +276,17 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
         }
         else if (n != undefined) {
             $http.post(configs.restHostName + '/User/GetById', { id: n }).then(function (response) {
-                $scope.anonymousUser = false;
-                $scope.currentUser = response.data;
-                $scope.getRoom(true);
-            }, function (error) {
-                alert(Resources.NoConnectionToServer);
-            });
+                if (response.data.ErrorType != 0) {
+                    //TODO better error handling?
+                    alert($scope.GetErrorOutput(response.data.Errors));
+                } else {
+                    $scope.anonymousUser = false;
+                    $scope.currentUser = response.data.Data;
+                    $scope.getRoom(true);
+                }
+
+
+            }, $scope.onErrorAlert);
         }
     });
     /**
@@ -322,16 +327,15 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
                         $scope.ImageMessage = Resources.FileTooBigResizing;
                         var img = new Image();
                         img.src = 'data:image/png;base64,' + n.base64;
-                        img.onload=function ()
-                        {
+                        img.onload = function () {
                             var resized = resizeImg(img, 800, 800, 0);
                             $scope.questionImage.base64 = resized.split('ata:image/png;base64,')[1];
                             $scope.ImageMessage = Resources.ImageResized;
-                            $scope.imageTooBig =false;
-                            $scope.$apply();                            
+                            $scope.imageTooBig = false;
+                            $scope.$apply();
                             //$scope.questionImage.base64 = "R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==";
-                        }           
-                    } else {                   
+                        }
+                    } else {
                         $scope.imageTooBig = false;
                         $scope.ImageMessage = null;
                     }
@@ -372,7 +376,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
     $scope.setImageMessage = function () {
         //start by assuming the picture is too big
         $scope.imageTooBig = true;
-        $scope.ImageMessage = window.Resources.LoadingImage+"...";
+        $scope.ImageMessage = window.Resources.LoadingImage + "...";
         $scope.$apply();
     }
     ///#endregion
@@ -387,11 +391,15 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
         */
     $scope.getQuestions = function () {
         $http.get(configs.restHostName + '/Question/GetQuestionsForRoomWithoutImages?roomId=' + MyRoomIdFromViewBag).then(function (response) {
-            $scope.Questions = response.data;
-            $scope.questionsLoaded = true;
-        }, function (error) {
-            alert(Resources.NoConnectionToServer);
-        });
+            if (response.data.ErrorType != 0) {
+                //TODO better error handling?
+                alert($scope.GetErrorOutput(response.data.Errors));
+            } else {
+                $scope.Questions = response.data.Data;
+                $scope.questionsLoaded = true;
+            }
+            
+        }, $scope.onErrorAlert);
     };
     /**
        * @ngdoc method
@@ -434,14 +442,12 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
         $http.post('/Room/toJsonQuestion', { CreatedBy: $window.userId, CreatedByUserName: $scope.anonymousUser ? null : $scope.currentUser.DisplayName, RoomId: MyRoomIdFromViewBag, Image: image, QuestionText: $scope.QuestionText, ResponseOptions: newResponses, ExpireTimestamp: $scope.ExpirationTime, QuetionsType: $scope.QuestionType }).
             then(function (response) {
                 ///Use response to send to REST API
-                $http.post(configs.restHostName + '/Question/CreateQuestion', { question: JSON.stringify(response.data), type: $scope.QuestionType });
+                $http.post(configs.restHostName + '/Question/CreateQuestion', { question: JSON.stringify(response.data), type: $scope.QuestionType }).then(null, $scope.onErrorAlert);
                 //Check if this function call is an update or a create
                 if ($scope.UpdateQuestionBool) {
                     //Delete the old question
                     $scope.deleteQuestion($scope.SpecificQuestion);
                 }
-            }, function (error) {
-                alert(Resources.NoConnectionToServer);
             });
     }
 
@@ -475,11 +481,9 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
             return;
         ///Use response to send to REST API string response
         var Obj = { Value: $scope.answerChoosen.Value, UserId: $window.userId, UserDisplayName: $scope.anonymousUser ? null : $scope.currentUser.DisplayName }
-        $http.post(configs.restHostName + '/Question/AddQuestionResponse', {response:JSON.stringify(Obj), questionId:$scope.SpecificQuestion._id}).then(function(succes) {
-           
-        }, function (error) {
-            alert(Resources.NoConnectionToServer);
-        });
+        $http.post(configs.restHostName + '/Question/AddQuestionResponse', { response: JSON.stringify(Obj), questionId: $scope.SpecificQuestion._id }).then(function (succes) {
+
+        }, $scope.onErrorAlert);
     }
     /**
      * @ngdoc method
@@ -500,15 +504,15 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
      */
     $scope.RemoveResponseOption = function (item) {
         if ($scope.ResponseOptions.length > 2 || $scope.QuestionType !== "MultipleChoiceQuestion") {
-        var temp = [];
-        var counter = 0;
-        for (var i = 0; i < $scope.ResponseOptions.length; i++) {
-           if ($scope.ResponseOptions[i] !== item) {
-                temp.push({ id: counter, val: $scope.ResponseOptions[i].val });
-                counter = counter + 1;
+            var temp = [];
+            var counter = 0;
+            for (var i = 0; i < $scope.ResponseOptions.length; i++) {
+                if ($scope.ResponseOptions[i] !== item) {
+                    temp.push({ id: counter, val: $scope.ResponseOptions[i].val });
+                    counter = counter + 1;
+                }
             }
-        }
-        $scope.ResponseOptions = temp;
+            $scope.ResponseOptions = temp;
 
         }
     }
@@ -533,21 +537,25 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
         $scope.progressCancel = $interval($scope.getPercentage, 1000);
         ///Start getting the image for the specific question
         $http.get(configs.restHostName + '/Question/GetImageByQuestionId?questionId=' + question._id).then(function (response) {
-            if (response.data === "") {
-                //set image to noImage
-                //$scope.questionImage = configs.noImgBase64;
-                $scope.SpecificQuestion.Img = configs.noImgBase64;
-                $("#specificQuestionImage").prop('title', Resources.NoPictureText);
-                $scope.NoPicture = true;
+            if (response.data.ErrorType != 0) {
+                //TODO better error handling?
+                alert($scope.GetErrorOutput(response.data.Errors));
             } else {
-                $scope.SpecificQuestion.Img = response.data;
-                $("#specificQuestionImage").prop('title', Resources.ClickToChangeImageSize);
-                $scope.NoPicture = false;
+                if (response.data.Data === "") {
+                    //set image to noImage
+                    //$scope.questionImage = configs.noImgBase64;
+                    $scope.SpecificQuestion.Img = configs.noImgBase64;
+                    $("#specificQuestionImage").prop('title', Resources.NoPictureText);
+                    $scope.NoPicture = true;
+                } else {
+                    $scope.SpecificQuestion.Img = response.data.Data;
+                    $("#specificQuestionImage").prop('title', Resources.ClickToChangeImageSize);
+                    $scope.NoPicture = false;
+                }
+                $scope.specificImageLoaded = true;
             }
-            $scope.specificImageLoaded = true;
-        }, function (error) {
-            alert(Resources.NoConnectionToServer);
-        });
+            
+        }, $scope.onErrorAlert);
         $scope.createPieChart();
     }
     /**
@@ -615,28 +623,27 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
     */
     $scope.deleteQuestion = function (questionToDelete) {
         $scope.SpecificQuestion = null;
-        $http.delete(configs.restHostName + '/Question/DeleteQuestion', { params: {id: questionToDelete._id} }).then(function (response) {
+        $http.delete(configs.restHostName + '/Question/DeleteQuestion', { params: { id: questionToDelete._id } }).then(function (response) {
             ///Check for errors on request
-            if (response.data.ErrorMessage != undefined) {
-               $scope.questionDeleteMessage = response.data.ErrorMessage;
+            if (response.data.ErrorType != 0) {
+                //TODO better error handling?
+                $scope.questionDeleteMessage=$scope.GetErrorOutput(response.data.Errors);
                 return;
             } else {
                 $scope.modalChanger("deleteQuestionModal", "hide");
             }
-        }, function (error) {
-            alert(Resources.NoConnectionToServer);
-        });
+        }, $scope.onErrorAlert);
     }
     ///#endregion
 
     //#region LocationFunction
     //this check is to make the tests excecuteable
-        if (navigator.geolocation != undefined) {
-            ///Calls and get the currentlocation
-            navigator.geolocation.getCurrentPosition(function(position) {
-                $scope.currentLocation = position;
-            });
-        }
+    if (navigator.geolocation != undefined) {
+        ///Calls and get the currentlocation
+        navigator.geolocation.getCurrentPosition(function (position) {
+            $scope.currentLocation = position;
+        });
+    }
 
     /**
    * @ngdoc method
@@ -645,7 +652,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
    * @description
    * Function that toggles the view of the google map
    */
-        //Code for rooms maps
+    //Code for rooms maps
     $scope.toggleRoomLocation = function () {
         $("#googlemapsRoom").toggle();
         $("#updateBtn").toggle();
@@ -710,11 +717,9 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
             tempLocation.Latitude = position.coords.latitude;
             tempLocation.Longitude = position.coords.longitude;
 
-            $http.post(configs.restHostName + '/Room/UpdateLocation', { id: $scope.CurrentRoom._id, location: JSON.stringify(tempLocation) }).then(function(succes) {
-              
-            }, function(error) {
-                alert(Resources.NoConnectionToServer);
-            });
+            $http.post(configs.restHostName + '/Room/UpdateLocation', { id: $scope.CurrentRoom._id, location: JSON.stringify(tempLocation) }).then(function (succes) {
+
+            }, $scope.onErrorAlert);
         });
     }
     //#endregion
@@ -737,12 +742,12 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
             $scope.getAllUsers();
             $scope.specificRoomLoaded = true;
             ///Check for errors on request
-            if (response.data.ErrorMessage != undefined) {
-                $scope.RoomErrorDiv = response.data.ErrorMessage;
+            if (response.data.ErrorType !=0) {
+                $scope.RoomErrorDiv = $scope.GetErrorOutput(response.data.Errors);
                 return;
             }
 
-            $scope.CurrentRoom = response.data;
+            $scope.CurrentRoom = JSON.parse(response.data.Data);
             if (userIsNotAnonymous) {
                 if ($scope.currentUser.ConnectedRoomIds != undefined) {
                     if ($scope.CurrentRoom.HasPassword && $scope.currentUser.ConnectedRoomIds.indexOf(MyRoomIdFromViewBag) == -1) {
@@ -750,8 +755,10 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
                     } else {
                         $scope.rightPassword = true;
                     }
-                } else {
+                } else if ($scope.CurrentRoom.HasPassword) {
                     $scope.modalChanger("myModalPassword", "show");
+                } else {
+                    $scope.rightPassword = true;
                 }
             } else {
                 if ($scope.CurrentRoom.AllowAnonymous == false) {
@@ -764,9 +771,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
                 }
             }
 
-        }, function (error) {
-            alert(Resources.NoConnectionToServer);
-        });
+        }, $scope.onErrorAlert);
     };
     //#endregion
 
@@ -811,20 +816,16 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
         if (direction == "Up") {
             ///Use response to send to REST API
             var Obj = { Value: 1, CreatedById: $window.userId }
-            $http.post(configs.restHostName + '/Question/AddVote', { vote: JSON.stringify(Obj), type: $scope.SpecificQuestion._t, id: $scope.SpecificQuestion._id }).then(function(success) {
-                
-            }, function(error) {
-                alert(Resources.NoConnectionToServer);
-            });
+            $http.post(configs.restHostName + '/Question/AddVote', { vote: JSON.stringify(Obj), type: $scope.SpecificQuestion._t, id: $scope.SpecificQuestion._id }).then(function (success) {
+
+            }, $scope.onErrorAlert);
         }
         if (direction == "Down") {
             ///Use response to send to REST API
             var Obj = { Value: -1, CreatedById: $window.userId }
             $http.post(configs.restHostName + '/Question/AddVote', { vote: JSON.stringify(Obj), type: $scope.SpecificQuestion._t, id: $scope.SpecificQuestion._id }).then(function (success) {
 
-            }, function (error) {
-                alert(Resources.NoConnectionToServer);
-            });
+            }, $scope.onErrorAlert);
         }
     }
     //#endregion
@@ -889,7 +890,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
         //Check if the inputted password with hash is the same as the rooms password
         if (CryptoJS.SHA512($scope.inputPassword).toString() == $scope.CurrentRoom.EncryptedPassword) {
             $scope.modalChanger("myModalPassword", "hide");
-            
+
             $scope.rightPassword = true;
             if ($scope.currentUser.ConnectedRoomIds != undefined) {
                 $scope.currentUser.ConnectedRoomIds.push(MyRoomIdFromViewBag);
@@ -916,9 +917,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
                         then(function (response) {
 
                         });
-                }, function(error) {
-                    alert(Resources.NoConnectionToServer);
-                });
+                }, $scope.onErrorAlert);
             }
         } else {
             $scope.passwordMessage = window.Resources.IncorrectPassword;
@@ -952,7 +951,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
             $scope.ActiveUsers = result.data;
         });
     }
-    
+
     /**
  * @ngdoc method
  * @name RoomController#GetChatMessageUserName
@@ -1005,7 +1004,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
         $scope.textAreaModel = "";
 
         ///Make get request for json object conversion
-        $http.post('/Room/toJsonChatMessage', { userId: window.userId, userDisplayName: $scope.anonymousUser?null:$scope.currentUser.DisplayName, roomId: MyRoomIdFromViewBag, text: message }).
+        $http.post('/Room/toJsonChatMessage', { userId: window.userId, userDisplayName: $scope.anonymousUser ? null : $scope.currentUser.DisplayName, roomId: MyRoomIdFromViewBag, text: message }).
             then(function (response) {
                 ///Use response to send to REST API
                 $http.post(configs.restHostName + '/Chat/CreateChatMessage', { ChatMessage: JSON.stringify(response.data) });
@@ -1024,8 +1023,42 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
  * @param {String} state the state we wish to change to
  */
     ///Modal state changer
-    $scope.modalChanger = function(id, state) {
-        $("#"+id).modal(state);
+    $scope.modalChanger = function (id, state) {
+        $("#" + id).modal(state);
+    }
+    /**
+           * @ngdoc method
+           * @name RoomController#GetErrorOutput
+           * @methodOf WisR.controller:RoomController
+           * @description
+           * Helper function toget the error outputs
+           * @param {Array<ErrorCode>} errors array of errors
+           */
+    $scope.GetErrorOutput = function (errors) {
+        var output = Resources.Error + ": ";
+        for (var i = 0; i < errors.length; i++) {
+            var error = "";
+            switch (errors[i]) {
+                case 0:
+                    error = Resources.RoomSecretAlreadyInUse;
+                    break;
+                default:
+                    error = "ERROR NOT HANDLED YET";
+            }
+            output = output + error;
+        }
+        return output;
+    }
+    /**
+                    * @ngdoc method
+                    * @name RoomController#monErrorAlert
+                    * @methodOf WisR.controller:RoomController
+                    * @description
+                    * Helper function to alert that error has occured when communicating with restapi
+                    * @param {Error} error the error that has occured
+                    */
+    $scope.onErrorAlert = function (error) {
+        alert(Resources.NoConnectionToServer);
     }
     /**
  * @ngdoc method
@@ -1040,8 +1073,8 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
  */
     ///Helper function to find index of object in array
     function findWithAttr(array, attr, value) {
-       for (var i = 0; i < array.length; i += 1) {
-           if (array[i][attr] === value) {
+        for (var i = 0; i < array.length; i += 1) {
+            if (array[i][attr] === value) {
                 return i;
             }
         }
@@ -1059,10 +1092,10 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
         $scope.QuestionText = question.QuestionText;
         $scope.QuestionType = question._t;
         $(function () {
-            $("#questionTypeId option[value='"+question._t+"']").prop('selected', true);
+            $("#questionTypeId option[value='" + question._t + "']").prop('selected', true);
             //$("#questionTypeId").val(question._t);
         });
-        
+
         $scope.ResponseOptions = question.ResponseOptions;
         $scope.questionImage = question.Img;
         $scope.ExpirationTime = 0;
@@ -1076,14 +1109,14 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
 * @param {String} modal the jquery id string for the modal window to toggle
 * @param {Question} question the question to put into a scope variable so that we can work with it
 */
-    $scope.toggleModalWithQuestion=function(modal, question) {
+    $scope.toggleModalWithQuestion = function (modal, question) {
         $(modal).modal('toggle');
         $scope.SpecificQuestion = question;
         if (modal === '#myModalCreate') {
             $scope.UpdateQuestionBool = true;// if called from here it is an update
             setQuestionInputs(question);
         }
-        
+
     }
     /**
 * @ngdoc method
@@ -1105,7 +1138,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
 * Function to toggle dropdown
 * @param {String} questionid id for the dropdown to toggle
 */
-    $scope.toggleDropdown=function(questionId) {
+    $scope.toggleDropdown = function (questionId) {
         $("#dropdown" + questionId).dropdown("toggle");
     }
     /**
@@ -1120,7 +1153,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
 * @param {Integer} degress the degress to rotate the picture(not used at the moment)
 */
     function resizeImg(img, maxWidth, maxHeight, degrees) {
-        
+
         var imgWidth = img.width,
           imgHeight = img.height;
 
