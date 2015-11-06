@@ -7,11 +7,12 @@
 //
 
 import Foundation
+import JsonSerializerSwift
 
 /// Handles the Http-Calls from the client to the RestAPI
 class HttpHandler {
     
-    static let mainUrl = "http://192.168.198.159:1337/"
+    static let mainUrl = "http://192.168.198.164:1337/"
     //static let mainUrl = "http://wisrrestapi.aceipse.dk/"
     //static let mainUrl = "http://wisrrestapi.azurewebsites.net/"
     
@@ -26,14 +27,13 @@ class HttpHandler {
      - parameter action:						Is the HTTP call to invoke on the RestAPI. Follows the "/Controller/Action" pattern.
      - parameter type:							Type of call: POST or GET.
      - parameter body:							The body of the POST, empty if GET.
-     - parameter completionHandler:	A closure function to be run when the HTTP request is complete and the client has received an answer from the RestAPI. See Apple dataTaskWithRequest documentation.
-     - parameter data:					Data returned from the RestAPI. Should always be a JSON string of type ReturnMessage.
-     - parameter response:					Metadata associated with the response. See Apple NSURLResponse documentation.
+     - parameter completionHandler:             A closure function to be run when the HTTP request has completed and the client has received an answer from the RestAPI.
+     - parameter notification:                  Data returned from the rest api is always a JSON string of Notification. This function then parses the JSON string to this Notification class.
+     - parameter response:                      Metadata associated with the response. See Apple NSURLResponse documentation.
      - parameter error:							Error returned from the server. See Apple dataTaskWithRequest documentation.
-     - parameter message:                The data parsed as ReturnMessage. Never nil, but if nothing is received from server it will be a custom error code.
      */
     static func requestWithResponse(action action: String, type: String, body: String, completionHandler:
-        (data: String, response: String?, error: String?) -> Void) {
+        (notification: Notification, response: String?, error: String?) -> Void) {
             let session = NSURLSession.sharedSession()
             let url = NSURL(string: mainUrl + action)!
             
@@ -41,20 +41,21 @@ class HttpHandler {
             request.HTTPMethod = type
             // "+" becomes " " http://stackoverflow.com/questions/2491351/nsmutableurlrequest-eats-plus-signs that's half a day lost
             request.HTTPBody = body.stringByReplacingOccurrencesOfString("+", withString: "%2b").dataUsingEncoding(NSUTF8StringEncoding)
-            //request.timeoutInterval = 10
             
             let started = NSDate()
             let task = session.dataTaskWithRequest(request) {
                 data, response, error in
-                //print("time for \(__FUNCTION__) mainUrl: \(mainUrl) action: \(action) http call \(NSDate().timeIntervalSinceDate(started)) seconds")
+                print("time for \(__FUNCTION__) mainUrl: \(mainUrl) action: \(action) http call \(NSDate().timeIntervalSinceDate(started)) seconds")
                 
-                //Todo add customError class to completionHandler?
-                //log(data: data, response: response, error: error)
-                var dataString = String()
-                if let data = data {
-                    dataString = (NSString(data: data, encoding: NSUTF8StringEncoding) as! String)
+                //Convert data to Notification
+                var n = Notification()
+                if let nData = data, swiftData = NSString(data: nData, encoding: NSUTF8StringEncoding) as? String {
+                    if let notificationDictionary = try? JSONSerializer.toDictionary(swiftData) {
+                        n = Notification(jsonDictionary: notificationDictionary)
+                    }
                 }
-                completionHandler(data: dataString, response: String(response), error: String(error))
+                
+                completionHandler(notification: n, response: String(response), error: String(error))
             }
             task.resume()
     }

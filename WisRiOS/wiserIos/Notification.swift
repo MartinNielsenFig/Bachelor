@@ -14,6 +14,10 @@ class Notification {
     var ErrorType: ErrorTypes
     var Errors = [ErrorCode]()
     
+    init(){
+        self.ErrorType = ErrorTypes.Error
+    }
+    
     init(jsonDictionary: NSDictionary) {
         Data = jsonDictionary["Data"] as? String
         ErrorType = ErrorTypes(rawValue: jsonDictionary["ErrorType"] as! Int) ?? ErrorTypes.Error
