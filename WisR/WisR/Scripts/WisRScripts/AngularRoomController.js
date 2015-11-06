@@ -281,7 +281,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
                     alert($scope.GetErrorOutput(response.data.Errors));
                 } else {
                     $scope.anonymousUser = false;
-                    $scope.currentUser = response.data.Data;
+                    $scope.currentUser = JSON.parse(response.data.Data);
                     $scope.getRoom(true);
                 }
 
@@ -395,7 +395,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
                 //TODO better error handling?
                 alert($scope.GetErrorOutput(response.data.Errors));
             } else {
-                $scope.Questions = response.data.Data;
+                $scope.Questions = JSON.parse(response.data.Data);
                 $scope.questionsLoaded = true;
             }
             
@@ -541,14 +541,14 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
                 //TODO better error handling?
                 alert($scope.GetErrorOutput(response.data.Errors));
             } else {
-                if (response.data.Data === "") {
+                if (JSON.parse(response.data.Data) === "") {
                     //set image to noImage
                     //$scope.questionImage = configs.noImgBase64;
                     $scope.SpecificQuestion.Img = configs.noImgBase64;
                     $("#specificQuestionImage").prop('title', Resources.NoPictureText);
                     $scope.NoPicture = true;
                 } else {
-                    $scope.SpecificQuestion.Img = response.data.Data;
+                    $scope.SpecificQuestion.Img = JSON.parse(response.data.Data);
                     $("#specificQuestionImage").prop('title', Resources.ClickToChangeImageSize);
                     $scope.NoPicture = false;
                 }
