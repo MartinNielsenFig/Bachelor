@@ -73,7 +73,7 @@ class QuestionListViewController: UITableViewController, Paged {
         if let indexPath = indexPath, cell = tableView.cellForRowAtIndexPath(indexPath) {
             
             let q = questions[indexPath.row]
-            if q.CreatedById != CurrentUser.sharedInstance._id {
+            if q.CreatedById != CurrentUser.sharedInstance._id! {
                 return
             }
             
@@ -236,7 +236,7 @@ class QuestionListViewController: UITableViewController, Paged {
         cell.downvoteCounter.text = String(votesCount.downvotes)
         
         //If already voted
-        if let myVote = (question.Votes.filter() { $0.CreatedById == CurrentUser.sharedInstance._id }.first) {
+        if let myVote = (question.Votes.filter() { $0.CreatedById == CurrentUser.sharedInstance._id! }.first) {
             cell.userHasVoted(up: myVote.Value == 1)
         } else {
             //This needs to be done because we're using dequeueReusableCellWithIdentifier, else all will be blue after first
@@ -247,8 +247,12 @@ class QuestionListViewController: UITableViewController, Paged {
         if let parent = (parentViewController?.parentViewController as? RoomPageViewController) {
             cell.textLabel?.textColor = UIColor.blackColor()
             if question.CreatedById == parent.room?.CreatedById {
-                cell.label.font = UIFont.boldSystemFontOfSize(15.0)
+                cell.label.font = UIFont.boldSystemFontOfSize(16.0)
+            } else {
+                cell.label.font = UIFont.systemFontOfSize(16.0);
             }
+        } else {
+            print("could not get parent view controller 67823409")
         }
         
         return cell

@@ -34,7 +34,7 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
         }
         
         //Title for users, room owner sees an edit button
-        if self.room.CreatedById == CurrentUser.sharedInstance._id {
+        if self.room.CreatedById == CurrentUser.sharedInstance._id! {
             let editbtnContainer = UIView(frame: CGRectMake(0, 0, 44, 44))
             editbtnContainer.backgroundColor = UIColor.clearColor()
             let btn = UIButton(type: .DetailDisclosure)

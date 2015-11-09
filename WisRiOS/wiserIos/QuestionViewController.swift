@@ -84,7 +84,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         //Vote btns
         var hasVote = false
         for v in question.Votes {
-            if v.CreatedById == CurrentUser.sharedInstance._id {
+            if v.CreatedById == CurrentUser.sharedInstance._id! {
                 hasVote = true
                 updateVoteUI(v.Value == 1)
                 break
@@ -119,6 +119,11 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     - parameter sender:	The button pressed
     */
     @IBAction func sendResponse(sender: AnyObject) {
+        
+        guard question._id != nil && pickerData.count > 0 else {
+            return
+        }
+        
         let index = answerPicker.selectedRowInComponent(0)
         let answerPickerText = pickerData[index]
         
@@ -133,7 +138,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             (notification, response, error) in
             
             if notification.ErrorType == .Ok || notification.ErrorType == .OkWithError {
-                if let myResponse = (self.question.Result.filter() { $0.UserId == CurrentUser.sharedInstance._id }.first) where !DEBUG_ALWAYS_ADD {
+                if let myResponse = (self.question.Result.filter() { $0.UserId == CurrentUser.sharedInstance._id! }.first) where !DEBUG_ALWAYS_ADD {
                     myResponse.Value = answer.Value
                 } else {
                     self.question.Result += [answer]
@@ -164,7 +169,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         if let index = index {
             selectedAnswerPickerIndex = index
         } else {
-            if let myAnswer = (question.Result.filter() { $0.UserId == CurrentUser.sharedInstance._id }.first) {
+            if let myAnswer = (question.Result.filter() { $0.UserId == CurrentUser.sharedInstance._id! }.first) {
                 selectedAnswerPickerIndex = pickerData.indexOf(myAnswer.Value) ?? -1
             } else {
                 selectedAnswerPickerIndex = -1
@@ -194,6 +199,11 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
      - parameter up:	If true upvotes, if false downvotes.
      */
     func vote(up: Bool, button: UIButton) {
+        
+        guard question._id != nil else {
+            return
+        }
+        
         updateVoteUI(up)
         let voteValue = up ? 1 : -1
         let vote = Vote(createdById: CurrentUser.sharedInstance._id!, value: voteValue)
@@ -204,7 +214,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             (notification, response, error) in
             
             if notification.ErrorType == .Ok || notification.ErrorType == .OkWithError {
-                if let myVote = (self.question.Votes.filter() { $0.CreatedById == CurrentUser.sharedInstance._id }.first) {
+                if let myVote = (self.question.Votes.filter() { $0.CreatedById == CurrentUser.sharedInstance._id! }.first) {
                     myVote.Value = voteValue
                 } else {
                     self.question.Votes += [vote]

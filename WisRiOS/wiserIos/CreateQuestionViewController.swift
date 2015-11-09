@@ -122,7 +122,7 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
         
         //Create question object and send it
         let q = Question()
-        q.CreatedById = CurrentUser.sharedInstance._id
+        q.CreatedById = CurrentUser.sharedInstance._id!
         
         //http://stackoverflow.com/questions/11251340/convert-uiimage-to-base64-string-in-objective-c-and-swift
         if let selectedImage = self.selectedImage {
@@ -136,6 +136,7 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
         q.QuestionText = questionText?.inputField.text
         q.RoomId = room._id
         q.ExpireTimestamp = durationInput?.inputField.text
+        q.CreatedByUserDisplayName = CurrentUser.sharedInstance.DisplayName ?? "Anonymous"
         
         let jsonQ = JSONSerializer.toJson(q)
         let body = "roomId=\(room._id!)&question=\(jsonQ)&type=MultipleChoiceQuestion"

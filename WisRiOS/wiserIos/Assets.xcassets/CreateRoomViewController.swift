@@ -188,7 +188,7 @@ class CreateRoomViewController: UITableViewController {
         
         room.Name = roomNameInputCell?.inputField.text
         room.AllowAnonymous = anonymousInputCell?.uiSwitch.on ?? onDefault
-        room.CreatedById = CurrentUser.sharedInstance._id
+        room.CreatedById = CurrentUser.sharedInstance._id!
         room.HasChat = chatInputCell?.uiSwitch.on ?? onDefault
         room.HasPassword = pwSwitchCell?.uiSwitch.on ?? onDefault
         room.UseLocation = roomUsesLocationInputCell?.uiSwitch.on ?? onDefault
