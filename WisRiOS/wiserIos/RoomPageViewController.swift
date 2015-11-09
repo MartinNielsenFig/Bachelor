@@ -207,8 +207,10 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
             let locationJson = JSONSerializer.toJson(location)
             
             let body = "id=\(self.room._id!)&location=\(locationJson)"
-            HttpHandler.requestWithResponse(action: "Room/UpdateLocation", type: "POST", body: body, completionHandler: { (data, response, error) in
-                if data == "" {
+            HttpHandler.requestWithResponse(action: "Room/UpdateLocation", type: "POST", body: body, completionHandler: {
+                (notification, response, error) in
+                
+                if notification.ErrorType == .Ok || notification.ErrorType == .OkWithError {
                     Toast.showToast(NSLocalizedString("Location updated", comment: ""), durationMs: 2000, presenter: self)
                 } else {
                     Toast.showToast(NSLocalizedString("Could not update room location", comment: ""), durationMs: 2000, presenter: self)

@@ -402,6 +402,75 @@
   <data name="NoConnectionToServer" xml:space="preserve">
     <value>Could not access REST API, contact system administrator</value>
   </data>
+  <data name="ActiveDirctoryError" xml:space="preserve">
+    <value>Error in looking up that user, server should be on VPN</value>
+  </data>
+  <data name="CouldNotAddQuestion" xml:space="preserve">
+    <value>Database error</value>
+  </data>
+  <data name="CouldNotAddRoomToDatabase" xml:space="preserve">
+    <value>Database error</value>
+  </data>
+  <data name="CouldNotAddUser" xml:space="preserve">
+    <value>Database error</value>
+  </data>
+  <data name="CouldNotDeleteAllChatMessages" xml:space="preserve">
+    <value>Database error</value>
+  </data>
+  <data name="CouldNotDeleteAllQuestions" xml:space="preserve">
+    <value>Database error</value>
+  </data>
+  <data name="CouldNotDeleteRoom" xml:space="preserve">
+    <value>Database error</value>
+  </data>
+  <data name="CouldNotDeleteUser" xml:space="preserve">
+    <value>Database error</value>
+  </data>
+  <data name="CouldNotGetChatMessages" xml:space="preserve">
+    <value>Database error</value>
+  </data>
+  <data name="CouldNotGetQuestions" xml:space="preserve">
+    <value>Database error</value>
+  </data>
+  <data name="CouldNotGetQuestionType" xml:space="preserve">
+    <value>Database error</value>
+  </data>
+  <data name="CouldNotGetRoomsFromDatabase" xml:space="preserve">
+    <value>Database error</value>
+  </data>
+  <data name="CouldNotGetUsers" xml:space="preserve">
+    <value>Database error</value>
+  </data>
+  <data name="CouldNotParseJsonToClass" xml:space="preserve">
+    <value>Error in validating your request</value>
+  </data>
+  <data name="CouldNotUpdateQuestion" xml:space="preserve">
+    <value>Database error</value>
+  </data>
+  <data name="CouldNotUpdateRoom" xml:space="preserve">
+    <value>Database error</value>
+  </data>
+  <data name="CouldNotUpdateUser" xml:space="preserve">
+    <value>Database error</value>
+  </data>
+  <data name="NewQuestionIdShouldBeNull" xml:space="preserve">
+    <value>Error in creating new question, id should be null</value>
+  </data>
+  <data name="QuestionExpired" xml:space="preserve">
+    <value>Question timer has run out</value>
+  </data>
+  <data name="RabbitMqError" xml:space="preserve">
+    <value>Minor complications, please update page</value>
+  </data>
+  <data name="RoomDoesNotExist" xml:space="preserve">
+    <value>Couldn't find room with that id</value>
+  </data>
+  <data name="StringIsNotJsonFormat" xml:space="preserve">
+    <value>Error in validating your request</value>
+  </data>
+  <data name="UserNotFound" xml:space="preserve">
+    <value>No user with that information</value>
+  </data>
   <data name="WrongMessageFormat" xml:space="preserve">
     <value>Your message had the wrong format</value>
   </data>

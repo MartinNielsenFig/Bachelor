@@ -12,7 +12,7 @@ import JsonSerializerSwift
 /// Handles the Http-Calls from the client to the RestAPI
 class HttpHandler {
     
-    static let mainUrl = "http://192.168.198.164:1337/"
+    static let mainUrl = "http://192.168.198.166:1337/"
     //static let mainUrl = "http://wisrrestapi.aceipse.dk/"
     //static let mainUrl = "http://wisrrestapi.azurewebsites.net/"
     
@@ -45,7 +45,7 @@ class HttpHandler {
             let started = NSDate()
             let task = session.dataTaskWithRequest(request) {
                 data, response, error in
-                print("time for \(__FUNCTION__) mainUrl: \(mainUrl) action: \(action) http call \(NSDate().timeIntervalSinceDate(started)) seconds")
+                //print("time for \(__FUNCTION__) mainUrl: \(mainUrl) action: \(action) http call \(NSDate().timeIntervalSinceDate(started)) seconds")
                 
                 //Convert data to Notification
                 var n = Notification()

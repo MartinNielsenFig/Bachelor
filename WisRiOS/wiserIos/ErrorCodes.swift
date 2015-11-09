@@ -18,4 +18,22 @@ enum ErrorCode: Int {
     case CouldNotParseJsonToClass
     case CouldNotAddRoomToDatabase
     case CouldNotGetRoomsFromDatabase
+    case CouldNotDeleteAllChatMessages
+    case CouldNotDeleteAllQuestions
+    case CouldNotDeleteRoom
+    case CouldNotUpdateRoom
+    case CouldNotGetUsers
+    case CouldNotAddUser
+    case CouldNotUpdateUser
+    case UserNotFound
+    case CouldNotDeleteUser
+    case CouldNotGetQuestions
+    case CouldNotGetQuestionType
+    case NewQuestionIdShouldBeNull
+    case RoomDoesNotExist
+    case CouldNotAddQuestion
+    case CouldNotUpdateQuestion
+    case QuestionExpired
+    case ActiveDirctoryError
+    case CouldNotGetChatMessages
 }

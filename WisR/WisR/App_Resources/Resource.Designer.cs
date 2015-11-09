@@ -63,6 +63,24 @@ namespace WisR.App_Resources {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
+        public static string ActiveDirctoryError {
+            get {
+                return ResourceManager.GetString("ActiveDirctoryError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string ActiveDirectoryError {
+            get {
+                return ResourceManager.GetString("ActiveDirectoryError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
         public static string AddResponseOption {
             get {
                 return ResourceManager.GetString("AddResponseOption", resourceCulture);
@@ -243,6 +261,15 @@ namespace WisR.App_Resources {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
+        public static string CouldNotAddQuestion {
+            get {
+                return ResourceManager.GetString("CouldNotAddQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
         public static string CouldNotAddRoomToDatabase {
             get {
                 return ResourceManager.GetString("CouldNotAddRoomToDatabase", resourceCulture);
@@ -252,9 +279,126 @@ namespace WisR.App_Resources {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
+        public static string CouldNotAddUser {
+            get {
+                return ResourceManager.GetString("CouldNotAddUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string CouldNotDeleteAllChatMessages {
+            get {
+                return ResourceManager.GetString("CouldNotDeleteAllChatMessages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string CouldNotDeleteAllQuestions {
+            get {
+                return ResourceManager.GetString("CouldNotDeleteAllQuestions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string CouldNotDeleteRoom {
+            get {
+                return ResourceManager.GetString("CouldNotDeleteRoom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string CouldNotDeleteUser {
+            get {
+                return ResourceManager.GetString("CouldNotDeleteUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string CouldNotGetChatMessages {
+            get {
+                return ResourceManager.GetString("CouldNotGetChatMessages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string CouldNotGetQuestions {
+            get {
+                return ResourceManager.GetString("CouldNotGetQuestions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string CouldNotGetQuestionType {
+            get {
+                return ResourceManager.GetString("CouldNotGetQuestionType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string CouldNotGetRoomsFromDatabase {
+            get {
+                return ResourceManager.GetString("CouldNotGetRoomsFromDatabase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string CouldNotGetUsers {
+            get {
+                return ResourceManager.GetString("CouldNotGetUsers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
         public static string CouldNotParseJsonToClass {
             get {
                 return ResourceManager.GetString("CouldNotParseJsonToClass", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string CouldNotUpdateQuestion {
+            get {
+                return ResourceManager.GetString("CouldNotUpdateQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string CouldNotUpdateRoom {
+            get {
+                return ResourceManager.GetString("CouldNotUpdateRoom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string CouldNotUpdateUser {
+            get {
+                return ResourceManager.GetString("CouldNotUpdateUser", resourceCulture);
             }
         }
         
@@ -513,6 +657,15 @@ namespace WisR.App_Resources {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
+        public static string NewQuestionIdShouldBeNull {
+            get {
+                return ResourceManager.GetString("NewQuestionIdShouldBeNull", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
         public static string NoAccessRequiresLogin {
             get {
                 return ResourceManager.GetString("NoAccessRequiresLogin", resourceCulture);
@@ -639,6 +792,15 @@ namespace WisR.App_Resources {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
+        public static string QuestionExpired {
+            get {
+                return ResourceManager.GetString("QuestionExpired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
         public static string QuestionText {
             get {
                 return ResourceManager.GetString("QuestionText", resourceCulture);
@@ -723,6 +885,15 @@ namespace WisR.App_Resources {
         public static string RoomAuthor {
             get {
                 return ResourceManager.GetString("RoomAuthor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string RoomDoesNotExist {
+            get {
+                return ResourceManager.GetString("RoomDoesNotExist", resourceCulture);
             }
         }
         
@@ -885,6 +1056,15 @@ namespace WisR.App_Resources {
         public static string UseLocationHelp {
             get {
                 return ResourceManager.GetString("UseLocationHelp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string UserNotFound {
+            get {
+                return ResourceManager.GetString("UserNotFound", resourceCulture);
             }
         }
         

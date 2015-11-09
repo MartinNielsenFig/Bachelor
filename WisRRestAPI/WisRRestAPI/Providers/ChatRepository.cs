@@ -62,7 +62,8 @@ namespace WisRRestAPI.Providers
         public List<ChatMessage> GetNewerMessages(ChatMessage msg) {
 
             //Gt = GreaterThan
-            var filter = Builders<BsonDocument>.Filter.Gt("Timestamp", msg.Timestamp);
+            var builder = Builders<BsonDocument>.Filter;
+            var filter = builder.Gt("Timestamp", msg.Timestamp) & builder.Eq("RoomId", msg.RoomId);
             var bsonDocumentList = _database.GetCollection<BsonDocument>("chatmessage").Find(filter).ToListAsync();
 
             List<ChatMessage> chatMessagesList = new List<ChatMessage>();

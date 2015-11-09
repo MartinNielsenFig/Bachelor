@@ -209,30 +209,33 @@ class CreateRoomViewController: UITableViewController {
         
         let jsonRoom = JSONSerializer.toJson(self.room)
         let body = "room=\(jsonRoom)"
-        HttpHandler.requestWithResponse(action: "Room/CreateRoom", type: "POST", body: body) { (data, response, error) in
-            assert(false)
-            /*
-            if let error = try? ReturnMessage.parse(data) {
-                print(error.ErrorMessage)
+        HttpHandler.requestWithResponse(action: "Room/CreateRoom", type: "POST", body: body) {
+            (notification, response, error) in
+            
+            if notification.ErrorType == .Ok || notification.ErrorType == .OkWithError {
                 
-                if error.ErrorCode == ErrorCodes.RoomSecretAlreadyInUse.rawValue {
-                    print("SECRET ALREADY IN USE")
-                    
-                    let alert = UIAlertController(title: NSLocalizedString("Secret in use", comment: ""), message: NSLocalizedString("Secret is already in use, choose another.", comment: ""), preferredStyle: .Alert)
-                    alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { action in
-                        self.roomSecretInputCell?.inputField.becomeFirstResponder()
-                    }))
+                if let data = notification.Data {
+                    self.room._id = data.stringByReplacingOccurrencesOfString(";", withString: "")
                     dispatch_async(dispatch_get_main_queue()) {
-                        self.presentViewController(alert, animated: true, completion: nil)
+                        self.performSegueWithIdentifier("RoomCreated", sender: self)
                     }
+                } else {
+                    print("did not receive ID from the room created")
                 }
-            }
-            else {
-                self.room._id = data.stringByReplacingOccurrencesOfString(";", withString: "")
+                
+            } else if notification.Errors.contains(ErrorCode.RoomSecretAlreadyInUse) {
+                
+                print("secret already in use")
+                let alert = UIAlertController(title: NSLocalizedString("Secret in use", comment: ""), message: NSLocalizedString("Secret is already in use, choose another.", comment: ""), preferredStyle: .Alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { action in
+                    self.roomSecretInputCell?.inputField.becomeFirstResponder()
+                }))
                 dispatch_async(dispatch_get_main_queue()) {
-                    self.performSegueWithIdentifier("RoomCreated", sender: self)
+                    self.presentViewController(alert, animated: true, completion: nil)
                 }
-            }*/
+            } else {
+                print(notification.Errors)
+            }
         }
     }
     

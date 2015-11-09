@@ -39,8 +39,8 @@ class RoomTableViewController: UITableViewController {
         let roomAtRow = self.rooms[indexPath.row]
         return roomAtRow.CreatedById == CurrentUser.sharedInstance._id
     }
-
-
+    
+    
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         
         if rooms.count <= 0 {
@@ -108,27 +108,32 @@ class RoomTableViewController: UITableViewController {
         }
         
         let start = NSDate()
-        HttpHandler.requestWithResponse(action: "Room/GetAll", type: "GET", body: "") { (data, response, error) in
+        HttpHandler.requestWithResponse(action: "Room/GetAll", type: "GET", body: "") {
+            (notification, response, error) in
             
-            var tmpRooms = [Room]()
-            
-            if let jsonArray = try? JSONSerializer.toArray(data) {
-                for room in jsonArray {
-                    tmpRooms += [Room(jsonDictionary: room as! NSDictionary)]
+            if notification.ErrorType == .Ok || notification.ErrorType == .OkWithError {
+                var tmpRooms = [Room]()
+                
+                if let data = notification.Data, jsonArray = try? JSONSerializer.toArray(data) {
+                    for room in jsonArray {
+                        tmpRooms += [Room(jsonDictionary: room as! NSDictionary)]
+                    }
                 }
+                
+                self.rooms.removeAll()
+                self.allRooms.removeAll()
+                
+                self.allRooms = tmpRooms
+                self.rooms = RoomFilterHelper.filterRoomsByLocation(self.allRooms, metersRadius: 1000)
+                refreshControl?.endRefreshing()
+                
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.tableView.reloadData()
+                }
+                print("duration of \(__FUNCTION__) took \(NSDate().timeIntervalSinceDate(start))")
+            } else {
+                print(notification.Errors)
             }
-            
-            self.rooms.removeAll()
-            self.allRooms.removeAll()
-            
-            self.allRooms = tmpRooms
-            self.rooms = RoomFilterHelper.filterRoomsByLocation(self.allRooms, metersRadius: 1000)
-            refreshControl?.endRefreshing()
-            
-            dispatch_async(dispatch_get_main_queue()) {
-                self.tableView.reloadData()
-            }
-            print("duration of \(__FUNCTION__) took \(NSDate().timeIntervalSinceDate(start))")
         }
     }
     

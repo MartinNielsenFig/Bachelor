@@ -1052,7 +1052,79 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
             var error = "";
             switch (errors[i]) {
                 case 0:
-                    error = Resources.RoomSecretAlreadyInUse;
+                    error = Resources.RoomSecretAlreadyInUse + " " + Resources.Error + ":" + errors[i];
+                    break;
+                case 1:
+                    error = Resources.NoRoomWithThatSecret + " " + Resources.Error + ":" + errors[i];
+                    break;
+                case 2:
+                    error = Resources.RabbitMqError + " " + Resources.Error + ":" + errors[i];
+                    break;
+                case 3:
+                    error = Resources.StringIsNotJsonFormat + " " + Resources.Error + ":" + errors[i];
+                    break;
+                case 4:
+                    error = Resources.CouldNotParseJsonToClass + " " + Resources.Error + ":" + errors[i];
+                    break;
+                case 5:
+                    error = Resources.CouldNotAddRoomToDatabase + " " + Resources.Error + ":" + errors[i];
+                    break;
+                case 6:
+                    error = Resources.CouldNotGetRoomsFromDatabase + " " + Resources.Error + ":" + errors[i];
+                    break;
+                case 7:
+                    error = Resources.CouldNotDeleteAllChatMessages + " " + Resources.Error + ":" + errors[i];
+                    break;
+                case 8:
+                    error = Resources.CouldNotDeleteAllQuestions + " " + Resources.Error + ":" + errors[i];
+                    break;
+                case 9:
+                    error = Resources.CouldNotDeleteRoom + " " + Resources.Error + ":" + errors[i];
+                    break;
+                case 10:
+                    error = Resources.CouldNotUpdateRoom + " " + Resources.Error + ":" + errors[i];
+                    break;
+                case 11:
+                    error = Resources.CouldNotGetUsers + " " + Resources.Error + ":" + errors[i];
+                    break;
+                case 12:
+                    error = Resources.CouldNotAddUser + " " + Resources.Error + ":" + errors[i];
+                    break;
+                case 13:
+                    error = Resources.CouldNotUpdateUser + " " + Resources.Error + ":" + errors[i];
+                    break;
+                case 14:
+                    error = Resources.UserNotFound + " " + Resources.Error + ":" + errors[i];
+                    break;
+                case 15:
+                    error = Resources.CouldNotDeleteUser + " " + Resources.Error + ":" + errors[i];
+                    break;
+                case 16:
+                    error = Resources.CouldNotGetQuestions + " " + Resources.Error + ":" + errors[i];
+                    break;
+                case 17:
+                    error = Resources.CouldNotGetQuestionType + " " + Resources.Error + ":" + errors[i];
+                    break;
+                case 18:
+                    error = Resources.NewQuestionIdShouldBeNull + " " + Resources.Error + ":" + errors[i];
+                    break;
+                case 19:
+                    error = Resources.RoomDoesNotExist + " " + Resources.Error + ":" + errors[i];
+                    break;
+                case 20:
+                    error = Resources.CouldNotAddQuestion + " " + Resources.Error + ":" + errors[i];
+                    break;
+                case 21:
+                    error = Resources.CouldNotUpdateQuestion + " " + Resources.Error + ":" + errors[i];
+                    break;
+                case 22:
+                    error = Resources.QuestionExpired + " " + Resources.Error + ":" + errors[i];
+                    break;
+                case 23:
+                    error = Resources.ActiveDirctoryError + " " + Resources.Error + ":" + errors[i];
+                    break;
+                case 24:
+                    error = Resources.CouldNotGetChatMessages + " " + Resources.Error + ":" + errors[i];
                     break;
                 case 24:
                     error = Resources.WrongMessageFormat;

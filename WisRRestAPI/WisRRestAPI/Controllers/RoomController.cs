@@ -116,13 +116,13 @@ namespace WisRRestAPI.Controllers
             }
             catch (Exception e)
             {
-                errors.Add(ErrorCodes.CouldNotGetRoomsFromDatabase);
+                errors.Add(ErrorCodes.RoomDoesNotExist);
                 return new Notification(null, ErrorTypes.Error, errors).ToJson();
             }
 
             if (item == null)
             {
-                errors.Add(ErrorCodes.CouldNotGetRoomsFromDatabase);
+                errors.Add(ErrorCodes.RoomDoesNotExist);
                 return new Notification(null, ErrorTypes.Error, errors).ToJson();
             }
 

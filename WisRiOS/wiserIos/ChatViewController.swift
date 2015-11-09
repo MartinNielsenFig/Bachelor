@@ -41,6 +41,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let msg = ChatMessage()
         msg.ByUserId = CurrentUser.sharedInstance._id
         msg.RoomId = roomId
+        msg.ByUserDisplayName = CurrentUser.sharedInstance.DisplayName
         //message timestamp gets created on restApi
         msg.Value = textMessageInput.text
         
@@ -244,7 +245,10 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         cell.textLabel?.numberOfLines = 0
         let msg = messages[indexPath.row]
-        cell.textLabel?.text = msg.Value
+        
+        let textmsg = msg.Value ?? ""
+        let byuser = msg.ByUserDisplayName ?? "Anonymous"
+        cell.textLabel?.text = "\(byuser): \(textmsg)"
         
         cell.layer.cornerRadius = 20
         cell.layer.borderWidth = 2
