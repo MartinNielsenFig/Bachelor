@@ -414,4 +414,64 @@
   <data name="NoConnectionToServer" xml:space="preserve">
     <value />
   </data>
+  <data name="ActiveDirctoryError" xml:space="preserve">
+    <value />
+  </data>
+  <data name="ActiveDirectoryError" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CouldNotAddQuestion" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CouldNotAddUser" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CouldNotDeleteAllChatMessages" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CouldNotDeleteAllQuestions" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CouldNotDeleteRoom" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CouldNotDeleteUser" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CouldNotGetChatMessages" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CouldNotGetQuestions" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CouldNotGetQuestionType" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CouldNotGetRoomsFromDatabase" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CouldNotGetUsers" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CouldNotUpdateQuestion" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CouldNotUpdateRoom" xml:space="preserve">
+    <value />
+  </data>
+  <data name="CouldNotUpdateUser" xml:space="preserve">
+    <value />
+  </data>
+  <data name="NewQuestionIdShouldBeNull" xml:space="preserve">
+    <value />
+  </data>
+  <data name="QuestionExpired" xml:space="preserve">
+    <value />
+  </data>
+  <data name="RoomDoesNotExist" xml:space="preserve">
+    <value />
+  </data>
+  <data name="UserNotFound" xml:space="preserve">
+    <value />
+  </data>
 </root>

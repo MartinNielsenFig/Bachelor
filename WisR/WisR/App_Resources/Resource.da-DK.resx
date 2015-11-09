@@ -402,4 +402,73 @@
   <data name="NoConnectionToServer" xml:space="preserve">
     <value>Kunne ikke forbinde til REST API, kontakt system administrator</value>
   </data>
+  <data name="ActiveDirctoryError" xml:space="preserve">
+    <value>Fejl ved active directory opslag</value>
+  </data>
+  <data name="CouldNotAddQuestion" xml:space="preserve">
+    <value>Database fejl</value>
+  </data>
+  <data name="CouldNotAddRoomToDatabase" xml:space="preserve">
+    <value>Database fejl</value>
+  </data>
+  <data name="CouldNotAddUser" xml:space="preserve">
+    <value>Database fejl</value>
+  </data>
+  <data name="CouldNotDeleteAllChatMessages" xml:space="preserve">
+    <value>Database fejl</value>
+  </data>
+  <data name="CouldNotDeleteAllQuestions" xml:space="preserve">
+    <value>Database fejl</value>
+  </data>
+  <data name="CouldNotDeleteRoom" xml:space="preserve">
+    <value>Database fejl</value>
+  </data>
+  <data name="CouldNotDeleteUser" xml:space="preserve">
+    <value>Database fejl</value>
+  </data>
+  <data name="CouldNotGetChatMessages" xml:space="preserve">
+    <value>Database fejl</value>
+  </data>
+  <data name="CouldNotGetQuestions" xml:space="preserve">
+    <value>Database fejl</value>
+  </data>
+  <data name="CouldNotGetQuestionType" xml:space="preserve">
+    <value>Database fejl</value>
+  </data>
+  <data name="CouldNotGetRoomsFromDatabase" xml:space="preserve">
+    <value>Database fejl</value>
+  </data>
+  <data name="CouldNotGetUsers" xml:space="preserve">
+    <value>Database fejl</value>
+  </data>
+  <data name="CouldNotParseJsonToClass" xml:space="preserve">
+    <value>Fejl i validering af request</value>
+  </data>
+  <data name="CouldNotUpdateQuestion" xml:space="preserve">
+    <value>Database fejl</value>
+  </data>
+  <data name="CouldNotUpdateRoom" xml:space="preserve">
+    <value>Database fejl</value>
+  </data>
+  <data name="CouldNotUpdateUser" xml:space="preserve">
+    <value>Database fejl</value>
+  </data>
+  <data name="NewQuestionIdShouldBeNull" xml:space="preserve">
+    <value>Fejl ved oprettelse af spørgsmål</value>
+  </data>
+  <data name="QuestionExpired" xml:space="preserve">
+    <value>Spørgsmålets timer er løbet ud</value>
+  </data>
+  <data name="RabbitMqError" xml:space="preserve">
+    <value>Mindre fejl opstået, venligst opdatér siden</value>
+  </data>
+  <data name="RoomDoesNotExist" xml:space="preserve">
+    <value>Kunne ikke finde et rum med det id</value>
+  </data>
+  <data name="StringIsNotJsonFormat" xml:space="preserve">
+    <value>Fejl i validering af request</value>
+  </data>
+  <data name="UserNotFound" xml:space="preserve">
+    <value>Bruger ikke fundet</value>
+  </data>
 </root>
