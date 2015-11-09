@@ -24,8 +24,15 @@ class FacebookHelper {
     static func requestWisrUserFrom(facebookId facebookId: String) {
         let body = "facebookId=\(facebookId)"
         
-        HttpHandler.requestWithResponse(action: "User/GetWisrIdFromFacebookId", type: "POST", body: body) { (data, response, error) in
-            CurrentUser.sharedInstance._id = data
+        HttpHandler.requestWithResponse(action: "User/GetWisrIdFromFacebookId", type: "POST", body: body) {
+            (notification, response, error) in
+            
+            if notification.ErrorType == .Ok || notification.ErrorType == .OkWithError {
+                CurrentUser.sharedInstance._id = notification.Data
+            } else {
+                print("problem with Facebook logon")
+                print(notification.Errors)
+            }
         }
     }
     
@@ -54,13 +61,22 @@ class FacebookHelper {
                     let userJson = JSONSerializer.toJson(user)
                     let body = "User=\(userJson)"
                     
-                    HttpHandler.requestWithResponse(action: "User/CreateUser", type: "POST", body: body) { (data, response, error) in
-                        CurrentUser.sharedInstance._id = data
+                    HttpHandler.requestWithResponse(action: "User/CreateUser", type: "POST", body: body) {
+                        (notification, response, error) in
+                        
+                        if notification.ErrorType == .Ok || notification.ErrorType == .OkWithError {
+                            if let data = notification.Data {
+                                CurrentUser.sharedInstance._id = data
+                            } else {
+                                print("did not get Facebook ID when creating user")
+                            }
+                        } else {
+                            print(notification.Errors)
+                        }
                     }
                 }
-                
             } else {
-                NSLog("Error Getting Info \(error)");
+                NSLog("Error Getting Facebook info \(error)");
             }
         }
     }

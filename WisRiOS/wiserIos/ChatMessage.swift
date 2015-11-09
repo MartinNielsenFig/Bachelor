@@ -14,11 +14,9 @@ class ChatMessage {
     var RoomId: String?
     var Value: String?
     var Timestamp: String?
+    var ByUserDisplayName: String?
     
     init(){}
-    
-    //JsonSerializer wont map this
-    var notMapped_name = String()
     
     init(jsonDictionary: NSDictionary) {
         
@@ -27,5 +25,6 @@ class ChatMessage {
         RoomId = jsonDictionary["RoomId"] as? String
         Value = jsonDictionary["Value"] as? String
         Timestamp = jsonDictionary["Timestamp"] as? String
+        ByUserDisplayName = jsonDictionary["ByUserDisplayName"] as? String
     }
 }

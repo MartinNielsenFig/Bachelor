@@ -12,9 +12,11 @@ import Foundation
 class Answer {
     var Value: String
     var UserId: String
+    var UserDisplayName: String
     
-    init(value: String, userId: String) {
+    init(value: String, userId: String, userDisplayName: String) {
         self.Value = value
         self.UserId = userId
+        self.UserDisplayName = userDisplayName
     }
 }

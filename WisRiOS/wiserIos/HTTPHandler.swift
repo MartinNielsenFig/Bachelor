@@ -12,7 +12,7 @@ import JsonSerializerSwift
 /// Handles the Http-Calls from the client to the RestAPI
 class HttpHandler {
     
-    static let mainUrl = "http://192.168.198.164:1337/"
+    static let mainUrl = "http://192.168.198.166:1337/"
     //static let mainUrl = "http://wisrrestapi.aceipse.dk/"
     //static let mainUrl = "http://wisrrestapi.azurewebsites.net/"
     
