@@ -127,7 +127,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         let answerJson = JSONSerializer.toJson(answer)
         let body = "response=\(answerJson)&questionId=\(question._id!)"
         
-        let DEBUG_ALWAYS_ADD = true
+        let DEBUG_ALWAYS_ADD = true //todo remove
         
         HttpHandler.requestWithResponse(action: "Question/AddQuestionResponse", type: "POST", body: body) {
             (notification, response, error) in
