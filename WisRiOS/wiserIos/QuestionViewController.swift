@@ -100,7 +100,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         self.progressTimerUpdater?.stop()
         super.viewWillDisappear(animated)
     }
-
+    
     
     //MARK: Actions
     
@@ -123,14 +123,16 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         let answerPickerText = pickerData[index]
         
         //Todo handle if not logged in
-        let answer = Answer(value: answerPickerText, userId: CurrentUser.sharedInstance._id!)
+        let answer = Answer(value: answerPickerText, userId: CurrentUser.sharedInstance._id!, userDisplayName: CurrentUser.sharedInstance.DisplayName ?? "Anonymous")
         let answerJson = JSONSerializer.toJson(answer)
         let body = "response=\(answerJson)&questionId=\(question._id!)"
         
-        let DEBUG_ALWAYS_ADD = true
+        let DEBUG_ALWAYS_ADD = true //todo remove
         
-        HttpHandler.requestWithResponse(action: "Question/AddQuestionResponse", type: "POST", body: body) { (data, response, error) in
-            if error == "nil" && data == "" {
+        HttpHandler.requestWithResponse(action: "Question/AddQuestionResponse", type: "POST", body: body) {
+            (notification, response, error) in
+            
+            if notification.ErrorType == .Ok || notification.ErrorType == .OkWithError {
                 if let myResponse = (self.question.Result.filter() { $0.UserId == CurrentUser.sharedInstance._id }.first) where !DEBUG_ALWAYS_ADD {
                     myResponse.Value = answer.Value
                 } else {
@@ -140,8 +142,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                 let youVoted = NSLocalizedString("You voted", comment: "")
                 Toast.showToast(youVoted + " \(answer.Value)", durationMs: 2000, presenter: self)
                 self.highlightSelectedAnswer(index)
-            } else {
-                
+            } else if notification.Errors.contains(ErrorCode.QuestionExpired) {
                 dispatch_async(dispatch_get_main_queue()) {
                     let alert = UIAlertController(title: NSLocalizedString("An error has occurred", comment: ""), message: NSLocalizedString("Cannot respond to a question where timer has run out", comment: ""), preferredStyle: .Alert)
                     alert.addAction(UIAlertAction(title: "Ok", style: .Cancel) { action in
@@ -149,13 +150,12 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                         })
                     self.presentViewController(alert, animated: true, completion: nil)
                 }
-                
-                print(error)
-                print(data)
+            } else {
+                print("error in adding response to question")
+                print(notification.Errors)
             }
         }
     }
-    
     /**
      Highlights the selected answer in the Answer Picker.
      - parameter index:	The index on the selected answer from the user. If it's nil, this function will find it.
@@ -200,8 +200,10 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         let voteJson = JSONSerializer.toJson(vote)
         let body = "vote=\(voteJson)&type=MultipleChoiceQuestion&id=\(question._id!)"
         
-        HttpHandler.requestWithResponse(action: "Question/AddVote", type: "POST", body: body) { (data, response, error) in
-            if error == "nil" && data == "" {
+        HttpHandler.requestWithResponse(action: "Question/AddVote", type: "POST", body: body) {
+            (notification, response, error) in
+            
+            if notification.ErrorType == .Ok || notification.ErrorType == .OkWithError {
                 if let myVote = (self.question.Votes.filter() { $0.CreatedById == CurrentUser.sharedInstance._id }.first) {
                     myVote.Value = voteValue
                 } else {
@@ -209,6 +211,9 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                 }
                 
                 print(up ? "VOTED" : "DOWNVOTED")
+            } else {
+                print("could not upvote or downvote problem")
+                print(notification.Errors)
             }
         }
     }
@@ -280,21 +285,29 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                     self.questionImageView!.reloadInputViews()
                 }
             }
-            
         }
         
         //Don't reload image if already loaded
         if let b64Img = self.question.Img {
             updateImgGui(b64Img)
-            return
         } else {
             self.questionImageView.image = nil
-        }
-        
-        HttpHandler.requestWithResponse(action: "Question/GetImageByQuestionId?questionId=\(self.question._id!)", type: "GET", body: "") {
-            (data, response, error) -> Void in
-            self.question.Img = data    //this saves the image for later use
-            updateImgGui(data)
+            
+            HttpHandler.requestWithResponse(action: "Question/GetImageByQuestionId?questionId=\(self.question._id!)", type: "GET", body: "") {
+                (notification, response, error) in
+                
+                if notification.ErrorType == .Ok || notification.ErrorType == .OkWithError {
+                    if let data = notification.Data {
+                        self.question.Img = data    //this saves the image for later use
+                        updateImgGui(data)
+                    } else {
+                        print("did receive response but did not receive an image")
+                    }
+                } else {
+                    print("error getting image for question")
+                    print(notification.Errors)
+                }
+            }
         }
     }
     

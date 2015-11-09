@@ -86,10 +86,11 @@ class QuestionListViewController: UITableViewController, Paged {
             let deleted = NSLocalizedString("Question was deleted", comment: "")
             let deleteOnly = NSLocalizedString("Delete only", comment: "")
             
-            func delete(edit: Bool) {
+            func deleteThen(edit edit: Bool) {
                 if let parent = (self.parentViewController?.parentViewController as? RoomPageViewController) {
-                    HttpHandler.requestWithResponse(action: "Question/DeleteQuestion?id=\(q._id!)", type: "DELETE", body: "", completionHandler: { (data, response, error) -> Void in
-                        if data.lowercaseString.containsString("was deleted") {
+                    HttpHandler.requestWithResponse(action: "Question/DeleteQuestion?id=\(q._id!)", type: "DELETE", body: "", completionHandler: { (notification, response, error) in
+                        
+                        if notification.ErrorType == .Ok || notification.ErrorType == .OkWithError {
                             if edit {
                                 parent.editQuestion(q)
                             } else {
@@ -101,7 +102,7 @@ class QuestionListViewController: UITableViewController, Paged {
                         }
                     })
                 } else {
-                    print("could not retrieve parent as roompageviewcontroller")
+                    print("could not retrieve parent as roompageviewcontroller could not delete/edit")
                 }
             }
             
@@ -110,10 +111,10 @@ class QuestionListViewController: UITableViewController, Paged {
                 //Do nothing
             }))
             alert.addAction(UIAlertAction(title: deleteAndEdit, style: .Destructive, handler: { action in
-                delete(true)
+                deleteThen(edit: true)
             }))
             alert.addAction(UIAlertAction(title: deleteOnly, style: .Destructive, handler: { (action) in
-                delete(false)
+                deleteThen(edit: false)
             }))
             
             self.presentViewController(alert, animated: true, completion: nil)
@@ -165,21 +166,24 @@ class QuestionListViewController: UITableViewController, Paged {
         
         //"Swift Trailing Closure" syntax
         let action = "Question/GetQuestionsForRoomWithoutImages?roomId=\(self.roomId!)"
-        HttpHandler.requestWithResponse(action: action, type: "GET", body: "") { (data, response, error) -> Void in
+        HttpHandler.requestWithResponse(action: action, type: "GET", body: "") {
+            (notification, response, error) in
             
             var tmpQuestions = [Question]()
-            if let jsonArray = try? JSONSerializer.toArray(data) {
-                for question in jsonArray {
-                    tmpQuestions += [Question(jsonDictionary: question as! NSDictionary)]
-                }
+            if notification.ErrorType == .Ok || notification.ErrorType == .OkWithError {
                 
-                if tmpQuestions.count <= 0 {
-                    let q = Question()
-                    q.QuestionText = NSLocalizedString("No questions for room", comment: "")
-                    q.CreatedById = "system"
-                    tmpQuestions += [q]
+                if let data = notification.Data, jsonArray = try? JSONSerializer.toArray(data) {
+                    for question in jsonArray {
+                        tmpQuestions += [Question(jsonDictionary: question as! NSDictionary)]
+                    }
+                    
+                    if tmpQuestions.count <= 0 {
+                        let q = Question()
+                        q.QuestionText = NSLocalizedString("No questions for room", comment: "")
+                        q.CreatedById = "system"
+                        tmpQuestions += [q]
+                    }
                 }
-                
             } else {
                 let qError = Question()
                 qError.QuestionText = NSLocalizedString("Could not load questions", comment: "")
@@ -187,7 +191,6 @@ class QuestionListViewController: UITableViewController, Paged {
                 tmpQuestions = [qError]
             }
             
-            //http://stackoverflow.com/questions/18847438/dispatch-get-main-queue-in-main-thread
             dispatch_async(dispatch_get_main_queue()) {
                 self.questions.removeAll()
                 self.questions += tmpQuestions
@@ -224,7 +227,7 @@ class QuestionListViewController: UITableViewController, Paged {
         
         let cellIdentifier = "QuestionCell"
         let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! QuestionViewCell
-
+        
         //If question string is too long shorten it
         cell.label.text = StringExtractor.shortenString(question.QuestionText!, maxLength: 30)
         

@@ -41,23 +41,28 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let msg = ChatMessage()
         msg.ByUserId = CurrentUser.sharedInstance._id
         msg.RoomId = roomId
+        msg.ByUserDisplayName = CurrentUser.sharedInstance.DisplayName
         //message timestamp gets created on restApi
         msg.Value = textMessageInput.text
         
         let msgJson = JSONSerializer.toJson(msg)
         let body = "ChatMessage=\(msgJson)"
-        HttpHandler.requestWithResponse(action: "Chat/CreateChatMessage", type: "POST", body: body) { (data, response, error) in
-            NSLog("Chat/CreateChatMessage Done")
+        HttpHandler.requestWithResponse(action: "Chat/CreateChatMessage", type: "POST", body: body) {
+            (notification, response, error) in
             
-            dispatch_async(dispatch_get_main_queue()) {
-                self.textMessageInput.text = ""
-                
-                //If the last message is not visible, scroll to bottom
-                if self.stickToBottom() {
-                    self.scrollToBottom()
+            if notification.ErrorType == .Ok || notification.ErrorType == .OkWithError {
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.textMessageInput.text = ""
+                    
+                    //If the last message is not visible, scroll to bottom
+                    if self.stickToBottom() {
+                        self.scrollToBottom()
+                    }
+                    self.chatUpdater?.start()
+                    self.chatUpdater?.execute()
                 }
-                self.chatUpdater?.start()
-                self.chatUpdater?.execute()
+            } else {
+                print(notification.Errors)
             }
         }
     }
@@ -111,32 +116,35 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let newestMsg = self.newestMessageByIndex()
         let body = "msg=\(JSONSerializer.toJson(newestMsg))"
         
-        let start = NSDate()
-        HttpHandler.requestWithResponse(action: "Chat/GetNewerMessages", type: "POST", body: body) { (data, response, error) in
-            print("time for \(__FUNCTION__) is \(NSDate().timeIntervalSinceDate(start)) s")
+        HttpHandler.requestWithResponse(action: "Chat/GetNewerMessages", type: "POST", body: body) {
+            (notification, response, error) in
             
-            let sticky = self.stickToBottom()
-            var newMessages = false
-            if let jsonArray = try? JSONSerializer.toArray(data)  {
-                
-                for chatMsg in jsonArray {
-                    let m = ChatMessage(jsonDictionary: chatMsg as! NSDictionary)
-                    self.messages += [m]
-                    newMessages = true
-                }
-                
-                dispatch_async(dispatch_get_main_queue()) {
+            if notification.ErrorType == .Ok || notification.ErrorType == .OkWithError {
+                let sticky = self.stickToBottom()
+                var newMessages = false
+                if let data = notification.Data, jsonArray = try? JSONSerializer.toArray(data)  {
                     
-                    if newMessages {
-                        self.tableView.reloadData()
+                    for chatMsg in jsonArray {
+                        let m = ChatMessage(jsonDictionary: chatMsg as! NSDictionary)
+                        self.messages += [m]
+                        newMessages = true
                     }
-                    if (newMessages && sticky) || self.firstLoad {
-                        self.scrollToBottom()
-                        self.firstLoad = false
+                    
+                    dispatch_async(dispatch_get_main_queue()) {
+                        
+                        if newMessages {
+                            self.tableView.reloadData()
+                        }
+                        if (newMessages && sticky) || self.firstLoad {
+                            self.scrollToBottom()
+                            self.firstLoad = false
+                        }
                     }
+                } else {
+                    print("could not update chat")
                 }
             } else {
-                print("could not update chat")
+                print(notification.Errors)
             }
         }
     }
@@ -237,7 +245,10 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         cell.textLabel?.numberOfLines = 0
         let msg = messages[indexPath.row]
-        cell.textLabel?.text = msg.Value
+        
+        let textmsg = msg.Value ?? ""
+        let byuser = msg.ByUserDisplayName ?? "Anonymous"
+        cell.textLabel?.text = "\(byuser): \(textmsg)"
         
         cell.layer.cornerRadius = 20
         cell.layer.borderWidth = 2

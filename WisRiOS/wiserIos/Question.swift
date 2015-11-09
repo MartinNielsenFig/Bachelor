@@ -20,6 +20,7 @@ class Question {
     var Result = [Answer]()
     var CreationTimestamp: String?
     var ExpireTimestamp: String?
+    var CreatedByUserDisplayName: String?
     
     init() {}
     
@@ -55,14 +56,16 @@ class Question {
             for ans in resultArray {
                 let value = ans["Value"] as? String
                 let userId = ans["UserId"] as? String
+                let username = ans["UserDisplayName"] as? String
                 
-                let a = Answer(value: value ?? "none", userId: userId ?? "none")
+                let a = Answer(value: value ?? "none", userId: userId ?? "none", userDisplayName: username ?? "Anonymous")
                 self.Result += [a]
             }
         }
         
         self.CreationTimestamp = jsonDictionary["CreationTimestamp"] as? String
         self.ExpireTimestamp = jsonDictionary["ExpireTimestamp"] as? String
+        self.CreatedByUserDisplayName = jsonDictionary["CreatedByUserDisplayName"] as? String
     }
 }
 
