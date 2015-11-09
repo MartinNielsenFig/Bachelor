@@ -31,6 +31,10 @@ namespace WisRRestAPI {
         CouldNotUpdateQuestion,
         QuestionExpired, 
         ActiveDirctoryError,
-        CouldNotGetChatMessages
+        CouldNotGetChatMessages,
+        WrongQuestionFormat,
+        WrongMessageFormat,
+        WrongRoomFormat,
+        WrongUserFormat
     }
 }

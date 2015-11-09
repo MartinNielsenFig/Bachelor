@@ -912,6 +912,11 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
                     encryptedPassword: $scope.currentUser.EncryptedPassword,
                     connectedRoomIds: newIds
                 }).then(function (response) {
+                    if (response.data.ErrorType != 0) {
+                        //TODO better error handling?
+                        alert($scope.GetErrorOutput(response.data.Errors));
+                        return;
+                    }
                     ///Use response to send to REST API
                     $http.post(configs.restHostName + '/User/UpdateUser', { User: JSON.stringify(response.data), Id: $scope.currentUser._id }).
                         then(function (response) {
@@ -1048,6 +1053,18 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
             switch (errors[i]) {
                 case 0:
                     error = Resources.RoomSecretAlreadyInUse;
+                    break;
+                case 24:
+                    error = Resources.WrongMessageFormat;
+                    break;
+                case 25:
+                    error = Resources.WrongQuestionFormat;
+                    break;
+                case 26:
+                    error = Resources.WrongRoomFormat;
+                    break;
+                case 27:
+                    error = Resources.WrongUserFormat;
                     break;
                 default:
                     error = "ERROR NOT HANDLED YET";
