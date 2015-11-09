@@ -285,30 +285,28 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                     self.questionImageView!.reloadInputViews()
                 }
             }
-            
         }
         
         //Don't reload image if already loaded
         if let b64Img = self.question.Img {
             updateImgGui(b64Img)
-            return
         } else {
             self.questionImageView.image = nil
-        }
-        
-        HttpHandler.requestWithResponse(action: "Question/GetImageByQuestionId?questionId=\(self.question._id!)", type: "GET", body: "") {
-            (notification, response, error) in
             
-            if notification.ErrorType == .Ok || notification.ErrorType == .OkWithError {
-                if let data = notification.Data {
-                    self.question.Img = data    //this saves the image for later use
-                    updateImgGui(data)
+            HttpHandler.requestWithResponse(action: "Question/GetImageByQuestionId?questionId=\(self.question._id!)", type: "GET", body: "") {
+                (notification, response, error) in
+                
+                if notification.ErrorType == .Ok || notification.ErrorType == .OkWithError {
+                    if let data = notification.Data {
+                        self.question.Img = data    //this saves the image for later use
+                        updateImgGui(data)
+                    } else {
+                        print("did receive response but did not receive an image")
+                    }
                 } else {
-                    print("did receive response but did not receive an image")
+                    print("error getting image for question")
+                    print(notification.Errors)
                 }
-            } else {
-                print("error getting image for question")
-                print(notification.Errors)
             }
         }
     }
