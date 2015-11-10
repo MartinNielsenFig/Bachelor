@@ -49,7 +49,7 @@ namespace WisRRestAPI.Controllers
             }
 
 
-            return (new Notification(Rooms.Result.ToJson(), errorType, errors)).ToJson(); ;
+            return (new Notification(Rooms.Result.ToJson(), errorType, errors)).ToJson();
         }
         [System.Web.Mvc.HttpPost]
         public string CreateRoom(string Room)
