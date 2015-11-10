@@ -169,15 +169,15 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
      Scrolls to the bottom of the table view presented on this page
      */
     func scrollToBottom() {
-        let chatFieldHeight = self.messageInputStack.frame.height + 10
+        //let chatFieldHeight = self.messageInputStack.frame.height + 10
         dispatch_async(dispatch_get_main_queue()) {
             if self.messages.count > 0 {
                 self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.messages.count-1, inSection: 0), atScrollPosition: UITableViewScrollPosition.Bottom, animated: false)
-                //self.tableView.setContentOffset(CGPoint(x: 0, y: self.tableView.contentOffset.y + chatFieldHeight), animated: true)
             }
         }
     }
-    
+
+
     /**
      Policy that determines whether updates to the chat should scroll the UITableView to the bottom. This is to ensure that the user can scroll up the list to look at older messages, without the UITableView scrolling down again.
      - returns: Whether UITableView should scroll to bottom on updates.
@@ -256,8 +256,9 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let msg = messages[indexPath.row]
         
         let textmsg = msg.Value ?? ""
-        let byuser = msg.ByUserDisplayName ?? "Anonymous"
-        cell.textLabel?.text = "\(byuser): \(textmsg)"
+        let byuser = StringExtractor.nameAndInitials(msg.ByUserDisplayName) ?? "Anonymous"
+        let time = DateTimeHelper.getTimeStringFromEpochString(msg.Timestamp, dateFormat: "HH:mm")
+        cell.textLabel?.text = "\(time) \(byuser): \(textmsg)"
         
         cell.layer.cornerRadius = 20
         cell.layer.borderWidth = 2
