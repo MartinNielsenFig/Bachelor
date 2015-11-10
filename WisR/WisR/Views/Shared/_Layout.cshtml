@@ -108,7 +108,7 @@
                                             encryptedPassword: null,
                                         }).then(function(response) {
                                             //Use response to send to REST API
-                                            $http.post(configs.restHostName + '/User/CreateUser', { User: JSON.stringify(response.data) }).
+                                            $http.post(configs.restHostName + '/User/CreateUser', { User: response.data.Data }).
                                                 then(function(response) {
                                                     if (response.data.ErrorType != 0) {
                                                         //TODO better error handling?

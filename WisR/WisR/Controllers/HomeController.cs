@@ -123,11 +123,11 @@ namespace WisR.Controllers
             catch (Exception)
             {
                 errors.Add(ErrorCodes.WrongUserFormat);
-                return new Notification(null, errorType, errors).ToJson();
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
             }
             
 
-            return new Notification(user.ToJson(), ErrorTypes.Error, errors).ToJson(); 
+            return new Notification(user.ToJson(), errorType, errors).ToJson(); 
         }
 
         public ActionResult ChangeCurrentCulture(int id)

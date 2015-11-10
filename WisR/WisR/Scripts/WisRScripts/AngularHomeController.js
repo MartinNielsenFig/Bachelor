@@ -322,7 +322,7 @@ app.controller("HomeController", [
                 }).
                 then(function (response) {
                     ///Use response to send to REST API
-                    $http.post(configs.restHostName + '/Room/CreateRoom', { Room: JSON.stringify(response.data) }).
+                    $http.post(configs.restHostName + '/Room/CreateRoom', { Room: JSON.stringify(response.data.Data) }).
                         then(function (response) {
                             ///Check for error messages
                             if (response.data.ErrorType !== 0) {
@@ -352,7 +352,7 @@ app.controller("HomeController", [
                                 connectedRoomIds: newIds
                             }).then(function (response) {
                                 ///Use response to send to REST API
-                                $http.post(configs.restHostName + '/User/UpdateUser', { User: JSON.stringify(response.data), Id: $scope.currentUser._id }).
+                                $http.post(configs.restHostName + '/User/UpdateUser', { User: JSON.stringify(response.data.Data), Id: $scope.currentUser._id }).
                                     then(function (response) {
 
                                     });

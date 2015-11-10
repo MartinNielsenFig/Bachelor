@@ -442,7 +442,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
         $http.post('/Room/toJsonQuestion', { CreatedBy: $window.userId, CreatedByUserName: $scope.anonymousUser ? null : $scope.currentUser.DisplayName, RoomId: MyRoomIdFromViewBag, Image: image, QuestionText: $scope.QuestionText, ResponseOptions: newResponses, ExpireTimestamp: $scope.ExpirationTime, QuetionsType: $scope.QuestionType }).
             then(function (response) {
                 ///Use response to send to REST API
-                $http.post(configs.restHostName + '/Question/CreateQuestion', { question: JSON.stringify(response.data), type: $scope.QuestionType }).then(null, $scope.onErrorAlert);
+                $http.post(configs.restHostName + '/Question/CreateQuestion', { question: JSON.stringify(response.data.Data), type: $scope.QuestionType }).then(null, $scope.onErrorAlert);
                 //Check if this function call is an update or a create
                 if ($scope.UpdateQuestionBool) {
                     //Delete the old question
@@ -918,7 +918,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
                         return;
                     }
                     ///Use response to send to REST API
-                    $http.post(configs.restHostName + '/User/UpdateUser', { User: JSON.stringify(response.data), Id: $scope.currentUser._id }).
+                    $http.post(configs.restHostName + '/User/UpdateUser', { User: JSON.stringify(response.data.Data), Id: $scope.currentUser._id }).
                         then(function (response) {
 
                         });
@@ -960,7 +960,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
  */
     $scope.getAllUsers = function () {
         $http.get(configs.restHostName + '/User/GetAll').then(function (result) {
-            $scope.ActiveUsers = result.data;
+            $scope.ActiveUsers = result.data.Data;
         });
     }
 
@@ -1019,7 +1019,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
         $http.post('/Room/toJsonChatMessage', { userId: window.userId, userDisplayName: $scope.anonymousUser ? null : $scope.currentUser.DisplayName, roomId: MyRoomIdFromViewBag, text: message }).
             then(function (response) {
                 ///Use response to send to REST API
-                $http.post(configs.restHostName + '/Chat/CreateChatMessage', { ChatMessage: JSON.stringify(response.data) });
+                $http.post(configs.restHostName + '/Chat/CreateChatMessage', { ChatMessage: JSON.stringify(response.data.Data) });
             });
     }
     //#endregion
