@@ -510,7 +510,7 @@ app.controller("HomeController", [
                         error = Resources.RoomSecretAlreadyInUse +" "+ Resources.Error + ":" +errors[i];
                         break;
                     case 1:
-                        error = Resources.NoRoomWithThatSecret + " " + Resources.Error + ":" + errors[i];
+                        error = Resources.NoRoomWithThatSecret + $scope.uniqueRoomSecret + " " + Resources.Error + ":" + errors[i];
                         break;
                     case 2:
                         error = Resources.RabbitMqError + " " + Resources.Error + ":" + errors[i];
