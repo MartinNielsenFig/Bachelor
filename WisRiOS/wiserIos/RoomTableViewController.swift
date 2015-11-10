@@ -70,6 +70,10 @@ class RoomTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
+        if self.rooms.count <= 0 {
+            return UITableViewCell()
+        }
+        
         //We're using a predefined one with subtitles, see in Storyboard
         let cell = tableView.dequeueReusableCellWithIdentifier("SubtitleCell", forIndexPath: indexPath)
         

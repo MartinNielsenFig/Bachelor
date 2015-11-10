@@ -61,17 +61,17 @@ class CreateRoomViewController: UITableViewController {
             roomNameInputCell = cell
             return cell
         }
-            
         else if indexPath.row == 1 {
             let cellIdentifier = "TextInputCell"
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! TextInputCell
             
+            cell.inputField.autocapitalizationType = .None
+            cell.inputField.autocorrectionType = .No
             cell.label.text = NSLocalizedString("Secret", comment: "")
             cell.inputField.placeholder = NSLocalizedString("Let others join with secret", comment: "")
             roomSecretInputCell = cell
             return cell
         }
-            
         else if indexPath.row == 2 {
             let cellIdentifier = "BooleanInputCell"
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! BooleanInputCell
@@ -85,9 +85,7 @@ class CreateRoomViewController: UITableViewController {
             
             return cell
         }
-            
         else if indexPath.row == 3 {
-            
             let cellIdentifier = "TextInputCell"
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! TextInputCell
             cell.label.text = NSLocalizedString("Password", comment: "")
