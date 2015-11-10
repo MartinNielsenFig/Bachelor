@@ -9,7 +9,7 @@
 import UIKit
 import JsonSerializerSwift
 
-/// Container for the Room view. This ViewController basically has three sub-viewcontrollers: QuestionViewController, ChatViewController and QuestionListViewController. It enables the user to slide between these three views with a finger-flick. The implementation of this ViewController is influenced by this guide: https://www.veasoftware.com/tutorials/2015/4/2/uipageviewcontroller-in-swift-xcode-62-ios-82-tutorial
+/// Container for the Room view. This ViewController has three sub-viewcontrollers: QuestionViewController, ChatViewController and QuestionListViewController. It enables the user to slide between these three views with a finger-flick. The implementation of this ViewController is influenced by this guide: https://www.veasoftware.com/tutorials/2015/4/2/uipageviewcontroller-in-swift-xcode-62-ios-82-tutorial
 class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     
     //MARK: Properties
@@ -40,7 +40,6 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
             let btn = UIButton(type: .DetailDisclosure)
             btn.frame = CGRectMake(0, 0, 44, 44)
             btn.addTarget(self, action: "editRoom", forControlEvents: .TouchUpInside)
-            
             editbtnContainer.addSubview(btn)
             self.navigationItem.titleView = editbtnContainer
             
@@ -83,7 +82,8 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     override func viewDidAppear(animated: Bool) {
         
         //Check if room exists, else log out
-        checkRoomExistsUpdater = Updater(secondsDelay: 30, function: { () -> Void in
+        checkRoomExistsUpdater = Updater(secondsDelay: 30, function: {
+            () -> Void in
             print("updater check room exist")
             let body = "roomId=\(self.room._id!)"
             HttpHandler.requestWithResponse(action: "Room/RoomExists", type: "POST", body: body) {
@@ -151,7 +151,7 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     }
     
     /**
-     Simply there doesn't seem to be a way to pass arguments to selectors exit button click.
+     When using selectors in Swift, there doesn't seem to be an easy way to pass parameters.
      */
     func logoutRoomGracefully() {
         logoutRoom(false)
@@ -182,19 +182,19 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     
     //MARK: Utilities
     
+    /**
+    Shows information for the room and enables the user to update the location of the room. The location is assumed to be the same as collected by the start screen.
+    */
     func editRoom() {
         print("edit room called")
         
-        
-        let message = String(format: NSLocalizedString("Name of room: %@\nSecret of room: %@", comment: ""), self.room.Secret!, self.room.Name!)
+        let message = String(format: NSLocalizedString("Name of room: %@\nSecret of room: %@", comment: ""), self.room.Name!, self.room.Secret!)
         let alert = UIAlertController(title: NSLocalizedString("Room Information", comment: ""), message: message, preferredStyle: .ActionSheet)
         
         alert.addAction(UIAlertAction(title: NSLocalizedString("Ok", comment: ""), style: .Default, handler: { (action) in
             //do nothing
         }))
         alert.addAction(UIAlertAction(title: NSLocalizedString("Update Location", comment: ""), style: .Destructive, handler: { (action) in
-            //get location
-            //update the rooms lat long and accuracy
             
             self.room.Location.AccuracyMeters = CurrentUser.sharedInstance.location.AccuracyMeters
             self.room.Location.Latitude = CurrentUser.sharedInstance.location.Latitude
