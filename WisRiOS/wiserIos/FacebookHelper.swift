@@ -18,6 +18,7 @@ class FacebookHelper {
         let fbManager = FBSDKLoginManager()
         fbManager.logOut()
         FBSDKAccessToken.setCurrentAccessToken(nil)
+        CurrentUser.sharedInstance._id = nil
         CurrentUser.sharedInstance.FacebookId = nil
     }
     

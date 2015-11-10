@@ -61,17 +61,17 @@ class CreateRoomViewController: UITableViewController {
             roomNameInputCell = cell
             return cell
         }
-            
         else if indexPath.row == 1 {
             let cellIdentifier = "TextInputCell"
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! TextInputCell
             
+            cell.inputField.autocapitalizationType = .None
+            cell.inputField.autocorrectionType = .No
             cell.label.text = NSLocalizedString("Secret", comment: "")
             cell.inputField.placeholder = NSLocalizedString("Let others join with secret", comment: "")
             roomSecretInputCell = cell
             return cell
         }
-            
         else if indexPath.row == 2 {
             let cellIdentifier = "BooleanInputCell"
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! BooleanInputCell
@@ -85,9 +85,7 @@ class CreateRoomViewController: UITableViewController {
             
             return cell
         }
-            
         else if indexPath.row == 3 {
-            
             let cellIdentifier = "TextInputCell"
             let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! TextInputCell
             cell.label.text = NSLocalizedString("Password", comment: "")
@@ -167,15 +165,23 @@ class CreateRoomViewController: UITableViewController {
     func addRoomButtonPressed(button: UIBarButtonItem) {
         
         //Check user inputs
-        if let name = roomNameInputCell?.inputField.text, secret = roomSecretInputCell?.inputField.text where name == "" || secret == "" {
-            var msg = ""
-            if name == "" {
-                msg += NSLocalizedString("Room name cannot be empty. ", comment: "")
-            }
-            if secret == "" {
-                msg += NSLocalizedString("Room secret cannot be empty. ", comment: "")
-            }
-            
+        var msg = ""
+        var missingInformation = false
+        if let name = roomNameInputCell?.inputField.text where name == "" {
+            missingInformation = true
+            msg += NSLocalizedString("Room name cannot be empty. ", comment: "")
+
+        }
+        if let secret = roomSecretInputCell?.inputField.text where secret == "" {
+            missingInformation = true
+            msg += NSLocalizedString("Room secret cannot be empty. ", comment: "")
+        }
+        if CurrentUser.sharedInstance._id == nil {
+            missingInformation = true
+            msg += NSLocalizedString("You must be logged in to add a room ", comment: "")
+        }
+        
+        if missingInformation == true {
             let alert = UIAlertController(title: NSLocalizedString("Empty values", comment: ""), message: msg, preferredStyle: .Alert)
             alert.addAction(UIAlertAction(title: NSLocalizedString("Ok", comment: ""), style: .Default, handler: { action in
                 self.roomSecretInputCell?.inputField.becomeFirstResponder()
@@ -183,7 +189,6 @@ class CreateRoomViewController: UITableViewController {
             dispatch_async(dispatch_get_main_queue()) {
                 self.presentViewController(alert, animated: true, completion: nil)
             }
-            
             return
         }
         

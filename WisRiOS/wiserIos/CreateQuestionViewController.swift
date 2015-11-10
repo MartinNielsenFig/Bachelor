@@ -104,9 +104,13 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
         }
         if responseOptions.count <= 0 {
             missingInformation = true
-            informationText += NSLocalizedString("Need at least one response option.", comment: "")
+            informationText += NSLocalizedString("Need at least one response option. ", comment: "")
         }
-        if missingInformation {
+        if CurrentUser.sharedInstance._id == nil {
+            missingInformation = true
+            informationText += NSLocalizedString("You need to be logged in to add a question. ", comment: "")
+        }
+        if missingInformation == true {
             let alert = UIAlertController(title: NSLocalizedString("Missing information", comment: ""), message: informationText, preferredStyle: .Alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: { action in
                 //Do nothing
@@ -160,7 +164,7 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
                 }
             } else {
                 print("error in creating question")
-                Toast.showToast(NSLocalizedString("Error in creating question", comment: ""), durationMs: 2000, presenter: self)
+                Toast.showOkToast(NSLocalizedString("Error", comment: ""), message: NSLocalizedString("Error in creating question.", comment: ""), presenter: self)
             }
         }
     }
@@ -187,8 +191,7 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {
             return NSLocalizedString("Question parameters", comment: "")
-        }
-        else {
+        } else {
             return NSLocalizedString("Response options", comment: "")
         }
     }
@@ -259,8 +262,7 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.section == 0 && indexPath.row == 2 && photoSelected {
             return CGFloat(64*3)
-        }
-        else {
+        } else {
             return CGFloat(64)
         }
     }

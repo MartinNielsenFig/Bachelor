@@ -88,7 +88,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         //Vote btns
         var hasVote = false
         for v in question.Votes {
-            if v.CreatedById == CurrentUser.sharedInstance._id! {
+            if let myId = CurrentUser.sharedInstance._id where v.CreatedById == myId {
                 hasVote = true
                 updateVoteUI(v.Value == 1)
                 break
@@ -124,14 +124,16 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     */
     @IBAction func sendResponse(sender: AnyObject) {
         
-        guard question._id != nil && pickerData.count > 0 else {
+        if question._id == nil || pickerData.count < 0 || CurrentUser.sharedInstance._id == nil {
+            if CurrentUser.sharedInstance._id == nil {
+                Toast.showOkToast(NSLocalizedString("Error", comment: ""), message: NSLocalizedString("You must be logged in to respond to a question", comment: ""), presenter: self)
+            }
             return
         }
         
         let index = answerPicker.selectedRowInComponent(0)
         let answerPickerText = pickerData[index]
         
-        //Todo handle if not logged in
         let answer = Answer(value: answerPickerText, userId: CurrentUser.sharedInstance._id!, userDisplayName: CurrentUser.sharedInstance.DisplayName ?? "Anonymous")
         let answerJson = JSONSerializer.toJson(answer)
         let body = "response=\(answerJson)&questionId=\(question._id!)"
@@ -174,7 +176,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         if let index = index {
             selectedAnswerPickerIndex = index
         } else {
-            if let myAnswer = (question.Result.filter() { $0.UserId == CurrentUser.sharedInstance._id! }.first) {
+            if let myId = CurrentUser.sharedInstance._id, myAnswer = (question.Result.filter() { $0.UserId == myId }.first) {
                 selectedAnswerPickerIndex = pickerData.indexOf(myAnswer.Value) ?? -1
             } else {
                 selectedAnswerPickerIndex = -1
@@ -205,7 +207,10 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
      */
     func vote(up: Bool, button: UIButton) {
         
-        guard question._id != nil else {
+        if question._id == nil || CurrentUser.sharedInstance._id == nil {
+            if CurrentUser.sharedInstance._id == nil {
+                Toast.showOkToast(NSLocalizedString("Error", comment: ""), message: NSLocalizedString("Must be logged in to up or downvote", comment: ""), presenter: self)
+            }
             return
         }
         
@@ -283,20 +288,25 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         indicator!.startAnimating()
         self.view.addSubview(indicator!)
         
+        //Stop
+        func stopIndicator() {
+            dispatch_async(dispatch_get_main_queue()) {
+                self.indicator!.stopAnimating()
+                self.indicator!.removeFromSuperview()
+            }
+        }
+        
+        
         //Helper function
         func updateImgGui(b64Img: String) {
             let imageData = NSData(base64EncodedString: b64Img, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
-            guard imageData != nil else {
-                dispatch_async(dispatch_get_main_queue()) {
-                    self.indicator!.stopAnimating()
-                    self.indicator!.removeFromSuperview()
-                }
+            if imageData == nil {
+                stopIndicator()
                 return
             }
             let questionImage = UIImage(data: imageData!)
             dispatch_async(dispatch_get_main_queue()) {
-                self.indicator!.stopAnimating()
-                self.indicator!.removeFromSuperview()
+                stopIndicator()
                 //Add image to image scroll view
                 if let questionImage = questionImage where questionImage.size != CGSize(width: 0, height: 0) {
                     self.questionImageView.image = questionImage
@@ -323,6 +333,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                         updateImgGui(data)
                     } else {
                         print("did receive response but did not receive an image")
+                        stopIndicator()
                     }
                 } else {
                     print("error getting image for question")

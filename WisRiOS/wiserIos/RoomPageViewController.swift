@@ -34,7 +34,7 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
         }
         
         //Title for users, room owner sees an edit button
-        if self.room.CreatedById == CurrentUser.sharedInstance._id! {
+        if let myId = CurrentUser.sharedInstance._id where self.room.CreatedById == myId {
             let editbtnContainer = UIView(frame: CGRectMake(0, 0, 44, 44))
             editbtnContainer.backgroundColor = UIColor.clearColor()
             let btn = UIButton(type: .DetailDisclosure)
@@ -114,11 +114,15 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     }
     
     /**
-     Makes sure there's room enough for the navigation bar when presenting the sub-views. Needs a little offset when in landscape mode.
+     Makes sure there's room enough for the navigation bar when presenting the sub-views. Needs a little offset when in landscape mode, and is dependent on Device type (phone vs pad).
      - parameter orientationIsLandscape:	Indicates the orientation of the device.
      */
     func makeRoomForNavigationBar(orientationIsLandscape orientationIsLandscape: Bool) {
-        let offset = orientationIsLandscape ? CGFloat(16) : CGFloat(0)
+        
+        var offset = CGFloat(0)
+        if orientationIsLandscape || UIDevice.currentDevice().userInterfaceIdiom == .Pad {
+            offset = CGFloat(24)
+        }
         let cellHeight = self.navigationController!.navigationBar.frame.size.height + offset
         pageViewController.view.frame = CGRect(x: 0, y: cellHeight, width: view.frame.size.width, height: view.frame.size.height - cellHeight)
     }
@@ -190,8 +194,9 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
         print("edit room called")
         
         let message = String(format: NSLocalizedString("Name of room: %@\nSecret of room: %@", comment: ""), self.room.Name!, self.room.Secret!)
-        let alert = UIAlertController(title: NSLocalizedString("Room Information", comment: ""), message: message, preferredStyle: .ActionSheet)
         
+        //Build alert
+        let alert = UIAlertController(title: NSLocalizedString("Room Information", comment: ""), message: message, preferredStyle: .ActionSheet)
         alert.addAction(UIAlertAction(title: NSLocalizedString("Ok", comment: ""), style: .Default, handler: { (action) in
             //do nothing
         }))
@@ -212,13 +217,18 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
                 (notification, response, error) in
                 
                 if notification.ErrorType == .Ok || notification.ErrorType == .OkWithError {
-                    Toast.showToast(NSLocalizedString("Location updated", comment: ""), durationMs: 2000, presenter: self)
+                    Toast.showToast(NSLocalizedString("Location updated.", comment: ""), durationMs: 2000, presenter: self)
                 } else {
-                    Toast.showToast(NSLocalizedString("Could not update room location", comment: ""), durationMs: 2000, presenter: self)
+                    Toast.showOkToast(NSLocalizedString("Error", comment: ""),
+                        message: NSLocalizedString("Could not update room location", comment: ""), presenter: self)
                 }
             })
         }))
 
+        //http://stackoverflow.com/questions/25759885/uiactionsheet-from-popover-with-ios8-gm
+        //iPad support
+        alert.popoverPresentationController?.sourceView = self.view
+        alert.popoverPresentationController?.sourceRect = CGRectMake(self.view.bounds.size.width / 2.0, self.view.bounds.size.height / 2.0, 1.0, 1.0)
         self.presentViewController(alert, animated: true, completion: nil)
     }
     
