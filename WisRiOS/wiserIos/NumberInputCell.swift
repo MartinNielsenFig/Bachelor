@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// Displays a label and takes a number as input.
 class NumberInputCell: UITableViewCell {
     
     @IBOutlet weak var label: UILabel!

@@ -442,8 +442,16 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
         ///Make get request for json object conversion
         $http.post('/Room/toJsonQuestion', { CreatedBy: $window.userId, CreatedByUserName: $scope.anonymousUser ? null : $scope.currentUser.DisplayName, RoomId: MyRoomIdFromViewBag, Image: image, QuestionText: $scope.QuestionText, ResponseOptions: newResponses, ExpireTimestamp: $scope.ExpirationTime, QuetionsType: $scope.QuestionType }).
             then(function (response) {
+                if (response.data.ErrorType != 0) {
+                    //TODO better error handling?
+                    alert($scope.GetErrorOutput(response.data.Errors));
+                }
                 ///Use response to send to REST API
-                $http.post(configs.restHostName + '/Question/CreateQuestion', { question: JSON.stringify(response.data), type: $scope.QuestionType }).then(null, $scope.onErrorAlert);
+                $http.post(configs.restHostName + '/Question/CreateQuestion', { question: response.data.Data, type: $scope.QuestionType }).then(null, $scope.onErrorAlert);
+                if (response.data.ErrorType != 0) {
+                    //TODO better error handling?
+                    alert($scope.GetErrorOutput(response.data.Errors));
+                }
                 //Check if this function call is an update or a create
                 if ($scope.UpdateQuestionBool) {
                     //Delete the old question
@@ -913,10 +921,19 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
                     encryptedPassword: $scope.currentUser.EncryptedPassword,
                     connectedRoomIds: newIds
                 }).then(function (response) {
+                    if (response.data.ErrorType != 0) {
+                        //TODO better error handling?
+                        alert($scope.GetErrorOutput(response.data.Errors));
+                        return;
+                    }
                     ///Use response to send to REST API
-                    $http.post(configs.restHostName + '/User/UpdateUser', { User: JSON.stringify(response.data), Id: $scope.currentUser._id }).
+                    $http.post(configs.restHostName + '/User/UpdateUser', { User: response.data.Data, Id: $scope.currentUser._id }).
                         then(function (response) {
-
+                            if (response.data.ErrorType != 0) {
+                                //TODO better error handling?
+                                alert($scope.GetErrorOutput(response.data.Errors));
+                                return;
+                            }
                         });
                 }, $scope.onErrorAlert);
             }
@@ -956,7 +973,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
  */
     $scope.getAllUsers = function () {
         $http.get(configs.restHostName + '/User/GetAll').then(function (result) {
-            $scope.ActiveUsers = result.data;
+            $scope.ActiveUsers = result.data.Data;
         });
     }
 
@@ -1015,7 +1032,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
         $http.post('/Room/toJsonChatMessage', { userId: window.userId, userDisplayName: $scope.anonymousUser ? null : $scope.currentUser.DisplayName, roomId: MyRoomIdFromViewBag, text: message }).
             then(function (response) {
                 ///Use response to send to REST API
-                $http.post(configs.restHostName + '/Chat/CreateChatMessage', { ChatMessage: JSON.stringify(response.data) });
+                $http.post(configs.restHostName + '/Chat/CreateChatMessage', { ChatMessage: JSON.stringify(response.data.Data) });
             });
     }
     //#endregion
@@ -1121,6 +1138,18 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
                     break;
                 case 24:
                     error = Resources.CouldNotGetChatMessages + " " + Resources.Error + ":" + errors[i];
+                    break;
+                case 24:
+                    error = Resources.WrongMessageFormat;
+                    break;
+                case 25:
+                    error = Resources.WrongQuestionFormat;
+                    break;
+                case 26:
+                    error = Resources.WrongRoomFormat;
+                    break;
+                case 27:
+                    error = Resources.WrongUserFormat;
                     break;
                 default:
                     error = "ERROR NOT HANDLED YET";

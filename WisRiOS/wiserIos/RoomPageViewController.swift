@@ -9,7 +9,7 @@
 import UIKit
 import JsonSerializerSwift
 
-/// Container for the Room view. This ViewController basically has three sub-viewcontrollers: QuestionViewController, ChatViewController and QuestionListViewController. It enables the user to slide between these three views with a finger-flick. The implementation of this ViewController is influenced by this guide: https://www.veasoftware.com/tutorials/2015/4/2/uipageviewcontroller-in-swift-xcode-62-ios-82-tutorial
+/// Container for the Room view. This ViewController has three sub-viewcontrollers: QuestionViewController, ChatViewController and QuestionListViewController. It enables the user to slide between these three views with a finger-flick. The implementation of this ViewController is influenced by this guide: https://www.veasoftware.com/tutorials/2015/4/2/uipageviewcontroller-in-swift-xcode-62-ios-82-tutorial
 class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     
     //MARK: Properties
@@ -34,13 +34,12 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
         }
         
         //Title for users, room owner sees an edit button
-        if self.room.CreatedById == CurrentUser.sharedInstance._id {
+        if let myId = CurrentUser.sharedInstance._id where self.room.CreatedById == myId {
             let editbtnContainer = UIView(frame: CGRectMake(0, 0, 44, 44))
             editbtnContainer.backgroundColor = UIColor.clearColor()
             let btn = UIButton(type: .DetailDisclosure)
             btn.frame = CGRectMake(0, 0, 44, 44)
             btn.addTarget(self, action: "editRoom", forControlEvents: .TouchUpInside)
-            
             editbtnContainer.addSubview(btn)
             self.navigationItem.titleView = editbtnContainer
             
@@ -83,7 +82,8 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     override func viewDidAppear(animated: Bool) {
         
         //Check if room exists, else log out
-        checkRoomExistsUpdater = Updater(secondsDelay: 30, function: { () -> Void in
+        checkRoomExistsUpdater = Updater(secondsDelay: 30, function: {
+            () -> Void in
             print("updater check room exist")
             let body = "roomId=\(self.room._id!)"
             HttpHandler.requestWithResponse(action: "Room/RoomExists", type: "POST", body: body) {
@@ -95,6 +95,7 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
                         self.logoutRoom(true)
                     }
                 } else {
+                    print("error in checking if room exists")
                     print(notification.Errors)
                 }
             }
@@ -113,11 +114,15 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     }
     
     /**
-     Makes sure there's room enough for the navigation bar when presenting the sub-views. Needs a little offset when in landscape mode.
+     Makes sure there's room enough for the navigation bar when presenting the sub-views. Needs a little offset when in landscape mode, and is dependent on Device type (phone vs pad).
      - parameter orientationIsLandscape:	Indicates the orientation of the device.
      */
     func makeRoomForNavigationBar(orientationIsLandscape orientationIsLandscape: Bool) {
-        let offset = orientationIsLandscape ? CGFloat(16) : CGFloat(0)
+        
+        var offset = CGFloat(0)
+        if orientationIsLandscape || UIDevice.currentDevice().userInterfaceIdiom == .Pad {
+            offset = CGFloat(24)
+        }
         let cellHeight = self.navigationController!.navigationBar.frame.size.height + offset
         pageViewController.view.frame = CGRect(x: 0, y: cellHeight, width: view.frame.size.width, height: view.frame.size.height - cellHeight)
     }
@@ -151,7 +156,7 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     }
     
     /**
-     Simply there doesn't seem to be a way to pass arguments to selectors exit button click.
+     When using selectors in Swift, there doesn't seem to be an easy way to pass parameters.
      */
     func logoutRoomGracefully() {
         logoutRoom(false)
@@ -182,19 +187,20 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     
     //MARK: Utilities
     
+    /**
+    Shows information for the room and enables the user to update the location of the room. The location is assumed to be the same as collected by the start screen.
+    */
     func editRoom() {
         print("edit room called")
         
+        let message = String(format: NSLocalizedString("Name of room: %@\nSecret of room: %@", comment: ""), self.room.Name!, self.room.Secret!)
         
-        let message = String(format: NSLocalizedString("Name of room: %@\nSecret of room: %@", comment: ""), self.room.Secret!, self.room.Name!)
+        //Build alert
         let alert = UIAlertController(title: NSLocalizedString("Room Information", comment: ""), message: message, preferredStyle: .ActionSheet)
-        
         alert.addAction(UIAlertAction(title: NSLocalizedString("Ok", comment: ""), style: .Default, handler: { (action) in
             //do nothing
         }))
         alert.addAction(UIAlertAction(title: NSLocalizedString("Update Location", comment: ""), style: .Destructive, handler: { (action) in
-            //get location
-            //update the rooms lat long and accuracy
             
             self.room.Location.AccuracyMeters = CurrentUser.sharedInstance.location.AccuracyMeters
             self.room.Location.Latitude = CurrentUser.sharedInstance.location.Latitude
@@ -211,13 +217,18 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
                 (notification, response, error) in
                 
                 if notification.ErrorType == .Ok || notification.ErrorType == .OkWithError {
-                    Toast.showToast(NSLocalizedString("Location updated", comment: ""), durationMs: 2000, presenter: self)
+                    Toast.showToast(NSLocalizedString("Location updated.", comment: ""), durationMs: 2000, presenter: self)
                 } else {
-                    Toast.showToast(NSLocalizedString("Could not update room location", comment: ""), durationMs: 2000, presenter: self)
+                    Toast.showOkToast(NSLocalizedString("Error", comment: ""),
+                        message: NSLocalizedString("Could not update room location", comment: ""), presenter: self)
                 }
             })
         }))
 
+        //http://stackoverflow.com/questions/25759885/uiactionsheet-from-popover-with-ios8-gm
+        //iPad support
+        alert.popoverPresentationController?.sourceView = self.view
+        alert.popoverPresentationController?.sourceRect = CGRectMake(self.view.bounds.size.width / 2.0, self.view.bounds.size.height / 2.0, 1.0, 1.0)
         self.presentViewController(alert, animated: true, completion: nil)
     }
     

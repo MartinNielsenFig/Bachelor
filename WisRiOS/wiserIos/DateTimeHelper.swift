@@ -14,9 +14,9 @@ class DateTimeHelper {
     /**
      Returns a human readable string of the time from a epoch string.
      - parameter secSince1970:	Seconds since 1970. Aka Epoch.
-     - returns: A string representing the time.
+     - returns: A string representing the time specificed by the dateformat eg. "HH:mm:ss" will e.g. 10:33:52
      */
-    static func getTimeStringFromEpochString(secSince1970: String?) -> String {
+    static func getTimeStringFromEpochString(secSince1970: String?, dateFormat: String) -> String {
         
         var sec = Float()
         if let timestampUnknownSeperator = secSince1970 {
@@ -27,7 +27,7 @@ class DateTimeHelper {
         let timeInterval = NSTimeInterval(sec)
         let date = NSDate(timeIntervalSince1970: timeInterval)
         let formatter = NSDateFormatter()
-        formatter.dateFormat = "HH:mm:ss"
+        formatter.dateFormat = dateFormat
         let dateString = formatter.stringFromDate(date)
         
         return dateString

@@ -21,6 +21,7 @@ class RoomTableViewController: UITableViewController {
     //MARK: Lifecycle
     
     override func viewDidLoad() {
+        self.title = NSLocalizedString("Rooms nearby", comment: "")
         self.refreshControl = UIRefreshControl()
         self.refreshControl!.addTarget(self, action: "handleRefresh:", forControlEvents: UIControlEvents.ValueChanged)
         
@@ -37,7 +38,7 @@ class RoomTableViewController: UITableViewController {
             return false
         }
         let roomAtRow = self.rooms[indexPath.row]
-        return roomAtRow.CreatedById == CurrentUser.sharedInstance._id
+        return roomAtRow.CreatedById == (CurrentUser.sharedInstance._id ?? "-1")
     }
     
     
@@ -69,9 +70,12 @@ class RoomTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
+        if self.rooms.count <= 0 {
+            return UITableViewCell()
+        }
+        
         //We're using a predefined one with subtitles, see in Storyboard
-        let cellIdentifier = "SubtitleCell"
-        let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier("SubtitleCell", forIndexPath: indexPath)
         
         let room = self.rooms[indexPath.row]
         
@@ -79,12 +83,13 @@ class RoomTableViewController: UITableViewController {
         
         if room._id == "system" {
             cell.detailTextLabel?.text = ""
+        } else {
+            cell.detailTextLabel?.text = ""
         }
-        else if let cLong = CurrentUser.sharedInstance.location.Longitude, cLat = CurrentUser.sharedInstance.location.Latitude, rLong = room.Location.Longitude, rLat = room.Location.Latitude {
-            
+        /*else if let cLong = CurrentUser.sharedInstance.location.Longitude, cLat = CurrentUser.sharedInstance.location.Latitude, rLong = room.Location.Longitude, rLat = room.Location.Latitude {
             let distance = Int(RoomFilterHelper.distanceBetweenTwoCoordinatesMeters(cLat, cLong, rLat, rLong))
-            cell.detailTextLabel?.text = String(format: NSLocalizedString("%d meters away", comment: ""), distance)
-        }
+            cell.detailTextLabel?.text = String(format: NSLocalizedString("%d meters away", comment: ""), distanceText)
+        }*/
         
         return cell
     }
@@ -124,7 +129,7 @@ class RoomTableViewController: UITableViewController {
                 self.allRooms.removeAll()
                 
                 self.allRooms = tmpRooms
-                self.rooms = RoomFilterHelper.filterRoomsByLocation(self.allRooms, metersRadius: 1000)
+                self.rooms = RoomFilterHelper.filterRoomsByLocation(self.allRooms)
                 refreshControl?.endRefreshing()
                 
                 dispatch_async(dispatch_get_main_queue()) {
@@ -132,13 +137,14 @@ class RoomTableViewController: UITableViewController {
                 }
                 print("duration of \(__FUNCTION__) took \(NSDate().timeIntervalSinceDate(start))")
             } else {
+                print("could not get all rooms")
                 print(notification.Errors)
             }
         }
     }
     
     /**
-     Function that runs when user chooses to use a secret to connect to a room
+     Enables the user to join by secret.
      */
     func useSecret() {
         var secretInput: UITextField?
@@ -157,7 +163,7 @@ class RoomTableViewController: UITableViewController {
                 }
             } else {
                 print("secret not found")
-                Toast.showToast(NSLocalizedString("Secret doesn't exist", comment: ""), durationMs: 2000, presenter: self)
+                Toast.showOkToast(NSLocalizedString("Secret doesn't exist", comment: ""), message: "", presenter: self)
             }
         }))
         
@@ -182,6 +188,12 @@ class RoomTableViewController: UITableViewController {
         }
         else if let room = sender as? Room {
             selectedRoom = room
+        }
+        
+        //Check for anonymous user
+        if let room = selectedRoom, allowAnon = room.AllowAnonymous where !allowAnon && CurrentUser.sharedInstance._id == nil {
+            Toast.showOkToast(NSLocalizedString("No anonymous users", comment: ""), message: NSLocalizedString("Anonymous users are not allowed in this room. Please log in.", comment: ""), presenter: self)
+            return false
         }
         
         if let room = selectedRoom, hasPw = room.HasPassword where hasPw {

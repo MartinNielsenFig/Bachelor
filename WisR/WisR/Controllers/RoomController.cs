@@ -6,6 +6,7 @@ using MongoDB.Bson;
 using WisR.DomainModels;
 using WisR.Providers;
 using WisR.DomainModel;
+using WisRRestAPI;
 
 namespace WisR.Controllers
 {
@@ -31,62 +32,86 @@ namespace WisR.Controllers
             string ResponseOptions, string QuestionResult, string CreationTimestamp, string ExpireTimestamp,
             string QuetionsType, string Votes)
         {
+            List<ErrorCodes> errors = new List<ErrorCodes>();
+            ErrorTypes errorType = ErrorTypes.Ok;
+
             var question = new MultipleChoiceQuestion();
 
             var tempList = new List<ResponseOption>();
 
-            if (!ResponseOptions.IsNullOrWhiteSpace())
+            try
             {
-                foreach (var response in ResponseOptions.Split(','))
+                if (!ResponseOptions.IsNullOrWhiteSpace())
                 {
-                    tempList.Add(new ResponseOption {Value = response});
+                    foreach (var response in ResponseOptions.Split(','))
+                    {
+                        tempList.Add(new ResponseOption { Value = response });
+                    }
                 }
+                var tempListResult = new List<Answer>();
+                if (!QuestionResult.IsNullOrWhiteSpace())
+                {
+                    foreach (var result in QuestionResult.Split(','))
+                    {
+                        var tempResult = result.Split('-');
+                        tempListResult.Add(new Answer { Value = tempResult[0], UserId = tempResult[1] });
+                    }
+                }
+
+                var tempListVotes = new List<Vote>();
+                if (!Votes.IsNullOrWhiteSpace())
+                {
+                    foreach (var vote in Votes.Split(','))
+                    {
+                        var tempVote = vote.Split(':');
+                        tempListVotes.Add(new Vote { CreatedById = tempVote[1], Value = Convert.ToInt16(tempVote[0]) });
+                    }
+                }
+
+                question.CreatedById = CreatedBy;
+                question.CreatedByUserDisplayName = CreatedByUserName;
+                question.RoomId = RoomId;
+                question.Votes = tempListVotes;
+                question.Img = Image;
+                question.QuestionText = QuestionText;
+                question.ResponseOptions = tempList;
+                question.CreationTimestamp = CreationTimestamp;
+                question.Result = tempListResult;
+                question.ExpireTimestamp = ExpireTimestamp;
             }
-            var tempListResult = new List<Answer>();
-            if (!QuestionResult.IsNullOrWhiteSpace())
+            catch (Exception)
             {
-                foreach (var result in QuestionResult.Split(','))
-                {
-                    var tempResult = result.Split('-');
-                    tempListResult.Add(new Answer {Value = tempResult[0], UserId = tempResult[1]});
-                }
+                errors.Add(ErrorCodes.WrongQuestionFormat);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
             }
 
-            var tempListVotes = new List<Vote>();
-            if (!Votes.IsNullOrWhiteSpace())
-            {
-                foreach (var vote in Votes.Split(','))
-                {
-                    var tempVote = vote.Split(':');
-                    tempListVotes.Add(new Vote {CreatedById = tempVote[1], Value = Convert.ToInt16(tempVote[0])});
-                }
-            }
 
-            question.CreatedById = CreatedBy;
-            question.CreatedByUserDisplayName = CreatedByUserName;
-            question.RoomId = RoomId;
-            question.Votes = tempListVotes;
-            question.Img = Image;
-            question.QuestionText = QuestionText;
-            question.ResponseOptions = tempList;
-            question.CreationTimestamp = CreationTimestamp;
-            question.Result = tempListResult;
-            question.ExpireTimestamp = ExpireTimestamp;
-
-            return question.ToJson();
+            return new Notification(question.ToJson(),errorType,errors).ToJson();
             ;
         }
 
         public string toJsonChatMessage(string userId,string userDisplayName, string roomId, string text)
         {
+            List<ErrorCodes> errors = new List<ErrorCodes>();
+            ErrorTypes errorType = ErrorTypes.Ok;
+
             var chatMessage = new ChatMessage();
-            chatMessage.ByUserId = userId;
-            chatMessage.ByUserDisplayName = userDisplayName;
-            chatMessage.RoomId = roomId;
-            chatMessage.Value = text;
-            chatMessage.Timestamp =
-                (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalMilliseconds.ToString().Replace(",", ".");
-            return chatMessage.ToJson();
+            try
+            {
+                chatMessage.ByUserId = userId;
+                chatMessage.ByUserDisplayName = userDisplayName;
+                chatMessage.RoomId = roomId;
+                chatMessage.Value = text;
+                chatMessage.Timestamp =
+                    (DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalMilliseconds.ToString().Replace(",", ".");
+            }
+            catch (Exception)
+            {
+                errors.Add(ErrorCodes.WrongMessageFormat);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
+            }
+           
+            return new Notification(chatMessage.ToJson(), errorType, errors).ToJson();
         }
     }
 }

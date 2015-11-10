@@ -1107,6 +1107,42 @@ namespace WisR.App_Resources {
         /// <summary>
         ///   Looks up a localized string similar to .
         /// </summary>
+        public static string WrongMessageFormat {
+            get {
+                return ResourceManager.GetString("WrongMessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string WrongQuestionFormat {
+            get {
+                return ResourceManager.GetString("WrongQuestionFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string WrongRoomFormat {
+            get {
+                return ResourceManager.GetString("WrongRoomFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string WrongUserFormat {
+            get {
+                return ResourceManager.GetString("WrongUserFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
         public static string YouAnswered {
             get {
                 return ResourceManager.GetString("YouAnswered", resourceCulture);

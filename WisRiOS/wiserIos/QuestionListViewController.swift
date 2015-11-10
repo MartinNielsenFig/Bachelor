@@ -73,7 +73,7 @@ class QuestionListViewController: UITableViewController, Paged {
         if let indexPath = indexPath, cell = tableView.cellForRowAtIndexPath(indexPath) {
             
             let q = questions[indexPath.row]
-            if q.CreatedById != CurrentUser.sharedInstance._id {
+            if CurrentUser.sharedInstance._id == nil || q.CreatedById != CurrentUser.sharedInstance._id! {
                 return
             }
             
@@ -98,7 +98,7 @@ class QuestionListViewController: UITableViewController, Paged {
                                 self.fetchQuestions(manualRefresh: false)
                             }
                         } else {
-                            Toast.showToast(couldNotDelete, durationMs: 2000, presenter: self)
+                            Toast.showOkToast(NSLocalizedString("Error", comment: ""), message: couldNotDelete, presenter: self)
                         }
                     })
                 } else {
@@ -157,6 +157,11 @@ class QuestionListViewController: UITableViewController, Paged {
         return (noDownvotes, noUpvotes)
     }
     
+    /**
+     Redownloads the questions for the curret room without the images from the database to display on the list.
+     - parameter refreshControl:	An optional refreshcontrol to show loading
+     - parameter manualRefresh:	If called with manual refresh true, it means it was called by the user swiping down. In this case the UI is already responding to it. But if it's called by code, manualRefresh should be false to scroll down the view to show the UIRefreshControl
+     */
     func fetchQuestions(refreshControl: UIRefreshControl? = nil, manualRefresh: Bool) {
         
         if let rc = refreshControl where !manualRefresh {
@@ -236,7 +241,7 @@ class QuestionListViewController: UITableViewController, Paged {
         cell.downvoteCounter.text = String(votesCount.downvotes)
         
         //If already voted
-        if let myVote = (question.Votes.filter() { $0.CreatedById == CurrentUser.sharedInstance._id }.first) {
+        if let myId = CurrentUser.sharedInstance._id, myVote = (question.Votes.filter() { $0.CreatedById == myId }.first) {
             cell.userHasVoted(up: myVote.Value == 1)
         } else {
             //This needs to be done because we're using dequeueReusableCellWithIdentifier, else all will be blue after first
@@ -247,8 +252,12 @@ class QuestionListViewController: UITableViewController, Paged {
         if let parent = (parentViewController?.parentViewController as? RoomPageViewController) {
             cell.textLabel?.textColor = UIColor.blackColor()
             if question.CreatedById == parent.room?.CreatedById {
-                cell.label.font = UIFont.boldSystemFontOfSize(15.0)
+                cell.label.font = UIFont.boldSystemFontOfSize(16.0)
+            } else {
+                cell.label.font = UIFont.systemFontOfSize(16.0);
             }
+        } else {
+            print("could not get parent view controller 67823409")
         }
         
         return cell

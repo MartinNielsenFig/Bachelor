@@ -1,10 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Web.Mvc;
 using Microsoft.Ajax.Utilities;
 using MongoDB.Bson;
+using WisR.DomainModel;
 using WisR.DomainModels;
 using WisR.Helper;
 using WisR.Providers;
+using WisRRestAPI;
 
 namespace WisR.Controllers
 {
@@ -46,7 +49,13 @@ namespace WisR.Controllers
             double locationLatitude, double locationLongitude, int locationAccuracyMeters,
             string locationFormattedAddress)
         {
+            List<ErrorCodes> errors = new List<ErrorCodes>();
+            ErrorTypes errorType = ErrorTypes.Ok;
+
             var room = new Room();
+
+            try
+            {
             room.Name = RoomName;
             room.CreatedById = CreatedBy;
             room.Location.Timestamp = locationTimestamp;
@@ -65,7 +74,14 @@ namespace WisR.Controllers
             room.UsersCanAsk = userCanAsk;
             room.AllowAnonymous = allowAnonymous;
             room.UseLocation = useLocation;
-            return room.ToJson();
+            }
+            catch (Exception)
+            {
+                errors.Add(ErrorCodes.WrongRoomFormat);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
+            }
+
+            return new Notification(room.ToJson(), errorType, errors).ToJson();
         }
 
         /// <summary>
@@ -81,26 +97,37 @@ namespace WisR.Controllers
         public string toJsonUser(string encryptedPassword, string facebookId, string lDAPUserName, string displayName,
             string email, string connectedRoomIds)
         {
+            List<ErrorCodes> errors = new List<ErrorCodes>();
+            ErrorTypes errorType = ErrorTypes.Ok;
             var user = new User();
 
             var tempList = new List<string>();
 
-            if (connectedRoomIds != null)
+            try
             {
-                foreach (var id in connectedRoomIds.Split(','))
+                if (connectedRoomIds != null)
                 {
-                    tempList.Add(id);
+                    foreach (var id in connectedRoomIds.Split(','))
+                    {
+                        tempList.Add(id);
+                    }
                 }
+
+                user.FacebookId = facebookId;
+                user.LDAPUserName = lDAPUserName;
+                user.DisplayName = displayName;
+                user.Email = email;
+                user.EncryptedPassword = encryptedPassword;
+                user.ConnectedRoomIds = tempList;
             }
+            catch (Exception)
+            {
+                errors.Add(ErrorCodes.WrongUserFormat);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
+            }
+            
 
-            user.FacebookId = facebookId;
-            user.LDAPUserName = lDAPUserName;
-            user.DisplayName = displayName;
-            user.Email = email;
-            user.EncryptedPassword = encryptedPassword;
-            user.ConnectedRoomIds = tempList;
-
-            return user.ToJson();
+            return new Notification(user.ToJson(), errorType, errors).ToJson(); 
         }
 
         public ActionResult ChangeCurrentCulture(int id)

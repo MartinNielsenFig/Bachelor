@@ -331,8 +331,12 @@ app.controller("HomeController", [
                     useLocation: $scope.UseLocation
                 }).
                 then(function (response) {
+                    if (response.data.ErrorType != 0) {
+                        $scope.RoomCreationError = $scope.GetErrorOutput(response.data.Errors);
+                        return;
+                    }
                     ///Use response to send to REST API
-                    $http.post(configs.restHostName + '/Room/CreateRoom', { Room: JSON.stringify(response.data) }).
+                    $http.post(configs.restHostName + '/Room/CreateRoom', { Room: response.data.Data }).
                         then(function (response) {
                             ///Check for error messages
                             if (response.data.ErrorType !== 0) {
@@ -361,10 +365,17 @@ app.controller("HomeController", [
                                 encryptedPassword: $scope.currentUser.EncryptedPassword,
                                 connectedRoomIds: newIds
                             }).then(function (response) {
+                                if (response.data.ErrorType != 0) {
+                                    alert($scope.GetErrorOutput(response.data.Errors));
+                                    return;
+                                }
                                 ///Use response to send to REST API
-                                $http.post(configs.restHostName + '/User/UpdateUser', { User: JSON.stringify(response.data), Id: $scope.currentUser._id }).
+                                $http.post(configs.restHostName + '/User/UpdateUser', { User: response.data.Data, Id: $scope.currentUser._id }).
                                     then(function (response) {
-
+                                        if (response.data.ErrorType != 0) {
+                                            alert($scope.GetErrorOutput(response.data.Errors));
+                                            return;
+                                        }
                                     });
                             }, $scope.onErrorAlert);
 
@@ -528,7 +539,7 @@ app.controller("HomeController", [
                         error = Resources.RoomSecretAlreadyInUse +" "+ Resources.Error + ":" +errors[i];
                         break;
                     case 1:
-                        error = Resources.NoRoomWithThatSecret + " " + Resources.Error + ":" + errors[i];
+                        error = Resources.NoRoomWithThatSecret + $scope.uniqueRoomSecret + " " + Resources.Error + ":" + errors[i];
                         break;
                     case 2:
                         error = Resources.RabbitMqError + " " + Resources.Error + ":" + errors[i];

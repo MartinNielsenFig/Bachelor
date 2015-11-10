@@ -474,4 +474,16 @@
   <data name="UserNotFound" xml:space="preserve">
     <value />
   </data>
+  <data name="WrongMessageFormat" xml:space="preserve">
+    <value />
+  </data>
+  <data name="WrongQuestionFormat" xml:space="preserve">
+    <value />
+  </data>
+  <data name="WrongRoomFormat" xml:space="preserve">
+    <value />
+  </data>
+  <data name="WrongUserFormat" xml:space="preserve">
+    <value />
+  </data>
 </root>

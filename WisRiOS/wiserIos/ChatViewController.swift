@@ -62,6 +62,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     self.chatUpdater?.execute()
                 }
             } else {
+                print("Could not create chat message")
                 print(notification.Errors)
             }
         }
@@ -71,6 +72,9 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     override func viewDidLoad() {
         print("ChatViewController instantiated, roomId: \(self.roomId)")
+        
+        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        
         textMessageInput.delegate = self
         
         //Add border to keyboard input field
@@ -112,6 +116,9 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     //MARK: Utilities
     
+    /**
+    Continually polls the Rest server for messages newer than my current newest message.
+    */
     func updateChatPoll() {
         let newestMsg = self.newestMessageByIndex()
         let body = "msg=\(JSONSerializer.toJson(newestMsg))"
@@ -144,6 +151,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     print("could not update chat")
                 }
             } else {
+                print("could not update chat, see error")
                 print(notification.Errors)
             }
         }
@@ -161,15 +169,15 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
      Scrolls to the bottom of the table view presented on this page
      */
     func scrollToBottom() {
-        let chatFieldHeight = self.messageInputStack.frame.height + 10
+        //let chatFieldHeight = self.messageInputStack.frame.height + 10
         dispatch_async(dispatch_get_main_queue()) {
             if self.messages.count > 0 {
                 self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.messages.count-1, inSection: 0), atScrollPosition: UITableViewScrollPosition.Bottom, animated: false)
-                //self.tableView.setContentOffset(CGPoint(x: 0, y: self.tableView.contentOffset.y + chatFieldHeight), animated: true)
             }
         }
     }
-    
+
+
     /**
      Policy that determines whether updates to the chat should scroll the UITableView to the bottom. This is to ensure that the user can scroll up the list to look at older messages, without the UITableView scrolling down again.
      - returns: Whether UITableView should scroll to bottom on updates.
@@ -241,14 +249,16 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .Default, reuseIdentifier: "Cell")
         
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
+
         cell.textLabel?.numberOfLines = 0
         let msg = messages[indexPath.row]
         
         let textmsg = msg.Value ?? ""
-        let byuser = msg.ByUserDisplayName ?? "Anonymous"
-        cell.textLabel?.text = "\(byuser): \(textmsg)"
+        let byuser = StringExtractor.nameAndInitials(msg.ByUserDisplayName) ?? "Anonymous"
+        let time = DateTimeHelper.getTimeStringFromEpochString(msg.Timestamp, dateFormat: "HH:mm")
+        cell.textLabel?.text = "\(time) \(byuser): \(textmsg)"
         
         cell.layer.cornerRadius = 20
         cell.layer.borderWidth = 2
@@ -256,10 +266,8 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         if msg.ByUserId == CurrentUser.sharedInstance._id {
             cell.backgroundColor = UIColor(red: 35/255, green: 213/255, blue: 22/255, alpha: 1)
-            cell.textLabel?.textAlignment = .Right
         } else {
             cell.backgroundColor = UIColor(red: 25/255, green: 140/255, blue: 240/255, alpha: 1)
-            cell.textLabel?.textAlignment = .Left
         }
         
         return cell

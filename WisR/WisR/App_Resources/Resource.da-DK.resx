@@ -471,4 +471,16 @@
   <data name="UserNotFound" xml:space="preserve">
     <value>Bruger ikke fundet</value>
   </data>
+  <data name="WrongMessageFormat" xml:space="preserve">
+    <value>Din besked havde det forkerte format</value>
+  </data>
+  <data name="WrongQuestionFormat" xml:space="preserve">
+    <value>Dit spørgsmål havde det forkerte format</value>
+  </data>
+  <data name="WrongRoomFormat" xml:space="preserve">
+    <value>Dit rum havde det forkerte format</value>
+  </data>
+  <data name="WrongUserFormat" xml:space="preserve">
+    <value>Din bruger havde det forkerte format</value>
+  </data>
 </root>

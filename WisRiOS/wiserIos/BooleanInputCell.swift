@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// Displays a label and shows a UISwitch
 class BooleanInputCell: UITableViewCell {
 
     @IBOutlet weak var label: UILabel!

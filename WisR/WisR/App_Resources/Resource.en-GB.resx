@@ -471,4 +471,16 @@
   <data name="UserNotFound" xml:space="preserve">
     <value>No user with that information</value>
   </data>
+  <data name="WrongMessageFormat" xml:space="preserve">
+    <value>Your message had the wrong format</value>
+  </data>
+  <data name="WrongQuestionFormat" xml:space="preserve">
+    <value>Your question had the wrong format</value>
+  </data>
+  <data name="WrongRoomFormat" xml:space="preserve">
+    <value>Your room had the wrong format</value>
+  </data>
+  <data name="WrongUserFormat" xml:space="preserve">
+    <value>Your user had the wrong format</value>
+  </data>
 </root>

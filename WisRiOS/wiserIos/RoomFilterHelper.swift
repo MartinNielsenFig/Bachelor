@@ -12,10 +12,10 @@ class RoomFilterHelper {
     /**
      Returns a new array of Room containing only the rooms that are within a specified radius of the current user that is logged on. Required that CurrentUser.sharedInstance.location is set.
      - parameter rooms:				An array of Room to be filtered.
-     - parameter metersRadius:	The radius in which the room has to be in proximity to the user. Adds the accuracy of the room location and user location to this.
+     - parameter metersRadius:	The radius in which the room has to be in proximity to the user. Adds the accuracy of the room location and user location to this. Should be 0 if not testing.
      - returns: New array of filtered rooms.
      */
-    static func filterRoomsByLocation(rooms: [Room], metersRadius: Double) -> [Room] {
+    static func filterRoomsByLocation(rooms: [Room], metersRadius: Double = 0) -> [Room] {
         let start = NSDate()
         var filteredRooms = [Room]()
         
@@ -29,8 +29,9 @@ class RoomFilterHelper {
                     if let rLong = room.Location.Longitude, rLat = room.Location.Latitude {
                         
                         let roomAccuracy = Double(room.Location.AccuracyMeters ?? 0)
-                        let distance = distanceBetweenTwoCoordinatesMeters(cLat, cLong, rLat, rLong) + currentAccuracyMeters + roomAccuracy
-                        if distance < metersRadius {
+                        let roomRadius = Double(room.Radius ?? 0)
+                        let distance = distanceBetweenTwoCoordinatesMeters(cLat, cLong, rLat, rLong)
+                        if distance < (metersRadius + currentAccuracyMeters + roomAccuracy + roomRadius) {
                             filteredRooms += [room]
                         }
                     }

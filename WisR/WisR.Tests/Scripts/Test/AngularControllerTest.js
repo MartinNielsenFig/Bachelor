@@ -37,11 +37,11 @@ describe("English Test", function () {
             window = $window;
 
             //Setup for http request
-            httpBackend.when('GET', 'http://localhost:1337/Room/GetAll').respond({});
-            httpBackend.when('POST', 'http://localhost:7331/Home/toJsonRoom').respond({});
-            httpBackend.when('POST', 'http://localhost:7331/Home/toJsonUser').respond({});
-            httpBackend.when('POST', 'http://localhost:1337/User/UpdateUser').respond({});
-            httpBackend.when('POST', 'http://localhost:1337/User/GetById').respond({});
+            httpBackend.when('GET', 'http://localhost:1337/Room/GetAll').respond({ Data: '{"_id": 1}', ErrorType: 0, Errors: [] });
+            httpBackend.when('POST', 'http://localhost:7331/Home/toJsonRoom').respond({ Data: '{"_id": 1}', ErrorType: 0, Errors: [] });
+            httpBackend.when('POST', 'http://localhost:7331/Home/toJsonUser').respond({ Data: '{"_id": 1}', ErrorType: 0, Errors: [] });
+            httpBackend.when('POST', 'http://localhost:1337/User/UpdateUser').respond({ Data: '{"_id": 1}', ErrorType: 0, Errors: [] });
+            httpBackend.when('POST', 'http://localhost:1337/User/GetById').respond({ Data: '{"_id": 1}', ErrorType: 0, Errors: [] });
          
             //Setup for currentUser
             scope.currentUser = { ConnectedRoomIds: ["12312312"] }
@@ -83,7 +83,7 @@ describe("English Test", function () {
         });
 
         it('should call toJsonRoom, CreateRoom, toJsonUser and UpdateUser', function () {
-            httpBackend.when('POST', 'http://localhost:1337/Room/CreateRoom').respond("562a1ae9c7f562790c95a505;");
+            httpBackend.when('POST', 'http://localhost:1337/Room/CreateRoom').respond({ Data: '{"_id": 562a1ae9c7f562790c95a505}', ErrorType: 0, Errors: [0] });
             httpBackend.expectPOST('http://localhost:7331/Home/toJsonRoom');
             httpBackend.expectPOST('http://localhost:1337/Room/CreateRoom');
             httpBackend.expectPOST('http://localhost:7331/Home/toJsonUser');
@@ -94,13 +94,13 @@ describe("English Test", function () {
         });
 
         it('should call toJsonRoom, CreateRoom and then the an error message is promt', function () {
-            httpBackend.when('POST', 'http://localhost:1337/Room/CreateRoom').respond({ ErrorMessage: "Error" });
+            httpBackend.when('POST', 'http://localhost:1337/Room/CreateRoom').respond({ Data: '{"_id": 1}', ErrorType: 1, Errors: [0] });
             httpBackend.expectPOST('http://localhost:7331/Home/toJsonRoom');
             httpBackend.expectPOST('http://localhost:1337/Room/CreateRoom');
 
             scope.postRoom();
             httpBackend.flush();
-            expect(scope.RoomCreationError).toBe("Error: Error");
+            expect(scope.RoomCreationError).toBe("Error: There already exist a room with that secret Error:0");
         });
 
         it('password should have been encrypted', function () {
@@ -115,7 +115,7 @@ describe("English Test", function () {
         });
 
         it('changeViewToRoom should have been called', function () {
-            httpBackend.when('POST', 'http://localhost:1337/Room/GetByUniqueSecret').respond({ _id: 1 });
+            httpBackend.when('POST', 'http://localhost:1337/Room/GetByUniqueSecret').respond({ Data: '{"_id": 1}', ErrorType:0});
             httpBackend.expectPOST('http://localhost:1337/Room/GetByUniqueSecret');
             spyOn(scope, 'changeViewToRoom');
             scope.connectWithUniqueSecret();
@@ -125,18 +125,18 @@ describe("English Test", function () {
         });
 
         it('message should be "No room with the Secret: 20"', function () {
-            httpBackend.when('POST', 'http://localhost:1337/Room/GetByUniqueSecret').respond({});
+            httpBackend.when('POST', 'http://localhost:1337/Room/GetByUniqueSecret').respond({ Data: '{"_id": null}', ErrorType: 1, Errors: [1] });
             httpBackend.expectPOST('http://localhost:1337/Room/GetByUniqueSecret');
 
             scope.uniqueRoomSecret = 20;
             scope.connectWithUniqueSecret();
 
             httpBackend.flush();
-            expect(scope.Message).toBe("No room with the secret: 20");
+            expect(scope.Message).toBe("Error: No room with the secret: 20 Error:1");
         });
 
         it('should call GetByUniqueSecret', function () {
-            httpBackend.when('POST', 'http://localhost:1337/Room/GetByUniqueSecret').respond({ _id: 1 });
+            httpBackend.when('POST', 'http://localhost:1337/Room/GetByUniqueSecret').respond({ Data: '{"_id": 1}', ErrorType: 0, Errors: [] });
             httpBackend.expectPOST('http://localhost:1337/Room/GetByUniqueSecret');
             scope.connectWithUniqueSecret();
             httpBackend.flush();
@@ -150,6 +150,8 @@ describe("English Test", function () {
 
         it('should call User/GetById', function () {
             httpBackend.expectPOST('http://localhost:1337/User/GetById');
+
+            spyOn(scope, "GetErrorOutput");
 
             window.userId = "Martin";
             scope.$apply();
@@ -191,15 +193,15 @@ describe("English Test", function () {
             window = $window;
 
             //Setup for http request
-            httpBackend.when('POST', 'http://localhost:1337/User/GetById').respond({});
-            httpBackend.when('GET', 'http://localhost:1337/Question/GetQuestionsForRoomWithoutImages?roomId=1').respond({});
-            httpBackend.when('POST', '/Room/toJsonQuestion').respond({});
-            httpBackend.when('POST', 'http://localhost:1337/Question/CreateQuestion').respond({});
-            httpBackend.when('POST', 'http://localhost:1337/Question/AddQuestionResponse').respond({});
-            httpBackend.when('POST', "http://localhost:1337/Question/AddVote").respond({});
-            httpBackend.when('POST', "http://localhost:7331/Home/toJsonUser").respond({});
-            httpBackend.when('POST', "http://localhost:1337/User/UpdateUser").respond({});
-            httpBackend.when('POST',"http://localhost:1337/Chat/GetAllByRoomId").respond({});
+            httpBackend.when('POST', 'http://localhost:1337/User/GetById').respond({ Data: '{"_id": 1}', ErrorType: 0, Errors: [] });
+            httpBackend.when('GET', 'http://localhost:1337/Question/GetQuestionsForRoomWithoutImages?roomId=1').respond({ Data: '{"_id": 1}', ErrorType: 0, Errors: [] });
+            httpBackend.when('POST', '/Room/toJsonQuestion').respond({ Data: '{"_id": 1}', ErrorType: 0, Errors: [] });
+            httpBackend.when('POST', 'http://localhost:1337/Question/CreateQuestion').respond({ Data: '{"_id": 1}', ErrorType: 0, Errors: [] });
+            httpBackend.when('POST', 'http://localhost:1337/Question/AddQuestionResponse').respond({ Data: '{"_id": 1}', ErrorType: 0, Errors: [] });
+            httpBackend.when('POST', "http://localhost:1337/Question/AddVote").respond({ Data: '{"_id": 1}', ErrorType: 0, Errors: [] });
+            httpBackend.when('POST', "http://localhost:7331/Home/toJsonUser").respond({ Data: '{"_id": 1}', ErrorType: 0, Errors: [] });
+            httpBackend.when('POST', "http://localhost:1337/User/UpdateUser").respond({ Data: '{"_id": 1}', ErrorType: 0, Errors: [] });
+            httpBackend.when('POST', "http://localhost:1337/Chat/GetAllByRoomId").respond({ Data: '{"_id": 1}', ErrorType: 0, Errors: [] });
 
             //Setup for currentUser
             scope.currentUser = { ConnectedRoomIds: ["12312312"] }
@@ -360,7 +362,7 @@ describe("English Test", function () {
         });
 
         it('should call /Question/GetImageByQuestionId?questionId=1, image found', function () {
-            httpBackend.when('GET', "http://localhost:1337/Question/GetImageByQuestionId?questionId=1").respond({});
+            httpBackend.when('GET', "http://localhost:1337/Question/GetImageByQuestionId?questionId=1").respond({ Data: '{"_id": 1}', ErrorType: 0, Errors: [] });
             httpBackend.expectGET("http://localhost:1337/Question/GetImageByQuestionId?questionId=1");
 
             spyOn(scope, "getSpecificAnswer");
@@ -377,7 +379,7 @@ describe("English Test", function () {
         });
 
         it('should call /Question/GetImageByQuestionId?questionId=1, image not found', function () {
-            httpBackend.when('GET', "http://localhost:1337/Question/GetImageByQuestionId?questionId=1").respond("");
+            httpBackend.when('GET', "http://localhost:1337/Question/GetImageByQuestionId?questionId=1").respond({ Data: null, ErrorType: 0, Errors: [] });
             httpBackend.expectGET("http://localhost:1337/Question/GetImageByQuestionId?questionId=1");
 
             spyOn(scope, "getSpecificAnswer");
@@ -420,7 +422,7 @@ describe("English Test", function () {
         });
 
         it('should call Question/DeleteQuestion and call modalchanger, no error', function () {
-            httpBackend.when('DELETE', 'http://localhost:1337/Question/DeleteQuestion?id=1').respond({});
+            httpBackend.when('DELETE', 'http://localhost:1337/Question/DeleteQuestion?id=1').respond({ Data: null, ErrorType: 0, Errors: [] });
             httpBackend.expectDELETE("http://localhost:1337/Question/DeleteQuestion?id=1");
 
             var q = { _id: 1 };
@@ -434,7 +436,7 @@ describe("English Test", function () {
         });
 
         it('should call Question/DeleteQuestion and call modalchanger, with error', function () {
-            httpBackend.when('DELETE', 'http://localhost:1337/Question/DeleteQuestion?id=1').respond({ ErrorMessage: "Error" });
+            httpBackend.when('DELETE', 'http://localhost:1337/Question/DeleteQuestion?id=1').respond({ Data: null, ErrorType: 1, Errors: [8] });
             httpBackend.expectDELETE("http://localhost:1337/Question/DeleteQuestion?id=1");
 
             var q = { _id: 1 };
@@ -443,11 +445,11 @@ describe("English Test", function () {
             scope.deleteQuestion(q);
             httpBackend.flush();
 
-            expect(scope.questionDeleteMessage).toBe("Error");
+            expect(scope.questionDeleteMessage).toBe("Error: Database error Error:8");
         });
 
         it('should call /Room/GetById and location changed', function () {
-            httpBackend.when('POST', 'http://localhost:1337/Room/GetById').respond({ AllowAnonymous: false });
+            httpBackend.when('POST', 'http://localhost:1337/Room/GetById').respond({ Data: '{ "AllowAnonymous": false }', ErrorType: 0, Errors: [] });
             httpBackend.expectPOST("http://localhost:1337/Room/GetById");
 
             spyOn(scope, "getQuestions");
@@ -473,7 +475,7 @@ describe("English Test", function () {
         });
 
         it('should call /Room/GetById and modalChanger should have been called', function () {
-            httpBackend.when('POST', 'http://localhost:1337/Room/GetById').respond({ HasPassword: true });
+            httpBackend.when('POST', 'http://localhost:1337/Room/GetById').respond({ Data: '{ "HasPassword": true }', ErrorType: 0, Errors: [] });
             httpBackend.expectPOST("http://localhost:1337/Room/GetById");
 
             spyOn(scope, "modalChanger");
@@ -487,7 +489,7 @@ describe("English Test", function () {
         });
 
         it('should call /Room/GetById and modalChanger should have been called', function () {
-            httpBackend.when('POST', 'http://localhost:1337/Room/GetById').respond({ HasPassword: true });
+            httpBackend.when('POST', 'http://localhost:1337/Room/GetById').respond({ Data: '{ "HasPassword": true }', ErrorType: 0, Errors: [] });
             httpBackend.expectPOST("http://localhost:1337/Room/GetById");
 
             spyOn(scope, "modalChanger");
@@ -501,7 +503,7 @@ describe("English Test", function () {
         });
 
         it('should call /Room/GetById and Error gotten', function () {
-            httpBackend.when('POST', 'http://localhost:1337/Room/GetById').respond({ ErrorMessage: "Error" });
+            httpBackend.when('POST', 'http://localhost:1337/Room/GetById').respond({ Data: '{"_id": 1}', ErrorType: 1, Errors: [6] });
             httpBackend.expectPOST("http://localhost:1337/Room/GetById");
 
             spyOn(scope, "modalChanger");
@@ -511,7 +513,7 @@ describe("English Test", function () {
             scope.getRoom(false);
 
             httpBackend.flush();
-            expect(scope.RoomErrorDiv).toBe("Error");
+            expect(scope.RoomErrorDiv).toBe("Error: Database error Error:6");
         });
 
         it('should call /Room/GetById,User is not anonymous, and modalChanger should have been called', function () {
@@ -529,7 +531,7 @@ describe("English Test", function () {
         });
 
         it('should call /Room/GetById,User is not anonymous, and rightpassword should be true', function () {
-            httpBackend.when('POST', 'http://localhost:1337/Room/GetById').respond({ HasPassword: true,});
+            httpBackend.when('POST', 'http://localhost:1337/Room/GetById').respond({ Data: '{ "HasPassword": true }', ErrorType: 0, Errors: [] });
             httpBackend.expectPOST("http://localhost:1337/Room/GetById");
 
             scope.currentUser = {ConnectedRoomIds: [1]}
@@ -544,7 +546,7 @@ describe("English Test", function () {
         });
 
         it('should call /Room/GetById,User is not anonymous, and modalChanger should have been called', function () {
-            httpBackend.when('POST', 'http://localhost:1337/Room/GetById').respond({ HasPassword: true });
+            httpBackend.when('POST', 'http://localhost:1337/Room/GetById').respond({ Data: '{ "HasPassword": true }', ErrorType: 0, Errors: [] });
             httpBackend.expectPOST("http://localhost:1337/Room/GetById");
 
             scope.currentUser = {};
@@ -659,17 +661,6 @@ describe("English Test", function () {
 
             httpBackend.flush();
             expect(scope.chatLoaded).toBe(true);
-        });
-        it('', function () {
-
-        });
-
-        it('', function () {
-
-        });
-
-        it('', function () {
-
         });
     });
 });
