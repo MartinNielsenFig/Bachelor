@@ -164,7 +164,7 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
                 }
             } else {
                 print("error in creating question")
-                Toast.showToast(NSLocalizedString("Error in creating question", comment: ""), durationMs: 2000, presenter: self)
+                Toast.showOkToast(NSLocalizedString("Error", comment: ""), message: NSLocalizedString("Error in creating question.", comment: ""), presenter: self)
             }
         }
     }

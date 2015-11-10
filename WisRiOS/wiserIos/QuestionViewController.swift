@@ -126,7 +126,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         
         if question._id == nil || pickerData.count < 0 || CurrentUser.sharedInstance._id == nil {
             if CurrentUser.sharedInstance._id == nil {
-                Toast.showToast("You must be logged in to respond to a question", durationMs: 2000, presenter: self)
+                Toast.showOkToast(NSLocalizedString("Error", comment: ""), message: NSLocalizedString("You must be logged in to respond to a question", comment: ""), presenter: self)
             }
             return
         }
@@ -209,7 +209,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         
         if question._id == nil || CurrentUser.sharedInstance._id == nil {
             if CurrentUser.sharedInstance._id == nil {
-                Toast.showToast(NSLocalizedString("Must be logged in to up or downvote", comment: ""), durationMs: 2000, presenter: self)
+                Toast.showOkToast(NSLocalizedString("Error", comment: ""), message: NSLocalizedString("Must be logged in to up or downvote", comment: ""), presenter: self)
             }
             return
         }

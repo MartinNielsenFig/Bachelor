@@ -212,9 +212,10 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
                 (notification, response, error) in
                 
                 if notification.ErrorType == .Ok || notification.ErrorType == .OkWithError {
-                    Toast.showToast(NSLocalizedString("Location updated", comment: ""), durationMs: 2000, presenter: self)
+                    Toast.showToast(NSLocalizedString("Location updated.", comment: ""), durationMs: 2000, presenter: self)
                 } else {
-                    Toast.showToast(NSLocalizedString("Could not update room location", comment: ""), durationMs: 2000, presenter: self)
+                    Toast.showOkToast(NSLocalizedString("Error", comment: ""),
+                        message: NSLocalizedString("Could not update room location", comment: ""), presenter: self)
                 }
             })
         }))

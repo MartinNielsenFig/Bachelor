@@ -157,7 +157,7 @@ class RoomTableViewController: UITableViewController {
                 }
             } else {
                 print("secret not found")
-                Toast.showToast(NSLocalizedString("Secret doesn't exist", comment: ""), durationMs: 2000, presenter: self)
+                Toast.showOkToast(NSLocalizedString("Secret doesn't exist", comment: ""), message: "", presenter: self)
             }
         }))
         
@@ -182,6 +182,12 @@ class RoomTableViewController: UITableViewController {
         }
         else if let room = sender as? Room {
             selectedRoom = room
+        }
+        
+        //Check for anonymous user
+        if let room = selectedRoom, allowAnon = room.AllowAnonymous where !allowAnon && CurrentUser.sharedInstance._id == nil {
+            Toast.showOkToast(NSLocalizedString("No anonymous users", comment: ""), message: NSLocalizedString("Anonymous users are not allowed in this room. Please log in.", comment: ""), presenter: self)
+            return false
         }
         
         if let room = selectedRoom, hasPw = room.HasPassword where hasPw {

@@ -98,7 +98,7 @@ class QuestionListViewController: UITableViewController, Paged {
                                 self.fetchQuestions(manualRefresh: false)
                             }
                         } else {
-                            Toast.showToast(couldNotDelete, durationMs: 2000, presenter: self)
+                            Toast.showOkToast(NSLocalizedString("Error", comment: ""), message: couldNotDelete, presenter: self)
                         }
                     })
                 } else {
