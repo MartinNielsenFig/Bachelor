@@ -104,9 +104,13 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
         }
         if responseOptions.count <= 0 {
             missingInformation = true
-            informationText += NSLocalizedString("Need at least one response option.", comment: "")
+            informationText += NSLocalizedString("Need at least one response option. ", comment: "")
         }
-        if missingInformation {
+        if CurrentUser.sharedInstance._id == nil {
+            missingInformation = true
+            informationText += NSLocalizedString("You need to be logged in to add a question. ", comment: "")
+        }
+        if missingInformation == true {
             let alert = UIAlertController(title: NSLocalizedString("Missing information", comment: ""), message: informationText, preferredStyle: .Alert)
             alert.addAction(UIAlertAction(title: "Ok", style: .Cancel, handler: { action in
                 //Do nothing

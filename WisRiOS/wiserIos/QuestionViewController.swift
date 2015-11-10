@@ -88,7 +88,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         //Vote btns
         var hasVote = false
         for v in question.Votes {
-            if v.CreatedById == CurrentUser.sharedInstance._id! {
+            if let myId = CurrentUser.sharedInstance._id where v.CreatedById == myId {
                 hasVote = true
                 updateVoteUI(v.Value == 1)
                 break
@@ -124,14 +124,16 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     */
     @IBAction func sendResponse(sender: AnyObject) {
         
-        guard question._id != nil && pickerData.count > 0 else {
+        if question._id == nil || pickerData.count < 0 || CurrentUser.sharedInstance._id == nil {
+            if CurrentUser.sharedInstance._id == nil {
+                Toast.showToast("You must be logged in to respond to a question", durationMs: 2000, presenter: self)
+            }
             return
         }
         
         let index = answerPicker.selectedRowInComponent(0)
         let answerPickerText = pickerData[index]
         
-        //Todo handle if not logged in
         let answer = Answer(value: answerPickerText, userId: CurrentUser.sharedInstance._id!, userDisplayName: CurrentUser.sharedInstance.DisplayName ?? "Anonymous")
         let answerJson = JSONSerializer.toJson(answer)
         let body = "response=\(answerJson)&questionId=\(question._id!)"
@@ -174,7 +176,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         if let index = index {
             selectedAnswerPickerIndex = index
         } else {
-            if let myAnswer = (question.Result.filter() { $0.UserId == CurrentUser.sharedInstance._id! }.first) {
+            if let myId = CurrentUser.sharedInstance._id, myAnswer = (question.Result.filter() { $0.UserId == myId }.first) {
                 selectedAnswerPickerIndex = pickerData.indexOf(myAnswer.Value) ?? -1
             } else {
                 selectedAnswerPickerIndex = -1
@@ -205,7 +207,10 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
      */
     func vote(up: Bool, button: UIButton) {
         
-        guard question._id != nil else {
+        if question._id == nil || CurrentUser.sharedInstance._id == nil {
+            if CurrentUser.sharedInstance._id == nil {
+                Toast.showToast(NSLocalizedString("Must be logged in to up or downvote", comment: ""), durationMs: 2000, presenter: self)
+            }
             return
         }
         
@@ -286,7 +291,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         //Helper function
         func updateImgGui(b64Img: String) {
             let imageData = NSData(base64EncodedString: b64Img, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
-            guard imageData != nil else {
+            if imageData == nil {
                 dispatch_async(dispatch_get_main_queue()) {
                     self.indicator!.stopAnimating()
                     self.indicator!.removeFromSuperview()

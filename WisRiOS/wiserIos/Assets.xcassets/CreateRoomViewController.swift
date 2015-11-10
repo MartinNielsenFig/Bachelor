@@ -167,15 +167,23 @@ class CreateRoomViewController: UITableViewController {
     func addRoomButtonPressed(button: UIBarButtonItem) {
         
         //Check user inputs
-        if let name = roomNameInputCell?.inputField.text, secret = roomSecretInputCell?.inputField.text where name == "" || secret == "" {
-            var msg = ""
-            if name == "" {
-                msg += NSLocalizedString("Room name cannot be empty. ", comment: "")
-            }
-            if secret == "" {
-                msg += NSLocalizedString("Room secret cannot be empty. ", comment: "")
-            }
-            
+        var msg = ""
+        var missingInformation = false
+        if let name = roomNameInputCell?.inputField.text where name == "" {
+            missingInformation = true
+            msg += NSLocalizedString("Room name cannot be empty. ", comment: "")
+
+        }
+        if let secret = roomSecretInputCell?.inputField.text where secret == "" {
+            missingInformation = true
+            msg += NSLocalizedString("Room secret cannot be empty. ", comment: "")
+        }
+        if CurrentUser.sharedInstance._id == nil {
+            missingInformation = true
+            msg += NSLocalizedString("You must be logged in to add a room ", comment: "")
+        }
+        
+        if missingInformation == true {
             let alert = UIAlertController(title: NSLocalizedString("Empty values", comment: ""), message: msg, preferredStyle: .Alert)
             alert.addAction(UIAlertAction(title: NSLocalizedString("Ok", comment: ""), style: .Default, handler: { action in
                 self.roomSecretInputCell?.inputField.becomeFirstResponder()
@@ -183,7 +191,6 @@ class CreateRoomViewController: UITableViewController {
             dispatch_async(dispatch_get_main_queue()) {
                 self.presentViewController(alert, animated: true, completion: nil)
             }
-            
             return
         }
         

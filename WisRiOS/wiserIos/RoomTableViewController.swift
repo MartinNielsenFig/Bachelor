@@ -37,7 +37,7 @@ class RoomTableViewController: UITableViewController {
             return false
         }
         let roomAtRow = self.rooms[indexPath.row]
-        return roomAtRow.CreatedById == CurrentUser.sharedInstance._id!
+        return roomAtRow.CreatedById == (CurrentUser.sharedInstance._id ?? "-1")
     }
     
     

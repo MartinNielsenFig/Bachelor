@@ -39,7 +39,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         
         let msg = ChatMessage()
-        msg.ByUserId = CurrentUser.sharedInstance._id!
+        msg.ByUserId = CurrentUser.sharedInstance._id
         msg.RoomId = roomId
         msg.ByUserDisplayName = CurrentUser.sharedInstance.DisplayName
         //message timestamp gets created on restApi
@@ -264,7 +264,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         cell.layer.borderWidth = 2
         cell.layer.borderColor = UIColor.whiteColor().CGColor
         
-        if msg.ByUserId == CurrentUser.sharedInstance._id! {
+        if msg.ByUserId == CurrentUser.sharedInstance._id {
             cell.backgroundColor = UIColor(red: 35/255, green: 213/255, blue: 22/255, alpha: 1)
         } else {
             cell.backgroundColor = UIColor(red: 25/255, green: 140/255, blue: 240/255, alpha: 1)
