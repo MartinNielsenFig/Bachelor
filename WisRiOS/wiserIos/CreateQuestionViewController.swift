@@ -191,8 +191,7 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
     override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if section == 0 {
             return NSLocalizedString("Question parameters", comment: "")
-        }
-        else {
+        } else {
             return NSLocalizedString("Response options", comment: "")
         }
     }
@@ -263,8 +262,7 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if indexPath.section == 0 && indexPath.row == 2 && photoSelected {
             return CGFloat(64*3)
-        }
-        else {
+        } else {
             return CGFloat(64)
         }
     }
