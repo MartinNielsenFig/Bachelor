@@ -260,7 +260,6 @@ namespace WisRRestAPI.Controllers
         public string RoomExists(string roomId)
         {
             List<ErrorCodes> errors = new List<ErrorCodes>();
-            ErrorTypes errorType = ErrorTypes.Ok;
             var returnValue =false;
             try
             {
