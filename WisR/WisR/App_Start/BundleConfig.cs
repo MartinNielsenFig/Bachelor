@@ -12,7 +12,7 @@ namespace WisR
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js", 
                         "~/Scripts/WisRScripts/geolocationScripts.js", 
-                        "~/Scripts/jquery.signalR-2.2.0.js", 
+                        "~/Scripts/jquery.signalR-2.2.0.js",
                         "~/Scripts/angular.js",
                         "~/Scripts/angular-animate.js",
                         "~/Scripts/angular-base64-upload.js",
@@ -22,7 +22,7 @@ namespace WisR
                         "~/Scripts/WisRScripts/AngularUserScripts.js",
                         "~/Scripts/WisRScripts/AngularHomeController.js", 
                         "~/Scripts/WisRScripts/AngularFiltersScripts.js", 
-                        "~/Scripts/WisRScripts/AngularRoomController.js",
+                        "~/Scripts/WisRScripts/AngularRoomController.js",                     
                         "~/Scripts/WisRScripts/Config.js"));
             
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(

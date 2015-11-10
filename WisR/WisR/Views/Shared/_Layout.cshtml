@@ -19,8 +19,9 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/chartbundle")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("/signalr/hubs")
     @RenderSection("scripts", required: false)
-    <script src="signalr/hubs"></script>
+
 
     <script>
         window.Resources =@Html.Raw(Json.Encode(WisR.Helper.ResourceHelper.GetResource()));
@@ -122,7 +123,7 @@
                                                     }
                                                     
                                                 },function() {
-                                                    alert(Resources.NoConnectionToServer);
+                                                    //alert(Resources.NoConnectionToServer);
                                                 });
                                         });
                                     }

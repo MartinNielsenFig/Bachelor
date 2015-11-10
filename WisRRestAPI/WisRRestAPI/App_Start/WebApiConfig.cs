@@ -27,7 +27,7 @@ namespace WisRRestAPI
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
-            config.EnableCors(new EnableCorsAttribute("*", "*", "GET, POST, OPTIONS, PUT, DELETE"));
+            config.EnableCors();
         }
     }
 }

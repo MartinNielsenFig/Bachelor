@@ -246,6 +246,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
         * @description Title of remove ResponseOption button
         */
     $scope.ResponseOptionTitle = Resources.ResponseOptionTitle;
+
     /**
      * @ngdoc property
      * @name .#ActiveUsers
@@ -892,7 +893,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
             $scope.modalChanger("myModalPassword", "hide");
 
             $scope.rightPassword = true;
-            if ($scope.currentUser.ConnectedRoomIds != undefined) {
+            if ($scope.currentUser && $scope.currentUser.ConnectedRoomIds != undefined) {
                 $scope.currentUser.ConnectedRoomIds.push(MyRoomIdFromViewBag);
 
                 var newIds = "";
@@ -1137,7 +1138,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
                     * @param {Error} error the error that has occured
                     */
     $scope.onErrorAlert = function (error) {
-        alert(Resources.NoConnectionToServer);
+        //alert(Resources.NoConnectionToServer);
     }
     /**
  * @ngdoc method
@@ -1220,6 +1221,8 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
     $scope.toggleDropdown = function (questionId) {
         $("#dropdown" + questionId).dropdown("toggle");
     }
+
+
     /**
 * @ngdoc method
 * @name RoomController#resizeImg

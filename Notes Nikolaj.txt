@@ -14,3 +14,4 @@ Image Resizing
 Rest funktioner uden billeder
 Notifications
 denormalize
+timeout på http requests for at tjekke om de er canceled eller connection error

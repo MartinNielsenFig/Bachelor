@@ -28,6 +28,16 @@ app.controller("HomeController", [
         */
         $scope.Radius = 50;
         /**
+       * @ngdoc property
+       * @name .#numberOfShownRooms
+       * @returns {Integer} numberOfShownRooms
+       * @propertyOf WisR.controller:HomeController
+       * @description Property that determines how many rooms should be shown in the room table
+       * Default is Empty string
+       */
+        $scope.numberOfShownRooms = 10;
+        
+        /**
         * @ngdoc property
         * @name .#UniqueSecret
         * @returns {String} UniqueSecret
@@ -482,9 +492,28 @@ app.controller("HomeController", [
         //#endregion
 
         //#region Helper Functions
+
         /**
        * @ngdoc method
-       * @name RoomController#GetErrorOutput
+       * @name HomeController#chk_scroll
+       * @methodOf WisR.controller:HomeController
+       * @description
+       * Function that checks if we are at the bottom of the rooms div, if we are show more elements(infinite scrolling that helps load times)
+       */
+        $(document).ready(function () {
+            $('#roomsDiv').bind('scroll', chk_scroll);
+        });
+
+        function chk_scroll(e) {
+            var elem = $(e.currentTarget);
+            if (elem[0].scrollHeight - elem.scrollTop() == elem.outerHeight()) {
+                $scope.numberOfShownRooms += 10;
+                $scope.$apply();
+            }
+        }
+        /**
+       * @ngdoc method
+       * @name HomeController#GetErrorOutput
        * @methodOf WisR.controller:HomeController
        * @description
        * Helper function toget the error outputs
@@ -586,7 +615,7 @@ app.controller("HomeController", [
                 * @param {Error} error the error that has occured
                 */
         $scope.onErrorAlert = function (error) {
-            alert(Resources.NoConnectionToServer);
+            //alert(Resources.NoConnectionToServer);
         }
         /**
         * @ngdoc method

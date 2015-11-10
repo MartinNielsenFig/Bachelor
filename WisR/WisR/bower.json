@@ -1,15 +1,8 @@
 {
-  "name": "y",
-  "version": "0.0.0",
-  "license": "MIT",
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ],
-  "dependencies": {
-    "angular-scroll-glue": "~2.0.6"
-  }
+   "name": "bower",
+   "license": "Apache-2.0",
+   "private": true,
+   "dependencies": {
+      "angular-cancel-on-navigate": "^0.1.0"
+   }
 }
