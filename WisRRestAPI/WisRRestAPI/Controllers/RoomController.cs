@@ -271,7 +271,7 @@ namespace WisRRestAPI.Controllers
                 errors.Add(ErrorCodes.CouldNotUpdateRoom);
                 return new Notification(null, ErrorTypes.Error, errors).ToJson();
             }
-            return new Notification(returnValue.ToString(), ErrorTypes.Error, errors).ToJson();
+            return new Notification(returnValue.ToString(), ErrorTypes.Ok, errors).ToJson();
         }
     }
 }
