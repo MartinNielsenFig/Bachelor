@@ -141,6 +141,12 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
     }
     
     func showRoomsOnMapAsCircles() {
+        
+        if self.rooms.count > 100 {
+            print("many rooms detected nearby, not drawing circles to conserve power")
+            return
+        }
+        
         //Show on map
         self.mapView.removeOverlays(self.mapView.overlays)
         for room in self.rooms {
