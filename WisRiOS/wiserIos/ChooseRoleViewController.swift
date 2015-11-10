@@ -148,6 +148,7 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
                     }
                 }
             } else {
+                print("error in getting rooms")
                 print(notification.Errors)
             }
         }

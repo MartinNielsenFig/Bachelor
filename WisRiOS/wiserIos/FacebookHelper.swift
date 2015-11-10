@@ -71,12 +71,13 @@ class FacebookHelper {
                                 print("did not get Facebook ID when creating user")
                             }
                         } else {
+                            print("error in getting user information")
                             print(notification.Errors)
                         }
                     }
                 }
             } else {
-                NSLog("Error Getting Facebook info \(error)");
+                print("Error Getting Facebook info \(error)");
             }
         }
     }

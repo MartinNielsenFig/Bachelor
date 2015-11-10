@@ -131,6 +131,7 @@ class RoomTableViewController: UITableViewController {
                 }
                 print("duration of \(__FUNCTION__) took \(NSDate().timeIntervalSinceDate(start))")
             } else {
+                print("could not get all rooms")
                 print(notification.Errors)
             }
         }

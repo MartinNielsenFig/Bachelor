@@ -235,6 +235,7 @@ class CreateRoomViewController: UITableViewController {
                     self.presentViewController(alert, animated: true, completion: nil)
                 }
             } else {
+                print("error in creating room")
                 print(notification.Errors)
             }
         }

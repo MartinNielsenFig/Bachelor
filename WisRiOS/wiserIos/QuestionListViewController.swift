@@ -157,6 +157,11 @@ class QuestionListViewController: UITableViewController, Paged {
         return (noDownvotes, noUpvotes)
     }
     
+    /**
+     Redownloads the questions for the curret room without the images from the database to display on the list.
+     - parameter refreshControl:	An optional refreshcontrol to show loading
+     - parameter manualRefresh:	If called with manual refresh true, it means it was called by the user swiping down. In this case the UI is already responding to it. But if it's called by code, manualRefresh should be false to scroll down the view to show the UIRefreshControl
+     */
     func fetchQuestions(refreshControl: UIRefreshControl? = nil, manualRefresh: Bool) {
         
         if let rc = refreshControl where !manualRefresh {

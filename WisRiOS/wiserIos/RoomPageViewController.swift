@@ -95,6 +95,7 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
                         self.logoutRoom(true)
                     }
                 } else {
+                    print("error in checking if room exists")
                     print(notification.Errors)
                 }
             }

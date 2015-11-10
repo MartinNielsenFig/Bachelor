@@ -8,6 +8,9 @@
 
 import Foundation
 
+/**
+ *	These ErrorCodes are related to the errors received from the RestAPI. They are shared among the WisR system and clients.
+ */
 enum ErrorCode: Int {
     case NothingReceived = -100
     

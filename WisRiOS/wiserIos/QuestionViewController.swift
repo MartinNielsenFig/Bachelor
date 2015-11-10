@@ -150,6 +150,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                 Toast.showToast(youVoted + " \(answer.Value)", durationMs: 2000, presenter: self)
                 self.highlightSelectedAnswer(index)
             } else if notification.Errors.contains(ErrorCode.QuestionExpired) {
+                
                 dispatch_async(dispatch_get_main_queue()) {
                     let alert = UIAlertController(title: NSLocalizedString("An error has occurred", comment: ""),
                         message: NSLocalizedString("Cannot respond to a question where timer has run out", comment: ""),

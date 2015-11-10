@@ -62,6 +62,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     self.chatUpdater?.execute()
                 }
             } else {
+                print("Could not create chat message")
                 print(notification.Errors)
             }
         }
@@ -115,6 +116,9 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     //MARK: Utilities
     
+    /**
+    Continually polls the Rest server for messages newer than my current newest message.
+    */
     func updateChatPoll() {
         let newestMsg = self.newestMessageByIndex()
         let body = "msg=\(JSONSerializer.toJson(newestMsg))"
@@ -147,6 +151,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
                     print("could not update chat")
                 }
             } else {
+                print("could not update chat, see error")
                 print(notification.Errors)
             }
         }
