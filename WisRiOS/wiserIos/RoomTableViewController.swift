@@ -129,7 +129,7 @@ class RoomTableViewController: UITableViewController {
                 self.allRooms.removeAll()
                 
                 self.allRooms = tmpRooms
-                self.rooms = RoomFilterHelper.filterRoomsByLocation(self.allRooms, metersRadius: 1000)
+                self.rooms = RoomFilterHelper.filterRoomsByLocation(self.allRooms)
                 refreshControl?.endRefreshing()
                 
                 dispatch_async(dispatch_get_main_queue()) {

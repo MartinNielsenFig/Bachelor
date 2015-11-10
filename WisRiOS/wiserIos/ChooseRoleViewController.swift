@@ -22,9 +22,8 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
     var firstTimeRoomsLoaded = true
     
     let locationManager = CLLocationManager()
-    var bestAccuracy = Double.init(Int.max)
     var maxPositionUpdatesThisSession = Int()
-
+    
     
     //MARK: Lifecycle
     
@@ -35,7 +34,7 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
-        locationManager.distanceFilter = 0
+        locationManager.distanceFilter = 5
         locationManager.startUpdatingLocation()
         
         //Map delegation for pin behaviour
@@ -57,8 +56,7 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
     @IBAction func clickCreateRoomBtn(sender: AnyObject) {
         if CurrentUser.sharedInstance.FacebookId != nil {
             performSegueWithIdentifier("CreateRoom", sender: sender)
-        }
-        else {
+        } else {
             performSegueWithIdentifier("Login", sender: sender)
         }
         
@@ -113,7 +111,7 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
                     for room in jsonArray {
                         tmpRooms += [Room(jsonDictionary: room as! NSDictionary)]
                     }
-                    let filteredRooms = RoomFilterHelper.filterRoomsByLocation(tmpRooms, metersRadius: 1000*1000)
+                    let filteredRooms = RoomFilterHelper.filterRoomsByLocation(tmpRooms, metersRadius: 1000)
                     if filteredRooms.count <= 0 {
                         let noRooms = Room()
                         noRooms._id = "system"
@@ -133,23 +131,27 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
                 }
                 
                 self.rooms = tmpRooms
+                self.showRoomsOnMapAsCircles()
                 
-                //Show on map
-                self.mapView.removeOverlays(self.mapView.overlays)
-                for room in tmpRooms {
-                    if let lat = room.Location.Latitude, long = room.Location.Longitude {
-                        let roomPosition = CLLocationCoordinate2D(latitude: lat, longitude: long)
-                        
-                        let circleRadius = (room.Location.AccuracyMeters ?? 0) + (room.Radius ?? 0)
-                        let circle = MKCircle(centerCoordinate: roomPosition, radius: CLLocationDistance(circleRadius))
-                        dispatch_async(dispatch_get_main_queue()) {
-                            self.mapView.addOverlay(circle)
-                        }
-                    }
-                }
             } else {
                 print("error in getting rooms")
                 print(notification.Errors)
+            }
+        }
+    }
+    
+    func showRoomsOnMapAsCircles() {
+        //Show on map
+        self.mapView.removeOverlays(self.mapView.overlays)
+        for room in self.rooms {
+            if let lat = room.Location.Latitude, long = room.Location.Longitude {
+                let roomPosition = CLLocationCoordinate2D(latitude: lat, longitude: long)
+                
+                let circleRadius = (room.Location.AccuracyMeters ?? 0) + (room.Radius ?? 0)
+                let circle = MKCircle(centerCoordinate: roomPosition, radius: CLLocationDistance(circleRadius))
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.mapView.addOverlay(circle)
+                }
             }
         }
     }
@@ -169,7 +171,6 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
         else {
             pinView!.annotation = annotation
         }
-        
         return pinView
     }
     
@@ -188,50 +189,46 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
     //MARK: CLLocationManagerDelegate
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
         if let location = manager.location {
             
-            //Get rooms first time to show on map
-            if firstTimeRoomsLoaded {
-                firstTimeRoomsLoaded = false
-                loadRoomsBasedOnLocation()
-            }
+            print("updated location")
             
-            //Determine is accuracy is better than before
+            //Save position
             let currentAccuracy = location.horizontalAccuracy
-            if --maxPositionUpdatesThisSession <= 0 /*|| currentAccuracy <= 10*/ {
-                NSLog("stopped updating location")
-                locationManager.stopUpdatingLocation()
-            }
-            //NSLog("\(maxPositionUpdatesThisSession) tries left")
-            //NSLog("didUpdateLocations accuracy was \(currentAccuracy)")
+            self.location = location
+            CurrentUser.sharedInstance.location.Latitude = location.coordinate.latitude
+            CurrentUser.sharedInstance.location.Longitude = location.coordinate.longitude
+            CurrentUser.sharedInstance.location.AccuracyMeters = Int(currentAccuracy)
             
-            if currentAccuracy < bestAccuracy {
-                bestAccuracy = currentAccuracy
-                
-                //Save position
-                self.location = location
-                CurrentUser.sharedInstance.location.Latitude = location.coordinate.latitude
-                CurrentUser.sharedInstance.location.Longitude = location.coordinate.longitude
-                CurrentUser.sharedInstance.location.AccuracyMeters = Int(currentAccuracy)
-                
-                //Replace and update overlays, annotations and positioning
-                mapView.removeAnnotations(mapView.annotations)
-                
-                let coordinate = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+            //Replace and update overlays, annotations and positioning
+            mapView.removeAnnotations(mapView.annotations)
+            
+            let coordinate = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+            if firstTimeRoomsLoaded {
                 mapView.region = MKCoordinateRegionMakeWithDistance(coordinate, 500, 500)
-                
-                //Current location circle todo need fixing
-                /*
-                let circle = MKCircle(centerCoordinate: location.coordinate, radius: location.horizontalAccuracy as CLLocationDistance)
-                mapView.addOverlay(circle)
-                */
-                
-                let annotation = MKPointAnnotation()
-                annotation.coordinate = coordinate
-                mapView.addAnnotation(annotation)
             }
+            
+            //Current location circle todo need fixing
+            /*
+            let circle = MKCircle(centerCoordinate: location.coordinate, radius: location.horizontalAccuracy as CLLocationDistance)
+            mapView.addOverlay(circle)
+            */
+            
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = coordinate
+            mapView.addAnnotation(annotation)
+            
+            showRoomsOnMapAsCircles()
+        }
+        
+        //Get rooms first time to show on map
+        if firstTimeRoomsLoaded {
+            firstTimeRoomsLoaded = false
+            loadRoomsBasedOnLocation()
         }
     }
+    
     
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         NSLog("Error while updating location \(error.localizedDescription)")
@@ -254,4 +251,3 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
         }
     }
 }
-

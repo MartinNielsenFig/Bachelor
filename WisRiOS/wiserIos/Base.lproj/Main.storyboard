@@ -653,13 +653,13 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="duI-xg-kz9" userLabel="MessageInputStack">
                                                 <rect key="frame" x="0.0" y="7" width="595" height="33"/>
                                                 <subviews>
-                                                    <textField opaque="NO" clipsSubviews="YES" tag="102" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter your textmessage" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tuD-VA-PhF">
+                                                    <textField opaque="NO" clipsSubviews="YES" tag="102" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter your textmessage" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tuD-VA-PhF">
                                                         <rect key="frame" x="0.0" y="0.0" width="550" height="33"/>
                                                         <animations/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
                                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="send" enablesReturnKeyAutomatically="YES"/>
                                                     </textField>
-                                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X0D-To-bsu">
+                                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X0D-To-bsu">
                                                         <rect key="frame" x="555" y="0.0" width="40" height="33"/>
                                                         <animations/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -795,9 +795,9 @@
                                                     <rect key="frame" x="260" y="0.0" width="324" height="46"/>
                                                     <animations/>
                                                     <segments>
-                                                        <segment title="10 m"/>
-                                                        <segment title="40 m"/>
-                                                        <segment title="80 m"/>
+                                                        <segment title="50 m"/>
+                                                        <segment title="100 m"/>
+                                                        <segment title="20000 m"/>
                                                     </segments>
                                                 </segmentedControl>
                                             </subviews>
