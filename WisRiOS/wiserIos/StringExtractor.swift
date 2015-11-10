@@ -10,6 +10,28 @@ import Foundation
 
 class StringExtractor {
     
+    static func nameAndInitials(fullNameSpaceSeparated: String?) -> String? {
+        if let fullNameSpaceSeparated = fullNameSpaceSeparated {
+            
+            let nameArray = fullNameSpaceSeparated.componentsSeparatedByString(" ")
+            if nameArray.count <= 0 {
+                return nil
+            } else {
+                var name = nameArray[0] + " "
+                
+                for i in 1..<nameArray.count {
+                    //Get first char
+                    let firstChar = nameArray[i].characters.first!
+                    name += String(firstChar)
+                }
+                return name
+            }
+            
+        } else {
+            return nil
+        }
+    }
+    
     /**
      Extracts the highest number in a string
      - parameter aString:	string with e.g. text and numbers

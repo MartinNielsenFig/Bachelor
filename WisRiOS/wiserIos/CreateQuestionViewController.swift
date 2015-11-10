@@ -141,7 +141,7 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
         q.CreatedByUserDisplayName = CurrentUser.sharedInstance.DisplayName ?? "Anonymous"
         
         let jsonQ = JSONSerializer.toJson(q)
-        let body = "roomId=\(room._id!)&question=\(jsonQ)&type=MultipleChoiceQuestion"
+        let body = "question=\(jsonQ)&type=MultipleChoiceQuestion"
         
         HttpHandler.requestWithResponse(action: "Question/CreateQuestion", type: "POST", body: body) {
             (notification, response, error) in
