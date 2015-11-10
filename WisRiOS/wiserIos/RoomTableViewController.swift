@@ -70,8 +70,7 @@ class RoomTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         //We're using a predefined one with subtitles, see in Storyboard
-        let cellIdentifier = "SubtitleCell"
-        let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier("SubtitleCell", forIndexPath: indexPath)
         
         let room = self.rooms[indexPath.row]
         
@@ -138,7 +137,7 @@ class RoomTableViewController: UITableViewController {
     }
     
     /**
-     Function that runs when user chooses to use a secret to connect to a room
+     Enables the user to join by secret.
      */
     func useSecret() {
         var secretInput: UITextField?
