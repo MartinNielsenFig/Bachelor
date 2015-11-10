@@ -288,20 +288,25 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         indicator!.startAnimating()
         self.view.addSubview(indicator!)
         
+        //Stop
+        func stopIndicator() {
+            dispatch_async(dispatch_get_main_queue()) {
+                self.indicator!.stopAnimating()
+                self.indicator!.removeFromSuperview()
+            }
+        }
+        
+        
         //Helper function
         func updateImgGui(b64Img: String) {
             let imageData = NSData(base64EncodedString: b64Img, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
             if imageData == nil {
-                dispatch_async(dispatch_get_main_queue()) {
-                    self.indicator!.stopAnimating()
-                    self.indicator!.removeFromSuperview()
-                }
+                stopIndicator()
                 return
             }
             let questionImage = UIImage(data: imageData!)
             dispatch_async(dispatch_get_main_queue()) {
-                self.indicator!.stopAnimating()
-                self.indicator!.removeFromSuperview()
+                stopIndicator()
                 //Add image to image scroll view
                 if let questionImage = questionImage where questionImage.size != CGSize(width: 0, height: 0) {
                     self.questionImageView.image = questionImage
@@ -328,6 +333,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                         updateImgGui(data)
                     } else {
                         print("did receive response but did not receive an image")
+                        stopIndicator()
                     }
                 } else {
                     print("error getting image for question")

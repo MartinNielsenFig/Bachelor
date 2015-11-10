@@ -21,6 +21,7 @@ class RoomTableViewController: UITableViewController {
     //MARK: Lifecycle
     
     override func viewDidLoad() {
+        self.title = NSLocalizedString("Rooms nearby", comment: "")
         self.refreshControl = UIRefreshControl()
         self.refreshControl!.addTarget(self, action: "handleRefresh:", forControlEvents: UIControlEvents.ValueChanged)
         
@@ -78,12 +79,13 @@ class RoomTableViewController: UITableViewController {
         
         if room._id == "system" {
             cell.detailTextLabel?.text = ""
+        } else {
+            cell.detailTextLabel?.text = ""
         }
-        else if let cLong = CurrentUser.sharedInstance.location.Longitude, cLat = CurrentUser.sharedInstance.location.Latitude, rLong = room.Location.Longitude, rLat = room.Location.Latitude {
-            
+        /*else if let cLong = CurrentUser.sharedInstance.location.Longitude, cLat = CurrentUser.sharedInstance.location.Latitude, rLong = room.Location.Longitude, rLat = room.Location.Latitude {
             let distance = Int(RoomFilterHelper.distanceBetweenTwoCoordinatesMeters(cLat, cLong, rLat, rLong))
-            cell.detailTextLabel?.text = String(format: NSLocalizedString("%d meters away", comment: ""), distance)
-        }
+            cell.detailTextLabel?.text = String(format: NSLocalizedString("%d meters away", comment: ""), distanceText)
+        }*/
         
         return cell
     }
