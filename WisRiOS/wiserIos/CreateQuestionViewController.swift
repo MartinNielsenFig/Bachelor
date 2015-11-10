@@ -60,7 +60,7 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
     //MARK: Utilities
     
     /**
-    Loads an old question to be represented on the GUI if the user wanted to replace and already updated question. This basically allows the user to ask the same question again
+    Loads an old question to be represented on the GUI if the user wanted to replace an already created question.
     - parameter oldQuestion:	The old question to be represented. Is injected into CreateQuestionViewController before showing it if it should edit.
     */
     func loadOldQuestion(oldQuestion: Question?) {
@@ -82,11 +82,13 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
         }
     }
 
-
     func dismiss() {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    /**
+     Adds the question to the database.
+     */
     func addQuestion() {
         
         var missingInformation = false
@@ -122,11 +124,11 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
         
         //Create question object and send it
         let q = Question()
-        q.CreatedById = CurrentUser.sharedInstance._id
+        q.CreatedById = CurrentUser.sharedInstance._id!
         
         //http://stackoverflow.com/questions/11251340/convert-uiimage-to-base64-string-in-objective-c-and-swift
         if let selectedImage = self.selectedImage {
-            let imageData = UIImageJPEGRepresentation(selectedImage, 0.8)
+            let imageData = UIImageJPEGRepresentation(selectedImage, 0.5)
             if let imageData = imageData {
                 let b64 = imageData.base64EncodedStringWithOptions(NSDataBase64EncodingOptions.EncodingEndLineWithCarriageReturn)
                 q.Img = b64
@@ -136,12 +138,15 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
         q.QuestionText = questionText?.inputField.text
         q.RoomId = room._id
         q.ExpireTimestamp = durationInput?.inputField.text
+        q.CreatedByUserDisplayName = CurrentUser.sharedInstance.DisplayName ?? "Anonymous"
         
         let jsonQ = JSONSerializer.toJson(q)
         let body = "roomId=\(room._id!)&question=\(jsonQ)&type=MultipleChoiceQuestion"
         
-        HttpHandler.requestWithResponse(action: "Question/CreateQuestion", type: "POST", body: body) { (data, response, error) in
-            if error != nil {
+        HttpHandler.requestWithResponse(action: "Question/CreateQuestion", type: "POST", body: body) {
+            (notification, response, error) in
+            
+            if notification.ErrorType == .Ok || notification.ErrorType == .OkWithError {
                 NSLog("Question tried Created")
                 
                 dispatch_async(dispatch_get_main_queue()) {
@@ -153,6 +158,9 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
                     self.questionListViewController.fetchQuestions(manualRefresh: false)
                     self.dismiss()
                 }
+            } else {
+                print("error in creating question")
+                Toast.showToast(NSLocalizedString("Error in creating question", comment: ""), durationMs: 2000, presenter: self)
             }
         }
     }
@@ -299,7 +307,6 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
             alert.popoverPresentationController?.sourceView = self.view
             alert.popoverPresentationController?.sourceRect = CGRectMake(self.view.bounds.size.width / 2.0, self.view.bounds.size.height / 2.0, 1.0, 1.0)
             
-            
             presentViewController(alert, animated: true, completion: nil)
         }
     }
@@ -314,7 +321,6 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
         self.photoSelected = true
         selectedImage = (info[UIImagePickerControllerOriginalImage] as! UIImage)
         imageTableCell?.backgroundView = UIImageView(image: selectedImage)
-        //imageTableCell?.imageView?.image = selectedImage
         dismissViewControllerAnimated(true, completion: nil)
     }
     

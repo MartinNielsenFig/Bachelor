@@ -19,6 +19,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     var firstProgressBarUpdate = true
     var progressTimerUpdater: Updater?
     var selectedAnswerPickerIndex = -1
+    var indicator: UIActivityIndicatorView?
     
     //Get instantiated by QuestionListViewController
     var question = Question()
@@ -46,12 +47,15 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         
         answerPicker.delegate = self
         answerPicker.dataSource = self
-        
     }
     
     override func viewDidAppear(animated: Bool) {
         
         print("QuestionViewController viewDidAppear")
+        
+        //Stop any indicator
+        indicator?.stopAnimating()
+        indicator?.removeFromSuperview()
         
         //Show UI
         if self.question._id == nil {
@@ -84,7 +88,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         //Vote btns
         var hasVote = false
         for v in question.Votes {
-            if v.CreatedById == CurrentUser.sharedInstance._id {
+            if v.CreatedById == CurrentUser.sharedInstance._id! {
                 hasVote = true
                 updateVoteUI(v.Value == 1)
                 break
@@ -119,6 +123,11 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     - parameter sender:	The button pressed
     */
     @IBAction func sendResponse(sender: AnyObject) {
+        
+        guard question._id != nil && pickerData.count > 0 else {
+            return
+        }
+        
         let index = answerPicker.selectedRowInComponent(0)
         let answerPickerText = pickerData[index]
         
@@ -127,13 +136,11 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         let answerJson = JSONSerializer.toJson(answer)
         let body = "response=\(answerJson)&questionId=\(question._id!)"
         
-        let DEBUG_ALWAYS_ADD = true //todo remove
-        
         HttpHandler.requestWithResponse(action: "Question/AddQuestionResponse", type: "POST", body: body) {
             (notification, response, error) in
             
             if notification.ErrorType == .Ok || notification.ErrorType == .OkWithError {
-                if let myResponse = (self.question.Result.filter() { $0.UserId == CurrentUser.sharedInstance._id }.first) where !DEBUG_ALWAYS_ADD {
+                if let myResponse = (self.question.Result.filter() { $0.UserId == CurrentUser.sharedInstance._id! }.first) {
                     myResponse.Value = answer.Value
                 } else {
                     self.question.Result += [answer]
@@ -143,8 +150,11 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                 Toast.showToast(youVoted + " \(answer.Value)", durationMs: 2000, presenter: self)
                 self.highlightSelectedAnswer(index)
             } else if notification.Errors.contains(ErrorCode.QuestionExpired) {
+                
                 dispatch_async(dispatch_get_main_queue()) {
-                    let alert = UIAlertController(title: NSLocalizedString("An error has occurred", comment: ""), message: NSLocalizedString("Cannot respond to a question where timer has run out", comment: ""), preferredStyle: .Alert)
+                    let alert = UIAlertController(title: NSLocalizedString("An error has occurred", comment: ""),
+                        message: NSLocalizedString("Cannot respond to a question where timer has run out", comment: ""),
+                        preferredStyle: .Alert)
                     alert.addAction(UIAlertAction(title: "Ok", style: .Cancel) { action in
                         //Do nothing
                         })
@@ -164,7 +174,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         if let index = index {
             selectedAnswerPickerIndex = index
         } else {
-            if let myAnswer = (question.Result.filter() { $0.UserId == CurrentUser.sharedInstance._id }.first) {
+            if let myAnswer = (question.Result.filter() { $0.UserId == CurrentUser.sharedInstance._id! }.first) {
                 selectedAnswerPickerIndex = pickerData.indexOf(myAnswer.Value) ?? -1
             } else {
                 selectedAnswerPickerIndex = -1
@@ -194,6 +204,11 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
      - parameter up:	If true upvotes, if false downvotes.
      */
     func vote(up: Bool, button: UIButton) {
+        
+        guard question._id != nil else {
+            return
+        }
+        
         updateVoteUI(up)
         let voteValue = up ? 1 : -1
         let vote = Vote(createdById: CurrentUser.sharedInstance._id!, value: voteValue)
@@ -204,7 +219,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             (notification, response, error) in
             
             if notification.ErrorType == .Ok || notification.ErrorType == .OkWithError {
-                if let myVote = (self.question.Votes.filter() { $0.CreatedById == CurrentUser.sharedInstance._id }.first) {
+                if let myVote = (self.question.Votes.filter() { $0.CreatedById == CurrentUser.sharedInstance._id! }.first) {
                     myVote.Value = voteValue
                 } else {
                     self.question.Votes += [vote]
@@ -212,12 +227,16 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                 
                 print(up ? "VOTED" : "DOWNVOTED")
             } else {
+                self.resetVoteUI()
                 print("could not upvote or downvote problem")
                 print(notification.Errors)
             }
         }
     }
     
+    /**
+     Updates the progress bar with time left.
+     */
     func updateProgressbar() {
         
         if let startStr = question.CreationTimestamp?.stringByReplacingOccurrencesOfString(",", withString: "."), endStr = question.ExpireTimestamp?.stringByReplacingOccurrencesOfString(",", withString: "."), start = Double(startStr), end = Double(endStr) {
@@ -238,50 +257,53 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             let tLeftS = NSTimeInterval(tLeftMs/1000)
             let tLeftComponents = DateTimeHelper.getComponents(tLeftS, flags: [.Hour, .Minute, .Second])
             
-            let timeLeft = NSLocalizedString("Time left: ", comment: "")
+            //let timeLeft = NSLocalizedString("Time left: ", comment: "")
             timeLabel.text = "\(tLeftComponents.hour):\(tLeftComponents.minute):\(tLeftComponents.second)"
             progressBar.clipsToBounds = false
             progressBar.addSubview(timeLabel)
             
             if part >= 1 {
                 progressTimerUpdater?.stop()
+                timeLabel.removeFromSuperview()
                 return
             }
             firstProgressBarUpdate = false
         }
         else {
-            NSLog("could not parse question creationtime or endtime")
+            print("could not parse question creationtime or endtime")
         }
     }
     
+    /**
+     Loads the image for this Question either from cache or from database. Then shows it inside a ImageScrollView so user can pan around and zoom.
+     */
     func loadImage() {
-        let indicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
-        indicator.center = self.view.center
-        indicator.startAnimating()
-        self.view.addSubview(indicator)
+        indicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+        indicator!.center = self.view.center
+        indicator!.startAnimating()
+        self.view.addSubview(indicator!)
         
+        //Helper function
         func updateImgGui(b64Img: String) {
             let imageData = NSData(base64EncodedString: b64Img, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
-            
-            if imageData == nil {
+            guard imageData != nil else {
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.indicator!.stopAnimating()
+                    self.indicator!.removeFromSuperview()
+                }
                 return
             }
-            
             let questionImage = UIImage(data: imageData!)
-            
             dispatch_async(dispatch_get_main_queue()) {
-                indicator.stopAnimating()
-                indicator.removeFromSuperview()
-                
+                self.indicator!.stopAnimating()
+                self.indicator!.removeFromSuperview()
                 //Add image to image scroll view
                 if let questionImage = questionImage where questionImage.size != CGSize(width: 0, height: 0) {
                     self.questionImageView.image = questionImage
                     self.imageScrollView.contentSize = questionImage.size
-                    
                     let minimumZoomLevel = self.imageScrollView.frame.size.width/questionImage.size.width
                     self.imageScrollView.minimumZoomScale = minimumZoomLevel
                     self.imageScrollView.zoomScale = minimumZoomLevel
-                    
                     self.questionImageView!.reloadInputViews()
                 }
             }
@@ -292,7 +314,6 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             updateImgGui(b64Img)
         } else {
             self.questionImageView.image = nil
-            
             HttpHandler.requestWithResponse(action: "Question/GetImageByQuestionId?questionId=\(self.question._id!)", type: "GET", body: "") {
                 (notification, response, error) in
                 

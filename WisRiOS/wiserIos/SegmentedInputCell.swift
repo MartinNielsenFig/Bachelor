@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// Displays a label and radio button input.
 class SegmentedInputCell: UITableViewCell {
 
     @IBOutlet weak var label: UILabel!

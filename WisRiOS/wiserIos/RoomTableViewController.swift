@@ -37,7 +37,7 @@ class RoomTableViewController: UITableViewController {
             return false
         }
         let roomAtRow = self.rooms[indexPath.row]
-        return roomAtRow.CreatedById == CurrentUser.sharedInstance._id
+        return roomAtRow.CreatedById == CurrentUser.sharedInstance._id!
     }
     
     
@@ -70,8 +70,7 @@ class RoomTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         //We're using a predefined one with subtitles, see in Storyboard
-        let cellIdentifier = "SubtitleCell"
-        let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath)
+        let cell = tableView.dequeueReusableCellWithIdentifier("SubtitleCell", forIndexPath: indexPath)
         
         let room = self.rooms[indexPath.row]
         
@@ -132,13 +131,14 @@ class RoomTableViewController: UITableViewController {
                 }
                 print("duration of \(__FUNCTION__) took \(NSDate().timeIntervalSinceDate(start))")
             } else {
+                print("could not get all rooms")
                 print(notification.Errors)
             }
         }
     }
     
     /**
-     Function that runs when user chooses to use a secret to connect to a room
+     Enables the user to join by secret.
      */
     func useSecret() {
         var secretInput: UITextField?

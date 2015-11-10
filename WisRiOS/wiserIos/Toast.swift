@@ -8,7 +8,7 @@
 
 import UIKit
 
-/// A simple Android style toast/on screen message that dismisses itself after a chosen period. Also can call an optional callback function when dismissing.
+/// A simple Android style toast/on screen message that dismisses itself after a chosen period. Can call an optional callback function when dismissing.
 class Toast {
     static func showToast(message: String, durationMs: Int, presenter: UIViewController, imageName: String? = nil, callback: (() -> Void)? = nil) {
         

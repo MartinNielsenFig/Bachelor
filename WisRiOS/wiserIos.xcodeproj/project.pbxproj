@@ -30,7 +30,6 @@
 		CB6BC6241BA1AE92001C303B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB3C37751B8DBF5000897344 /* Main.storyboard */; };
 		CB6BC6261BA1B2ED001C303B /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6BC6251BA1B2ED001C303B /* ChatViewController.swift */; };
 		CB6BC6281BA1C05A001C303B /* QuestionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6BC6271BA1C05A001C303B /* QuestionListViewController.swift */; };
-		CB785FB01BE23FF1001DA19E /* LoginProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB785FAF1BE23FF1001DA19E /* LoginProvider.swift */; };
 		CB84802B1B9EDB5400D1C230 /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB84802A1B9EDB5400D1C230 /* CurrentUser.swift */; };
 		CB84802D1B9EE0DC00D1C230 /* FacebookHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB84802C1B9EE0DC00D1C230 /* FacebookHelper.swift */; };
 		CB9FF7C61B8F1401003A193B /* HTTPHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9FF7C51B8F1401003A193B /* HTTPHandler.swift */; };
@@ -227,7 +226,6 @@
 		CB50FD8D1B9708E40003C078 /* TextInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextInputCell.swift; sourceTree = "<group>"; };
 		CB6BC6251BA1B2ED001C303B /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		CB6BC6271BA1C05A001C303B /* QuestionListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionListViewController.swift; sourceTree = "<group>"; };
-		CB785FAF1BE23FF1001DA19E /* LoginProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginProvider.swift; sourceTree = "<group>"; };
 		CB84802A1B9EDB5400D1C230 /* CurrentUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentUser.swift; sourceTree = "<group>"; };
 		CB84802C1B9EE0DC00D1C230 /* FacebookHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookHelper.swift; sourceTree = "<group>"; };
 		CB9FF7C51B8F1401003A193B /* HTTPHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPHandler.swift; sourceTree = "<group>"; };
@@ -375,7 +373,6 @@
 			isa = PBXGroup;
 			children = (
 				CBB4D7DC1BA1A887001C531D /* Paged.swift */,
-				CB785FAF1BE23FF1001DA19E /* LoginProvider.swift */,
 			);
 			name = Interfaces;
 			sourceTree = "<group>";
@@ -713,7 +710,6 @@
 				CBB4D7DB1BA1A664001C531D /* QuestionViewController.swift in Sources */,
 				CBB60B2F1B9718EC0007A47B /* CreateRoomViewController.swift in Sources */,
 				CB84802B1B9EDB5400D1C230 /* CurrentUser.swift in Sources */,
-				CB785FB01BE23FF1001DA19E /* LoginProvider.swift in Sources */,
 				CB50FD8E1B9708E40003C078 /* TextInputCell.swift in Sources */,
 				CBF19CD81BAFFBA700A906B3 /* CreateQuestionViewController.swift in Sources */,
 				CB9FF7C61B8F1401003A193B /* HTTPHandler.swift in Sources */,

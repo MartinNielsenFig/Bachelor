@@ -8,6 +8,7 @@
 
 import UIKit
 
+/// Displays a label and takes text input.
 class TextInputCell: UITableViewCell {
     
     @IBOutlet weak var label: UILabel!

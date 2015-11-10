@@ -166,6 +166,7 @@ class CreateRoomViewController: UITableViewController {
      */
     func addRoomButtonPressed(button: UIBarButtonItem) {
         
+        //Check user inputs
         if let name = roomNameInputCell?.inputField.text, secret = roomSecretInputCell?.inputField.text where name == "" || secret == "" {
             var msg = ""
             if name == "" {
@@ -188,7 +189,7 @@ class CreateRoomViewController: UITableViewController {
         
         room.Name = roomNameInputCell?.inputField.text
         room.AllowAnonymous = anonymousInputCell?.uiSwitch.on ?? onDefault
-        room.CreatedById = CurrentUser.sharedInstance._id
+        room.CreatedById = CurrentUser.sharedInstance._id!
         room.HasChat = chatInputCell?.uiSwitch.on ?? onDefault
         room.HasPassword = pwSwitchCell?.uiSwitch.on ?? onDefault
         room.UseLocation = roomUsesLocationInputCell?.uiSwitch.on ?? onDefault
@@ -197,7 +198,7 @@ class CreateRoomViewController: UITableViewController {
         room.Location.AccuracyMeters = CurrentUser.sharedInstance.location.AccuracyMeters ?? 20
         
         let seg = radiusInputCell?.segment
-        let metersStr = seg?.titleForSegmentAtIndex((seg?.selectedSegmentIndex)!)
+        let metersStr = seg?.titleForSegmentAtIndex(seg!.selectedSegmentIndex)
         if metersStr != nil {
             let meters = StringExtractor.highestNumberInString(metersStr!)
             room.Radius = meters
@@ -215,12 +216,12 @@ class CreateRoomViewController: UITableViewController {
             if notification.ErrorType == .Ok || notification.ErrorType == .OkWithError {
                 
                 if let data = notification.Data {
-                    self.room._id = data.stringByReplacingOccurrencesOfString(";", withString: "")
+                    self.room._id = data
                     dispatch_async(dispatch_get_main_queue()) {
                         self.performSegueWithIdentifier("RoomCreated", sender: self)
                     }
                 } else {
-                    print("did not receive ID from the room created")
+                    print("did not receive ID for the created room")
                 }
                 
             } else if notification.Errors.contains(ErrorCode.RoomSecretAlreadyInUse) {
@@ -234,6 +235,7 @@ class CreateRoomViewController: UITableViewController {
                     self.presentViewController(alert, animated: true, completion: nil)
                 }
             } else {
+                print("error in creating room")
                 print(notification.Errors)
             }
         }

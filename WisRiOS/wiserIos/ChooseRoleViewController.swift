@@ -21,6 +21,34 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
     var rooms = [Room]()
     var firstTimeRoomsLoaded = true
     
+    let locationManager = CLLocationManager()
+    var bestAccuracy = Double.init(Int.max)
+    var maxPositionUpdatesThisSession = Int()
+
+    
+    //MARK: Lifecycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        //Setup location
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.distanceFilter = 0
+        locationManager.startUpdatingLocation()
+        
+        //Map delegation for pin behaviour
+        mapView.delegate = self
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        locationManager.startUpdatingLocation()
+        maxPositionUpdatesThisSession = 10
+        addLoginLogoutButtons()
+        super.viewDidAppear(animated)
+    }
+    
     //Actions
     /**
     Navigates to CreateRoom if logged in. Else navigate to Login screen.
@@ -72,29 +100,6 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
         self.presentViewController(alert, animated: true, completion: nil)
     }
     
-    //MARK: Lifecycle
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        //Setup location
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.distanceFilter = 0
-        locationManager.startUpdatingLocation()
-        
-        //Map delegation for pin behaviour
-        mapView.delegate = self
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        locationManager.startUpdatingLocation()
-        maxPositionUpdatesThisSession = 10
-        addLoginLogoutButtons()
-        super.viewDidAppear(animated)
-    }
-    
     func loadRoomsBasedOnLocation() {
         //Show nearby rooms
         HttpHandler.requestWithResponse(action: "Room/GetAll", type: "GET", body: "") {
@@ -143,6 +148,7 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
                     }
                 }
             } else {
+                print("error in getting rooms")
                 print(notification.Errors)
             }
         }
@@ -180,10 +186,6 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
     }
     
     //MARK: CLLocationManagerDelegate
-    
-    let locationManager = CLLocationManager()
-    var bestAccuracy = Double.init(Int.max)
-    var maxPositionUpdatesThisSession = Int()
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = manager.location {
@@ -247,7 +249,7 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
             loginRoomViewController.previousViewController = self
         }
         else if segue.identifier == "JoinRoom" {
-            let roomTableViewController = segue.destinationViewController as! RoomTableViewController
+            //let roomTableViewController = segue.destinationViewController as! RoomTableViewController
             //no need for initilizing
         }
     }
