@@ -266,10 +266,8 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         if msg.ByUserId == CurrentUser.sharedInstance._id! {
             cell.backgroundColor = UIColor(red: 35/255, green: 213/255, blue: 22/255, alpha: 1)
-            cell.textLabel?.textAlignment = .Right
         } else {
             cell.backgroundColor = UIColor(red: 25/255, green: 140/255, blue: 240/255, alpha: 1)
-            cell.textLabel?.textAlignment = .Left
         }
         
         return cell
