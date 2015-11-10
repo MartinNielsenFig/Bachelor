@@ -441,8 +441,16 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
         ///Make get request for json object conversion
         $http.post('/Room/toJsonQuestion', { CreatedBy: $window.userId, CreatedByUserName: $scope.anonymousUser ? null : $scope.currentUser.DisplayName, RoomId: MyRoomIdFromViewBag, Image: image, QuestionText: $scope.QuestionText, ResponseOptions: newResponses, ExpireTimestamp: $scope.ExpirationTime, QuetionsType: $scope.QuestionType }).
             then(function (response) {
+                if (response.data.ErrorType != 0) {
+                    //TODO better error handling?
+                    alert($scope.GetErrorOutput(response.data.Errors));
+                }
                 ///Use response to send to REST API
-                $http.post(configs.restHostName + '/Question/CreateQuestion', { question: JSON.stringify(response.data.Data), type: $scope.QuestionType }).then(null, $scope.onErrorAlert);
+                $http.post(configs.restHostName + '/Question/CreateQuestion', { question: response.data.Data, type: $scope.QuestionType }).then(null, $scope.onErrorAlert);
+                if (response.data.ErrorType != 0) {
+                    //TODO better error handling?
+                    alert($scope.GetErrorOutput(response.data.Errors));
+                }
                 //Check if this function call is an update or a create
                 if ($scope.UpdateQuestionBool) {
                     //Delete the old question
@@ -918,9 +926,13 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
                         return;
                     }
                     ///Use response to send to REST API
-                    $http.post(configs.restHostName + '/User/UpdateUser', { User: JSON.stringify(response.data.Data), Id: $scope.currentUser._id }).
+                    $http.post(configs.restHostName + '/User/UpdateUser', { User: response.data.Data, Id: $scope.currentUser._id }).
                         then(function (response) {
-
+                            if (response.data.ErrorType != 0) {
+                                //TODO better error handling?
+                                alert($scope.GetErrorOutput(response.data.Errors));
+                                return;
+                            }
                         });
                 }, $scope.onErrorAlert);
             }

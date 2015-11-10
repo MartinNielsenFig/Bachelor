@@ -107,6 +107,10 @@
                                             email: '@email' != "" ? '@email' : null,
                                             encryptedPassword: null,
                                         }).then(function(response) {
+                                            if (response.data.ErrorType != 0) {
+                                                alert($scope.GetErrorOutput(response.data.Errors));
+                                                return;
+                                            }
                                             //Use response to send to REST API
                                             $http.post(configs.restHostName + '/User/CreateUser', { User: response.data.Data }).
                                                 then(function(response) {
