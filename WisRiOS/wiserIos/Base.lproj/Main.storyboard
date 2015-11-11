@@ -138,23 +138,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="USk-jY-HdO" userLabel="OuterMainStack">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="420"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="USk-jY-HdO" userLabel="OuterMainStack">
+                                <rect key="frame" x="0.0" y="0.0" width="560" height="660"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Question text" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iGH-Ed-X4N">
-                                        <rect key="frame" x="230" y="190" width="140" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Question text" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iGH-Ed-X4N">
+                                        <rect key="frame" x="0.0" y="0.0" width="560" height="21"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Roh-CO-85Q" userLabel="InnerMainStack">
-                                        <rect key="frame" x="20" y="20" width="560" height="380"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Roh-CO-85Q" userLabel="InnerMainStack">
+                                        <rect key="frame" x="0.0" y="21" width="560" height="639"/>
                                         <subviews>
                                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3Km-db-wSI">
-                                                <rect key="frame" x="0.0" y="20" width="560" height="423"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="560" height="423"/>
                                                 <subviews>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OIc-BG-KSA" userLabel="Question Image">
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OIc-BG-KSA" userLabel="Question Image">
                                                         <animations/>
                                                         <variation key="heightClass=compact" ambiguous="YES">
                                                             <rect key="frame" x="0.0" y="0.0" width="0.0" height="0.0"/>
@@ -192,24 +192,24 @@
                                                     <outlet property="delegate" destination="ock-zx-gTK" id="jB0-nV-uvP"/>
                                                 </connections>
                                             </scrollView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="nAF-KY-9zs" userLabel="AnswerPicker&amp;Buttons">
-                                                <rect key="frame" x="0.0" y="443" width="560" height="117"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="nAF-KY-9zs" userLabel="AnswerPicker&amp;Buttons">
+                                                <rect key="frame" x="20" y="423" width="520" height="216"/>
                                                 <subviews>
-                                                    <pickerView contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KDW-Y0-aTM">
-                                                        <rect key="frame" x="0.0" y="0.0" width="280" height="117"/>
+                                                    <pickerView contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KDW-Y0-aTM">
+                                                        <rect key="frame" x="0.0" y="0.0" width="320" height="216"/>
                                                         <animations/>
                                                         <variation key="widthClass=regular" misplaced="YES">
                                                             <rect key="frame" x="0.0" y="0.0" width="380" height="117"/>
                                                         </variation>
                                                     </pickerView>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" alignment="center" spacing="-1" translatesAutoresizingMaskIntoConstraints="NO" id="3mO-eB-Cj7">
-                                                        <rect key="frame" x="280" y="8" width="280" height="102"/>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" axis="vertical" alignment="center" spacing="-1" translatesAutoresizingMaskIntoConstraints="NO" id="3mO-eB-Cj7">
+                                                        <rect key="frame" x="320" y="29" width="200" height="158"/>
                                                         <subviews>
-                                                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cso-9D-u05">
-                                                                <rect key="frame" x="96" y="0.0" width="88" height="44"/>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cso-9D-u05">
+                                                                <rect key="frame" x="0.0" y="0.0" width="200" height="100"/>
                                                                 <subviews>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S9p-q1-9ue" userLabel="Upvote Question">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
+                                                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S9p-q1-9ue" userLabel="Upvote Question">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                                                                         <animations/>
                                                                         <accessibility key="accessibilityConfiguration">
                                                                             <accessibilityTraits key="traits" button="YES" image="YES"/>
@@ -236,8 +236,8 @@
                                                                             <action selector="upvoteBtnPressed:" destination="ock-zx-gTK" eventType="touchUpInside" id="lkD-RR-7WY"/>
                                                                         </connections>
                                                                     </button>
-                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cfJ-dB-iui" userLabel="Downvote Question">
-                                                                        <rect key="frame" x="44" y="0.0" width="44" height="44"/>
+                                                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cfJ-dB-iui" userLabel="Downvote Question">
+                                                                        <rect key="frame" x="100" y="0.0" width="100" height="100"/>
                                                                         <animations/>
                                                                         <accessibility key="accessibilityConfiguration">
                                                                             <accessibilityTraits key="traits" button="YES" image="YES"/>
@@ -278,8 +278,8 @@
                                                                     </mask>
                                                                 </variation>
                                                             </stackView>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uV7-tu-bL6">
-                                                                <rect key="frame" x="100" y="43" width="81" height="30"/>
+                                                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uV7-tu-bL6">
+                                                                <rect key="frame" x="60" y="99" width="81" height="30"/>
                                                                 <animations/>
                                                                 <state key="normal" title="See Results"/>
                                                                 <variation key="heightClass=compact" ambiguous="YES" misplaced="YES">
@@ -289,8 +289,8 @@
                                                                     <segue destination="beQ-E0-jbN" kind="show" identifier="ShowResult" id="Vq6-kL-d2Z"/>
                                                                 </connections>
                                                             </button>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tGJ-Gn-5Xl">
-                                                                <rect key="frame" x="87" y="72" width="107" height="30"/>
+                                                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tGJ-Gn-5Xl">
+                                                                <rect key="frame" x="47" y="128" width="107" height="30"/>
                                                                 <animations/>
                                                                 <state key="normal" title="Send Response"/>
                                                                 <variation key="heightClass=compact" ambiguous="YES" misplaced="YES">
@@ -353,7 +353,7 @@
                                             </mask>
                                         </variation>
                                     </stackView>
-                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" misplaced="YES" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="1vg-7e-t9r">
+                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="1vg-7e-t9r">
                                         <rect key="frame" x="5" y="560" width="550" height="20"/>
                                         <animations/>
                                         <constraints>
@@ -415,18 +415,18 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="mFs-mJ-cVe"/>
                                 <exclude reference="1fy-7k-1Yy"/>
                                 <exclude reference="7Gu-Ys-cAw"/>
                                 <exclude reference="Zem-ao-RVi"/>
+                                <exclude reference="mFs-mJ-cVe"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=compact">
                             <mask key="constraints">
-                                <include reference="mFs-mJ-cVe"/>
                                 <include reference="1fy-7k-1Yy"/>
                                 <include reference="7Gu-Ys-cAw"/>
                                 <include reference="Zem-ao-RVi"/>
+                                <include reference="mFs-mJ-cVe"/>
                             </mask>
                         </variation>
                     </view>
