@@ -10,6 +10,8 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Base64;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,14 +28,22 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.example.tomas.wisrandroid.Helpers.ActivityLayoutHelper;
+import com.example.tomas.wisrandroid.Helpers.ErrorCodesDeserializer;
+import com.example.tomas.wisrandroid.Helpers.ErrorTypesDeserializer;
 import com.example.tomas.wisrandroid.Helpers.HttpHelper;
 import com.example.tomas.wisrandroid.Helpers.CustomRoomAdapter;
 import com.example.tomas.wisrandroid.Model.Coordinate;
+import com.example.tomas.wisrandroid.Model.ErrorCodes;
+import com.example.tomas.wisrandroid.Model.ErrorTypes;
+import com.example.tomas.wisrandroid.Model.Notification;
 import com.example.tomas.wisrandroid.Model.Room;
 import com.example.tomas.wisrandroid.R;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.lang.reflect.Method;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,7 +51,7 @@ import java.util.Map;
 public class SelectRoomActivity extends AppCompatActivity {
 
     private final ArrayList<Room> mRoomList = new ArrayList();
-    private final Gson mGson = new Gson();
+    private Gson mGson;
     private ListView mListView;
     private Button mButton;
     private Coordinate mCurrentCoordinate = new Coordinate();
@@ -55,6 +65,11 @@ public class SelectRoomActivity extends AppCompatActivity {
 
         if(getSupportActionBar() != null)
             getSupportActionBar().hide();
+
+        GsonBuilder mGsonBuilder = new GsonBuilder();
+        mGsonBuilder.registerTypeAdapter(ErrorTypes.class,new ErrorTypesDeserializer());
+        mGsonBuilder.registerTypeAdapter(ErrorCodes.class,new ErrorCodesDeserializer());
+        mGson = mGsonBuilder.create();
 
         Bundle mTEmpBundle = getIntent().getBundleExtra("Bundle");
 
@@ -86,76 +101,93 @@ public class SelectRoomActivity extends AppCompatActivity {
                                 Toast.makeText(getApplicationContext(), "In Listener", Toast.LENGTH_LONG).show();
 
                                 try {
-                                    final Room mRoom = mGson.fromJson(response, Room.class);
-                                    if(mRoom.get_id() != null) {
-                                        if (mRoom.get_HasPassword()) {
-                                            final AlertDialog.Builder mPasswordAlertDialog = new AlertDialog.Builder(mContext);
-                                            final EditText input = new EditText(getApplicationContext());
-                                            input.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                                            input.setBackgroundColor(Color.WHITE);
-                                            input.setTextColor(Color.BLACK);
-                                            input.setHint("Enter room password");
-                                            input.setHintTextColor(Color.GRAY);
-                                            input.setPadding(50, 0, 0, 0);
-                                            mPasswordAlertDialog.setCancelable(false);
-                                            mPasswordAlertDialog.setTitle("Password");
-                                            mPasswordAlertDialog.setMessage("Please enter password");
-                                            mPasswordAlertDialog.setView(input);
-                                            mPasswordAlertDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialogInterface, int i) {
-                                                    String currentText = input.getText().toString();
-                                                    if (mRoom.get_EncryptedPassword() == currentText) {
-                                                        Gson mGson = new Gson();
-                                                        Bundle mBundle = new Bundle();
-                                                        mBundle.putString("Room", mGson.toJson(mRoom));
-                                                        Intent mIntent = new Intent(getApplicationContext(), RoomActivity.class);
-                                                        mIntent.putExtra("CurrentRoom", mBundle);
-                                                        startActivity(mIntent, mBundle);
-                                                    } else {
-                                                        final AlertDialog.Builder mWrongPasswordAlertDialog = new AlertDialog.Builder(mContext);
-                                                        mWrongPasswordAlertDialog.setCancelable(false);
-                                                        mWrongPasswordAlertDialog.setTitle("Wrong Password");
-                                                        mWrongPasswordAlertDialog.setMessage("Invalid password, please try again");
-                                                        mWrongPasswordAlertDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                                            @Override
-                                                            public void onClick(DialogInterface dialogInterface, int i) {
-                                                                dialogInterface.dismiss();
+
+                                    Notification mNotification = mGson.fromJson(response, Notification.class);
+
+                                    if(mNotification.get_ErrorType() == ErrorTypes.Ok ||mNotification.get_ErrorType() == ErrorTypes.Complicated) {
+                                        final Room mRoom = mGson.fromJson(mNotification.get_Data(), Room.class);
+                                        if (mRoom.get_id() != null) {
+                                            if (mRoom.get_HasPassword()) {
+                                                final AlertDialog.Builder mPasswordAlertDialog = new AlertDialog.Builder(mContext);
+                                                final EditText input = new EditText(getApplicationContext());
+                                                input.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                                                input.setBackgroundColor(Color.WHITE);
+                                                input.setTextColor(Color.BLACK);
+                                                input.setHint("Enter room password");
+                                                input.setHintTextColor(Color.GRAY);
+                                                input.setPadding(50, 0, 0, 0);
+                                                mPasswordAlertDialog.setCancelable(false);
+                                                mPasswordAlertDialog.setTitle("Password");
+                                                mPasswordAlertDialog.setMessage("Please enter password");
+                                                mPasswordAlertDialog.setView(input);
+                                                mPasswordAlertDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                                        String currentText = input.getText().toString();
+                                                        String password = "";
+                                                        MessageDigest md;
+                                                        try {
+                                                            md = MessageDigest.getInstance("SHA-512");
+                                                            md.update(currentText.getBytes());
+                                                            byte byteData[] = md.digest();
+
+                                                            StringBuffer hashCodeBuffer = new StringBuffer();
+                                                            for (int index = 0; index < byteData.length; index++) {
+                                                                hashCodeBuffer.append(Integer.toString((byteData[index] & 0xff) + 0x100, 16).substring(1));
                                                             }
-                                                        });
-                                                        mWrongPasswordAlertDialog.show();
+                                                            password = hashCodeBuffer.toString();
+                                                        }catch (NoSuchAlgorithmException e) {
+                                                            Log.w("PWCovErr", "Could not load MessageDigest: SHA-512");
+                                                        }
+                                                        if (mRoom.get_EncryptedPassword().equals(password)) {
+                                                            Bundle mBundle = new Bundle();
+                                                            mBundle.putString("Room", mGson.toJson(mRoom));
+                                                            Intent mIntent = new Intent(getApplicationContext(), RoomActivity.class);
+                                                            mIntent.putExtra("CurrentRoom", mBundle);
+                                                            startActivity(mIntent, mBundle);
+                                                        } else {
+                                                            final AlertDialog.Builder mWrongPasswordAlertDialog = new AlertDialog.Builder(mContext);
+                                                            mWrongPasswordAlertDialog.setCancelable(false);
+                                                            mWrongPasswordAlertDialog.setTitle("Wrong Password");
+                                                            mWrongPasswordAlertDialog.setMessage("Invalid password, please try again");
+                                                            mWrongPasswordAlertDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                                                                @Override
+                                                                public void onClick(DialogInterface dialogInterface, int i) {
+                                                                    dialogInterface.dismiss();
+                                                                }
+                                                            });
+                                                            mWrongPasswordAlertDialog.show();
+                                                        }
                                                     }
-                                                }
-                                            });
-                                            mPasswordAlertDialog.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+                                                });
+                                                mPasswordAlertDialog.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                                        dialogInterface.dismiss();
+                                                    }
+                                                });
+                                                mPasswordAlertDialog.show();
+                                            } else {
+                                                Bundle mBundle = new Bundle();
+                                                mBundle.putString("Room", mGson.toJson(mRoom));
+                                                Intent mIntent = new Intent(getApplicationContext(), RoomActivity.class);
+                                                mIntent.putExtra("CurrentRoom", mBundle);
+                                                startActivity(mIntent, mBundle);
+                                            }
+                                        } else {
+                                            final AlertDialog.Builder mNoRoomFoundAlertDialog = new AlertDialog.Builder(mContext);
+                                            mNoRoomFoundAlertDialog.setCancelable(false);
+                                            mNoRoomFoundAlertDialog.setTitle("No room found!");
+                                            mNoRoomFoundAlertDialog.setMessage("No room with the entered secret were found");
+                                            mNoRoomFoundAlertDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialogInterface, int i) {
                                                     dialogInterface.dismiss();
                                                 }
                                             });
-                                            mPasswordAlertDialog.show();
-                                        } else {
-                                            Gson mGson = new Gson();
-                                            Bundle mBundle = new Bundle();
-                                            mBundle.putString("Room", mGson.toJson(mRoom));
-                                            Intent mIntent = new Intent(getApplicationContext(), RoomActivity.class);
-                                            mIntent.putExtra("CurrentRoom", mBundle);
-                                            startActivity(mIntent, mBundle);
+                                            mNoRoomFoundAlertDialog.show();
                                         }
-                                    } else {
-                                        final AlertDialog.Builder mNoRoomFoundAlertDialog = new AlertDialog.Builder(mContext);
-                                        mNoRoomFoundAlertDialog.setCancelable(false);
-                                        mNoRoomFoundAlertDialog.setTitle("No room found!");
-                                        mNoRoomFoundAlertDialog.setMessage("No room with the entered secret were found");
-                                        mNoRoomFoundAlertDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialogInterface, int i) {
-                                                dialogInterface.dismiss();
-                                            }
-                                        });
-                                        mNoRoomFoundAlertDialog.show();
                                     }
-
                                 } catch (Exception e) {
 
                                 }
@@ -220,7 +252,23 @@ public class SelectRoomActivity extends AppCompatActivity {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             String currentText = input.getText().toString();
-                            if (mRoom.get_EncryptedPassword() == currentText) {
+                            String password = "";
+                            MessageDigest md;
+                            try {
+                                md = MessageDigest.getInstance("SHA-512");
+                                md.update(currentText.getBytes());
+                                byte byteData[] = md.digest();
+
+                                StringBuffer hashCodeBuffer = new StringBuffer();
+                                for (int index = 0; index < byteData.length; index++) {
+                                    hashCodeBuffer.append(Integer.toString((byteData[index] & 0xff) + 0x100, 16).substring(1));
+                                }
+                                password = hashCodeBuffer.toString();
+                            }catch (NoSuchAlgorithmException e) {
+                                Log.w("PWCovErr", "Could not load MessageDigest: SHA-512");
+                            }
+                            String password2 = mRoom.get_EncryptedPassword();
+                            if (mRoom.get_EncryptedPassword().equals(password)) {
                                 Gson mGson = new Gson();
                                 Bundle mBundle = new Bundle();
                                 mBundle.putString("Room", mGson.toJson(mRoom));
@@ -267,14 +315,17 @@ public class SelectRoomActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 Toast.makeText(getApplicationContext(), "In Listener", Toast.LENGTH_LONG).show();
 
-                Room[] mRooms = mGson.fromJson(response, Room[].class);
-                for(Room room : mRooms)
-                {
-                    if( distanceBetweenTwoCoordinatesMeters(mCurrentCoordinate.get_Latitude(),mCurrentCoordinate.get_Longitude(), room.get_Location().get_Latitude(), room.get_Location().get_Longitude()) < room.get_Radius())
-                        mRoomList.add(room);
+                Notification mNotification = mGson.fromJson(response,Notification.class);
+
+                if (mNotification.get_ErrorType() == ErrorTypes.Ok || mNotification.get_ErrorType() == ErrorTypes.Complicated) {
+                    Room[] mRooms = mGson.fromJson(mNotification.get_Data(), Room[].class);
+                    for (Room room : mRooms) {
+                        if (distanceBetweenTwoCoordinatesMeters(mCurrentCoordinate.get_Latitude(), mCurrentCoordinate.get_Longitude(), room.get_Location().get_Latitude(), room.get_Location().get_Longitude()) < room.get_Radius())
+                            mRoomList.add(room);
+                    }
+                    CustomRoomAdapter temp = (CustomRoomAdapter) mListView.getAdapter();
+                    temp.notifyDataSetChanged();
                 }
-                CustomRoomAdapter temp = (CustomRoomAdapter)mListView.getAdapter();
-                temp.notifyDataSetChanged();
             }
         };
 

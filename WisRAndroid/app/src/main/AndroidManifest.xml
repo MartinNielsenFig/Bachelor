@@ -55,7 +55,7 @@
         <activity
             android:name=".Activities.CreateQuestionActivity"
             android:label="@string/title_activity_create_question"
-            android:windowSoftInputMode="stateHidden|adjustResize">
+            android:windowSoftInputMode="adjustResize">
 
         </activity>
 

@@ -31,14 +31,21 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.example.tomas.wisrandroid.Helpers.ActivityLayoutHelper;
+import com.example.tomas.wisrandroid.Helpers.ErrorCodesDeserializer;
+import com.example.tomas.wisrandroid.Helpers.ErrorTypesDeserializer;
 import com.example.tomas.wisrandroid.Helpers.HttpHelper;
 import com.example.tomas.wisrandroid.Model.Coordinate;
+import com.example.tomas.wisrandroid.Model.ErrorCodes;
+import com.example.tomas.wisrandroid.Model.ErrorTypes;
+import com.example.tomas.wisrandroid.Model.Notification;
 import com.example.tomas.wisrandroid.Model.Room;
 import com.example.tomas.wisrandroid.R;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -48,7 +55,7 @@ import java.util.Map;
 
 public class CreateRoomActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
-    final Gson gson = new Gson();
+    private Gson gson;
 
     // Classes needed to handle the coordinates of the room
     private GoogleApiClient mGoogleApiClient;
@@ -85,6 +92,11 @@ public class CreateRoomActivity extends AppCompatActivity implements GoogleApiCl
         //ActivityLayoutHelper.HideLayout(getWindow(), getSupportActionBar());
         if(getSupportActionBar() != null)
             getSupportActionBar().hide();
+
+        GsonBuilder mGsonBuilder = new GsonBuilder();
+        mGsonBuilder.registerTypeAdapter(ErrorTypes.class,new ErrorTypesDeserializer());
+        mGsonBuilder.registerTypeAdapter(ErrorCodes.class,new ErrorCodesDeserializer());
+        gson = mGsonBuilder.create();
 
         buildGoogleApiClient();
         mGoogleApiClient.connect();
@@ -150,6 +162,7 @@ public class CreateRoomActivity extends AppCompatActivity implements GoogleApiCl
                     }
                     mThirdRadiusToggleButton.setChecked(true);
                 }
+
             }
         });
 
@@ -201,22 +214,23 @@ public class CreateRoomActivity extends AppCompatActivity implements GoogleApiCl
 
                 mParams.put("Room", json);
 
-                //final TextView mErr = (TextView) findViewById(R.id.errortext);
-                //final TextView mResp = (TextView) findViewById(R.id.responsetext);
-
                 Response.Listener<String> mListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         Toast.makeText(getApplicationContext(), "In Listener", Toast.LENGTH_LONG).show();
-                        mRoom.set_id(response);
-                        //mResp.setText(response);
 
-                        Gson mGson = new Gson();
-                        Bundle mBundle = new Bundle();
-                        mBundle.putString("Room", mGson.toJson(mRoom));
-                        Intent mIntent = new Intent(getApplicationContext(), RoomActivity.class);
-                        mIntent.putExtra("CurrentRoom", mBundle);
-                        startActivity(mIntent, mBundle);
+                        Notification mNotification = gson.fromJson(response, Notification.class);
+
+                        if (mNotification.get_ErrorType() == ErrorTypes.Ok || mNotification.get_ErrorType() == ErrorTypes.Complicated) {
+                            mRoom.set_id(mNotification.get_Data());
+                            //mResp.setText(response);
+
+                            Bundle mBundle = new Bundle();
+                            mBundle.putString("Room", gson.toJson(mRoom));
+                            Intent mIntent = new Intent(getApplicationContext(), RoomActivity.class);
+                            mIntent.putExtra("CurrentRoom", mBundle);
+                            startActivity(mIntent, mBundle);
+                        } else {Toast.makeText(getApplicationContext(), ErrorTypes.Error.toString(), Toast.LENGTH_LONG).show();}
                     }
                 };
 
@@ -224,7 +238,6 @@ public class CreateRoomActivity extends AppCompatActivity implements GoogleApiCl
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
                         Toast.makeText(getApplicationContext(),"In ErrorListener" + volleyError.getMessage(),Toast.LENGTH_LONG).show();
-                        //mErr.setText(volleyError.getMessage());
                     }
                 };
 
@@ -285,7 +298,12 @@ public class CreateRoomActivity extends AppCompatActivity implements GoogleApiCl
 
     @Override
     public void onConnected(Bundle bundle) {
-        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, LocationRequest.create().setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY), new com.google.android.gms.location.LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                mLastLocation = location;
+            }
+        });
     }
 
     @Override
