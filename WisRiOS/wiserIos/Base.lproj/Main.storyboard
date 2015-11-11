@@ -168,10 +168,24 @@
                                                     <constraint firstAttribute="trailing" secondItem="OIc-BG-KSA" secondAttribute="trailing" id="GXi-Kk-j75"/>
                                                     <constraint firstAttribute="bottom" secondItem="OIc-BG-KSA" secondAttribute="bottom" id="KRe-hM-AU7"/>
                                                     <constraint firstItem="OIc-BG-KSA" firstAttribute="top" secondItem="3Km-db-wSI" secondAttribute="top" id="eCf-M8-PLJ"/>
+                                                    <constraint firstAttribute="bottom" secondItem="OIc-BG-KSA" secondAttribute="bottom" id="krb-jR-0qS"/>
+                                                    <constraint firstAttribute="trailing" secondItem="OIc-BG-KSA" secondAttribute="trailing" id="lDO-Y2-ENd"/>
                                                     <constraint firstItem="OIc-BG-KSA" firstAttribute="leading" secondItem="3Km-db-wSI" secondAttribute="leading" id="uck-lo-p2T"/>
                                                 </constraints>
-                                                <variation key="heightClass=compact" ambiguous="YES">
-                                                    <rect key="frame" x="0.0" y="0.0" width="350" height="380"/>
+                                                <variation key="default">
+                                                    <mask key="constraints">
+                                                        <exclude reference="krb-jR-0qS"/>
+                                                        <exclude reference="lDO-Y2-ENd"/>
+                                                    </mask>
+                                                </variation>
+                                                <variation key="heightClass=compact" ambiguous="YES" misplaced="YES">
+                                                    <rect key="frame" x="0.0" y="155" width="375" height="50"/>
+                                                    <mask key="constraints">
+                                                        <exclude reference="GXi-Kk-j75"/>
+                                                        <include reference="krb-jR-0qS"/>
+                                                        <include reference="lDO-Y2-ENd"/>
+                                                        <exclude reference="uck-lo-p2T"/>
+                                                    </mask>
                                                 </variation>
                                                 <variation key="widthClass=regular" ambiguous="YES" misplaced="YES">
                                                     <rect key="frame" x="0.0" y="0.0" width="760" height="423"/>
@@ -186,6 +200,9 @@
                                                     <pickerView contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KDW-Y0-aTM">
                                                         <rect key="frame" x="0.0" y="0.0" width="300" height="210"/>
                                                         <animations/>
+                                                        <variation key="heightClass=compact" misplaced="YES">
+                                                            <rect key="frame" x="0.0" y="0.0" width="225" height="206"/>
+                                                        </variation>
                                                         <variation key="widthClass=regular" ambiguous="YES">
                                                             <rect key="frame" x="0.0" y="0.0" width="320" height="216"/>
                                                         </variation>
@@ -236,8 +253,8 @@
                                                                 <rect key="frame" x="110" y="43" width="81" height="30"/>
                                                                 <animations/>
                                                                 <state key="normal" title="See Results"/>
-                                                                <variation key="heightClass=compact" ambiguous="YES">
-                                                                    <rect key="frame" x="13" y="43" width="81" height="118"/>
+                                                                <variation key="heightClass=compact" ambiguous="YES" misplaced="YES">
+                                                                    <rect key="frame" x="72" y="43" width="81" height="82"/>
                                                                 </variation>
                                                                 <variation key="widthClass=regular" ambiguous="YES">
                                                                     <rect key="frame" x="60" y="99" width="81" height="30"/>
@@ -250,8 +267,8 @@
                                                                 <rect key="frame" x="97" y="72" width="107" height="30"/>
                                                                 <animations/>
                                                                 <state key="normal" title="Send Response"/>
-                                                                <variation key="heightClass=compact" ambiguous="YES">
-                                                                    <rect key="frame" x="0.0" y="160" width="107" height="30"/>
+                                                                <variation key="heightClass=compact" ambiguous="YES" misplaced="YES">
+                                                                    <rect key="frame" x="59" y="124" width="107" height="30"/>
                                                                 </variation>
                                                                 <variation key="widthClass=regular" ambiguous="YES">
                                                                     <rect key="frame" x="47" y="128" width="107" height="30"/>
@@ -262,6 +279,9 @@
                                                             </button>
                                                         </subviews>
                                                         <animations/>
+                                                        <variation key="heightClass=compact" misplaced="YES">
+                                                            <rect key="frame" x="0.0" y="206" width="225" height="154"/>
+                                                        </variation>
                                                         <variation key="widthClass=regular" ambiguous="YES">
                                                             <rect key="frame" x="320" y="29" width="200" height="158"/>
                                                         </variation>
@@ -270,8 +290,19 @@
                                                 <animations/>
                                                 <constraints>
                                                     <constraint firstItem="3mO-eB-Cj7" firstAttribute="width" secondItem="KDW-Y0-aTM" secondAttribute="width" id="wKB-Fk-5TS"/>
+                                                    <constraint firstItem="KDW-Y0-aTM" firstAttribute="height" secondItem="3mO-eB-Cj7" secondAttribute="height" multiplier="4:3" id="zbW-GO-5tB"/>
                                                 </constraints>
-                                                <variation key="heightClass=compact" axis="vertical"/>
+                                                <variation key="default">
+                                                    <mask key="constraints">
+                                                        <exclude reference="zbW-GO-5tB"/>
+                                                    </mask>
+                                                </variation>
+                                                <variation key="heightClass=compact" axis="vertical" misplaced="YES">
+                                                    <rect key="frame" x="375" y="0.0" width="225" height="360"/>
+                                                    <mask key="constraints">
+                                                        <include reference="zbW-GO-5tB"/>
+                                                    </mask>
+                                                </variation>
                                                 <variation key="widthClass=regular" ambiguous="YES" misplaced="YES">
                                                     <rect key="frame" x="120" y="423" width="520" height="216"/>
                                                 </variation>
@@ -280,11 +311,28 @@
                                         <animations/>
                                         <constraints>
                                             <constraint firstItem="nAF-KY-9zs" firstAttribute="leading" secondItem="Roh-CO-85Q" secondAttribute="leading" id="8SB-zX-IyH"/>
+                                            <constraint firstItem="3Km-db-wSI" firstAttribute="width" secondItem="nAF-KY-9zs" secondAttribute="width" multiplier="5:3" id="I7h-Pe-cxM"/>
                                             <constraint firstItem="3Km-db-wSI" firstAttribute="height" secondItem="nAF-KY-9zs" secondAttribute="height" multiplier="5:3" id="VTi-Tw-UDx"/>
                                             <constraint firstAttribute="trailing" secondItem="3Km-db-wSI" secondAttribute="trailing" id="XSi-ib-G3G"/>
                                             <constraint firstItem="3Km-db-wSI" firstAttribute="leading" secondItem="Roh-CO-85Q" secondAttribute="leading" id="rv9-0j-nmZ"/>
                                             <constraint firstAttribute="trailing" secondItem="nAF-KY-9zs" secondAttribute="trailing" id="yMR-xq-zaf"/>
                                         </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="I7h-Pe-cxM"/>
+                                            </mask>
+                                        </variation>
+                                        <variation key="heightClass=compact" axis="horizontal" misplaced="YES">
+                                            <rect key="frame" x="0.0" y="21" width="600" height="360"/>
+                                            <mask key="constraints">
+                                                <exclude reference="8SB-zX-IyH"/>
+                                                <exclude reference="yMR-xq-zaf"/>
+                                                <include reference="I7h-Pe-cxM"/>
+                                                <exclude reference="VTi-Tw-UDx"/>
+                                                <exclude reference="XSi-ib-G3G"/>
+                                                <exclude reference="rv9-0j-nmZ"/>
+                                            </mask>
+                                        </variation>
                                         <variation key="widthClass=regular" ambiguous="YES" misplaced="YES">
                                             <rect key="frame" x="0.0" y="21" width="760" height="639"/>
                                         </variation>
@@ -296,7 +344,10 @@
                                             <constraint firstAttribute="height" constant="20" id="nc6-AP-0bN"/>
                                         </constraints>
                                         <variation key="heightClass=compact" misplaced="YES">
-                                            <rect key="frame" x="280" y="400" width="0.0" height="0.0"/>
+                                            <rect key="frame" x="0.0" y="380" width="600" height="20"/>
+                                            <mask key="constraints">
+                                                <include reference="nc6-AP-0bN"/>
+                                            </mask>
                                         </variation>
                                         <variation key="widthClass=regular" ambiguous="YES" misplaced="YES">
                                             <rect key="frame" x="0.0" y="660" width="760" height="2"/>
@@ -304,12 +355,27 @@
                                     </progressView>
                                 </subviews>
                                 <animations/>
-                                <variation key="heightClass=compact" alignment="center"/>
+                                <constraints>
+                                    <constraint firstItem="1vg-7e-t9r" firstAttribute="leading" secondItem="USk-jY-HdO" secondAttribute="leading" id="dpB-Vz-bVM"/>
+                                    <constraint firstAttribute="trailing" secondItem="1vg-7e-t9r" secondAttribute="trailing" id="zw1-wc-asN"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="dpB-Vz-bVM"/>
+                                        <exclude reference="zw1-wc-asN"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=compact" alignment="center">
+                                    <mask key="subviews">
+                                        <include reference="1vg-7e-t9r"/>
+                                    </mask>
+                                    <mask key="constraints">
+                                        <include reference="dpB-Vz-bVM"/>
+                                        <include reference="zw1-wc-asN"/>
+                                    </mask>
+                                </variation>
                                 <variation key="widthClass=regular" fixedFrame="YES">
                                     <rect key="frame" x="0.0" y="0.0" width="760" height="662"/>
-                                    <mask key="subviews">
-                                        <exclude reference="1vg-7e-t9r"/>
-                                    </mask>
                                 </variation>
                             </stackView>
                         </subviews>
@@ -644,9 +710,6 @@
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9qs-5N-3DG">
                                                             <rect key="frame" x="20" y="0.0" width="34" height="34"/>
                                                             <animations/>
-                                                            <variation key="heightClass=compact" misplaced="YES">
-                                                                <rect key="frame" x="20" y="0.0" width="34" height="34"/>
-                                                            </variation>
                                                         </imageView>
                                                     </subviews>
                                                     <animations/>
