@@ -178,7 +178,11 @@ class CreateRoomViewController: UITableViewController {
         }
         if CurrentUser.sharedInstance._id == nil {
             missingInformation = true
-            msg += NSLocalizedString("You must be logged in to add a room ", comment: "")
+            msg += NSLocalizedString("You must be logged in to add a room. ", comment: "")
+        }
+        if let usesLocation = roomUsesLocationInputCell?.uiSwitch where (CurrentUser.sharedInstance.location.Latitude == nil || CurrentUser.sharedInstance.location.Longitude == nil) && usesLocation.on {
+            missingInformation = true
+            msg += NSLocalizedString("Your room is location enabled, but the app couldn't get your position. ", comment: "")
         }
         
         if missingInformation == true {
@@ -228,9 +232,7 @@ class CreateRoomViewController: UITableViewController {
                 } else {
                     print("did not receive ID for the created room")
                 }
-                
             } else if notification.Errors.contains(ErrorCode.RoomSecretAlreadyInUse) {
-                
                 print("secret already in use")
                 let alert = UIAlertController(title: NSLocalizedString("Secret in use", comment: ""), message: NSLocalizedString("Secret is already in use, choose another.", comment: ""), preferredStyle: .Alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { action in

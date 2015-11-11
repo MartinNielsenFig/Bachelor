@@ -12,8 +12,8 @@ import JsonSerializerSwift
 /// Handles the Http-Calls from the client to the RestAPI
 class HttpHandler {
     
-    //static let mainUrl = "http://192.168.198.166:1337/"
-    static let mainUrl = "http://wisrrestapi.azurewebsites.net/"
+    static let mainUrl = "http://192.168.198.169:1337/"
+    //static let mainUrl = "http://wisrrestapi.azurewebsites.net/"
     //static let mainUrl = "http://wisrrestapi.aceipse.dk/"
     
     static func log(data data: NSData?, response: NSURLResponse?, error: NSError?) {
