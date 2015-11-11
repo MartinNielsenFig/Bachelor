@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="yxR-EF-Thn">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
@@ -138,23 +137,26 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="USk-jY-HdO" userLabel="OuterMainStack">
-                                <rect key="frame" x="0.0" y="0.0" width="560" height="660"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="USk-jY-HdO" userLabel="OuterMainStack">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Question text" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iGH-Ed-X4N">
-                                        <rect key="frame" x="0.0" y="0.0" width="560" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Question text" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iGH-Ed-X4N">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="21"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
+                                        <variation key="widthClass=regular" ambiguous="YES" misplaced="YES">
+                                            <rect key="frame" x="0.0" y="0.0" width="760" height="21"/>
+                                        </variation>
                                     </label>
-                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Roh-CO-85Q" userLabel="InnerMainStack">
-                                        <rect key="frame" x="0.0" y="21" width="560" height="639"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Roh-CO-85Q" userLabel="InnerMainStack">
+                                        <rect key="frame" x="0.0" y="21" width="600" height="560"/>
                                         <subviews>
                                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3Km-db-wSI">
-                                                <rect key="frame" x="0.0" y="0.0" width="560" height="423"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="600" height="350"/>
                                                 <subviews>
-                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OIc-BG-KSA" userLabel="Question Image">
+                                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OIc-BG-KSA" userLabel="Question Image">
                                                         <animations/>
                                                         <variation key="heightClass=compact" ambiguous="YES">
                                                             <rect key="frame" x="0.0" y="0.0" width="0.0" height="0.0"/>
@@ -163,138 +165,96 @@
                                                 </subviews>
                                                 <animations/>
                                                 <constraints>
-                                                    <constraint firstAttribute="bottom" secondItem="OIc-BG-KSA" secondAttribute="bottom" id="PAV-qm-nwH"/>
-                                                    <constraint firstItem="OIc-BG-KSA" firstAttribute="leading" secondItem="3Km-db-wSI" secondAttribute="leading" id="hpZ-97-Rgk"/>
-                                                    <constraint firstItem="OIc-BG-KSA" firstAttribute="top" secondItem="3Km-db-wSI" secondAttribute="top" id="mmU-qv-gW4"/>
-                                                    <constraint firstAttribute="trailing" secondItem="OIc-BG-KSA" secondAttribute="trailing" id="rKk-p2-BoV"/>
+                                                    <constraint firstAttribute="trailing" secondItem="OIc-BG-KSA" secondAttribute="trailing" id="GXi-Kk-j75"/>
+                                                    <constraint firstAttribute="bottom" secondItem="OIc-BG-KSA" secondAttribute="bottom" id="KRe-hM-AU7"/>
+                                                    <constraint firstItem="OIc-BG-KSA" firstAttribute="top" secondItem="3Km-db-wSI" secondAttribute="top" id="eCf-M8-PLJ"/>
+                                                    <constraint firstItem="OIc-BG-KSA" firstAttribute="leading" secondItem="3Km-db-wSI" secondAttribute="leading" id="uck-lo-p2T"/>
                                                 </constraints>
-                                                <variation key="default">
-                                                    <mask key="constraints">
-                                                        <exclude reference="PAV-qm-nwH"/>
-                                                        <exclude reference="hpZ-97-Rgk"/>
-                                                        <exclude reference="mmU-qv-gW4"/>
-                                                        <exclude reference="rKk-p2-BoV"/>
-                                                    </mask>
-                                                </variation>
                                                 <variation key="heightClass=compact" ambiguous="YES">
                                                     <rect key="frame" x="0.0" y="0.0" width="350" height="380"/>
-                                                    <mask key="constraints">
-                                                        <include reference="PAV-qm-nwH"/>
-                                                        <include reference="hpZ-97-Rgk"/>
-                                                        <include reference="mmU-qv-gW4"/>
-                                                        <include reference="rKk-p2-BoV"/>
-                                                    </mask>
                                                 </variation>
                                                 <variation key="widthClass=regular" ambiguous="YES" misplaced="YES">
-                                                    <rect key="frame" x="0.0" y="21" width="760" height="423"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="760" height="423"/>
                                                 </variation>
                                                 <connections>
                                                     <outlet property="delegate" destination="ock-zx-gTK" id="jB0-nV-uvP"/>
                                                 </connections>
                                             </scrollView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="nAF-KY-9zs" userLabel="AnswerPicker&amp;Buttons">
-                                                <rect key="frame" x="20" y="423" width="520" height="216"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="nAF-KY-9zs" userLabel="AnswerPicker&amp;Buttons">
+                                                <rect key="frame" x="0.0" y="350" width="600" height="210"/>
                                                 <subviews>
-                                                    <pickerView contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KDW-Y0-aTM">
-                                                        <rect key="frame" x="0.0" y="0.0" width="320" height="216"/>
+                                                    <pickerView contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KDW-Y0-aTM">
+                                                        <rect key="frame" x="0.0" y="0.0" width="300" height="210"/>
                                                         <animations/>
-                                                        <variation key="widthClass=regular" misplaced="YES">
-                                                            <rect key="frame" x="0.0" y="0.0" width="380" height="117"/>
+                                                        <variation key="widthClass=regular" ambiguous="YES">
+                                                            <rect key="frame" x="0.0" y="0.0" width="320" height="216"/>
                                                         </variation>
                                                     </pickerView>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" axis="vertical" alignment="center" spacing="-1" translatesAutoresizingMaskIntoConstraints="NO" id="3mO-eB-Cj7">
-                                                        <rect key="frame" x="320" y="29" width="200" height="158"/>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" alignment="center" spacing="-1" translatesAutoresizingMaskIntoConstraints="NO" id="3mO-eB-Cj7">
+                                                        <rect key="frame" x="300" y="54" width="300" height="102"/>
                                                         <subviews>
-                                                            <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cso-9D-u05">
-                                                                <rect key="frame" x="0.0" y="0.0" width="200" height="100"/>
+                                                            <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cso-9D-u05">
+                                                                <rect key="frame" x="106" y="0.0" width="88" height="44"/>
                                                                 <subviews>
-                                                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S9p-q1-9ue" userLabel="Upvote Question">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S9p-q1-9ue" userLabel="Upvote Question">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
                                                                         <animations/>
                                                                         <accessibility key="accessibilityConfiguration">
                                                                             <accessibilityTraits key="traits" button="YES" image="YES"/>
                                                                         </accessibility>
                                                                         <constraints>
-                                                                            <constraint firstAttribute="width" constant="44" id="9Zw-hp-Jwb"/>
-                                                                            <constraint firstAttribute="width" secondItem="S9p-q1-9ue" secondAttribute="height" multiplier="1:1" id="aal-d4-qsL"/>
+                                                                            <constraint firstAttribute="width" constant="44" id="F9U-CE-SQJ"/>
+                                                                            <constraint firstAttribute="height" constant="44" id="GZH-iZ-iCu"/>
                                                                         </constraints>
                                                                         <state key="normal" image="ThumbsUp"/>
-                                                                        <variation key="default">
-                                                                            <mask key="constraints">
-                                                                                <exclude reference="9Zw-hp-Jwb"/>
-                                                                                <exclude reference="aal-d4-qsL"/>
-                                                                            </mask>
-                                                                        </variation>
-                                                                        <variation key="heightClass=compact" misplaced="YES">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
-                                                                            <mask key="constraints">
-                                                                                <include reference="9Zw-hp-Jwb"/>
-                                                                                <include reference="aal-d4-qsL"/>
-                                                                            </mask>
-                                                                        </variation>
                                                                         <connections>
                                                                             <action selector="upvoteBtnPressed:" destination="ock-zx-gTK" eventType="touchUpInside" id="lkD-RR-7WY"/>
                                                                         </connections>
                                                                     </button>
-                                                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cfJ-dB-iui" userLabel="Downvote Question">
-                                                                        <rect key="frame" x="100" y="0.0" width="100" height="100"/>
+                                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cfJ-dB-iui" userLabel="Downvote Question">
+                                                                        <rect key="frame" x="44" y="0.0" width="44" height="44"/>
                                                                         <animations/>
                                                                         <accessibility key="accessibilityConfiguration">
                                                                             <accessibilityTraits key="traits" button="YES" image="YES"/>
                                                                         </accessibility>
                                                                         <constraints>
-                                                                            <constraint firstAttribute="width" secondItem="cfJ-dB-iui" secondAttribute="height" multiplier="1:1" id="X5V-iA-kc0"/>
+                                                                            <constraint firstAttribute="width" constant="44" id="4NM-AD-K2w"/>
+                                                                            <constraint firstAttribute="height" constant="44" id="7J8-a6-Pzs"/>
                                                                         </constraints>
                                                                         <state key="normal" image="ThumbsDown"/>
-                                                                        <variation key="default">
-                                                                            <mask key="constraints">
-                                                                                <exclude reference="X5V-iA-kc0"/>
-                                                                            </mask>
-                                                                        </variation>
-                                                                        <variation key="heightClass=compact" misplaced="YES">
-                                                                            <rect key="frame" x="44" y="0.0" width="44" height="44"/>
-                                                                            <mask key="constraints">
-                                                                                <include reference="X5V-iA-kc0"/>
-                                                                            </mask>
-                                                                        </variation>
                                                                         <connections>
                                                                             <action selector="downvoteBtnPressed:" destination="ock-zx-gTK" eventType="touchUpInside" id="Cfj-8H-lIT"/>
                                                                         </connections>
                                                                     </button>
                                                                 </subviews>
                                                                 <animations/>
-                                                                <constraints>
-                                                                    <constraint firstItem="S9p-q1-9ue" firstAttribute="width" secondItem="cfJ-dB-iui" secondAttribute="width" id="bfG-fX-4y9"/>
-                                                                </constraints>
-                                                                <variation key="default">
-                                                                    <mask key="constraints">
-                                                                        <exclude reference="bfG-fX-4y9"/>
-                                                                    </mask>
-                                                                </variation>
-                                                                <variation key="heightClass=compact" misplaced="YES">
-                                                                    <rect key="frame" x="10" y="0.0" width="88" height="44"/>
-                                                                    <mask key="constraints">
-                                                                        <include reference="bfG-fX-4y9"/>
-                                                                    </mask>
+                                                                <variation key="widthClass=regular" ambiguous="YES">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="200" height="100"/>
                                                                 </variation>
                                                             </stackView>
-                                                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uV7-tu-bL6">
-                                                                <rect key="frame" x="60" y="99" width="81" height="30"/>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uV7-tu-bL6">
+                                                                <rect key="frame" x="110" y="43" width="81" height="30"/>
                                                                 <animations/>
                                                                 <state key="normal" title="See Results"/>
-                                                                <variation key="heightClass=compact" ambiguous="YES" misplaced="YES">
+                                                                <variation key="heightClass=compact" ambiguous="YES">
                                                                     <rect key="frame" x="13" y="43" width="81" height="118"/>
+                                                                </variation>
+                                                                <variation key="widthClass=regular" ambiguous="YES">
+                                                                    <rect key="frame" x="60" y="99" width="81" height="30"/>
                                                                 </variation>
                                                                 <connections>
                                                                     <segue destination="beQ-E0-jbN" kind="show" identifier="ShowResult" id="Vq6-kL-d2Z"/>
                                                                 </connections>
                                                             </button>
-                                                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tGJ-Gn-5Xl">
-                                                                <rect key="frame" x="47" y="128" width="107" height="30"/>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tGJ-Gn-5Xl">
+                                                                <rect key="frame" x="97" y="72" width="107" height="30"/>
                                                                 <animations/>
                                                                 <state key="normal" title="Send Response"/>
-                                                                <variation key="heightClass=compact" ambiguous="YES" misplaced="YES">
+                                                                <variation key="heightClass=compact" ambiguous="YES">
                                                                     <rect key="frame" x="0.0" y="160" width="107" height="30"/>
+                                                                </variation>
+                                                                <variation key="widthClass=regular" ambiguous="YES">
+                                                                    <rect key="frame" x="47" y="128" width="107" height="30"/>
                                                                 </variation>
                                                                 <connections>
                                                                     <action selector="sendResponse:" destination="ock-zx-gTK" eventType="touchUpInside" id="FDD-aN-YCr"/>
@@ -302,105 +262,53 @@
                                                             </button>
                                                         </subviews>
                                                         <animations/>
-                                                        <variation key="heightClass=compact" misplaced="YES">
-                                                            <rect key="frame" x="52" y="190" width="107" height="190"/>
-                                                        </variation>
-                                                        <variation key="widthClass=regular" misplaced="YES">
-                                                            <rect key="frame" x="380" y="8" width="380" height="102"/>
+                                                        <variation key="widthClass=regular" ambiguous="YES">
+                                                            <rect key="frame" x="320" y="29" width="200" height="158"/>
                                                         </variation>
                                                     </stackView>
                                                 </subviews>
                                                 <animations/>
                                                 <constraints>
-                                                    <constraint firstItem="KDW-Y0-aTM" firstAttribute="height" secondItem="3mO-eB-Cj7" secondAttribute="height" id="hDz-cR-tqL"/>
+                                                    <constraint firstItem="3mO-eB-Cj7" firstAttribute="width" secondItem="KDW-Y0-aTM" secondAttribute="width" id="wKB-Fk-5TS"/>
                                                 </constraints>
-                                                <variation key="default">
-                                                    <mask key="constraints">
-                                                        <exclude reference="hDz-cR-tqL"/>
-                                                    </mask>
-                                                </variation>
-                                                <variation key="heightClass=compact" axis="vertical">
-                                                    <mask key="constraints">
-                                                        <include reference="hDz-cR-tqL"/>
-                                                    </mask>
-                                                </variation>
-                                                <variation key="widthClass=regular" misplaced="YES">
-                                                    <rect key="frame" x="0.0" y="444" width="760" height="117"/>
+                                                <variation key="heightClass=compact" axis="vertical"/>
+                                                <variation key="widthClass=regular" ambiguous="YES" misplaced="YES">
+                                                    <rect key="frame" x="120" y="423" width="520" height="216"/>
                                                 </variation>
                                             </stackView>
                                         </subviews>
                                         <animations/>
                                         <constraints>
-                                            <constraint firstItem="nAF-KY-9zs" firstAttribute="height" secondItem="Roh-CO-85Q" secondAttribute="height" id="ZXi-XB-p7I"/>
-                                            <constraint firstItem="nAF-KY-9zs" firstAttribute="leading" secondItem="3Km-db-wSI" secondAttribute="trailing" id="hqi-YN-Cxw"/>
-                                            <constraint firstItem="3Km-db-wSI" firstAttribute="height" secondItem="Roh-CO-85Q" secondAttribute="height" id="mPu-7C-MFf"/>
-                                            <constraint firstItem="3Km-db-wSI" firstAttribute="width" secondItem="nAF-KY-9zs" secondAttribute="width" multiplier="100:60" id="rED-fL-wlg"/>
+                                            <constraint firstItem="nAF-KY-9zs" firstAttribute="leading" secondItem="Roh-CO-85Q" secondAttribute="leading" id="8SB-zX-IyH"/>
+                                            <constraint firstItem="3Km-db-wSI" firstAttribute="height" secondItem="nAF-KY-9zs" secondAttribute="height" multiplier="5:3" id="VTi-Tw-UDx"/>
+                                            <constraint firstAttribute="trailing" secondItem="3Km-db-wSI" secondAttribute="trailing" id="XSi-ib-G3G"/>
+                                            <constraint firstItem="3Km-db-wSI" firstAttribute="leading" secondItem="Roh-CO-85Q" secondAttribute="leading" id="rv9-0j-nmZ"/>
+                                            <constraint firstAttribute="trailing" secondItem="nAF-KY-9zs" secondAttribute="trailing" id="yMR-xq-zaf"/>
                                         </constraints>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="mPu-7C-MFf"/>
-                                                <exclude reference="rED-fL-wlg"/>
-                                                <exclude reference="ZXi-XB-p7I"/>
-                                                <exclude reference="hqi-YN-Cxw"/>
-                                            </mask>
-                                        </variation>
-                                        <variation key="heightClass=compact" axis="horizontal">
-                                            <mask key="constraints">
-                                                <include reference="mPu-7C-MFf"/>
-                                                <include reference="rED-fL-wlg"/>
-                                                <include reference="ZXi-XB-p7I"/>
-                                                <include reference="hqi-YN-Cxw"/>
-                                            </mask>
+                                        <variation key="widthClass=regular" ambiguous="YES" misplaced="YES">
+                                            <rect key="frame" x="0.0" y="21" width="760" height="639"/>
                                         </variation>
                                     </stackView>
-                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="1vg-7e-t9r">
-                                        <rect key="frame" x="5" y="560" width="550" height="20"/>
+                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1vg-7e-t9r">
+                                        <rect key="frame" x="0.0" y="580" width="600" height="20"/>
                                         <animations/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="18" id="LOM-i6-czM"/>
-                                            <constraint firstAttribute="width" id="S7C-4g-9xF"/>
-                                            <constraint firstAttribute="height" id="q1J-yp-vju"/>
+                                            <constraint firstAttribute="height" constant="20" id="nc6-AP-0bN"/>
                                         </constraints>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="S7C-4g-9xF"/>
-                                                <exclude reference="q1J-yp-vju"/>
-                                            </mask>
-                                        </variation>
                                         <variation key="heightClass=compact" misplaced="YES">
                                             <rect key="frame" x="280" y="400" width="0.0" height="0.0"/>
-                                            <mask key="constraints">
-                                                <exclude reference="LOM-i6-czM"/>
-                                                <include reference="S7C-4g-9xF"/>
-                                                <include reference="q1J-yp-vju"/>
-                                            </mask>
                                         </variation>
-                                        <variation key="widthClass=regular" misplaced="YES">
-                                            <rect key="frame" x="5" y="560" width="750" height="20"/>
+                                        <variation key="widthClass=regular" ambiguous="YES" misplaced="YES">
+                                            <rect key="frame" x="0.0" y="660" width="760" height="2"/>
                                         </variation>
                                     </progressView>
                                 </subviews>
                                 <animations/>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="1vg-7e-t9r" secondAttribute="trailing" id="W7s-md-t9a"/>
-                                    <constraint firstItem="1vg-7e-t9r" firstAttribute="leading" secondItem="USk-jY-HdO" secondAttribute="leading" id="whl-Rj-ccG"/>
-                                </constraints>
-                                <variation key="default">
+                                <variation key="heightClass=compact" alignment="center"/>
+                                <variation key="widthClass=regular" fixedFrame="YES">
+                                    <rect key="frame" x="0.0" y="0.0" width="760" height="662"/>
                                     <mask key="subviews">
                                         <exclude reference="1vg-7e-t9r"/>
-                                    </mask>
-                                    <mask key="constraints">
-                                        <exclude reference="W7s-md-t9a"/>
-                                        <exclude reference="whl-Rj-ccG"/>
-                                    </mask>
-                                </variation>
-                                <variation key="heightClass=compact" alignment="center">
-                                    <mask key="subviews">
-                                        <include reference="1vg-7e-t9r"/>
-                                    </mask>
-                                    <mask key="constraints">
-                                        <include reference="W7s-md-t9a"/>
-                                        <include reference="whl-Rj-ccG"/>
                                     </mask>
                                 </variation>
                             </stackView>
@@ -408,27 +316,11 @@
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="USk-jY-HdO" firstAttribute="top" secondItem="Gl5-rZ-I7q" secondAttribute="topMargin" id="1fy-7k-1Yy"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="USk-jY-HdO" secondAttribute="trailing" id="7Gu-Ys-cAw"/>
-                            <constraint firstItem="USk-jY-HdO" firstAttribute="leading" secondItem="Gl5-rZ-I7q" secondAttribute="leadingMargin" id="Zem-ao-RVi"/>
-                            <constraint firstItem="EGY-Xl-mqb" firstAttribute="top" secondItem="USk-jY-HdO" secondAttribute="bottom" id="mFs-mJ-cVe"/>
+                            <constraint firstItem="EGY-Xl-mqb" firstAttribute="top" secondItem="USk-jY-HdO" secondAttribute="bottom" id="30Y-me-j0n"/>
+                            <constraint firstAttribute="trailing" secondItem="USk-jY-HdO" secondAttribute="trailing" id="BZz-Mz-EMW"/>
+                            <constraint firstItem="USk-jY-HdO" firstAttribute="top" secondItem="Gl5-rZ-I7q" secondAttribute="topMargin" id="TMA-rd-NGf"/>
+                            <constraint firstItem="USk-jY-HdO" firstAttribute="leading" secondItem="Gl5-rZ-I7q" secondAttribute="leading" id="jPm-x8-OX6"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="1fy-7k-1Yy"/>
-                                <exclude reference="7Gu-Ys-cAw"/>
-                                <exclude reference="Zem-ao-RVi"/>
-                                <exclude reference="mFs-mJ-cVe"/>
-                            </mask>
-                        </variation>
-                        <variation key="heightClass=compact">
-                            <mask key="constraints">
-                                <include reference="1fy-7k-1Yy"/>
-                                <include reference="7Gu-Ys-cAw"/>
-                                <include reference="Zem-ao-RVi"/>
-                                <include reference="mFs-mJ-cVe"/>
-                            </mask>
-                        </variation>
                     </view>
                     <connections>
                         <outlet property="answerPicker" destination="KDW-Y0-aTM" id="Me2-kK-pNK"/>
@@ -752,6 +644,9 @@
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9qs-5N-3DG">
                                                             <rect key="frame" x="20" y="0.0" width="34" height="34"/>
                                                             <animations/>
+                                                            <variation key="heightClass=compact" misplaced="YES">
+                                                                <rect key="frame" x="20" y="0.0" width="34" height="34"/>
+                                                            </variation>
                                                         </imageView>
                                                     </subviews>
                                                     <animations/>
