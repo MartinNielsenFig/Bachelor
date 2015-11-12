@@ -66,7 +66,7 @@ describe("English Test", function () {
             var room = { AllowAnonymous: false }
             scope.userId = 'NoUser';
             scope.changeViewToRoom(room);
-            expect(scope.Message).toBe('The room-secret you have entered requires you to login');
+            expect(scope.Message).toBe('The room requires you to be logged in');
         });
 
         it('should change location to ?RoomId=1', function () {
@@ -461,13 +461,12 @@ describe("English Test", function () {
             expect(window.location.href).toBe("/");
         });
 
-        it('should call /Room/GetById and rightPassword should be true', function () {
-            httpBackend.when('POST', 'http://localhost:1337/Room/GetById').respond({ Data: null, ErrorType: 0, Errors: [] });
+        it('should call /Room/GetById and rightPassword should be true', function() {
+            httpBackend.when('POST', 'http://localhost:1337/Room/GetById').respond({ Data: '{"AllowAnonymous": true, "HasPassword": false }', ErrorType: 0, Errors: [] });
             httpBackend.expectPOST("http://localhost:1337/Room/GetById");
 
-            scope.CurrentRoom = { AllowAnonymous: true };
-            scope.CurrentRoom = { HasPassword: false };
-
+            console.log("Right one!");
+           
             spyOn(scope, "getQuestions");
             spyOn(scope, "getChatMessages");
             spyOn(scope, "getAllUsers");
@@ -520,7 +519,7 @@ describe("English Test", function () {
         });
 
         it('should call /Room/GetById,User is not anonymous, and modalChanger should have been called', function () {
-            httpBackend.when('POST', 'http://localhost:1337/Room/GetById').respond({ HasPassword: true });
+            httpBackend.when('POST', 'http://localhost:1337/Room/GetById').respond({ Data: '{ "HasPassword": true }', ErrorType: 0, Errors: [] });
             httpBackend.expectPOST("http://localhost:1337/Room/GetById");
 
             spyOn(scope, "modalChanger");

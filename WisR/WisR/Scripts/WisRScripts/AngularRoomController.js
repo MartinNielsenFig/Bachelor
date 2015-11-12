@@ -770,7 +770,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
                     $scope.rightPassword = true;
                 }
             } else {
-                if ($scope.CurrentRoom.AllowAnonymous == false) {
+               if ($scope.CurrentRoom.AllowAnonymous == false) {
                     $window.location.href = "/";
                 }
                 else if ($scope.CurrentRoom.HasPassword) {
