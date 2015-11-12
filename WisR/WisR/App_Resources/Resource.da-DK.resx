@@ -274,7 +274,7 @@
     <value>Præcision: </value>
   </data>
   <data name="RoomSecretRequiresLogin" xml:space="preserve">
-    <value>Rummet med den hemmelighed, kræver at du logger ind</value>
+    <value>Rummet, kræver at du er logget ind</value>
   </data>
   <data name="ChoosePicture" xml:space="preserve">
     <value>Vælg billede</value>
