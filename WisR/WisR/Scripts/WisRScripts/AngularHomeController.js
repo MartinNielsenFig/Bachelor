@@ -519,7 +519,7 @@ app.controller("HomeController", [
             var elem = $(e.currentTarget);
             if (elem[0].scrollHeight - elem.scrollTop() == elem.outerHeight()) {
                 $scope.numberOfShownRooms += 10;
-                $scope.$apply();
+                $scope.$digest();
             }
         }
         /**
