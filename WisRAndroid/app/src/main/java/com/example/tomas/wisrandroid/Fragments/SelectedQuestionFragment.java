@@ -10,6 +10,7 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.ExifInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
@@ -36,21 +37,28 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.example.tomas.wisrandroid.Activities.RoomActivity;
+import com.example.tomas.wisrandroid.Helpers.ErrorCodesDeserializer;
+import com.example.tomas.wisrandroid.Helpers.ErrorTypesDeserializer;
 import com.example.tomas.wisrandroid.Helpers.HttpHelper;
 import com.example.tomas.wisrandroid.Model.Answer;
+import com.example.tomas.wisrandroid.Model.ErrorCodes;
+import com.example.tomas.wisrandroid.Model.ErrorTypes;
 import com.example.tomas.wisrandroid.Model.MultipleChoiceQuestion;
 import com.example.tomas.wisrandroid.Model.MyUser;
+import com.example.tomas.wisrandroid.Model.Notification;
 import com.example.tomas.wisrandroid.Model.Question;
 import com.example.tomas.wisrandroid.Model.ResponseOption;
 import com.example.tomas.wisrandroid.Model.TextualQuestion;
 import com.example.tomas.wisrandroid.Model.Vote;
 import com.example.tomas.wisrandroid.R;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -80,7 +88,7 @@ public class SelectedQuestionFragment extends Fragment {
     private NumberPicker mNumberPicker;
 
     // Gson
-    private final Gson gson = new Gson();
+    private Gson gson;
 
     public static SelectedQuestionFragment newInstance(int page, String title) {
         SelectedQuestionFragment mSelectedQuestionFragment = new SelectedQuestionFragment();
@@ -91,6 +99,11 @@ public class SelectedQuestionFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        GsonBuilder mGsonBuilder = new GsonBuilder();
+        mGsonBuilder.registerTypeAdapter(ErrorTypes.class,new ErrorTypesDeserializer());
+        mGsonBuilder.registerTypeAdapter(ErrorCodes.class,new ErrorCodesDeserializer());
+        gson = mGsonBuilder.create();
 
     }
 
@@ -192,7 +205,7 @@ public class SelectedQuestionFragment extends Fragment {
             mQuestionTextView.setText(mQuestion.get_QuestionText());
             for (Vote vote : mQuestion.get_Votes())
             {
-                if (vote.get_createdById() == MyUser.getMyuser().get_Id())
+                if (vote.get_createdById().equals(MyUser.getMyuser().get_Id()))
                 {
                     if(vote.get_value() == -1)
                     {
@@ -210,11 +223,13 @@ public class SelectedQuestionFragment extends Fragment {
             String[] responses = new String[mResponses.size()];
             responses =  mResponses.toArray(responses);
             mNumberPicker.setMinValue(0);
+            mNumberPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
             if(responses.length > 0)
             {
                 mNumberPicker.setMaxValue(responses.length-1);
                 mNumberPicker.setDisplayedValues(responses);
                 mNumberPicker.setEnabled(true);
+                mNumberPicker.setWrapSelectorWheel(false);
             }else
             {
                 String[] noResponse = new String[1];
@@ -222,6 +237,7 @@ public class SelectedQuestionFragment extends Fragment {
                 mNumberPicker.setMaxValue(0);
                 mNumberPicker.setDisplayedValues(noResponse);
                 mNumberPicker.setEnabled(false);
+                mNumberPicker.setWrapSelectorWheel(false);
             }
             GetPicture();
 
@@ -279,8 +295,12 @@ public class SelectedQuestionFragment extends Fragment {
 
     }
 
+
+
     private Bitmap DecodeImage(String Image)
     {
+        ByteArrayOutputStream mBaos = new ByteArrayOutputStream();
+
         // Getting width of the current display
         Display display = ((RoomActivity)getActivity()).getWindowManager().getDefaultDisplay();
         int width = display.getWidth();
@@ -292,35 +312,46 @@ public class SelectedQuestionFragment extends Fragment {
         BitmapFactory.decodeByteArray(bytesDecoded, 0, bytesDecoded.length, bitmapOptions);
 
         // Calculating scaling factor to compress the picture to desired size
-        if (bitmapOptions.outWidth > width) {
-            bitmapOptions.inSampleSize = (bitmapOptions.outWidth / width) + 2;
+        int inSampleSize = 1;
+        if (bitmapOptions.outWidth > 320 || bitmapOptions.outHeight > 240) {
+            final int inSampleWidth = bitmapOptions.outWidth;
+            final int inSampleHeight = bitmapOptions.outHeight;
+            while ((inSampleHeight / inSampleSize) > 240 && (inSampleWidth / inSampleSize) > 320)
+                inSampleSize *= 2;
         }
         bitmapOptions.inJustDecodeBounds = false;
         mPicture = BitmapFactory.decodeByteArray(bytesDecoded, 0, bytesDecoded.length,bitmapOptions);
 
-
-
+        mPicture.compress(Bitmap.CompressFormat.JPEG,100,mBaos);
         return mPicture;
     }
 
     private void SendResponse()
     {
         Map<String,String> mParams = new HashMap<String, String>();
-        final Answer mAnswer = new Answer(mNumberPicker.getDisplayedValues()[mNumberPicker.getValue()], MyUser.getMyuser().get_Id());
+        final Answer mAnswer = new Answer(mNumberPicker.getDisplayedValues()[mNumberPicker.getValue()], MyUser.getMyuser().get_Id(), MyUser.getMyuser().get_DisplayName());
         mParams.put("response",gson.toJson(mAnswer));
         mParams.put("questionId", mQuestion.get_Id());
 
         Response.Listener<String> mListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                int whatisvalue = mNumberPicker.getValue();
-                if (response.isEmpty())
+
+                Notification mNotification = gson.fromJson(response,Notification.class);
+
+                if ( mNotification.get_ErrorType() == ErrorTypes.Ok ||mNotification.get_ErrorType() == ErrorTypes.Complicated)
                 {
-                    //mQuestion.get_Result().add(mAnswer);
+                    mQuestion.get_Result().add(mAnswer);
+                } else {
+                    if (mNotification.get_Errors().contains(ErrorCodes.QuestionExpired))
+                        Toast.makeText(getContext(),"Question expired",Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(),"Failed to add your answer",Toast.LENGTH_LONG).show();
+                }
+
                     //EditText child = ((EditText) mNumberPicker.getChildAt(mNumberPicker.getValue()));
                     //child.setTextColor(Color.GREEN);
-                }
-                Toast.makeText(getContext(),response,Toast.LENGTH_LONG).show();
+
+
             }
         };
 
@@ -344,9 +375,10 @@ public class SelectedQuestionFragment extends Fragment {
     private void DownVote()
     {
         int entryFound = -1;
+        mDownVoteButton.setEnabled(false);
         for (Vote vote : mQuestion.get_Votes())
         {
-            if(vote.get_createdById() == MyUser.getMyuser().get_Id())
+            if(vote.get_createdById().equals(MyUser.getMyuser().get_Id()))
             {
                 entryFound = 1;
                 vote.set_value(-1);
@@ -360,9 +392,18 @@ public class SelectedQuestionFragment extends Fragment {
                 Response.Listener<String> mListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(getContext(),response,Toast.LENGTH_LONG).show();
-                        mUpVoteButton.setEnabled(true);
-                        mDownVoteButton.setEnabled(false);
+                        Notification mNotification = gson.fromJson(response,Notification.class);
+
+                        if(mNotification.get_ErrorType() == ErrorTypes.Ok || mNotification.get_ErrorType() == ErrorTypes.Complicated)
+                        {
+                            mUpVoteButton.setEnabled(true);
+                            mDownVoteButton.setEnabled(false);
+                        }else{
+                            mDownVoteButton.setEnabled(true);
+                            Toast.makeText(getContext(),"Failed to DownVote your question",Toast.LENGTH_LONG).show();
+                        }
+
+
                     }
                 };
 
@@ -398,9 +439,16 @@ public class SelectedQuestionFragment extends Fragment {
             Response.Listener<String> mListener = new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
-                    Toast.makeText(getContext(),response,Toast.LENGTH_LONG).show();
-                    mUpVoteButton.setEnabled(true);
-                    mDownVoteButton.setEnabled(false);
+                    Notification mNotification = gson.fromJson(response,Notification.class);
+
+                    if(mNotification.get_ErrorType() == ErrorTypes.Ok || mNotification.get_ErrorType() == ErrorTypes.Complicated)
+                    {
+                        mUpVoteButton.setEnabled(true);
+                        mDownVoteButton.setEnabled(false);
+                    }else{
+                        mDownVoteButton.setEnabled(true);
+                        Toast.makeText(getContext(),"Failed to DownVote your question",Toast.LENGTH_LONG).show();
+                    }
                 }
             };
 
@@ -425,9 +473,10 @@ public class SelectedQuestionFragment extends Fragment {
     private void UpVote()
     {
         int entryFound = -1;
+        mUpVoteButton.setEnabled(false);
         for (Vote vote : mQuestion.get_Votes())
         {
-            if(vote.get_createdById() == MyUser.getMyuser().get_Id())
+            if(vote.get_createdById().equals(MyUser.getMyuser().get_Id()))
             {
                 entryFound = 1;
                 vote.set_value(1);
@@ -441,9 +490,16 @@ public class SelectedQuestionFragment extends Fragment {
                 Response.Listener<String> mListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(getContext(),response,Toast.LENGTH_LONG).show();
-                        mDownVoteButton.setEnabled(true);
-                        mUpVoteButton.setEnabled(false);
+                        Notification mNotification = gson.fromJson(response,Notification.class);
+
+                        if(mNotification.get_ErrorType() == ErrorTypes.Ok || mNotification.get_ErrorType() == ErrorTypes.Complicated)
+                        {
+                            mDownVoteButton.setEnabled(true);
+                            mUpVoteButton.setEnabled(false);
+                        }else{
+                            mUpVoteButton.setEnabled(true);
+                            Toast.makeText(getContext(),"Failed to UpVote your question",Toast.LENGTH_LONG).show();
+                        }
                     }
                 };
 
@@ -477,9 +533,16 @@ public class SelectedQuestionFragment extends Fragment {
             Response.Listener<String> mListener = new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
-                    Toast.makeText(getContext(),response,Toast.LENGTH_LONG).show();
-                    mDownVoteButton.setEnabled(true);
-                    mUpVoteButton.setEnabled(false);
+                    Notification mNotification = gson.fromJson(response,Notification.class);
+
+                    if(mNotification.get_ErrorType() == ErrorTypes.Ok || mNotification.get_ErrorType() == ErrorTypes.Complicated)
+                    {
+                        mDownVoteButton.setEnabled(true);
+                        mUpVoteButton.setEnabled(false);
+                    }else{
+                        mUpVoteButton.setEnabled(true);
+                        Toast.makeText(getContext(),"Failed to UpVote your question",Toast.LENGTH_LONG).show();
+                    }
 
                 }
             };
@@ -502,9 +565,12 @@ public class SelectedQuestionFragment extends Fragment {
         }
     }
 
-    public void ClearImage()
-    {
+    public void ClearImage() {
         mImageView.setImageBitmap(null);
+        if (mPicture != null) {
+            if (!mPicture.isRecycled())
+                mPicture.recycle();
+        }
     }
 
 }

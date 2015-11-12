@@ -69,4 +69,9 @@ public class TextualQuestion extends Question{
     public String get_ExpireTimestamp() {return super.get_ExpireTimestamp();}
     @Override
     public void set_ExpireTimestamp(String ExpireTimestamp) {super.set_ExpireTimestamp(ExpireTimestamp);}
+
+    @Override
+    public String getCreatedByUserDisplayName() {return super.getCreatedByUserDisplayName();}
+    @Override
+    public void setCreatedByUserDisplayName(String createdByUserDisplayName) {super.setCreatedByUserDisplayName(createdByUserDisplayName);}
 }

@@ -54,8 +54,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         print("QuestionViewController viewDidAppear")
         
         //Stop any indicator
-        indicator?.stopAnimating()
-        indicator?.removeFromSuperview()
+        self.stopIndicator()
         
         //Show UI
         if self.question._id == nil {
@@ -105,6 +104,10 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
         super.viewWillDisappear(animated)
     }
     
+    override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation) {
+        print("didrotate")
+        self.viewDidAppear(false)
+    }
     
     //MARK: Actions
     
@@ -280,22 +283,28 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     
     /**
+     Stops image loading indicator in UI thread
+     */
+    func stopIndicator() {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.indicator?.stopAnimating()
+            self.indicator?.removeFromSuperview()
+        }
+    }
+    
+    /**
      Loads the image for this Question either from cache or from database. Then shows it inside a ImageScrollView so user can pan around and zoom.
      */
     func loadImage() {
-        indicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
-        indicator!.center = self.view.center
-        indicator!.startAnimating()
-        self.view.addSubview(indicator!)
         
-        //Stop
-        func stopIndicator() {
-            dispatch_async(dispatch_get_main_queue()) {
-                self.indicator!.stopAnimating()
-                self.indicator!.removeFromSuperview()
-            }
+        stopIndicator()
+        
+        dispatch_async(dispatch_get_main_queue()) {
+            self.indicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+            self.indicator!.center = self.view.center
+            self.indicator!.startAnimating()
+            self.view.addSubview(self.indicator!)
         }
-        
         
         //Helper function
         func updateImgGui(b64Img: String) {
@@ -306,12 +315,15 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
             }
             let questionImage = UIImage(data: imageData!)
             dispatch_async(dispatch_get_main_queue()) {
-                stopIndicator()
+                self.stopIndicator()
                 //Add image to image scroll view
                 if let questionImage = questionImage where questionImage.size != CGSize(width: 0, height: 0) {
                     self.questionImageView.image = questionImage
                     self.imageScrollView.contentSize = questionImage.size
-                    let minimumZoomLevel = self.imageScrollView.frame.size.width/questionImage.size.width
+                    
+                    let portrait = UIApplication.sharedApplication().statusBarOrientation == .Portrait
+                    let minimumZoomLevel = portrait ? (self.imageScrollView.frame.size.width/questionImage.size.width) : 1
+                    
                     self.imageScrollView.minimumZoomScale = minimumZoomLevel
                     self.imageScrollView.zoomScale = minimumZoomLevel
                     self.questionImageView!.reloadInputViews()
@@ -333,7 +345,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                         updateImgGui(data)
                     } else {
                         print("did receive response but did not receive an image")
-                        stopIndicator()
+                        self.stopIndicator()
                     }
                 } else {
                     print("error getting image for question")

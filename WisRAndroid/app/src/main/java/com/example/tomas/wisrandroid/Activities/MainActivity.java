@@ -26,8 +26,13 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
+import com.example.tomas.wisrandroid.Helpers.ErrorCodesDeserializer;
+import com.example.tomas.wisrandroid.Helpers.ErrorTypesDeserializer;
 import com.example.tomas.wisrandroid.Helpers.HttpHelper;
+import com.example.tomas.wisrandroid.Model.ErrorCodes;
+import com.example.tomas.wisrandroid.Model.ErrorTypes;
 import com.example.tomas.wisrandroid.Model.MyUser;
+import com.example.tomas.wisrandroid.Model.Notification;
 import com.example.tomas.wisrandroid.Model.User;
 import com.example.tomas.wisrandroid.Model.Vote;
 import com.example.tomas.wisrandroid.R;
@@ -42,6 +47,7 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.*;
 import com.google.android.gms.maps.model.*;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.lang.reflect.InvocationHandler;
 import java.util.HashMap;
@@ -53,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private GoogleMap mMap;
     private GoogleApiClient mGoogleApiClient;
     private Location mLastLocation;
-    private final Gson gson = new Gson();
+    private Gson gson;
 
     private Menu mMenu;
     private Button mCreateRoomButton;
@@ -68,6 +74,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         //getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         if(getSupportActionBar() != null)
             getSupportActionBar().hide();
+
+        GsonBuilder mGsonBuilder = new GsonBuilder();
+        mGsonBuilder.registerTypeAdapter(ErrorTypes.class,new ErrorTypesDeserializer());
+        mGsonBuilder.registerTypeAdapter(ErrorCodes.class,new ErrorCodesDeserializer());
+        gson = mGsonBuilder.create();
 
         buildGoogleApiClient();
 
@@ -113,10 +124,10 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                     }
                 });
                 Bundle mBundle = new Bundle();
-                mBundle.putDouble("Lat",mLastLocation.getLatitude());
-                mBundle.putDouble("Long",mLastLocation.getLongitude());
+                mBundle.putDouble("Lat", mLastLocation.getLatitude());
+                mBundle.putDouble("Long", mLastLocation.getLongitude());
                 Intent mIntent = new Intent(MainActivity.this, SelectRoomActivity.class);
-                mIntent.putExtra("Bundle",mBundle);
+                mIntent.putExtra("Bundle", mBundle);
                 startActivity(mIntent);
             }
         });
@@ -187,6 +198,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     @Override
     public void onConnected(Bundle bundle) {
+        mMap.clear();
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, LocationRequest.create().setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY), new com.google.android.gms.location.LocationListener() {
                 @Override
                 public void onLocationChanged(Location location) {
@@ -254,8 +266,12 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             public void onResponse(String response) {
                 Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
 
-                MyUser.getMyuser().set_Id(response);
-                GetUserInfo();
+                Notification mNotification = gson.fromJson(response,Notification.class);
+
+                if (mNotification.get_ErrorType() == ErrorTypes.Ok || mNotification.get_ErrorType() == ErrorTypes.Complicated) {
+                    MyUser.getMyuser().set_Id(mNotification.get_Data());
+                    GetUserInfo();
+                }
             }
         };
 
@@ -286,21 +302,24 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
             @Override
             public void onResponse(String response) {
                 Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
-                User mTempUser;
-                try {
-                    mTempUser = gson.fromJson(response, User.class);
-                } catch (Exception e)
-                {
-                    Log.w("GsonConversionError",e.toString());
-                    mTempUser = new User();
+
+                Notification mNotification = gson.fromJson(response,Notification.class);
+
+                if (mNotification.get_ErrorType() == ErrorTypes.Ok || mNotification.get_ErrorType() == ErrorTypes.Complicated) {
+                    User mTempUser;
+                    try {
+                        mTempUser = gson.fromJson(mNotification.get_Data(), User.class);
+                    } catch (Exception e) {
+                        Log.w("GsonConversionError", e.toString());
+                        mTempUser = new User();
+                    }
+
+                    MyUser.getMyuser().set_ConnectedRooms(mTempUser.get_ConnectedRooms());
+                    MyUser.getMyuser().set_DisplayName(mTempUser.get_DisplayName());
+                    MyUser.getMyuser().set_Email(mTempUser.get_Email());
+                    MyUser.getMyuser().set_LDAPUserName(mTempUser.get_ILDAPUserName());
+                    MyUser.getMyuser().set_EncryptedPassword(mTempUser.get_EncryptedPassword());
                 }
-
-                MyUser.getMyuser().set_ConnectedRooms(mTempUser.get_ConnectedRooms());
-                MyUser.getMyuser().set_DisplayName(mTempUser.get_DisplayName());
-                MyUser.getMyuser().set_Email(mTempUser.get_Email());
-                MyUser.getMyuser().set_LDAPUserName(mTempUser.get_ILDAPUserName());
-                MyUser.getMyuser().set_EncryptedPassword(mTempUser.get_EncryptedPassword());
-
             }
         };
 

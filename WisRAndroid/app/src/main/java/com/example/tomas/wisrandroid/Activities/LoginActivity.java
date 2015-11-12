@@ -16,8 +16,13 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.example.tomas.wisrandroid.Helpers.ActivityLayoutHelper;
+import com.example.tomas.wisrandroid.Helpers.ErrorCodesDeserializer;
+import com.example.tomas.wisrandroid.Helpers.ErrorTypesDeserializer;
 import com.example.tomas.wisrandroid.Helpers.HttpHelper;
+import com.example.tomas.wisrandroid.Model.ErrorCodes;
+import com.example.tomas.wisrandroid.Model.ErrorTypes;
 import com.example.tomas.wisrandroid.Model.MyUser;
+import com.example.tomas.wisrandroid.Model.Notification;
 import com.example.tomas.wisrandroid.Model.User;
 import com.example.tomas.wisrandroid.R;
 import com.facebook.AccessToken;
@@ -30,6 +35,7 @@ import com.facebook.HttpMethod;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONException;
 
@@ -39,6 +45,7 @@ import java.util.Map;
 public class LoginActivity extends AppCompatActivity {
 
     private CallbackManager cbm;
+    private Gson gson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,15 +57,24 @@ public class LoginActivity extends AppCompatActivity {
             getSupportActionBar().hide();
         }
 
+        GsonBuilder mGsonBuilder = new GsonBuilder();
+        mGsonBuilder.registerTypeAdapter(ErrorTypes.class,new ErrorTypesDeserializer());
+        mGsonBuilder.registerTypeAdapter(ErrorCodes.class,new ErrorCodesDeserializer());
+        gson = mGsonBuilder.create();
+
         Resources.Theme mtheme = getTheme();
-        final Gson gson = new Gson();
+
         cbm = CallbackManager.Factory.create();
 
         final Response.Listener<String> mListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Toast.makeText(getApplicationContext(), "In Listener", Toast.LENGTH_LONG).show();
-                MyUser.getMyuser().set_Id(response);
+
+                Notification mNotification = gson.fromJson(response, Notification.class);
+
+                if (mNotification.get_ErrorType() == ErrorTypes.Ok || mNotification.get_ErrorType() == ErrorTypes.Complicated)
+                    MyUser.getMyuser().set_Id(response);
                 finish();
             }
         };

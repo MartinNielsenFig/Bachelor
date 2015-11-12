@@ -22,14 +22,20 @@ import com.android.volley.toolbox.Volley;
 import com.example.tomas.wisrandroid.Activities.CreateQuestionActivity;
 import com.example.tomas.wisrandroid.Activities.RoomActivity;
 import com.example.tomas.wisrandroid.Helpers.CustomQuestionAdapter;
+import com.example.tomas.wisrandroid.Helpers.ErrorCodesDeserializer;
+import com.example.tomas.wisrandroid.Helpers.ErrorTypesDeserializer;
 import com.example.tomas.wisrandroid.Helpers.HttpHelper;
+import com.example.tomas.wisrandroid.Model.ErrorCodes;
+import com.example.tomas.wisrandroid.Model.ErrorTypes;
 import com.example.tomas.wisrandroid.Model.MultipleChoiceQuestion;
+import com.example.tomas.wisrandroid.Model.Notification;
 import com.example.tomas.wisrandroid.Model.Question;
 import com.example.tomas.wisrandroid.Model.Room;
 import com.example.tomas.wisrandroid.Model.TextualQuestion;
 import com.example.tomas.wisrandroid.Model.Vote;
 import com.example.tomas.wisrandroid.R;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
@@ -43,7 +49,7 @@ public class QuestionListFragment extends android.support.v4.app.Fragment {
     private String title;
     private int page;
     private Room mRoom;
-    private final Gson gson = new Gson();
+    private Gson gson;
     private ListView mListView;
     private TextView mTextView;
     private Button mButton;
@@ -67,6 +73,11 @@ public class QuestionListFragment extends android.support.v4.app.Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        GsonBuilder mGsonBuilder = new GsonBuilder();
+        mGsonBuilder.registerTypeAdapter(ErrorTypes.class,new ErrorTypesDeserializer());
+        mGsonBuilder.registerTypeAdapter(ErrorCodes.class,new ErrorCodesDeserializer());
+        gson = mGsonBuilder.create();
+
         page = getArguments().getInt("someInt", 0);
         title = getArguments().getString("someTitle");
         mRoom = gson.fromJson(getArguments().getString("someRoom"),Room.class);
@@ -83,6 +94,9 @@ public class QuestionListFragment extends android.support.v4.app.Fragment {
             @Override
             public void onClick(View view) {
                 Intent mIntent = new Intent(getActivity(), CreateQuestionActivity.class);
+                Bundle mBundle = new Bundle();
+                mBundle.putString("RoomId",mRoom.get_id());
+                mIntent.putExtra("Bundle", mBundle);
                 getActivity().startActivity(mIntent);
             }
         });
@@ -130,18 +144,22 @@ public class QuestionListFragment extends android.support.v4.app.Fragment {
             @Override
             public void onResponse(String response) {
 
-                ArrayList<Question> mTempQuestions = new ArrayList<>();
-                JsonElement e = new JsonParser().parse(response);
-                JsonArray array = e.getAsJsonArray();
-                for (JsonElement element : array) {
-                    if(element.toString().contains("MultipleChoiceQuestion")){
-                        mTempQuestions.add(0,gson.fromJson(element, MultipleChoiceQuestion.class));
-                    }else {
-                        mTempQuestions.add(gson.fromJson(element, TextualQuestion.class));
+                Notification mNotification = gson.fromJson(response, Notification.class);
+
+                if(mNotification.get_ErrorType() == ErrorTypes.Ok || mNotification.get_ErrorType() == ErrorTypes.Complicated) {
+                    ArrayList<Question> mTempQuestions = new ArrayList<>();
+                    JsonElement e = new JsonParser().parse(mNotification.get_Data());
+                    JsonArray array = e.getAsJsonArray();
+                    for (JsonElement element : array) {
+                        if (element.toString().contains("MultipleChoiceQuestion")) {
+                            mTempQuestions.add(gson.fromJson(element, MultipleChoiceQuestion.class));
+                        } else {
+                            mTempQuestions.add(gson.fromJson(element, TextualQuestion.class));
+                        }
                     }
+                    RearrangeQuestions(mTempQuestions);
+                    mAdapter.notifyDataSetChanged();
                 }
-                RearrangeQuestions(mTempQuestions);
-                mAdapter.notifyDataSetChanged();
             }
         };
 
@@ -175,23 +193,23 @@ public class QuestionListFragment extends android.support.v4.app.Fragment {
     {
 
         for (Question question : mTempList) {
-            if (question.get_CreatedById() == mRoom.get_CreatedById()) {
-                mQuestions.add(0,question);
-            } else {
-                int index = 0;
-                while(true)
-                {
-                    if(index == mQuestions.size())
-                    {
-                        mQuestions.add(index,question);
-                        break;
+            if (question.get_CreatedById() != null) {
+
+                if (question.get_CreatedById().equals(mRoom.get_CreatedById())) {
+                    mQuestions.add(0, question);
+                } else {
+                    int index = 0;
+                    while (true) {
+                        if (index == mQuestions.size()) {
+                            mQuestions.add(index, question);
+                            break;
+                        }
+                        if (!mQuestions.isEmpty() || (CalculateVotes(question.get_Votes()) > CalculateVotes(mQuestions.get(index).get_Votes()) && !question.get_CreatedById().equals(mRoom.get_CreatedById()))) {
+                            mQuestions.add(index, question);
+                            break;
+                        }
+                        index++;
                     }
-                    if(!mQuestions.isEmpty() || (CalculateVotes(question.get_Votes()) > CalculateVotes(mQuestions.get(index).get_Votes()) && question.get_CreatedById() != mRoom.get_CreatedById()))
-                    {
-                        mQuestions.add(index,question);
-                        break;
-                    }
-                    index++;
                 }
             }
         }

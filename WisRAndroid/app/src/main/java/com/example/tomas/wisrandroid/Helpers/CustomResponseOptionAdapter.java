@@ -33,13 +33,9 @@ public class CustomResponseOptionAdapter extends ArrayAdapter<ResponseOption> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View rowView = inflater.inflate(R.layout.questionrowlayout, parent, false);
-        TextView textView = (TextView) rowView.findViewById(R.id.question_row_textview);
+        View rowView = inflater.inflate(R.layout.responseoptionrowlayout, parent, false);
+        TextView textView = (TextView) rowView.findViewById(R.id.response_row_textview);
         textView.setText(values.get(position).get_value());
-//        ImageView imageView = (ImageView) rowView.findViewById(R.id.question_row_imageview);
-//        byte[] bytes = Base64.decode(values.get(position).get_Img(), Base64.NO_WRAP);
-//        Drawable image = new BitmapDrawable(BitmapFactory.decodeByteArray(bytes, 0, bytes.length));
-//       imageView.setImageDrawable(image);
 
         return rowView;
     }

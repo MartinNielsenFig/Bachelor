@@ -153,8 +153,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:textOff="10m"
-                    android:textOn="10m"
+                    android:textOff="50m"
+                    android:textOn="50m"
                     style="@style/Base.Widget.AppCompat.DrawerArrowToggle"/>
 
                 <ToggleButton
@@ -165,8 +165,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:textOff="20m"
-                    android:textOn="20m" />
+                    android:textOff="100m"
+                    android:textOn="100m" />
 
                 <ToggleButton
                     android:layout_margin="5dp"
@@ -176,8 +176,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
-                    android:textOff="40m"
-                    android:textOn="40m" />
+                    android:textOff="200m"
+                    android:textOn="200m" />
             </RadioGroup>
 
         </LinearLayout>

@@ -12,6 +12,7 @@ public abstract class Question {
     private String Img;
     private ArrayList<Vote> Votes;
     private String CreatedById;
+    private String CreatedByUserDisplayName;
     private String RoomId;
     private ArrayList<ResponseOption> ResponseOptions;
     private ArrayList<Answer> Result;
@@ -20,9 +21,8 @@ public abstract class Question {
 
     //Constructors
     public Question(){}
-    public Question(String _id, String QuestionText, String Img, ArrayList<Vote> Votes,
-                    int Downvotes, String CreatedById, String RoomId, ArrayList<ResponseOption> ResponseOptions,
-                    ArrayList<Answer> Result, String CreationTimestamp, String ExpireTimestamp  )
+    public Question(String _id, String QuestionText, String Img, ArrayList<Vote> Votes, String CreatedById, String RoomId, ArrayList<ResponseOption> ResponseOptions,
+                    ArrayList<Answer> Result, String CreationTimestamp, String ExpireTimestamp, String CreatedByUserDisplayName  )
     {
         this._id = _id;
         this.QuestionText = QuestionText;
@@ -34,6 +34,7 @@ public abstract class Question {
         this.Result = Result;
         this.CreationTimestamp = CreationTimestamp;
         this.ExpireTimestamp = ExpireTimestamp;
+        this.CreatedByUserDisplayName = CreatedByUserDisplayName;
     }
 
     //Properties
@@ -67,5 +68,6 @@ public abstract class Question {
     public String get_ExpireTimestamp(){return this.ExpireTimestamp;}
     public void set_ExpireTimestamp(String ExpireTimestamp){this.ExpireTimestamp = ExpireTimestamp;}
 
-
+    public String getCreatedByUserDisplayName() { return CreatedByUserDisplayName;}
+    public void setCreatedByUserDisplayName(String createdByUserDisplayName) {CreatedByUserDisplayName = createdByUserDisplayName;}
 }
