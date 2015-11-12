@@ -274,7 +274,7 @@
     <value>Precision: </value>
   </data>
   <data name="RoomSecretRequiresLogin" xml:space="preserve">
-    <value>The room-secret you have entered requires you to login</value>
+    <value>The room requires you to be logged in</value>
   </data>
   <data name="ChoosePicture" xml:space="preserve">
     <value>Choose Picture</value>

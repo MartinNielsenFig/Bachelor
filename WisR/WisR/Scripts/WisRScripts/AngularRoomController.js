@@ -443,7 +443,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
         $http.post('/Room/toJsonQuestion', { CreatedBy: $window.userId, CreatedByUserName: $scope.anonymousUser ? null : $scope.currentUser.DisplayName, RoomId: MyRoomIdFromViewBag, Image: image, QuestionText: $scope.QuestionText, ResponseOptions: newResponses, ExpireTimestamp: $scope.ExpirationTime, QuetionsType: $scope.QuestionType }).
             then(function (response) {
                 if (response.data.ErrorType != 0) {
-                    //TODO better error handling?
+                    
                     alert($scope.GetErrorOutput(response.data.Errors));
                 }
                 ///Use response to send to REST API
@@ -1031,8 +1031,12 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
         ///Make get request for json object conversion
         $http.post('/Room/toJsonChatMessage', { userId: window.userId, userDisplayName: $scope.anonymousUser ? null : $scope.currentUser.DisplayName, roomId: MyRoomIdFromViewBag, text: message }).
             then(function (response) {
+                if (response.data.ErrorType != 0) {
+
+                    alert($scope.GetErrorOutput(response.data.Errors));
+                }
                 ///Use response to send to REST API
-                $http.post(configs.restHostName + '/Chat/CreateChatMessage', { ChatMessage: JSON.stringify(response.data.Data) });
+                $http.post(configs.restHostName + '/Chat/CreateChatMessage', { ChatMessage: response.data.Data });
             });
     }
     //#endregion
