@@ -462,8 +462,11 @@ describe("English Test", function () {
         });
 
         it('should call /Room/GetById and rightPassword should be true', function () {
-            httpBackend.when('POST', 'http://localhost:1337/Room/GetById').respond({});
+            httpBackend.when('POST', 'http://localhost:1337/Room/GetById').respond({ Data: null, ErrorType: 0, Errors: [] });
             httpBackend.expectPOST("http://localhost:1337/Room/GetById");
+
+            scope.CurrentRoom = { AllowAnonymous: true };
+            scope.CurrentRoom = { HasPassword: false };
 
             spyOn(scope, "getQuestions");
             spyOn(scope, "getChatMessages");
