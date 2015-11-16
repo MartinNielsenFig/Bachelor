@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// When receiving an answer from the rest API with HTTPHandler the answer is always a JSON representation of a Notification. The Notification class tells you of any errors from the request, and if there's errors, which kind.
+/// When receiving an answer from the WisRApi with HTTPHandler the answer is always a JSON representation of a Notification. The Notification class tells you of any errors from the request, and if there's errors, which kind.
 class Notification {
     
     var Data: String?

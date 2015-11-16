@@ -9,7 +9,7 @@
 import Foundation
 
 /**
- *	Notification class has an ErrorType after a Http call to the RestAPI. This indicates whether it went ok, ok but with errors (non essential errors that did not conflict with the main goal of the call) or it went wrong.
+ *	Notification class has an ErrorType after a Http call to the WisRApi. This indicates whether it went ok, ok but with errors (non essential errors that did not conflict with the main goal of the call) or it went wrong.
  */
 public enum ErrorTypes: Int {
     case Ok = 0

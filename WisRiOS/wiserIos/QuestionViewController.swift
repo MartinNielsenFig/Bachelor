@@ -122,7 +122,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     //MARK: Utilities
     
     /**
-    Sends a response to the Question to the RestAPI. The answer has the users ID to ensure that he can only respond once (handled by RestAPI)
+    Sends a response to the Question to the WisRApi. The answer has the users ID to ensure that he can only respond once (handled by WisRApi)
     - parameter sender:	The button pressed
     */
     @IBAction func sendResponse(sender: AnyObject) {

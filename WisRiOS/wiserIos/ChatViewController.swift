@@ -42,7 +42,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         msg.ByUserId = CurrentUser.sharedInstance._id
         msg.RoomId = roomId
         msg.ByUserDisplayName = CurrentUser.sharedInstance.DisplayName
-        //message timestamp gets created on restApi
+        //message timestamp gets created on WisRApi
         msg.Value = textMessageInput.text
         
         let msgJson = JSONSerializer.toJson(msg)
@@ -117,7 +117,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     //MARK: Utilities
     
     /**
-    Continually polls the Rest server for messages newer than my current newest message.
+    Continually polls the WisRApi server for messages newer than my current newest message.
     */
     func updateChatPoll() {
         let newestMsg = self.newestMessageByIndex()
