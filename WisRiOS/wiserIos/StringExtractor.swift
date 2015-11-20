@@ -8,8 +8,14 @@
 
 import Foundation
 
+/// Contains string manipulation functions
 class StringExtractor {
     
+    /**
+     Extracts the name and the initials from a full name.
+     - parameter fullNameSpaceSeparated:	The full name separated by space e.g. "Peter Helstrup Jensen"
+     - returns: First name and initals e.g. Peter HJ
+     */
     static func nameAndInitials(fullNameSpaceSeparated: String?) -> String? {
         if let fullNameSpaceSeparated = fullNameSpaceSeparated {
             

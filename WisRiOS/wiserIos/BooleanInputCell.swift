@@ -11,8 +11,12 @@ import UIKit
 /// Displays a label and shows a UISwitch
 class BooleanInputCell: UITableViewCell {
 
+    // MARK: Properties
+    
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var uiSwitch: UISwitch!
+    
+    // MARK: Lifecycle
     
     override func awakeFromNib() {
         super.awakeFromNib()

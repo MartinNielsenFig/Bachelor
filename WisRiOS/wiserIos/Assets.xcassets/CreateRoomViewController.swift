@@ -15,19 +15,31 @@ class CreateRoomViewController: UITableViewController {
     
     //MARK: Properties
     
+    /// Reference to inputcell
     var roomNameInputCell: TextInputCell?
+    /// Reference to inputcell
     var roomSecretInputCell: TextInputCell?
+    /// Reference to inputcell
     var pwSwitchCell: BooleanInputCell?
+    /// Reference to inputcell
     var pwInputCell: TextInputCell?
+    /// Reference to inputcell
     var radiusInputCell: SegmentedInputCell?
+    /// Reference to inputcell
     var chatInputCell: BooleanInputCell?
+    /// Reference to inputcell
     var anonymousInputCell: BooleanInputCell?
+    /// Reference to inputcell
     var userQuestionInputCell: BooleanInputCell?
+    /// Reference to inputcell
     var roomUsesLocationInputCell: BooleanInputCell?
+    /// Reference to password label
     var pwLabel: UILabel?
     
+    /// Room being created by this ViewController
     var room = Room()
     
+    /// The default state for boolean input cells (Switches)
     let onDefault = true
     
     //MARK: Lifecycle

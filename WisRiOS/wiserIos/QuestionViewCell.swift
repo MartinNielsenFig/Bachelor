@@ -11,13 +11,19 @@ import UIKit
 /// Displays a Question on a list with up/down vote graphics and text.
 class QuestionViewCell: UITableViewCell {
     
+    //MARK: Properties
+    
     @IBOutlet weak var label: UILabel!
     
+    /// The downvote counter is shown in the cell
     @IBOutlet weak var downvoteCounter: UILabel!
     @IBOutlet weak var downvoteImage: UIImageView!
     
+    /// The upvote counter is shown in the cell
     @IBOutlet weak var upvoteCounter: UILabel!
     @IBOutlet weak var upvoteImage: UIImageView!
+    
+    //MARK: Lifecycle
     
     override func awakeFromNib() {
         defaultImage()
@@ -33,6 +39,8 @@ class QuestionViewCell: UITableViewCell {
         
         // Configure the view for the selected state
     }
+    
+    //MARK: Utilities
     
     func defaultImage() {
         upvoteImage.image = UIImage(named: "ThumbsUp")

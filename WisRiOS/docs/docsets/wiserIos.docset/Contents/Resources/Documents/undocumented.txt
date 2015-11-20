@@ -1,0 +1,267 @@
+LogonViewController.swift
+	override func viewDidLoad()
+ErrorCodes.swift
+	case NothingReceived = -100
+	case RoomSecretAlreadyInUse = 0
+	case NoRoomWithThatSecret
+	case RabbitMqError
+	case StringIsNotJsonFormat
+	case CouldNotParseJsonToClass
+	case CouldNotAddRoomToDatabase
+	case CouldNotGetRoomsFromDatabase
+	case CouldNotDeleteAllChatMessages
+	case CouldNotDeleteAllQuestions
+	case CouldNotDeleteRoom
+	case CouldNotUpdateRoom
+	case CouldNotGetUsers
+	case CouldNotAddUser
+	case CouldNotUpdateUser
+	case UserNotFound
+	case CouldNotDeleteUser
+	case CouldNotGetQuestions
+	case CouldNotGetQuestionType
+	case NewQuestionIdShouldBeNull
+	case RoomDoesNotExist
+	case CouldNotAddQuestion
+	case CouldNotUpdateQuestion
+	case QuestionExpired
+	case ActiveDirctoryError
+	case CouldNotGetChatMessages
+NumberInputCell.swift
+	@IBOutlet weak var label: UILabel!
+	@IBOutlet weak var inputField: UITextField!
+	override func awakeFromNib()
+	override func setSelected(selected: Bool, animated: Bool)
+Coordinate.swift
+	var Latitude: Double?
+	var Longitude: Double?
+	var AccuracyMeters: Int?
+	var FormattedAddress: String?
+	var Timestamp: String?
+RoomPageViewController.swift
+	override func viewDidLoad()
+	override func viewDidAppear(animated: Bool)
+	override func viewDidDisappear(animated: Bool)
+	override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation)
+	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
+	func addQuestion()
+	func editQuestion(oldQuestion: Question)
+	func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController?
+	func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController?
+	func presentationCountForPageViewController(pageViewController: UIPageViewController) -> Int
+	func presentationIndexForPageViewController(pageViewController: UIPageViewController) -> Int
+QuestionViewCell.swift
+	@IBOutlet weak var label: UILabel!
+	@IBOutlet weak var downvoteImage: UIImageView!
+	@IBOutlet weak var upvoteImage: UIImageView!
+	override func awakeFromNib()
+	override func setSelected(selected: Bool, animated: Bool)
+	func defaultImage()
+	func userHasVoted(up up: Bool)
+RoomTableViewController.swift
+	override func viewDidLoad()
+	override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool
+	override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath)
+	override func numberOfSectionsInTableView(tableView: UITableView) -> Int
+	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+	func handleRefresh(refreshControl: UIRefreshControl)
+	override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool
+	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
+Updater.swift
+	var timer: NSTimer!
+	var userFunction: (() -> Void)!
+	var secondsDelay: Double!
+	var debugName: String?
+	init(secondsDelay: Double, function: () -> Void, debugName: String? = nil)
+	@objc func execute()
+QuestionListViewController.swift
+	override func viewDidLoad()
+	override func viewDidAppear(animated: Bool)
+	func handleRefresh(refreshControl: UIRefreshControl)
+	override func numberOfSectionsInTableView(tableView: UITableView) -> Int
+	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+ChatMessage.swift
+	var _id: String?
+	var ByUserId: String?
+	var RoomId: String?
+	var Value: String?
+	var Timestamp: String?
+	var ByUserDisplayName: String?
+	init(){}
+	init(jsonDictionary: NSDictionary)
+ChooseRoleViewController.swift
+	override func viewDidLoad()
+	override func viewDidAppear(animated: Bool)
+	func addLoginLogoutButtons()
+	func loadRoomsBasedOnLocation()
+	func showRoomsOnMapAsCircles()
+	func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView?
+	func mapView(mapView: MKMapView, rendererForOverlay overlay: MKOverlay) -> MKOverlayRenderer
+	func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation])
+	func locationManager(manager: CLLocationManager, didFailWithError error: NSError)
+	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
+ResponseOption.swift
+	var Value: String
+	var Weight: Int
+	init(value: String, weight: Int)
+Question.swift
+	var _id: String?
+	var RoomId: String?
+	var CreatedById: String?
+	var Votes = [Vote]()
+	var Img: String?
+	var QuestionText: String?
+	var ResponseOptions = [ResponseOption]()
+	var Result = [Answer]()
+	var CreationTimestamp: String?
+	var ExpireTimestamp: String?
+	var CreatedByUserDisplayName: String?
+	init() {}
+	init(jsonDictionary: NSDictionary)
+	class TextualQuestion: Question
+	var SpecificText: String? = "swiftenCreated"
+	override init(jsonDictionary: NSDictionary)
+Paged.swift
+	var roomId: String? { get set }
+Room.swift
+	var _id: String?
+	var Name: String?
+	var CreatedById: String?
+	var Location = Coordinate()
+	var Radius: Int?
+	var Secret: String?
+	var HasPassword: Bool?
+	var EncryptedPassword: String?
+	var HasChat: Bool?
+	var UsersCanAsk: Bool?
+	var AllowAnonymous: Bool?
+	var UseLocation: Bool?
+	convenience init(jsonDictionary: NSDictionary)
+ChatViewController.swift
+	@IBOutlet weak var tableView: UITableView!
+	@IBOutlet weak var textMessageInput: UITextField!
+	@IBOutlet weak var messageInputStack: UIStackView!
+	@IBOutlet weak var messageInputStackContainerView: UIView!
+	@IBAction func sendPressed(sender: AnyObject)
+	override func viewDidLoad()
+	override func viewWillAppear(animated: Bool)
+	override func viewWillDisappear(animated: Bool)
+	func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+	func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+	func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
+	func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
+	func scrollViewWillBeginDragging(scrollView: UIScrollView)
+	func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool)
+	func textFieldShouldReturn(textField: UITextField) -> Bool
+	func keyboardWillShow(notification: NSNotification)
+	func keyboardWillHide(notification: NSNotification)
+Notification.swift
+	var Data: String?
+	var ErrorType: ErrorTypes
+	var Errors = [ErrorCode]()
+	init()
+	init(jsonDictionary: NSDictionary)
+AppDelegate.swift
+	class AppDelegate: UIResponder, UIApplicationDelegate
+	var window: UIWindow?
+	func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool
+	func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool
+	func applicationWillResignActive(application: UIApplication)
+	func applicationDidEnterBackground(application: UIApplication)
+	func applicationWillEnterForeground(application: UIApplication)
+	func applicationDidBecomeActive(application: UIApplication)
+	func applicationWillTerminate(application: UIApplication)
+Vote.swift
+	var CreatedById: String?
+	var Value: Int?
+	init(createdById: String, value: Int)
+QuestionViewController.swift
+	override func viewDidLoad()
+	override func viewDidAppear(animated: Bool)
+	override func viewWillDisappear(animated: Bool)
+	override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation)
+	@IBAction func upvoteBtnPressed(sender: AnyObject)
+	@IBAction func downvoteBtnPressed(sender: AnyObject)
+	func updateVoteUI(up: Bool)
+	func resetVoteUI()
+	func updateImgGui(b64Img: String)
+	func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int
+	func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int
+	func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?
+	func pickerView(pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString?
+	func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView?
+	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
+CreateRoomViewController.swift
+	override func viewDidLoad()
+	override func numberOfSectionsInTableView(tableView: UITableView) -> Int
+	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+	func dismiss()
+	func enablePwSwitchChanged(uiSwitch: UISwitch)
+	override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?)
+CurrentUser.swift
+	var location = Coordinate()
+	static let sharedInstance = CurrentUser()
+TextInputCell.swift
+	@IBOutlet weak var label: UILabel!
+	@IBOutlet weak var inputField: UITextField!
+	override func awakeFromNib()
+	override func setSelected(selected: Bool, animated: Bool)
+CreateQuestionViewController.swift
+	var room: Room!
+	override func viewDidLoad()
+	override func viewDidAppear(animated: Bool)
+	func dismiss()
+	func addResponseOption()
+	override func numberOfSectionsInTableView(tableView: UITableView) -> Int
+	override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String?
+	override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+	override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+	override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
+	override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool
+	override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath)
+	override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath)
+	func imagePickerControllerDidCancel(picker: UIImagePickerController)
+	func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject])
+	func textFieldShouldReturn(textField: UITextField) -> Bool
+HTTPHandler.swift
+	static let mainUrl = "http://wisrrestapi.azurewebsites.net/"
+	static func log(data data: NSData?, response: NSURLResponse?, error: NSError?)
+RoomFilterHelper.swift
+	class RoomFilterHelper
+Answer.swift
+	var Value: String
+	var UserId: String
+	var UserDisplayName: String
+	init(value: String, userId: String, userDisplayName: String)
+User.swift
+	var _id: String?
+	var FacebookId: String?
+	var ConnectedRoomIds: [Int]?
+	var LDAPUserName: String?
+	var DisplayName: String?
+	var Email: String?
+	var EncryptedPassword: String?
+	init(){}
+	init(jsonDictionary: NSDictionary)
+SegmentedInputCell.swift
+	@IBOutlet weak var label: UILabel!
+	@IBOutlet weak var segment: UISegmentedControl!
+	override func awakeFromNib()
+	override func setSelected(selected: Bool, animated: Bool)
+ErrorType.swift
+	case Ok = 0
+	case Error
+	case OkWithError
+BooleanInputCell.swift
+	@IBOutlet weak var label: UILabel!
+	@IBOutlet weak var uiSwitch: UISwitch!
+	override func awakeFromNib()
+	override func setSelected(selected: Bool, animated: Bool)
+StringExtractor.swift
+	func determineHighest()
+ResultViewController.swift
+	override func viewDidLoad()

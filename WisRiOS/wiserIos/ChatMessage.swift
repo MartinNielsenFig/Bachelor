@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// A Chatmessage to be represented in the Chatroom
 class ChatMessage {
     var _id: String?
     var ByUserId: String?

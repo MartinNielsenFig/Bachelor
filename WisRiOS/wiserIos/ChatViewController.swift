@@ -15,13 +15,17 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     //MARK: Properties
     
+    /// The index of this view on the RoomPageViewController
     let pageIndex = 2
+    /// Keyboard offset used to properly hide the keyboard when showing/hiding the keyboard
     let kbOffset = CGFloat(38)
-    let inputAccessoryViewId = 100  //id is given from storyboard
-    
+    /// The id of the room this chat resides in.
     var roomId: String?
+    /// Array of messages represented by this chat
     var messages = [ChatMessage]()
+    /// An updater that continually pulls for new messages from WisR web api
     var chatUpdater: Updater?
+    /// A boolean that indicates whether it's the first time loading the chat. Used to scroll to the bottom.
     var firstLoad = true
     
     @IBOutlet weak var tableView: UITableView!

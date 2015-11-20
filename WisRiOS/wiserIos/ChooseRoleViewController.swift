@@ -16,15 +16,17 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
     
     //MARK: Properties
     
+    /// A reference to the map on the UI
     @IBOutlet var mapView: MKMapView!
+    /// The location of the user
     var location = CLLocation()
+    /// The rooms that are represented on the map
     var rooms = [Room]()
+    /// A boolean indicating whether it's the first time the rooms has loaded. To avoid centering map more than once on user location.
     var firstTimeRoomsLoaded = true
-    
+    /// Manages the fetching of the location etc. refer to Apple's documentation on CLLocationManager
     let locationManager = CLLocationManager()
-    var maxPositionUpdatesThisSession = Int()
-    
-    
+        
     //MARK: Lifecycle
     
     override func viewDidLoad() {
@@ -43,7 +45,6 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
     
     override func viewDidAppear(animated: Bool) {
         locationManager.startUpdatingLocation()
-        maxPositionUpdatesThisSession = 10
         addLoginLogoutButtons()
         super.viewDidAppear(animated)
     }

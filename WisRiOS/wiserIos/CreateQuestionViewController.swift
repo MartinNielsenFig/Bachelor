@@ -14,10 +14,11 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
     
     //MARK: Properties
     
-    //Gets instantiated by RoomPageViewController in prepareForSegue
+    //The room this question is being created in.
     var room: Room!
+    /// The QuestionListViewController that previously represented the list. Used to add the newly created question.
     var questionListViewController: QuestionListViewController!
-    
+    /// The response options for this question
     var responseOptions = [ResponseOption]() {
         didSet {
             dispatch_async(dispatch_get_main_queue()) {
@@ -25,13 +26,18 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
             }
         }
     }
-    
+    /// Reference to ui input cell
     var questionText: TextInputCell?
+    /// Reference to ui input cell
     var durationInput: NumberInputCell?
+    /// Reference to ui table view cell
     var imageTableCell: UITableViewCell?
+    /// Reference to the selected image to be shown as a part of the question
     var selectedImage: UIImage?
+    /// Reference to ui input cell
     var addResponseCell: TextInputCell?
     
+    /// Boolean indicating whether theres a photo selected. Used to enlarge the image selected.
     var photoSelected = false {
         didSet {
             dispatch_async(dispatch_get_main_queue()) {
@@ -40,7 +46,7 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
         }
     }
     
-    //If this is set, then represent that question in the editing
+    /// If this is not null, then this view will represent that question in the editing
     var oldQuestion: Question?
     
     //MARK: Lifecycle

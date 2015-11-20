@@ -27,6 +27,9 @@ class Updater: NSObject {
         userFunction!()
     }
     
+    /**
+     Stops the updater. But keeps track of the closure, so it can be easily started again.
+     */
     func stop() {
         timer?.invalidate()
         timer = nil
@@ -36,6 +39,9 @@ class Updater: NSObject {
         }
     }
     
+    /**
+     Starts the updater. Even after it has been stopped.
+     */
     func start() {
         if timer == nil {
             timer = NSTimer.scheduledTimerWithTimeInterval(secondsDelay, target: self, selector: "execute", userInfo: nil, repeats: true)
