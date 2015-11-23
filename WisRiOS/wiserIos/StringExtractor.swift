@@ -1,6 +1,6 @@
 //
 //  StringExtractor.swift
-//  wiserIos
+//  WisR iOS
 //
 //  Created by Peter Helstrup Jensen on 03/09/2015.
 //  Copyright © 2015 Peter Helstrup Jensen. All rights reserved.
