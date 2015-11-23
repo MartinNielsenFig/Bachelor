@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// A coordinate in the world.
 class Coordinate {
     var Latitude: Double?
     var Longitude: Double?

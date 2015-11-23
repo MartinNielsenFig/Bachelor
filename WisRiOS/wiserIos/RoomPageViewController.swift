@@ -14,13 +14,17 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     
     //MARK: Properties
     
-    //Gets instantiated by previous caller
+    /// The room that was chosen on the previous Room list. RoomPageViewController representes this Room
     var room: Room!
+    /// A reference to a UIPageViewController used to display a paged view.
     var pageViewController: UIPageViewController!
+    /// Number of pages represented by UIPageViewController, can be subtracted by 1 if chat is not present.
     var pageCount = 3
+    /// Keeps track on index of the current page being represented.
     var currentPage = 0
+    /// An updater that can continually poll whether the room still exists, else log out.
     var checkRoomExistsUpdater: Updater?
-    
+    /// Array of the viewControllers representing the pages inside the UIPageViewController
     var viewControllerArray = [UIViewController?](count: 3, repeatedValue: nil)
     
     //MARK: Lifecycle
@@ -129,6 +133,19 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     
     //MARK: Navigation
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "CreateQuestion" {
+            let createQuestionViewController = ((segue.destinationViewController as! UINavigationController).topViewController) as! CreateQuestionViewController
+            createQuestionViewController.questionListViewController = viewControllerAtIndex(0, createNew: false) as! QuestionListViewController
+            createQuestionViewController.room = self.room
+            
+            if let oldQuestion = sender as? Question {
+                createQuestionViewController.oldQuestion = oldQuestion
+            }
+        }
+        
+    }
+    
     /**
     Log out of the room.
     - parameter forced:	If forced is true, the logout will be forced and the user will not be able to cancel.
@@ -156,7 +173,7 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     }
     
     /**
-     When using selectors in Swift, there doesn't seem to be an easy way to pass parameters.
+     This function simply asks user to log out or not.
      */
     func logoutRoomGracefully() {
         logoutRoom(false)
@@ -170,19 +187,6 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     
     func editQuestion(oldQuestion: Question) {
         performSegueWithIdentifier("CreateQuestion", sender: oldQuestion)
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "CreateQuestion" {
-            let createQuestionViewController = ((segue.destinationViewController as! UINavigationController).topViewController) as! CreateQuestionViewController
-            createQuestionViewController.questionListViewController = viewControllerAtIndex(0, createNew: false) as! QuestionListViewController
-            createQuestionViewController.room = self.room
-            
-            if let oldQuestion = sender as? Question {
-                createQuestionViewController.oldQuestion = oldQuestion
-            }
-        }
-        
     }
     
     //MARK: Utilities

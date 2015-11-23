@@ -141,7 +141,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Question text" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iGH-Ed-X4N">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="21"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="20"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -151,9 +151,9 @@
                                         </variation>
                                     </label>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Roh-CO-85Q" userLabel="InnerMainStack">
-                                        <rect key="frame" x="0.0" y="21" width="600" height="560"/>
+                                        <rect key="frame" x="0.0" y="20" width="600" height="560"/>
                                         <subviews>
-                                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3Km-db-wSI">
+                                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3Km-db-wSI">
                                                 <rect key="frame" x="0.0" y="0.0" width="600" height="350"/>
                                                 <subviews>
                                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OIc-BG-KSA" userLabel="Question Image">
@@ -201,17 +201,17 @@
                                                     <outlet property="delegate" destination="ock-zx-gTK" id="jB0-nV-uvP"/>
                                                 </connections>
                                             </scrollView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="nAF-KY-9zs" userLabel="AnswerPicker&amp;Buttons">
+                                            <stackView opaque="NO" contentMode="scaleToFill" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="nAF-KY-9zs" userLabel="AnswerPicker&amp;Buttons">
                                                 <rect key="frame" x="0.0" y="350" width="600" height="210"/>
                                                 <subviews>
-                                                    <pickerView contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KDW-Y0-aTM">
+                                                    <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KDW-Y0-aTM">
                                                         <rect key="frame" x="0.0" y="0.0" width="300" height="210"/>
                                                         <animations/>
                                                         <variation key="widthClass=regular" ambiguous="YES">
                                                             <rect key="frame" x="0.0" y="0.0" width="320" height="216"/>
                                                         </variation>
                                                     </pickerView>
-                                                    <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" alignment="center" spacing="-1" translatesAutoresizingMaskIntoConstraints="NO" id="3mO-eB-Cj7">
+                                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="-1" translatesAutoresizingMaskIntoConstraints="NO" id="3mO-eB-Cj7">
                                                         <rect key="frame" x="300" y="54" width="300" height="102"/>
                                                         <subviews>
                                                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cso-9D-u05">
@@ -257,7 +257,7 @@
                                                                 <rect key="frame" x="110" y="43" width="81" height="30"/>
                                                                 <animations/>
                                                                 <state key="normal" title="See Results"/>
-                                                                <variation key="heightClass=compact" ambiguous="YES">
+                                                                <variation key="heightClass=compact" ambiguous="YES" misplaced="YES">
                                                                     <rect key="frame" x="72" y="43" width="81" height="82"/>
                                                                 </variation>
                                                                 <variation key="widthClass=regular" ambiguous="YES">
@@ -271,7 +271,7 @@
                                                                 <rect key="frame" x="97" y="72" width="107" height="30"/>
                                                                 <animations/>
                                                                 <state key="normal" title="Send Response"/>
-                                                                <variation key="heightClass=compact" ambiguous="YES">
+                                                                <variation key="heightClass=compact" ambiguous="YES" misplaced="YES">
                                                                     <rect key="frame" x="59" y="124" width="107" height="30"/>
                                                                 </variation>
                                                                 <variation key="widthClass=regular" ambiguous="YES">
@@ -715,6 +715,9 @@
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9qs-5N-3DG">
                                                             <rect key="frame" x="20" y="0.0" width="34" height="34"/>
                                                             <animations/>
+                                                            <variation key="heightClass=compact" misplaced="YES">
+                                                                <rect key="frame" x="20" y="0.0" width="34" height="34"/>
+                                                            </variation>
                                                         </imageView>
                                                     </subviews>
                                                     <animations/>

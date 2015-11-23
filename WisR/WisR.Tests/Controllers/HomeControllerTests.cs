@@ -1,5 +1,8 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MongoDB.Bson.Serialization;
 using Moq;
+using WisR.DomainModel;
 using WisR.Providers;
 
 namespace WisR.Controllers.Tests
@@ -34,10 +37,12 @@ namespace WisR.Controllers.Tests
                 useLocation, locationTimestamp, locationLatitude, locationLongitude, locationAccuracyMeters,
                 locationFormattedAddress);
 
+            Notification data = BsonSerializer.Deserialize<Notification>(myTestRoom);
+
             //Assert
             Assert.AreEqual(
                 "'{ \"_id\" : null, \"Name\" : \"Test Room\", \"CreatedById\" : \"Test creator\", \"Location\" : { \"Latitude\" : 10.0, \"Longitude\" : 10.0, \"AccuracyMeters\" : 30, \"FormattedAddress\" : \"Aarhus School of engineering\", \"Timestamp\" : \"10\" }, \"Radius\" : 10, \"Secret\" : \"Test secret\", \"HasPassword\" : true, \"EncryptedPassword\" : \"Test password\", \"HasChat\" : true, \"UsersCanAsk\" : true, \"AllowAnonymous\" : true, \"UseLocation\" : true }'",
-                "'" + myTestRoom + "'");
+                "'" + data.Data + "'");
         }
 
         [TestMethod]
@@ -55,10 +60,13 @@ namespace WisR.Controllers.Tests
             //Act
             var myTestUser = controller.toJsonUser(encryptedPassword, facebookId, LDAPUserName, displayName, email,
                 connectedRoomIds);
+
+            Notification data = BsonSerializer.Deserialize<Notification>(myTestUser);
+
             //Assert
             Assert.AreEqual(
                 "'{ \"_id\" : null, \"FacebookId\" : \"Facebook test id\", \"ConnectedRoomIds\" : [\"A\", \"B\", \"C\", \"D\"], \"LDAPUserName\" : \"LDAP test user name\", \"DisplayName\" : \"Displayname\", \"Email\" : \"Testemail@test.com\", \"EncryptedPassword\" : \"Test password\" }'",
-                "'" + myTestUser + "'");
+                "'" + data.Data + "'");
         }
 
         [TestMethod]

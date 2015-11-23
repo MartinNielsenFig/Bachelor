@@ -14,25 +14,39 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     
     //MARK: Properties
     
+    /// The index of this view on the RoomPageViewController
     let pageIndex = 1
+    /// The roomId of the room being represented
     var roomId: String?
+    /// A boolean indicating whether it's the first time the progress bar has loaded. Used to disable the animation the first time
     var firstProgressBarUpdate = true
+    /// An updater that continually updates the progress timer
     var progressTimerUpdater: Updater?
+    /// Keeps that on what answer the user has picked
     var selectedAnswerPickerIndex = -1
+    /// A reference to the loading indicator. As field to ensure being able to stop it upon leaving this ViewController
     var indicator: UIActivityIndicatorView?
-    
-    //Get instantiated by QuestionListViewController
+    /// The question being represented
     var question = Question()
     
+    /// Label showing the time left on progress bar
     var timeLabel = UILabel()
+    /// Reference to view item
     @IBOutlet weak var questionText: UILabel!
+    /// Reference to view item
     @IBOutlet weak var answerPicker: UIPickerView!
+    /// Reference to view item
     @IBOutlet weak var progressBar: UIProgressView!
+    /// Reference to view item
     @IBOutlet weak var upvoteButton: UIButton!
+    /// Reference to view item
     @IBOutlet weak var downvoteButton: UIButton!
+    /// Reference to view item
     @IBOutlet weak var imageScrollView: UIScrollView!
+    /// Reference to view item
     @IBOutlet weak var questionImageView: UIImageView!
     
+    /// The data representeed by the UIPickerView
     var pickerData = [String]()
     
     //MARK: Lifecycle
@@ -122,7 +136,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     //MARK: Utilities
     
     /**
-    Sends a response to the Question to the RestAPI. The answer has the users ID to ensure that he can only respond once (handled by RestAPI)
+    Sends a response to the Question to the WisRApi. The answer has the users ID to ensure that he can only respond once (handled by WisRApi)
     - parameter sender:	The button pressed
     */
     @IBAction func sendResponse(sender: AnyObject) {

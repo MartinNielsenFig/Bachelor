@@ -1,6 +1,6 @@
 //
 //  StringExtractor.swift
-//  wiserIos
+//  WisR iOS
 //
 //  Created by Peter Helstrup Jensen on 03/09/2015.
 //  Copyright © 2015 Peter Helstrup Jensen. All rights reserved.
@@ -8,8 +8,14 @@
 
 import Foundation
 
+/// Contains string manipulation functions
 class StringExtractor {
     
+    /**
+     Extracts the name and the initials from a full name.
+     - parameter fullNameSpaceSeparated:	The full name separated by space e.g. "Peter Helstrup Jensen"
+     - returns: First name and initals e.g. Peter HJ
+     */
     static func nameAndInitials(fullNameSpaceSeparated: String?) -> String? {
         if let fullNameSpaceSeparated = fullNameSpaceSeparated {
             
@@ -31,7 +37,6 @@ class StringExtractor {
             return nil
         }
     }
-    
     /**
      Extracts the highest number in a string
      - parameter aString:	string with e.g. text and numbers
@@ -75,8 +80,6 @@ class StringExtractor {
             let endIndex = aString.startIndex.advancedBy(maxLength)
             shortenedText = aString.substringToIndex(endIndex) + "..."
         }
-        
         return shortenedText
     }
-    
 }

@@ -14,6 +14,9 @@ import JsonSerializerSwift
 /// Encapsulates the functionality related to logging in/out of FB and requestion user information from FB.
 class FacebookHelper {
     
+    /**
+     Logs of facebook and resets the CurrentUser singleton login information
+     */
     static func logOff() {
         let fbManager = FBSDKLoginManager()
         fbManager.logOut()
@@ -22,6 +25,10 @@ class FacebookHelper {
         CurrentUser.sharedInstance.FacebookId = nil
     }
     
+    /**
+     Given the Facebook id, requests the wisr ID from the wisr database
+     - parameter facebookId:	The Facebook ID associated with the user.
+     */
     static func requestWisrUserFrom(facebookId facebookId: String) {
         let body = "facebookId=\(facebookId)"
         
@@ -37,6 +44,10 @@ class FacebookHelper {
         }
     }
     
+    /**
+     Requests user information from Facebook
+     - parameter createUser:	Determines whether to create the user on the WisR database and give the user a WisR ID
+     */
     static func requestCurrentUserInformation(createUser createUser: Bool) {
         //http://stackoverflow.com/questions/30049450/get-fbsdkloginmanagerloginresults-email-and-name
         let fbRequest = FBSDKGraphRequest(graphPath: "me", parameters: ["fields": "id, name"])

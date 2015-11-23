@@ -1,5 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using MongoDB.Bson.Serialization;
 using Moq;
+using WisR.DomainModel;
 using WisR.Providers;
 
 namespace WisR.Controllers.Tests
@@ -22,9 +24,10 @@ namespace WisR.Controllers.Tests
             //Act
             var testChatMsg = controller.toJsonChatMessage(userid,userDisplayname, roomId, text);
 
+            Notification data = BsonSerializer.Deserialize<Notification>(testChatMsg);
             //Assert - this one excludes timestamp since it is time based and will always fail
             Assert.IsTrue(
-                testChatMsg.Contains(
+                data.Data.Contains(
                     "{ \"_id\" : null, \"ByUserId\" : \"Test user id\", \"ByUserDisplayName\" : \"Test user displayname\", \"RoomId\" : \"Test room id\", \"Value\" : \"Test text\","));
         }
 
@@ -51,10 +54,12 @@ namespace WisR.Controllers.Tests
             var testQuestionMsg = controller.toJsonQuestion(createdBy,createdByDisplayname, roomId, image, questionText, responseOptions,
                 questionResult, CreationTimeStamp, ExpireTimeStamp, questionType, votes);
 
+            Notification data = BsonSerializer.Deserialize<Notification>(testQuestionMsg);
+
             //Assert
             Assert.AreEqual(
                 "{ \"_id\" : null, \"RoomId\" : \"Test room id\", \"CreatedById\" : \"Test user\", \"CreatedByUserDisplayName\" : \"Test user displayname\", \"Votes\" : [], \"Img\" : \"Test image\", \"QuestionText\" : \"Test question text\", \"ResponseOptions\" : [], \"Result\" : [], \"CreationTimestamp\" : \"Test timestamp\", \"ExpireTimestamp\" : \"Test expire\" }",
-                testQuestionMsg);
+                data.Data);
         }
 
         [TestMethod]
@@ -80,10 +85,12 @@ namespace WisR.Controllers.Tests
             var testQuestionMsg = controller.toJsonQuestion(createdBy, createdByDisplayname, roomId, image, questionText, responseOptions,
                 questionResult, CreationTimeStamp, ExpireTimeStamp, questionType, votes);
 
+            Notification data = BsonSerializer.Deserialize<Notification>(testQuestionMsg);
+
             //Assert
             Assert.AreEqual(
                 "{ \"_id\" : null, \"RoomId\" : \"Test room id\", \"CreatedById\" : \"Test user\", \"CreatedByUserDisplayName\" : \"Test user displayname\", \"Votes\" : [], \"Img\" : \"Test image\", \"QuestionText\" : \"Test question text\", \"ResponseOptions\" : [{ \"Value\" : \"Response a\", \"Weight\" : 0 }, { \"Value\" : \"Response b\", \"Weight\" : 0 }, { \"Value\" : \"Response c\", \"Weight\" : 0 }], \"Result\" : [], \"CreationTimestamp\" : \"Test timestamp\", \"ExpireTimestamp\" : \"Test expire\" }",
-                testQuestionMsg);
+                data.Data);
         }
     }
 }

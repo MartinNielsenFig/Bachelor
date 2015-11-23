@@ -11,8 +11,12 @@ import UIKit
 /// Displays a label and takes a number as input.
 class NumberInputCell: UITableViewCell {
     
+    // MARK: Properties
+    
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var inputField: UITextField!
+    
+    // MARK: Lifecycle
     
     override func awakeFromNib() {
         super.awakeFromNib()
