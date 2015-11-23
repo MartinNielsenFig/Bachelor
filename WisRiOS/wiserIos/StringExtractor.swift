@@ -37,7 +37,6 @@ class StringExtractor {
             return nil
         }
     }
-    
     /**
      Extracts the highest number in a string
      - parameter aString:	string with e.g. text and numbers
@@ -81,8 +80,6 @@ class StringExtractor {
             let endIndex = aString.startIndex.advancedBy(maxLength)
             shortenedText = aString.substringToIndex(endIndex) + "..."
         }
-        
         return shortenedText
     }
-    
 }
