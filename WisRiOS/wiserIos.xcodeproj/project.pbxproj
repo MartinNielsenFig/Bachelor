@@ -32,7 +32,7 @@
 		CB6BC6281BA1C05A001C303B /* QuestionListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6BC6271BA1C05A001C303B /* QuestionListViewController.swift */; };
 		CB84802B1B9EDB5400D1C230 /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB84802A1B9EDB5400D1C230 /* CurrentUser.swift */; };
 		CB84802D1B9EE0DC00D1C230 /* FacebookHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB84802C1B9EE0DC00D1C230 /* FacebookHelper.swift */; };
-		CB9FF7C61B8F1401003A193B /* HTTPHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9FF7C51B8F1401003A193B /* HTTPHandler.swift */; };
+		CB9FF7C61B8F1401003A193B /* HttpHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9FF7C51B8F1401003A193B /* HttpHandler.swift */; };
 		CB9FF7CA1B8F27EC003A193B /* Coordinate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9FF7C91B8F27EC003A193B /* Coordinate.swift */; };
 		CB9FF7CC1B8F28B4003A193B /* Answer.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9FF7CB1B8F28B4003A193B /* Answer.swift */; };
 		CB9FF7CE1B8F2916003A193B /* Question.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB9FF7CD1B8F2916003A193B /* Question.swift */; };
@@ -228,7 +228,7 @@
 		CB6BC6271BA1C05A001C303B /* QuestionListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuestionListViewController.swift; sourceTree = "<group>"; };
 		CB84802A1B9EDB5400D1C230 /* CurrentUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentUser.swift; sourceTree = "<group>"; };
 		CB84802C1B9EE0DC00D1C230 /* FacebookHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookHelper.swift; sourceTree = "<group>"; };
-		CB9FF7C51B8F1401003A193B /* HTTPHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPHandler.swift; sourceTree = "<group>"; };
+		CB9FF7C51B8F1401003A193B /* HttpHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpHandler.swift; sourceTree = "<group>"; };
 		CB9FF7C91B8F27EC003A193B /* Coordinate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coordinate.swift; sourceTree = "<group>"; };
 		CB9FF7CB1B8F28B4003A193B /* Answer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Answer.swift; sourceTree = "<group>"; };
 		CB9FF7CD1B8F2916003A193B /* Question.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Question.swift; sourceTree = "<group>"; };
@@ -290,14 +290,22 @@
 				CB3C37911B8DE1F000897344 /* RoomTableViewController.swift */,
 				CBB60B2E1B9718EC0007A47B /* CreateRoomViewController.swift */,
 				CBB4D7D61BA189EC001C531D /* LogonViewController.swift */,
+				CBF19CD71BAFFBA700A906B3 /* CreateQuestionViewController.swift */,
+				CB1B7B8F1BB966B400EB637E /* ResultViewController.swift */,
+				CB03542A1C03061400BCC44B /* RoomViewControllers */,
+			);
+			name = ViewControllers;
+			sourceTree = "<group>";
+		};
+		CB03542A1C03061400BCC44B /* RoomViewControllers */ = {
+			isa = PBXGroup;
+			children = (
 				CBB4D7D81BA1A567001C531D /* RoomPageViewController.swift */,
 				CBB4D7DA1BA1A664001C531D /* QuestionViewController.swift */,
 				CB6BC6251BA1B2ED001C303B /* ChatViewController.swift */,
 				CB6BC6271BA1C05A001C303B /* QuestionListViewController.swift */,
-				CBF19CD71BAFFBA700A906B3 /* CreateQuestionViewController.swift */,
-				CB1B7B8F1BB966B400EB637E /* ResultViewController.swift */,
 			);
-			name = ViewControllers;
+			name = RoomViewControllers;
 			sourceTree = "<group>";
 		};
 		CB3C37651B8DBF5000897344 = {
@@ -394,7 +402,7 @@
 		CB9FF7C71B8F1859003A193B /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				CB9FF7C51B8F1401003A193B /* HTTPHandler.swift */,
+				CB9FF7C51B8F1401003A193B /* HttpHandler.swift */,
 				CB39A97A1B986B7F0014F818 /* StringExtractor.swift */,
 				CB84802C1B9EE0DC00D1C230 /* FacebookHelper.swift */,
 				CB0D53C51BA85996007E4CD2 /* DateTimeHelper.swift */,
@@ -712,7 +720,7 @@
 				CB84802B1B9EDB5400D1C230 /* CurrentUser.swift in Sources */,
 				CB50FD8E1B9708E40003C078 /* TextInputCell.swift in Sources */,
 				CBF19CD81BAFFBA700A906B3 /* CreateQuestionViewController.swift in Sources */,
-				CB9FF7C61B8F1401003A193B /* HTTPHandler.swift in Sources */,
+				CB9FF7C61B8F1401003A193B /* HttpHandler.swift in Sources */,
 				CB2A1B881BB9DA0F00821087 /* RoomFilterHelper.swift in Sources */,
 				CB9FF7CC1B8F28B4003A193B /* Answer.swift in Sources */,
 				CB2AD54E1BDF8FE600E50ACF /* Toast.swift in Sources */,
