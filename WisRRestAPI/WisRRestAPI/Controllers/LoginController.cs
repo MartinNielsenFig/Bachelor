@@ -9,8 +9,17 @@ using WisR.DomainModel;
 
 namespace WisRRestAPI.Controllers
 {
+    /// <summary>
+    /// This controller handler login to LDAP
+    /// </summary>
     public class LoginController : Controller
     {
+        /// <summary>
+        /// Logins with LDAP, from email and password.
+        /// </summary>
+        /// <param name="email">The email.</param>
+        /// <param name="password">The password.</param>
+        /// <returns>Notification</returns>
         [System.Web.Mvc.HttpPost]
         public string LoginWithLDAP(string email, string password)
         {

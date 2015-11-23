@@ -17,6 +17,9 @@ using WisRRestAPI.Providers;
 
 namespace WisRRestAPI.Controllers
 {
+    /// <summary>
+    /// The room controller is used to handle the room CRUD's
+    /// </summary>
     public class RoomController : Controller
     {
         private readonly IRoomRepository _rr;
@@ -24,6 +27,13 @@ namespace WisRRestAPI.Controllers
         private readonly IChatRepository _cr;
         private IRabbitPublisher _irabbitPublisher;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RoomController"/> class.
+        /// </summary>
+        /// <param name="rr">The room repository.</param>
+        /// <param name="cr">The chat repository.</param>
+        /// <param name="qr">The question repository.</param>
+        /// <param name="irabbitPublisher">The rabbitMQ publisher.</param>
         public RoomController(IRoomRepository rr, IChatRepository cr, IQuestionRepository qr, IRabbitPublisher irabbitPublisher)
         {
             _rr = rr;
@@ -32,6 +42,10 @@ namespace WisRRestAPI.Controllers
             _irabbitPublisher = irabbitPublisher;
         }
 
+        /// <summary>
+        /// Gets all.
+        /// </summary>
+        /// <returns>Notification</returns>
         [System.Web.Mvc.HttpGet]
         public string GetAll()
         {
@@ -51,6 +65,11 @@ namespace WisRRestAPI.Controllers
 
             return (new Notification(Rooms.Result.ToJson(), errorType, errors)).ToJson();
         }
+        /// <summary>
+        /// Creates the room.
+        /// </summary>
+        /// <param name="Room">The room.</param>
+        /// <returns>Notification</returns>
         [System.Web.Mvc.HttpPost]
         public string CreateRoom(string Room)
         {
@@ -103,6 +122,11 @@ namespace WisRRestAPI.Controllers
 
             return new Notification(roomId, errorType, errors).ToJson();
         }
+        /// <summary>
+        /// Gets by the identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>Notification</returns>
         [System.Web.Mvc.HttpPost]
         public string GetById(string id)
         {
@@ -128,6 +152,11 @@ namespace WisRRestAPI.Controllers
 
             return new Notification(item.ToJson(), errorType, errors).ToJson();
         }
+        /// <summary>
+        /// Gets by the unique secret.
+        /// </summary>
+        /// <param name="secret">The secret.</param>
+        /// <returns>Notification</returns>
         [System.Web.Mvc.HttpPost]
         public string GetByUniqueSecret(string secret)
         {
@@ -152,6 +181,11 @@ namespace WisRRestAPI.Controllers
 
             return new Notification(item.ToJson(), errorType, errors).ToJson();
         }
+        /// <summary>
+        /// Deletes the room.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>Notification</returns>
         [System.Web.Mvc.HttpDelete]
         public string DeleteRoom(string id)
         {
@@ -198,6 +232,12 @@ namespace WisRRestAPI.Controllers
             return new Notification(null, ErrorTypes.Error, errors).ToJson();
         }
 
+        /// <summary>
+        /// Updates the location.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <param name="location">The location.</param>
+        /// <returns>Notification</returns>
         public string UpdateLocation(string id, string location)
         {
             List<ErrorCodes> errors = new List<ErrorCodes>();
@@ -255,7 +295,7 @@ namespace WisRRestAPI.Controllers
         /// Determine whether a room is present in a given moment. Used to check that you are not inside a room that has been deleted.  
         /// </summary>
         /// <param name="roomId">The id of the room to check if exists.</param>
-        /// <returns>Whether or not the room exists.</returns>
+        /// <returns>Notification</returns>
         [HttpPost]
         public string RoomExists(string roomId)
         {
