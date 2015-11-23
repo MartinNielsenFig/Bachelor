@@ -189,18 +189,27 @@ app.controller("HomeController", [
            * @param {String} theTitle The title of the notification as specified in the options parameter of the constructor.
            * @param {String} link redirect link for the onclick event
            */
-        Notification.requestPermission();
+        if (!("Notification" in window)) {
+            //Do nothing
+        } else {
+            Notification.requestPermission();
+        }
+       
         $scope.spawnNotification = function (theBody, theIcon, theTitle, link) {
-            var options = {
-                body: theBody,
-                icon: theIcon
-            }
-            var n = new Notification(theTitle, options);
-            n.onclick = function () {
-                $window.location.href = link;
-                $window.focus();
-            }
-            setTimeout(n.close.bind(n), 4000);
+            if (!("Notification" in window)) {
+                return;
+            } else {
+                var options = {
+                    body: theBody,
+                    icon: theIcon
+                }
+                var n = new Notification(theTitle, options);
+                n.onclick = function () {
+                    $window.location.href = link;
+                    $window.focus();
+                }
+                setTimeout(n.close.bind(n), 4000);
+            }          
         }
         //#endregion
 

@@ -19,17 +19,14 @@ namespace WisRRestAPI.Controllers
     {
         private readonly IRoomRepository _rr;
         private readonly IChatRepository _cr;
-        private readonly JavaScriptSerializer _jsSerializer;
         private IRabbitPublisher _irabbitPublisher;
 
         public ChatController(IChatRepository cr, IRabbitPublisher irabbitPublisher, IRoomRepository rr)
         {
             _rr = rr;
             _cr = cr;
-            _jsSerializer = new JavaScriptSerializer();
             _irabbitPublisher = irabbitPublisher;
         }
-
         [System.Web.Mvc.HttpGet]
         public string GetAll()
         {
@@ -68,8 +65,6 @@ namespace WisRRestAPI.Controllers
 
             return new Notification(chatMessages.Result.ToJson(), errorType, errors).ToJson();
         }
-
-
         /// <summary>
         /// Fetches messages for the room specified in the msg parameter that is newer than that message.
         /// </summary>
@@ -106,7 +101,6 @@ namespace WisRRestAPI.Controllers
 
             return new Notification(newerMessages.ToJson(), errorType, errors).ToJson();
         }
-
         [System.Web.Mvc.HttpPost]
         public string CreateChatMessage(string ChatMessage)
         {
@@ -147,7 +141,6 @@ namespace WisRRestAPI.Controllers
 
             return new Notification(_cr.AddChatMessage(chatMsg), errorType, errors).ToJson(); 
         }
-
         [System.Web.Mvc.HttpGet]
         public string GetById(string id)
         {

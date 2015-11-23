@@ -32,7 +32,6 @@ namespace WisRRestAPI.Controllers
             _qr = qr;
             _irabbitPublisher = irabbitPublisher;
         }
-
         [System.Web.Mvc.HttpGet]
         public string GetAll()
         {
@@ -63,7 +62,6 @@ temp= questions.Result.ToJson();
             
             return new Notification(temp, errorType, errors).ToJson();
         }
-
         [System.Web.Mvc.HttpGet]
         public string GetQuestionsForRoom(string roomId) {
             List<ErrorCodes> errors = new List<ErrorCodes>();
@@ -133,7 +131,6 @@ temp= questions.Result.ToJson();
 
             return new Notification(result.Img, errorType, errors).ToJson();
         }
-
         [System.Web.Mvc.HttpPost]
         public string CreateQuestion(string question, string type)
         {
@@ -201,7 +198,6 @@ temp= questions.Result.ToJson();
 
             return new Notification(null, errorType, errors).ToJson();
         }
-
         [System.Web.Mvc.HttpPost]
         public string UpdateQuestion(string question, string type, string id)
         {
@@ -249,7 +245,6 @@ temp= questions.Result.ToJson();
             }
             return new Notification(null, errorType, errors).ToJson();
         }
-
         [System.Web.Mvc.HttpPost]
         public string AddQuestionResponse(string response, string questionId)
         {
@@ -322,7 +317,6 @@ _qr.UpdateQuestionResults(questionId, q);
            
             return new Notification(null, errorType, errors).ToJson();
         }
-
         public string AddVote(string vote, string type, string id) {
             List<ErrorCodes> errors = new List<ErrorCodes>();
             ErrorTypes errorType = ErrorTypes.Ok;
@@ -383,7 +377,6 @@ q = _qr.GetQuestionWithoutImage(id).Result;
 
             return new Notification(null, errorType, errors).ToJson();
         }
-
         [System.Web.Mvc.HttpGet]
         public string GetById(string id)
         {
@@ -409,8 +402,6 @@ q = _qr.GetQuestionWithoutImage(id).Result;
 
             return new Notification(item.ToJson(), errorType, errors).ToJson();
         }
-
-
         [System.Web.Mvc.HttpDelete]
         public string DeleteQuestion(string id)
         {

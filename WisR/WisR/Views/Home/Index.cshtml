@@ -11,16 +11,16 @@
                 <div id="roomText" class="text-center">
                     <h2><small>@WisR.App_Resources.Resource.RoomsBasedOn <a onClick="toggleLocation();" style="cursor: pointer">@WisR.App_Resources.Resource.YourLocation</a></small></h2>
                 </div>
-                <div ng-hide="roomsLoaded" class="container text-center">
-                    <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span><label id="loadingLabel" class="">@WisR.App_Resources.Resource.Loading @WisR.App_Resources.Resource.YourLocation ...</label>
-                </div>
                 <div id="googlemaps" hidden>
                     <div id="address"></div>
                     <div id="accuracy"></div>
                     <div id="map_canvas" style="height: 300px"></div>
                 </div>
+                <div ng-hide="roomsLoaded" class="container text-center" style="height: 300px">
+                    <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span><label id="loadingLabel" class="">@WisR.App_Resources.Resource.Loading @WisR.App_Resources.Resource.YourLocation ...</label>
+                </div>
                 <div ng-show="roomsLoaded">
-                    <div style="height: 300px; text-align: center" ng-hide="(Rooms|roomsNear:this).length>0">
+                    <div style="height: 300px; text-align: center" ng-if="(Rooms|roomsNear:this).length==0">
                         <h3>{{RoomsMessage}}</h3>
                     </div>
                 </div>
@@ -75,7 +75,7 @@
                         </span>
                     </div>
                 </div>
-                <div class="col-md-12 text-center">
+                <div class="col-md-12 text-center" ng-if="Message">
                     {{Message}}
                 </div>
             </div>

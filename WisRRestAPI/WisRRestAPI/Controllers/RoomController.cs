@@ -17,6 +17,9 @@ using WisRRestAPI.Providers;
 
 namespace WisRRestAPI.Controllers
 {
+    /// <summary>
+    /// RoomController, controller that handles all room related requests
+    /// </summary>
     public class RoomController : Controller
     {
         private readonly IRoomRepository _rr;
@@ -31,7 +34,10 @@ namespace WisRRestAPI.Controllers
             _qr = qr;
             _irabbitPublisher = irabbitPublisher;
         }
-
+        /// <summary>
+        /// Gets all rooms from the database
+        /// </summary>
+        /// <returns>String with all rooms</returns>
         [System.Web.Mvc.HttpGet]
         public string GetAll()
         {
@@ -197,7 +203,6 @@ namespace WisRRestAPI.Controllers
             errors.Add(ErrorCodes.CouldNotDeleteRoom);
             return new Notification(null, ErrorTypes.Error, errors).ToJson();
         }
-
         public string UpdateLocation(string id, string location)
         {
             List<ErrorCodes> errors = new List<ErrorCodes>();
@@ -250,7 +255,6 @@ namespace WisRRestAPI.Controllers
             }
             return new Notification(null, errorType, errors).ToJson();
         }
-
         /// <summary>
         /// Determine whether a room is present in a given moment. Used to check that you are not inside a room that has been deleted.  
         /// </summary>
