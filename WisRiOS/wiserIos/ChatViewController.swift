@@ -36,8 +36,11 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     //MARK: Actions
     
     @IBAction func sendPressed(sender: AnyObject) {
+        let inputText = textMessageInput.text
+        textMessageInput.text = ""
+        
         chatUpdater?.stop()
-        if let text = textMessageInput.text where text.isEmpty {
+        if let text = inputText where text.isEmpty {
             print("empty message not allowed in chat")
             return
         }
@@ -47,7 +50,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         msg.RoomId = roomId
         msg.ByUserDisplayName = CurrentUser.sharedInstance.DisplayName
         //message timestamp gets created on WisRApi
-        msg.Value = textMessageInput.text
+        msg.Value = inputText
         
         let msgJson = JSONSerializer.toJson(msg)
         let body = "ChatMessage=\(msgJson)"
@@ -56,7 +59,6 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
             
             if notification.ErrorType == .Ok || notification.ErrorType == .OkWithError {
                 dispatch_async(dispatch_get_main_queue()) {
-                    self.textMessageInput.text = ""
                     
                     //If the last message is not visible, scroll to bottom
                     if self.stickToBottom() {
@@ -175,7 +177,9 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func scrollToBottom() {
         //let chatFieldHeight = self.messageInputStack.frame.height + 10
         dispatch_async(dispatch_get_main_queue()) {
+            
             if self.messages.count > 0 {
+                self.tableView.reloadData()
                 self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.messages.count-1, inSection: 0), atScrollPosition: UITableViewScrollPosition.Bottom, animated: false)
             }
         }

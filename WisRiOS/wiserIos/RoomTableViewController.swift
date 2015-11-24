@@ -10,7 +10,7 @@ import UIKit
 import JsonSerializerSwift
 import CryptoSwift  //CryptoSwift https://github.com/krzyzanowskim/CryptoSwift all credits to krzyzanowskim
 
-/// Shows the rooms nearby in a list, enabling the user to join the room.
+/// Shows the rooms nearby in a list, enabling the user to join the room. Also enables the user to join a room by a secret.
 class RoomTableViewController: UITableViewController {
     
     //MARK: Properties

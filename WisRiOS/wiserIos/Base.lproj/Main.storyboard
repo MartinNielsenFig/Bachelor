@@ -405,7 +405,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7vm-I6-Bgi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5388" y="-841"/>
+            <point key="canvasLocation" x="4510" y="625.5"/>
         </scene>
         <!--Create Question-->
         <scene sceneID="t8G-ob-Dw6">
@@ -640,7 +640,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qIJ-uQ-6Lf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4426" y="-98"/>
+            <point key="canvasLocation" x="4510" y="1527"/>
         </scene>
         <!--Question List-->
         <scene sceneID="fyC-LS-JIs">
@@ -1018,7 +1018,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ON3-ey-VAx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3268" y="-841"/>
+            <point key="canvasLocation" x="3164" y="-1090.5"/>
         </scene>
         <!--RoomList-->
         <scene sceneID="DFv-wp-ugX">
