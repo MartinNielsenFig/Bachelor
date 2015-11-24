@@ -15,11 +15,16 @@ class LogonViewController: UIViewController, FBSDKLoginButtonDelegate {
     
     //MARK: Properties
     
+    /// The previous navigation controller that instantiated the LogonViewController. Used to dismiss this view.
     var previousNavigationController: UINavigationController?
+    /// The previous view controller that instantiated the LogonViewController. Used to dismiss this view.
     var previousViewController: UIViewController?
     
     //MARK: Utilities
     
+    /**
+    User cancelled logon process. Dismisses the logon view.
+    */
     @IBAction func cancelLogonBtn() {
         previousNavigationController?.dismissViewControllerAnimated(true, completion: nil)
     }
@@ -37,6 +42,12 @@ class LogonViewController: UIViewController, FBSDKLoginButtonDelegate {
     
     //MARK: FBSDKLoginButtonDelegate
     
+    /**
+    Function called when clicking the logon button
+    - parameter loginButton:	The logon button pressed
+    - parameter result:			See Facebook FBSDKLoginManagerLoginResult documentation
+    - parameter error:				Error regarding contact with Facebook
+    */
     func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
         
         if let granted = result.grantedPermissions {
@@ -48,6 +59,10 @@ class LogonViewController: UIViewController, FBSDKLoginButtonDelegate {
         }
     }
     
+    /**
+     Called when logged out
+     - parameter loginButton:	Button used to log in
+     */
     func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
         NSLog("Facebook log off")
     }

@@ -14,9 +14,10 @@ class ResultViewController: UIViewController {
     
     //MARK: Properties
     
+    /// Reference to the pie chart view
     @IBOutlet var pieChartView: PieChartView!
     
-    //Instantiated by previous ViewController
+    /// The question this resultview represents
     var question: Question!
     
     //MARK: Lifecycle
@@ -49,6 +50,11 @@ class ResultViewController: UIViewController {
     
     //MARK: Utilities
     
+    /**
+    Updates the chart on the ui
+    - parameter dataPoints:	The datapoints to be represented
+    - parameter values:			The values to be represented.
+    */
     func updateChart(dataPoints: [String], values: [Double]) {
         var dataEntries = [BarChartDataEntry]()
         for i in 0..<dataPoints.count {

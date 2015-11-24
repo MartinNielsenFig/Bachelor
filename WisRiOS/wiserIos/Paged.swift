@@ -12,6 +12,7 @@ import Foundation
 *	A protocol that each sub-ViewController of RoomPageViewController comforms to. 
 */
 protocol Paged {
+    /// The index on the RoomPageViewController
     var pageIndex: Int { get }
     var roomId: String? { get set }
 }

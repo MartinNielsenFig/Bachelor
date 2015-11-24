@@ -9,11 +9,11 @@
 import Foundation
 import JsonSerializerSwift
 
-/// Handles the Http-Calls from the client to the RestAPI
+/// Handles the Http-Calls from the client to the WisRApi
 class HttpHandler {
     
-    static let mainUrl = "http://192.168.198.169:1337/"
-    //static let mainUrl = "http://wisrrestapi.azurewebsites.net/"
+    //static let mainUrl = "http://192.168.198.169:1337/"
+    static let mainUrl = "http://wisrrestapi.azurewebsites.net/"
     //static let mainUrl = "http://wisrrestapi.aceipse.dk/"
     
     static func log(data data: NSData?, response: NSURLResponse?, error: NSError?) {
@@ -23,12 +23,12 @@ class HttpHandler {
     }
     
     /**
-     Sends a HTTP request to the RestAPI with the specified action and body. Then runs a callback-function with the received data as parameters.
-     - parameter action:						Is the HTTP call to invoke on the RestAPI. Follows the "/Controller/Action" pattern.
+     Sends a HTTP request to the WisRApi with the specified action and body. Then runs a callback-function with the received data as parameters.
+     - parameter action:						Is the HTTP call to invoke on the WisRApi. Follows the "/Controller/Action" pattern.
      - parameter type:							Type of call: POST or GET.
      - parameter body:							The body of the POST, empty if GET.
-     - parameter completionHandler:             A closure function to be run when the HTTP request has completed and the client has received an answer from the RestAPI.
-     - parameter notification:                  Data returned from the rest api is always a JSON string of Notification. This function then parses the JSON string to this Notification class.
+     - parameter completionHandler:             A closure function to be run when the HTTP request has completed and the client has received an answer from the WisRApi.
+     - parameter notification:                  Data returned from the WisRApi is always a JSON string of Notification. This function then parses the JSON string to this Notification class.
      - parameter response:                      Metadata associated with the response. See Apple NSURLResponse documentation.
      - parameter error:							Error returned from the server. See Apple dataTaskWithRequest documentation.
      */

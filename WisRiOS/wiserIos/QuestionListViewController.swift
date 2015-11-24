@@ -14,8 +14,11 @@ class QuestionListViewController: UITableViewController, Paged {
     
     //MARK: Properties
     
+    /// The index of this view on the RoomPageViewController
     let pageIndex = 0
+    /// The roomId of the room this QuestionList resides in.
     var roomId: String?
+    /// The questions on the list
     var questions = [Question]() {
         didSet {
             print("QuestionListViewController detected change in self.questions array")

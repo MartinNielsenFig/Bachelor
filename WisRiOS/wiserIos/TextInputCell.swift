@@ -11,14 +11,19 @@ import UIKit
 /// Displays a label and takes text input.
 class TextInputCell: UITableViewCell {
     
+    // MARK: Properties
+    
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var inputField: UITextField!
 
+    // MARK: Lifecycle
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
+    
+    // MARK: Utilities
     
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)

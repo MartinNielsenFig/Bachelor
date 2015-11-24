@@ -290,7 +290,6 @@ namespace WisRRestAPI.Controllers
             }
             return new Notification(null, errorType, errors).ToJson();
         }
-
         /// <summary>
         /// Determine whether a room is present in a given moment. Used to check that you are not inside a room that has been deleted.  
         /// </summary>

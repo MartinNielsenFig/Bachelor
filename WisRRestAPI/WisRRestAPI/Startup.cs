@@ -28,9 +28,6 @@ namespace WisRRestAPI
             container.Register<IUserRepository, UserRepository>(Lifestyle.Singleton);
             container.Register<IRabbitPublisher, rabbitPublisher>(Lifestyle.Singleton);
             DependencyResolver.SetResolver(new SimpleInjectorDependencyResolver(container));
-
-
-            
         }
     }
 }

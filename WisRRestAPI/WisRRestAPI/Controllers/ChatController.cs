@@ -22,7 +22,6 @@ namespace WisRRestAPI.Controllers
     {
         private readonly IRoomRepository _rr;
         private readonly IChatRepository _cr;
-        private readonly JavaScriptSerializer _jsSerializer;
         private IRabbitPublisher _irabbitPublisher;
 
         /// <summary>
@@ -35,7 +34,6 @@ namespace WisRRestAPI.Controllers
         {
             _rr = rr;
             _cr = cr;
-            _jsSerializer = new JavaScriptSerializer();
             _irabbitPublisher = irabbitPublisher;
         }
 
@@ -86,8 +84,6 @@ namespace WisRRestAPI.Controllers
 
             return new Notification(chatMessages.Result.ToJson(), errorType, errors).ToJson();
         }
-
-
         /// <summary>
         /// Fetches messages for the room specified in the msg parameter that is newer than that message.
         /// </summary>

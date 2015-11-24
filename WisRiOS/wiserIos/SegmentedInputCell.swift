@@ -11,9 +11,12 @@ import UIKit
 /// Displays a label and radio button input.
 class SegmentedInputCell: UITableViewCell {
 
+    // MARK: Properties
+    
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var segment: UISegmentedControl!
     
+    // MARK: Lifecycle
     
     override func awakeFromNib() {
         super.awakeFromNib()

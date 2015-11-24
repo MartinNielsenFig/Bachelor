@@ -8,7 +8,7 @@
 
 import Foundation
 
-/// Answer is a users answer to a Question
+/// A user's answer to a Question
 class Answer {
     var Value: String
     var UserId: String

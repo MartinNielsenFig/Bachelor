@@ -6,12 +6,12 @@ AngularJS
 CryptoJS
 Scrollglue
 ChartJS og Angular-chart
-RestAPI
+//RestAPI
 Localization på webapp(ResourceHelper klasse,herunder også tilføjelse af basecontroller) - "Language" er ikke oversat
 Grunt(herunder ngDocs)
 LDAP login
 Image Resizing
-Rest funktioner uden billeder
+//Rest funktioner uden billeder
 Notifications
-denormalize
+//Denormalize
 infinite scrolling og limitTo på rooms tabellen
