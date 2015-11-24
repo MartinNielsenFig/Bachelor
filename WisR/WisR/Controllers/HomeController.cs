@@ -11,6 +11,9 @@ using WisRRestAPI;
 
 namespace WisR.Controllers
 {
+    /// <summary>
+    /// Home controller is used by the homepage for, room and user json-nification
+    /// </summary>
     public class HomeController : BaseController
     {
         private readonly IRabbitSubscriber _rabbitHandler;
@@ -130,6 +133,11 @@ namespace WisR.Controllers
             return new Notification(user.ToJson(), errorType, errors).ToJson(); 
         }
 
+        /// <summary>
+        /// Changes the current culture.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns></returns>
         public ActionResult ChangeCurrentCulture(int id)
         {
             //  

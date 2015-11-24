@@ -4,6 +4,9 @@ using WisR.Helper;
 
 namespace WisR.Controllers
 {
+    /// <summary>
+    /// Used to check if a session has choosen a language, else it take browsers standard
+    /// </summary>
     public class BaseController : Controller
     {
         protected override bool DisableAsyncSupport

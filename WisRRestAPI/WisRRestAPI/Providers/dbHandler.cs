@@ -9,6 +9,9 @@ using WisR.DomainModels;
 
 namespace WisRRestAPI.DomainModel
 {
+    /// <summary>
+    /// The specific db handler for the connection to mongoDB
+    /// </summary>
     public class dbHandler : IdbHandler
     {
         private IMongoDatabase _db;
@@ -18,9 +21,6 @@ namespace WisRRestAPI.DomainModel
             var connection = ConfigurationManager.AppSettings["mongoString"];
             var client = new MongoClient(connection);
             _db = client.GetDatabase("wisr");
-
-            //Update script. Tag to Secret:
-            //db.room.update( { }, { $rename: { "Tag": "Secret" } }, { multi: true } )
         }
 
         public IMongoDatabase getDb()

@@ -234,6 +234,9 @@
     <Compile Include="..\..\WisRRestAPI\WisRRestAPI\DomainModel\MultipleChoiceQuestion.cs">
       <Link>DomainModels\MultipleChoiceQuestion.cs</Link>
     </Compile>
+    <Compile Include="..\..\WisRRestAPI\WisRRestAPI\DomainModel\Notification.cs">
+      <Link>DomainModels\Notification.cs</Link>
+    </Compile>
     <Compile Include="..\..\WisRRestAPI\WisRRestAPI\DomainModel\ResponseOption.cs">
       <Link>DomainModels\ResponseOption.cs</Link>
     </Compile>
@@ -273,7 +276,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\RoomController.cs" />
-    <Compile Include="DomainModels\Notification.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

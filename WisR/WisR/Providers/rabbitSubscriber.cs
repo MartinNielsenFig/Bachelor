@@ -10,6 +10,9 @@ using WisR.Hubs;
 
 namespace WisR.Providers
 {
+    /// <summary>
+    /// The rabbitMQ subsciber that handles all the subscribtions of the application.
+    /// </summary>
     public class RabbitSubscriber : IRabbitSubscriber
     {
         private IConnection _conn;
