@@ -15,9 +15,9 @@ class RoomTableViewController: UITableViewController {
     
     //MARK: Properties
     
-    /// The rooms being represented by the tableView
+    /// The rooms being represented by the tableView.
     var rooms = [Room]()
-    /// All of the rooms on the system. Used because filtering of location is client side. Could be moved to WisR Web API
+    /// All of the rooms on the system. Used because filtering of location is client side. Could be moved to WisR Web API. Loaded from previous ViewController
     var allRooms = [Room]()
     
     //MARK: Lifecycle

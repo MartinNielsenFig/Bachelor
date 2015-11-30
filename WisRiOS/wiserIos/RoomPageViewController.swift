@@ -206,10 +206,6 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
         }))
         alert.addAction(UIAlertAction(title: NSLocalizedString("Update Location", comment: ""), style: .Destructive, handler: { (action) in
             
-            self.room.Location.AccuracyMeters = CurrentUser.sharedInstance.location.AccuracyMeters
-            self.room.Location.Latitude = CurrentUser.sharedInstance.location.Latitude
-            self.room.Location.Longitude = CurrentUser.sharedInstance.location.Longitude
-            
             let location = Coordinate()
             location.AccuracyMeters = CurrentUser.sharedInstance.location.AccuracyMeters
             location.Latitude = CurrentUser.sharedInstance.location.Latitude
@@ -221,6 +217,10 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
                 (notification, response, error) in
                 
                 if notification.ErrorType == .Ok || notification.ErrorType == .OkWithError {
+                    self.room.Location.AccuracyMeters = CurrentUser.sharedInstance.location.AccuracyMeters
+                    self.room.Location.Latitude = CurrentUser.sharedInstance.location.Latitude
+                    self.room.Location.Longitude = CurrentUser.sharedInstance.location.Longitude
+                    
                     Toast.showToast(NSLocalizedString("Location updated.", comment: ""), durationMs: 2000, presenter: self)
                 } else {
                     Toast.showOkToast(NSLocalizedString("Error", comment: ""),
