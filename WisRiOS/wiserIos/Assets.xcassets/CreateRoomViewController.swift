@@ -47,7 +47,7 @@ class CreateRoomViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addRoomButtonPressed:")
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Add, target: self, action: "addRoomBtn:")
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Cancel, target: self, action: "dismiss")
         
     }
@@ -174,7 +174,7 @@ class CreateRoomViewController: UITableViewController {
      Method triggered by add room button. Fetches the data from the UI and instantiates the Room field. Then sends the room as JSON to the WisRApi which handles creation.
      - parameter button:	The button that initated the function call.
      */
-    func addRoomButtonPressed(button: UIBarButtonItem) {
+    func addRoomBtn(button: UIBarButtonItem) {
         
         //Check user inputs
         var msg = ""
