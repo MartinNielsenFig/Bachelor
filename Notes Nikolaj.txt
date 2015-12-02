@@ -12,6 +12,6 @@ Grunt(herunder ngDocs)
 LDAP login
 Image Resizing
 //Rest funktioner uden billeder
-Notifications
+//Notifications
 //Denormalize
 infinite scrolling og limitTo på rooms tabellen
