@@ -465,9 +465,34 @@ q = _qr.GetQuestionWithoutImage(id).Result;
                 return new Notification(null, ErrorTypes.Error, errors).ToJson();
             }
 
-            return new Notification(item.ToJson(), errorType, errors).ToJson();
+            return new Notification(item.Result.ToJson(), errorType, errors).ToJson();
         }
 
+        /// <summary>
+        /// Gets the question by identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>Notification</returns>
+        [System.Web.Mvc.HttpGet]
+        public string GetQuestionWithoutImage(string id) {
+            List<ErrorCodes> errors = new List<ErrorCodes>();
+            ErrorTypes errorType = ErrorTypes.Ok;
+
+            Task<Question> item;
+            try {
+                item = _qr.GetQuestionWithoutImage(id);
+            } catch (Exception) {
+                errors.Add(ErrorCodes.CouldNotGetQuestions);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
+            }
+
+            if (item == null) {
+                errors.Add(ErrorCodes.CouldNotGetQuestions);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
+            }
+
+            return new Notification(item.Result.ToJson(), errorType, errors).ToJson();
+        }
 
         /// <summary>
         /// Deletes the question.
