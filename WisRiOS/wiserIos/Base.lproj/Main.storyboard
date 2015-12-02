@@ -24,6 +24,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IaR-K2-F17">
                                         <rect key="frame" x="0.0" y="0.0" width="89" height="30"/>
                                         <animations/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <state key="normal" title="Create Room"/>
                                         <connections>
                                             <action selector="clickCreateRoomBtn:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8Wu-Ut-xNU"/>
@@ -32,6 +33,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zXc-jJ-l7g">
                                         <rect key="frame" x="139" y="0.0" width="72" height="30"/>
                                         <animations/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <state key="normal" title="Join Room"/>
                                         <connections>
                                             <segue destination="C4H-el-owm" kind="show" identifier="JoinRoom" id="g9T-Lu-mcY"/>
@@ -43,6 +45,9 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="1Bg-Rj-sGb">
                                 <rect key="frame" x="20" y="134" width="560" height="446"/>
                                 <animations/>
+                                <variation key="heightClass=compact" misplaced="YES">
+                                    <rect key="frame" x="20" y="134" width="560" height="246"/>
+                                </variation>
                             </mapView>
                         </subviews>
                         <animations/>
