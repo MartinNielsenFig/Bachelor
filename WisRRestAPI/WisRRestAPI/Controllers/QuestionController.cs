@@ -20,18 +20,31 @@ using WisRRestAPI.Providers;
 
 namespace WisRRestAPI.Controllers
 {
-    //Todo handle errors with Error() class.
+    /// <summary>
+    /// The question controller is used to handle the question CRUD's
+    /// </summary>
     public class QuestionController : Controller
     {
         private readonly IRoomRepository _rr;
         private readonly IQuestionRepository _qr;
         private readonly IRabbitPublisher _irabbitPublisher;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="QuestionController"/> class.
+        /// </summary>
+        /// <param name="qr">The question repository.</param>
+        /// <param name="irabbitPublisher">The rabbitMQ publisher.</param>
+        /// <param name="rr">The room repository.</param>
         public QuestionController(IQuestionRepository qr, IRabbitPublisher irabbitPublisher, IRoomRepository rr)
         {
             _rr = rr;
             _qr = qr;
             _irabbitPublisher = irabbitPublisher;
         }
+
+        /// <summary>
+        /// Gets all.
+        /// </summary>
+        /// <returns>Notification</returns>
         [System.Web.Mvc.HttpGet]
         public string GetAll()
         {
@@ -62,6 +75,12 @@ temp= questions.Result.ToJson();
             
             return new Notification(temp, errorType, errors).ToJson();
         }
+
+        /// <summary>
+        /// Gets the questions from room identifier.
+        /// </summary>
+        /// <param name="roomId">The room identifier.</param>
+        /// <returns>Notification</returns>
         [System.Web.Mvc.HttpGet]
         public string GetQuestionsForRoom(string roomId) {
             List<ErrorCodes> errors = new List<ErrorCodes>();
@@ -80,6 +99,11 @@ temp= questions.Result.ToJson();
             
             return new Notification(qList.Result.ToJson(), errorType, errors).ToJson();
         }
+        /// <summary>
+        /// Gets the questions without images from room identifier.
+        /// </summary>
+        /// <param name="roomId">The room identifier.</param>
+        /// <returns>Notification</returns>
         [System.Web.Mvc.HttpGet]
         public string GetQuestionsForRoomWithoutImages(string roomId)
         {
@@ -110,6 +134,11 @@ temp= questions.Result.ToJson();
             
             return new Notification(result, errorType, errors).ToJson();
         }
+        /// <summary>
+        /// Gets the image by question identifier.
+        /// </summary>
+        /// <param name="questionId">The question identifier.</param>
+        /// <returns>Notification</returns>
         [System.Web.Mvc.HttpGet]
         public string GetImageByQuestionId(string questionId)
         {
@@ -131,6 +160,13 @@ temp= questions.Result.ToJson();
 
             return new Notification(result.Img, errorType, errors).ToJson();
         }
+
+        /// <summary>
+        /// Creates the question.
+        /// </summary>
+        /// <param name="question">The question.</param>
+        /// <param name="type">The type.</param>
+        /// <returns>Notification</returns>
         [System.Web.Mvc.HttpPost]
         public string CreateQuestion(string question, string type)
         {
@@ -198,6 +234,14 @@ temp= questions.Result.ToJson();
 
             return new Notification(null, errorType, errors).ToJson();
         }
+
+        /// <summary>
+        /// Updates the question.
+        /// </summary>
+        /// <param name="question">The question.</param>
+        /// <param name="type">The type.</param>
+        /// <param name="id">The identifier.</param>
+        /// <returns>Notification</returns>
         [System.Web.Mvc.HttpPost]
         public string UpdateQuestion(string question, string type, string id)
         {
@@ -245,6 +289,13 @@ temp= questions.Result.ToJson();
             }
             return new Notification(null, errorType, errors).ToJson();
         }
+
+        /// <summary>
+        /// Adds the question response.
+        /// </summary>
+        /// <param name="response">The response.</param>
+        /// <param name="questionId">The question identifier.</param>
+        /// <returns>Notification</returns>
         [System.Web.Mvc.HttpPost]
         public string AddQuestionResponse(string response, string questionId)
         {
@@ -317,6 +368,14 @@ _qr.UpdateQuestionResults(questionId, q);
            
             return new Notification(null, errorType, errors).ToJson();
         }
+
+        /// <summary>
+        /// Adds the vote.
+        /// </summary>
+        /// <param name="vote">The vote.</param>
+        /// <param name="type">The type.</param>
+        /// <param name="id">The identifier.</param>
+        /// <returns>Notification</returns>
         public string AddVote(string vote, string type, string id) {
             List<ErrorCodes> errors = new List<ErrorCodes>();
             ErrorTypes errorType = ErrorTypes.Ok;
@@ -377,6 +436,12 @@ q = _qr.GetQuestionWithoutImage(id).Result;
 
             return new Notification(null, errorType, errors).ToJson();
         }
+
+        /// <summary>
+        /// Gets the question by identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>Notification</returns>
         [System.Web.Mvc.HttpGet]
         public string GetById(string id)
         {
@@ -402,6 +467,13 @@ q = _qr.GetQuestionWithoutImage(id).Result;
 
             return new Notification(item.ToJson(), errorType, errors).ToJson();
         }
+
+
+        /// <summary>
+        /// Deletes the question.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>Notification</returns>
         [System.Web.Mvc.HttpDelete]
         public string DeleteQuestion(string id)
         {

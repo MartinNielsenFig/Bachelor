@@ -254,7 +254,7 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
         }
         else if segue.identifier == "JoinRoom" {
             //let roomTableViewController = segue.destinationViewController as! RoomTableViewController
-            //no need for initilizing
+            //no need for initializing
         }
     }
 }

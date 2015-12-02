@@ -15,18 +15,32 @@ using WisRRestAPI.Providers;
 
 namespace WisRRestAPI.Controllers
 {
+    /// <summary>
+    /// The chat controller is used to handle the chat CRUD's
+    /// </summary>
     public class ChatController : Controller
     {
         private readonly IRoomRepository _rr;
         private readonly IChatRepository _cr;
         private IRabbitPublisher _irabbitPublisher;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ChatController"/> class.
+        /// </summary>
+        /// <param name="cr">The chat repository.</param>
+        /// <param name="irabbitPublisher">The rabbitMQ publisher.</param>
+        /// <param name="rr">The room repository.</param>
         public ChatController(IChatRepository cr, IRabbitPublisher irabbitPublisher, IRoomRepository rr)
         {
             _rr = rr;
             _cr = cr;
             _irabbitPublisher = irabbitPublisher;
         }
+
+        /// <summary>
+        /// Gets all.
+        /// </summary>
+        /// <returns>Notification</returns>
         [System.Web.Mvc.HttpGet]
         public string GetAll()
         {
@@ -46,6 +60,11 @@ namespace WisRRestAPI.Controllers
            
             return new Notification(chatMessages.Result.ToJson(), errorType, errors).ToJson();
         }
+        /// <summary>
+        /// Gets all by room identifier.
+        /// </summary>
+        /// <param name="roomId">The room identifier.</param>
+        /// <returns>Notification</returns>
         [System.Web.Mvc.HttpPost]
         public string GetAllByRoomId(string roomId)
         {
@@ -101,6 +120,12 @@ namespace WisRRestAPI.Controllers
 
             return new Notification(newerMessages.ToJson(), errorType, errors).ToJson();
         }
+
+        /// <summary>
+        /// Creates the chat message.
+        /// </summary>
+        /// <param name="ChatMessage">The chat message.</param>
+        /// <returns>Notification</returns>
         [System.Web.Mvc.HttpPost]
         public string CreateChatMessage(string ChatMessage)
         {
@@ -127,6 +152,17 @@ namespace WisRRestAPI.Controllers
             //Assign date to ChatMessage
             chatMsg.Timestamp = TimeHelper.timeSinceEpoch();
 
+            try
+            {
+                _cr.AddChatMessage(chatMsg);
+            }
+            catch (Exception)
+            {
+                errors.Add(ErrorCodes.CouldNotGetChatMessages);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
+            }
+            
+
             //assign ID to room
             chatMsg.Id = ObjectId.GenerateNewId(DateTime.Now).ToString();
             try
@@ -139,8 +175,14 @@ namespace WisRRestAPI.Controllers
                errorType = ErrorTypes.Complicated;
             }
 
-            return new Notification(_cr.AddChatMessage(chatMsg), errorType, errors).ToJson(); 
+            return new Notification(null, errorType, errors).ToJson(); 
         }
+
+        /// <summary>
+        /// Gets by identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>Notification</returns>
         [System.Web.Mvc.HttpGet]
         public string GetById(string id)
         {
@@ -166,6 +208,11 @@ namespace WisRRestAPI.Controllers
 
             return new Notification(item.ToJson(), errorType, errors).ToJson();
         }
+        /// <summary>
+        /// Deletes the chat message by identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>Notification</returns>
         [System.Web.Mvc.HttpDelete]
         public string DeleteChatMessage(string id)
         {

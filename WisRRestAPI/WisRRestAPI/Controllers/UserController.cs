@@ -14,14 +14,25 @@ using WisRRestAPI.DomainModel;
 
 namespace WisRRestAPI.Controllers
 {
+    /// <summary>
+    /// The user controller is used to handle the user CRUD's
+    /// </summary>
     public class UserController : Controller
     {
         private readonly IUserRepository _ur;
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UserController"/> class.
+        /// </summary>
+        /// <param name="ur">The user repository.</param>
         public UserController(IUserRepository ur)
         {
             _ur = ur;
         }
 
+        /// <summary>
+        /// Gets all.
+        /// </summary>
+        /// <returns>Notification</returns>
         [System.Web.Mvc.HttpGet]
         public string GetAll()
         {
@@ -41,8 +52,13 @@ namespace WisRRestAPI.Controllers
             return new Notification(Users.Result.ToJson(), errorType, errors).ToJson();
         }
 
-        //Creates an user on MongoDB from User with facebook ID, then returns MongoDB ID.
-        //If user already exists, returns MongoDB ID.
+
+        /// <summary>
+        /// Creates an user on MongoDB from User with facebook ID.
+        /// If user already exists, returns MongoDB ID.
+        /// </summary>
+        /// <param name="User">The user.</param>
+        /// <returns>Notification</returns>
         [System.Web.Mvc.HttpPost]
         public string CreateUser(string User)
         {
@@ -111,6 +127,12 @@ namespace WisRRestAPI.Controllers
             
         }
 
+        /// <summary>
+        /// Updates the user.
+        /// </summary>
+        /// <param name="User">The user with updates.</param>
+        /// <param name="Id">The identifier.</param>
+        /// <returns>Notification</returns>
         [System.Web.Mvc.HttpPost]
         public string UpdateUser(string User, string Id)
         {
@@ -141,6 +163,11 @@ namespace WisRRestAPI.Controllers
             return new Notification(null, errorType, errors).ToJson();
         }
 
+        /// <summary>
+        /// Gets by the identifier.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>Notification</returns>
         [System.Web.Mvc.HttpPost]
         public string GetById(string id)
         {
@@ -172,6 +199,11 @@ namespace WisRRestAPI.Controllers
 
             return new Notification(item.ToJson(), errorType, errors).ToJson();
         }
+        /// <summary>
+        /// Deletes the user.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>Notification</returns>
         [System.Web.Mvc.HttpDelete]
         public string DeleteUser(string id)
         {
@@ -197,6 +229,11 @@ namespace WisRRestAPI.Controllers
             return new Notification(null, ErrorTypes.Error, errors).ToJson();
         }
 
+        /// <summary>
+        /// Gets the wisr identifier from facebook identifier.
+        /// </summary>
+        /// <param name="facebookId">The facebook identifier.</param>
+        /// <returns>Notification</returns>
         [System.Web.Mvc.HttpPost]
         public string GetWisrIdFromFacebookId(string facebookId)
         {

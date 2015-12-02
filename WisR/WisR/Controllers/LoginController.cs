@@ -6,6 +6,9 @@ using Facebook;
 
 namespace WisR.Controllers
 {
+    /// <summary>
+    /// Login controller is used to authentication of users.
+    /// </summary>
     public class LoginController : BaseController
     {
         public string redirecturi;
@@ -22,6 +25,9 @@ namespace WisR.Controllers
             }
         }
 
+        /// <summary>
+        /// Logins with facebook.
+        /// </summary>
         public void LoginWithFacebook()
         {
             //Save culture information before deleting session
@@ -41,6 +47,12 @@ namespace WisR.Controllers
             Response.Redirect(loginUrl.AbsoluteUri);
         }
 
+        /// <summary>
+        /// Logins with LDAP.
+        /// </summary>
+        /// <param name="email">The email.</param>
+        /// <param name="password">The password.</param>
+        /// <returns></returns>
         public string LoginWithLDAP(string email, string password)
         {
             var authenticated = false;
@@ -66,6 +78,10 @@ namespace WisR.Controllers
             return authenticated.ToString();
         }
 
+        /// <summary>
+        /// Checks if user is logged in
+        /// </summary>
+        /// <returns></returns>
         public ActionResult LoginCheck()
         {
             if (Request.QueryString["code"] == null)
@@ -92,22 +108,17 @@ namespace WisR.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        /// <summary>
+        /// Logouts this instance.
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Logout()
         {
-            //if (Session["AccessToken"] != null)
-            //{
-            //var token = Session["AccessToken"].ToString();
-            //var client = new FacebookClient();
-
-            //var logoutUrl = client.GetLogoutUrl(new { access_token = token, next = redirecturi });
-
-            //Response.Redirect(logoutUrl.AbsoluteUri);
             //Save culture information before deleting session
             var culture = (int) Session["CurrentCulture"];
             Session.RemoveAll();
             Session["CurrentCulture"] = culture;
-            //}
-
+            
             return RedirectToAction("Index", "Home");
         }
     }

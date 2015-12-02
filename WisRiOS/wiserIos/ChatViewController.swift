@@ -27,50 +27,15 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var chatUpdater: Updater?
     /// A boolean that indicates whether it's the first time loading the chat. Used to scroll to the bottom.
     var firstLoad = true
+    /// Manually keep track of keyboard shown
     
+    
+    
+    @IBOutlet weak var keyboardHeightLayoutConstraint: NSLayoutConstraint!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var textMessageInput: UITextField!
     @IBOutlet weak var messageInputStack: UIStackView!
     @IBOutlet weak var messageInputStackContainerView: UIView!
-    
-    //MARK: Actions
-    
-    @IBAction func sendPressed(sender: AnyObject) {
-        chatUpdater?.stop()
-        if let text = textMessageInput.text where text.isEmpty {
-            print("empty message not allowed in chat")
-            return
-        }
-        
-        let msg = ChatMessage()
-        msg.ByUserId = CurrentUser.sharedInstance._id
-        msg.RoomId = roomId
-        msg.ByUserDisplayName = CurrentUser.sharedInstance.DisplayName
-        //message timestamp gets created on WisRApi
-        msg.Value = textMessageInput.text
-        
-        let msgJson = JSONSerializer.toJson(msg)
-        let body = "ChatMessage=\(msgJson)"
-        HttpHandler.requestWithResponse(action: "Chat/CreateChatMessage", type: "POST", body: body) {
-            (notification, response, error) in
-            
-            if notification.ErrorType == .Ok || notification.ErrorType == .OkWithError {
-                dispatch_async(dispatch_get_main_queue()) {
-                    self.textMessageInput.text = ""
-                    
-                    //If the last message is not visible, scroll to bottom
-                    if self.stickToBottom() {
-                        self.scrollToBottom()
-                    }
-                    self.chatUpdater?.start()
-                    self.chatUpdater?.execute()
-                }
-            } else {
-                print("Could not create chat message")
-                print(notification.Errors)
-            }
-        }
-    }
     
     //MARK: Lifecycle
     
@@ -99,23 +64,66 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     //Setup registering for keyboard events
     override func viewWillAppear(animated: Bool) {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "appGoesToBackground:", name: UIApplicationWillResignActiveNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardNotification:", name: UIKeyboardWillChangeFrameNotification, object: nil)
         
         //"Resolving Strong Reference Cycles for Closures" Apple swift documentation
-        chatUpdater = Updater(secondsDelay: 2, function: { [unowned self] () in
+        chatUpdater = Updater(secondsDelay: 2, function: {
+            [unowned self] () in
             self.updateChatPoll()
+            
             }, debugName: "ChatPoll")
         chatUpdater?.execute()
     }
     
     override func viewWillDisappear(animated: Bool) {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationWillResignActiveNotification, object: nil)
         
         chatUpdater?.stop()
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    
+    //MARK: Actions
+    
+    @IBAction func sendPressed(sender: AnyObject) {
+        let inputText = textMessageInput.text
+        textMessageInput.text = ""
+        
+        if let text = inputText where text.isEmpty {
+            print("empty message not allowed in chat")
+            return
+        }
+        chatUpdater?.stop()
+        
+        let msg = ChatMessage()
+        msg.ByUserId = CurrentUser.sharedInstance._id
+        msg.RoomId = roomId
+        msg.ByUserDisplayName = CurrentUser.sharedInstance.DisplayName
+        //message timestamp gets created on WisRApi
+        msg.Value = inputText
+        
+        let msgJson = JSONSerializer.toJson(msg)
+        let body = "ChatMessage=\(msgJson)"
+        HttpHandler.requestWithResponse(action: "Chat/CreateChatMessage", type: "POST", body: body) {
+            (notification, response, error) in
+            
+            if notification.ErrorType == .Ok || notification.ErrorType == .OkWithError {
+                dispatch_async(dispatch_get_main_queue()) {
+                    
+                    //If the last message is not visible, scroll to bottom
+                    if self.stickToBottom() {
+                        self.scrollToBottom()
+                    }
+                    self.chatUpdater?.start()
+                    self.chatUpdater?.execute()
+                }
+            } else {
+                print("Could not create chat message")
+                print(notification.Errors)
+            }
+        }
     }
     
     //MARK: Utilities
@@ -173,15 +181,15 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
      Scrolls to the bottom of the table view presented on this page
      */
     func scrollToBottom() {
-        //let chatFieldHeight = self.messageInputStack.frame.height + 10
         dispatch_async(dispatch_get_main_queue()) {
             if self.messages.count > 0 {
-                self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.messages.count-1, inSection: 0), atScrollPosition: UITableViewScrollPosition.Bottom, animated: false)
+                self.tableView.reloadData()
+                self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: self.messages.count-1, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: false)
             }
         }
     }
-
-
+    
+    
     /**
      Policy that determines whether updates to the chat should scroll the UITableView to the bottom. This is to ensure that the user can scroll up the list to look at older messages, without the UITableView scrolling down again.
      - returns: Whether UITableView should scroll to bottom on updates.
@@ -202,7 +210,8 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func isMessageShown(row: Int) -> Bool {
         var visible = false
         if messages.count > 0 {
-            self.tableView.indexPathsForVisibleRows?.forEach({ (indexPath) -> () in
+            self.tableView.indexPathsForVisibleRows?.forEach({
+                (indexPath) -> () in
                 if indexPath.row == row {
                     visible = true
                 }
@@ -217,7 +226,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
      Looks through the downloaded messages and looks for the newest message. Then returns its timestamp. Could probably just look at the message last in the array.
      - returns: Timestamp as seconds since 1-1-1970.
      */
-    func oldestMessageEpochByIteration() -> Double {
+    func newestMessageByIteration() -> Double {
         var oldestTime = 0.0
         for m in self.messages {
             if let timeStamp = m.Timestamp {
@@ -245,7 +254,6 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
-    
     //MARK: UITableViewController
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -255,7 +263,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
-
+        
         cell.textLabel?.numberOfLines = 0
         let msg = messages[indexPath.row]
         
@@ -312,52 +320,45 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func appGoesToBackground(notification: NSNotification) {
         print("app goes to background")
         
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationWillResignActiveNotification, object: nil)
     }
     
-    //Keyboard hide/show based upon https://github.com/Lightstreamer/Lightstreamer-example-Chat-client-ios-swift with modifications
-    func keyboardWillShow(notification: NSNotification) {
-        print("\(__FUNCTION__) has been called")
+    
+    /**
+     Called on keyboard notification events. Handles moving the chat window screen up/down upon keyboard show/hide. Code is from http://stackoverflow.com/questions/25693130/move-textfield-when-keyboard-appears-swift
+     - parameter notification:	The keyboard notification
+     */
+    func keyboardNotification(notification: NSNotification) {
         
-        // Reducing size of table
-        let baseView = self.view
-        let keyboardFrame = notification.userInfo![UIKeyboardFrameBeginUserInfoKey]!.CGRectValue
-        let animationDuration = notification.userInfo![UIKeyboardAnimationDurationUserInfoKey]!.doubleValue
+        print("keyboard notification")
         
-        let visibleRows = tableView!.indexPathsForVisibleRows
-        var lastIndexPath : NSIndexPath? = nil
-        
-        if (visibleRows != nil) && visibleRows!.count > 0 {
-            lastIndexPath = visibleRows![visibleRows!.count-1] as NSIndexPath
+        if let userInfo = notification.userInfo {
+            let endFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.CGRectValue()
+            
+            if endFrame?.origin.y >= UIScreen.mainScreen().bounds.size.height {
+                self.keyboardHeightLayoutConstraint?.constant = 0
+            } else if let height = endFrame?.size.height {
+                self.keyboardHeightLayoutConstraint?.constant = height - kbOffset
+            } else {
+                self.keyboardHeightLayoutConstraint?.constant = 0
+            }
+            
+            //Animation stuff
+            
+            let duration:NSTimeInterval = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0
+            let animationCurveRawNSN = userInfo[UIKeyboardAnimationCurveUserInfoKey] as? NSNumber
+            let animationCurveRaw = animationCurveRawNSN?.unsignedLongValue ?? UIViewAnimationOptions.CurveEaseInOut.rawValue
+            let animationCurve:UIViewAnimationOptions = UIViewAnimationOptions(rawValue: animationCurveRaw)
+            
+            UIView.animateWithDuration(duration,
+                delay: NSTimeInterval(0),
+                options: animationCurve,
+                animations: { self.view.layoutIfNeeded() },
+                completion:  { (Bool) -> Void in self.scrollToBottom()})
+            
         }
-        
-        UIView.animateWithDuration(animationDuration, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-            baseView!.frame = CGRectMake(baseView!.frame.origin.x, baseView!.frame.origin.y, baseView!.frame.size.width, baseView!.frame.size.height - keyboardFrame.height + self.kbOffset)
-            }, completion: {
-                (finished: Bool) in
-                if lastIndexPath != nil {
-                    // Scroll down the table so that the last
-                    // visible row remains visible
-                    self.tableView.scrollToRowAtIndexPath(lastIndexPath!, atScrollPosition: UITableViewScrollPosition.Bottom, animated: true)
-                }
-        })
     }
     
-    func keyboardWillHide(notification: NSNotification) {
-        print("\(__FUNCTION__) has been called")
-        
-        // Expanding size of table
-        let baseView = self.view
-        let keyboardFrame = notification.userInfo![UIKeyboardFrameBeginUserInfoKey]!.CGRectValue
-        let animationDuration = notification.userInfo![UIKeyboardAnimationDurationUserInfoKey]!.doubleValue
-        
-        UIView.animateWithDuration(animationDuration, delay: 0.0, options: UIViewAnimationOptions.CurveEaseOut, animations: {
-            baseView!.frame = CGRectMake(baseView!.frame.origin.x, baseView!.frame.origin.y, baseView!.frame.size.width, baseView!.frame.size.height + keyboardFrame.height - self.kbOffset)
-            
-            }, completion: nil)
-    }
 }
 
 

@@ -10,6 +10,9 @@ using WisRRestAPI;
 
 namespace WisR.Controllers
 {
+    /// <summary>
+    /// Romm controller is used by the room page for, question and chatmessage json-nification
+    /// </summary>
     public class RoomController : BaseController
     {
         private readonly IRabbitSubscriber _rabbitSubscriber;
@@ -28,6 +31,21 @@ namespace WisR.Controllers
             return View();
         }
 
+        /// <summary>
+        /// To json question convertion.
+        /// </summary>
+        /// <param name="CreatedBy">Created by.</param>
+        /// <param name="CreatedByUserName">Name of the user.</param>
+        /// <param name="RoomId">The room identifier.</param>
+        /// <param name="Image">The image.</param>
+        /// <param name="QuestionText">The question text.</param>
+        /// <param name="ResponseOptions">The response options.</param>
+        /// <param name="QuestionResult">The question result.</param>
+        /// <param name="CreationTimestamp">The creation timestamp.</param>
+        /// <param name="ExpireTimestamp">The expire timestamp.</param>
+        /// <param name="QuetionsType">Type of the quetions.</param>
+        /// <param name="Votes">The votes.</param>
+        /// <returns></returns>
         public string toJsonQuestion(string CreatedBy,string CreatedByUserName, string RoomId, string Image, string QuestionText,
             string ResponseOptions, string QuestionResult, string CreationTimestamp, string ExpireTimestamp,
             string QuetionsType, string Votes)
@@ -90,6 +108,14 @@ namespace WisR.Controllers
             ;
         }
 
+        /// <summary>
+        /// To json chat message conversion.
+        /// </summary>
+        /// <param name="userId">The user identifier.</param>
+        /// <param name="userDisplayName">Name of the user.</param>
+        /// <param name="roomId">The room identifier.</param>
+        /// <param name="text">The text.</param>
+        /// <returns></returns>
         public string toJsonChatMessage(string userId,string userDisplayName, string roomId, string text)
         {
             List<ErrorCodes> errors = new List<ErrorCodes>();

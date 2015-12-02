@@ -11,6 +11,9 @@ using WisRRestAPI;
 
 namespace WisR.Controllers
 {
+    /// <summary>
+    /// Home controller is used by the homepage for, room and user json-nification
+    /// </summary>
     public class HomeController : BaseController
     {
         private readonly IRabbitSubscriber _rabbitHandler;
@@ -43,7 +46,7 @@ namespace WisR.Controllers
         /// <param name="locationLongitude">The location longitude.</param>
         /// <param name="locationAccuracyMeters">The location accuracy meters.</param>
         /// <param name="locationFormattedAddress">The location formatted address.</param>
-        /// <returns></returns>
+        /// <returns>The Room as Json string</returns>
         public string toJsonRoom(string RoomName, string CreatedBy, int radius, string secret, string password,
             bool hasChat, bool userCanAsk, bool allowAnonymous, bool useLocation, string locationTimestamp,
             double locationLatitude, double locationLongitude, int locationAccuracyMeters,
@@ -85,7 +88,7 @@ namespace WisR.Controllers
         }
 
         /// <summary>
-        ///     To the json user.
+        ///     Converts the user to json.
         /// </summary>
         /// <param name="encryptedPassword">The encrypted password.</param>
         /// <param name="facebookId">The facebook identifier.</param>
@@ -93,7 +96,7 @@ namespace WisR.Controllers
         /// <param name="displayName">The display name.</param>
         /// <param name="email">The email.</param>
         /// <param name="connectedRoomIds">The connected room ids.</param>
-        /// <returns></returns>
+        /// <returns>The User as Json string</returns>
         public string toJsonUser(string encryptedPassword, string facebookId, string lDAPUserName, string displayName,
             string email, string connectedRoomIds)
         {
@@ -130,6 +133,11 @@ namespace WisR.Controllers
             return new Notification(user.ToJson(), errorType, errors).ToJson(); 
         }
 
+        /// <summary>
+        /// Changes the current culture.
+        /// </summary>
+        /// <param name="id">The identifier.</param>
+        /// <returns>Returns you to the page the request came from</returns>
         public ActionResult ChangeCurrentCulture(int id)
         {
             //  

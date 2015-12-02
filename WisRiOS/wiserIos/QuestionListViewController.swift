@@ -77,6 +77,7 @@ class QuestionListViewController: UITableViewController, Paged {
             
             let q = questions[indexPath.row]
             if CurrentUser.sharedInstance._id == nil || q.CreatedById != CurrentUser.sharedInstance._id! {
+                print("not logged in or question created by is unknown")
                 return
             }
             
@@ -91,7 +92,8 @@ class QuestionListViewController: UITableViewController, Paged {
             
             func deleteThen(edit edit: Bool) {
                 if let parent = (self.parentViewController?.parentViewController as? RoomPageViewController) {
-                    HttpHandler.requestWithResponse(action: "Question/DeleteQuestion?id=\(q._id!)", type: "DELETE", body: "", completionHandler: { (notification, response, error) in
+                    HttpHandler.requestWithResponse(action: "Question/DeleteQuestion?id=\(q._id!)", type: "DELETE", body: "", completionHandler: {
+                        (notification, response, error) in
                         
                         if notification.ErrorType == .Ok || notification.ErrorType == .OkWithError {
                             if edit {

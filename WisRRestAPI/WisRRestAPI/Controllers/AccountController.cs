@@ -19,6 +19,9 @@ using WisRRestAPI.Results;
 
 namespace WisRRestAPI.Controllers
 {
+    /// <summary>
+    /// This is scaffoled by ASP.Net
+    /// </summary>
     [Authorize]
     [RoutePrefix("api/Account")]
     public class AccountController : ApiController
