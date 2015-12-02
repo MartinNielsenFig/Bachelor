@@ -152,19 +152,20 @@ namespace WisRRestAPI.Controllers
             //Assign date to ChatMessage
             chatMsg.Timestamp = TimeHelper.timeSinceEpoch();
 
-            try
-            {
-                _cr.AddChatMessage(chatMsg);
-            }
-            catch (Exception)
-            {
-                errors.Add(ErrorCodes.CouldNotGetChatMessages);
-                return new Notification(null, ErrorTypes.Error, errors).ToJson();
-            }
+           
             
 
             //assign ID to room
             chatMsg.Id = ObjectId.GenerateNewId(DateTime.Now).ToString();
+            try
+            {
+                _cr.AddChatMessage(chatMsg);
+            }
+            catch (Exception e)
+            {
+                errors.Add(ErrorCodes.CouldNotGetChatMessages);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
+            }
             try
             {
                 _irabbitPublisher.publishString("CreateChatMessage", chatMsg.ToJson());
