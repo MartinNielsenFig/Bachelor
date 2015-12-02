@@ -1,0 +1,25 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_modulef68b0720fe4f447bdb7b367f1da08d65}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/chain/wrapper\+Concat.\+js}
+var array = \mbox{[}1\mbox{]}; var wrapped = \+\_\+(array).concat(2, \mbox{[}3\mbox{]}, \mbox{[}\mbox{[}4\mbox{]}\mbox{]});
+
+console.\+log(wrapped.\+value()); // =$>$ \mbox{[}1, 2, 3, \mbox{[}4\mbox{]}\mbox{]}
+
+console.\+log(array); // =$>$ \mbox{[}1\mbox{]}
+
+
+\begin{DoxyCodeInclude}
+var arrayConcat = require(\textcolor{stringliteral}{'../internal/arrayConcat'}),
+    baseFlatten = require(\textcolor{stringliteral}{'../internal/baseFlatten'}),
+    isArray = require(\textcolor{stringliteral}{'../lang/isArray'}),
+    restParam = require(\textcolor{stringliteral}{'../function/restParam'}),
+    toObject = require(\textcolor{stringliteral}{'../internal/toObject'});
+
+var wrapperConcat = restParam(\textcolor{keyword}{function}(values) \{
+  values = baseFlatten(values);
+  \textcolor{keywordflow}{return} this.thru(\textcolor{keyword}{function}(array) \{
+    \textcolor{keywordflow}{return} arrayConcat(isArray(array) ? array : [toObject(array)], values);
+  \});
+\});
+
+module.exports = wrapperConcat;
+\end{DoxyCodeInclude}
+ 

@@ -1,0 +1,35 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module1dacf9b3929c42ed3a17c54220d9a4ba}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/array/chunk.\+js}
+\+\_\+.\+chunk(\mbox{[}\textquotesingle{}a\textquotesingle{}, \textquotesingle{}b\textquotesingle{}, \textquotesingle{}c\textquotesingle{}, \textquotesingle{}d\textquotesingle{}\mbox{]}, 2); // =$>$ \mbox{[}\mbox{[}\textquotesingle{}a\textquotesingle{}, \textquotesingle{}b\textquotesingle{}\mbox{]}, \mbox{[}\textquotesingle{}c\textquotesingle{}, \textquotesingle{}d\textquotesingle{}\mbox{]}\mbox{]}
+
+\+\_\+.\+chunk(\mbox{[}\textquotesingle{}a\textquotesingle{}, \textquotesingle{}b\textquotesingle{}, \textquotesingle{}c\textquotesingle{}, \textquotesingle{}d\textquotesingle{}\mbox{]}, 3); // =$>$ \mbox{[}\mbox{[}\textquotesingle{}a\textquotesingle{}, \textquotesingle{}b\textquotesingle{}, \textquotesingle{}c\textquotesingle{}\mbox{]}, \mbox{[}\textquotesingle{}d\textquotesingle{}\mbox{]}\mbox{]}
+
+
+\begin{DoxyCodeInclude}
+var baseSlice = require(\textcolor{stringliteral}{'../internal/baseSlice'}),
+    isIterateeCall = require(\textcolor{stringliteral}{'../internal/isIterateeCall'});
+
+\textcolor{comment}{/* Native method references for those with the same name as other `lodash` methods. */}
+var nativeCeil = Math.ceil,
+    nativeFloor = Math.floor,
+    nativeMax = Math.max;
+
+\textcolor{keyword}{function} chunk(array, size, guard) \{
+  \textcolor{keywordflow}{if} (guard ? isIterateeCall(array, size, guard) : size == null) \{
+    size = 1;
+  \} \textcolor{keywordflow}{else} \{
+    size = nativeMax(nativeFloor(size) || 1, 1);
+  \}
+  var index = 0,
+      length = array ? array.length : 0,
+      resIndex = -1,
+      result = Array(nativeCeil(length / size));
+
+  \textcolor{keywordflow}{while} (index < length) \{
+    result[++resIndex] = baseSlice(array, index, (index += size));
+  \}
+  \textcolor{keywordflow}{return} result;
+\}
+
+module.exports = chunk;
+\end{DoxyCodeInclude}
+ 

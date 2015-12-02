@@ -1,0 +1,17 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module51d53fd4833215a35ce65f37e207e0df}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/lang/is\+Element.\+js}
+\+\_\+.\+is\+Element(document.\+body); // =$>$ true
+
+\+\_\+.\+is\+Element(\textquotesingle{}$<$body$>$\textquotesingle{}); // =$>$ false
+
+
+\begin{DoxyCodeInclude}
+var isObjectLike = require(\textcolor{stringliteral}{'../internal/isObjectLike'}),
+    isPlainObject = require(\textcolor{stringliteral}{'./isPlainObject'});
+
+\textcolor{keyword}{function} isElement(value) \{
+  \textcolor{keywordflow}{return} !!value && value.nodeType === 1 && isObjectLike(value) && !isPlainObject(value);
+\}
+
+module.exports = isElement;
+\end{DoxyCodeInclude}
+ 

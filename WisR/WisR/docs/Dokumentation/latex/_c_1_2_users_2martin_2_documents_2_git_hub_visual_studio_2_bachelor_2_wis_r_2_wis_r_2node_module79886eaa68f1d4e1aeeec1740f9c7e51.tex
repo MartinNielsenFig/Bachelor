@@ -1,0 +1,24 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module79886eaa68f1d4e1aeeec1740f9c7e51}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/array/compact.\+js}
+\+\_\+.\+compact(\mbox{[}0, 1, false, 2, \textquotesingle{}\textquotesingle{}, 3\mbox{]}); // =$>$ \mbox{[}1, 2, 3\mbox{]}
+
+
+\begin{DoxyCodeInclude}
+
+\textcolor{keyword}{function} compact(array) \{
+  var index = -1,
+      length = array ? array.length : 0,
+      resIndex = -1,
+      result = [];
+
+  \textcolor{keywordflow}{while} (++index < length) \{
+    var value = array[index];
+    \textcolor{keywordflow}{if} (value) \{
+      result[++resIndex] = value;
+    \}
+  \}
+  \textcolor{keywordflow}{return} result;
+\}
+
+module.exports = compact;
+\end{DoxyCodeInclude}
+ 

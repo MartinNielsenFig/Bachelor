@@ -1,0 +1,15 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_modulee8d69e7d4329a3a7100e9b0d1d7151cf}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/function/delay.\+js}
+\+\_\+.\+delay(function(text) \{ console.\+log(text); \}, 1000, \textquotesingle{}later\textquotesingle{}); // =$>$ logs \textquotesingle{}later\textquotesingle{} after one second
+
+
+\begin{DoxyCodeInclude}
+var baseDelay = require(\textcolor{stringliteral}{'../internal/baseDelay'}),
+    restParam = require(\textcolor{stringliteral}{'./restParam'});
+
+var delay = restParam(\textcolor{keyword}{function}(func, wait, args) \{
+  \textcolor{keywordflow}{return} baseDelay(func, wait, args);
+\});
+
+module.exports = delay;
+\end{DoxyCodeInclude}
+ 

@@ -1,0 +1,1671 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module90297fde802c62ef18cb50832c7aa71e}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt/node\+\_\+modules/lodash/lodash.\+underscore.\+js}
+var stooges = \mbox{[} \{ \textquotesingle{}name\textquotesingle{}\+: \textquotesingle{}moe\textquotesingle{}, \textquotesingle{}age\textquotesingle{}\+: 40 \}, \{ \textquotesingle{}name\textquotesingle{}\+: \textquotesingle{}larry\textquotesingle{}, \textquotesingle{}age\textquotesingle{}\+: 50 \}, \{ \textquotesingle{}name\textquotesingle{}\+: \textquotesingle{}curly\textquotesingle{}, \textquotesingle{}age\textquotesingle{}\+: 60 \} \mbox{]};
+
+\+\_\+.\+clone(\{ \textquotesingle{}name\textquotesingle{}\+: \textquotesingle{}moe\textquotesingle{} \}); // =$>$ \{ \textquotesingle{}name\textquotesingle{}\+: \textquotesingle{}moe\textquotesingle{} \}
+
+var shallow = \+\_\+.\+clone(stooges); shallow\mbox{[}0\mbox{]} === stooges\mbox{[}0\mbox{]}; // =$>$ true
+
+var deep = \+\_\+.\+clone(stooges, true); shallow\mbox{[}0\mbox{]} === stooges\mbox{[}0\mbox{]}; // =$>$ false
+
+
+\begin{DoxyCodeInclude}
+
+;(\textcolor{keyword}{function}(window, undefined) \{
+
+  var freeExports = typeof exports == \textcolor{stringliteral}{'object'} && exports;
+
+  var freeGlobal = typeof global == \textcolor{stringliteral}{'object'} && global;
+  \textcolor{keywordflow}{if} (freeGlobal.global === freeGlobal) \{
+    window = freeGlobal;
+  \}
+
+  var arrayRef = [],
+      \textcolor{comment}{// avoid a Closure Compiler bug by creatively creating an object}
+      objectRef = \textcolor{keyword}{new} \textcolor{keyword}{function}()\{\};
+
+  var idCounter = 0;
+
+  var indicatorObject = objectRef;
+
+  var oldDash = window.\_;
+
+  var reEscapedHtml = /&(?:amp|lt|gt|quot|#x27);/g;
+
+  var reFlags = /\(\backslash\)w*$/;
+
+  var reNative = RegExp(\textcolor{charliteral}{'^'} +
+    (objectRef.valueOf + \textcolor{stringliteral}{''})
+      .replace(/[.*+?^=!:$\{\}()|[\(\backslash\)]\(\backslash\)/\(\backslash\)\(\backslash\)]/g, \textcolor{stringliteral}{'\(\backslash\)\(\backslash\)$&'})
+      .replace(/valueOf|\textcolor{keywordflow}{for} [^\(\backslash\)]]+/g, \textcolor{stringliteral}{'.+?'}) + \textcolor{charliteral}{'$'}
+  );
+
+  var reEsTemplate = /\(\backslash\)$\(\backslash\)\{((?:(?=\(\backslash\)\(\backslash\)?)\(\backslash\)\(\backslash\)?[\(\backslash\)s\(\backslash\)S])*?)\}/g;
+
+  var reInterpolate = /<%=([\(\backslash\)s\(\backslash\)S]+?)%>/g;
+
+  var reNoMatch = /($^)/;
+
+  var reUnescapedHtml = /[&<>\textcolor{stringliteral}{"']/g;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  var reUnescapedString = /['\(\backslash\)n\(\backslash\)r\(\backslash\)t\(\backslash\)u2028\(\backslash\)u2029\(\backslash\)\(\backslash\)]/g;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  var shadowed = [}
+\textcolor{stringliteral}{    'constructor', 'hasOwnProperty', 'isPrototypeOf', 'propertyIsEnumerable',}
+\textcolor{stringliteral}{    'toLocaleString', 'toString', 'valueOf'}
+\textcolor{stringliteral}{  ];}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  var templateCounter = 0;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  var ceil = Math.ceil,}
+\textcolor{stringliteral}{      concat = arrayRef.concat,}
+\textcolor{stringliteral}{      floor = Math.floor,}
+\textcolor{stringliteral}{      getPrototypeOf = reNative.test(getPrototypeOf = Object.getPrototypeOf) && getPrototypeOf,}
+\textcolor{stringliteral}{      hasOwnProperty = objectRef.hasOwnProperty,}
+\textcolor{stringliteral}{      push = arrayRef.push,}
+\textcolor{stringliteral}{      propertyIsEnumerable = objectRef.propertyIsEnumerable,}
+\textcolor{stringliteral}{      slice = arrayRef.slice,}
+\textcolor{stringliteral}{      toString = objectRef.toString;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  /* Native method shortcuts for methods with the same name as other `lodash` methods */}
+\textcolor{stringliteral}{  var nativeBind = reNative.test(nativeBind = slice.bind) && nativeBind,}
+\textcolor{stringliteral}{      nativeIsArray = reNative.test(nativeIsArray = Array.isArray) && nativeIsArray,}
+\textcolor{stringliteral}{      nativeIsFinite = window.isFinite,}
+\textcolor{stringliteral}{      nativeIsNaN = window.isNaN,}
+\textcolor{stringliteral}{      nativeKeys = reNative.test(nativeKeys = Object.keys) && nativeKeys,}
+\textcolor{stringliteral}{      nativeMax = Math.max,}
+\textcolor{stringliteral}{      nativeMin = Math.min,}
+\textcolor{stringliteral}{      nativeRandom = Math.random;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  var argsClass = '[object Arguments]',}
+\textcolor{stringliteral}{      arrayClass = '[object Array]',}
+\textcolor{stringliteral}{      boolClass = '[object Boolean]',}
+\textcolor{stringliteral}{      dateClass = '[object Date]',}
+\textcolor{stringliteral}{      funcClass = '[object Function]',}
+\textcolor{stringliteral}{      numberClass = '[object Number]',}
+\textcolor{stringliteral}{      objectClass = '[object Object]',}
+\textcolor{stringliteral}{      regexpClass = '[object RegExp]',}
+\textcolor{stringliteral}{      stringClass = '[object String]';}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  var hasObjectSpliceBug = (hasObjectSpliceBug = \{ '0': 1, 'length': 1 \},}
+\textcolor{stringliteral}{    arrayRef.splice.call(hasObjectSpliceBug, 0, 1), hasObjectSpliceBug[0]);}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  /* Detect if `Function#bind` exists and is inferred to be fast (all but V8) */}
+\textcolor{stringliteral}{  var isBindFast = nativeBind && /\(\backslash\)n|Opera/.test(nativeBind + toString.call(window.opera));}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  try \{}
+\textcolor{stringliteral}{    var useSourceURL = (Function('//@')(), !window.attachEvent);}
+\textcolor{stringliteral}{  \} catch(e) \{ \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  var objectTypes = \{}
+\textcolor{stringliteral}{    'boolean': false,}
+\textcolor{stringliteral}{    'function': true,}
+\textcolor{stringliteral}{    'object': true,}
+\textcolor{stringliteral}{    'number': false,}
+\textcolor{stringliteral}{    'string': false,}
+\textcolor{stringliteral}{    'undefined': false}
+\textcolor{stringliteral}{  \};}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  var stringEscapes = \{}
+\textcolor{stringliteral}{    '\(\backslash\)\(\backslash\)': '\(\backslash\)\(\backslash\)',}
+\textcolor{stringliteral}{    "}\textcolor{stringliteral}{'": "'}\textcolor{stringliteral}{",}
+\textcolor{stringliteral}{    '\(\backslash\)n': 'n',}
+\textcolor{stringliteral}{    '\(\backslash\)r': 'r',}
+\textcolor{stringliteral}{    '\(\backslash\)t': 't',}
+\textcolor{stringliteral}{    '\(\backslash\)u2028': 'u2028',}
+\textcolor{stringliteral}{    '\(\backslash\)u2029': 'u2029'}
+\textcolor{stringliteral}{  \};}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  /*--------------------------------------------------------------------------*/}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function lodash(value) \{}
+\textcolor{stringliteral}{    // exit early if already wrapped}
+\textcolor{stringliteral}{    if (value && value.\_\_wrapped\_\_) \{}
+\textcolor{stringliteral}{      return value;}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    // allow invoking `lodash` without the `new` operator}
+\textcolor{stringliteral}{    if (!(this instanceof lodash)) \{}
+\textcolor{stringliteral}{      return new lodash(value);}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    this.\_\_wrapped\_\_ = value;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  lodash.templateSettings = \{}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    'escape': /<%-([\(\backslash\)s\(\backslash\)S]+?)%>/g,}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    'evaluate': /<%([\(\backslash\)s\(\backslash\)S]+?)%>/g,}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    'interpolate': reInterpolate,}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    'variable': ''}
+\textcolor{stringliteral}{  \};}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  /*--------------------------------------------------------------------------*/}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  var forEachIteratorOptions = \{}
+\textcolor{stringliteral}{    'args': 'collection, callback, thisArg',}
+\textcolor{stringliteral}{    'top': 'callback = createCallback(callback, thisArg)',}
+\textcolor{stringliteral}{    'arrayLoop': 'if (callback(value, index, collection) === false) return result',}
+\textcolor{stringliteral}{    'objectLoop': 'if (callback(value, index, collection) === false) return result'}
+\textcolor{stringliteral}{  \};}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  var forOwnIteratorOptions = \{}
+\textcolor{stringliteral}{    'arrayLoop': null}
+\textcolor{stringliteral}{  \};}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  /*--------------------------------------------------------------------------*/}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function charAtCallback(value) \{}
+\textcolor{stringliteral}{    return value.charCodeAt(0);}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function compareAscending(a, b) \{}
+\textcolor{stringliteral}{    var ai = a.index,}
+\textcolor{stringliteral}{        bi = b.index;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    a = a.criteria;}
+\textcolor{stringliteral}{    b = b.criteria;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    // ensure a stable sort in V8 and other engines}
+\textcolor{stringliteral}{    // http://code.google.com/p/v8/issues/detail?id=90}
+\textcolor{stringliteral}{    if (a !== b) \{}
+\textcolor{stringliteral}{      if (a > b || a === undefined) \{}
+\textcolor{stringliteral}{        return 1;}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{      if (a < b || b === undefined) \{}
+\textcolor{stringliteral}{        return -1;}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    return ai < bi ? -1 : 1;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function createBound(func, thisArg, partialArgs) \{}
+\textcolor{stringliteral}{    function bound() \{}
+\textcolor{stringliteral}{      // `Function#bind` spec}
+\textcolor{stringliteral}{      // http://es5.github.com/#x15.3.4.5}
+\textcolor{stringliteral}{      var args = arguments,}
+\textcolor{stringliteral}{          thisBinding = thisArg;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{      if (partialArgs.length) \{}
+\textcolor{stringliteral}{        args = args.length}
+\textcolor{stringliteral}{          ? partialArgs.concat(slice.call(args))}
+\textcolor{stringliteral}{          : partialArgs;}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{      if (this instanceof bound) \{}
+\textcolor{stringliteral}{        // get `func` instance if `bound` is invoked in a `new` expression}
+\textcolor{stringliteral}{        noop.prototype = func.prototype;}
+\textcolor{stringliteral}{        thisBinding = new noop;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{        // mimic the constructor's `return` behavior}
+\textcolor{stringliteral}{        // http://es5.github.com/#x13.2.2}
+\textcolor{stringliteral}{        var result = func.apply(thisBinding, args);}
+\textcolor{stringliteral}{        return isObject(result)}
+\textcolor{stringliteral}{          ? result}
+\textcolor{stringliteral}{          : thisBinding}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{      return func.apply(thisBinding, args);}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    return bound;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function createCallback(func, thisArg) \{}
+\textcolor{stringliteral}{    if (!func) \{}
+\textcolor{stringliteral}{      return identity;}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    if (typeof func != 'function') \{}
+\textcolor{stringliteral}{      return function(object) \{}
+\textcolor{stringliteral}{        return object[func];}
+\textcolor{stringliteral}{      \};}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    if (thisArg !== undefined) \{}
+\textcolor{stringliteral}{      return function(value, index, object) \{}
+\textcolor{stringliteral}{        return func.call(thisArg, value, index, object);}
+\textcolor{stringliteral}{      \};}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    return func;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function createIterator() \{}
+\textcolor{stringliteral}{    var data = \{}
+\textcolor{stringliteral}{      'arrayLoop': '',}
+\textcolor{stringliteral}{      'bottom': '',}
+\textcolor{stringliteral}{      'hasDontEnumBug': hasDontEnumBug,}
+\textcolor{stringliteral}{      'objectLoop': '',}
+\textcolor{stringliteral}{      'noArgsEnum': noArgsEnum,}
+\textcolor{stringliteral}{      'noCharByIndex': noCharByIndex,}
+\textcolor{stringliteral}{      'shadowed': shadowed,}
+\textcolor{stringliteral}{      'top': '',}
+\textcolor{stringliteral}{      'useHas': true}
+\textcolor{stringliteral}{    \};}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    // merge options into a template data object}
+\textcolor{stringliteral}{    for (var object, index = 0; object = arguments[index]; index++) \{}
+\textcolor{stringliteral}{      for (var key in object) \{}
+\textcolor{stringliteral}{        data[key] = object[key];}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    var args = data.args;}
+\textcolor{stringliteral}{    data.firstArg = /^[^,]+/.exec(args)[0];}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    // create the function factory}
+\textcolor{stringliteral}{    var factory = Function(}
+\textcolor{stringliteral}{        'createCallback, hasOwnProperty, isString, objectTypes, ' +}
+\textcolor{stringliteral}{        'nativeKeys, propertyIsEnumerable',}
+\textcolor{stringliteral}{      'return function(' + args + ') \{\(\backslash\)n' + (data) + '\(\backslash\)n\}'}
+\textcolor{stringliteral}{    );}
+\textcolor{stringliteral}{    // return the compiled function}
+\textcolor{stringliteral}{    return factory(}
+\textcolor{stringliteral}{      createCallback, hasOwnProperty, isString, objectTypes,}
+\textcolor{stringliteral}{      nativeKeys, propertyIsEnumerable}
+\textcolor{stringliteral}{    );}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function escapeStringChar(match) \{}
+\textcolor{stringliteral}{    return '\(\backslash\)\(\backslash\)' + stringEscapes[match];}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function escapeHtmlChar(match) \{}
+\textcolor{stringliteral}{    return htmlEscapes[match];}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function noop() \{}
+\textcolor{stringliteral}{    // no operation performed}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function unescapeHtmlChar(match) \{}
+\textcolor{stringliteral}{    return htmlUnescapes[match];}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  /*--------------------------------------------------------------------------*/}
+\textcolor{stringliteral}{  lodash.isArguments = function(value) \{}
+\textcolor{stringliteral}{    return toString.call(value) == argsClass;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  // fallback for browsers that can't detect `arguments` objects by [[Class]]}
+\textcolor{stringliteral}{  if (!lodash.isArguments(arguments)) \{}
+\textcolor{stringliteral}{    lodash.isArguments = function(value) \{}
+\textcolor{stringliteral}{      return value ? hasOwnProperty.call(value, 'callee') : false;}
+\textcolor{stringliteral}{    \};}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  var forIn = function (collection, callback) \{}
+\textcolor{stringliteral}{    var index, value, iteratee = collection, result = collection;}
+\textcolor{stringliteral}{    if (!collection) return result;}
+\textcolor{stringliteral}{    callback = createCallback(callback);}
+\textcolor{stringliteral}{    }
+\textcolor{stringliteral}{      for (index in iteratee) \{}
+\textcolor{stringliteral}{        value = iteratee[index];}
+\textcolor{stringliteral}{        if (callback(value, index, collection) === indicatorObject) return result;    }
+\textcolor{stringliteral}{      \}    }
+\textcolor{stringliteral}{    ;}
+\textcolor{stringliteral}{    return result}
+\textcolor{stringliteral}{  \};}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  var forOwn = function (collection, callback) \{}
+\textcolor{stringliteral}{    var index, value, iteratee = collection, result = collection;}
+\textcolor{stringliteral}{    if (!collection) return result;}
+\textcolor{stringliteral}{    callback = createCallback(callback);}
+\textcolor{stringliteral}{    }
+\textcolor{stringliteral}{      for (index in iteratee) \{}
+\textcolor{stringliteral}{        if (hasOwnProperty.call(iteratee, index)) \{    }
+\textcolor{stringliteral}{        value = iteratee[index];}
+\textcolor{stringliteral}{        if (callback(value, index, collection) === indicatorObject) return result;    }
+\textcolor{stringliteral}{        \}}
+\textcolor{stringliteral}{      \}    }
+\textcolor{stringliteral}{    ;}
+\textcolor{stringliteral}{    return result}
+\textcolor{stringliteral}{  \};}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function shimIsPlainObject(value) \{}
+\textcolor{stringliteral}{    // avoid non-objects and false positives for `arguments` objects}
+\textcolor{stringliteral}{    var result = false;}
+\textcolor{stringliteral}{    if (!(value && typeof value == 'object') || isArguments(value)) \{}
+\textcolor{stringliteral}{      return result;}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    // IE < 9 presents DOM nodes as `Object` objects except they have `toString`}
+\textcolor{stringliteral}{    // methods that are `typeof` "}\textcolor{keywordtype}{string}\textcolor{stringliteral}{" and still can coerce nodes to strings.}
+\textcolor{stringliteral}{    // Also check that the constructor is `Object` (i.e. `Object instanceof Object`)}
+\textcolor{stringliteral}{    var ctor = value.constructor;}
+\textcolor{stringliteral}{    if (}
+\textcolor{stringliteral}{        (!isFunction(ctor) || ctor instanceof ctor)) \{}
+\textcolor{stringliteral}{      // In most environments an object's own properties are iterated before}
+\textcolor{stringliteral}{      // its inherited properties. If the last iterated property is an object's}
+\textcolor{stringliteral}{      // own property then there are no inherited enumerable properties.}
+\textcolor{stringliteral}{      forIn(value, function(value, key) \{}
+\textcolor{stringliteral}{        result = key;}
+\textcolor{stringliteral}{      \});}
+\textcolor{stringliteral}{      return result === false || hasOwnProperty.call(value, result);}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    return result;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function shimKeys(object) \{}
+\textcolor{stringliteral}{    var result = [];}
+\textcolor{stringliteral}{    forOwn(object, function(value, key) \{}
+\textcolor{stringliteral}{      result.push(key);}
+\textcolor{stringliteral}{    \});}
+\textcolor{stringliteral}{    return result;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  var htmlEscapes = \{}
+\textcolor{stringliteral}{    '&': '&amp;',}
+\textcolor{stringliteral}{    '<': '&lt;',}
+\textcolor{stringliteral}{    '>': '&gt;',}
+\textcolor{stringliteral}{    '"}\textcolor{stringliteral}{': '}&quot;\textcolor{stringliteral}{',}
+\textcolor{stringliteral}{    "'}\textcolor{stringliteral}{": '&#x27;'}
+\textcolor{stringliteral}{  \};}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  var htmlUnescapes = invert(htmlEscapes);}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  /*--------------------------------------------------------------------------*/}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function clone(value) \{}
+\textcolor{stringliteral}{    return value && objectTypes[typeof value]}
+\textcolor{stringliteral}{      ? (isArray(value) ? slice.call(value) : extend(\{\}, value))}
+\textcolor{stringliteral}{      : value}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  var defaults = function (object) \{}
+\textcolor{stringliteral}{    var index, value, iteratee = object, result = object;}
+\textcolor{stringliteral}{    if (!object) return result;}
+\textcolor{stringliteral}{    for (var argsIndex = 1, argsLength = arguments.length; argsIndex < argsLength; argsIndex++) \{}
+\textcolor{stringliteral}{      if (iteratee = arguments[argsIndex]) \{;}
+\textcolor{stringliteral}{    }
+\textcolor{stringliteral}{      for (index in iteratee) \{}
+\textcolor{stringliteral}{        value = iteratee[index];}
+\textcolor{stringliteral}{        if (result[index] == null) result[index] = value;    }
+\textcolor{stringliteral}{      \}    }
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{    \};}
+\textcolor{stringliteral}{    return result}
+\textcolor{stringliteral}{  \};}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  var extend = function (object) \{}
+\textcolor{stringliteral}{    var index, value, iteratee = object, result = object;}
+\textcolor{stringliteral}{    if (!object) return result;}
+\textcolor{stringliteral}{    for (var argsIndex = 1, argsLength = arguments.length; argsIndex < argsLength; argsIndex++) \{}
+\textcolor{stringliteral}{      if (iteratee = arguments[argsIndex]) \{;}
+\textcolor{stringliteral}{    }
+\textcolor{stringliteral}{      for (index in iteratee) \{}
+\textcolor{stringliteral}{        value = iteratee[index];}
+\textcolor{stringliteral}{        result[index] = value;    }
+\textcolor{stringliteral}{      \}    }
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{    \};}
+\textcolor{stringliteral}{    return result}
+\textcolor{stringliteral}{  \};}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function functions(object) \{}
+\textcolor{stringliteral}{    var result = [];}
+\textcolor{stringliteral}{    forIn(object, function(value, key) \{}
+\textcolor{stringliteral}{      if (isFunction(value)) \{}
+\textcolor{stringliteral}{        result.push(key);}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{    \});}
+\textcolor{stringliteral}{    return result.sort();}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function has(object, property) \{}
+\textcolor{stringliteral}{    return object ? hasOwnProperty.call(object, property) : false;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function invert(object) \{}
+\textcolor{stringliteral}{    var result = \{\};}
+\textcolor{stringliteral}{    forOwn(object, function(value, key) \{}
+\textcolor{stringliteral}{      result[value] = key;}
+\textcolor{stringliteral}{    \});}
+\textcolor{stringliteral}{    return result;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  var isArray = nativeIsArray || function(value) \{}
+\textcolor{stringliteral}{    return toString.call(value) == arrayClass;}
+\textcolor{stringliteral}{  \};}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function isBoolean(value) \{}
+\textcolor{stringliteral}{    return value === true || value === false || toString.call(value) == boolClass;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function isDate(value) \{}
+\textcolor{stringliteral}{    return toString.call(value) == dateClass;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function isElement(value) \{}
+\textcolor{stringliteral}{    return value ? value.nodeType === 1 : false;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function isEmpty(value) \{}
+\textcolor{stringliteral}{    if (!value) \{}
+\textcolor{stringliteral}{      return true;}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    if (isArray(value) || isString(value)) \{}
+\textcolor{stringliteral}{      return !value.length;}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    for (var key in value) \{}
+\textcolor{stringliteral}{      if (hasOwnProperty.call(value, key)) \{}
+\textcolor{stringliteral}{        return false;}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    return true;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function isEqual(a, b, stackA, stackB) \{}
+\textcolor{stringliteral}{    // exit early for identical values}
+\textcolor{stringliteral}{    if (a === b) \{}
+\textcolor{stringliteral}{      // treat `+0` vs. `-0` as not equal}
+\textcolor{stringliteral}{      return a !== 0 || (1 / a == 1 / b);}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    // a strict comparison is necessary because `null == undefined`}
+\textcolor{stringliteral}{    if (a == null || b == null) \{}
+\textcolor{stringliteral}{      return a === b;}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    // compare [[Class]] names}
+\textcolor{stringliteral}{    var className = toString.call(a);}
+\textcolor{stringliteral}{    if (className != toString.call(b)) \{}
+\textcolor{stringliteral}{      return false;}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    switch (className) \{}
+\textcolor{stringliteral}{      case boolClass:}
+\textcolor{stringliteral}{      case dateClass:}
+\textcolor{stringliteral}{        // coerce dates and booleans to numbers, dates to milliseconds and booleans}
+\textcolor{stringliteral}{        // to `1` or `0`, treating invalid dates coerced to `NaN` as not equal}
+\textcolor{stringliteral}{        return +a == +b;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{      case numberClass:}
+\textcolor{stringliteral}{        // treat `NaN` vs. `NaN` as equal}
+\textcolor{stringliteral}{        return a != +a}
+\textcolor{stringliteral}{          ? b != +b}
+\textcolor{stringliteral}{          // but treat `+0` vs. `-0` as not equal}
+\textcolor{stringliteral}{          : (a == 0 ? (1 / a == 1 / b) : a == +b);}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{      case regexpClass:}
+\textcolor{stringliteral}{      case stringClass:}
+\textcolor{stringliteral}{        // coerce regexes to strings (http://es5.github.com/#x15.10.6.4)}
+\textcolor{stringliteral}{        // treat string primitives and their corresponding object instances as equal}
+\textcolor{stringliteral}{        return a == b + '';}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    // exit early, in older browsers, if `a` is array-like but not `b`}
+\textcolor{stringliteral}{    var isArr = className == arrayClass;}
+\textcolor{stringliteral}{    }
+\textcolor{stringliteral}{    if (!isArr) \{}
+\textcolor{stringliteral}{      // unwrap any `lodash` wrapped values}
+\textcolor{stringliteral}{      if (a.\_\_wrapped\_\_ || b.\_\_wrapped\_\_) \{}
+\textcolor{stringliteral}{        return isEqual(a.\_\_wrapped\_\_ || a, b.\_\_wrapped\_\_ || b);}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{      // exit for functions and DOM nodes}
+\textcolor{stringliteral}{      if (className != objectClass) \{}
+\textcolor{stringliteral}{        return false;}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{      var ctorA = a.constructor,}
+\textcolor{stringliteral}{          ctorB = b.constructor;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{      // non `Object` object instances with different constructors are not equal}
+\textcolor{stringliteral}{      if (ctorA != ctorB && !(}
+\textcolor{stringliteral}{            isFunction(ctorA) && ctorA instanceof ctorA &&}
+\textcolor{stringliteral}{            isFunction(ctorB) && ctorB instanceof ctorB}
+\textcolor{stringliteral}{          )) \{}
+\textcolor{stringliteral}{        return false;}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    // assume cyclic structures are equal}
+\textcolor{stringliteral}{    // the algorithm for detecting cyclic structures is adapted from ES 5.1}
+\textcolor{stringliteral}{    // section 15.12.3, abstract operation `JO` (http://es5.github.com/#x15.12.3)}
+\textcolor{stringliteral}{    stackA || (stackA = []);}
+\textcolor{stringliteral}{    stackB || (stackB = []);}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    var length = stackA.length;}
+\textcolor{stringliteral}{    while (length--) \{}
+\textcolor{stringliteral}{      if (stackA[length] == a) \{}
+\textcolor{stringliteral}{        return stackB[length] == b;}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    var index = -1,}
+\textcolor{stringliteral}{        result = true,}
+\textcolor{stringliteral}{        size = 0;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    // add `a` and `b` to the stack of traversed objects}
+\textcolor{stringliteral}{    stackA.push(a);}
+\textcolor{stringliteral}{    stackB.push(b);}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    // recursively compare objects and arrays (susceptible to call stack limits)}
+\textcolor{stringliteral}{    if (isArr) \{}
+\textcolor{stringliteral}{      // compare lengths to determine if a deep comparison is necessary}
+\textcolor{stringliteral}{      size = a.length;}
+\textcolor{stringliteral}{      result = size == b.length;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{      if (result) \{}
+\textcolor{stringliteral}{        // deep compare the contents, ignoring non-numeric properties}
+\textcolor{stringliteral}{        while (size--) \{}
+\textcolor{stringliteral}{          if (!(result = isEqual(a[size], b[size], stackA, stackB))) \{}
+\textcolor{stringliteral}{            break;}
+\textcolor{stringliteral}{          \}}
+\textcolor{stringliteral}{        \}}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{      return result;}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    // deep compare objects}
+\textcolor{stringliteral}{    for (var key in a) \{}
+\textcolor{stringliteral}{      if (hasOwnProperty.call(a, key)) \{}
+\textcolor{stringliteral}{        // count the number of properties.}
+\textcolor{stringliteral}{        size++;}
+\textcolor{stringliteral}{        // deep compare each property value.}
+\textcolor{stringliteral}{        if (!(hasOwnProperty.call(b, key) && isEqual(a[key], b[key], stackA, stackB))) \{}
+\textcolor{stringliteral}{          return false;}
+\textcolor{stringliteral}{        \}}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    // ensure both objects have the same number of properties}
+\textcolor{stringliteral}{    for (key in b) \{}
+\textcolor{stringliteral}{      // The JS engine in Adobe products, like InDesign, has a bug that causes}
+\textcolor{stringliteral}{      // `!size--` to throw an error so it must be wrapped in parentheses.}
+\textcolor{stringliteral}{      // https://github.com/documentcloud/underscore/issues/355}
+\textcolor{stringliteral}{      if (hasOwnProperty.call(b, key) && !(size--)) \{}
+\textcolor{stringliteral}{        // `size` will be `-1` if `b` has more properties than `a`}
+\textcolor{stringliteral}{        return false;}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    return true;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function isFinite(value) \{}
+\textcolor{stringliteral}{    return nativeIsFinite(value) && toString.call(value) == numberClass;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function isFunction(value) \{}
+\textcolor{stringliteral}{    return typeof value == 'function';}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{  // fallback for older versions of Chrome and Safari}
+\textcolor{stringliteral}{  if (isFunction(/x/)) \{}
+\textcolor{stringliteral}{    isFunction = function(value) \{}
+\textcolor{stringliteral}{      return toString.call(value) == funcClass;}
+\textcolor{stringliteral}{    \};}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function isObject(value) \{}
+\textcolor{stringliteral}{    // check if the value is the ECMAScript language type of Object}
+\textcolor{stringliteral}{    // http://es5.github.com/#x8}
+\textcolor{stringliteral}{    // and avoid a V8 bug}
+\textcolor{stringliteral}{    // http://code.google.com/p/v8/issues/detail?id=2291}
+\textcolor{stringliteral}{    return value ? objectTypes[typeof value] : false;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function isNaN(value) \{}
+\textcolor{stringliteral}{    // `NaN` as a primitive is the only value that is not equal to itself}
+\textcolor{stringliteral}{    // (perform the [[Class]] check first to avoid errors with some host objects in IE)}
+\textcolor{stringliteral}{    return toString.call(value) == numberClass && value != +value}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function isNull(value) \{}
+\textcolor{stringliteral}{    return value === null;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function isNumber(value) \{}
+\textcolor{stringliteral}{    return toString.call(value) == numberClass;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function isRegExp(value) \{}
+\textcolor{stringliteral}{    return toString.call(value) == regexpClass;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function isString(value) \{}
+\textcolor{stringliteral}{    return toString.call(value) == stringClass;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function isUndefined(value) \{}
+\textcolor{stringliteral}{    return value === undefined;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  var keys = !nativeKeys ? shimKeys : function(object) \{}
+\textcolor{stringliteral}{    return (isObject(object) ? nativeKeys(object) : []);}
+\textcolor{stringliteral}{  \};}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function omit(object) \{}
+\textcolor{stringliteral}{    var props = concat.apply(arrayRef, arguments),}
+\textcolor{stringliteral}{        result = \{\};}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    forIn(object, function(value, key) \{}
+\textcolor{stringliteral}{      if (indexOf(props, key, 1) < 0) \{}
+\textcolor{stringliteral}{        result[key] = value;}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{    \});}
+\textcolor{stringliteral}{    return result;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function pairs(object) \{}
+\textcolor{stringliteral}{    var result = [];}
+\textcolor{stringliteral}{    forOwn(object, function(value, key) \{}
+\textcolor{stringliteral}{      result.push([key, value]);}
+\textcolor{stringliteral}{    \});}
+\textcolor{stringliteral}{    return result;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function pick(object) \{}
+\textcolor{stringliteral}{    var index = 0,}
+\textcolor{stringliteral}{        props = concat.apply(arrayRef, arguments),}
+\textcolor{stringliteral}{        length = props.length,}
+\textcolor{stringliteral}{        result = \{\};}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    while (++index < length) \{}
+\textcolor{stringliteral}{      var prop = props[index];}
+\textcolor{stringliteral}{      if (prop in object) \{}
+\textcolor{stringliteral}{        result[prop] = object[prop];}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    return result;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function values(object) \{}
+\textcolor{stringliteral}{    var result = [];}
+\textcolor{stringliteral}{    forOwn(object, function(value) \{}
+\textcolor{stringliteral}{      result.push(value);}
+\textcolor{stringliteral}{    \});}
+\textcolor{stringliteral}{    return result;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  /*--------------------------------------------------------------------------*/}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function contains(collection, target) \{}
+\textcolor{stringliteral}{    var length = collection ? collection.length : 0;}
+\textcolor{stringliteral}{    return typeof length == 'number'}
+\textcolor{stringliteral}{      ? indexOf(collection, target) > -1}
+\textcolor{stringliteral}{      : some(collection, function(value) \{ return value === target; \});}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function countBy(collection, callback, thisArg) \{}
+\textcolor{stringliteral}{    var result = \{\};}
+\textcolor{stringliteral}{    callback = createCallback(callback, thisArg);}
+\textcolor{stringliteral}{    forEach(collection, function(value, key, collection) \{}
+\textcolor{stringliteral}{      key = callback(value, key, collection);}
+\textcolor{stringliteral}{      (hasOwnProperty.call(result, key) ? result[key]++ : result[key] = 1);}
+\textcolor{stringliteral}{    \});}
+\textcolor{stringliteral}{    return result;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function every(collection, callback, thisArg) \{}
+\textcolor{stringliteral}{    var result = true;}
+\textcolor{stringliteral}{    callback = createCallback(callback, thisArg);}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    if (isArray(collection)) \{}
+\textcolor{stringliteral}{      var index = -1,}
+\textcolor{stringliteral}{          length = collection.length;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{      while (++index < length) \{}
+\textcolor{stringliteral}{        if (!(result = !!callback(collection[index], index, collection))) \{}
+\textcolor{stringliteral}{          break;}
+\textcolor{stringliteral}{        \}}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{    \} else \{}
+\textcolor{stringliteral}{      forEach(collection, function(value, index, collection) \{}
+\textcolor{stringliteral}{        return !(result = !!callback(value, index, collection)) && indicatorObject;}
+\textcolor{stringliteral}{      \});}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    return result;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function filter(collection, callback, thisArg) \{}
+\textcolor{stringliteral}{    var result = [];}
+\textcolor{stringliteral}{    callback = createCallback(callback, thisArg);}
+\textcolor{stringliteral}{    forEach(collection, function(value, index, collection) \{}
+\textcolor{stringliteral}{      if (callback(value, index, collection)) \{}
+\textcolor{stringliteral}{        result.push(value);}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{    \});}
+\textcolor{stringliteral}{    return result;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function find(collection, callback, thisArg) \{}
+\textcolor{stringliteral}{    var result;}
+\textcolor{stringliteral}{    callback = createCallback(callback, thisArg);}
+\textcolor{stringliteral}{    forEach(collection, function(value, index, collection) \{}
+\textcolor{stringliteral}{      if (callback(value, index, collection)) \{}
+\textcolor{stringliteral}{        result = value;}
+\textcolor{stringliteral}{        return false;}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{    \});}
+\textcolor{stringliteral}{    return result;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  var forEach = function (collection, callback, thisArg) \{}
+\textcolor{stringliteral}{    var index, value, iteratee = collection, result = collection;}
+\textcolor{stringliteral}{    if (!collection) return result;}
+\textcolor{stringliteral}{    callback = createCallback(callback, thisArg);}
+\textcolor{stringliteral}{    var length = iteratee.length; index = -1;}
+\textcolor{stringliteral}{    if (typeof length == 'number') \{  }
+\textcolor{stringliteral}{      while (++index < length) \{}
+\textcolor{stringliteral}{        value = iteratee[index];}
+\textcolor{stringliteral}{        if (callback(value, index, collection) === indicatorObject) return result}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    else \{  }
+\textcolor{stringliteral}{      for (index in iteratee) \{}
+\textcolor{stringliteral}{        if (hasOwnProperty.call(iteratee, index)) \{    }
+\textcolor{stringliteral}{        value = iteratee[index];}
+\textcolor{stringliteral}{        if (callback(value, index, collection) === indicatorObject) return result;    }
+\textcolor{stringliteral}{        \}}
+\textcolor{stringliteral}{      \}    }
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    ;}
+\textcolor{stringliteral}{    }
+\textcolor{stringliteral}{  \};}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function groupBy(collection, callback, thisArg) \{}
+\textcolor{stringliteral}{    var result = \{\};}
+\textcolor{stringliteral}{    callback = createCallback(callback, thisArg);}
+\textcolor{stringliteral}{    forEach(collection, function(value, key, collection) \{}
+\textcolor{stringliteral}{      key = callback(value, key, collection);}
+\textcolor{stringliteral}{      (hasOwnProperty.call(result, key) ? result[key] : result[key] = []).push(value);}
+\textcolor{stringliteral}{    \});}
+\textcolor{stringliteral}{    return result;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function invoke(collection, methodName) \{}
+\textcolor{stringliteral}{    var args = slice.call(arguments, 2),}
+\textcolor{stringliteral}{        isFunc = typeof methodName == 'function',}
+\textcolor{stringliteral}{        result = [];}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    forEach(collection, function(value) \{}
+\textcolor{stringliteral}{      result.push((isFunc ? methodName : value[methodName]).apply(value, args));}
+\textcolor{stringliteral}{    \});}
+\textcolor{stringliteral}{    return result;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function map(collection, callback, thisArg) \{}
+\textcolor{stringliteral}{    var index = -1,}
+\textcolor{stringliteral}{        length = collection ? collection.length : 0,}
+\textcolor{stringliteral}{        result = Array(typeof length == 'number' ? length : 0);}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    callback = createCallback(callback, thisArg);}
+\textcolor{stringliteral}{    if (isArray(collection)) \{}
+\textcolor{stringliteral}{      while (++index < length) \{}
+\textcolor{stringliteral}{        result[index] = callback(collection[index], index, collection);}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{    \} else \{}
+\textcolor{stringliteral}{      forEach(collection, function(value, key, collection) \{}
+\textcolor{stringliteral}{        result[++index] = callback(value, key, collection);}
+\textcolor{stringliteral}{      \});}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    return result;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function max(collection, callback, thisArg) \{}
+\textcolor{stringliteral}{    var computed = -Infinity,}
+\textcolor{stringliteral}{        index = -1,}
+\textcolor{stringliteral}{        length = collection ? collection.length : 0,}
+\textcolor{stringliteral}{        result = computed;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    if (callback || !isArray(collection)) \{}
+\textcolor{stringliteral}{      callback = createCallback(callback, thisArg);}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{      forEach(collection, function(value, index, collection) \{}
+\textcolor{stringliteral}{        var current = callback(value, index, collection);}
+\textcolor{stringliteral}{        if (current > computed) \{}
+\textcolor{stringliteral}{          computed = current;}
+\textcolor{stringliteral}{          result = value;}
+\textcolor{stringliteral}{        \}}
+\textcolor{stringliteral}{      \});}
+\textcolor{stringliteral}{    \} else \{}
+\textcolor{stringliteral}{      while (++index < length) \{}
+\textcolor{stringliteral}{        if (collection[index] > result) \{}
+\textcolor{stringliteral}{          result = collection[index];}
+\textcolor{stringliteral}{        \}}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    return result;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function min(collection, callback, thisArg) \{}
+\textcolor{stringliteral}{    var computed = Infinity,}
+\textcolor{stringliteral}{        index = -1,}
+\textcolor{stringliteral}{        length = collection ? collection.length : 0,}
+\textcolor{stringliteral}{        result = computed;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    if (callback || !isArray(collection)) \{}
+\textcolor{stringliteral}{      callback = createCallback(callback, thisArg);}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{      forEach(collection, function(value, index, collection) \{}
+\textcolor{stringliteral}{        var current = callback(value, index, collection);}
+\textcolor{stringliteral}{        if (current < computed) \{}
+\textcolor{stringliteral}{          computed = current;}
+\textcolor{stringliteral}{          result = value;}
+\textcolor{stringliteral}{        \}}
+\textcolor{stringliteral}{      \});}
+\textcolor{stringliteral}{    \} else \{}
+\textcolor{stringliteral}{      while (++index < length) \{}
+\textcolor{stringliteral}{        if (collection[index] < result) \{}
+\textcolor{stringliteral}{          result = collection[index];}
+\textcolor{stringliteral}{        \}}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    return result;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function pluck(collection, property) \{}
+\textcolor{stringliteral}{    var result = [];}
+\textcolor{stringliteral}{    forEach(collection, function(value) \{}
+\textcolor{stringliteral}{      result.push(value[property]);}
+\textcolor{stringliteral}{    \});}
+\textcolor{stringliteral}{    return result;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function reduce(collection, callback, accumulator, thisArg) \{}
+\textcolor{stringliteral}{    var noaccum = arguments.length < 3;}
+\textcolor{stringliteral}{    callback = createCallback(callback, thisArg);}
+\textcolor{stringliteral}{    forEach(collection, function(value, index, collection) \{}
+\textcolor{stringliteral}{      accumulator = noaccum}
+\textcolor{stringliteral}{        ? (noaccum = false, value)}
+\textcolor{stringliteral}{        : callback(accumulator, value, index, collection)}
+\textcolor{stringliteral}{    \});}
+\textcolor{stringliteral}{    return accumulator;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function reduceRight(collection, callback, accumulator, thisArg) \{}
+\textcolor{stringliteral}{    var iteratee = collection,}
+\textcolor{stringliteral}{        length = collection ? collection.length : 0,}
+\textcolor{stringliteral}{        noaccum = arguments.length < 3;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    if (typeof length != 'number') \{}
+\textcolor{stringliteral}{      var props = keys(collection);}
+\textcolor{stringliteral}{      length = props.length;}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    forEach(collection, function(value, index, collection) \{}
+\textcolor{stringliteral}{      index = props ? props[--length] : --length;}
+\textcolor{stringliteral}{      accumulator = noaccum}
+\textcolor{stringliteral}{        ? (noaccum = false, iteratee[index])}
+\textcolor{stringliteral}{        : callback.call(thisArg, accumulator, iteratee[index], index, collection);}
+\textcolor{stringliteral}{    \});}
+\textcolor{stringliteral}{    return accumulator;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function reject(collection, callback, thisArg) \{}
+\textcolor{stringliteral}{    callback = createCallback(callback, thisArg);}
+\textcolor{stringliteral}{    return filter(collection, function(value, index, collection) \{}
+\textcolor{stringliteral}{      return !callback(value, index, collection);}
+\textcolor{stringliteral}{    \});}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function shuffle(collection) \{}
+\textcolor{stringliteral}{    var index = -1,}
+\textcolor{stringliteral}{        result = Array(collection ? collection.length : 0);}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    forEach(collection, function(value) \{}
+\textcolor{stringliteral}{      var rand = floor(nativeRandom() * (++index + 1));}
+\textcolor{stringliteral}{      result[index] = result[rand];}
+\textcolor{stringliteral}{      result[rand] = value;}
+\textcolor{stringliteral}{    \});}
+\textcolor{stringliteral}{    return result;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function size(collection) \{}
+\textcolor{stringliteral}{    var length = collection ? collection.length : 0;}
+\textcolor{stringliteral}{    return typeof length == 'number' ? length : keys(collection).length;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function some(collection, callback, thisArg) \{}
+\textcolor{stringliteral}{    var result;}
+\textcolor{stringliteral}{    callback = createCallback(callback, thisArg);}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    if (isArray(collection)) \{}
+\textcolor{stringliteral}{      var index = -1,}
+\textcolor{stringliteral}{          length = collection.length;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{      while (++index < length) \{}
+\textcolor{stringliteral}{        if (result = callback(collection[index], index, collection)) \{}
+\textcolor{stringliteral}{          break;}
+\textcolor{stringliteral}{        \}}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{    \} else \{}
+\textcolor{stringliteral}{      forEach(collection, function(value, index, collection) \{}
+\textcolor{stringliteral}{        return (result = callback(value, index, collection)) && indicatorObject;}
+\textcolor{stringliteral}{      \});}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    return !!result;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function sortBy(collection, callback, thisArg) \{}
+\textcolor{stringliteral}{    var result = [];}
+\textcolor{stringliteral}{    callback = createCallback(callback, thisArg);}
+\textcolor{stringliteral}{    forEach(collection, function(value, index, collection) \{}
+\textcolor{stringliteral}{      result.push(\{}
+\textcolor{stringliteral}{        'criteria': callback(value, index, collection),}
+\textcolor{stringliteral}{        'index': index,}
+\textcolor{stringliteral}{        'value': value}
+\textcolor{stringliteral}{      \});}
+\textcolor{stringliteral}{    \});}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    var length = result.length;}
+\textcolor{stringliteral}{    result.sort(compareAscending);}
+\textcolor{stringliteral}{    while (length--) \{}
+\textcolor{stringliteral}{      result[length] = result[length].value;}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    return result;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function toArray(collection) \{}
+\textcolor{stringliteral}{    if (collection && typeof collection.length == 'number') \{}
+\textcolor{stringliteral}{      return (typeof collection == 'string')}
+\textcolor{stringliteral}{        ? collection.split('')}
+\textcolor{stringliteral}{        : slice.call(collection);}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    return values(collection);}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function where(collection, properties) \{}
+\textcolor{stringliteral}{    var props = [];}
+\textcolor{stringliteral}{    forIn(properties, function(value, prop) \{}
+\textcolor{stringliteral}{      props.push(prop);}
+\textcolor{stringliteral}{    \});}
+\textcolor{stringliteral}{    return filter(collection, function(object) \{}
+\textcolor{stringliteral}{      var length = props.length;}
+\textcolor{stringliteral}{      while (length--) \{}
+\textcolor{stringliteral}{        var result = object[props[length]] === properties[props[length]];}
+\textcolor{stringliteral}{        if (!result) \{}
+\textcolor{stringliteral}{          break;}
+\textcolor{stringliteral}{        \}}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{      return !!result;}
+\textcolor{stringliteral}{    \});}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  /*--------------------------------------------------------------------------*/}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function compact(array) \{}
+\textcolor{stringliteral}{    var index = -1,}
+\textcolor{stringliteral}{        length = array ? array.length : 0,}
+\textcolor{stringliteral}{        result = [];}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    while (++index < length) \{}
+\textcolor{stringliteral}{      var value = array[index];}
+\textcolor{stringliteral}{      if (value) \{}
+\textcolor{stringliteral}{        result.push(value);}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    return result;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function difference(array) \{}
+\textcolor{stringliteral}{    var index = -1,}
+\textcolor{stringliteral}{        length = array.length,}
+\textcolor{stringliteral}{        flattened = concat.apply(arrayRef, arguments),}
+\textcolor{stringliteral}{        result = [];}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    while (++index < length) \{}
+\textcolor{stringliteral}{      var value = array[index]}
+\textcolor{stringliteral}{      if (indexOf(flattened, value, length) < 0) \{}
+\textcolor{stringliteral}{        result.push(value);}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    return result}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function first(array, n, guard) \{}
+\textcolor{stringliteral}{    if (array) \{}
+\textcolor{stringliteral}{      return (n == null || guard) ? array[0] : slice.call(array, 0, n);}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function flatten(array, shallow) \{}
+\textcolor{stringliteral}{    var index = -1,}
+\textcolor{stringliteral}{        length = array ? array.length : 0,}
+\textcolor{stringliteral}{        result = [];}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    while (++index < length) \{}
+\textcolor{stringliteral}{      var value = array[index];}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{      // recursively flatten arrays (susceptible to call stack limits)}
+\textcolor{stringliteral}{      if (isArray(value)) \{}
+\textcolor{stringliteral}{        push.apply(result, shallow ? value : flatten(value));}
+\textcolor{stringliteral}{      \} else \{}
+\textcolor{stringliteral}{        result.push(value);}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    return result;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function indexOf(array, value, fromIndex) \{}
+\textcolor{stringliteral}{    var index = -1,}
+\textcolor{stringliteral}{        length = array ? array.length : 0;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    if (typeof fromIndex == 'number') \{}
+\textcolor{stringliteral}{      index = (fromIndex < 0 ? nativeMax(0, length + fromIndex) : fromIndex || 0) - 1;}
+\textcolor{stringliteral}{    \} else if (fromIndex) \{}
+\textcolor{stringliteral}{      index = sortedIndex(array, value);}
+\textcolor{stringliteral}{      return array[index] === value ? index : -1;}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    while (++index < length) \{}
+\textcolor{stringliteral}{      if (array[index] === value) \{}
+\textcolor{stringliteral}{        return index;}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    return -1;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function initial(array, n, guard) \{}
+\textcolor{stringliteral}{    return array}
+\textcolor{stringliteral}{      ? slice.call(array, 0, -((n == null || guard) ? 1 : n))}
+\textcolor{stringliteral}{      : [];}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function intersection(array) \{}
+\textcolor{stringliteral}{    var args = arguments,}
+\textcolor{stringliteral}{        argsLength = args.length,}
+\textcolor{stringliteral}{        result = [];}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    forEach(array, function(value) \{}
+\textcolor{stringliteral}{      if (indexOf(result, value) < 0) \{}
+\textcolor{stringliteral}{        var length = argsLength;}
+\textcolor{stringliteral}{        while (--length) \{}
+\textcolor{stringliteral}{          if (indexOf(args[length], value) < 0) \{}
+\textcolor{stringliteral}{            return;}
+\textcolor{stringliteral}{          \}}
+\textcolor{stringliteral}{        \}}
+\textcolor{stringliteral}{        result.push(value);}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{    \});}
+\textcolor{stringliteral}{    return result;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function last(array, n, guard) \{}
+\textcolor{stringliteral}{    if (array) \{}
+\textcolor{stringliteral}{      var length = array.length;}
+\textcolor{stringliteral}{      return (n == null || guard) ? array[length - 1] : slice.call(array, -n || length);}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function lastIndexOf(array, value, fromIndex) \{}
+\textcolor{stringliteral}{    var index = array ? array.length : 0;}
+\textcolor{stringliteral}{    if (typeof fromIndex == 'number') \{}
+\textcolor{stringliteral}{      index = (fromIndex < 0 ? nativeMax(0, index + fromIndex) : nativeMin(fromIndex, index - 1)) + 1;}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    while (index--) \{}
+\textcolor{stringliteral}{      if (array[index] === value) \{}
+\textcolor{stringliteral}{        return index;}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    return -1;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function object(keys, values) \{}
+\textcolor{stringliteral}{    var index = -1,}
+\textcolor{stringliteral}{        length = keys ? keys.length : 0,}
+\textcolor{stringliteral}{        result = \{\};}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    while (++index < length) \{}
+\textcolor{stringliteral}{      var key = keys[index];}
+\textcolor{stringliteral}{      if (values) \{}
+\textcolor{stringliteral}{        result[key] = values[index];}
+\textcolor{stringliteral}{      \} else \{}
+\textcolor{stringliteral}{        result[key[0]] = key[1];}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    return result;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function range(start, end, step) \{}
+\textcolor{stringliteral}{    start = +start || 0;}
+\textcolor{stringliteral}{    step = +step || 1;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    if (end == null) \{}
+\textcolor{stringliteral}{      end = start;}
+\textcolor{stringliteral}{      start = 0;}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    // use `Array(length)` so V8 will avoid the slower "}dictionary\textcolor{stringliteral}{" mode}
+\textcolor{stringliteral}{    // http://www.youtube.com/watch?v=XAqIpGU8ZZk#t=16m27s}
+\textcolor{stringliteral}{    var index = -1,}
+\textcolor{stringliteral}{        length = nativeMax(0, ceil((end - start) / step)),}
+\textcolor{stringliteral}{        result = Array(length);}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    while (++index < length) \{}
+\textcolor{stringliteral}{      result[index] = start;}
+\textcolor{stringliteral}{      start += step;}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    return result;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function rest(array, n, guard) \{}
+\textcolor{stringliteral}{    return array}
+\textcolor{stringliteral}{      ? slice.call(array, (n == null || guard) ? 1 : n)}
+\textcolor{stringliteral}{      : [];}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function sortedIndex(array, value, callback, thisArg) \{}
+\textcolor{stringliteral}{    var low = 0,}
+\textcolor{stringliteral}{        high = array ? array.length : low;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    // explicitly reference `identity` for better engine inlining}
+\textcolor{stringliteral}{    callback = callback ? createCallback(callback, thisArg) : identity;}
+\textcolor{stringliteral}{    value = callback(value);}
+\textcolor{stringliteral}{    while (low < high) \{}
+\textcolor{stringliteral}{      var mid = (low + high) >>> 1;}
+\textcolor{stringliteral}{      callback(array[mid]) < value}
+\textcolor{stringliteral}{        ? low = mid + 1}
+\textcolor{stringliteral}{        : high = mid;}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    return low;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function union() \{}
+\textcolor{stringliteral}{    return uniq(concat.apply(arrayRef, arguments));}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function uniq(array, isSorted, callback, thisArg) \{}
+\textcolor{stringliteral}{    var index = -1,}
+\textcolor{stringliteral}{        length = array ? array.length : 0,}
+\textcolor{stringliteral}{        result = [],}
+\textcolor{stringliteral}{        seen = result;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    if (callback) \{}
+\textcolor{stringliteral}{      seen = [];}
+\textcolor{stringliteral}{      callback = createCallback(callback, thisArg);}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    while (++index < length) \{}
+\textcolor{stringliteral}{      var value = array[index],}
+\textcolor{stringliteral}{          computed = callback ? callback(value, index, array) : value;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{      if (isSorted}
+\textcolor{stringliteral}{            ? !index || seen[seen.length - 1] !== computed}
+\textcolor{stringliteral}{            : indexOf(seen, computed) < 0}
+\textcolor{stringliteral}{          ) \{}
+\textcolor{stringliteral}{        if (callback) \{}
+\textcolor{stringliteral}{          seen.push(computed);}
+\textcolor{stringliteral}{        \}}
+\textcolor{stringliteral}{        result.push(value);}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    return result;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function without(array) \{}
+\textcolor{stringliteral}{    var index = -1,}
+\textcolor{stringliteral}{        length = array.length,}
+\textcolor{stringliteral}{        result = [];}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    while (++index < length) \{}
+\textcolor{stringliteral}{      var value = array[index]}
+\textcolor{stringliteral}{      if (indexOf(arguments, value, 1) < 0) \{}
+\textcolor{stringliteral}{        result.push(value);}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    return result}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function zip(array) \{}
+\textcolor{stringliteral}{    var index = -1,}
+\textcolor{stringliteral}{        length = array ? max(pluck(arguments, 'length')) : 0,}
+\textcolor{stringliteral}{        result = Array(length);}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    while (++index < length) \{}
+\textcolor{stringliteral}{      result[index] = pluck(arguments, index);}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    return result;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  /*--------------------------------------------------------------------------*/}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function after(n, func) \{}
+\textcolor{stringliteral}{    if (n < 1) \{}
+\textcolor{stringliteral}{      return func();}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    return function() \{}
+\textcolor{stringliteral}{      if (--n < 1) \{}
+\textcolor{stringliteral}{        return func.apply(this, arguments);}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{    \};}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function bind(func, thisArg) \{}
+\textcolor{stringliteral}{    // use `Function#bind` if it exists and is fast}
+\textcolor{stringliteral}{    // (in V8 `Function#bind` is slower except when partially applied)}
+\textcolor{stringliteral}{    return isBindFast || (nativeBind && arguments.length > 2)}
+\textcolor{stringliteral}{      ? nativeBind.call.apply(nativeBind, arguments)}
+\textcolor{stringliteral}{      : createBound(func, thisArg, slice.call(arguments, 2));}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function bindAll(object) \{}
+\textcolor{stringliteral}{    var funcs = arguments,}
+\textcolor{stringliteral}{        index = funcs.length > 1 ? 0 : (funcs = functions(object), -1),}
+\textcolor{stringliteral}{        length = funcs.length;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    while (++index < length) \{}
+\textcolor{stringliteral}{      var key = funcs[index];}
+\textcolor{stringliteral}{      object[key] = bind(object[key], object);}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    return object;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function compose() \{}
+\textcolor{stringliteral}{    var funcs = arguments;}
+\textcolor{stringliteral}{    return function() \{}
+\textcolor{stringliteral}{      var args = arguments,}
+\textcolor{stringliteral}{          length = funcs.length;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{      while (length--) \{}
+\textcolor{stringliteral}{        args = [funcs[length].apply(this, args)];}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{      return args[0];}
+\textcolor{stringliteral}{    \};}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function debounce(func, wait, immediate) \{}
+\textcolor{stringliteral}{    var args,}
+\textcolor{stringliteral}{        result,}
+\textcolor{stringliteral}{        thisArg,}
+\textcolor{stringliteral}{        timeoutId;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    function delayed() \{}
+\textcolor{stringliteral}{      timeoutId = null;}
+\textcolor{stringliteral}{      if (!immediate) \{}
+\textcolor{stringliteral}{        result = func.apply(thisArg, args);}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    return function() \{}
+\textcolor{stringliteral}{      var isImmediate = immediate && !timeoutId;}
+\textcolor{stringliteral}{      args = arguments;}
+\textcolor{stringliteral}{      thisArg = this;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{      clearTimeout(timeoutId);}
+\textcolor{stringliteral}{      timeoutId = setTimeout(delayed, wait);}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{      if (isImmediate) \{}
+\textcolor{stringliteral}{        result = func.apply(thisArg, args);}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{      return result;}
+\textcolor{stringliteral}{    \};}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function delay(func, wait) \{}
+\textcolor{stringliteral}{    var args = slice.call(arguments, 2);}
+\textcolor{stringliteral}{    return setTimeout(function() \{ func.apply(undefined, args); \}, wait);}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function defer(func) \{}
+\textcolor{stringliteral}{    var args = slice.call(arguments, 1);}
+\textcolor{stringliteral}{    return setTimeout(function() \{ func.apply(undefined, args); \}, 1);}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function memoize(func, resolver) \{}
+\textcolor{stringliteral}{    var cache = \{\};}
+\textcolor{stringliteral}{    return function() \{}
+\textcolor{stringliteral}{      var key = resolver ? resolver.apply(this, arguments) : arguments[0];}
+\textcolor{stringliteral}{      return hasOwnProperty.call(cache, key)}
+\textcolor{stringliteral}{        ? cache[key]}
+\textcolor{stringliteral}{        : (cache[key] = func.apply(this, arguments));}
+\textcolor{stringliteral}{    \};}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function once(func) \{}
+\textcolor{stringliteral}{    var result,}
+\textcolor{stringliteral}{        ran = false;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    return function() \{}
+\textcolor{stringliteral}{      if (ran) \{}
+\textcolor{stringliteral}{        return result;}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{      ran = true;}
+\textcolor{stringliteral}{      result = func.apply(this, arguments);}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{      // clear the `func` variable so the function may be garbage collected}
+\textcolor{stringliteral}{      func = null;}
+\textcolor{stringliteral}{      return result;}
+\textcolor{stringliteral}{    \};}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function throttle(func, wait) \{}
+\textcolor{stringliteral}{    var args,}
+\textcolor{stringliteral}{        result,}
+\textcolor{stringliteral}{        thisArg,}
+\textcolor{stringliteral}{        timeoutId,}
+\textcolor{stringliteral}{        lastCalled = 0;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    function trailingCall() \{}
+\textcolor{stringliteral}{      lastCalled = new Date;}
+\textcolor{stringliteral}{      timeoutId = null;}
+\textcolor{stringliteral}{      result = func.apply(thisArg, args);}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    return function() \{}
+\textcolor{stringliteral}{      var now = new Date,}
+\textcolor{stringliteral}{          remaining = wait - (now - lastCalled);}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{      args = arguments;}
+\textcolor{stringliteral}{      thisArg = this;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{      if (remaining <= 0) \{}
+\textcolor{stringliteral}{        clearTimeout(timeoutId);}
+\textcolor{stringliteral}{        lastCalled = now;}
+\textcolor{stringliteral}{        result = func.apply(thisArg, args);}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{      else if (!timeoutId) \{}
+\textcolor{stringliteral}{        timeoutId = setTimeout(trailingCall, remaining);}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{      return result;}
+\textcolor{stringliteral}{    \};}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function wrap(value, wrapper) \{}
+\textcolor{stringliteral}{    return function() \{}
+\textcolor{stringliteral}{      var args = [value];}
+\textcolor{stringliteral}{      push.apply(args, arguments);}
+\textcolor{stringliteral}{      return wrapper.apply(this, args);}
+\textcolor{stringliteral}{    \};}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  /*--------------------------------------------------------------------------*/}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function escape(string) \{}
+\textcolor{stringliteral}{    return string == null ? '' : (string + '').replace(reUnescapedHtml, escapeHtmlChar);}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function identity(value) \{}
+\textcolor{stringliteral}{    return value;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function mixin(object) \{}
+\textcolor{stringliteral}{    forEach(functions(object), function(methodName) \{}
+\textcolor{stringliteral}{      var func = lodash[methodName] = object[methodName];}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{      lodash.prototype[methodName] = function() \{}
+\textcolor{stringliteral}{        var args = [this.\_\_wrapped\_\_];}
+\textcolor{stringliteral}{        push.apply(args, arguments);}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{        var result = func.apply(lodash, args);}
+\textcolor{stringliteral}{        if (this.\_\_chain\_\_) \{}
+\textcolor{stringliteral}{          result = new lodash(result);}
+\textcolor{stringliteral}{          result.\_\_chain\_\_ = true;}
+\textcolor{stringliteral}{        \}}
+\textcolor{stringliteral}{        return result;}
+\textcolor{stringliteral}{      \};}
+\textcolor{stringliteral}{    \});}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function noConflict() \{}
+\textcolor{stringliteral}{    window.\_ = oldDash;}
+\textcolor{stringliteral}{    return this;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function random(min, max) \{}
+\textcolor{stringliteral}{    if (min == null && max == null) \{}
+\textcolor{stringliteral}{      max = 1;}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    min = +min || 0;}
+\textcolor{stringliteral}{    if (max == null) \{}
+\textcolor{stringliteral}{      max = min;}
+\textcolor{stringliteral}{      min = 0;}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    return min + floor(nativeRandom() * ((+max || 0) - min + 1));}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function result(object, property) \{}
+\textcolor{stringliteral}{    // based on Backbone's private `getValue` function}
+\textcolor{stringliteral}{    // https://github.com/documentcloud/backbone/blob/0.9.2/backbone.js#L1419-1424}
+\textcolor{stringliteral}{    var value = object ? object[property] : null;}
+\textcolor{stringliteral}{    return isFunction(value) ? object[property]() : value;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function template(text, data, options) \{}
+\textcolor{stringliteral}{    text || (text = '');}
+\textcolor{stringliteral}{    options = defaults(\{\}, options, lodash.templateSettings);}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    var index = 0,}
+\textcolor{stringliteral}{        source = "}\_\_p += \textcolor{stringliteral}{'",}
+\textcolor{stringliteral}{        variable = options.variable;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    var reDelimiters = RegExp(}
+\textcolor{stringliteral}{      (options.escape || reNoMatch).source + '}|\textcolor{stringliteral}{' +}
+\textcolor{stringliteral}{      (options.interpolate || reNoMatch).source + '}|\textcolor{stringliteral}{' +}
+\textcolor{stringliteral}{      (options.evaluate || reNoMatch).source + '}|$\textcolor{stringliteral}{'}
+\textcolor{stringliteral}{    , '}g\textcolor{stringliteral}{');}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    text.replace(reDelimiters, function(match, escapeValue, interpolateValue, evaluateValue, offset) \{}
+\textcolor{stringliteral}{      source += text.slice(index, offset).replace(reUnescapedString, escapeStringChar);}
+\textcolor{stringliteral}{      source +=}
+\textcolor{stringliteral}{        escapeValue ? "'} +\(\backslash\)n\_.escape(\textcolor{stringliteral}{" + escapeValue + "}) +\(\backslash\)n\textcolor{stringliteral}{'" :}
+\textcolor{stringliteral}{        evaluateValue ? "'};\(\backslash\)n\textcolor{stringliteral}{" + evaluateValue + "};\(\backslash\)n\_\_p += \textcolor{stringliteral}{'" :}
+\textcolor{stringliteral}{        interpolateValue ? "'} +\(\backslash\)n((\_\_t = (\textcolor{stringliteral}{" + interpolateValue + "})) == null ? \textcolor{stringliteral}{''} : \_\_t) +\(\backslash\)n\textcolor{stringliteral}{'" : '}\textcolor{stringliteral}{';}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{      index = offset + match.length;}
+\textcolor{stringliteral}{    \});}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    source += "'};\(\backslash\)n\textcolor{stringliteral}{";}
+\textcolor{stringliteral}{    if (!variable) \{}
+\textcolor{stringliteral}{      variable = 'obj';}
+\textcolor{stringliteral}{      source = 'with (' + variable + ' || \{\}) \{\(\backslash\)n' + source + '\(\backslash\)n\}\(\backslash\)n';}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    source = 'function(' + variable + ') \{\(\backslash\)n' +}
+\textcolor{stringliteral}{      'var \_\_t, \_\_p = \(\backslash\)'\(\backslash\)', \_\_j = Array.prototype.join;\(\backslash\)n' +}
+\textcolor{stringliteral}{      'function print() \{ \_\_p += \_\_j.call(arguments, \(\backslash\)'\(\backslash\)') \}\(\backslash\)n' +}
+\textcolor{stringliteral}{      source +}
+\textcolor{stringliteral}{      'return \_\_p\(\backslash\)n\}';}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    try \{}
+\textcolor{stringliteral}{      var result = Function('\_', 'return ' + source)(lodash);}
+\textcolor{stringliteral}{    \} catch(e) \{}
+\textcolor{stringliteral}{      e.source = source;}
+\textcolor{stringliteral}{      throw e;}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    if (data) \{}
+\textcolor{stringliteral}{      return result(data);}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    result.source = source;}
+\textcolor{stringliteral}{    return result;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function times(n, callback, thisArg) \{}
+\textcolor{stringliteral}{    n = +n || 0;}
+\textcolor{stringliteral}{    var index = -1,}
+\textcolor{stringliteral}{        result = Array(n);}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    while (++index < n) \{}
+\textcolor{stringliteral}{      result[index] = callback.call(thisArg, index);}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    return result;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function unescape(string) \{}
+\textcolor{stringliteral}{    return string == null ? '' : (string + '').replace(reEscapedHtml, unescapeHtmlChar);}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function uniqueId(prefix) \{}
+\textcolor{stringliteral}{    var id = idCounter++;}
+\textcolor{stringliteral}{    return prefix ? prefix + id : id;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  /*--------------------------------------------------------------------------*/}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function chain(value) \{}
+\textcolor{stringliteral}{    value = new lodash(value);}
+\textcolor{stringliteral}{    value.\_\_chain\_\_ = true;}
+\textcolor{stringliteral}{    return value;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function tap(value, interceptor) \{}
+\textcolor{stringliteral}{    interceptor(value);}
+\textcolor{stringliteral}{    return value;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function wrapperChain() \{}
+\textcolor{stringliteral}{    this.\_\_chain\_\_ = true;}
+\textcolor{stringliteral}{    return this;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function wrapperValue() \{}
+\textcolor{stringliteral}{    return this.\_\_wrapped\_\_;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  /*--------------------------------------------------------------------------*/}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  lodash.VERSION = '0.9.2';}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  // assign static methods}
+\textcolor{stringliteral}{  lodash.after = after;}
+\textcolor{stringliteral}{  lodash.bind = bind;}
+\textcolor{stringliteral}{  lodash.bindAll = bindAll;}
+\textcolor{stringliteral}{  lodash.chain = chain;}
+\textcolor{stringliteral}{  lodash.clone = clone;}
+\textcolor{stringliteral}{  lodash.compact = compact;}
+\textcolor{stringliteral}{  lodash.compose = compose;}
+\textcolor{stringliteral}{  lodash.contains = contains;}
+\textcolor{stringliteral}{  lodash.countBy = countBy;}
+\textcolor{stringliteral}{  lodash.debounce = debounce;}
+\textcolor{stringliteral}{  lodash.defaults = defaults;}
+\textcolor{stringliteral}{  lodash.defer = defer;}
+\textcolor{stringliteral}{  lodash.delay = delay;}
+\textcolor{stringliteral}{  lodash.difference = difference;}
+\textcolor{stringliteral}{  lodash.escape = escape;}
+\textcolor{stringliteral}{  lodash.every = every;}
+\textcolor{stringliteral}{  lodash.extend = extend;}
+\textcolor{stringliteral}{  lodash.filter = filter;}
+\textcolor{stringliteral}{  lodash.find = find;}
+\textcolor{stringliteral}{  lodash.first = first;}
+\textcolor{stringliteral}{  lodash.flatten = flatten;}
+\textcolor{stringliteral}{  lodash.forEach = forEach;}
+\textcolor{stringliteral}{  lodash.functions = functions;}
+\textcolor{stringliteral}{  lodash.groupBy = groupBy;}
+\textcolor{stringliteral}{  lodash.has = has;}
+\textcolor{stringliteral}{  lodash.identity = identity;}
+\textcolor{stringliteral}{  lodash.indexOf = indexOf;}
+\textcolor{stringliteral}{  lodash.initial = initial;}
+\textcolor{stringliteral}{  lodash.intersection = intersection;}
+\textcolor{stringliteral}{  lodash.invert = invert;}
+\textcolor{stringliteral}{  lodash.invoke = invoke;}
+\textcolor{stringliteral}{  lodash.isArray = isArray;}
+\textcolor{stringliteral}{  lodash.isBoolean = isBoolean;}
+\textcolor{stringliteral}{  lodash.isDate = isDate;}
+\textcolor{stringliteral}{  lodash.isElement = isElement;}
+\textcolor{stringliteral}{  lodash.isEmpty = isEmpty;}
+\textcolor{stringliteral}{  lodash.isEqual = isEqual;}
+\textcolor{stringliteral}{  lodash.isFinite = isFinite;}
+\textcolor{stringliteral}{  lodash.isFunction = isFunction;}
+\textcolor{stringliteral}{  lodash.isNaN = isNaN;}
+\textcolor{stringliteral}{  lodash.isNull = isNull;}
+\textcolor{stringliteral}{  lodash.isNumber = isNumber;}
+\textcolor{stringliteral}{  lodash.isObject = isObject;}
+\textcolor{stringliteral}{  lodash.isRegExp = isRegExp;}
+\textcolor{stringliteral}{  lodash.isString = isString;}
+\textcolor{stringliteral}{  lodash.isUndefined = isUndefined;}
+\textcolor{stringliteral}{  lodash.keys = keys;}
+\textcolor{stringliteral}{  lodash.last = last;}
+\textcolor{stringliteral}{  lodash.lastIndexOf = lastIndexOf;}
+\textcolor{stringliteral}{  lodash.map = map;}
+\textcolor{stringliteral}{  lodash.max = max;}
+\textcolor{stringliteral}{  lodash.memoize = memoize;}
+\textcolor{stringliteral}{  lodash.min = min;}
+\textcolor{stringliteral}{  lodash.mixin = mixin;}
+\textcolor{stringliteral}{  lodash.noConflict = noConflict;}
+\textcolor{stringliteral}{  lodash.object = object;}
+\textcolor{stringliteral}{  lodash.omit = omit;}
+\textcolor{stringliteral}{  lodash.once = once;}
+\textcolor{stringliteral}{  lodash.pairs = pairs;}
+\textcolor{stringliteral}{  lodash.pick = pick;}
+\textcolor{stringliteral}{  lodash.pluck = pluck;}
+\textcolor{stringliteral}{  lodash.random = random;}
+\textcolor{stringliteral}{  lodash.range = range;}
+\textcolor{stringliteral}{  lodash.reduce = reduce;}
+\textcolor{stringliteral}{  lodash.reduceRight = reduceRight;}
+\textcolor{stringliteral}{  lodash.reject = reject;}
+\textcolor{stringliteral}{  lodash.rest = rest;}
+\textcolor{stringliteral}{  lodash.result = result;}
+\textcolor{stringliteral}{  lodash.shuffle = shuffle;}
+\textcolor{stringliteral}{  lodash.size = size;}
+\textcolor{stringliteral}{  lodash.some = some;}
+\textcolor{stringliteral}{  lodash.sortBy = sortBy;}
+\textcolor{stringliteral}{  lodash.sortedIndex = sortedIndex;}
+\textcolor{stringliteral}{  lodash.tap = tap;}
+\textcolor{stringliteral}{  lodash.template = template;}
+\textcolor{stringliteral}{  lodash.throttle = throttle;}
+\textcolor{stringliteral}{  lodash.times = times;}
+\textcolor{stringliteral}{  lodash.toArray = toArray;}
+\textcolor{stringliteral}{  lodash.unescape = unescape;}
+\textcolor{stringliteral}{  lodash.union = union;}
+\textcolor{stringliteral}{  lodash.uniq = uniq;}
+\textcolor{stringliteral}{  lodash.uniqueId = uniqueId;}
+\textcolor{stringliteral}{  lodash.values = values;}
+\textcolor{stringliteral}{  lodash.where = where;}
+\textcolor{stringliteral}{  lodash.without = without;}
+\textcolor{stringliteral}{  lodash.wrap = wrap;}
+\textcolor{stringliteral}{  lodash.zip = zip;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  // assign aliases}
+\textcolor{stringliteral}{  lodash.all = every;}
+\textcolor{stringliteral}{  lodash.any = some;}
+\textcolor{stringliteral}{  lodash.collect = map;}
+\textcolor{stringliteral}{  lodash.detect = find;}
+\textcolor{stringliteral}{  lodash.drop = rest;}
+\textcolor{stringliteral}{  lodash.each = forEach;}
+\textcolor{stringliteral}{  lodash.foldl = reduce;}
+\textcolor{stringliteral}{  lodash.foldr = reduceRight;}
+\textcolor{stringliteral}{  lodash.head = first;}
+\textcolor{stringliteral}{  lodash.include = contains;}
+\textcolor{stringliteral}{  lodash.inject = reduce;}
+\textcolor{stringliteral}{  lodash.methods = functions;}
+\textcolor{stringliteral}{  lodash.select = filter;}
+\textcolor{stringliteral}{  lodash.tail = rest;}
+\textcolor{stringliteral}{  lodash.take = first;}
+\textcolor{stringliteral}{  lodash.unique = uniq;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  /*--------------------------------------------------------------------------*/}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  // add all static functions to `lodash.prototype`}
+\textcolor{stringliteral}{  mixin(lodash);}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  // add `lodash.prototype.chain` after calling `mixin()` to avoid overwriting}
+\textcolor{stringliteral}{  // it with the wrapped `lodash.chain`}
+\textcolor{stringliteral}{  lodash.prototype.chain = wrapperChain;}
+\textcolor{stringliteral}{  lodash.prototype.value = wrapperValue;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  // add all mutator Array functions to the wrapper.}
+\textcolor{stringliteral}{  forEach(['pop', 'push', 'reverse', 'shift', 'sort', 'splice', 'unshift'], function(methodName) \{}
+\textcolor{stringliteral}{    var func = arrayRef[methodName];}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    lodash.prototype[methodName] = function() \{}
+\textcolor{stringliteral}{      var value = this.\_\_wrapped\_\_;}
+\textcolor{stringliteral}{      func.apply(value, arguments);}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{      // avoid array-like object bugs with `Array#shift` and `Array#splice` in}
+\textcolor{stringliteral}{      // Firefox < 10 and IE < 9}
+\textcolor{stringliteral}{      if (hasObjectSpliceBug && value.length === 0) \{}
+\textcolor{stringliteral}{        delete value[0];}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{      if (this.\_\_chain\_\_) \{}
+\textcolor{stringliteral}{        value = new lodash(value);}
+\textcolor{stringliteral}{        value.\_\_chain\_\_ = true;}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{      return value;}
+\textcolor{stringliteral}{    \};}
+\textcolor{stringliteral}{  \});}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  // add all accessor Array functions to the wrapper.}
+\textcolor{stringliteral}{  forEach(['concat', 'join', 'slice'], function(methodName) \{}
+\textcolor{stringliteral}{    var func = arrayRef[methodName];}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    lodash.prototype[methodName] = function() \{}
+\textcolor{stringliteral}{      var value = this.\_\_wrapped\_\_,}
+\textcolor{stringliteral}{          result = func.apply(value, arguments);}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{      if (this.\_\_chain\_\_) \{}
+\textcolor{stringliteral}{        result = new lodash(result);}
+\textcolor{stringliteral}{        result.\_\_chain\_\_ = true;}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{      return result;}
+\textcolor{stringliteral}{    \};}
+\textcolor{stringliteral}{  \});}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  /*--------------------------------------------------------------------------*/}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  if (freeExports) \{}
+\textcolor{stringliteral}{    // in Node.js or RingoJS v0.8.0+}
+\textcolor{stringliteral}{    if (typeof module == 'object' && module && module.exports == freeExports) \{}
+\textcolor{stringliteral}{      (module.exports = lodash).\_ = lodash;}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    // in Narwhal or RingoJS v0.7.0-}
+\textcolor{stringliteral}{    else \{}
+\textcolor{stringliteral}{      freeExports.\_ = lodash;}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{  else \{}
+\textcolor{stringliteral}{    // in a browser or Rhino}
+\textcolor{stringliteral}{    window.\_ = lodash;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{\}(this));}
+\end{DoxyCodeInclude}
+ 

@@ -1,0 +1,28 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module78f187cbb354b52bc415f19efb84d83c}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/function/wrap.\+js}
+var p = \+\_\+.\+wrap(\+\_\+.\+escape, function(func, text) \{ return \textquotesingle{}
+
+\textquotesingle{} + func(text) + \textquotesingle{}
+
+\textquotesingle{}; \});
+
+p(\textquotesingle{}fred, barney, \& pebbles\textquotesingle{}); // =$>$ \textquotesingle{}
+
+fred, barney, \& pebbles
+
+\textquotesingle{}
+
+
+\begin{DoxyCodeInclude}
+var createWrapper = require(\textcolor{stringliteral}{'../internal/createWrapper'}),
+    identity = require(\textcolor{stringliteral}{'../utility/identity'});
+
+var PARTIAL\_FLAG = 32;
+
+\textcolor{keyword}{function} wrap(value, wrapper) \{
+  wrapper = wrapper == null ? identity : wrapper;
+  \textcolor{keywordflow}{return} createWrapper(wrapper, PARTIAL\_FLAG, undefined, [value], []);
+\}
+
+module.exports = wrap;
+\end{DoxyCodeInclude}
+ 

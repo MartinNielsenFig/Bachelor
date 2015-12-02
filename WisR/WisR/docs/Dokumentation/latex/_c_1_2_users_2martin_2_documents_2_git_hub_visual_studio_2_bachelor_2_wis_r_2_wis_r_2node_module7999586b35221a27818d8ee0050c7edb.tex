@@ -1,0 +1,22 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module7999586b35221a27818d8ee0050c7edb}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/chain/wrapper\+Commit.\+js}
+var array = \mbox{[}1, 2\mbox{]}; var wrapped = \+\_\+(array).push(3);
+
+console.\+log(array); // =$>$ \mbox{[}1, 2\mbox{]}
+
+wrapped = wrapped.\+commit(); console.\+log(array); // =$>$ \mbox{[}1, 2, 3\mbox{]}
+
+wrapped.\+last(); // =$>$ 3
+
+console.\+log(array); // =$>$ \mbox{[}1, 2, 3\mbox{]}
+
+
+\begin{DoxyCodeInclude}
+var LodashWrapper = require(\textcolor{stringliteral}{'../internal/LodashWrapper'});
+
+\textcolor{keyword}{function} wrapperCommit() \{
+  \textcolor{keywordflow}{return} \textcolor{keyword}{new} LodashWrapper(this.value(), this.\_\_chain\_\_);
+\}
+
+module.exports = wrapperCommit;
+\end{DoxyCodeInclude}
+ 

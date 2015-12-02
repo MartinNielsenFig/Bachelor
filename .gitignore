@@ -240,3 +240,5 @@ wisrios/docs/
 wiserIos/.DS_Store
 WisRRestAPI/WisRRestAPI/Properties/PublishProfiles/wisrrestapi - FTP (2).pubxml
 WisRRestAPI/WisRRestAPI/Properties/PublishProfiles/wisrrestapi - Web Deploy (2).pubxml
+/WisR/coverage
+/WisR/Phantom/phantomjs-2.0.0-windows

@@ -1,0 +1,174 @@
+\hypertarget{class_wis_r_rest_a_p_i_1_1_controllers_1_1_user_controller}{}\section{Wis\+R\+Rest\+A\+P\+I.\+Controllers.\+User\+Controller Class Reference}
+\label{class_wis_r_rest_a_p_i_1_1_controllers_1_1_user_controller}\index{Wis\+R\+Rest\+A\+P\+I.\+Controllers.\+User\+Controller@{Wis\+R\+Rest\+A\+P\+I.\+Controllers.\+User\+Controller}}
+
+
+The user controller is used to handle the user C\+R\+U\+D\textquotesingle{}s  
+
+
+Inheritance diagram for Wis\+R\+Rest\+A\+P\+I.\+Controllers.\+User\+Controller\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_wis_r_rest_a_p_i_1_1_controllers_1_1_user_controller}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_wis_r_rest_a_p_i_1_1_controllers_1_1_user_controller_af8152952e406cfcec821fe4ae0a1e195}{User\+Controller} (\hyperlink{interface_wis_r_rest_a_p_i_1_1_domain_model_1_1_i_user_repository}{I\+User\+Repository} ur)
+\begin{DoxyCompactList}\small\item\em Initializes a new instance of the \hyperlink{class_wis_r_rest_a_p_i_1_1_controllers_1_1_user_controller}{User\+Controller} class. \end{DoxyCompactList}\item 
+string \hyperlink{class_wis_r_rest_a_p_i_1_1_controllers_1_1_user_controller_a4c83db8f3ccdae60f0f865f8fc968206}{Get\+All} ()
+\begin{DoxyCompactList}\small\item\em Gets all. \end{DoxyCompactList}\item 
+string \hyperlink{class_wis_r_rest_a_p_i_1_1_controllers_1_1_user_controller_aaf05bf7eaaf61d32561f66ddb4b8f8a9}{Create\+User} (string \hyperlink{class_wis_r_1_1_domain_models_1_1_user}{User})
+\begin{DoxyCompactList}\small\item\em Creates an user on Mongo\+D\+B from User with facebook I\+D. If user already exists, returns Mongo\+D\+B I\+D. \end{DoxyCompactList}\item 
+string \hyperlink{class_wis_r_rest_a_p_i_1_1_controllers_1_1_user_controller_a460cd7b02a8b42d0b1a3c90476ae3b3e}{Update\+User} (string \hyperlink{class_wis_r_1_1_domain_models_1_1_user}{User}, string Id)
+\begin{DoxyCompactList}\small\item\em Updates the user. \end{DoxyCompactList}\item 
+string \hyperlink{class_wis_r_rest_a_p_i_1_1_controllers_1_1_user_controller_a61784914b643252724c463565b0432f9}{Get\+By\+Id} (string id)
+\begin{DoxyCompactList}\small\item\em Gets by the identifier. \end{DoxyCompactList}\item 
+string \hyperlink{class_wis_r_rest_a_p_i_1_1_controllers_1_1_user_controller_a08d1766adb0dd2ce7882d934a5f69c63}{Delete\+User} (string id)
+\begin{DoxyCompactList}\small\item\em Deletes the user. \end{DoxyCompactList}\item 
+string \hyperlink{class_wis_r_rest_a_p_i_1_1_controllers_1_1_user_controller_aaf85a31aa3585f124fdd8874deb8dfad}{Get\+Wisr\+Id\+From\+Facebook\+Id} (string facebook\+Id)
+\begin{DoxyCompactList}\small\item\em Gets the wisr identifier from facebook identifier. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The user controller is used to handle the user C\+R\+U\+D\textquotesingle{}s 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_wis_r_rest_a_p_i_1_1_controllers_1_1_user_controller_af8152952e406cfcec821fe4ae0a1e195}{}\index{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+User\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+User\+Controller}!User\+Controller@{User\+Controller}}
+\index{User\+Controller@{User\+Controller}!Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+User\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+User\+Controller}}
+\subsubsection[{User\+Controller(\+I\+User\+Repository ur)}]{\setlength{\rightskip}{0pt plus 5cm}Wis\+R\+Rest\+A\+P\+I.\+Controllers.\+User\+Controller.\+User\+Controller (
+\begin{DoxyParamCaption}
+\item[{{\bf I\+User\+Repository}}]{ur}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_wis_r_rest_a_p_i_1_1_controllers_1_1_user_controller_af8152952e406cfcec821fe4ae0a1e195}
+
+
+Initializes a new instance of the \hyperlink{class_wis_r_rest_a_p_i_1_1_controllers_1_1_user_controller}{User\+Controller} class. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em ur} & The user repository.\\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_wis_r_rest_a_p_i_1_1_controllers_1_1_user_controller_aaf05bf7eaaf61d32561f66ddb4b8f8a9}{}\index{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+User\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+User\+Controller}!Create\+User@{Create\+User}}
+\index{Create\+User@{Create\+User}!Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+User\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+User\+Controller}}
+\subsubsection[{Create\+User(string User)}]{\setlength{\rightskip}{0pt plus 5cm}string Wis\+R\+Rest\+A\+P\+I.\+Controllers.\+User\+Controller.\+Create\+User (
+\begin{DoxyParamCaption}
+\item[{string}]{User}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_wis_r_rest_a_p_i_1_1_controllers_1_1_user_controller_aaf05bf7eaaf61d32561f66ddb4b8f8a9}
+
+
+Creates an user on Mongo\+D\+B from User with facebook I\+D. If user already exists, returns Mongo\+D\+B I\+D. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em User} & The user.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Notification
+\end{DoxyReturn}
+\hypertarget{class_wis_r_rest_a_p_i_1_1_controllers_1_1_user_controller_a08d1766adb0dd2ce7882d934a5f69c63}{}\index{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+User\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+User\+Controller}!Delete\+User@{Delete\+User}}
+\index{Delete\+User@{Delete\+User}!Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+User\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+User\+Controller}}
+\subsubsection[{Delete\+User(string id)}]{\setlength{\rightskip}{0pt plus 5cm}string Wis\+R\+Rest\+A\+P\+I.\+Controllers.\+User\+Controller.\+Delete\+User (
+\begin{DoxyParamCaption}
+\item[{string}]{id}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_wis_r_rest_a_p_i_1_1_controllers_1_1_user_controller_a08d1766adb0dd2ce7882d934a5f69c63}
+
+
+Deletes the user. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & The identifier.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Notification
+\end{DoxyReturn}
+\hypertarget{class_wis_r_rest_a_p_i_1_1_controllers_1_1_user_controller_a4c83db8f3ccdae60f0f865f8fc968206}{}\index{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+User\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+User\+Controller}!Get\+All@{Get\+All}}
+\index{Get\+All@{Get\+All}!Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+User\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+User\+Controller}}
+\subsubsection[{Get\+All()}]{\setlength{\rightskip}{0pt plus 5cm}string Wis\+R\+Rest\+A\+P\+I.\+Controllers.\+User\+Controller.\+Get\+All (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_wis_r_rest_a_p_i_1_1_controllers_1_1_user_controller_a4c83db8f3ccdae60f0f865f8fc968206}
+
+
+Gets all. 
+
+\begin{DoxyReturn}{Returns}
+Notification
+\end{DoxyReturn}
+\hypertarget{class_wis_r_rest_a_p_i_1_1_controllers_1_1_user_controller_a61784914b643252724c463565b0432f9}{}\index{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+User\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+User\+Controller}!Get\+By\+Id@{Get\+By\+Id}}
+\index{Get\+By\+Id@{Get\+By\+Id}!Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+User\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+User\+Controller}}
+\subsubsection[{Get\+By\+Id(string id)}]{\setlength{\rightskip}{0pt plus 5cm}string Wis\+R\+Rest\+A\+P\+I.\+Controllers.\+User\+Controller.\+Get\+By\+Id (
+\begin{DoxyParamCaption}
+\item[{string}]{id}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_wis_r_rest_a_p_i_1_1_controllers_1_1_user_controller_a61784914b643252724c463565b0432f9}
+
+
+Gets by the identifier. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & The identifier.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Notification
+\end{DoxyReturn}
+\hypertarget{class_wis_r_rest_a_p_i_1_1_controllers_1_1_user_controller_aaf85a31aa3585f124fdd8874deb8dfad}{}\index{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+User\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+User\+Controller}!Get\+Wisr\+Id\+From\+Facebook\+Id@{Get\+Wisr\+Id\+From\+Facebook\+Id}}
+\index{Get\+Wisr\+Id\+From\+Facebook\+Id@{Get\+Wisr\+Id\+From\+Facebook\+Id}!Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+User\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+User\+Controller}}
+\subsubsection[{Get\+Wisr\+Id\+From\+Facebook\+Id(string facebook\+Id)}]{\setlength{\rightskip}{0pt plus 5cm}string Wis\+R\+Rest\+A\+P\+I.\+Controllers.\+User\+Controller.\+Get\+Wisr\+Id\+From\+Facebook\+Id (
+\begin{DoxyParamCaption}
+\item[{string}]{facebook\+Id}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_wis_r_rest_a_p_i_1_1_controllers_1_1_user_controller_aaf85a31aa3585f124fdd8874deb8dfad}
+
+
+Gets the wisr identifier from facebook identifier. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em facebook\+Id} & The facebook identifier.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Notification
+\end{DoxyReturn}
+\hypertarget{class_wis_r_rest_a_p_i_1_1_controllers_1_1_user_controller_a460cd7b02a8b42d0b1a3c90476ae3b3e}{}\index{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+User\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+User\+Controller}!Update\+User@{Update\+User}}
+\index{Update\+User@{Update\+User}!Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+User\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+User\+Controller}}
+\subsubsection[{Update\+User(string User, string Id)}]{\setlength{\rightskip}{0pt plus 5cm}string Wis\+R\+Rest\+A\+P\+I.\+Controllers.\+User\+Controller.\+Update\+User (
+\begin{DoxyParamCaption}
+\item[{string}]{User, }
+\item[{string}]{Id}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_wis_r_rest_a_p_i_1_1_controllers_1_1_user_controller_a460cd7b02a8b42d0b1a3c90476ae3b3e}
+
+
+Updates the user. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em User} & The user with updates.\\
+\hline
+{\em Id} & The identifier.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Notification
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Wis\+R\+Rest\+A\+P\+I/\+Controllers/User\+Controller.\+cs\end{DoxyCompactItemize}

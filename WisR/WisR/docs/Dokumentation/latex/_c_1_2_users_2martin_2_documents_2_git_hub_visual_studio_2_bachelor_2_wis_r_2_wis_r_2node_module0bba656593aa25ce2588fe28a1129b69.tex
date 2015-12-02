@@ -1,0 +1,43 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module0bba656593aa25ce2588fe28a1129b69}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/object/set.\+js}
+var object = \{ \textquotesingle{}a\textquotesingle{}\+: \mbox{[}\{ \textquotesingle{}b\textquotesingle{}\+: \{ \textquotesingle{}c\textquotesingle{}\+: 3 \} \}\mbox{]} \};
+
+\+\_\+.\+set(object, \textquotesingle{}a\mbox{[}0\mbox{]}.b.\+c\textquotesingle{}, 4); console.\+log(object.\+a\mbox{[}0\mbox{]}.b.\+c); // =$>$ 4
+
+\+\_\+.\+set(object, \textquotesingle{}x\mbox{[}0\mbox{]}.y.\+z\textquotesingle{}, 5); console.\+log(object.\+x\mbox{[}0\mbox{]}.y.\+z); // =$>$ 5
+
+
+\begin{DoxyCodeInclude}
+var isIndex = require(\textcolor{stringliteral}{'../internal/isIndex'}),
+    isKey = require(\textcolor{stringliteral}{'../internal/isKey'}),
+    isObject = require(\textcolor{stringliteral}{'../lang/isObject'}),
+    toPath = require(\textcolor{stringliteral}{'../internal/toPath'});
+
+\textcolor{keyword}{function} set(\textcolor{keywordtype}{object}, path, value) \{
+  \textcolor{keywordflow}{if} (\textcolor{keywordtype}{object} == null) \{
+    \textcolor{keywordflow}{return} object;
+  \}
+  var pathKey = (path + \textcolor{stringliteral}{''});
+  path = (\textcolor{keywordtype}{object}[pathKey] != null || isKey(path, \textcolor{keywordtype}{object})) ? [pathKey] : toPath(path);
+
+  var index = -1,
+      length = path.length,
+      lastIndex = length - 1,
+      nested = object;
+
+  \textcolor{keywordflow}{while} (nested != null && ++index < length) \{
+    var key = path[index];
+    \textcolor{keywordflow}{if} (isObject(nested)) \{
+      \textcolor{keywordflow}{if} (index == lastIndex) \{
+        nested[key] = value;
+      \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (nested[key] == null) \{
+        nested[key] = isIndex(path[index + 1]) ? [] : \{\};
+      \}
+    \}
+    nested = nested[key];
+  \}
+  \textcolor{keywordflow}{return} object;
+\}
+
+module.exports = set;
+\end{DoxyCodeInclude}
+ 

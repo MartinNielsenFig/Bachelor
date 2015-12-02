@@ -1,0 +1,31 @@
+\hypertarget{class_reporter}{}\section{Reporter Class Reference}
+\label{class_reporter}\index{Reporter@{Reporter}}
+
+
+\subsection{Detailed Description}
+convenience mechanism to write one or more reports ensuring that config options are respected. \subsubsection*{Usage }
+
+\begin{DoxyVerb} var fs = require('fs'),
+     reporter = new require('istanbul').Reporter(),
+     collector = new require('istanbul').Collector(),
+     sync = true;
+
+ collector.add(JSON.parse(fs.readFileSync('coverage.json', 'utf8')));
+ reporter.add('lcovonly');
+ reporter.addAll(['clover', 'cobertura']);
+ reporter.write(collector, sync, function () { console.log('done'); });
+\end{DoxyVerb}
+
+
+
+\begin{DoxyParams}{Parameters}
+{\em \{\+Configuration\}} & cfg the config object, a falsy value will load the default configuration instead \\
+\hline
+{\em \{\+String\}} & dir the directory in which to write the reports, may be falsy to use config or global defaults   main \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/lib/reporter.\+js\end{DoxyCompactItemize}

@@ -1,0 +1,15 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module9e91ebb44c4243369c82e7fb9fa83046}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/function/defer.\+js}
+\+\_\+.\+defer(function(text) \{ console.\+log(text); \}, \textquotesingle{}deferred\textquotesingle{}); // logs \textquotesingle{}deferred\textquotesingle{} after one or more milliseconds
+
+
+\begin{DoxyCodeInclude}
+var baseDelay = require(\textcolor{stringliteral}{'../internal/baseDelay'}),
+    restParam = require(\textcolor{stringliteral}{'./restParam'});
+
+var defer = restParam(\textcolor{keyword}{function}(func, args) \{
+  \textcolor{keywordflow}{return} baseDelay(func, 1, args);
+\});
+
+module.exports = defer;
+\end{DoxyCodeInclude}
+ 

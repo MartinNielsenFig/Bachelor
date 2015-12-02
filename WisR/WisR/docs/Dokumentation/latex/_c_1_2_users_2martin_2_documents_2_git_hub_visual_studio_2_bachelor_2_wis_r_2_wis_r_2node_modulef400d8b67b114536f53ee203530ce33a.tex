@@ -1,0 +1,24 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_modulef400d8b67b114536f53ee203530ce33a}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/lang/to\+Array.\+js}
+(function() \{ return \+\_\+.\+to\+Array(arguments).slice(1); \}(1, 2, 3)); // =$>$ \mbox{[}2, 3\mbox{]}
+
+
+\begin{DoxyCodeInclude}
+var arrayCopy = require(\textcolor{stringliteral}{'../internal/arrayCopy'}),
+    getLength = require(\textcolor{stringliteral}{'../internal/getLength'}),
+    isLength = require(\textcolor{stringliteral}{'../internal/isLength'}),
+    values = require(\textcolor{stringliteral}{'../object/values'});
+
+\textcolor{keyword}{function} toArray(value) \{
+  var length = value ? getLength(value) : 0;
+  \textcolor{keywordflow}{if} (!isLength(length)) \{
+    \textcolor{keywordflow}{return} values(value);
+  \}
+  \textcolor{keywordflow}{if} (!length) \{
+    \textcolor{keywordflow}{return} [];
+  \}
+  \textcolor{keywordflow}{return} arrayCopy(value);
+\}
+
+module.exports = toArray;
+\end{DoxyCodeInclude}
+ 

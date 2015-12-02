@@ -1,0 +1,36 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_modulea0efb9e176d11e35081f3b4d0aa6596d}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/collection/sort\+By.\+js}
+\+\_\+.\+sort\+By(\mbox{[}1, 2, 3\mbox{]}, function(n) \{ return Math.\+sin(n); \}); // =$>$ \mbox{[}3, 1, 2\mbox{]}
+
+\+\_\+.\+sort\+By(\mbox{[}1, 2, 3\mbox{]}, function(n) \{ return this.\+sin(n); \}, Math); // =$>$ \mbox{[}3, 1, 2\mbox{]}
+
+var users = \mbox{[} \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}fred\textquotesingle{} \}, \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}pebbles\textquotesingle{} \}, \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}barney\textquotesingle{} \} \mbox{]};
+
+// using the {\ttfamily \+\_\+.\+property} callback shorthand \+\_\+.\+pluck(\+\_\+.\+sort\+By(users, \textquotesingle{}user\textquotesingle{}), \textquotesingle{}user\textquotesingle{}); // =$>$ \mbox{[}\textquotesingle{}barney\textquotesingle{}, \textquotesingle{}fred\textquotesingle{}, \textquotesingle{}pebbles\textquotesingle{}\mbox{]}
+
+
+\begin{DoxyCodeInclude}
+var baseCallback = require(\textcolor{stringliteral}{'../internal/baseCallback'}),
+    baseMap = require(\textcolor{stringliteral}{'../internal/baseMap'}),
+    baseSortBy = require(\textcolor{stringliteral}{'../internal/baseSortBy'}),
+    compareAscending = require(\textcolor{stringliteral}{'../internal/compareAscending'}),
+    isIterateeCall = require(\textcolor{stringliteral}{'../internal/isIterateeCall'});
+
+\textcolor{keyword}{function} sortBy(collection, iteratee, thisArg) \{
+  \textcolor{keywordflow}{if} (collection == null) \{
+    \textcolor{keywordflow}{return} [];
+  \}
+  \textcolor{keywordflow}{if} (thisArg && isIterateeCall(collection, iteratee, thisArg)) \{
+    iteratee = undefined;
+  \}
+  var index = -1;
+  iteratee = baseCallback(iteratee, thisArg, 3);
+
+  var result = baseMap(collection, \textcolor{keyword}{function}(value, key, collection) \{
+    \textcolor{keywordflow}{return} \{ \textcolor{stringliteral}{'criteria'}: iteratee(value, key, collection), \textcolor{stringliteral}{'index'}: ++index, \textcolor{stringliteral}{'value'}: value \};
+  \});
+  \textcolor{keywordflow}{return} baseSortBy(result, compareAscending);
+\}
+
+module.exports = sortBy;
+\end{DoxyCodeInclude}
+ 

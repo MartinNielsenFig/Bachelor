@@ -1,0 +1,20 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_moduleda776dea75911ea38abaea641f7b6bce}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/lang/is\+Object.\+js}
+\+\_\+.\+is\+Object(\{\}); // =$>$ true
+
+\+\_\+.\+is\+Object(\mbox{[}1, 2, 3\mbox{]}); // =$>$ true
+
+\+\_\+.\+is\+Object(1); // =$>$ false
+
+
+\begin{DoxyCodeInclude}
+
+\textcolor{keyword}{function} isObject(value) \{
+  \textcolor{comment}{// Avoid a V8 JIT bug in Chrome 19-20.}
+  \textcolor{comment}{// See https://code.google.com/p/v8/issues/detail?id=2291 for more details.}
+  var type = typeof value;
+  \textcolor{keywordflow}{return} !!value && (type == \textcolor{stringliteral}{'object'} || type == \textcolor{stringliteral}{'function'});
+\}
+
+module.exports = isObject;
+\end{DoxyCodeInclude}
+ 

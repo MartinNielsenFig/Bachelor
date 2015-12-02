@@ -1,0 +1,22 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module2fd3ebfac7c829aecf11c49bf816ca07}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/function/rearg.\+js}
+var rearged = \+\_\+.\+rearg(function(a, b, c) \{ return \mbox{[}a, b, c\mbox{]}; \}, 2, 0, 1);
+
+rearged(\textquotesingle{}b\textquotesingle{}, \textquotesingle{}c\textquotesingle{}, \textquotesingle{}a\textquotesingle{}) // =$>$ \mbox{[}\textquotesingle{}a\textquotesingle{}, \textquotesingle{}b\textquotesingle{}, \textquotesingle{}c\textquotesingle{}\mbox{]}
+
+var map = \+\_\+.\+rearg(\+\_\+.\+map, \mbox{[}1, 0\mbox{]}); map(function(n) \{ return n $\ast$ 3; \}, \mbox{[}1, 2, 3\mbox{]}); // =$>$ \mbox{[}3, 6, 9\mbox{]}
+
+
+\begin{DoxyCodeInclude}
+var baseFlatten = require(\textcolor{stringliteral}{'../internal/baseFlatten'}),
+    createWrapper = require(\textcolor{stringliteral}{'../internal/createWrapper'}),
+    restParam = require(\textcolor{stringliteral}{'./restParam'});
+
+var REARG\_FLAG = 256;
+
+var rearg = restParam(\textcolor{keyword}{function}(func, indexes) \{
+  \textcolor{keywordflow}{return} createWrapper(func, REARG\_FLAG, undefined, undefined, undefined, baseFlatten(indexes));
+\});
+
+module.exports = rearg;
+\end{DoxyCodeInclude}
+ 

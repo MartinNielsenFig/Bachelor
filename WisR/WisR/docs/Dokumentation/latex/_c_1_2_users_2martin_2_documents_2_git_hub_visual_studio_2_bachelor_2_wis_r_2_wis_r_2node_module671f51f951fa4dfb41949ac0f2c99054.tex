@@ -1,0 +1,16 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module671f51f951fa4dfb41949ac0f2c99054}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/collection/reduce\+Right.\+js}
+var array = \mbox{[}\mbox{[}0, 1\mbox{]}, \mbox{[}2, 3\mbox{]}, \mbox{[}4, 5\mbox{]}\mbox{]};
+
+\+\_\+.\+reduce\+Right(array, function(flattened, other) \{ return flattened.\+concat(other); \}, \mbox{[}\mbox{]}); // =$>$ \mbox{[}4, 5, 2, 3, 0, 1\mbox{]}
+
+
+\begin{DoxyCodeInclude}
+var arrayReduceRight = require(\textcolor{stringliteral}{'../internal/arrayReduceRight'}),
+    baseEachRight = require(\textcolor{stringliteral}{'../internal/baseEachRight'}),
+    createReduce = require(\textcolor{stringliteral}{'../internal/createReduce'});
+
+var reduceRight = createReduce(arrayReduceRight, baseEachRight);
+
+module.exports = reduceRight;
+\end{DoxyCodeInclude}
+ 

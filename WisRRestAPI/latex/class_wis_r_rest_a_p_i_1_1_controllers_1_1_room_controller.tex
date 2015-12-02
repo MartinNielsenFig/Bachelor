@@ -1,0 +1,204 @@
+\hypertarget{class_wis_r_rest_a_p_i_1_1_controllers_1_1_room_controller}{}\section{Wis\+R\+Rest\+A\+P\+I.\+Controllers.\+Room\+Controller Class Reference}
+\label{class_wis_r_rest_a_p_i_1_1_controllers_1_1_room_controller}\index{Wis\+R\+Rest\+A\+P\+I.\+Controllers.\+Room\+Controller@{Wis\+R\+Rest\+A\+P\+I.\+Controllers.\+Room\+Controller}}
+
+
+The room controller is used to handle the room C\+R\+U\+D\textquotesingle{}s  
+
+
+Inheritance diagram for Wis\+R\+Rest\+A\+P\+I.\+Controllers.\+Room\+Controller\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_wis_r_rest_a_p_i_1_1_controllers_1_1_room_controller}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_wis_r_rest_a_p_i_1_1_controllers_1_1_room_controller_ac8968b0858aec120f53d7b128e80262e}{Room\+Controller} (\hyperlink{interface_wis_r_rest_a_p_i_1_1_domain_model_1_1_i_room_repository}{I\+Room\+Repository} rr, \hyperlink{interface_wis_r_rest_a_p_i_1_1_providers_1_1_i_chat_repository}{I\+Chat\+Repository} cr, \hyperlink{interface_wis_r_rest_a_p_i_1_1_domain_model_1_1_i_question_repository}{I\+Question\+Repository} qr, \hyperlink{interface_wis_r_rest_a_p_i_1_1_providers_1_1_i_rabbit_publisher}{I\+Rabbit\+Publisher} irabbit\+Publisher)
+\begin{DoxyCompactList}\small\item\em Initializes a new instance of the \hyperlink{class_wis_r_rest_a_p_i_1_1_controllers_1_1_room_controller}{Room\+Controller} class. \end{DoxyCompactList}\item 
+string \hyperlink{class_wis_r_rest_a_p_i_1_1_controllers_1_1_room_controller_accefc672156db932f258f2ce3b215945}{Get\+All} ()
+\begin{DoxyCompactList}\small\item\em Gets all. \end{DoxyCompactList}\item 
+string \hyperlink{class_wis_r_rest_a_p_i_1_1_controllers_1_1_room_controller_ad3ab8b1c3c69ccd1233fb0e4ccd2a8f9}{Create\+Room} (string \hyperlink{class_wis_r_1_1_domain_models_1_1_room}{Room})
+\begin{DoxyCompactList}\small\item\em Creates the room. \end{DoxyCompactList}\item 
+string \hyperlink{class_wis_r_rest_a_p_i_1_1_controllers_1_1_room_controller_ab8438fba187cc10fb023f9318458f41f}{Get\+By\+Id} (string id)
+\begin{DoxyCompactList}\small\item\em Gets by the identifier. \end{DoxyCompactList}\item 
+string \hyperlink{class_wis_r_rest_a_p_i_1_1_controllers_1_1_room_controller_afbe7421d52f132df05d4d4832755cf56}{Get\+By\+Unique\+Secret} (string secret)
+\begin{DoxyCompactList}\small\item\em Gets by the unique secret. \end{DoxyCompactList}\item 
+string \hyperlink{class_wis_r_rest_a_p_i_1_1_controllers_1_1_room_controller_a089b73167d64c9ee5a4a3181e938d6e9}{Delete\+Room} (string id)
+\begin{DoxyCompactList}\small\item\em Deletes the room. \end{DoxyCompactList}\item 
+string \hyperlink{class_wis_r_rest_a_p_i_1_1_controllers_1_1_room_controller_accfee91aaadad8e92c68e73aadf184f3}{Update\+Location} (string id, string location)
+\begin{DoxyCompactList}\small\item\em Updates the location. \end{DoxyCompactList}\item 
+string \hyperlink{class_wis_r_rest_a_p_i_1_1_controllers_1_1_room_controller_a6b6e12d062030d26057ae8e8d55f8e32}{Room\+Exists} (string room\+Id)
+\begin{DoxyCompactList}\small\item\em Determine whether a room is present in a given moment. Used to check that you are not inside a room that has been deleted. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The room controller is used to handle the room C\+R\+U\+D\textquotesingle{}s 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_wis_r_rest_a_p_i_1_1_controllers_1_1_room_controller_ac8968b0858aec120f53d7b128e80262e}{}\index{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Room\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Room\+Controller}!Room\+Controller@{Room\+Controller}}
+\index{Room\+Controller@{Room\+Controller}!Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Room\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Room\+Controller}}
+\subsubsection[{Room\+Controller(\+I\+Room\+Repository rr, I\+Chat\+Repository cr, I\+Question\+Repository qr, I\+Rabbit\+Publisher irabbit\+Publisher)}]{\setlength{\rightskip}{0pt plus 5cm}Wis\+R\+Rest\+A\+P\+I.\+Controllers.\+Room\+Controller.\+Room\+Controller (
+\begin{DoxyParamCaption}
+\item[{{\bf I\+Room\+Repository}}]{rr, }
+\item[{{\bf I\+Chat\+Repository}}]{cr, }
+\item[{{\bf I\+Question\+Repository}}]{qr, }
+\item[{{\bf I\+Rabbit\+Publisher}}]{irabbit\+Publisher}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_wis_r_rest_a_p_i_1_1_controllers_1_1_room_controller_ac8968b0858aec120f53d7b128e80262e}
+
+
+Initializes a new instance of the \hyperlink{class_wis_r_rest_a_p_i_1_1_controllers_1_1_room_controller}{Room\+Controller} class. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em rr} & The room repository.\\
+\hline
+{\em cr} & The chat repository.\\
+\hline
+{\em qr} & The question repository.\\
+\hline
+{\em irabbit\+Publisher} & The rabbit\+M\+Q publisher.\\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_wis_r_rest_a_p_i_1_1_controllers_1_1_room_controller_ad3ab8b1c3c69ccd1233fb0e4ccd2a8f9}{}\index{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Room\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Room\+Controller}!Create\+Room@{Create\+Room}}
+\index{Create\+Room@{Create\+Room}!Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Room\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Room\+Controller}}
+\subsubsection[{Create\+Room(string Room)}]{\setlength{\rightskip}{0pt plus 5cm}string Wis\+R\+Rest\+A\+P\+I.\+Controllers.\+Room\+Controller.\+Create\+Room (
+\begin{DoxyParamCaption}
+\item[{string}]{Room}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_wis_r_rest_a_p_i_1_1_controllers_1_1_room_controller_ad3ab8b1c3c69ccd1233fb0e4ccd2a8f9}
+
+
+Creates the room. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Room} & The room.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Notification
+\end{DoxyReturn}
+\hypertarget{class_wis_r_rest_a_p_i_1_1_controllers_1_1_room_controller_a089b73167d64c9ee5a4a3181e938d6e9}{}\index{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Room\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Room\+Controller}!Delete\+Room@{Delete\+Room}}
+\index{Delete\+Room@{Delete\+Room}!Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Room\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Room\+Controller}}
+\subsubsection[{Delete\+Room(string id)}]{\setlength{\rightskip}{0pt plus 5cm}string Wis\+R\+Rest\+A\+P\+I.\+Controllers.\+Room\+Controller.\+Delete\+Room (
+\begin{DoxyParamCaption}
+\item[{string}]{id}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_wis_r_rest_a_p_i_1_1_controllers_1_1_room_controller_a089b73167d64c9ee5a4a3181e938d6e9}
+
+
+Deletes the room. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & The identifier.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Notification
+\end{DoxyReturn}
+\hypertarget{class_wis_r_rest_a_p_i_1_1_controllers_1_1_room_controller_accefc672156db932f258f2ce3b215945}{}\index{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Room\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Room\+Controller}!Get\+All@{Get\+All}}
+\index{Get\+All@{Get\+All}!Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Room\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Room\+Controller}}
+\subsubsection[{Get\+All()}]{\setlength{\rightskip}{0pt plus 5cm}string Wis\+R\+Rest\+A\+P\+I.\+Controllers.\+Room\+Controller.\+Get\+All (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_wis_r_rest_a_p_i_1_1_controllers_1_1_room_controller_accefc672156db932f258f2ce3b215945}
+
+
+Gets all. 
+
+\begin{DoxyReturn}{Returns}
+Notification
+\end{DoxyReturn}
+\hypertarget{class_wis_r_rest_a_p_i_1_1_controllers_1_1_room_controller_ab8438fba187cc10fb023f9318458f41f}{}\index{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Room\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Room\+Controller}!Get\+By\+Id@{Get\+By\+Id}}
+\index{Get\+By\+Id@{Get\+By\+Id}!Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Room\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Room\+Controller}}
+\subsubsection[{Get\+By\+Id(string id)}]{\setlength{\rightskip}{0pt plus 5cm}string Wis\+R\+Rest\+A\+P\+I.\+Controllers.\+Room\+Controller.\+Get\+By\+Id (
+\begin{DoxyParamCaption}
+\item[{string}]{id}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_wis_r_rest_a_p_i_1_1_controllers_1_1_room_controller_ab8438fba187cc10fb023f9318458f41f}
+
+
+Gets by the identifier. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & The identifier.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Notification
+\end{DoxyReturn}
+\hypertarget{class_wis_r_rest_a_p_i_1_1_controllers_1_1_room_controller_afbe7421d52f132df05d4d4832755cf56}{}\index{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Room\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Room\+Controller}!Get\+By\+Unique\+Secret@{Get\+By\+Unique\+Secret}}
+\index{Get\+By\+Unique\+Secret@{Get\+By\+Unique\+Secret}!Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Room\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Room\+Controller}}
+\subsubsection[{Get\+By\+Unique\+Secret(string secret)}]{\setlength{\rightskip}{0pt plus 5cm}string Wis\+R\+Rest\+A\+P\+I.\+Controllers.\+Room\+Controller.\+Get\+By\+Unique\+Secret (
+\begin{DoxyParamCaption}
+\item[{string}]{secret}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_wis_r_rest_a_p_i_1_1_controllers_1_1_room_controller_afbe7421d52f132df05d4d4832755cf56}
+
+
+Gets by the unique secret. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em secret} & The secret.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Notification
+\end{DoxyReturn}
+\hypertarget{class_wis_r_rest_a_p_i_1_1_controllers_1_1_room_controller_a6b6e12d062030d26057ae8e8d55f8e32}{}\index{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Room\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Room\+Controller}!Room\+Exists@{Room\+Exists}}
+\index{Room\+Exists@{Room\+Exists}!Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Room\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Room\+Controller}}
+\subsubsection[{Room\+Exists(string room\+Id)}]{\setlength{\rightskip}{0pt plus 5cm}string Wis\+R\+Rest\+A\+P\+I.\+Controllers.\+Room\+Controller.\+Room\+Exists (
+\begin{DoxyParamCaption}
+\item[{string}]{room\+Id}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_wis_r_rest_a_p_i_1_1_controllers_1_1_room_controller_a6b6e12d062030d26057ae8e8d55f8e32}
+
+
+Determine whether a room is present in a given moment. Used to check that you are not inside a room that has been deleted. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em room\+Id} & The id of the room to check if exists.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Notification
+\end{DoxyReturn}
+\hypertarget{class_wis_r_rest_a_p_i_1_1_controllers_1_1_room_controller_accfee91aaadad8e92c68e73aadf184f3}{}\index{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Room\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Room\+Controller}!Update\+Location@{Update\+Location}}
+\index{Update\+Location@{Update\+Location}!Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Room\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Room\+Controller}}
+\subsubsection[{Update\+Location(string id, string location)}]{\setlength{\rightskip}{0pt plus 5cm}string Wis\+R\+Rest\+A\+P\+I.\+Controllers.\+Room\+Controller.\+Update\+Location (
+\begin{DoxyParamCaption}
+\item[{string}]{id, }
+\item[{string}]{location}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_wis_r_rest_a_p_i_1_1_controllers_1_1_room_controller_accfee91aaadad8e92c68e73aadf184f3}
+
+
+Updates the location. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & The identifier.\\
+\hline
+{\em location} & The location.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Notification
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Wis\+R\+Rest\+A\+P\+I/\+Controllers/Room\+Controller.\+cs\end{DoxyCompactItemize}

@@ -1,0 +1,59 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_moduleae219ff04fa1a65c0c57ebf49d9aa01d}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/utility/mixin.\+js}
+function vowels(string) \{ return \+\_\+.\+filter(string, function(v) \{ return /\mbox{[}aeiou\mbox{]}/i.test(v); \}); \}
+
+\+\_\+.\+mixin(\{ \textquotesingle{}vowels\textquotesingle{}\+: vowels \}); \+\_\+.\+vowels(\textquotesingle{}fred\textquotesingle{}); // =$>$ \mbox{[}\textquotesingle{}e\textquotesingle{}\mbox{]}
+
+\+\_\+(\textquotesingle{}fred\textquotesingle{}).vowels().value(); // =$>$ \mbox{[}\textquotesingle{}e\textquotesingle{}\mbox{]}
+
+\+\_\+.\+mixin(\{ \textquotesingle{}vowels\textquotesingle{}\+: vowels \}, \{ \textquotesingle{}chain\textquotesingle{}\+: false \}); \+\_\+(\textquotesingle{}fred\textquotesingle{}).vowels(); // =$>$ \mbox{[}\textquotesingle{}e\textquotesingle{}\mbox{]}
+
+
+\begin{DoxyCodeInclude}
+var arrayCopy = require(\textcolor{stringliteral}{'../internal/arrayCopy'}),
+    arrayPush = require(\textcolor{stringliteral}{'../internal/arrayPush'}),
+    baseFunctions = require(\textcolor{stringliteral}{'../internal/baseFunctions'}),
+    isFunction = require(\textcolor{stringliteral}{'../lang/isFunction'}),
+    isObject = require(\textcolor{stringliteral}{'../lang/isObject'}),
+    keys = require(\textcolor{stringliteral}{'../object/keys'});
+
+\textcolor{keyword}{function} mixin(\textcolor{keywordtype}{object}, source, options) \{
+  var methodNames = baseFunctions(source, keys(source));
+
+  var chain = \textcolor{keyword}{true},
+      index = -1,
+      isFunc = isFunction(\textcolor{keywordtype}{object}),
+      length = methodNames.length;
+
+  \textcolor{keywordflow}{if} (options === \textcolor{keyword}{false}) \{
+    chain = \textcolor{keyword}{false};
+  \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (isObject(options) && \textcolor{stringliteral}{'chain'} in options) \{
+    chain = options.chain;
+  \}
+  \textcolor{keywordflow}{while} (++index < length) \{
+    var methodName = methodNames[index],
+        func = source[methodName];
+
+    \textcolor{keywordtype}{object}[methodName] = func;
+    \textcolor{keywordflow}{if} (isFunc) \{
+      \textcolor{keywordtype}{object}.prototype[methodName] = (\textcolor{keyword}{function}(func) \{
+        \textcolor{keywordflow}{return} \textcolor{keyword}{function}() \{
+          var chainAll = this.\_\_chain\_\_;
+          \textcolor{keywordflow}{if} (chain || chainAll) \{
+            var result = object(this.\_\_wrapped\_\_),
+                actions = result.\_\_actions\_\_ = arrayCopy(this.\_\_actions\_\_);
+
+            actions.push(\{ \textcolor{stringliteral}{'func'}: func, \textcolor{stringliteral}{'args'}: arguments, \textcolor{stringliteral}{'thisArg'}: \textcolor{keywordtype}{object} \});
+            result.\_\_chain\_\_ = chainAll;
+            \textcolor{keywordflow}{return} result;
+          \}
+          \textcolor{keywordflow}{return} func.apply(\textcolor{keywordtype}{object}, arrayPush([this.value()], arguments));
+        \};
+      \}(func));
+    \}
+  \}
+  \textcolor{keywordflow}{return} object;
+\}
+
+module.exports = mixin;
+\end{DoxyCodeInclude}
+ 

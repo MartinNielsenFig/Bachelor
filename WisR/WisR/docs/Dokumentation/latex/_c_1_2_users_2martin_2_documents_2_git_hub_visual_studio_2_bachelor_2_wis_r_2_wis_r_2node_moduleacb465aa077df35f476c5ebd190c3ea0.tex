@@ -1,0 +1,29 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_moduleacb465aa077df35f476c5ebd190c3ea0}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/string/words.\+js}
+\+\_\+.\+words(\textquotesingle{}fred, barney, \& pebbles\textquotesingle{}); // =$>$ \mbox{[}\textquotesingle{}fred\textquotesingle{}, \textquotesingle{}barney\textquotesingle{}, \textquotesingle{}pebbles\textquotesingle{}\mbox{]}
+
+\+\_\+.\+words(\textquotesingle{}fred, barney, \& pebbles\textquotesingle{}, /\mbox{[}$^\wedge$, \mbox{]}+/g); // =$>$ \mbox{[}\textquotesingle{}fred\textquotesingle{}, \textquotesingle{}barney\textquotesingle{}, \textquotesingle{}\&\textquotesingle{}, \textquotesingle{}pebbles\textquotesingle{}\mbox{]}
+
+
+\begin{DoxyCodeInclude}
+var baseToString = require(\textcolor{stringliteral}{'../internal/baseToString'}),
+    isIterateeCall = require(\textcolor{stringliteral}{'../internal/isIterateeCall'});
+
+var reWords = (\textcolor{keyword}{function}() \{
+  var upper = \textcolor{stringliteral}{'[A-Z\(\backslash\)\(\backslash\)xc0-\(\backslash\)\(\backslash\)xd6\(\backslash\)\(\backslash\)xd8-\(\backslash\)\(\backslash\)xde]'},
+      lower = \textcolor{stringliteral}{'[a-z\(\backslash\)\(\backslash\)xdf-\(\backslash\)\(\backslash\)xf6\(\backslash\)\(\backslash\)xf8-\(\backslash\)\(\backslash\)xff]+'};
+
+  \textcolor{keywordflow}{return} RegExp(upper + \textcolor{stringliteral}{'+(?='} + upper + lower + \textcolor{stringliteral}{')|'} + upper + \textcolor{charliteral}{'?'} + lower + \textcolor{charliteral}{'|'} + upper + \textcolor{stringliteral}{'+|[0-9]+'}, \textcolor{charliteral}{'g'}
+      );
+\}());
+
+\textcolor{keyword}{function} words(\textcolor{keywordtype}{string}, pattern, guard) \{
+  \textcolor{keywordflow}{if} (guard && isIterateeCall(\textcolor{keywordtype}{string}, pattern, guard)) \{
+    pattern = undefined;
+  \}
+  \textcolor{keywordtype}{string} = baseToString(\textcolor{keywordtype}{string});
+  \textcolor{keywordflow}{return} \textcolor{keywordtype}{string}.match(pattern || reWords) || [];
+\}
+
+module.exports = words;
+\end{DoxyCodeInclude}
+ 

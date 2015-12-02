@@ -1,0 +1,18 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module84a5676d68d610d57011e5b68c0e1326}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/string/snake\+Case.\+js}
+\+\_\+.\+snake\+Case(\textquotesingle{}Foo Bar\textquotesingle{}); // =$>$ \textquotesingle{}foo\+\_\+bar\textquotesingle{}
+
+\+\_\+.\+snake\+Case(\textquotesingle{}foo\+Bar\textquotesingle{}); // =$>$ \textquotesingle{}foo\+\_\+bar\textquotesingle{}
+
+\+\_\+.\+snake\+Case(\textquotesingle{}--foo-\/bar\textquotesingle{}); // =$>$ \textquotesingle{}foo\+\_\+bar\textquotesingle{}
+
+
+\begin{DoxyCodeInclude}
+var createCompounder = require(\textcolor{stringliteral}{'../internal/createCompounder'});
+
+var snakeCase = createCompounder(\textcolor{keyword}{function}(result, word, index) \{
+  \textcolor{keywordflow}{return} result + (index ? \textcolor{charliteral}{'\_'} : \textcolor{stringliteral}{''}) + word.toLowerCase();
+\});
+
+module.exports = snakeCase;
+\end{DoxyCodeInclude}
+ 

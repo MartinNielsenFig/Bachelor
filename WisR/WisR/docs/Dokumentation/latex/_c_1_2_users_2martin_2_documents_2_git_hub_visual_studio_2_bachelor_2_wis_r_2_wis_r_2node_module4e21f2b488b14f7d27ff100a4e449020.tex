@@ -1,0 +1,14 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module4e21f2b488b14f7d27ff100a4e449020}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/collection/for\+Each\+Right.\+js}
+\+\_\+(\mbox{[}1, 2\mbox{]}).for\+Each\+Right(function(n) \{ console.\+log(n); \}).value(); // =$>$ logs each value from right to left and returns the array
+
+
+\begin{DoxyCodeInclude}
+var arrayEachRight = require(\textcolor{stringliteral}{'../internal/arrayEachRight'}),
+    baseEachRight = require(\textcolor{stringliteral}{'../internal/baseEachRight'}),
+    createForEach = require(\textcolor{stringliteral}{'../internal/createForEach'});
+
+var forEachRight = createForEach(arrayEachRight, baseEachRight);
+
+module.exports = forEachRight;
+\end{DoxyCodeInclude}
+ 

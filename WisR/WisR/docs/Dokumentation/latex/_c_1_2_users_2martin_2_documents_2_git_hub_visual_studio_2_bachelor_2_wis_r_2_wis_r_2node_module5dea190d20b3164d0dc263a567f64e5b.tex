@@ -1,0 +1,28 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module5dea190d20b3164d0dc263a567f64e5b}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/array/take.\+js}
+\+\_\+.\+take(\mbox{[}1, 2, 3\mbox{]}); // =$>$ \mbox{[}1\mbox{]}
+
+\+\_\+.\+take(\mbox{[}1, 2, 3\mbox{]}, 2); // =$>$ \mbox{[}1, 2\mbox{]}
+
+\+\_\+.\+take(\mbox{[}1, 2, 3\mbox{]}, 5); // =$>$ \mbox{[}1, 2, 3\mbox{]}
+
+\+\_\+.\+take(\mbox{[}1, 2, 3\mbox{]}, 0); // =$>$ \mbox{[}\mbox{]}
+
+
+\begin{DoxyCodeInclude}
+var baseSlice = require(\textcolor{stringliteral}{'../internal/baseSlice'}),
+    isIterateeCall = require(\textcolor{stringliteral}{'../internal/isIterateeCall'});
+
+\textcolor{keyword}{function} take(array, n, guard) \{
+  var length = array ? array.length : 0;
+  \textcolor{keywordflow}{if} (!length) \{
+    \textcolor{keywordflow}{return} [];
+  \}
+  \textcolor{keywordflow}{if} (guard ? isIterateeCall(array, n, guard) : n == null) \{
+    n = 1;
+  \}
+  \textcolor{keywordflow}{return} baseSlice(array, 0, n < 0 ? 0 : n);
+\}
+
+module.exports = take;
+\end{DoxyCodeInclude}
+ 

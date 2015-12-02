@@ -1,0 +1,124 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2_scripts_2_53d3ce3bfd2c70be05e0b362863774c0}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/\+Scripts/\+Crypto\+J\+S/components/sha1.\+js}
+Shortcut function to the hasher\textquotesingle{}s object interface.
+
+
+\begin{DoxyParams}{Parameters}
+{\em \{\+Word\+Array$\vert$string\}} & message The message to hash.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\{Word\+Array\} The hash.
+\end{DoxyReturn}
+\begin{DoxyVerb}var hash = CryptoJS.SHA1('message');
+var hash = CryptoJS.SHA1(wordArray);\end{DoxyVerb}
+
+
+
+\begin{DoxyCodeInclude}
+\textcolor{comment}{/*}
+\textcolor{comment}{CryptoJS v3.1.2}
+\textcolor{comment}{code.google.com/p/crypto-js}
+\textcolor{comment}{(c) 2009-2013 by Jeff Mott. All rights reserved.}
+\textcolor{comment}{code.google.com/p/crypto-js/wiki/License}
+\textcolor{comment}{*/}
+(\textcolor{keyword}{function} () \{
+    \textcolor{comment}{// Shortcuts}
+    var C = CryptoJS;
+    var C\_lib = C.lib;
+    var WordArray = C\_lib.WordArray;
+    var Hasher = C\_lib.Hasher;
+    var C\_algo = C.algo;
+
+    \textcolor{comment}{// Reusable object}
+    var W = [];
+
+    var SHA1 = C\_algo.SHA1 = Hasher.extend(\{
+        \_doReset: \textcolor{keyword}{function} () \{
+            this.\_hash = \textcolor{keyword}{new} WordArray.init([
+                0x67452301, 0xefcdab89,
+                0x98badcfe, 0x10325476,
+                0xc3d2e1f0
+            ]);
+        \},
+
+        \_doProcessBlock: \textcolor{keyword}{function} (M, offset) \{
+            \textcolor{comment}{// Shortcut}
+            var H = this.\_hash.words;
+
+            \textcolor{comment}{// Working variables}
+            var a = H[0];
+            var b = H[1];
+            var c = H[2];
+            var d = H[3];
+            var e = H[4];
+
+            \textcolor{comment}{// Computation}
+            \textcolor{keywordflow}{for} (var i = 0; i < 80; i++) \{
+                \textcolor{keywordflow}{if} (i < 16) \{
+                    W[i] = M[offset + i] | 0;
+                \} \textcolor{keywordflow}{else} \{
+                    var n = W[i - 3] ^ W[i - 8] ^ W[i - 14] ^ W[i - 16];
+                    W[i] = (n << 1) | (n >>> 31);
+                \}
+
+                var t = ((a << 5) | (a >>> 27)) + e + W[i];
+                \textcolor{keywordflow}{if} (i < 20) \{
+                    t += ((b & c) | (~b & d)) + 0x5a827999;
+                \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (i < 40) \{
+                    t += (b ^ c ^ d) + 0x6ed9eba1;
+                \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (i < 60) \{
+                    t += ((b & c) | (b & d) | (c & d)) - 0x70e44324;
+                \} \textcolor{keywordflow}{else} \textcolor{comment}{/* if (i < 80) */} \{
+                    t += (b ^ c ^ d) - 0x359d3e2a;
+                \}
+
+                e = d;
+                d = c;
+                c = (b << 30) | (b >>> 2);
+                b = a;
+                a = t;
+            \}
+
+            \textcolor{comment}{// Intermediate hash value}
+            H[0] = (H[0] + a) | 0;
+            H[1] = (H[1] + b) | 0;
+            H[2] = (H[2] + c) | 0;
+            H[3] = (H[3] + d) | 0;
+            H[4] = (H[4] + e) | 0;
+        \},
+
+        \_doFinalize: \textcolor{keyword}{function} () \{
+            \textcolor{comment}{// Shortcuts}
+            var data = this.\_data;
+            var dataWords = data.words;
+
+            var nBitsTotal = this.\_nDataBytes * 8;
+            var nBitsLeft = data.sigBytes * 8;
+
+            \textcolor{comment}{// Add padding}
+            dataWords[nBitsLeft >>> 5] |= 0x80 << (24 - nBitsLeft % 32);
+            dataWords[(((nBitsLeft + 64) >>> 9) << 4) + 14] = Math.floor(nBitsTotal / 0x100000000);
+            dataWords[(((nBitsLeft + 64) >>> 9) << 4) + 15] = nBitsTotal;
+            data.sigBytes = dataWords.length * 4;
+
+            \textcolor{comment}{// Hash final blocks}
+            this.\_process();
+
+            \textcolor{comment}{// Return final computed hash}
+            \textcolor{keywordflow}{return} this.\_hash;
+        \},
+
+        clone: \textcolor{keyword}{function} () \{
+            var clone = Hasher.clone.call(\textcolor{keyword}{this});
+            clone.\_hash = this.\_hash.clone();
+
+            \textcolor{keywordflow}{return} clone;
+        \}
+    \});
+
+    C.SHA1 = Hasher.\_createHelper(SHA1);
+
+    C.HmacSHA1 = Hasher.\_createHmacHelper(SHA1);
+\}());
+\end{DoxyCodeInclude}
+ 

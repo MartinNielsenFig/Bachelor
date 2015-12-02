@@ -1,0 +1,46 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_modulea1829d168840fb4113b0be4581cb8967}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/object/invert.\+js}
+var object = \{ \textquotesingle{}a\textquotesingle{}\+: 1, \textquotesingle{}b\textquotesingle{}\+: 2, \textquotesingle{}c\textquotesingle{}\+: 1 \};
+
+\+\_\+.\+invert(object); // =$>$ \{ \textquotesingle{}1\textquotesingle{}\+: \textquotesingle{}c\textquotesingle{}, \textquotesingle{}2\textquotesingle{}\+: \textquotesingle{}b\textquotesingle{} \}
+
+// with {\ttfamily multi\+Value} \+\_\+.\+invert(object, true); // =$>$ \{ \textquotesingle{}1\textquotesingle{}\+: \mbox{[}\textquotesingle{}a\textquotesingle{}, \textquotesingle{}c\textquotesingle{}\mbox{]}, \textquotesingle{}2\textquotesingle{}\+: \mbox{[}\textquotesingle{}b\textquotesingle{}\mbox{]} \}
+
+
+\begin{DoxyCodeInclude}
+var isIterateeCall = require(\textcolor{stringliteral}{'../internal/isIterateeCall'}),
+    keys = require(\textcolor{stringliteral}{'./keys'});
+
+var objectProto = Object.prototype;
+
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+\textcolor{keyword}{function} invert(\textcolor{keywordtype}{object}, multiValue, guard) \{
+  \textcolor{keywordflow}{if} (guard && isIterateeCall(\textcolor{keywordtype}{object}, multiValue, guard)) \{
+    multiValue = undefined;
+  \}
+  var index = -1,
+      props = keys(\textcolor{keywordtype}{object}),
+      length = props.length,
+      result = \{\};
+
+  \textcolor{keywordflow}{while} (++index < length) \{
+    var key = props[index],
+        value = \textcolor{keywordtype}{object}[key];
+
+    \textcolor{keywordflow}{if} (multiValue) \{
+      \textcolor{keywordflow}{if} (hasOwnProperty.call(result, value)) \{
+        result[value].push(key);
+      \} \textcolor{keywordflow}{else} \{
+        result[value] = [key];
+      \}
+    \}
+    \textcolor{keywordflow}{else} \{
+      result[value] = key;
+    \}
+  \}
+  \textcolor{keywordflow}{return} result;
+\}
+
+module.exports = invert;
+\end{DoxyCodeInclude}
+ 

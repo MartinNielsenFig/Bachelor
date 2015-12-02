@@ -1,0 +1,17 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module4ece162061f12ae26da3fefeda1fa450}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/object/for\+Own\+Right.\+js}
+function Foo() \{ this.\+a = 1; this.\+b = 2; \}
+
+Foo.\+prototype.\+c = 3;
+
+\+\_\+.\+for\+Own\+Right(new Foo, function(value, key) \{ console.\+log(key); \}); // =$>$ logs \textquotesingle{}b\textquotesingle{} and \textquotesingle{}a\textquotesingle{} assuming {\ttfamily \+\_\+.\+for\+Own} logs \textquotesingle{}a\textquotesingle{} and \textquotesingle{}b\textquotesingle{}
+
+
+\begin{DoxyCodeInclude}
+var baseForOwnRight = require(\textcolor{stringliteral}{'../internal/baseForOwnRight'}),
+    createForOwn = require(\textcolor{stringliteral}{'../internal/createForOwn'});
+
+var forOwnRight = createForOwn(baseForOwnRight);
+
+module.exports = forOwnRight;
+\end{DoxyCodeInclude}
+ 

@@ -1,0 +1,17 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module91d7f4e0e50fec978a94100462d29b29}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/object/for\+In\+Right.\+js}
+function Foo() \{ this.\+a = 1; this.\+b = 2; \}
+
+Foo.\+prototype.\+c = 3;
+
+\+\_\+.\+for\+In\+Right(new Foo, function(value, key) \{ console.\+log(key); \}); // =$>$ logs \textquotesingle{}c\textquotesingle{}, \textquotesingle{}b\textquotesingle{}, and \textquotesingle{}a\textquotesingle{} assuming {\ttfamily \+\_\+.\+for\+In} logs \textquotesingle{}a\textquotesingle{}, \textquotesingle{}b\textquotesingle{}, and \textquotesingle{}c\textquotesingle{}
+
+
+\begin{DoxyCodeInclude}
+var baseForRight = require(\textcolor{stringliteral}{'../internal/baseForRight'}),
+    createForIn = require(\textcolor{stringliteral}{'../internal/createForIn'});
+
+var forInRight = createForIn(baseForRight);
+
+module.exports = forInRight;
+\end{DoxyCodeInclude}
+ 

@@ -1,0 +1,26 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_moduled05df6815040473064b9ee6dd8785401}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/array/pull\+At.\+js}
+var array = \mbox{[}5, 10, 15, 20\mbox{]}; var evens = \+\_\+.\+pull\+At(array, 1, 3);
+
+console.\+log(array); // =$>$ \mbox{[}5, 15\mbox{]}
+
+console.\+log(evens); // =$>$ \mbox{[}10, 20\mbox{]}
+
+
+\begin{DoxyCodeInclude}
+var baseAt = require(\textcolor{stringliteral}{'../internal/baseAt'}),
+    baseCompareAscending = require(\textcolor{stringliteral}{'../internal/baseCompareAscending'}),
+    baseFlatten = require(\textcolor{stringliteral}{'../internal/baseFlatten'}),
+    basePullAt = require(\textcolor{stringliteral}{'../internal/basePullAt'}),
+    restParam = require(\textcolor{stringliteral}{'../function/restParam'});
+
+var pullAt = restParam(\textcolor{keyword}{function}(array, indexes) \{
+  indexes = baseFlatten(indexes);
+
+  var result = baseAt(array, indexes);
+  basePullAt(array, indexes.sort(baseCompareAscending));
+  \textcolor{keywordflow}{return} result;
+\});
+
+module.exports = pullAt;
+\end{DoxyCodeInclude}
+ 

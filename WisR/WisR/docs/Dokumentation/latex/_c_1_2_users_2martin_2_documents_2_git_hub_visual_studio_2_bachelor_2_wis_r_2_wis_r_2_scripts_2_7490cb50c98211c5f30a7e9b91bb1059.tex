@@ -1,0 +1,173 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2_scripts_2_7490cb50c98211c5f30a7e9b91bb1059}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/\+Scripts/\+Crypto\+J\+S/components/sha256.\+js}
+Shortcut function to the hasher\textquotesingle{}s object interface.
+
+
+\begin{DoxyParams}{Parameters}
+{\em \{\+Word\+Array$\vert$string\}} & message The message to hash.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\{Word\+Array\} The hash.
+\end{DoxyReturn}
+\begin{DoxyVerb}var hash = CryptoJS.SHA256('message');
+var hash = CryptoJS.SHA256(wordArray);\end{DoxyVerb}
+
+
+
+\begin{DoxyCodeInclude}
+\textcolor{comment}{/*}
+\textcolor{comment}{CryptoJS v3.1.2}
+\textcolor{comment}{code.google.com/p/crypto-js}
+\textcolor{comment}{(c) 2009-2013 by Jeff Mott. All rights reserved.}
+\textcolor{comment}{code.google.com/p/crypto-js/wiki/License}
+\textcolor{comment}{*/}
+(\textcolor{keyword}{function} (Math) \{
+    \textcolor{comment}{// Shortcuts}
+    var C = CryptoJS;
+    var C\_lib = C.lib;
+    var WordArray = C\_lib.WordArray;
+    var Hasher = C\_lib.Hasher;
+    var C\_algo = C.algo;
+
+    \textcolor{comment}{// Initialization and round constants tables}
+    var H = [];
+    var K = [];
+
+    \textcolor{comment}{// Compute constants}
+    (\textcolor{keyword}{function} () \{
+        \textcolor{keyword}{function} isPrime(n) \{
+            var sqrtN = Math.sqrt(n);
+            \textcolor{keywordflow}{for} (var factor = 2; factor <= sqrtN; factor++) \{
+                \textcolor{keywordflow}{if} (!(n % factor)) \{
+                    \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+                \}
+            \}
+
+            \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+        \}
+
+        \textcolor{keyword}{function} getFractionalBits(n) \{
+            \textcolor{keywordflow}{return} ((n - (n | 0)) * 0x100000000) | 0;
+        \}
+
+        var n = 2;
+        var nPrime = 0;
+        \textcolor{keywordflow}{while} (nPrime < 64) \{
+            \textcolor{keywordflow}{if} (isPrime(n)) \{
+                \textcolor{keywordflow}{if} (nPrime < 8) \{
+                    H[nPrime] = getFractionalBits(Math.pow(n, 1 / 2));
+                \}
+                K[nPrime] = getFractionalBits(Math.pow(n, 1 / 3));
+
+                nPrime++;
+            \}
+
+            n++;
+        \}
+    \}());
+
+    \textcolor{comment}{// Reusable object}
+    var W = [];
+
+    var SHA256 = C\_algo.SHA256 = Hasher.extend(\{
+        \_doReset: \textcolor{keyword}{function} () \{
+            this.\_hash = \textcolor{keyword}{new} WordArray.init(H.slice(0));
+        \},
+
+        \_doProcessBlock: \textcolor{keyword}{function} (M, offset) \{
+            \textcolor{comment}{// Shortcut}
+            var H = this.\_hash.words;
+
+            \textcolor{comment}{// Working variables}
+            var a = H[0];
+            var b = H[1];
+            var c = H[2];
+            var d = H[3];
+            var e = H[4];
+            var f = H[5];
+            var g = H[6];
+            var h = H[7];
+
+            \textcolor{comment}{// Computation}
+            \textcolor{keywordflow}{for} (var i = 0; i < 64; i++) \{
+                \textcolor{keywordflow}{if} (i < 16) \{
+                    W[i] = M[offset + i] | 0;
+                \} \textcolor{keywordflow}{else} \{
+                    var gamma0x = W[i - 15];
+                    var gamma0  = ((gamma0x << 25) | (gamma0x >>> 7))  ^
+                                  ((gamma0x << 14) | (gamma0x >>> 18)) ^
+                                   (gamma0x >>> 3);
+
+                    var gamma1x = W[i - 2];
+                    var gamma1  = ((gamma1x << 15) | (gamma1x >>> 17)) ^
+                                  ((gamma1x << 13) | (gamma1x >>> 19)) ^
+                                   (gamma1x >>> 10);
+
+                    W[i] = gamma0 + W[i - 7] + gamma1 + W[i - 16];
+                \}
+
+                var ch  = (e & f) ^ (~e & g);
+                var maj = (a & b) ^ (a & c) ^ (b & c);
+
+                var sigma0 = ((a << 30) | (a >>> 2)) ^ ((a << 19) | (a >>> 13)) ^ ((a << 10) | (a >>> 22));
+                var sigma1 = ((e << 26) | (e >>> 6)) ^ ((e << 21) | (e >>> 11)) ^ ((e << 7)  | (e >>> 25));
+
+                var t1 = h + sigma1 + ch + K[i] + W[i];
+                var t2 = sigma0 + maj;
+
+                h = g;
+                g = f;
+                f = e;
+                e = (d + t1) | 0;
+                d = c;
+                c = b;
+                b = a;
+                a = (t1 + t2) | 0;
+            \}
+
+            \textcolor{comment}{// Intermediate hash value}
+            H[0] = (H[0] + a) | 0;
+            H[1] = (H[1] + b) | 0;
+            H[2] = (H[2] + c) | 0;
+            H[3] = (H[3] + d) | 0;
+            H[4] = (H[4] + e) | 0;
+            H[5] = (H[5] + f) | 0;
+            H[6] = (H[6] + g) | 0;
+            H[7] = (H[7] + h) | 0;
+        \},
+
+        \_doFinalize: \textcolor{keyword}{function} () \{
+            \textcolor{comment}{// Shortcuts}
+            var data = this.\_data;
+            var dataWords = data.words;
+
+            var nBitsTotal = this.\_nDataBytes * 8;
+            var nBitsLeft = data.sigBytes * 8;
+
+            \textcolor{comment}{// Add padding}
+            dataWords[nBitsLeft >>> 5] |= 0x80 << (24 - nBitsLeft % 32);
+            dataWords[(((nBitsLeft + 64) >>> 9) << 4) + 14] = Math.floor(nBitsTotal / 0x100000000);
+            dataWords[(((nBitsLeft + 64) >>> 9) << 4) + 15] = nBitsTotal;
+            data.sigBytes = dataWords.length * 4;
+
+            \textcolor{comment}{// Hash final blocks}
+            this.\_process();
+
+            \textcolor{comment}{// Return final computed hash}
+            \textcolor{keywordflow}{return} this.\_hash;
+        \},
+
+        clone: \textcolor{keyword}{function} () \{
+            var clone = Hasher.clone.call(\textcolor{keyword}{this});
+            clone.\_hash = this.\_hash.clone();
+
+            \textcolor{keywordflow}{return} clone;
+        \}
+    \});
+
+    C.SHA256 = Hasher.\_createHelper(SHA256);
+
+    C.HmacSHA256 = Hasher.\_createHmacHelper(SHA256);
+\}(Math));
+\end{DoxyCodeInclude}
+ 

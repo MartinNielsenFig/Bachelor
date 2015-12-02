@@ -1,0 +1,177 @@
+\hypertarget{class_wis_r_rest_a_p_i_1_1_controllers_1_1_chat_controller}{}\section{Wis\+R\+Rest\+A\+P\+I.\+Controllers.\+Chat\+Controller Class Reference}
+\label{class_wis_r_rest_a_p_i_1_1_controllers_1_1_chat_controller}\index{Wis\+R\+Rest\+A\+P\+I.\+Controllers.\+Chat\+Controller@{Wis\+R\+Rest\+A\+P\+I.\+Controllers.\+Chat\+Controller}}
+
+
+The chat controller is used to handle the chat C\+R\+U\+D\textquotesingle{}s  
+
+
+Inheritance diagram for Wis\+R\+Rest\+A\+P\+I.\+Controllers.\+Chat\+Controller\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_wis_r_rest_a_p_i_1_1_controllers_1_1_chat_controller}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_wis_r_rest_a_p_i_1_1_controllers_1_1_chat_controller_a002ad6bcc7681a47304434501af09842}{Chat\+Controller} (\hyperlink{interface_wis_r_rest_a_p_i_1_1_providers_1_1_i_chat_repository}{I\+Chat\+Repository} cr, \hyperlink{interface_wis_r_rest_a_p_i_1_1_providers_1_1_i_rabbit_publisher}{I\+Rabbit\+Publisher} irabbit\+Publisher, \hyperlink{interface_wis_r_rest_a_p_i_1_1_domain_model_1_1_i_room_repository}{I\+Room\+Repository} rr)
+\begin{DoxyCompactList}\small\item\em Initializes a new instance of the \hyperlink{class_wis_r_rest_a_p_i_1_1_controllers_1_1_chat_controller}{Chat\+Controller} class. \end{DoxyCompactList}\item 
+string \hyperlink{class_wis_r_rest_a_p_i_1_1_controllers_1_1_chat_controller_a2ae23dbf792527feff86bc01509bdfd3}{Get\+All} ()
+\begin{DoxyCompactList}\small\item\em Gets all. \end{DoxyCompactList}\item 
+string \hyperlink{class_wis_r_rest_a_p_i_1_1_controllers_1_1_chat_controller_a5b86a0a1bfc4ea720dc6f516844fa63d}{Get\+All\+By\+Room\+Id} (string room\+Id)
+\begin{DoxyCompactList}\small\item\em Gets all by room identifier. \end{DoxyCompactList}\item 
+string \hyperlink{class_wis_r_rest_a_p_i_1_1_controllers_1_1_chat_controller_a160f5a59cda5dce2ff31255bdab85f13}{Get\+Newer\+Messages} (string msg)
+\begin{DoxyCompactList}\small\item\em Fetches messages for the room specified in the msg parameter that is newer than that message. \end{DoxyCompactList}\item 
+string \hyperlink{class_wis_r_rest_a_p_i_1_1_controllers_1_1_chat_controller_ae826964139207d0df7f85f43d0a73a21}{Create\+Chat\+Message} (string \hyperlink{class_wis_r_1_1_domain_model_1_1_chat_message}{Chat\+Message})
+\begin{DoxyCompactList}\small\item\em Creates the chat message. \end{DoxyCompactList}\item 
+string \hyperlink{class_wis_r_rest_a_p_i_1_1_controllers_1_1_chat_controller_a54f5753cf829bb54b2cab12d6d23d46c}{Get\+By\+Id} (string id)
+\begin{DoxyCompactList}\small\item\em Gets by identifier. \end{DoxyCompactList}\item 
+string \hyperlink{class_wis_r_rest_a_p_i_1_1_controllers_1_1_chat_controller_a80848f890fd1ac560380c2ab197ecdca}{Delete\+Chat\+Message} (string id)
+\begin{DoxyCompactList}\small\item\em Deletes the chat message by identifier. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The chat controller is used to handle the chat C\+R\+U\+D\textquotesingle{}s 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_wis_r_rest_a_p_i_1_1_controllers_1_1_chat_controller_a002ad6bcc7681a47304434501af09842}{}\index{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Chat\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Chat\+Controller}!Chat\+Controller@{Chat\+Controller}}
+\index{Chat\+Controller@{Chat\+Controller}!Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Chat\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Chat\+Controller}}
+\subsubsection[{Chat\+Controller(\+I\+Chat\+Repository cr, I\+Rabbit\+Publisher irabbit\+Publisher, I\+Room\+Repository rr)}]{\setlength{\rightskip}{0pt plus 5cm}Wis\+R\+Rest\+A\+P\+I.\+Controllers.\+Chat\+Controller.\+Chat\+Controller (
+\begin{DoxyParamCaption}
+\item[{{\bf I\+Chat\+Repository}}]{cr, }
+\item[{{\bf I\+Rabbit\+Publisher}}]{irabbit\+Publisher, }
+\item[{{\bf I\+Room\+Repository}}]{rr}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_wis_r_rest_a_p_i_1_1_controllers_1_1_chat_controller_a002ad6bcc7681a47304434501af09842}
+
+
+Initializes a new instance of the \hyperlink{class_wis_r_rest_a_p_i_1_1_controllers_1_1_chat_controller}{Chat\+Controller} class. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em cr} & The chat repository.\\
+\hline
+{\em irabbit\+Publisher} & The rabbit\+M\+Q publisher.\\
+\hline
+{\em rr} & The room repository.\\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_wis_r_rest_a_p_i_1_1_controllers_1_1_chat_controller_ae826964139207d0df7f85f43d0a73a21}{}\index{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Chat\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Chat\+Controller}!Create\+Chat\+Message@{Create\+Chat\+Message}}
+\index{Create\+Chat\+Message@{Create\+Chat\+Message}!Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Chat\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Chat\+Controller}}
+\subsubsection[{Create\+Chat\+Message(string Chat\+Message)}]{\setlength{\rightskip}{0pt plus 5cm}string Wis\+R\+Rest\+A\+P\+I.\+Controllers.\+Chat\+Controller.\+Create\+Chat\+Message (
+\begin{DoxyParamCaption}
+\item[{string}]{Chat\+Message}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_wis_r_rest_a_p_i_1_1_controllers_1_1_chat_controller_ae826964139207d0df7f85f43d0a73a21}
+
+
+Creates the chat message. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Chat\+Message} & The chat message.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Notification
+\end{DoxyReturn}
+\hypertarget{class_wis_r_rest_a_p_i_1_1_controllers_1_1_chat_controller_a80848f890fd1ac560380c2ab197ecdca}{}\index{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Chat\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Chat\+Controller}!Delete\+Chat\+Message@{Delete\+Chat\+Message}}
+\index{Delete\+Chat\+Message@{Delete\+Chat\+Message}!Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Chat\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Chat\+Controller}}
+\subsubsection[{Delete\+Chat\+Message(string id)}]{\setlength{\rightskip}{0pt plus 5cm}string Wis\+R\+Rest\+A\+P\+I.\+Controllers.\+Chat\+Controller.\+Delete\+Chat\+Message (
+\begin{DoxyParamCaption}
+\item[{string}]{id}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_wis_r_rest_a_p_i_1_1_controllers_1_1_chat_controller_a80848f890fd1ac560380c2ab197ecdca}
+
+
+Deletes the chat message by identifier. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & The identifier.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Notification
+\end{DoxyReturn}
+\hypertarget{class_wis_r_rest_a_p_i_1_1_controllers_1_1_chat_controller_a2ae23dbf792527feff86bc01509bdfd3}{}\index{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Chat\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Chat\+Controller}!Get\+All@{Get\+All}}
+\index{Get\+All@{Get\+All}!Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Chat\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Chat\+Controller}}
+\subsubsection[{Get\+All()}]{\setlength{\rightskip}{0pt plus 5cm}string Wis\+R\+Rest\+A\+P\+I.\+Controllers.\+Chat\+Controller.\+Get\+All (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_wis_r_rest_a_p_i_1_1_controllers_1_1_chat_controller_a2ae23dbf792527feff86bc01509bdfd3}
+
+
+Gets all. 
+
+\begin{DoxyReturn}{Returns}
+Notification
+\end{DoxyReturn}
+\hypertarget{class_wis_r_rest_a_p_i_1_1_controllers_1_1_chat_controller_a5b86a0a1bfc4ea720dc6f516844fa63d}{}\index{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Chat\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Chat\+Controller}!Get\+All\+By\+Room\+Id@{Get\+All\+By\+Room\+Id}}
+\index{Get\+All\+By\+Room\+Id@{Get\+All\+By\+Room\+Id}!Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Chat\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Chat\+Controller}}
+\subsubsection[{Get\+All\+By\+Room\+Id(string room\+Id)}]{\setlength{\rightskip}{0pt plus 5cm}string Wis\+R\+Rest\+A\+P\+I.\+Controllers.\+Chat\+Controller.\+Get\+All\+By\+Room\+Id (
+\begin{DoxyParamCaption}
+\item[{string}]{room\+Id}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_wis_r_rest_a_p_i_1_1_controllers_1_1_chat_controller_a5b86a0a1bfc4ea720dc6f516844fa63d}
+
+
+Gets all by room identifier. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em room\+Id} & The room identifier.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Notification
+\end{DoxyReturn}
+\hypertarget{class_wis_r_rest_a_p_i_1_1_controllers_1_1_chat_controller_a54f5753cf829bb54b2cab12d6d23d46c}{}\index{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Chat\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Chat\+Controller}!Get\+By\+Id@{Get\+By\+Id}}
+\index{Get\+By\+Id@{Get\+By\+Id}!Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Chat\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Chat\+Controller}}
+\subsubsection[{Get\+By\+Id(string id)}]{\setlength{\rightskip}{0pt plus 5cm}string Wis\+R\+Rest\+A\+P\+I.\+Controllers.\+Chat\+Controller.\+Get\+By\+Id (
+\begin{DoxyParamCaption}
+\item[{string}]{id}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_wis_r_rest_a_p_i_1_1_controllers_1_1_chat_controller_a54f5753cf829bb54b2cab12d6d23d46c}
+
+
+Gets by identifier. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & The identifier.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Notification
+\end{DoxyReturn}
+\hypertarget{class_wis_r_rest_a_p_i_1_1_controllers_1_1_chat_controller_a160f5a59cda5dce2ff31255bdab85f13}{}\index{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Chat\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Chat\+Controller}!Get\+Newer\+Messages@{Get\+Newer\+Messages}}
+\index{Get\+Newer\+Messages@{Get\+Newer\+Messages}!Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Chat\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Chat\+Controller}}
+\subsubsection[{Get\+Newer\+Messages(string msg)}]{\setlength{\rightskip}{0pt plus 5cm}string Wis\+R\+Rest\+A\+P\+I.\+Controllers.\+Chat\+Controller.\+Get\+Newer\+Messages (
+\begin{DoxyParamCaption}
+\item[{string}]{msg}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_wis_r_rest_a_p_i_1_1_controllers_1_1_chat_controller_a160f5a59cda5dce2ff31255bdab85f13}
+
+
+Fetches messages for the room specified in the msg parameter that is newer than that message. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em msg} & A J\+S\+O\+N representation of the Chat\+Message with room id and timestamp\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+A J\+S\+O\+N Array with messages newer than parameter message
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Wis\+R\+Rest\+A\+P\+I/\+Controllers/Chat\+Controller.\+cs\end{DoxyCompactItemize}

@@ -1,0 +1,22 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_moduleb9e394a74447fda6b76dee44118b971e}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/lang/is\+String.\+js}
+\+\_\+.\+is\+String(\textquotesingle{}abc\textquotesingle{}); // =$>$ true
+
+\+\_\+.\+is\+String(1); // =$>$ false
+
+
+\begin{DoxyCodeInclude}
+var isObjectLike = require(\textcolor{stringliteral}{'../internal/isObjectLike'});
+
+var stringTag = \textcolor{stringliteral}{'[object String]'};
+
+var objectProto = Object.prototype;
+
+var objToString = objectProto.toString;
+
+\textcolor{keyword}{function} isString(value) \{
+  \textcolor{keywordflow}{return} typeof value == \textcolor{stringliteral}{'string'} || (isObjectLike(value) && objToString.call(value) == stringTag);
+\}
+
+module.exports = isString;
+\end{DoxyCodeInclude}
+ 

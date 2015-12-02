@@ -1,0 +1,136 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module7dc90453c8994f73842a3b25e503aec3}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/function/debounce.\+js}
+// avoid costly calculations while the window size is in flux j\+Query(window).on(\textquotesingle{}resize\textquotesingle{}, \+\_\+.\+debounce(calculate\+Layout, 150));
+
+// invoke {\ttfamily send\+Mail} when the click event is fired, debouncing subsequent calls j\+Query(\textquotesingle{}\#postbox\textquotesingle{}).on(\textquotesingle{}click\textquotesingle{}, \+\_\+.\+debounce(send\+Mail, 300, \{ \textquotesingle{}leading\textquotesingle{}\+: true, \textquotesingle{}trailing\textquotesingle{}\+: false \}));
+
+// ensure {\ttfamily batch\+Log} is invoked once after 1 second of debounced calls var source = new Event\+Source(\textquotesingle{}/stream\textquotesingle{}); j\+Query(source).on(\textquotesingle{}message\textquotesingle{}, \+\_\+.\+debounce(batch\+Log, 250, \{ \textquotesingle{}max\+Wait\textquotesingle{}\+: 1000 \}));
+
+// cancel a debounced call var todo\+Changes = \+\_\+.\+debounce(batch\+Log, 1000); Object.\+observe(models.\+todo, todo\+Changes);
+
+Object.\+observe(models, function(changes) \{ if (\+\_\+.\+find(changes, \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}todo\textquotesingle{}, \textquotesingle{}type\textquotesingle{}\+: \textquotesingle{}delete\textquotesingle{}\})) \{ todo\+Changes.\+cancel(); \} \}, \mbox{[}\textquotesingle{}delete\textquotesingle{}\mbox{]});
+
+// ...at some point {\ttfamily models.\+todo} is changed models.\+todo.\+completed = true;
+
+// ...before 1 second has passed {\ttfamily models.\+todo} is deleted // which cancels the debounced {\ttfamily todo\+Changes} call delete models.\+todo;
+
+
+\begin{DoxyCodeInclude}
+var isObject = require(\textcolor{stringliteral}{'../lang/isObject'}),
+    now = require(\textcolor{stringliteral}{'../date/now'});
+
+var FUNC\_ERROR\_TEXT = \textcolor{stringliteral}{'Expected a function'};
+
+\textcolor{comment}{/* Native method references for those with the same name as other `lodash` methods. */}
+var nativeMax = Math.max;
+
+\textcolor{keyword}{function} debounce(func, wait, options) \{
+  var args,
+      maxTimeoutId,
+      result,
+      stamp,
+      thisArg,
+      timeoutId,
+      trailingCall,
+      lastCalled = 0,
+      maxWait = \textcolor{keyword}{false},
+      trailing = \textcolor{keyword}{true};
+
+  \textcolor{keywordflow}{if} (typeof func != \textcolor{stringliteral}{'function'}) \{
+    \textcolor{keywordflow}{throw} \textcolor{keyword}{new} TypeError(FUNC\_ERROR\_TEXT);
+  \}
+  wait = wait < 0 ? 0 : (+wait || 0);
+  \textcolor{keywordflow}{if} (options === \textcolor{keyword}{true}) \{
+    var leading = \textcolor{keyword}{true};
+    trailing = \textcolor{keyword}{false};
+  \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (isObject(options)) \{
+    leading = !!options.leading;
+    maxWait = \textcolor{stringliteral}{'maxWait'} in options && nativeMax(+options.maxWait || 0, wait);
+    trailing = \textcolor{stringliteral}{'trailing'} in options ? !!options.trailing : trailing;
+  \}
+
+  \textcolor{keyword}{function} cancel() \{
+    \textcolor{keywordflow}{if} (timeoutId) \{
+      clearTimeout(timeoutId);
+    \}
+    \textcolor{keywordflow}{if} (maxTimeoutId) \{
+      clearTimeout(maxTimeoutId);
+    \}
+    lastCalled = 0;
+    maxTimeoutId = timeoutId = trailingCall = undefined;
+  \}
+
+  \textcolor{keyword}{function} complete(isCalled, \textcolor{keywordtype}{id}) \{
+    \textcolor{keywordflow}{if} (\textcolor{keywordtype}{id}) \{
+      clearTimeout(\textcolor{keywordtype}{id});
+    \}
+    maxTimeoutId = timeoutId = trailingCall = undefined;
+    \textcolor{keywordflow}{if} (isCalled) \{
+      lastCalled = now();
+      result = func.apply(thisArg, args);
+      \textcolor{keywordflow}{if} (!timeoutId && !maxTimeoutId) \{
+        args = thisArg = undefined;
+      \}
+    \}
+  \}
+
+  \textcolor{keyword}{function} delayed() \{
+    var remaining = wait - (now() - stamp);
+    \textcolor{keywordflow}{if} (remaining <= 0 || remaining > wait) \{
+      complete(trailingCall, maxTimeoutId);
+    \} \textcolor{keywordflow}{else} \{
+      timeoutId = setTimeout(delayed, remaining);
+    \}
+  \}
+
+  \textcolor{keyword}{function} maxDelayed() \{
+    complete(trailing, timeoutId);
+  \}
+
+  \textcolor{keyword}{function} debounced() \{
+    args = arguments;
+    stamp = now();
+    thisArg = \textcolor{keyword}{this};
+    trailingCall = trailing && (timeoutId || !leading);
+
+    \textcolor{keywordflow}{if} (maxWait === \textcolor{keyword}{false}) \{
+      var leadingCall = leading && !timeoutId;
+    \} \textcolor{keywordflow}{else} \{
+      \textcolor{keywordflow}{if} (!maxTimeoutId && !leading) \{
+        lastCalled = stamp;
+      \}
+      var remaining = maxWait - (stamp - lastCalled),
+          isCalled = remaining <= 0 || remaining > maxWait;
+
+      \textcolor{keywordflow}{if} (isCalled) \{
+        \textcolor{keywordflow}{if} (maxTimeoutId) \{
+          maxTimeoutId = clearTimeout(maxTimeoutId);
+        \}
+        lastCalled = stamp;
+        result = func.apply(thisArg, args);
+      \}
+      \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (!maxTimeoutId) \{
+        maxTimeoutId = setTimeout(maxDelayed, remaining);
+      \}
+    \}
+    \textcolor{keywordflow}{if} (isCalled && timeoutId) \{
+      timeoutId = clearTimeout(timeoutId);
+    \}
+    \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (!timeoutId && wait !== maxWait) \{
+      timeoutId = setTimeout(delayed, wait);
+    \}
+    \textcolor{keywordflow}{if} (leadingCall) \{
+      isCalled = \textcolor{keyword}{true};
+      result = func.apply(thisArg, args);
+    \}
+    \textcolor{keywordflow}{if} (isCalled && !timeoutId && !maxTimeoutId) \{
+      args = thisArg = undefined;
+    \}
+    \textcolor{keywordflow}{return} result;
+  \}
+  debounced.cancel = cancel;
+  \textcolor{keywordflow}{return} debounced;
+\}
+
+module.exports = debounce;
+\end{DoxyCodeInclude}
+ 

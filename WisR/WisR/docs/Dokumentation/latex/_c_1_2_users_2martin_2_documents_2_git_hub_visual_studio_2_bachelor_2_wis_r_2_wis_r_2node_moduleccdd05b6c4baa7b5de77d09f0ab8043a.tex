@@ -1,0 +1,154 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_moduleccdd05b6c4baa7b5de77d09f0ab8043a}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/string/template.\+js}
+// using the \char`\"{}interpolate\char`\"{} delimiter to create a compiled template var compiled = \+\_\+.\+template(\textquotesingle{}hello $<$\%= user \%$>$!\textquotesingle{}); compiled(\{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}fred\textquotesingle{} \}); // =$>$ \textquotesingle{}hello fred!\textquotesingle{}
+
+// using the H\+T\+M\+L \char`\"{}escape\char`\"{} delimiter to escape data property values var compiled = \+\_\+.\+template(\textquotesingle{}{\bfseries $<$\%-\/ value \%$>$}\textquotesingle{}); compiled(\{ \textquotesingle{}value\textquotesingle{}\+: \textquotesingle{}$<$script$>$\textquotesingle{} \}); // =$>$ \textquotesingle{}{\bfseries $<$script$>$}\textquotesingle{}
+
+// using the \char`\"{}evaluate\char`\"{} delimiter to execute Java\+Script and generate H\+T\+M\+L var compiled = \+\_\+.\+template(\textquotesingle{}$<$\% \+\_\+.\+for\+Each(users, function(user) \{ \%$>$$<$\%-\/ user \%$>$$<$\% \}); \%$>$\textquotesingle{}); compiled(\{ \textquotesingle{}users\textquotesingle{}\+: \mbox{[}\textquotesingle{}fred\textquotesingle{}, \textquotesingle{}barney\textquotesingle{}\mbox{]} \}); // =$>$ \textquotesingle{}fredbarney\textquotesingle{}
+
+// using the internal {\ttfamily print} function in \char`\"{}evaluate\char`\"{} delimiters var compiled = \+\_\+.\+template(\textquotesingle{}$<$\% print(\char`\"{}hello \char`\"{} + user); \%$>$!\textquotesingle{}); compiled(\{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}barney\textquotesingle{} \}); // =$>$ \textquotesingle{}hello barney!\textquotesingle{}
+
+// using the E\+S delimiter as an alternative to the default \char`\"{}interpolate\char`\"{} delimiter var compiled = \+\_\+.\+template(\textquotesingle{}hello \$\{ user \}!\textquotesingle{}); compiled(\{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}pebbles\textquotesingle{} \}); // =$>$ \textquotesingle{}hello pebbles!\textquotesingle{}
+
+// using custom template delimiters \+\_\+.\+template\+Settings.\+interpolate = /\{\{(\mbox{[}\mbox{]}+?)\}\}/g; var compiled = \+\_\+.\+template(\textquotesingle{}hello \{\{ user \}\}!\textquotesingle{}); compiled(\{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}mustache\textquotesingle{} \}); // =$>$ \textquotesingle{}hello mustache!\textquotesingle{}
+
+// using backslashes to treat delimiters as plain text var compiled = \+\_\+.\+template(\textquotesingle{}$<$\%= \char`\"{}\textbackslash{}\textbackslash{}$<$\%-\/ value \%\textbackslash{}\textbackslash{}$>$\char`\"{} \%$>$\textquotesingle{}); compiled(\{ \textquotesingle{}value\textquotesingle{}\+: \textquotesingle{}ignored\textquotesingle{} \}); // =$>$ \textquotesingle{}$<$\%-\/ value \%$>$\textquotesingle{}
+
+// using the {\ttfamily imports} option to import {\ttfamily j\+Query} as {\ttfamily jq} var text = \textquotesingle{}$<$\% jq.\+each(users, function(user) \{ \%$>$$<$\%-\/ user \%$>$$<$\% \}); \%$>$\textquotesingle{}; var compiled = \+\_\+.\+template(text, \{ \textquotesingle{}imports\textquotesingle{}\+: \{ \textquotesingle{}jq\textquotesingle{}\+: j\+Query \} \}); compiled(\{ \textquotesingle{}users\textquotesingle{}\+: \mbox{[}\textquotesingle{}fred\textquotesingle{}, \textquotesingle{}barney\textquotesingle{}\mbox{]} \}); // =$>$ \textquotesingle{}fredbarney\textquotesingle{}
+
+// using the {\ttfamily source\+U\+R\+L} option to specify a custom source\+U\+R\+L for the template var compiled = \+\_\+.\+template(\textquotesingle{}hello $<$\%= user \%$>$!\textquotesingle{}, \{ \textquotesingle{}source\+U\+R\+L\textquotesingle{}\+: \textquotesingle{}/basic/greeting.jst\textquotesingle{} \}); compiled(data); // =$>$ find the source of \char`\"{}greeting.\+jst\char`\"{} under the Sources tab or Resources panel of the web inspector
+
+// using the {\ttfamily variable} option to ensure a with-\/statement isn\textquotesingle{}t used in the compiled template var compiled = \+\_\+.\+template(\textquotesingle{}hi $<$\%= data.\+user \%$>$!\textquotesingle{}, \{ \textquotesingle{}variable\textquotesingle{}\+: \textquotesingle{}data\textquotesingle{} \}); compiled.\+source; // =$>$ function(data) \{ // var \+\_\+\+\_\+t, \+\_\+\+\_\+p = \textquotesingle{}\textquotesingle{}; // \+\_\+\+\_\+p += \textquotesingle{}hi \textquotesingle{} + ((\+\_\+\+\_\+t = ( data.\+user )) == null ? \textquotesingle{}\textquotesingle{} \+: \+\_\+\+\_\+t) + \textquotesingle{}!\textquotesingle{}; // return \+\_\+\+\_\+p; // \}
+
+// using the {\ttfamily source} property to inline compiled templates for meaningful // line numbers in error messages and a stack trace fs.\+write\+File\+Sync(path.\+join(cwd, \textquotesingle{}jst.\+js\textquotesingle{}), \textquotesingle{}\textbackslash{} var J\+S\+T = \{\textbackslash{} \char`\"{}main\char`\"{}\+: \textquotesingle{} + \+\_\+.\+template(main\+Text).source + \textquotesingle{}\textbackslash{} \};\textbackslash{} \textquotesingle{});
+
+
+\begin{DoxyCodeInclude}
+var assignOwnDefaults = require(\textcolor{stringliteral}{'../internal/assignOwnDefaults'}),
+    assignWith = require(\textcolor{stringliteral}{'../internal/assignWith'}),
+    attempt = require(\textcolor{stringliteral}{'../utility/attempt'}),
+    baseAssign = require(\textcolor{stringliteral}{'../internal/baseAssign'}),
+    baseToString = require(\textcolor{stringliteral}{'../internal/baseToString'}),
+    baseValues = require(\textcolor{stringliteral}{'../internal/baseValues'}),
+    escapeStringChar = require(\textcolor{stringliteral}{'../internal/escapeStringChar'}),
+    isError = require(\textcolor{stringliteral}{'../lang/isError'}),
+    isIterateeCall = require(\textcolor{stringliteral}{'../internal/isIterateeCall'}),
+    keys = require(\textcolor{stringliteral}{'../object/keys'}),
+    reInterpolate = require(\textcolor{stringliteral}{'../internal/reInterpolate'}),
+    templateSettings = require(\textcolor{stringliteral}{'./templateSettings'});
+
+var reEmptyStringLeading = /\(\backslash\)b\_\_p \(\backslash\)+= \textcolor{stringliteral}{''};/g,
+    reEmptyStringMiddle = /\(\backslash\)b(\_\_p \(\backslash\)+=) \textcolor{stringliteral}{''} \(\backslash\)+/g,
+    reEmptyStringTrailing = /(\_\_e\(\backslash\)(.*?\(\backslash\))|\(\backslash\)b\_\_t\(\backslash\))) \(\backslash\)+\(\backslash\)n\textcolor{stringliteral}{''};/g;
+
+var reEsTemplate = /\(\backslash\)$\(\backslash\)\{([^\(\backslash\)\(\backslash\)\}]*(?:\(\backslash\)\(\backslash\).[^\(\backslash\)\(\backslash\)\}]*)*)\(\backslash\)\}/g;
+
+var reNoMatch = /($^)/;
+
+var reUnescapedString = /[\textcolor{stringliteral}{'\(\backslash\)n\(\backslash\)r\(\backslash\)u2028\(\backslash\)u2029\(\backslash\)\(\backslash\)]/g;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{function template(string, options, otherOptions) \{}
+\textcolor{stringliteral}{  // Based on John Resig'}s `tmpl` implementation (http:\textcolor{comment}{//ejohn.org/blog/javascript-micro-templating/)}
+  \textcolor{comment}{// and Laura Doktorova's doT.js (https://github.com/olado/doT).}
+  var settings = templateSettings.imports.\_.templateSettings || templateSettings;
+
+  if (otherOptions && isIterateeCall(\textcolor{keywordtype}{string}, options, otherOptions)) \{
+    options = otherOptions = undefined;
+  \}
+  \textcolor{keywordtype}{string} = baseToString(\textcolor{keywordtype}{string});
+  options = assignWith(baseAssign(\{\}, otherOptions || options), settings, assignOwnDefaults);
+
+  var imports = assignWith(baseAssign(\{\}, options.imports), settings.imports, assignOwnDefaults),
+      importsKeys = keys(imports),
+      importsValues = baseValues(imports, importsKeys);
+
+  var isEscaping,
+      isEvaluating,
+      index = 0,
+      interpolate = options.interpolate || reNoMatch,
+      source = \textcolor{stringliteral}{"\_\_p += '"};
+
+  \textcolor{comment}{// Compile the regexp to match each delimiter.}
+  var reDelimiters = RegExp(
+    (options.escape || reNoMatch).source + \textcolor{charliteral}{'|'} +
+    interpolate.source + \textcolor{charliteral}{'|'} +
+    (interpolate === reInterpolate ? reEsTemplate : reNoMatch).source + \textcolor{charliteral}{'|'} +
+    (options.evaluate || reNoMatch).source + \textcolor{stringliteral}{'|$'}
+  , \textcolor{charliteral}{'g'});
+
+  \textcolor{comment}{// Use a sourceURL for easier debugging.}
+  var sourceURL = \textcolor{stringliteral}{'sourceURL'} in options ? \textcolor{stringliteral}{'//# sourceURL='} + options.sourceURL + \textcolor{charliteral}{'\(\backslash\)n'} : \textcolor{stringliteral}{''};
+
+  \textcolor{keywordtype}{string}.replace(reDelimiters, \textcolor{keyword}{function}(match, escapeValue, interpolateValue, esTemplateValue, 
+      evaluateValue, offset) \{
+    interpolateValue || (interpolateValue = esTemplateValue);
+
+    \textcolor{comment}{// Escape characters that can't be included in string literals.}
+    source += \textcolor{keywordtype}{string}.slice(index, offset).replace(reUnescapedString, escapeStringChar);
+
+    \textcolor{comment}{// Replace delimiters with snippets.}
+    \textcolor{keywordflow}{if} (escapeValue) \{
+      isEscaping = \textcolor{keyword}{true};
+      source += \textcolor{stringliteral}{"' +\(\backslash\)n\_\_e("} + escapeValue + \textcolor{stringliteral}{") +\(\backslash\)n'"};
+    \}
+    \textcolor{keywordflow}{if} (evaluateValue) \{
+      isEvaluating = \textcolor{keyword}{true};
+      source += \textcolor{stringliteral}{"';\(\backslash\)n"} + evaluateValue + \textcolor{stringliteral}{";\(\backslash\)n\_\_p += '"};
+    \}
+    \textcolor{keywordflow}{if} (interpolateValue) \{
+      source += \textcolor{stringliteral}{"' +\(\backslash\)n((\_\_t = ("} + interpolateValue + \textcolor{stringliteral}{")) == null ? '' : \_\_t) +\(\backslash\)n'"};
+    \}
+    index = offset + match.length;
+
+    \textcolor{comment}{// The JS engine embedded in Adobe products requires returning the `match`}
+    \textcolor{comment}{// string in order to produce the correct `offset` value.}
+    \textcolor{keywordflow}{return} match;
+  \});
+
+  source += \textcolor{stringliteral}{"';\(\backslash\)n"};
+
+  \textcolor{comment}{// If `variable` is not specified wrap a with-statement around the generated}
+  \textcolor{comment}{// code to add the data object to the top of the scope chain.}
+  var variable = options.variable;
+  \textcolor{keywordflow}{if} (!variable) \{
+    source = \textcolor{stringliteral}{'with (obj) \{\(\backslash\)n'} + source + \textcolor{stringliteral}{'\(\backslash\)n\}\(\backslash\)n'};
+  \}
+  \textcolor{comment}{// Cleanup code by stripping empty strings.}
+  source = (isEvaluating ? source.replace(reEmptyStringLeading, \textcolor{stringliteral}{''}) : source)
+    .replace(reEmptyStringMiddle, \textcolor{stringliteral}{'$1'})
+    .replace(reEmptyStringTrailing, \textcolor{stringliteral}{'$1;'});
+
+  \textcolor{comment}{// Frame code as the function body.}
+  source = \textcolor{stringliteral}{'function('} + (variable || \textcolor{stringliteral}{'obj'}) + \textcolor{stringliteral}{') \{\(\backslash\)n'} +
+    (variable
+      ? \textcolor{stringliteral}{''}
+      : \textcolor{stringliteral}{'obj || (obj = \{\});\(\backslash\)n'}
+    ) +
+    \textcolor{stringliteral}{"var \_\_t, \_\_p = ''"} +
+    (isEscaping
+       ? \textcolor{stringliteral}{', \_\_e = \_.escape'}
+       : \textcolor{stringliteral}{''}
+    ) +
+    (isEvaluating
+      ? \textcolor{stringliteral}{', \_\_j = Array.prototype.join;\(\backslash\)n'} +
+        \textcolor{stringliteral}{"function print() \{ \_\_p += \_\_j.call(arguments, '') \}\(\backslash\)n"}
+      : \textcolor{stringliteral}{';\(\backslash\)n'}
+    ) +
+    source +
+    \textcolor{stringliteral}{'return \_\_p\(\backslash\)n\}'};
+
+  var result = attempt(\textcolor{keyword}{function}() \{
+    \textcolor{keywordflow}{return} Function(importsKeys, sourceURL + \textcolor{stringliteral}{'return '} + source).apply(undefined, importsValues);
+  \});
+
+  \textcolor{comment}{// Provide the compiled function's source by its `toString` method or}
+  \textcolor{comment}{// the `source` property as a convenience for inlining compiled templates.}
+  result.source = source;
+  \textcolor{keywordflow}{if} (isError(result)) \{
+    \textcolor{keywordflow}{throw} result;
+  \}
+  \textcolor{keywordflow}{return} result;
+\}
+
+module.exports = \textcolor{keyword}{template};
+\end{DoxyCodeInclude}
+ 

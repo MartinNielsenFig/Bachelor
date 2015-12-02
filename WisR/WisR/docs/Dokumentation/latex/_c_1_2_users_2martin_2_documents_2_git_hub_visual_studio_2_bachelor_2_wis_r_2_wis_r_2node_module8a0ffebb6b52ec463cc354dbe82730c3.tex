@@ -1,0 +1,46 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module8a0ffebb6b52ec463cc354dbe82730c3}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/array/last\+Index\+Of.\+js}
+\+\_\+.\+last\+Index\+Of(\mbox{[}1, 2, 1, 2\mbox{]}, 2); // =$>$ 3
+
+// using {\ttfamily from\+Index} \+\_\+.\+last\+Index\+Of(\mbox{[}1, 2, 1, 2\mbox{]}, 2, 2); // =$>$ 1
+
+// performing a binary search \+\_\+.\+last\+Index\+Of(\mbox{[}1, 1, 2, 2\mbox{]}, 2, true); // =$>$ 3
+
+
+\begin{DoxyCodeInclude}
+var binaryIndex = require(\textcolor{stringliteral}{'../internal/binaryIndex'}),
+    indexOfNaN = require(\textcolor{stringliteral}{'../internal/indexOfNaN'});
+
+\textcolor{comment}{/* Native method references for those with the same name as other `lodash` methods. */}
+var nativeMax = Math.max,
+    nativeMin = Math.min;
+
+\textcolor{keyword}{function} lastIndexOf(array, value, fromIndex) \{
+  var length = array ? array.length : 0;
+  \textcolor{keywordflow}{if} (!length) \{
+    \textcolor{keywordflow}{return} -1;
+  \}
+  var index = length;
+  \textcolor{keywordflow}{if} (typeof fromIndex == \textcolor{stringliteral}{'number'}) \{
+    index = (fromIndex < 0 ? nativeMax(length + fromIndex, 0) : nativeMin(fromIndex || 0, length - 1)) + 1;
+  \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (fromIndex) \{
+    index = binaryIndex(array, value, \textcolor{keyword}{true}) - 1;
+    var other = array[index];
+    \textcolor{keywordflow}{if} (value === value ? (value === other) : (other !== other)) \{
+      \textcolor{keywordflow}{return} index;
+    \}
+    \textcolor{keywordflow}{return} -1;
+  \}
+  \textcolor{keywordflow}{if} (value !== value) \{
+    \textcolor{keywordflow}{return} indexOfNaN(array, index, \textcolor{keyword}{true});
+  \}
+  \textcolor{keywordflow}{while} (index--) \{
+    \textcolor{keywordflow}{if} (array[index] === value) \{
+      \textcolor{keywordflow}{return} index;
+    \}
+  \}
+  \textcolor{keywordflow}{return} -1;
+\}
+
+module.exports = lastIndexOf;
+\end{DoxyCodeInclude}
+ 

@@ -1,0 +1,16 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_moduleeb072a054beac4b00aefef72228fc53c}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/collection/reduce.\+js}
+\+\_\+.\+reduce(\mbox{[}1, 2\mbox{]}, function(total, n) \{ return total + n; \}); // =$>$ 3
+
+\+\_\+.\+reduce(\{ \textquotesingle{}a\textquotesingle{}\+: 1, \textquotesingle{}b\textquotesingle{}\+: 2 \}, function(result, n, key) \{ result\mbox{[}key\mbox{]} = n $\ast$ 3; return result; \}, \{\}); // =$>$ \{ \textquotesingle{}a\textquotesingle{}\+: 3, \textquotesingle{}b\textquotesingle{}\+: 6 \} (iteration order is not guaranteed)
+
+
+\begin{DoxyCodeInclude}
+var arrayReduce = require(\textcolor{stringliteral}{'../internal/arrayReduce'}),
+    baseEach = require(\textcolor{stringliteral}{'../internal/baseEach'}),
+    createReduce = require(\textcolor{stringliteral}{'../internal/createReduce'});
+
+var reduce = createReduce(arrayReduce, baseEach);
+
+module.exports = reduce;
+\end{DoxyCodeInclude}
+ 

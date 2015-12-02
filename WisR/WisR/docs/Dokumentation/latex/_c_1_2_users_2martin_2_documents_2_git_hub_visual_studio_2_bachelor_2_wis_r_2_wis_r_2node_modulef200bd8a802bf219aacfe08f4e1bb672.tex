@@ -1,0 +1,21 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_modulef200bd8a802bf219aacfe08f4e1bb672}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/function/partial\+Right.\+js}
+var greet = function(greeting, name) \{ return greeting + \textquotesingle{} \textquotesingle{} + name; \};
+
+var greet\+Fred = \+\_\+.\+partial\+Right(greet, \textquotesingle{}fred\textquotesingle{}); greet\+Fred(\textquotesingle{}hi\textquotesingle{}); // =$>$ \textquotesingle{}hi fred\textquotesingle{}
+
+// using placeholders var say\+Hello\+To = \+\_\+.\+partial\+Right(greet, \textquotesingle{}hello\textquotesingle{}, \+\_\+); say\+Hello\+To(\textquotesingle{}fred\textquotesingle{}); // =$>$ \textquotesingle{}hello fred\textquotesingle{}
+
+
+\begin{DoxyCodeInclude}
+var createPartial = require(\textcolor{stringliteral}{'../internal/createPartial'});
+
+var PARTIAL\_RIGHT\_FLAG = 64;
+
+var partialRight = createPartial(PARTIAL\_RIGHT\_FLAG);
+
+\textcolor{comment}{// Assign default placeholders.}
+partialRight.placeholder = \{\};
+
+module.exports = partialRight;
+\end{DoxyCodeInclude}
+ 

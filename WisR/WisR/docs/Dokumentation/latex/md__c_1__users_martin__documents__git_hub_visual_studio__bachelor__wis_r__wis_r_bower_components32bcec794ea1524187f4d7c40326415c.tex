@@ -1,0 +1,40 @@
+Provides drop-\/in functionality that cancels H\+T\+T\+P requests when the browser\textquotesingle{}s location is changed.
+
+\subsection*{Installation}
+
+Prerequisites\+: an existing Angular\+J\+S project of course.
+
+Using Bower\+:
+
+
+\begin{DoxyCode}
+1 bower install -S angular-cancel-on-navigate
+\end{DoxyCode}
+
+
+Or, manually download {\ttfamily build/angular\+Cancel\+On\+Navigate\+Module.\+js} (or the minified version) and place it somewhere in your project.
+
+Then, add the script include in your H\+T\+M\+L which of course should point to the right location\+:
+
+
+\begin{DoxyCode}
+1 <script
+       src="../bower\_components/angular-cancel-on-navigate/build/angularCancelOnNavigateModule.js"></script>
+\end{DoxyCode}
+
+
+Add the module dependency to the main app module declaration\+:
+
+
+\begin{DoxyCode}
+1 angular
+2   .module('myApp', [
+3     ...
+4     'angularCancelOnNavigateModule'
+5   ])
+\end{DoxyCode}
+
+
+\subsection*{Configuration}
+
+When the module is included, all \$http requests are automatically intercepted and a cancel promise is registered when the request its timeout is not specified explicitly. If you want to exclude certain \$http calls from this behavior, either provide an explicit timeout, or set the {\ttfamily no\+Cancel\+On\+Route\+Change} property to {\ttfamily true} in the \$http options. 

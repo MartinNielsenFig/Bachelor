@@ -1,0 +1,16 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_moduled7c39335c1b0db6ef1c19fba989f3a13}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/object/map\+Values.\+js}
+\+\_\+.\+map\+Values(\{ \textquotesingle{}a\textquotesingle{}\+: 1, \textquotesingle{}b\textquotesingle{}\+: 2 \}, function(n) \{ return n $\ast$ 3; \}); // =$>$ \{ \textquotesingle{}a\textquotesingle{}\+: 3, \textquotesingle{}b\textquotesingle{}\+: 6 \}
+
+var users = \{ \textquotesingle{}fred\textquotesingle{}\+: \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}fred\textquotesingle{}, \textquotesingle{}age\textquotesingle{}\+: 40 \}, \textquotesingle{}pebbles\textquotesingle{}\+: \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}pebbles\textquotesingle{}, \textquotesingle{}age\textquotesingle{}\+: 1 \} \};
+
+// using the {\ttfamily \+\_\+.\+property} callback shorthand \+\_\+.\+map\+Values(users, \textquotesingle{}age\textquotesingle{}); // =$>$ \{ \textquotesingle{}fred\textquotesingle{}\+: 40, \textquotesingle{}pebbles\textquotesingle{}\+: 1 \} (iteration order is not guaranteed)
+
+
+\begin{DoxyCodeInclude}
+var createObjectMapper = require(\textcolor{stringliteral}{'../internal/createObjectMapper'});
+
+var mapValues = createObjectMapper();
+
+module.exports = mapValues;
+\end{DoxyCodeInclude}
+ 

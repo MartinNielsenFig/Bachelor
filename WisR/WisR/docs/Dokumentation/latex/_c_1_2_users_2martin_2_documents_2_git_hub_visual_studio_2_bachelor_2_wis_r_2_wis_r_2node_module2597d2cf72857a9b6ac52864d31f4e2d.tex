@@ -1,0 +1,18 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module2597d2cf72857a9b6ac52864d31f4e2d}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/collection/at.\+js}
+\+\_\+.\+at(\mbox{[}\textquotesingle{}a\textquotesingle{}, \textquotesingle{}b\textquotesingle{}, \textquotesingle{}c\textquotesingle{}\mbox{]}, \mbox{[}0, 2\mbox{]}); // =$>$ \mbox{[}\textquotesingle{}a\textquotesingle{}, \textquotesingle{}c\textquotesingle{}\mbox{]}
+
+\+\_\+.\+at(\mbox{[}\textquotesingle{}barney\textquotesingle{}, \textquotesingle{}fred\textquotesingle{}, \textquotesingle{}pebbles\textquotesingle{}\mbox{]}, 0, 2); // =$>$ \mbox{[}\textquotesingle{}barney\textquotesingle{}, \textquotesingle{}pebbles\textquotesingle{}\mbox{]}
+
+
+\begin{DoxyCodeInclude}
+var baseAt = require(\textcolor{stringliteral}{'../internal/baseAt'}),
+    baseFlatten = require(\textcolor{stringliteral}{'../internal/baseFlatten'}),
+    restParam = require(\textcolor{stringliteral}{'../function/restParam'});
+
+var at = restParam(\textcolor{keyword}{function}(collection, props) \{
+  \textcolor{keywordflow}{return} baseAt(collection, baseFlatten(props));
+\});
+
+module.exports = at;
+\end{DoxyCodeInclude}
+ 

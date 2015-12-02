@@ -1,0 +1,21 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module90d9190dd7eb53d6aa102fdf1b12888f}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/utility/property\+Of.\+js}
+var array = \mbox{[}0, 1, 2\mbox{]}, object = \{ \textquotesingle{}a\textquotesingle{}\+: array, \textquotesingle{}b\textquotesingle{}\+: array, \textquotesingle{}c\textquotesingle{}\+: array \};
+
+\+\_\+.\+map(\mbox{[}\textquotesingle{}a\mbox{[}2\mbox{]}\textquotesingle{}, \textquotesingle{}c\mbox{[}0\mbox{]}\textquotesingle{}\mbox{]}, \+\_\+.\+property\+Of(object)); // =$>$ \mbox{[}2, 0\mbox{]}
+
+\+\_\+.\+map(\mbox{[}\mbox{[}\textquotesingle{}a\textquotesingle{}, \textquotesingle{}2\textquotesingle{}\mbox{]}, \mbox{[}\textquotesingle{}c\textquotesingle{}, \textquotesingle{}0\textquotesingle{}\mbox{]}\mbox{]}, \+\_\+.\+property\+Of(object)); // =$>$ \mbox{[}2, 0\mbox{]}
+
+
+\begin{DoxyCodeInclude}
+var baseGet = require(\textcolor{stringliteral}{'../internal/baseGet'}),
+    toPath = require(\textcolor{stringliteral}{'../internal/toPath'});
+
+\textcolor{keyword}{function} propertyOf(\textcolor{keywordtype}{object}) \{
+  \textcolor{keywordflow}{return} \textcolor{keyword}{function}(path) \{
+    \textcolor{keywordflow}{return} baseGet(\textcolor{keywordtype}{object}, toPath(path), (path + \textcolor{stringliteral}{''}));
+  \};
+\}
+
+module.exports = propertyOf;
+\end{DoxyCodeInclude}
+ 

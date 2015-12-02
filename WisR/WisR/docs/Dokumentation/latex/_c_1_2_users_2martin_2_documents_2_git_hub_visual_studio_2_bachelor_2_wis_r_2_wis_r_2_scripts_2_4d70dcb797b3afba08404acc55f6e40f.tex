@@ -1,0 +1,289 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2_scripts_2_4d70dcb797b3afba08404acc55f6e40f}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/\+Scripts/\+Crypto\+J\+S/components/sha3.\+js}
+Shortcut function to the hasher\textquotesingle{}s object interface.
+
+
+\begin{DoxyParams}{Parameters}
+{\em \{\+Word\+Array$\vert$string\}} & message The message to hash.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\{Word\+Array\} The hash.
+\end{DoxyReturn}
+\begin{DoxyVerb}var hash = CryptoJS.SHA3('message');
+var hash = CryptoJS.SHA3(wordArray);\end{DoxyVerb}
+
+
+
+\begin{DoxyCodeInclude}
+\textcolor{comment}{/*}
+\textcolor{comment}{CryptoJS v3.1.2}
+\textcolor{comment}{code.google.com/p/crypto-js}
+\textcolor{comment}{(c) 2009-2013 by Jeff Mott. All rights reserved.}
+\textcolor{comment}{code.google.com/p/crypto-js/wiki/License}
+\textcolor{comment}{*/}
+(\textcolor{keyword}{function} (Math) \{
+    \textcolor{comment}{// Shortcuts}
+    var C = CryptoJS;
+    var C\_lib = C.lib;
+    var WordArray = C\_lib.WordArray;
+    var Hasher = C\_lib.Hasher;
+    var C\_x64 = C.x64;
+    var X64Word = C\_x64.Word;
+    var C\_algo = C.algo;
+
+    \textcolor{comment}{// Constants tables}
+    var RHO\_OFFSETS = [];
+    var PI\_INDEXES  = [];
+    var ROUND\_CONSTANTS = [];
+
+    \textcolor{comment}{// Compute Constants}
+    (\textcolor{keyword}{function} () \{
+        \textcolor{comment}{// Compute rho offset constants}
+        var x = 1, y = 0;
+        \textcolor{keywordflow}{for} (var t = 0; t < 24; t++) \{
+            RHO\_OFFSETS[x + 5 * y] = ((t + 1) * (t + 2) / 2) % 64;
+
+            var newX = y % 5;
+            var newY = (2 * x + 3 * y) % 5;
+            x = newX;
+            y = newY;
+        \}
+
+        \textcolor{comment}{// Compute pi index constants}
+        \textcolor{keywordflow}{for} (var x = 0; x < 5; x++) \{
+            \textcolor{keywordflow}{for} (var y = 0; y < 5; y++) \{
+                PI\_INDEXES[x + 5 * y] = y + ((2 * x + 3 * y) % 5) * 5;
+            \}
+        \}
+
+        \textcolor{comment}{// Compute round constants}
+        var LFSR = 0x01;
+        \textcolor{keywordflow}{for} (var i = 0; i < 24; i++) \{
+            var roundConstantMsw = 0;
+            var roundConstantLsw = 0;
+
+            \textcolor{keywordflow}{for} (var j = 0; j < 7; j++) \{
+                \textcolor{keywordflow}{if} (LFSR & 0x01) \{
+                    var bitPosition = (1 << j) - 1;
+                    \textcolor{keywordflow}{if} (bitPosition < 32) \{
+                        roundConstantLsw ^= 1 << bitPosition;
+                    \} \textcolor{keywordflow}{else} \textcolor{comment}{/* if (bitPosition >= 32) */} \{
+                        roundConstantMsw ^= 1 << (bitPosition - 32);
+                    \}
+                \}
+
+                \textcolor{comment}{// Compute next LFSR}
+                \textcolor{keywordflow}{if} (LFSR & 0x80) \{
+                    \textcolor{comment}{// Primitive polynomial over GF(2): x^8 + x^6 + x^5 + x^4 + 1}
+                    LFSR = (LFSR << 1) ^ 0x71;
+                \} \textcolor{keywordflow}{else} \{
+                    LFSR <<= 1;
+                \}
+            \}
+
+            ROUND\_CONSTANTS[i] = X64Word.create(roundConstantMsw, roundConstantLsw);
+        \}
+    \}());
+
+    \textcolor{comment}{// Reusable objects for temporary values}
+    var T = [];
+    (\textcolor{keyword}{function} () \{
+        \textcolor{keywordflow}{for} (var i = 0; i < 25; i++) \{
+            T[i] = X64Word.create();
+        \}
+    \}());
+
+    var SHA3 = C\_algo.SHA3 = Hasher.extend(\{
+        cfg: Hasher.cfg.extend(\{
+            outputLength: 512
+        \}),
+
+        \_doReset: \textcolor{keyword}{function} () \{
+            var state = this.\_state = []
+            \textcolor{keywordflow}{for} (var i = 0; i < 25; i++) \{
+                state[i] = \textcolor{keyword}{new} X64Word.init();
+            \}
+
+            this.blockSize = (1600 - 2 * this.cfg.outputLength) / 32;
+        \},
+
+        \_doProcessBlock: \textcolor{keyword}{function} (M, offset) \{
+            \textcolor{comment}{// Shortcuts}
+            var state = this.\_state;
+            var nBlockSizeLanes = this.blockSize / 2;
+
+            \textcolor{comment}{// Absorb}
+            \textcolor{keywordflow}{for} (var i = 0; i < nBlockSizeLanes; i++) \{
+                \textcolor{comment}{// Shortcuts}
+                var M2i  = M[offset + 2 * i];
+                var M2i1 = M[offset + 2 * i + 1];
+
+                \textcolor{comment}{// Swap endian}
+                M2i = (
+                    (((M2i << 8)  | (M2i >>> 24)) & 0x00ff00ff) |
+                    (((M2i << 24) | (M2i >>> 8))  & 0xff00ff00)
+                );
+                M2i1 = (
+                    (((M2i1 << 8)  | (M2i1 >>> 24)) & 0x00ff00ff) |
+                    (((M2i1 << 24) | (M2i1 >>> 8))  & 0xff00ff00)
+                );
+
+                \textcolor{comment}{// Absorb message into state}
+                var lane = state[i];
+                lane.high ^= M2i1;
+                lane.low  ^= M2i;
+            \}
+
+            \textcolor{comment}{// Rounds}
+            \textcolor{keywordflow}{for} (var round = 0; round < 24; round++) \{
+                \textcolor{comment}{// Theta}
+                \textcolor{keywordflow}{for} (var x = 0; x < 5; x++) \{
+                    \textcolor{comment}{// Mix column lanes}
+                    var tMsw = 0, tLsw = 0;
+                    \textcolor{keywordflow}{for} (var y = 0; y < 5; y++) \{
+                        var lane = state[x + 5 * y];
+                        tMsw ^= lane.high;
+                        tLsw ^= lane.low;
+                    \}
+
+                    \textcolor{comment}{// Temporary values}
+                    var Tx = T[x];
+                    Tx.high = tMsw;
+                    Tx.low  = tLsw;
+                \}
+                \textcolor{keywordflow}{for} (var x = 0; x < 5; x++) \{
+                    \textcolor{comment}{// Shortcuts}
+                    var Tx4 = T[(x + 4) % 5];
+                    var Tx1 = T[(x + 1) % 5];
+                    var Tx1Msw = Tx1.high;
+                    var Tx1Lsw = Tx1.low;
+
+                    \textcolor{comment}{// Mix surrounding columns}
+                    var tMsw = Tx4.high ^ ((Tx1Msw << 1) | (Tx1Lsw >>> 31));
+                    var tLsw = Tx4.low  ^ ((Tx1Lsw << 1) | (Tx1Msw >>> 31));
+                    \textcolor{keywordflow}{for} (var y = 0; y < 5; y++) \{
+                        var lane = state[x + 5 * y];
+                        lane.high ^= tMsw;
+                        lane.low  ^= tLsw;
+                    \}
+                \}
+
+                \textcolor{comment}{// Rho Pi}
+                \textcolor{keywordflow}{for} (var laneIndex = 1; laneIndex < 25; laneIndex++) \{
+                    \textcolor{comment}{// Shortcuts}
+                    var lane = state[laneIndex];
+                    var laneMsw = lane.high;
+                    var laneLsw = lane.low;
+                    var rhoOffset = RHO\_OFFSETS[laneIndex];
+
+                    \textcolor{comment}{// Rotate lanes}
+                    \textcolor{keywordflow}{if} (rhoOffset < 32) \{
+                        var tMsw = (laneMsw << rhoOffset) | (laneLsw >>> (32 - rhoOffset));
+                        var tLsw = (laneLsw << rhoOffset) | (laneMsw >>> (32 - rhoOffset));
+                    \} \textcolor{keywordflow}{else} \textcolor{comment}{/* if (rhoOffset >= 32) */} \{
+                        var tMsw = (laneLsw << (rhoOffset - 32)) | (laneMsw >>> (64 - rhoOffset));
+                        var tLsw = (laneMsw << (rhoOffset - 32)) | (laneLsw >>> (64 - rhoOffset));
+                    \}
+
+                    \textcolor{comment}{// Transpose lanes}
+                    var TPiLane = T[PI\_INDEXES[laneIndex]];
+                    TPiLane.high = tMsw;
+                    TPiLane.low  = tLsw;
+                \}
+
+                \textcolor{comment}{// Rho pi at x = y = 0}
+                var T0 = T[0];
+                var state0 = state[0];
+                T0.high = state0.high;
+                T0.low  = state0.low;
+
+                \textcolor{comment}{// Chi}
+                \textcolor{keywordflow}{for} (var x = 0; x < 5; x++) \{
+                    \textcolor{keywordflow}{for} (var y = 0; y < 5; y++) \{
+                        \textcolor{comment}{// Shortcuts}
+                        var laneIndex = x + 5 * y;
+                        var lane = state[laneIndex];
+                        var TLane = T[laneIndex];
+                        var Tx1Lane = T[((x + 1) % 5) + 5 * y];
+                        var Tx2Lane = T[((x + 2) % 5) + 5 * y];
+
+                        \textcolor{comment}{// Mix rows}
+                        lane.high = TLane.high ^ (~Tx1Lane.high & Tx2Lane.high);
+                        lane.low  = TLane.low  ^ (~Tx1Lane.low  & Tx2Lane.low);
+                    \}
+                \}
+
+                \textcolor{comment}{// Iota}
+                var lane = state[0];
+                var roundConstant = ROUND\_CONSTANTS[round];
+                lane.high ^= roundConstant.high;
+                lane.low  ^= roundConstant.low;;
+            \}
+        \},
+
+        \_doFinalize: \textcolor{keyword}{function} () \{
+            \textcolor{comment}{// Shortcuts}
+            var data = this.\_data;
+            var dataWords = data.words;
+            var nBitsTotal = this.\_nDataBytes * 8;
+            var nBitsLeft = data.sigBytes * 8;
+            var blockSizeBits = this.blockSize * 32;
+
+            \textcolor{comment}{// Add padding}
+            dataWords[nBitsLeft >>> 5] |= 0x1 << (24 - nBitsLeft % 32);
+            dataWords[((Math.ceil((nBitsLeft + 1) / blockSizeBits) * blockSizeBits) >>> 5) - 1] |= 0x80;
+            data.sigBytes = dataWords.length * 4;
+
+            \textcolor{comment}{// Hash final blocks}
+            this.\_process();
+
+            \textcolor{comment}{// Shortcuts}
+            var state = this.\_state;
+            var outputLengthBytes = this.cfg.outputLength / 8;
+            var outputLengthLanes = outputLengthBytes / 8;
+
+            \textcolor{comment}{// Squeeze}
+            var hashWords = [];
+            \textcolor{keywordflow}{for} (var i = 0; i < outputLengthLanes; i++) \{
+                \textcolor{comment}{// Shortcuts}
+                var lane = state[i];
+                var laneMsw = lane.high;
+                var laneLsw = lane.low;
+
+                \textcolor{comment}{// Swap endian}
+                laneMsw = (
+                    (((laneMsw << 8)  | (laneMsw >>> 24)) & 0x00ff00ff) |
+                    (((laneMsw << 24) | (laneMsw >>> 8))  & 0xff00ff00)
+                );
+                laneLsw = (
+                    (((laneLsw << 8)  | (laneLsw >>> 24)) & 0x00ff00ff) |
+                    (((laneLsw << 24) | (laneLsw >>> 8))  & 0xff00ff00)
+                );
+
+                \textcolor{comment}{// Squeeze state to retrieve hash}
+                hashWords.push(laneLsw);
+                hashWords.push(laneMsw);
+            \}
+
+            \textcolor{comment}{// Return final computed hash}
+            \textcolor{keywordflow}{return} \textcolor{keyword}{new} WordArray.init(hashWords, outputLengthBytes);
+        \},
+
+        clone: \textcolor{keyword}{function} () \{
+            var clone = Hasher.clone.call(\textcolor{keyword}{this});
+
+            var state = clone.\_state = this.\_state.slice(0);
+            \textcolor{keywordflow}{for} (var i = 0; i < 25; i++) \{
+                state[i] = state[i].clone();
+            \}
+
+            \textcolor{keywordflow}{return} clone;
+        \}
+    \});
+
+    C.SHA3 = Hasher.\_createHelper(SHA3);
+
+    C.HmacSHA3 = Hasher.\_createHmacHelper(SHA3);
+\}(Math));
+\end{DoxyCodeInclude}
+ 

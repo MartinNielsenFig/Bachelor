@@ -1,0 +1,29 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module8c8cc7aba5f0c1ede5868dedc57812b1}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/collection/invoke.\+js}
+\+\_\+.\+invoke(\mbox{[}\mbox{[}5, 1, 7\mbox{]}, \mbox{[}3, 2, 1\mbox{]}\mbox{]}, \textquotesingle{}sort\textquotesingle{}); // =$>$ \mbox{[}\mbox{[}1, 5, 7\mbox{]}, \mbox{[}1, 2, 3\mbox{]}\mbox{]}
+
+\+\_\+.\+invoke(\mbox{[}123, 456\mbox{]}, String.\+prototype.\+split, \textquotesingle{}\textquotesingle{}); // =$>$ \mbox{[}\mbox{[}\textquotesingle{}1\textquotesingle{}, \textquotesingle{}2\textquotesingle{}, \textquotesingle{}3\textquotesingle{}\mbox{]}, \mbox{[}\textquotesingle{}4\textquotesingle{}, \textquotesingle{}5\textquotesingle{}, \textquotesingle{}6\textquotesingle{}\mbox{]}\mbox{]}
+
+
+\begin{DoxyCodeInclude}
+var baseEach = require(\textcolor{stringliteral}{'../internal/baseEach'}),
+    invokePath = require(\textcolor{stringliteral}{'../internal/invokePath'}),
+    isArrayLike = require(\textcolor{stringliteral}{'../internal/isArrayLike'}),
+    isKey = require(\textcolor{stringliteral}{'../internal/isKey'}),
+    restParam = require(\textcolor{stringliteral}{'../function/restParam'});
+
+var invoke = restParam(\textcolor{keyword}{function}(collection, path, args) \{
+  var index = -1,
+      isFunc = typeof path == \textcolor{stringliteral}{'function'},
+      isProp = isKey(path),
+      result = isArrayLike(collection) ? Array(collection.length) : [];
+
+  baseEach(collection, \textcolor{keyword}{function}(value) \{
+    var func = isFunc ? path : ((isProp && value != null) ? value[path] : undefined);
+    result[++index] = func ? func.apply(value, args) : invokePath(value, path, args);
+  \});
+  \textcolor{keywordflow}{return} result;
+\});
+
+module.exports = invoke;
+\end{DoxyCodeInclude}
+ 

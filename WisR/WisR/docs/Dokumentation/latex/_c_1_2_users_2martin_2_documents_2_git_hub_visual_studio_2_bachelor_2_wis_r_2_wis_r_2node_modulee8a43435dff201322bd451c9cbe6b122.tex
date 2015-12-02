@@ -1,0 +1,24 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_modulee8a43435dff201322bd451c9cbe6b122}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/lang/is\+Arguments.\+js}
+\+\_\+.\+is\+Arguments(function() \{ return arguments; \}()); // =$>$ true
+
+\+\_\+.\+is\+Arguments(\mbox{[}1, 2, 3\mbox{]}); // =$>$ false
+
+
+\begin{DoxyCodeInclude}
+var isArrayLike = require(\textcolor{stringliteral}{'../internal/isArrayLike'}),
+    isObjectLike = require(\textcolor{stringliteral}{'../internal/isObjectLike'});
+
+var objectProto = Object.prototype;
+
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+var propertyIsEnumerable = objectProto.propertyIsEnumerable;
+
+\textcolor{keyword}{function} isArguments(value) \{
+  \textcolor{keywordflow}{return} isObjectLike(value) && isArrayLike(value) &&
+    hasOwnProperty.call(value, \textcolor{stringliteral}{'callee'}) && !propertyIsEnumerable.call(value, \textcolor{stringliteral}{'callee'});
+\}
+
+module.exports = isArguments;
+\end{DoxyCodeInclude}
+ 

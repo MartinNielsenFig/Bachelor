@@ -1,0 +1,242 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2_scripts_2_f711bcf880480968d4e4e4c00b21e685}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/\+Scripts/\+Crypto\+J\+S/components/md5.\+js}
+Shortcut function to the hasher\textquotesingle{}s object interface.
+
+
+\begin{DoxyParams}{Parameters}
+{\em \{\+Word\+Array$\vert$string\}} & message The message to hash.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\{Word\+Array\} The hash.
+\end{DoxyReturn}
+\begin{DoxyVerb}var hash = CryptoJS.MD5('message');
+var hash = CryptoJS.MD5(wordArray);\end{DoxyVerb}
+
+
+
+\begin{DoxyCodeInclude}
+\textcolor{comment}{/*}
+\textcolor{comment}{CryptoJS v3.1.2}
+\textcolor{comment}{code.google.com/p/crypto-js}
+\textcolor{comment}{(c) 2009-2013 by Jeff Mott. All rights reserved.}
+\textcolor{comment}{code.google.com/p/crypto-js/wiki/License}
+\textcolor{comment}{*/}
+(\textcolor{keyword}{function} (Math) \{
+    \textcolor{comment}{// Shortcuts}
+    var C = CryptoJS;
+    var C\_lib = C.lib;
+    var WordArray = C\_lib.WordArray;
+    var Hasher = C\_lib.Hasher;
+    var C\_algo = C.algo;
+
+    \textcolor{comment}{// Constants table}
+    var T = [];
+
+    \textcolor{comment}{// Compute constants}
+    (\textcolor{keyword}{function} () \{
+        \textcolor{keywordflow}{for} (var i = 0; i < 64; i++) \{
+            T[i] = (Math.abs(Math.sin(i + 1)) * 0x100000000) | 0;
+        \}
+    \}());
+
+    var MD5 = C\_algo.MD5 = Hasher.extend(\{
+        \_doReset: \textcolor{keyword}{function} () \{
+            this.\_hash = \textcolor{keyword}{new} WordArray.init([
+                0x67452301, 0xefcdab89,
+                0x98badcfe, 0x10325476
+            ]);
+        \},
+
+        \_doProcessBlock: \textcolor{keyword}{function} (M, offset) \{
+            \textcolor{comment}{// Swap endian}
+            \textcolor{keywordflow}{for} (var i = 0; i < 16; i++) \{
+                \textcolor{comment}{// Shortcuts}
+                var offset\_i = offset + i;
+                var M\_offset\_i = M[offset\_i];
+
+                M[offset\_i] = (
+                    (((M\_offset\_i << 8)  | (M\_offset\_i >>> 24)) & 0x00ff00ff) |
+                    (((M\_offset\_i << 24) | (M\_offset\_i >>> 8))  & 0xff00ff00)
+                );
+            \}
+
+            \textcolor{comment}{// Shortcuts}
+            var H = this.\_hash.words;
+
+            var M\_offset\_0  = M[offset + 0];
+            var M\_offset\_1  = M[offset + 1];
+            var M\_offset\_2  = M[offset + 2];
+            var M\_offset\_3  = M[offset + 3];
+            var M\_offset\_4  = M[offset + 4];
+            var M\_offset\_5  = M[offset + 5];
+            var M\_offset\_6  = M[offset + 6];
+            var M\_offset\_7  = M[offset + 7];
+            var M\_offset\_8  = M[offset + 8];
+            var M\_offset\_9  = M[offset + 9];
+            var M\_offset\_10 = M[offset + 10];
+            var M\_offset\_11 = M[offset + 11];
+            var M\_offset\_12 = M[offset + 12];
+            var M\_offset\_13 = M[offset + 13];
+            var M\_offset\_14 = M[offset + 14];
+            var M\_offset\_15 = M[offset + 15];
+
+            \textcolor{comment}{// Working varialbes}
+            var a = H[0];
+            var b = H[1];
+            var c = H[2];
+            var d = H[3];
+
+            \textcolor{comment}{// Computation}
+            a = FF(a, b, c, d, M\_offset\_0,  7,  T[0]);
+            d = FF(d, a, b, c, M\_offset\_1,  12, T[1]);
+            c = FF(c, d, a, b, M\_offset\_2,  17, T[2]);
+            b = FF(b, c, d, a, M\_offset\_3,  22, T[3]);
+            a = FF(a, b, c, d, M\_offset\_4,  7,  T[4]);
+            d = FF(d, a, b, c, M\_offset\_5,  12, T[5]);
+            c = FF(c, d, a, b, M\_offset\_6,  17, T[6]);
+            b = FF(b, c, d, a, M\_offset\_7,  22, T[7]);
+            a = FF(a, b, c, d, M\_offset\_8,  7,  T[8]);
+            d = FF(d, a, b, c, M\_offset\_9,  12, T[9]);
+            c = FF(c, d, a, b, M\_offset\_10, 17, T[10]);
+            b = FF(b, c, d, a, M\_offset\_11, 22, T[11]);
+            a = FF(a, b, c, d, M\_offset\_12, 7,  T[12]);
+            d = FF(d, a, b, c, M\_offset\_13, 12, T[13]);
+            c = FF(c, d, a, b, M\_offset\_14, 17, T[14]);
+            b = FF(b, c, d, a, M\_offset\_15, 22, T[15]);
+
+            a = GG(a, b, c, d, M\_offset\_1,  5,  T[16]);
+            d = GG(d, a, b, c, M\_offset\_6,  9,  T[17]);
+            c = GG(c, d, a, b, M\_offset\_11, 14, T[18]);
+            b = GG(b, c, d, a, M\_offset\_0,  20, T[19]);
+            a = GG(a, b, c, d, M\_offset\_5,  5,  T[20]);
+            d = GG(d, a, b, c, M\_offset\_10, 9,  T[21]);
+            c = GG(c, d, a, b, M\_offset\_15, 14, T[22]);
+            b = GG(b, c, d, a, M\_offset\_4,  20, T[23]);
+            a = GG(a, b, c, d, M\_offset\_9,  5,  T[24]);
+            d = GG(d, a, b, c, M\_offset\_14, 9,  T[25]);
+            c = GG(c, d, a, b, M\_offset\_3,  14, T[26]);
+            b = GG(b, c, d, a, M\_offset\_8,  20, T[27]);
+            a = GG(a, b, c, d, M\_offset\_13, 5,  T[28]);
+            d = GG(d, a, b, c, M\_offset\_2,  9,  T[29]);
+            c = GG(c, d, a, b, M\_offset\_7,  14, T[30]);
+            b = GG(b, c, d, a, M\_offset\_12, 20, T[31]);
+
+            a = HH(a, b, c, d, M\_offset\_5,  4,  T[32]);
+            d = HH(d, a, b, c, M\_offset\_8,  11, T[33]);
+            c = HH(c, d, a, b, M\_offset\_11, 16, T[34]);
+            b = HH(b, c, d, a, M\_offset\_14, 23, T[35]);
+            a = HH(a, b, c, d, M\_offset\_1,  4,  T[36]);
+            d = HH(d, a, b, c, M\_offset\_4,  11, T[37]);
+            c = HH(c, d, a, b, M\_offset\_7,  16, T[38]);
+            b = HH(b, c, d, a, M\_offset\_10, 23, T[39]);
+            a = HH(a, b, c, d, M\_offset\_13, 4,  T[40]);
+            d = HH(d, a, b, c, M\_offset\_0,  11, T[41]);
+            c = HH(c, d, a, b, M\_offset\_3,  16, T[42]);
+            b = HH(b, c, d, a, M\_offset\_6,  23, T[43]);
+            a = HH(a, b, c, d, M\_offset\_9,  4,  T[44]);
+            d = HH(d, a, b, c, M\_offset\_12, 11, T[45]);
+            c = HH(c, d, a, b, M\_offset\_15, 16, T[46]);
+            b = HH(b, c, d, a, M\_offset\_2,  23, T[47]);
+
+            a = II(a, b, c, d, M\_offset\_0,  6,  T[48]);
+            d = II(d, a, b, c, M\_offset\_7,  10, T[49]);
+            c = II(c, d, a, b, M\_offset\_14, 15, T[50]);
+            b = II(b, c, d, a, M\_offset\_5,  21, T[51]);
+            a = II(a, b, c, d, M\_offset\_12, 6,  T[52]);
+            d = II(d, a, b, c, M\_offset\_3,  10, T[53]);
+            c = II(c, d, a, b, M\_offset\_10, 15, T[54]);
+            b = II(b, c, d, a, M\_offset\_1,  21, T[55]);
+            a = II(a, b, c, d, M\_offset\_8,  6,  T[56]);
+            d = II(d, a, b, c, M\_offset\_15, 10, T[57]);
+            c = II(c, d, a, b, M\_offset\_6,  15, T[58]);
+            b = II(b, c, d, a, M\_offset\_13, 21, T[59]);
+            a = II(a, b, c, d, M\_offset\_4,  6,  T[60]);
+            d = II(d, a, b, c, M\_offset\_11, 10, T[61]);
+            c = II(c, d, a, b, M\_offset\_2,  15, T[62]);
+            b = II(b, c, d, a, M\_offset\_9,  21, T[63]);
+
+            \textcolor{comment}{// Intermediate hash value}
+            H[0] = (H[0] + a) | 0;
+            H[1] = (H[1] + b) | 0;
+            H[2] = (H[2] + c) | 0;
+            H[3] = (H[3] + d) | 0;
+        \},
+
+        \_doFinalize: \textcolor{keyword}{function} () \{
+            \textcolor{comment}{// Shortcuts}
+            var data = this.\_data;
+            var dataWords = data.words;
+
+            var nBitsTotal = this.\_nDataBytes * 8;
+            var nBitsLeft = data.sigBytes * 8;
+
+            \textcolor{comment}{// Add padding}
+            dataWords[nBitsLeft >>> 5] |= 0x80 << (24 - nBitsLeft % 32);
+
+            var nBitsTotalH = Math.floor(nBitsTotal / 0x100000000);
+            var nBitsTotalL = nBitsTotal;
+            dataWords[(((nBitsLeft + 64) >>> 9) << 4) + 15] = (
+                (((nBitsTotalH << 8)  | (nBitsTotalH >>> 24)) & 0x00ff00ff) |
+                (((nBitsTotalH << 24) | (nBitsTotalH >>> 8))  & 0xff00ff00)
+            );
+            dataWords[(((nBitsLeft + 64) >>> 9) << 4) + 14] = (
+                (((nBitsTotalL << 8)  | (nBitsTotalL >>> 24)) & 0x00ff00ff) |
+                (((nBitsTotalL << 24) | (nBitsTotalL >>> 8))  & 0xff00ff00)
+            );
+
+            data.sigBytes = (dataWords.length + 1) * 4;
+
+            \textcolor{comment}{// Hash final blocks}
+            this.\_process();
+
+            \textcolor{comment}{// Shortcuts}
+            var hash = this.\_hash;
+            var H = hash.words;
+
+            \textcolor{comment}{// Swap endian}
+            \textcolor{keywordflow}{for} (var i = 0; i < 4; i++) \{
+                \textcolor{comment}{// Shortcut}
+                var H\_i = H[i];
+
+                H[i] = (((H\_i << 8)  | (H\_i >>> 24)) & 0x00ff00ff) |
+                       (((H\_i << 24) | (H\_i >>> 8))  & 0xff00ff00);
+            \}
+
+            \textcolor{comment}{// Return final computed hash}
+            \textcolor{keywordflow}{return} hash;
+        \},
+
+        clone: \textcolor{keyword}{function} () \{
+            var clone = Hasher.clone.call(\textcolor{keyword}{this});
+            clone.\_hash = this.\_hash.clone();
+
+            \textcolor{keywordflow}{return} clone;
+        \}
+    \});
+
+    \textcolor{keyword}{function} FF(a, b, c, d, x, s, t) \{
+        var n = a + ((b & c) | (~b & d)) + x + t;
+        \textcolor{keywordflow}{return} ((n << s) | (n >>> (32 - s))) + b;
+    \}
+
+    \textcolor{keyword}{function} GG(a, b, c, d, x, s, t) \{
+        var n = a + ((b & d) | (c & ~d)) + x + t;
+        \textcolor{keywordflow}{return} ((n << s) | (n >>> (32 - s))) + b;
+    \}
+
+    \textcolor{keyword}{function} HH(a, b, c, d, x, s, t) \{
+        var n = a + (b ^ c ^ d) + x + t;
+        \textcolor{keywordflow}{return} ((n << s) | (n >>> (32 - s))) + b;
+    \}
+
+    \textcolor{keyword}{function} II(a, b, c, d, x, s, t) \{
+        var n = a + (c ^ (b | ~d)) + x + t;
+        \textcolor{keywordflow}{return} ((n << s) | (n >>> (32 - s))) + b;
+    \}
+
+    C.MD5 = Hasher.\_createHelper(MD5);
+
+    C.HmacMD5 = Hasher.\_createHmacHelper(MD5);
+\}(Math));
+\end{DoxyCodeInclude}
+ 

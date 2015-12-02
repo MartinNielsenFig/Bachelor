@@ -1,0 +1,19 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module89660d33641a4156db3122f385a88d14}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/collection/find\+Where.\+js}
+var users = \mbox{[} \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}barney\textquotesingle{}, \textquotesingle{}age\textquotesingle{}\+: 36, \textquotesingle{}active\textquotesingle{}\+: true \}, \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}fred\textquotesingle{}, \textquotesingle{}age\textquotesingle{}\+: 40, \textquotesingle{}active\textquotesingle{}\+: false \} \mbox{]};
+
+\+\_\+.\+result(\+\_\+.\+find\+Where(users, \{ \textquotesingle{}age\textquotesingle{}\+: 36, \textquotesingle{}active\textquotesingle{}\+: true \}), \textquotesingle{}user\textquotesingle{}); // =$>$ \textquotesingle{}barney\textquotesingle{}
+
+\+\_\+.\+result(\+\_\+.\+find\+Where(users, \{ \textquotesingle{}age\textquotesingle{}\+: 40, \textquotesingle{}active\textquotesingle{}\+: false \}), \textquotesingle{}user\textquotesingle{}); // =$>$ \textquotesingle{}fred\textquotesingle{}
+
+
+\begin{DoxyCodeInclude}
+var baseMatches = require(\textcolor{stringliteral}{'../internal/baseMatches'}),
+    find = require(\textcolor{stringliteral}{'./find'});
+
+\textcolor{keyword}{function} findWhere(collection, source) \{
+  \textcolor{keywordflow}{return} find(collection, baseMatches(source));
+\}
+
+module.exports = findWhere;
+\end{DoxyCodeInclude}
+ 

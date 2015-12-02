@@ -1,0 +1,26 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module4abf9e0f369dcd241493ffbcfee8830f}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/string/starts\+With.\+js}
+\+\_\+.\+starts\+With(\textquotesingle{}abc\textquotesingle{}, \textquotesingle{}a\textquotesingle{}); // =$>$ true
+
+\+\_\+.\+starts\+With(\textquotesingle{}abc\textquotesingle{}, \textquotesingle{}b\textquotesingle{}); // =$>$ false
+
+\+\_\+.\+starts\+With(\textquotesingle{}abc\textquotesingle{}, \textquotesingle{}b\textquotesingle{}, 1); // =$>$ true
+
+
+\begin{DoxyCodeInclude}
+var baseToString = require(\textcolor{stringliteral}{'../internal/baseToString'});
+
+\textcolor{comment}{/* Native method references for those with the same name as other `lodash` methods. */}
+var nativeMin = Math.min;
+
+\textcolor{keyword}{function} startsWith(\textcolor{keywordtype}{string}, target, position) \{
+  \textcolor{keywordtype}{string} = baseToString(\textcolor{keywordtype}{string});
+  position = position == null
+    ? 0
+    : nativeMin(position < 0 ? 0 : (+position || 0), \textcolor{keywordtype}{string}.length);
+
+  \textcolor{keywordflow}{return} \textcolor{keywordtype}{string}.lastIndexOf(target, position) == position;
+\}
+
+module.exports = startsWith;
+\end{DoxyCodeInclude}
+ 

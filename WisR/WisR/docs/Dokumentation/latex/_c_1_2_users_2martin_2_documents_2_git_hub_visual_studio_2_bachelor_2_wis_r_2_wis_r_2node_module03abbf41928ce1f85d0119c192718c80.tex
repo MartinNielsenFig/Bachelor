@@ -1,0 +1,34 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module03abbf41928ce1f85d0119c192718c80}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/chain/wrapper\+Reverse.\+js}
+var array = \mbox{[}1, 2, 3\mbox{]};
+
+\+\_\+(array).reverse().value() // =$>$ \mbox{[}3, 2, 1\mbox{]}
+
+console.\+log(array); // =$>$ \mbox{[}3, 2, 1\mbox{]}
+
+
+\begin{DoxyCodeInclude}
+var LazyWrapper = require(\textcolor{stringliteral}{'../internal/LazyWrapper'}),
+    LodashWrapper = require(\textcolor{stringliteral}{'../internal/LodashWrapper'}),
+    thru = require(\textcolor{stringliteral}{'./thru'});
+
+\textcolor{keyword}{function} wrapperReverse() \{
+  var value = this.\_\_wrapped\_\_;
+
+  var interceptor = \textcolor{keyword}{function}(value) \{
+    \textcolor{keywordflow}{return} value.reverse();
+  \};
+  \textcolor{keywordflow}{if} (value instanceof LazyWrapper) \{
+    var wrapped = value;
+    \textcolor{keywordflow}{if} (this.\_\_actions\_\_.length) \{
+      wrapped = \textcolor{keyword}{new} LazyWrapper(\textcolor{keyword}{this});
+    \}
+    wrapped = wrapped.reverse();
+    wrapped.\_\_actions\_\_.push(\{ \textcolor{stringliteral}{'func'}: thru, \textcolor{stringliteral}{'args'}: [interceptor], \textcolor{stringliteral}{'thisArg'}: undefined \});
+    \textcolor{keywordflow}{return} \textcolor{keyword}{new} LodashWrapper(wrapped, this.\_\_chain\_\_);
+  \}
+  \textcolor{keywordflow}{return} this.thru(interceptor);
+\}
+
+module.exports = wrapperReverse;
+\end{DoxyCodeInclude}
+ 

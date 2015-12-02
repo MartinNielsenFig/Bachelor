@@ -1,0 +1,2036 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_moduledf1d3fccefe076e7cba2c20deacf125a}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/contrib-\/jasmine/node\+\_\+modules/es5-\/shim/tests/lib/jasmine.\+js}
+Returns a matchable \textquotesingle{}generic\textquotesingle{} object of the class type. For use in expecations of type when values don\textquotesingle{}t matter.
+
+// don\textquotesingle{}t care about which function is passed in, as long as it\textquotesingle{}s a function expect(my\+Spy).to\+Have\+Been\+Called\+With(jasmine.\+any(\+Function));
+
+
+\begin{DoxyParams}{Parameters}
+{\em \{\+Class\}} & clazz \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+matchable object of the type clazz
+\end{DoxyReturn}
+
+\begin{DoxyCodeInclude}
+var isCommonJS = typeof window == \textcolor{stringliteral}{"undefined"} && typeof exports == \textcolor{stringliteral}{"object"};
+
+var jasmine = \{\};
+\textcolor{keywordflow}{if} (isCommonJS) exports.jasmine = jasmine;
+jasmine.unimplementedMethod\_ = \textcolor{keyword}{function}() \{
+  \textcolor{keywordflow}{throw} \textcolor{keyword}{new} Error(\textcolor{stringliteral}{"unimplemented method"});
+\};
+
+jasmine.undefined = jasmine.\_\_\_undefined\_\_\_;
+
+jasmine.VERBOSE = \textcolor{keyword}{false};
+
+jasmine.DEFAULT\_UPDATE\_INTERVAL = 250;
+
+jasmine.MAX\_PRETTY\_PRINT\_DEPTH = 40;
+
+jasmine.DEFAULT\_TIMEOUT\_INTERVAL = 5000;
+
+jasmine.CATCH\_EXCEPTIONS = \textcolor{keyword}{true};
+
+jasmine.getGlobal = \textcolor{keyword}{function}() \{
+  \textcolor{keyword}{function} getGlobal() \{
+    \textcolor{keywordflow}{return} \textcolor{keyword}{this};
+  \}
+
+  \textcolor{keywordflow}{return} getGlobal();
+\};
+
+jasmine.bindOriginal\_ = \textcolor{keyword}{function}(base, name) \{
+  var original = base[name];
+  \textcolor{keywordflow}{if} (original.apply) \{
+    \textcolor{keywordflow}{return} \textcolor{keyword}{function}() \{
+      \textcolor{keywordflow}{return} original.apply(base, arguments);
+    \};
+  \} \textcolor{keywordflow}{else} \{
+    \textcolor{comment}{// IE support}
+    \textcolor{keywordflow}{return} jasmine.getGlobal()[name];
+  \}
+\};
+
+jasmine.setTimeout = jasmine.bindOriginal\_(jasmine.getGlobal(), \textcolor{stringliteral}{'setTimeout'});
+jasmine.clearTimeout = jasmine.bindOriginal\_(jasmine.getGlobal(), \textcolor{stringliteral}{'clearTimeout'});
+jasmine.setInterval = jasmine.bindOriginal\_(jasmine.getGlobal(), \textcolor{stringliteral}{'setInterval'});
+jasmine.clearInterval = jasmine.bindOriginal\_(jasmine.getGlobal(), \textcolor{stringliteral}{'clearInterval'});
+
+jasmine.MessageResult = \textcolor{keyword}{function}(values) \{
+  this.type = \textcolor{stringliteral}{'log'};
+  this.values = values;
+  this.trace = \textcolor{keyword}{new} Error(); \textcolor{comment}{// todo: test better}
+\};
+
+jasmine.MessageResult.prototype.toString = \textcolor{keyword}{function}() \{
+  var text = \textcolor{stringliteral}{""};
+  \textcolor{keywordflow}{for} (var i = 0; i < this.values.length; i++) \{
+    \textcolor{keywordflow}{if} (i > 0) text += \textcolor{stringliteral}{" "};
+    \textcolor{keywordflow}{if} (jasmine.isString\_(\textcolor{keyword}{this}.values[i])) \{
+      text += this.values[i];
+    \} \textcolor{keywordflow}{else} \{
+      text += jasmine.pp(this.values[i]);
+    \}
+  \}
+  \textcolor{keywordflow}{return} text;
+\};
+
+jasmine.ExpectationResult = \textcolor{keyword}{function}(params) \{
+  this.type = \textcolor{stringliteral}{'expect'};
+  this.matcherName = params.matcherName;
+  this.passed\_ = params.passed;
+  this.expected = params.expected;
+  this.actual = params.actual;
+  this.message = this.passed\_ ? \textcolor{stringliteral}{'Passed.'} : params.message;
+
+  var trace = (params.trace || \textcolor{keyword}{new} Error(this.message));
+  this.trace = this.passed\_ ? \textcolor{stringliteral}{''} : trace;
+\};
+
+jasmine.ExpectationResult.prototype.toString = \textcolor{keyword}{function} () \{
+  \textcolor{keywordflow}{return} this.message;
+\};
+
+jasmine.ExpectationResult.prototype.passed = \textcolor{keyword}{function} () \{
+  \textcolor{keywordflow}{return} this.passed\_;
+\};
+
+jasmine.getEnv = \textcolor{keyword}{function}() \{
+  var env = jasmine.currentEnv\_ = jasmine.currentEnv\_ || \textcolor{keyword}{new} jasmine.Env();
+  \textcolor{keywordflow}{return} env;
+\};
+
+jasmine.isArray\_ = \textcolor{keyword}{function}(value) \{
+  \textcolor{keywordflow}{return} jasmine.isA\_(\textcolor{stringliteral}{"Array"}, value);
+\};
+
+jasmine.isString\_ = \textcolor{keyword}{function}(value) \{
+  \textcolor{keywordflow}{return} jasmine.isA\_(\textcolor{stringliteral}{"String"}, value);
+\};
+
+jasmine.isNumber\_ = \textcolor{keyword}{function}(value) \{
+  \textcolor{keywordflow}{return} jasmine.isA\_(\textcolor{stringliteral}{"Number"}, value);
+\};
+
+jasmine.isA\_ = \textcolor{keyword}{function}(typeName, value) \{
+  \textcolor{keywordflow}{return} Object.prototype.toString.apply(value) === \textcolor{stringliteral}{'[object '} + typeName + \textcolor{charliteral}{']'};
+\};
+
+jasmine.pp = \textcolor{keyword}{function}(value) \{
+  var stringPrettyPrinter = \textcolor{keyword}{new} jasmine.StringPrettyPrinter();
+  stringPrettyPrinter.format(value);
+  \textcolor{keywordflow}{return} stringPrettyPrinter.string;
+\};
+
+jasmine.isDomNode = \textcolor{keyword}{function}(obj) \{
+  \textcolor{keywordflow}{return} obj.nodeType > 0;
+\};
+
+jasmine.any = \textcolor{keyword}{function}(clazz) \{
+  \textcolor{keywordflow}{return} \textcolor{keyword}{new} jasmine.Matchers.Any(clazz);
+\};
+
+jasmine.objectContaining = \textcolor{keyword}{function} (sample) \{
+    \textcolor{keywordflow}{return} \textcolor{keyword}{new} jasmine.Matchers.ObjectContaining(sample);
+\};
+
+jasmine.Spy = \textcolor{keyword}{function}(name) \{
+  this.identity = name || \textcolor{stringliteral}{'unknown'};
+  this.isSpy = \textcolor{keyword}{true};
+  this.plan = \textcolor{keyword}{function}() \{
+  \};
+  this.mostRecentCall = \{\};
+
+  this.argsForCall = [];
+  this.calls = [];
+\};
+
+jasmine.Spy.prototype.andCallThrough = \textcolor{keyword}{function}() \{
+  this.plan = this.originalValue;
+  \textcolor{keywordflow}{return} \textcolor{keyword}{this};
+\};
+
+jasmine.Spy.prototype.andReturn = \textcolor{keyword}{function}(value) \{
+  this.plan = \textcolor{keyword}{function}() \{
+    \textcolor{keywordflow}{return} value;
+  \};
+  \textcolor{keywordflow}{return} \textcolor{keyword}{this};
+\};
+
+jasmine.Spy.prototype.andThrow = \textcolor{keyword}{function}(exceptionMsg) \{
+  this.plan = \textcolor{keyword}{function}() \{
+    \textcolor{keywordflow}{throw} exceptionMsg;
+  \};
+  \textcolor{keywordflow}{return} \textcolor{keyword}{this};
+\};
+
+jasmine.Spy.prototype.andCallFake = \textcolor{keyword}{function}(fakeFunc) \{
+  this.plan = fakeFunc;
+  \textcolor{keywordflow}{return} \textcolor{keyword}{this};
+\};
+
+jasmine.Spy.prototype.reset = \textcolor{keyword}{function}() \{
+  this.wasCalled = \textcolor{keyword}{false};
+  this.callCount = 0;
+  this.argsForCall = [];
+  this.calls = [];
+  this.mostRecentCall = \{\};
+\};
+
+jasmine.createSpy = \textcolor{keyword}{function}(name) \{
+
+  var spyObj = \textcolor{keyword}{function}() \{
+    spyObj.wasCalled = \textcolor{keyword}{true};
+    spyObj.callCount++;
+    var args = jasmine.util.argsToArray(arguments);
+    spyObj.mostRecentCall.object = \textcolor{keyword}{this};
+    spyObj.mostRecentCall.args = args;
+    spyObj.argsForCall.push(args);
+    spyObj.calls.push(\{\textcolor{keywordtype}{object}: \textcolor{keyword}{this}, args: args\});
+    \textcolor{keywordflow}{return} spyObj.plan.apply(\textcolor{keyword}{this}, arguments);
+  \};
+
+  var spy = \textcolor{keyword}{new} jasmine.Spy(name);
+
+  \textcolor{keywordflow}{for} (var prop in spy) \{
+    spyObj[prop] = spy[prop];
+  \}
+
+  spyObj.reset();
+
+  \textcolor{keywordflow}{return} spyObj;
+\};
+
+jasmine.isSpy = \textcolor{keyword}{function}(putativeSpy) \{
+  \textcolor{keywordflow}{return} putativeSpy && putativeSpy.isSpy;
+\};
+
+jasmine.createSpyObj = \textcolor{keyword}{function}(baseName, methodNames) \{
+  \textcolor{keywordflow}{if} (!jasmine.isArray\_(methodNames) || methodNames.length === 0) \{
+    \textcolor{keywordflow}{throw} \textcolor{keyword}{new} Error(\textcolor{stringliteral}{'createSpyObj requires a non-empty array of method names to create spies for'});
+  \}
+  var obj = \{\};
+  \textcolor{keywordflow}{for} (var i = 0; i < methodNames.length; i++) \{
+    obj[methodNames[i]] = jasmine.createSpy(baseName + \textcolor{charliteral}{'.'} + methodNames[i]);
+  \}
+  \textcolor{keywordflow}{return} obj;
+\};
+
+jasmine.log = \textcolor{keyword}{function}() \{
+  var spec = jasmine.getEnv().currentSpec;
+  spec.log.apply(spec, arguments);
+\};
+
+var spyOn = \textcolor{keyword}{function}(obj, methodName) \{
+  \textcolor{keywordflow}{return} jasmine.getEnv().currentSpec.spyOn(obj, methodName);
+\};
+\textcolor{keywordflow}{if} (isCommonJS) exports.spyOn = spyOn;
+
+var it = \textcolor{keyword}{function}(desc, func) \{
+  \textcolor{keywordflow}{return} jasmine.getEnv().it(desc, func);
+\};
+\textcolor{keywordflow}{if} (isCommonJS) exports.it = it;
+
+var xit = \textcolor{keyword}{function}(desc, func) \{
+  \textcolor{keywordflow}{return} jasmine.getEnv().xit(desc, func);
+\};
+\textcolor{keywordflow}{if} (isCommonJS) exports.xit = xit;
+
+var expect = \textcolor{keyword}{function}(actual) \{
+  \textcolor{keywordflow}{return} jasmine.getEnv().currentSpec.expect(actual);
+\};
+\textcolor{keywordflow}{if} (isCommonJS) exports.expect = expect;
+
+var runs = \textcolor{keyword}{function}(func) \{
+  jasmine.getEnv().currentSpec.runs(func);
+\};
+\textcolor{keywordflow}{if} (isCommonJS) exports.runs = runs;
+
+var waits = \textcolor{keyword}{function}(timeout) \{
+  jasmine.getEnv().currentSpec.waits(timeout);
+\};
+\textcolor{keywordflow}{if} (isCommonJS) exports.waits = waits;
+
+var waitsFor = \textcolor{keyword}{function}(latchFunction, optional\_timeoutMessage, optional\_timeout) \{
+  jasmine.getEnv().currentSpec.waitsFor.apply(jasmine.getEnv().currentSpec, arguments);
+\};
+\textcolor{keywordflow}{if} (isCommonJS) exports.waitsFor = waitsFor;
+
+var beforeEach = \textcolor{keyword}{function}(beforeEachFunction) \{
+  jasmine.getEnv().beforeEach(beforeEachFunction);
+\};
+\textcolor{keywordflow}{if} (isCommonJS) exports.beforeEach = beforeEach;
+
+var afterEach = \textcolor{keyword}{function}(afterEachFunction) \{
+  jasmine.getEnv().afterEach(afterEachFunction);
+\};
+\textcolor{keywordflow}{if} (isCommonJS) exports.afterEach = afterEach;
+
+var describe = \textcolor{keyword}{function}(description, specDefinitions) \{
+  \textcolor{keywordflow}{return} jasmine.getEnv().describe(description, specDefinitions);
+\};
+\textcolor{keywordflow}{if} (isCommonJS) exports.describe = describe;
+
+var xdescribe = \textcolor{keyword}{function}(description, specDefinitions) \{
+  \textcolor{keywordflow}{return} jasmine.getEnv().xdescribe(description, specDefinitions);
+\};
+\textcolor{keywordflow}{if} (isCommonJS) exports.xdescribe = xdescribe;
+
+
+\textcolor{comment}{// Provide the XMLHttpRequest class for IE 5.x-6.x:}
+jasmine.XmlHttpRequest = (typeof XMLHttpRequest == \textcolor{stringliteral}{"undefined"}) ? \textcolor{keyword}{function}() \{
+  \textcolor{keyword}{function} tryIt(f) \{
+    \textcolor{keywordflow}{try} \{
+      \textcolor{keywordflow}{return} f();
+    \} \textcolor{keywordflow}{catch}(e) \{
+    \}
+    \textcolor{keywordflow}{return} null;
+  \}
+
+  var xhr = tryIt(\textcolor{keyword}{function}() \{
+    \textcolor{keywordflow}{return} \textcolor{keyword}{new} ActiveXObject(\textcolor{stringliteral}{"Msxml2.XMLHTTP.6.0"});
+  \}) ||
+    tryIt(\textcolor{keyword}{function}() \{
+      \textcolor{keywordflow}{return} \textcolor{keyword}{new} ActiveXObject(\textcolor{stringliteral}{"Msxml2.XMLHTTP.3.0"});
+    \}) ||
+    tryIt(\textcolor{keyword}{function}() \{
+      \textcolor{keywordflow}{return} \textcolor{keyword}{new} ActiveXObject(\textcolor{stringliteral}{"Msxml2.XMLHTTP"});
+    \}) ||
+    tryIt(\textcolor{keyword}{function}() \{
+      \textcolor{keywordflow}{return} \textcolor{keyword}{new} ActiveXObject(\textcolor{stringliteral}{"Microsoft.XMLHTTP"});
+    \});
+
+  \textcolor{keywordflow}{if} (!xhr) \textcolor{keywordflow}{throw} \textcolor{keyword}{new} Error(\textcolor{stringliteral}{"This browser does not support XMLHttpRequest."});
+
+  \textcolor{keywordflow}{return} xhr;
+\} : XMLHttpRequest;
+jasmine.util = \{\};
+
+jasmine.util.inherit = \textcolor{keyword}{function}(childClass, parentClass) \{
+  var subclass = \textcolor{keyword}{function}() \{
+  \};
+  subclass.prototype = parentClass.prototype;
+  childClass.prototype = \textcolor{keyword}{new} subclass();
+\};
+
+jasmine.util.formatException = \textcolor{keyword}{function}(e) \{
+  var lineNumber;
+  \textcolor{keywordflow}{if} (e.line) \{
+    lineNumber = e.line;
+  \}
+  \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (e.lineNumber) \{
+    lineNumber = e.lineNumber;
+  \}
+
+  var file;
+
+  \textcolor{keywordflow}{if} (e.sourceURL) \{
+    file = e.sourceURL;
+  \}
+  \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (e.fileName) \{
+    file = e.fileName;
+  \}
+
+  var message = (e.name && e.message) ? (e.name + \textcolor{stringliteral}{': '} + e.message) : e.toString();
+
+  \textcolor{keywordflow}{if} (file && lineNumber) \{
+    message += \textcolor{stringliteral}{' in '} + file + \textcolor{stringliteral}{' (line '} + lineNumber + \textcolor{charliteral}{')'};
+  \}
+
+  \textcolor{keywordflow}{return} message;
+\};
+
+jasmine.util.htmlEscape = \textcolor{keyword}{function}(str) \{
+  \textcolor{keywordflow}{if} (!str) \textcolor{keywordflow}{return} str;
+  \textcolor{keywordflow}{return} str.replace(/&/g, \textcolor{stringliteral}{'&amp;'})
+    .replace(/</g, \textcolor{stringliteral}{'&lt;'})
+    .replace(/>/g, \textcolor{stringliteral}{'&gt;'});
+\};
+
+jasmine.util.argsToArray = \textcolor{keyword}{function}(args) \{
+  var arrayOfArgs = [];
+  \textcolor{keywordflow}{for} (var i = 0; i < args.length; i++) arrayOfArgs.push(args[i]);
+  \textcolor{keywordflow}{return} arrayOfArgs;
+\};
+
+jasmine.util.extend = \textcolor{keyword}{function}(destination, source) \{
+  \textcolor{keywordflow}{for} (var property in source) destination[property] = source[property];
+  \textcolor{keywordflow}{return} destination;
+\};
+
+jasmine.Env = \textcolor{keyword}{function}() \{
+  this.currentSpec = null;
+  this.currentSuite = null;
+  this.currentRunner\_ = \textcolor{keyword}{new} jasmine.Runner(\textcolor{keyword}{this});
+
+  this.\hyperlink{classreporter}{reporter} = \textcolor{keyword}{new} jasmine.MultiReporter();
+
+  this.updateInterval = jasmine.DEFAULT\_UPDATE\_INTERVAL;
+  this.defaultTimeoutInterval = jasmine.DEFAULT\_TIMEOUT\_INTERVAL;
+  this.lastUpdate = 0;
+  this.specFilter = \textcolor{keyword}{function}() \{
+    \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+  \};
+
+  this.nextSpecId\_ = 0;
+  this.nextSuiteId\_ = 0;
+  this.equalityTesters\_ = [];
+
+  \textcolor{comment}{// wrap matchers}
+  this.matchersClass = \textcolor{keyword}{function}() \{
+    jasmine.Matchers.apply(\textcolor{keyword}{this}, arguments);
+  \};
+  jasmine.util.inherit(this.matchersClass, jasmine.Matchers);
+
+  jasmine.Matchers.wrapInto\_(jasmine.Matchers.prototype, \textcolor{keyword}{this}.matchersClass);
+\};
+
+
+jasmine.Env.prototype.setTimeout = jasmine.setTimeout;
+jasmine.Env.prototype.clearTimeout = jasmine.clearTimeout;
+jasmine.Env.prototype.setInterval = jasmine.setInterval;
+jasmine.Env.prototype.clearInterval = jasmine.clearInterval;
+
+jasmine.Env.prototype.version = \textcolor{keyword}{function} () \{
+  \textcolor{keywordflow}{if} (jasmine.version\_) \{
+    \textcolor{keywordflow}{return} jasmine.version\_;
+  \} \textcolor{keywordflow}{else} \{
+    \textcolor{keywordflow}{throw} \textcolor{keyword}{new} Error(\textcolor{stringliteral}{'Version not set'});
+  \}
+\};
+
+jasmine.Env.prototype.versionString = \textcolor{keyword}{function}() \{
+  \textcolor{keywordflow}{if} (!jasmine.version\_) \{
+    \textcolor{keywordflow}{return} \textcolor{stringliteral}{"version unknown"};
+  \}
+
+  var version = this.version();
+  var versionString = version.major + \textcolor{stringliteral}{"."} + version.minor + \textcolor{stringliteral}{"."} + version.build;
+  \textcolor{keywordflow}{if} (version.release\_candidate) \{
+    versionString += \textcolor{stringliteral}{".rc"} + version.release\_candidate;
+  \}
+  versionString += \textcolor{stringliteral}{" revision "} + version.revision;
+  \textcolor{keywordflow}{return} versionString;
+\};
+
+jasmine.Env.prototype.nextSpecId = \textcolor{keyword}{function} () \{
+  \textcolor{keywordflow}{return} this.nextSpecId\_++;
+\};
+
+jasmine.Env.prototype.nextSuiteId = \textcolor{keyword}{function} () \{
+  \textcolor{keywordflow}{return} this.nextSuiteId\_++;
+\};
+
+jasmine.Env.prototype.addReporter = \textcolor{keyword}{function}(\hyperlink{classreporter}{reporter}) \{
+  this.\hyperlink{classreporter}{reporter}.addReporter(\hyperlink{classreporter}{reporter});
+\};
+
+jasmine.Env.prototype.execute = \textcolor{keyword}{function}() \{
+  this.currentRunner\_.execute();
+\};
+
+jasmine.Env.prototype.describe = \textcolor{keyword}{function}(description, specDefinitions) \{
+  var suite = \textcolor{keyword}{new} jasmine.Suite(\textcolor{keyword}{this}, description, specDefinitions, this.currentSuite);
+
+  var parentSuite = this.currentSuite;
+  \textcolor{keywordflow}{if} (parentSuite) \{
+    parentSuite.add(suite);
+  \} \textcolor{keywordflow}{else} \{
+    this.currentRunner\_.add(suite);
+  \}
+
+  this.currentSuite = suite;
+
+  var declarationError = null;
+  \textcolor{keywordflow}{try} \{
+    specDefinitions.call(suite);
+  \} \textcolor{keywordflow}{catch}(e) \{
+    declarationError = e;
+  \}
+
+  \textcolor{keywordflow}{if} (declarationError) \{
+    this.it(\textcolor{stringliteral}{"encountered a declaration exception"}, \textcolor{keyword}{function}() \{
+      \textcolor{keywordflow}{throw} declarationError;
+    \});
+  \}
+
+  this.currentSuite = parentSuite;
+
+  \textcolor{keywordflow}{return} suite;
+\};
+
+jasmine.Env.prototype.beforeEach = \textcolor{keyword}{function}(beforeEachFunction) \{
+  \textcolor{keywordflow}{if} (this.currentSuite) \{
+    this.currentSuite.beforeEach(beforeEachFunction);
+  \} \textcolor{keywordflow}{else} \{
+    this.currentRunner\_.beforeEach(beforeEachFunction);
+  \}
+\};
+
+jasmine.Env.prototype.currentRunner = \textcolor{keyword}{function} () \{
+  \textcolor{keywordflow}{return} this.currentRunner\_;
+\};
+
+jasmine.Env.prototype.afterEach = \textcolor{keyword}{function}(afterEachFunction) \{
+  \textcolor{keywordflow}{if} (this.currentSuite) \{
+    this.currentSuite.afterEach(afterEachFunction);
+  \} \textcolor{keywordflow}{else} \{
+    this.currentRunner\_.afterEach(afterEachFunction);
+  \}
+
+\};
+
+jasmine.Env.prototype.xdescribe = \textcolor{keyword}{function}(desc, specDefinitions) \{
+  \textcolor{keywordflow}{return} \{
+    execute: \textcolor{keyword}{function}() \{
+    \}
+  \};
+\};
+
+jasmine.Env.prototype.it = \textcolor{keyword}{function}(description, func) \{
+  var spec = \textcolor{keyword}{new} jasmine.Spec(\textcolor{keyword}{this}, this.currentSuite, description);
+  this.currentSuite.add(spec);
+  this.currentSpec = spec;
+
+  \textcolor{keywordflow}{if} (func) \{
+    spec.runs(func);
+  \}
+
+  \textcolor{keywordflow}{return} spec;
+\};
+
+jasmine.Env.prototype.xit = \textcolor{keyword}{function}(desc, func) \{
+  \textcolor{keywordflow}{return} \{
+    \textcolor{keywordtype}{id}: this.nextSpecId(),
+    runs: \textcolor{keyword}{function}() \{
+    \}
+  \};
+\};
+
+jasmine.Env.prototype.compareRegExps\_ = \textcolor{keyword}{function}(a, b, mismatchKeys, mismatchValues) \{
+  \textcolor{keywordflow}{if} (a.source != b.source)
+    mismatchValues.push(\textcolor{stringliteral}{"expected pattern /"} + b.source + \textcolor{stringliteral}{"/ is not equal to the pattern /"} + a.source + \textcolor{stringliteral}{"/
+      "});
+
+  \textcolor{keywordflow}{if} (a.ignoreCase != b.ignoreCase)
+    mismatchValues.push(\textcolor{stringliteral}{"expected modifier i was"} + (b.ignoreCase ? \textcolor{stringliteral}{" "} : \textcolor{stringliteral}{" not "}) + \textcolor{stringliteral}{"set and does not
+       equal the origin modifier"});
+
+  \textcolor{keywordflow}{if} (a.global != b.global)
+    mismatchValues.push(\textcolor{stringliteral}{"expected modifier g was"} + (b.global ? \textcolor{stringliteral}{" "} : \textcolor{stringliteral}{" not "}) + \textcolor{stringliteral}{"set and does not equal
+       the origin modifier"});
+
+  \textcolor{keywordflow}{if} (a.multiline != b.multiline)
+    mismatchValues.push(\textcolor{stringliteral}{"expected modifier m was"} + (b.multiline ? \textcolor{stringliteral}{" "} : \textcolor{stringliteral}{" not "}) + \textcolor{stringliteral}{"set and does not equal
+       the origin modifier"});
+
+  \textcolor{keywordflow}{if} (a.sticky != b.sticky)
+    mismatchValues.push(\textcolor{stringliteral}{"expected modifier y was"} + (b.sticky ? \textcolor{stringliteral}{" "} : \textcolor{stringliteral}{" not "}) + \textcolor{stringliteral}{"set and does not equal
+       the origin modifier"});
+
+  \textcolor{keywordflow}{return} (mismatchValues.length === 0);
+\};
+
+jasmine.Env.prototype.compareObjects\_ = \textcolor{keyword}{function}(a, b, mismatchKeys, mismatchValues) \{
+  \textcolor{keywordflow}{if} (a.\_\_Jasmine\_been\_here\_before\_\_ === b && b.\_\_Jasmine\_been\_here\_before\_\_ === a) \{
+    \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+  \}
+
+  a.\_\_Jasmine\_been\_here\_before\_\_ = b;
+  b.\_\_Jasmine\_been\_here\_before\_\_ = a;
+
+  var hasKey = \textcolor{keyword}{function}(obj, keyName) \{
+    \textcolor{keywordflow}{return} obj !== null && obj[keyName] !== jasmine.undefined;
+  \};
+
+  \textcolor{keywordflow}{for} (var property in b) \{
+    \textcolor{keywordflow}{if} (!hasKey(a, property) && hasKey(b, property)) \{
+      mismatchKeys.push(\textcolor{stringliteral}{"expected has key '"} + property + \textcolor{stringliteral}{"', but missing from actual."});
+    \}
+  \}
+  \textcolor{keywordflow}{for} (property in a) \{
+    \textcolor{keywordflow}{if} (!hasKey(b, property) && hasKey(a, property)) \{
+      mismatchKeys.push(\textcolor{stringliteral}{"expected missing key '"} + property + \textcolor{stringliteral}{"', but present in actual."});
+    \}
+  \}
+  \textcolor{keywordflow}{for} (property in b) \{
+    \textcolor{keywordflow}{if} (property == \textcolor{stringliteral}{'\_\_Jasmine\_been\_here\_before\_\_'}) \textcolor{keywordflow}{continue};
+    \textcolor{keywordflow}{if} (!this.equals\_(a[property], b[property], mismatchKeys, mismatchValues)) \{
+      mismatchValues.push(\textcolor{stringliteral}{"'"} + property + \textcolor{stringliteral}{"' was '"} + (b[property] ? jasmine.util.htmlEscape(b[property].
+      toString()) : b[property]) + \textcolor{stringliteral}{"' in expected, but was '"} + (a[property] ? jasmine.util.htmlEscape(a[property].
+      toString()) : a[property]) + \textcolor{stringliteral}{"' in actual."});
+    \}
+  \}
+
+  \textcolor{keywordflow}{if} (jasmine.isArray\_(a) && jasmine.isArray\_(b) && a.length != b.length) \{
+    mismatchValues.push(\textcolor{stringliteral}{"arrays were not the same length"});
+  \}
+
+  \textcolor{keyword}{delete} a.\_\_Jasmine\_been\_here\_before\_\_;
+  \textcolor{keyword}{delete} b.\_\_Jasmine\_been\_here\_before\_\_;
+  \textcolor{keywordflow}{return} (mismatchKeys.length === 0 && mismatchValues.length === 0);
+\};
+
+jasmine.Env.prototype.equals\_ = \textcolor{keyword}{function}(a, b, mismatchKeys, mismatchValues) \{
+  mismatchKeys = mismatchKeys || [];
+  mismatchValues = mismatchValues || [];
+
+  \textcolor{keywordflow}{for} (var i = 0; i < this.equalityTesters\_.length; i++) \{
+    var equalityTester = this.equalityTesters\_[i];
+    var result = equalityTester(a, b, \textcolor{keyword}{this}, mismatchKeys, mismatchValues);
+    \textcolor{keywordflow}{if} (result !== jasmine.undefined) \textcolor{keywordflow}{return} result;
+  \}
+
+  \textcolor{keywordflow}{if} (a === b) \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+
+  \textcolor{keywordflow}{if} (a === jasmine.undefined || a === null || b === jasmine.undefined || b === null) \{
+    \textcolor{keywordflow}{return} (a == jasmine.undefined && b == jasmine.undefined);
+  \}
+
+  \textcolor{keywordflow}{if} (jasmine.isDomNode(a) && jasmine.isDomNode(b)) \{
+    \textcolor{keywordflow}{return} a === b;
+  \}
+
+  \textcolor{keywordflow}{if} (a instanceof Date && b instanceof Date) \{
+    \textcolor{keywordflow}{return} a.getTime() == b.getTime();
+  \}
+
+  \textcolor{keywordflow}{if} (a.jasmineMatches) \{
+    \textcolor{keywordflow}{return} a.jasmineMatches(b);
+  \}
+
+  \textcolor{keywordflow}{if} (b.jasmineMatches) \{
+    \textcolor{keywordflow}{return} b.jasmineMatches(a);
+  \}
+
+  \textcolor{keywordflow}{if} (a instanceof jasmine.Matchers.ObjectContaining) \{
+    \textcolor{keywordflow}{return} a.matches(b);
+  \}
+
+  \textcolor{keywordflow}{if} (b instanceof jasmine.Matchers.ObjectContaining) \{
+    \textcolor{keywordflow}{return} b.matches(a);
+  \}
+
+  \textcolor{keywordflow}{if} (jasmine.isString\_(a) && jasmine.isString\_(b)) \{
+    \textcolor{keywordflow}{return} (a == b);
+  \}
+
+  \textcolor{keywordflow}{if} (jasmine.isNumber\_(a) && jasmine.isNumber\_(b)) \{
+    \textcolor{keywordflow}{return} (a == b);
+  \}
+
+  \textcolor{keywordflow}{if} (a instanceof RegExp && b instanceof RegExp) \{
+    \textcolor{keywordflow}{return} this.compareRegExps\_(a, b, mismatchKeys, mismatchValues);
+  \}
+
+  \textcolor{keywordflow}{if} (typeof a === \textcolor{stringliteral}{"object"} && typeof b === \textcolor{stringliteral}{"object"}) \{
+    \textcolor{keywordflow}{return} this.compareObjects\_(a, b, mismatchKeys, mismatchValues);
+  \}
+
+  \textcolor{comment}{//Straight check}
+  \textcolor{keywordflow}{return} (a === b);
+\};
+
+jasmine.Env.prototype.contains\_ = \textcolor{keyword}{function}(haystack, needle) \{
+  \textcolor{keywordflow}{if} (jasmine.isArray\_(haystack)) \{
+    \textcolor{keywordflow}{for} (var i = 0; i < haystack.length; i++) \{
+      \textcolor{keywordflow}{if} (this.equals\_(haystack[i], needle)) \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+    \}
+    \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+  \}
+  \textcolor{keywordflow}{return} haystack.indexOf(needle) >= 0;
+\};
+
+jasmine.Env.prototype.addEqualityTester = \textcolor{keyword}{function}(equalityTester) \{
+  this.equalityTesters\_.push(equalityTester);
+\};
+jasmine.Reporter = \textcolor{keyword}{function}() \{
+\};
+
+\textcolor{comment}{//noinspection JSUnusedLocalSymbols}
+jasmine.Reporter.prototype.reportRunnerStarting = \textcolor{keyword}{function}(runner) \{
+\};
+
+\textcolor{comment}{//noinspection JSUnusedLocalSymbols}
+jasmine.Reporter.prototype.reportRunnerResults = \textcolor{keyword}{function}(runner) \{
+\};
+
+\textcolor{comment}{//noinspection JSUnusedLocalSymbols}
+jasmine.Reporter.prototype.reportSuiteResults = \textcolor{keyword}{function}(suite) \{
+\};
+
+\textcolor{comment}{//noinspection JSUnusedLocalSymbols}
+jasmine.Reporter.prototype.reportSpecStarting = \textcolor{keyword}{function}(spec) \{
+\};
+
+\textcolor{comment}{//noinspection JSUnusedLocalSymbols}
+jasmine.Reporter.prototype.reportSpecResults = \textcolor{keyword}{function}(spec) \{
+\};
+
+\textcolor{comment}{//noinspection JSUnusedLocalSymbols}
+jasmine.Reporter.prototype.log = \textcolor{keyword}{function}(str) \{
+\};
+
+jasmine.Block = \textcolor{keyword}{function}(env, func, spec) \{
+  this.env = env;
+  this.func = func;
+  this.spec = spec;
+\};
+
+jasmine.Block.prototype.execute = \textcolor{keyword}{function}(onComplete) \{
+  \textcolor{keywordflow}{if} (!jasmine.CATCH\_EXCEPTIONS) \{
+    this.func.apply(this.spec);
+  \}
+  \textcolor{keywordflow}{else} \{
+    \textcolor{keywordflow}{try} \{
+      this.func.apply(this.spec);
+    \} \textcolor{keywordflow}{catch} (e) \{
+      this.spec.fail(e);
+    \}
+  \}
+  onComplete();
+\};
+jasmine.JsApiReporter = \textcolor{keyword}{function}() \{
+  this.started = \textcolor{keyword}{false};
+  this.finished = \textcolor{keyword}{false};
+  this.suites\_ = [];
+  this.results\_ = \{\};
+\};
+
+jasmine.JsApiReporter.prototype.reportRunnerStarting = \textcolor{keyword}{function}(runner) \{
+  this.started = \textcolor{keyword}{true};
+  var suites = runner.topLevelSuites();
+  \textcolor{keywordflow}{for} (var i = 0; i < suites.length; i++) \{
+    var suite = suites[i];
+    this.suites\_.push(this.summarize\_(suite));
+  \}
+\};
+
+jasmine.JsApiReporter.prototype.suites = \textcolor{keyword}{function}() \{
+  \textcolor{keywordflow}{return} this.suites\_;
+\};
+
+jasmine.JsApiReporter.prototype.summarize\_ = \textcolor{keyword}{function}(suiteOrSpec) \{
+  var isSuite = suiteOrSpec instanceof jasmine.Suite;
+  var summary = \{
+    \textcolor{keywordtype}{id}: suiteOrSpec.id,
+    name: suiteOrSpec.description,
+    type: isSuite ? \textcolor{stringliteral}{'suite'} : \textcolor{stringliteral}{'spec'},
+    children: []
+  \};
+
+  \textcolor{keywordflow}{if} (isSuite) \{
+    var children = suiteOrSpec.children();
+    \textcolor{keywordflow}{for} (var i = 0; i < children.length; i++) \{
+      summary.children.push(this.summarize\_(children[i]));
+    \}
+  \}
+  \textcolor{keywordflow}{return} summary;
+\};
+
+jasmine.JsApiReporter.prototype.results = \textcolor{keyword}{function}() \{
+  \textcolor{keywordflow}{return} this.results\_;
+\};
+
+jasmine.JsApiReporter.prototype.resultsForSpec = \textcolor{keyword}{function}(specId) \{
+  \textcolor{keywordflow}{return} this.results\_[specId];
+\};
+
+\textcolor{comment}{//noinspection JSUnusedLocalSymbols}
+jasmine.JsApiReporter.prototype.reportRunnerResults = \textcolor{keyword}{function}(runner) \{
+  this.finished = \textcolor{keyword}{true};
+\};
+
+\textcolor{comment}{//noinspection JSUnusedLocalSymbols}
+jasmine.JsApiReporter.prototype.reportSuiteResults = \textcolor{keyword}{function}(suite) \{
+\};
+
+\textcolor{comment}{//noinspection JSUnusedLocalSymbols}
+jasmine.JsApiReporter.prototype.reportSpecResults = \textcolor{keyword}{function}(spec) \{
+  this.results\_[spec.id] = \{
+    messages: spec.results().getItems(),
+    result: spec.results().failedCount > 0 ? \textcolor{stringliteral}{"failed"} : \textcolor{stringliteral}{"passed"}
+  \};
+\};
+
+\textcolor{comment}{//noinspection JSUnusedLocalSymbols}
+jasmine.JsApiReporter.prototype.log = \textcolor{keyword}{function}(str) \{
+\};
+
+jasmine.JsApiReporter.prototype.resultsForSpecs = \textcolor{keyword}{function}(specIds)\{
+  var results = \{\};
+  \textcolor{keywordflow}{for} (var i = 0; i < specIds.length; i++) \{
+    var specId = specIds[i];
+    results[specId] = this.summarizeResult\_(this.results\_[specId]);
+  \}
+  \textcolor{keywordflow}{return} results;
+\};
+
+jasmine.JsApiReporter.prototype.summarizeResult\_ = \textcolor{keyword}{function}(result)\{
+  var summaryMessages = [];
+  var messagesLength = result.messages.length;
+  \textcolor{keywordflow}{for} (var messageIndex = 0; messageIndex < messagesLength; messageIndex++) \{
+    var resultMessage = result.messages[messageIndex];
+    summaryMessages.push(\{
+      text: resultMessage.type == \textcolor{stringliteral}{'log'} ? resultMessage.toString() : jasmine.undefined,
+      passed: resultMessage.passed ? resultMessage.passed() : \textcolor{keyword}{true},
+      type: resultMessage.type,
+      message: resultMessage.message,
+      trace: \{
+        stack: resultMessage.passed && !resultMessage.passed() ? resultMessage.trace.stack : jasmine.
+      undefined
+      \}
+    \});
+  \}
+
+  \textcolor{keywordflow}{return} \{
+    result : result.result,
+    messages : summaryMessages
+  \};
+\};
+
+jasmine.Matchers = \textcolor{keyword}{function}(env, actual, spec, opt\_isNot) \{
+  this.env = env;
+  this.actual = actual;
+  this.spec = spec;
+  this.isNot = opt\_isNot || \textcolor{keyword}{false};
+  this.reportWasCalled\_ = \textcolor{keyword}{false};
+\};
+
+\textcolor{comment}{// todo: @deprecated as of Jasmine 0.11, remove soon [xw]}
+jasmine.Matchers.pp = \textcolor{keyword}{function}(str) \{
+  \textcolor{keywordflow}{throw} \textcolor{keyword}{new} Error(\textcolor{stringliteral}{"jasmine.Matchers.pp() is no longer supported, please use jasmine.pp() instead!"});
+\};
+
+\textcolor{comment}{// todo: @deprecated Deprecated as of Jasmine 0.10. Rewrite your custom matchers to return true or false.
+       [xw]}
+jasmine.Matchers.prototype.report = \textcolor{keyword}{function}(result, failing\_message, details) \{
+  \textcolor{keywordflow}{throw} \textcolor{keyword}{new} Error(\textcolor{stringliteral}{"As of jasmine 0.11, custom matchers must be implemented differently -- please see
+       jasmine docs"});
+\};
+
+jasmine.Matchers.wrapInto\_ = \textcolor{keyword}{function}(prototype, matchersClass) \{
+  \textcolor{keywordflow}{for} (var methodName in prototype) \{
+    \textcolor{keywordflow}{if} (methodName == \textcolor{stringliteral}{'report'}) \textcolor{keywordflow}{continue};
+    var orig = prototype[methodName];
+    matchersClass.prototype[methodName] = jasmine.Matchers.matcherFn\_(methodName, orig);
+  \}
+\};
+
+jasmine.Matchers.matcherFn\_ = \textcolor{keyword}{function}(matcherName, matcherFunction) \{
+  \textcolor{keywordflow}{return} \textcolor{keyword}{function}() \{
+    var matcherArgs = jasmine.util.argsToArray(arguments);
+    var result = matcherFunction.apply(\textcolor{keyword}{this}, arguments);
+
+    \textcolor{keywordflow}{if} (this.isNot) \{
+      result = !result;
+    \}
+
+    \textcolor{keywordflow}{if} (this.reportWasCalled\_) \textcolor{keywordflow}{return} result;
+
+    var message;
+    \textcolor{keywordflow}{if} (!result) \{
+      \textcolor{keywordflow}{if} (this.message) \{
+        message = this.message.apply(\textcolor{keyword}{this}, arguments);
+        \textcolor{keywordflow}{if} (jasmine.isArray\_(message)) \{
+          message = message[this.isNot ? 1 : 0];
+        \}
+      \} \textcolor{keywordflow}{else} \{
+        var englishyPredicate = matcherName.replace(/[A-Z]/g, \textcolor{keyword}{function}(s) \{ \textcolor{keywordflow}{return} \textcolor{charliteral}{' '} + s.toLowerCase(); \}
+      );
+        message = \textcolor{stringliteral}{"Expected "} + jasmine.pp(this.actual) + (this.isNot ? \textcolor{stringliteral}{" not "} : \textcolor{stringliteral}{" "}) + englishyPredicate;
+        \textcolor{keywordflow}{if} (matcherArgs.length > 0) \{
+          \textcolor{keywordflow}{for} (var i = 0; i < matcherArgs.length; i++) \{
+            \textcolor{keywordflow}{if} (i > 0) message += \textcolor{stringliteral}{","};
+            message += \textcolor{stringliteral}{" "} + jasmine.pp(matcherArgs[i]);
+          \}
+        \}
+        message += \textcolor{stringliteral}{"."};
+      \}
+    \}
+    var expectationResult = \textcolor{keyword}{new} jasmine.ExpectationResult(\{
+      matcherName: matcherName,
+      passed: result,
+      expected: matcherArgs.length > 1 ? matcherArgs : matcherArgs[0],
+      actual: this.actual,
+      message: message
+    \});
+    this.spec.addMatcherResult(expectationResult);
+    \textcolor{keywordflow}{return} jasmine.undefined;
+  \};
+\};
+
+
+
+
+jasmine.Matchers.prototype.toBe = \textcolor{keyword}{function}(expected) \{
+  \textcolor{keywordflow}{return} this.actual === expected;
+\};
+
+jasmine.Matchers.prototype.toNotBe = \textcolor{keyword}{function}(expected) \{
+  \textcolor{keywordflow}{return} this.actual !== expected;
+\};
+
+jasmine.Matchers.prototype.toEqual = \textcolor{keyword}{function}(expected) \{
+  \textcolor{keywordflow}{return} this.env.equals\_(this.actual, expected);
+\};
+
+jasmine.Matchers.prototype.toNotEqual = \textcolor{keyword}{function}(expected) \{
+  \textcolor{keywordflow}{return} !this.env.equals\_(this.actual, expected);
+\};
+
+jasmine.Matchers.prototype.toMatch = \textcolor{keyword}{function}(expected) \{
+  \textcolor{keywordflow}{return} \textcolor{keyword}{new} RegExp(expected).test(this.actual);
+\};
+
+jasmine.Matchers.prototype.toNotMatch = \textcolor{keyword}{function}(expected) \{
+  \textcolor{keywordflow}{return} !(\textcolor{keyword}{new} RegExp(expected).test(this.actual));
+\};
+
+jasmine.Matchers.prototype.toBeDefined = \textcolor{keyword}{function}() \{
+  \textcolor{keywordflow}{return} (this.actual !== jasmine.undefined);
+\};
+
+jasmine.Matchers.prototype.toBeUndefined = \textcolor{keyword}{function}() \{
+  \textcolor{keywordflow}{return} (this.actual === jasmine.undefined);
+\};
+
+jasmine.Matchers.prototype.toBeNull = \textcolor{keyword}{function}() \{
+  \textcolor{keywordflow}{return} (this.actual === null);
+\};
+
+jasmine.Matchers.prototype.toBeNaN = \textcolor{keyword}{function}() \{
+    this.message = \textcolor{keyword}{function}() \{
+        \textcolor{keywordflow}{return} [ \textcolor{stringliteral}{"Expected "} + jasmine.pp(this.actual) + \textcolor{stringliteral}{" to be NaN."} ];
+    \};
+
+    \textcolor{keywordflow}{return} (this.actual !== this.actual);
+\};
+
+jasmine.Matchers.prototype.toBeTruthy = \textcolor{keyword}{function}() \{
+  \textcolor{keywordflow}{return} !!this.actual;
+\};
+
+
+jasmine.Matchers.prototype.toBeFalsy = \textcolor{keyword}{function}() \{
+  \textcolor{keywordflow}{return} !this.actual;
+\};
+
+
+jasmine.Matchers.prototype.toHaveBeenCalled = \textcolor{keyword}{function}() \{
+  \textcolor{keywordflow}{if} (arguments.length > 0) \{
+    \textcolor{keywordflow}{throw} \textcolor{keyword}{new} Error(\textcolor{stringliteral}{'toHaveBeenCalled does not take arguments, use toHaveBeenCalledWith'});
+  \}
+
+  \textcolor{keywordflow}{if} (!jasmine.isSpy(\textcolor{keyword}{this}.actual)) \{
+    \textcolor{keywordflow}{throw} \textcolor{keyword}{new} Error(\textcolor{stringliteral}{'Expected a spy, but got '} + jasmine.pp(\textcolor{keyword}{this}.actual) + \textcolor{charliteral}{'.'});
+  \}
+
+  this.message = \textcolor{keyword}{function}() \{
+    \textcolor{keywordflow}{return} [
+      \textcolor{stringliteral}{"Expected spy "} + this.actual.identity + \textcolor{stringliteral}{" to have been called."},
+      \textcolor{stringliteral}{"Expected spy "} + this.actual.identity + \textcolor{stringliteral}{" not to have been called."}
+    ];
+  \};
+
+  \textcolor{keywordflow}{return} this.actual.wasCalled;
+\};
+
+jasmine.Matchers.prototype.wasCalled = jasmine.Matchers.prototype.toHaveBeenCalled;
+
+jasmine.Matchers.prototype.wasNotCalled = \textcolor{keyword}{function}() \{
+  \textcolor{keywordflow}{if} (arguments.length > 0) \{
+    \textcolor{keywordflow}{throw} \textcolor{keyword}{new} Error(\textcolor{stringliteral}{'wasNotCalled does not take arguments'});
+  \}
+
+  \textcolor{keywordflow}{if} (!jasmine.isSpy(\textcolor{keyword}{this}.actual)) \{
+    \textcolor{keywordflow}{throw} \textcolor{keyword}{new} Error(\textcolor{stringliteral}{'Expected a spy, but got '} + jasmine.pp(\textcolor{keyword}{this}.actual) + \textcolor{charliteral}{'.'});
+  \}
+
+  this.message = \textcolor{keyword}{function}() \{
+    \textcolor{keywordflow}{return} [
+      \textcolor{stringliteral}{"Expected spy "} + this.actual.identity + \textcolor{stringliteral}{" to not have been called."},
+      \textcolor{stringliteral}{"Expected spy "} + this.actual.identity + \textcolor{stringliteral}{" to have been called."}
+    ];
+  \};
+
+  \textcolor{keywordflow}{return} !this.actual.wasCalled;
+\};
+
+jasmine.Matchers.prototype.toHaveBeenCalledWith = \textcolor{keyword}{function}() \{
+  var expectedArgs = jasmine.util.argsToArray(arguments);
+  \textcolor{keywordflow}{if} (!jasmine.isSpy(\textcolor{keyword}{this}.actual)) \{
+    \textcolor{keywordflow}{throw} \textcolor{keyword}{new} Error(\textcolor{stringliteral}{'Expected a spy, but got '} + jasmine.pp(\textcolor{keyword}{this}.actual) + \textcolor{charliteral}{'.'});
+  \}
+  this.message = \textcolor{keyword}{function}() \{
+    var invertedMessage = \textcolor{stringliteral}{"Expected spy "} + this.actual.identity + \textcolor{stringliteral}{" not to have been called with "} + 
+      jasmine.pp(expectedArgs) + \textcolor{stringliteral}{" but it was."};
+    var positiveMessage = \textcolor{stringliteral}{""};
+    \textcolor{keywordflow}{if} (this.actual.callCount === 0) \{
+      positiveMessage = \textcolor{stringliteral}{"Expected spy "} + this.actual.identity + \textcolor{stringliteral}{" to have been called with "} + jasmine.pp(
+      expectedArgs) + \textcolor{stringliteral}{" but it was never called."};
+    \} \textcolor{keywordflow}{else} \{
+      positiveMessage = \textcolor{stringliteral}{"Expected spy "} + this.actual.identity + \textcolor{stringliteral}{" to have been called with "} + jasmine.pp(
+      expectedArgs) + \textcolor{stringliteral}{" but actual calls were "} + jasmine.pp(this.actual.argsForCall).replace(/^\(\backslash\)[ | \(\backslash\)]$/g, \textcolor{stringliteral}{''})
+    \}
+    \textcolor{keywordflow}{return} [positiveMessage, invertedMessage];
+  \};
+
+  \textcolor{keywordflow}{return} this.env.contains\_(this.actual.argsForCall, expectedArgs);
+\};
+
+jasmine.Matchers.prototype.wasCalledWith = jasmine.Matchers.prototype.toHaveBeenCalledWith;
+
+jasmine.Matchers.prototype.wasNotCalledWith = \textcolor{keyword}{function}() \{
+  var expectedArgs = jasmine.util.argsToArray(arguments);
+  \textcolor{keywordflow}{if} (!jasmine.isSpy(\textcolor{keyword}{this}.actual)) \{
+    \textcolor{keywordflow}{throw} \textcolor{keyword}{new} Error(\textcolor{stringliteral}{'Expected a spy, but got '} + jasmine.pp(\textcolor{keyword}{this}.actual) + \textcolor{charliteral}{'.'});
+  \}
+
+  this.message = \textcolor{keyword}{function}() \{
+    \textcolor{keywordflow}{return} [
+      \textcolor{stringliteral}{"Expected spy not to have been called with "} + jasmine.pp(expectedArgs) + \textcolor{stringliteral}{" but it was"},
+      \textcolor{stringliteral}{"Expected spy to have been called with "} + jasmine.pp(expectedArgs) + \textcolor{stringliteral}{" but it was"}
+    ];
+  \};
+
+  \textcolor{keywordflow}{return} !this.env.contains\_(this.actual.argsForCall, expectedArgs);
+\};
+
+jasmine.Matchers.prototype.toContain = \textcolor{keyword}{function}(expected) \{
+  \textcolor{keywordflow}{return} this.env.contains\_(this.actual, expected);
+\};
+
+jasmine.Matchers.prototype.toNotContain = \textcolor{keyword}{function}(expected) \{
+  \textcolor{keywordflow}{return} !this.env.contains\_(this.actual, expected);
+\};
+
+jasmine.Matchers.prototype.toBeLessThan = \textcolor{keyword}{function}(expected) \{
+  \textcolor{keywordflow}{return} this.actual < expected;
+\};
+
+jasmine.Matchers.prototype.toBeGreaterThan = \textcolor{keyword}{function}(expected) \{
+  \textcolor{keywordflow}{return} this.actual > expected;
+\};
+
+jasmine.Matchers.prototype.toBeCloseTo = \textcolor{keyword}{function}(expected, precision) \{
+  \textcolor{keywordflow}{if} (!(precision === 0)) \{
+    precision = precision || 2;
+  \}
+  \textcolor{keywordflow}{return} Math.abs(expected - this.actual) < (Math.pow(10, -precision) / 2);
+\};
+
+jasmine.Matchers.prototype.toThrow = \textcolor{keyword}{function}(expected) \{
+  var result = \textcolor{keyword}{false};
+  var exception;
+  \textcolor{keywordflow}{if} (typeof this.actual != \textcolor{stringliteral}{'function'}) \{
+    \textcolor{keywordflow}{throw} \textcolor{keyword}{new} Error(\textcolor{stringliteral}{'Actual is not a function'});
+  \}
+  \textcolor{keywordflow}{try} \{
+    this.actual();
+  \} \textcolor{keywordflow}{catch} (e) \{
+    exception = e;
+  \}
+  \textcolor{keywordflow}{if} (exception) \{
+    result = (expected === jasmine.undefined || this.env.equals\_(exception.message || exception, expected.
+      message || expected));
+  \}
+
+  var not = this.isNot ? \textcolor{stringliteral}{"not "} : \textcolor{stringliteral}{""};
+
+  this.message = \textcolor{keyword}{function}() \{
+    \textcolor{keywordflow}{if} (exception && (expected === jasmine.undefined || !\textcolor{keyword}{this}.env.equals\_(exception.message || exception, 
+      expected.message || expected))) \{
+      \textcolor{keywordflow}{return} [\textcolor{stringliteral}{"Expected function "} + not + \textcolor{stringliteral}{"to throw"}, expected ? expected.message || expected : \textcolor{stringliteral}{"an
+       exception"}, \textcolor{stringliteral}{", but it threw"}, exception.message || exception].join(\textcolor{charliteral}{' '});
+    \} \textcolor{keywordflow}{else} \{
+      \textcolor{keywordflow}{return} \textcolor{stringliteral}{"Expected function to throw an exception."};
+    \}
+  \};
+
+  \textcolor{keywordflow}{return} result;
+\};
+
+jasmine.Matchers.Any = \textcolor{keyword}{function}(expectedClass) \{
+  this.expectedClass = expectedClass;
+\};
+
+jasmine.Matchers.Any.prototype.jasmineMatches = \textcolor{keyword}{function}(other) \{
+  \textcolor{keywordflow}{if} (this.expectedClass == String) \{
+    \textcolor{keywordflow}{return} typeof other == \textcolor{stringliteral}{'string'} || other instanceof String;
+  \}
+
+  \textcolor{keywordflow}{if} (this.expectedClass == Number) \{
+    \textcolor{keywordflow}{return} typeof other == \textcolor{stringliteral}{'number'} || other instanceof Number;
+  \}
+
+  \textcolor{keywordflow}{if} (this.expectedClass == Function) \{
+    \textcolor{keywordflow}{return} typeof other == \textcolor{stringliteral}{'function'} || other instanceof Function;
+  \}
+
+  \textcolor{keywordflow}{if} (this.expectedClass == Object) \{
+    \textcolor{keywordflow}{return} typeof other == \textcolor{stringliteral}{'object'};
+  \}
+
+  \textcolor{keywordflow}{return} other instanceof this.expectedClass;
+\};
+
+jasmine.Matchers.Any.prototype.jasmineToString = \textcolor{keyword}{function}() \{
+  \textcolor{keywordflow}{return} \textcolor{stringliteral}{'<jasmine.any('} + this.expectedClass + \textcolor{stringliteral}{')>'};
+\};
+
+jasmine.Matchers.ObjectContaining = \textcolor{keyword}{function} (sample) \{
+  this.sample = sample;
+\};
+
+jasmine.Matchers.ObjectContaining.prototype.jasmineMatches = \textcolor{keyword}{function}(other, mismatchKeys, mismatchValues) 
+      \{
+  mismatchKeys = mismatchKeys || [];
+  mismatchValues = mismatchValues || [];
+
+  var env = jasmine.getEnv();
+
+  var hasKey = \textcolor{keyword}{function}(obj, keyName) \{
+    \textcolor{keywordflow}{return} obj != null && obj[keyName] !== jasmine.undefined;
+  \};
+
+  \textcolor{keywordflow}{for} (var property in this.sample) \{
+    \textcolor{keywordflow}{if} (!hasKey(other, property) && hasKey(this.sample, property)) \{
+      mismatchKeys.push(\textcolor{stringliteral}{"expected has key '"} + property + \textcolor{stringliteral}{"', but missing from actual."});
+    \}
+    \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (!env.equals\_(\textcolor{keyword}{this}.sample[property], other[property], mismatchKeys, mismatchValues)) \{
+      mismatchValues.push(\textcolor{stringliteral}{"'"} + property + \textcolor{stringliteral}{"' was '"} + (other[property] ? jasmine.util.htmlEscape(other[
+      property].toString()) : other[property]) + \textcolor{stringliteral}{"' in expected, but was '"} + (this.sample[property] ? jasmine.util.
+      htmlEscape(this.sample[property].toString()) : this.sample[property]) + \textcolor{stringliteral}{"' in actual."});
+    \}
+  \}
+
+  \textcolor{keywordflow}{return} (mismatchKeys.length === 0 && mismatchValues.length === 0);
+\};
+
+jasmine.Matchers.ObjectContaining.prototype.jasmineToString = \textcolor{keyword}{function} () \{
+  \textcolor{keywordflow}{return} \textcolor{stringliteral}{"<jasmine.objectContaining("} + jasmine.pp(this.sample) + \textcolor{stringliteral}{")>"};
+\};
+\textcolor{comment}{// Mock setTimeout, clearTimeout}
+\textcolor{comment}{// Contributed by Pivotal Computer Systems, www.pivotalsf.com}
+
+jasmine.FakeTimer = \textcolor{keyword}{function}() \{
+  this.reset();
+
+  var \textcolor{keyword}{self} = \textcolor{keyword}{this};
+  \textcolor{keyword}{self}.setTimeout = \textcolor{keyword}{function}(funcToCall, millis) \{
+    \textcolor{keyword}{self}.timeoutsMade++;
+    \textcolor{keyword}{self}.scheduleFunction(\textcolor{keyword}{self}.timeoutsMade, funcToCall, millis, \textcolor{keyword}{false});
+    \textcolor{keywordflow}{return} \textcolor{keyword}{self}.timeoutsMade;
+  \};
+
+  \textcolor{keyword}{self}.setInterval = \textcolor{keyword}{function}(funcToCall, millis) \{
+    \textcolor{keyword}{self}.timeoutsMade++;
+    \textcolor{keyword}{self}.scheduleFunction(\textcolor{keyword}{self}.timeoutsMade, funcToCall, millis, \textcolor{keyword}{true});
+    \textcolor{keywordflow}{return} \textcolor{keyword}{self}.timeoutsMade;
+  \};
+
+  \textcolor{keyword}{self}.clearTimeout = \textcolor{keyword}{function}(timeoutKey) \{
+    \textcolor{keyword}{self}.scheduledFunctions[timeoutKey] = jasmine.undefined;
+  \};
+
+  \textcolor{keyword}{self}.clearInterval = \textcolor{keyword}{function}(timeoutKey) \{
+    \textcolor{keyword}{self}.scheduledFunctions[timeoutKey] = jasmine.undefined;
+  \};
+
+\};
+
+jasmine.FakeTimer.prototype.reset = \textcolor{keyword}{function}() \{
+  this.timeoutsMade = 0;
+  this.scheduledFunctions = \{\};
+  this.nowMillis = 0;
+\};
+
+jasmine.FakeTimer.prototype.tick = \textcolor{keyword}{function}(millis) \{
+  var oldMillis = this.nowMillis;
+  var newMillis = oldMillis + millis;
+  this.runFunctionsWithinRange(oldMillis, newMillis);
+  this.nowMillis = newMillis;
+\};
+
+jasmine.FakeTimer.prototype.runFunctionsWithinRange = \textcolor{keyword}{function}(oldMillis, nowMillis) \{
+  var scheduledFunc;
+  var funcsToRun = [];
+  \textcolor{keywordflow}{for} (var timeoutKey in this.scheduledFunctions) \{
+    scheduledFunc = this.scheduledFunctions[timeoutKey];
+    \textcolor{keywordflow}{if} (scheduledFunc != jasmine.undefined &&
+        scheduledFunc.runAtMillis >= oldMillis &&
+        scheduledFunc.runAtMillis <= nowMillis) \{
+      funcsToRun.push(scheduledFunc);
+      this.scheduledFunctions[timeoutKey] = jasmine.undefined;
+    \}
+  \}
+
+  \textcolor{keywordflow}{if} (funcsToRun.length > 0) \{
+    funcsToRun.sort(\textcolor{keyword}{function}(a, b) \{
+      \textcolor{keywordflow}{return} a.runAtMillis - b.runAtMillis;
+    \});
+    \textcolor{keywordflow}{for} (var i = 0; i < funcsToRun.length; ++i) \{
+      \textcolor{keywordflow}{try} \{
+        var funcToRun = funcsToRun[i];
+        this.nowMillis = funcToRun.runAtMillis;
+        funcToRun.funcToCall();
+        \textcolor{keywordflow}{if} (funcToRun.recurring) \{
+          this.scheduleFunction(funcToRun.timeoutKey,
+              funcToRun.funcToCall,
+              funcToRun.millis,
+              \textcolor{keyword}{true});
+        \}
+      \} \textcolor{keywordflow}{catch}(e) \{
+      \}
+    \}
+    this.runFunctionsWithinRange(oldMillis, nowMillis);
+  \}
+\};
+
+jasmine.FakeTimer.prototype.scheduleFunction = \textcolor{keyword}{function}(timeoutKey, funcToCall, millis, recurring) \{
+  this.scheduledFunctions[timeoutKey] = \{
+    runAtMillis: this.nowMillis + millis,
+    funcToCall: funcToCall,
+    recurring: recurring,
+    timeoutKey: timeoutKey,
+    millis: millis
+  \};
+\};
+
+jasmine.Clock = \{
+  defaultFakeTimer: \textcolor{keyword}{new} jasmine.FakeTimer(),
+
+  reset: \textcolor{keyword}{function}() \{
+    jasmine.Clock.assertInstalled();
+    jasmine.Clock.defaultFakeTimer.reset();
+  \},
+
+  tick: \textcolor{keyword}{function}(millis) \{
+    jasmine.Clock.assertInstalled();
+    jasmine.Clock.defaultFakeTimer.tick(millis);
+  \},
+
+  runFunctionsWithinRange: \textcolor{keyword}{function}(oldMillis, nowMillis) \{
+    jasmine.Clock.defaultFakeTimer.runFunctionsWithinRange(oldMillis, nowMillis);
+  \},
+
+  scheduleFunction: \textcolor{keyword}{function}(timeoutKey, funcToCall, millis, recurring) \{
+    jasmine.Clock.defaultFakeTimer.scheduleFunction(timeoutKey, funcToCall, millis, recurring);
+  \},
+
+  useMock: \textcolor{keyword}{function}() \{
+    \textcolor{keywordflow}{if} (!jasmine.Clock.isInstalled()) \{
+      var spec = jasmine.getEnv().currentSpec;
+      spec.after(jasmine.Clock.uninstallMock);
+
+      jasmine.Clock.installMock();
+    \}
+  \},
+
+  installMock: \textcolor{keyword}{function}() \{
+    jasmine.Clock.installed = jasmine.Clock.defaultFakeTimer;
+  \},
+
+  uninstallMock: \textcolor{keyword}{function}() \{
+    jasmine.Clock.assertInstalled();
+    jasmine.Clock.installed = jasmine.Clock.real;
+  \},
+
+  real: \{
+    setTimeout: jasmine.getGlobal().setTimeout,
+    clearTimeout: jasmine.getGlobal().clearTimeout,
+    setInterval: jasmine.getGlobal().setInterval,
+    clearInterval: jasmine.getGlobal().clearInterval
+  \},
+
+  assertInstalled: \textcolor{keyword}{function}() \{
+    \textcolor{keywordflow}{if} (!jasmine.Clock.isInstalled()) \{
+      \textcolor{keywordflow}{throw} \textcolor{keyword}{new} Error(\textcolor{stringliteral}{"Mock clock is not installed, use jasmine.Clock.useMock()"});
+    \}
+  \},
+
+  isInstalled: \textcolor{keyword}{function}() \{
+    \textcolor{keywordflow}{return} jasmine.Clock.installed == jasmine.Clock.defaultFakeTimer;
+  \},
+
+  installed: null
+\};
+jasmine.Clock.installed = jasmine.Clock.real;
+
+\textcolor{comment}{//else for IE support}
+jasmine.getGlobal().setTimeout = \textcolor{keyword}{function}(funcToCall, millis) \{
+  \textcolor{keywordflow}{if} (jasmine.Clock.installed.setTimeout.apply) \{
+    \textcolor{keywordflow}{return} jasmine.Clock.installed.setTimeout.apply(\textcolor{keyword}{this}, arguments);
+  \} \textcolor{keywordflow}{else} \{
+    \textcolor{keywordflow}{return} jasmine.Clock.installed.setTimeout(funcToCall, millis);
+  \}
+\};
+
+jasmine.getGlobal().setInterval = \textcolor{keyword}{function}(funcToCall, millis) \{
+  \textcolor{keywordflow}{if} (jasmine.Clock.installed.setInterval.apply) \{
+    \textcolor{keywordflow}{return} jasmine.Clock.installed.setInterval.apply(\textcolor{keyword}{this}, arguments);
+  \} \textcolor{keywordflow}{else} \{
+    \textcolor{keywordflow}{return} jasmine.Clock.installed.setInterval(funcToCall, millis);
+  \}
+\};
+
+jasmine.getGlobal().clearTimeout = \textcolor{keyword}{function}(timeoutKey) \{
+  \textcolor{keywordflow}{if} (jasmine.Clock.installed.clearTimeout.apply) \{
+    \textcolor{keywordflow}{return} jasmine.Clock.installed.clearTimeout.apply(\textcolor{keyword}{this}, arguments);
+  \} \textcolor{keywordflow}{else} \{
+    \textcolor{keywordflow}{return} jasmine.Clock.installed.clearTimeout(timeoutKey);
+  \}
+\};
+
+jasmine.getGlobal().clearInterval = \textcolor{keyword}{function}(timeoutKey) \{
+  \textcolor{keywordflow}{if} (jasmine.Clock.installed.clearTimeout.apply) \{
+    \textcolor{keywordflow}{return} jasmine.Clock.installed.clearInterval.apply(\textcolor{keyword}{this}, arguments);
+  \} \textcolor{keywordflow}{else} \{
+    \textcolor{keywordflow}{return} jasmine.Clock.installed.clearInterval(timeoutKey);
+  \}
+\};
+
+jasmine.MultiReporter = \textcolor{keyword}{function}() \{
+  this.subReporters\_ = [];
+\};
+jasmine.util.inherit(jasmine.MultiReporter, jasmine.Reporter);
+
+jasmine.MultiReporter.prototype.addReporter = \textcolor{keyword}{function}(\hyperlink{classreporter}{reporter}) \{
+  this.subReporters\_.push(\hyperlink{classreporter}{reporter});
+\};
+
+(\textcolor{keyword}{function}() \{
+  var functionNames = [
+    \textcolor{stringliteral}{"reportRunnerStarting"},
+    \textcolor{stringliteral}{"reportRunnerResults"},
+    \textcolor{stringliteral}{"reportSuiteResults"},
+    \textcolor{stringliteral}{"reportSpecStarting"},
+    \textcolor{stringliteral}{"reportSpecResults"},
+    \textcolor{stringliteral}{"log"}
+  ];
+  \textcolor{keywordflow}{for} (var i = 0; i < functionNames.length; i++) \{
+    var functionName = functionNames[i];
+    jasmine.MultiReporter.prototype[functionName] = (\textcolor{keyword}{function}(functionName) \{
+      \textcolor{keywordflow}{return} \textcolor{keyword}{function}() \{
+        \textcolor{keywordflow}{for} (var j = 0; j < this.subReporters\_.length; j++) \{
+          var subReporter = this.subReporters\_[j];
+          \textcolor{keywordflow}{if} (subReporter[functionName]) \{
+            subReporter[functionName].apply(subReporter, arguments);
+          \}
+        \}
+      \};
+    \})(functionName);
+  \}
+\})();
+jasmine.NestedResults = \textcolor{keyword}{function}() \{
+  this.totalCount = 0;
+  this.passedCount = 0;
+  this.failedCount = 0;
+  this.skipped = \textcolor{keyword}{false};
+  this.items\_ = [];
+\};
+
+jasmine.NestedResults.prototype.rollupCounts = \textcolor{keyword}{function}(result) \{
+  this.totalCount += result.totalCount;
+  this.passedCount += result.passedCount;
+  this.failedCount += result.failedCount;
+\};
+
+jasmine.NestedResults.prototype.log = \textcolor{keyword}{function}(values) \{
+  this.items\_.push(\textcolor{keyword}{new} jasmine.MessageResult(values));
+\};
+
+jasmine.NestedResults.prototype.getItems = \textcolor{keyword}{function}() \{
+  \textcolor{keywordflow}{return} this.items\_;
+\};
+
+jasmine.NestedResults.prototype.addResult = \textcolor{keyword}{function}(result) \{
+  \textcolor{keywordflow}{if} (result.type != \textcolor{stringliteral}{'log'}) \{
+    \textcolor{keywordflow}{if} (result.items\_) \{
+      this.rollupCounts(result);
+    \} \textcolor{keywordflow}{else} \{
+      this.totalCount++;
+      \textcolor{keywordflow}{if} (result.passed()) \{
+        this.passedCount++;
+      \} \textcolor{keywordflow}{else} \{
+        this.failedCount++;
+      \}
+    \}
+  \}
+  this.items\_.push(result);
+\};
+
+jasmine.NestedResults.prototype.passed = \textcolor{keyword}{function}() \{
+  \textcolor{keywordflow}{return} this.passedCount === this.totalCount;
+\};
+jasmine.PrettyPrinter = \textcolor{keyword}{function}() \{
+  this.ppNestLevel\_ = 0;
+\};
+
+jasmine.PrettyPrinter.prototype.format = \textcolor{keyword}{function}(value) \{
+  this.ppNestLevel\_++;
+  \textcolor{keywordflow}{try} \{
+    \textcolor{keywordflow}{if} (value === jasmine.undefined) \{
+      this.emitScalar(\textcolor{stringliteral}{'undefined'});
+    \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (value === null) \{
+      this.emitScalar(\textcolor{stringliteral}{'null'});
+    \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (value === jasmine.getGlobal()) \{
+      this.emitScalar(\textcolor{stringliteral}{'<global>'});
+    \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (value.jasmineToString) \{
+      this.emitScalar(value.jasmineToString());
+    \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (typeof value === \textcolor{stringliteral}{'string'}) \{
+      this.emitString(value);
+    \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (jasmine.isSpy(value)) \{
+      this.emitScalar(\textcolor{stringliteral}{"spy on "} + value.identity);
+    \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (value instanceof RegExp) \{
+      this.emitScalar(value.toString());
+    \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (typeof value === \textcolor{stringliteral}{'function'}) \{
+      this.emitScalar(\textcolor{stringliteral}{'Function'});
+    \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (typeof value.nodeType === \textcolor{stringliteral}{'number'}) \{
+      this.emitScalar(\textcolor{stringliteral}{'HTMLNode'});
+    \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (value instanceof Date) \{
+      this.emitScalar(\textcolor{stringliteral}{'Date('} + value + \textcolor{charliteral}{')'});
+    \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (value.\_\_Jasmine\_been\_here\_before\_\_) \{
+      this.emitScalar(\textcolor{stringliteral}{'<circular reference: '} + (jasmine.isArray\_(value) ? \textcolor{stringliteral}{'Array'} : \textcolor{stringliteral}{'Object'}) + \textcolor{charliteral}{'>'});
+    \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (jasmine.isArray\_(value) || typeof value == \textcolor{stringliteral}{'object'}) \{
+      value.\_\_Jasmine\_been\_here\_before\_\_ = \textcolor{keyword}{true};
+      \textcolor{keywordflow}{if} (jasmine.isArray\_(value)) \{
+        this.emitArray(value);
+      \} \textcolor{keywordflow}{else} \{
+        this.emitObject(value);
+      \}
+      \textcolor{keyword}{delete} value.\_\_Jasmine\_been\_here\_before\_\_;
+    \} \textcolor{keywordflow}{else} \{
+      this.emitScalar(value.toString());
+    \}
+  \} \textcolor{keywordflow}{finally} \{
+    this.ppNestLevel\_--;
+  \}
+\};
+
+jasmine.PrettyPrinter.prototype.iterateObject = \textcolor{keyword}{function}(obj, fn) \{
+  \textcolor{keywordflow}{for} (var property in obj) \{
+    \textcolor{keywordflow}{if} (!obj.hasOwnProperty(property)) \textcolor{keywordflow}{continue};
+    \textcolor{keywordflow}{if} (property == \textcolor{stringliteral}{'\_\_Jasmine\_been\_here\_before\_\_'}) \textcolor{keywordflow}{continue};
+    fn(property, obj.\_\_lookupGetter\_\_ ? (obj.\_\_lookupGetter\_\_(property) !== jasmine.undefined && 
+                                         obj.\_\_lookupGetter\_\_(property) !== null) : \textcolor{keyword}{false});
+  \}
+\};
+
+jasmine.PrettyPrinter.prototype.emitArray = jasmine.unimplementedMethod\_;
+jasmine.PrettyPrinter.prototype.emitObject = jasmine.unimplementedMethod\_;
+jasmine.PrettyPrinter.prototype.emitScalar = jasmine.unimplementedMethod\_;
+jasmine.PrettyPrinter.prototype.emitString = jasmine.unimplementedMethod\_;
+
+jasmine.StringPrettyPrinter = \textcolor{keyword}{function}() \{
+  jasmine.PrettyPrinter.call(\textcolor{keyword}{this});
+
+  this.\textcolor{keywordtype}{string} = \textcolor{stringliteral}{''};
+\};
+jasmine.util.inherit(jasmine.StringPrettyPrinter, jasmine.PrettyPrinter);
+
+jasmine.StringPrettyPrinter.prototype.emitScalar = \textcolor{keyword}{function}(value) \{
+  this.append(value);
+\};
+
+jasmine.StringPrettyPrinter.prototype.emitString = \textcolor{keyword}{function}(value) \{
+  this.append(\textcolor{stringliteral}{"'"} + value + \textcolor{stringliteral}{"'"});
+\};
+
+jasmine.StringPrettyPrinter.prototype.emitArray = \textcolor{keyword}{function}(array) \{
+  \textcolor{keywordflow}{if} (this.ppNestLevel\_ > jasmine.MAX\_PRETTY\_PRINT\_DEPTH) \{
+    this.append(\textcolor{stringliteral}{"Array"});
+    \textcolor{keywordflow}{return};
+  \}
+
+  this.append(\textcolor{stringliteral}{'[ '});
+  \textcolor{keywordflow}{for} (var i = 0; i < array.length; i++) \{
+    \textcolor{keywordflow}{if} (i > 0) \{
+      this.append(\textcolor{stringliteral}{', '});
+    \}
+    this.format(array[i]);
+  \}
+  this.append(\textcolor{stringliteral}{' ]'});
+\};
+
+jasmine.StringPrettyPrinter.prototype.emitObject = \textcolor{keyword}{function}(obj) \{
+  \textcolor{keywordflow}{if} (this.ppNestLevel\_ > jasmine.MAX\_PRETTY\_PRINT\_DEPTH) \{
+    this.append(\textcolor{stringliteral}{"Object"});
+    \textcolor{keywordflow}{return};
+  \}
+
+  var \textcolor{keyword}{self} = \textcolor{keyword}{this};
+  this.append(\textcolor{stringliteral}{'\{ '});
+  var first = \textcolor{keyword}{true};
+
+  this.iterateObject(obj, \textcolor{keyword}{function}(property, isGetter) \{
+    \textcolor{keywordflow}{if} (first) \{
+      first = \textcolor{keyword}{false};
+    \} \textcolor{keywordflow}{else} \{
+      \textcolor{keyword}{self}.append(\textcolor{stringliteral}{', '});
+    \}
+
+    \textcolor{keyword}{self}.append(property);
+    \textcolor{keyword}{self}.append(\textcolor{stringliteral}{' : '});
+    \textcolor{keywordflow}{if} (isGetter) \{
+      \textcolor{keyword}{self}.append(\textcolor{stringliteral}{'<getter>'});
+    \} \textcolor{keywordflow}{else} \{
+      \textcolor{keyword}{self}.format(obj[property]);
+    \}
+  \});
+
+  this.append(\textcolor{stringliteral}{' \}'});
+\};
+
+jasmine.StringPrettyPrinter.prototype.append = \textcolor{keyword}{function}(value) \{
+  this.\textcolor{keywordtype}{string} += value;
+\};
+jasmine.Queue = \textcolor{keyword}{function}(env) \{
+  this.env = env;
+
+  \textcolor{comment}{// parallel to blocks. each true value in this array means the block will}
+  \textcolor{comment}{// get executed even if we abort}
+  this.ensured = [];
+  this.blocks = [];
+  this.running = \textcolor{keyword}{false};
+  this.index = 0;
+  this.offset = 0;
+  this.abort = \textcolor{keyword}{false};
+\};
+
+jasmine.Queue.prototype.addBefore = \textcolor{keyword}{function}(block, ensure) \{
+  \textcolor{keywordflow}{if} (ensure === jasmine.undefined) \{
+    ensure = \textcolor{keyword}{false};
+  \}
+
+  this.blocks.unshift(block);
+  this.ensured.unshift(ensure);
+\};
+
+jasmine.Queue.prototype.add = \textcolor{keyword}{function}(block, ensure) \{
+  \textcolor{keywordflow}{if} (ensure === jasmine.undefined) \{
+    ensure = \textcolor{keyword}{false};
+  \}
+
+  this.blocks.push(block);
+  this.ensured.push(ensure);
+\};
+
+jasmine.Queue.prototype.insertNext = \textcolor{keyword}{function}(block, ensure) \{
+  \textcolor{keywordflow}{if} (ensure === jasmine.undefined) \{
+    ensure = \textcolor{keyword}{false};
+  \}
+
+  this.ensured.splice((this.index + this.offset + 1), 0, ensure);
+  this.blocks.splice((this.index + this.offset + 1), 0, block);
+  this.offset++;
+\};
+
+jasmine.Queue.prototype.start = \textcolor{keyword}{function}(onComplete) \{
+  this.running = \textcolor{keyword}{true};
+  this.onComplete = onComplete;
+  this.next\_();
+\};
+
+jasmine.Queue.prototype.isRunning = \textcolor{keyword}{function}() \{
+  \textcolor{keywordflow}{return} this.running;
+\};
+
+jasmine.Queue.LOOP\_DONT\_RECURSE = \textcolor{keyword}{true};
+
+jasmine.Queue.prototype.next\_ = \textcolor{keyword}{function}() \{
+  var \textcolor{keyword}{self} = \textcolor{keyword}{this};
+  var goAgain = \textcolor{keyword}{true};
+
+  \textcolor{keywordflow}{while} (goAgain) \{
+    goAgain = \textcolor{keyword}{false};
+
+    \textcolor{keywordflow}{if} (\textcolor{keyword}{self}.index < \textcolor{keyword}{self}.blocks.length && !(\textcolor{keyword}{this}.abort && !\textcolor{keyword}{this}.ensured[\textcolor{keyword}{self}.index])) \{
+      var calledSynchronously = \textcolor{keyword}{true};
+      var completedSynchronously = \textcolor{keyword}{false};
+
+      var onComplete = \textcolor{keyword}{function} () \{
+        \textcolor{keywordflow}{if} (jasmine.Queue.LOOP\_DONT\_RECURSE && calledSynchronously) \{
+          completedSynchronously = \textcolor{keyword}{true};
+          \textcolor{keywordflow}{return};
+        \}
+
+        \textcolor{keywordflow}{if} (\textcolor{keyword}{self}.blocks[\textcolor{keyword}{self}.index].abort) \{
+          \textcolor{keyword}{self}.abort = \textcolor{keyword}{true};
+        \}
+
+        \textcolor{keyword}{self}.offset = 0;
+        \textcolor{keyword}{self}.index++;
+
+        var now = \textcolor{keyword}{new} Date().getTime();
+        \textcolor{keywordflow}{if} (\textcolor{keyword}{self}.env.updateInterval && now - \textcolor{keyword}{self}.env.lastUpdate > \textcolor{keyword}{self}.env.updateInterval) \{
+          \textcolor{keyword}{self}.env.lastUpdate = now;
+          \textcolor{keyword}{self}.env.setTimeout(\textcolor{keyword}{function}() \{
+            \textcolor{keyword}{self}.next\_();
+          \}, 0);
+        \} \textcolor{keywordflow}{else} \{
+          \textcolor{keywordflow}{if} (jasmine.Queue.LOOP\_DONT\_RECURSE && completedSynchronously) \{
+            goAgain = \textcolor{keyword}{true};
+          \} \textcolor{keywordflow}{else} \{
+            \textcolor{keyword}{self}.next\_();
+          \}
+        \}
+      \};
+      \textcolor{keyword}{self}.blocks[\textcolor{keyword}{self}.index].execute(onComplete);
+
+      calledSynchronously = \textcolor{keyword}{false};
+      \textcolor{keywordflow}{if} (completedSynchronously) \{
+        onComplete();
+      \}
+
+    \} \textcolor{keywordflow}{else} \{
+      \textcolor{keyword}{self}.running = \textcolor{keyword}{false};
+      \textcolor{keywordflow}{if} (\textcolor{keyword}{self}.onComplete) \{
+        \textcolor{keyword}{self}.onComplete();
+      \}
+    \}
+  \}
+\};
+
+jasmine.Queue.prototype.results = \textcolor{keyword}{function}() \{
+  var results = \textcolor{keyword}{new} jasmine.NestedResults();
+  \textcolor{keywordflow}{for} (var i = 0; i < this.blocks.length; i++) \{
+    \textcolor{keywordflow}{if} (this.blocks[i].results) \{
+      results.addResult(this.blocks[i].results());
+    \}
+  \}
+  \textcolor{keywordflow}{return} results;
+\};
+
+
+jasmine.Runner = \textcolor{keyword}{function}(env) \{
+  var \textcolor{keyword}{self} = \textcolor{keyword}{this};
+  \textcolor{keyword}{self}.env = env;
+  \textcolor{keyword}{self}.queue = \textcolor{keyword}{new} jasmine.Queue(env);
+  \textcolor{keyword}{self}.before\_ = [];
+  \textcolor{keyword}{self}.after\_ = [];
+  \textcolor{keyword}{self}.suites\_ = [];
+\};
+
+jasmine.Runner.prototype.execute = \textcolor{keyword}{function}() \{
+  var \textcolor{keyword}{self} = \textcolor{keyword}{this};
+  \textcolor{keywordflow}{if} (\textcolor{keyword}{self}.env.reporter.reportRunnerStarting) \{
+    \textcolor{keyword}{self}.env.reporter.reportRunnerStarting(\textcolor{keyword}{this});
+  \}
+  \textcolor{keyword}{self}.queue.start(\textcolor{keyword}{function} () \{
+    \textcolor{keyword}{self}.finishCallback();
+  \});
+\};
+
+jasmine.Runner.prototype.beforeEach = \textcolor{keyword}{function}(beforeEachFunction) \{
+  beforeEachFunction.typeName = \textcolor{stringliteral}{'beforeEach'};
+  this.before\_.splice(0,0,beforeEachFunction);
+\};
+
+jasmine.Runner.prototype.afterEach = \textcolor{keyword}{function}(afterEachFunction) \{
+  afterEachFunction.typeName = \textcolor{stringliteral}{'afterEach'};
+  this.after\_.splice(0,0,afterEachFunction);
+\};
+
+
+jasmine.Runner.prototype.finishCallback = \textcolor{keyword}{function}() \{
+  this.env.reporter.reportRunnerResults(\textcolor{keyword}{this});
+\};
+
+jasmine.Runner.prototype.addSuite = \textcolor{keyword}{function}(suite) \{
+  this.suites\_.push(suite);
+\};
+
+jasmine.Runner.prototype.add = \textcolor{keyword}{function}(block) \{
+  \textcolor{keywordflow}{if} (block instanceof jasmine.Suite) \{
+    this.addSuite(block);
+  \}
+  this.queue.add(block);
+\};
+
+jasmine.Runner.prototype.specs = \textcolor{keyword}{function} () \{
+  var suites = this.suites();
+  var specs = [];
+  \textcolor{keywordflow}{for} (var i = 0; i < suites.length; i++) \{
+    specs = specs.concat(suites[i].specs());
+  \}
+  \textcolor{keywordflow}{return} specs;
+\};
+
+jasmine.Runner.prototype.suites = \textcolor{keyword}{function}() \{
+  \textcolor{keywordflow}{return} this.suites\_;
+\};
+
+jasmine.Runner.prototype.topLevelSuites = \textcolor{keyword}{function}() \{
+  var topLevelSuites = [];
+  \textcolor{keywordflow}{for} (var i = 0; i < this.suites\_.length; i++) \{
+    \textcolor{keywordflow}{if} (!this.suites\_[i].parentSuite) \{
+      topLevelSuites.push(this.suites\_[i]);
+    \}
+  \}
+  \textcolor{keywordflow}{return} topLevelSuites;
+\};
+
+jasmine.Runner.prototype.results = \textcolor{keyword}{function}() \{
+  \textcolor{keywordflow}{return} this.queue.results();
+\};
+jasmine.Spec = \textcolor{keyword}{function}(env, suite, description) \{
+  \textcolor{keywordflow}{if} (!env) \{
+    \textcolor{keywordflow}{throw} \textcolor{keyword}{new} Error(\textcolor{stringliteral}{'jasmine.Env() required'});
+  \}
+  \textcolor{keywordflow}{if} (!suite) \{
+    \textcolor{keywordflow}{throw} \textcolor{keyword}{new} Error(\textcolor{stringliteral}{'jasmine.Suite() required'});
+  \}
+  var spec = \textcolor{keyword}{this};
+  spec.id = env.nextSpecId ? env.nextSpecId() : null;
+  spec.env = env;
+  spec.suite = suite;
+  spec.description = description;
+  spec.queue = \textcolor{keyword}{new} jasmine.Queue(env);
+
+  spec.afterCallbacks = [];
+  spec.spies\_ = [];
+
+  spec.results\_ = \textcolor{keyword}{new} jasmine.NestedResults();
+  spec.results\_.description = description;
+  spec.matchersClass = null;
+\};
+
+jasmine.Spec.prototype.getFullName = \textcolor{keyword}{function}() \{
+  \textcolor{keywordflow}{return} this.suite.getFullName() + \textcolor{charliteral}{' '} + this.description + \textcolor{charliteral}{'.'};
+\};
+
+
+jasmine.Spec.prototype.results = \textcolor{keyword}{function}() \{
+  \textcolor{keywordflow}{return} this.results\_;
+\};
+
+jasmine.Spec.prototype.log = \textcolor{keyword}{function}() \{
+  \textcolor{keywordflow}{return} this.results\_.log(arguments);
+\};
+
+jasmine.Spec.prototype.runs = \textcolor{keyword}{function} (func) \{
+  var block = \textcolor{keyword}{new} jasmine.Block(this.env, func, \textcolor{keyword}{this});
+  this.addToQueue(block);
+  \textcolor{keywordflow}{return} \textcolor{keyword}{this};
+\};
+
+jasmine.Spec.prototype.addToQueue = \textcolor{keyword}{function} (block) \{
+  \textcolor{keywordflow}{if} (this.queue.isRunning()) \{
+    this.queue.insertNext(block);
+  \} \textcolor{keywordflow}{else} \{
+    this.queue.add(block);
+  \}
+\};
+
+jasmine.Spec.prototype.addMatcherResult = \textcolor{keyword}{function}(result) \{
+  this.results\_.addResult(result);
+\};
+
+jasmine.Spec.prototype.expect = \textcolor{keyword}{function}(actual) \{
+  var positive = \textcolor{keyword}{new} (this.getMatchersClass\_())(this.env, actual, \textcolor{keyword}{this});
+  positive.not = \textcolor{keyword}{new} (this.getMatchersClass\_())(this.env, actual, \textcolor{keyword}{this}, \textcolor{keyword}{true});
+  \textcolor{keywordflow}{return} positive;
+\};
+
+jasmine.Spec.prototype.waits = \textcolor{keyword}{function}(timeout) \{
+  var waitsFunc = \textcolor{keyword}{new} jasmine.WaitsBlock(this.env, timeout, \textcolor{keyword}{this});
+  this.addToQueue(waitsFunc);
+  \textcolor{keywordflow}{return} \textcolor{keyword}{this};
+\};
+
+jasmine.Spec.prototype.waitsFor = \textcolor{keyword}{function}(latchFunction, optional\_timeoutMessage, optional\_timeout) \{
+  var latchFunction\_ = null;
+  var optional\_timeoutMessage\_ = null;
+  var optional\_timeout\_ = null;
+
+  \textcolor{keywordflow}{for} (var i = 0; i < arguments.length; i++) \{
+    var arg = arguments[i];
+    \textcolor{keywordflow}{switch} (typeof arg) \{
+      \textcolor{keywordflow}{case} \textcolor{stringliteral}{'function'}:
+        latchFunction\_ = arg;
+        \textcolor{keywordflow}{break};
+      \textcolor{keywordflow}{case} \textcolor{stringliteral}{'string'}:
+        optional\_timeoutMessage\_ = arg;
+        \textcolor{keywordflow}{break};
+      \textcolor{keywordflow}{case} \textcolor{stringliteral}{'number'}:
+        optional\_timeout\_ = arg;
+        \textcolor{keywordflow}{break};
+    \}
+  \}
+
+  var waitsForFunc = \textcolor{keyword}{new} jasmine.WaitsForBlock(this.env, optional\_timeout\_, latchFunction\_, 
+      optional\_timeoutMessage\_, \textcolor{keyword}{this});
+  this.addToQueue(waitsForFunc);
+  \textcolor{keywordflow}{return} \textcolor{keyword}{this};
+\};
+
+jasmine.Spec.prototype.fail = \textcolor{keyword}{function} (e) \{
+  var expectationResult = \textcolor{keyword}{new} jasmine.ExpectationResult(\{
+    passed: \textcolor{keyword}{false},
+    message: e ? jasmine.util.formatException(e) : \textcolor{stringliteral}{'Exception'},
+    trace: \{ stack: e.stack \}
+  \});
+  this.results\_.addResult(expectationResult);
+\};
+
+jasmine.Spec.prototype.getMatchersClass\_ = \textcolor{keyword}{function}() \{
+  \textcolor{keywordflow}{return} this.matchersClass || this.env.matchersClass;
+\};
+
+jasmine.Spec.prototype.addMatchers = \textcolor{keyword}{function}(matchersPrototype) \{
+  var parent = this.getMatchersClass\_();
+  var newMatchersClass = \textcolor{keyword}{function}() \{
+    parent.apply(\textcolor{keyword}{this}, arguments);
+  \};
+  jasmine.util.inherit(newMatchersClass, parent);
+  jasmine.Matchers.wrapInto\_(matchersPrototype, newMatchersClass);
+  this.matchersClass = newMatchersClass;
+\};
+
+jasmine.Spec.prototype.finishCallback = \textcolor{keyword}{function}() \{
+  this.env.reporter.reportSpecResults(\textcolor{keyword}{this});
+\};
+
+jasmine.Spec.prototype.finish = \textcolor{keyword}{function}(onComplete) \{
+  this.removeAllSpies();
+  this.finishCallback();
+  \textcolor{keywordflow}{if} (onComplete) \{
+    onComplete();
+  \}
+\};
+
+jasmine.Spec.prototype.after = \textcolor{keyword}{function}(doAfter) \{
+  \textcolor{keywordflow}{if} (this.queue.isRunning()) \{
+    this.queue.add(\textcolor{keyword}{new} jasmine.Block(\textcolor{keyword}{this}.env, doAfter, \textcolor{keyword}{this}), \textcolor{keyword}{true});
+  \} \textcolor{keywordflow}{else} \{
+    this.afterCallbacks.unshift(doAfter);
+  \}
+\};
+
+jasmine.Spec.prototype.execute = \textcolor{keyword}{function}(onComplete) \{
+  var spec = \textcolor{keyword}{this};
+  \textcolor{keywordflow}{if} (!spec.env.specFilter(spec)) \{
+    spec.results\_.skipped = \textcolor{keyword}{true};
+    spec.finish(onComplete);
+    \textcolor{keywordflow}{return};
+  \}
+
+  this.env.reporter.reportSpecStarting(\textcolor{keyword}{this});
+
+  spec.env.currentSpec = spec;
+
+  spec.addBeforesAndAftersToQueue();
+
+  spec.queue.start(\textcolor{keyword}{function} () \{
+    spec.finish(onComplete);
+  \});
+\};
+
+jasmine.Spec.prototype.addBeforesAndAftersToQueue = \textcolor{keyword}{function}() \{
+  var runner = this.env.currentRunner();
+  var i;
+
+  \textcolor{keywordflow}{for} (var suite = this.suite; suite; suite = suite.parentSuite) \{
+    \textcolor{keywordflow}{for} (i = 0; i < suite.before\_.length; i++) \{
+      this.queue.addBefore(\textcolor{keyword}{new} jasmine.Block(\textcolor{keyword}{this}.env, suite.before\_[i], \textcolor{keyword}{this}));
+    \}
+  \}
+  \textcolor{keywordflow}{for} (i = 0; i < runner.before\_.length; i++) \{
+    this.queue.addBefore(\textcolor{keyword}{new} jasmine.Block(\textcolor{keyword}{this}.env, runner.before\_[i], \textcolor{keyword}{this}));
+  \}
+  \textcolor{keywordflow}{for} (i = 0; i < this.afterCallbacks.length; i++) \{
+    this.queue.add(\textcolor{keyword}{new} jasmine.Block(\textcolor{keyword}{this}.env, \textcolor{keyword}{this}.afterCallbacks[i], \textcolor{keyword}{this}), \textcolor{keyword}{true});
+  \}
+  \textcolor{keywordflow}{for} (suite = this.suite; suite; suite = suite.parentSuite) \{
+    \textcolor{keywordflow}{for} (i = 0; i < suite.after\_.length; i++) \{
+      this.queue.add(\textcolor{keyword}{new} jasmine.Block(\textcolor{keyword}{this}.env, suite.after\_[i], \textcolor{keyword}{this}), \textcolor{keyword}{true});
+    \}
+  \}
+  \textcolor{keywordflow}{for} (i = 0; i < runner.after\_.length; i++) \{
+    this.queue.add(\textcolor{keyword}{new} jasmine.Block(\textcolor{keyword}{this}.env, runner.after\_[i], \textcolor{keyword}{this}), \textcolor{keyword}{true});
+  \}
+\};
+
+jasmine.Spec.prototype.explodes = \textcolor{keyword}{function}() \{
+  \textcolor{keywordflow}{throw} \textcolor{stringliteral}{'explodes function should not have been called'};
+\};
+
+jasmine.Spec.prototype.spyOn = \textcolor{keyword}{function}(obj, methodName, ignoreMethodDoesntExist) \{
+  \textcolor{keywordflow}{if} (obj == jasmine.undefined) \{
+    \textcolor{keywordflow}{throw} \textcolor{stringliteral}{"spyOn could not find an object to spy upon for "} + methodName + \textcolor{stringliteral}{"()"};
+  \}
+
+  \textcolor{keywordflow}{if} (!ignoreMethodDoesntExist && obj[methodName] === jasmine.undefined) \{
+    \textcolor{keywordflow}{throw} methodName + \textcolor{stringliteral}{'() method does not exist'};
+  \}
+
+  \textcolor{keywordflow}{if} (!ignoreMethodDoesntExist && obj[methodName] && obj[methodName].isSpy) \{
+    \textcolor{keywordflow}{throw} \textcolor{keyword}{new} Error(methodName + \textcolor{stringliteral}{' has already been spied upon'});
+  \}
+
+  var spyObj = jasmine.createSpy(methodName);
+
+  this.spies\_.push(spyObj);
+  spyObj.baseObj = obj;
+  spyObj.methodName = methodName;
+  spyObj.originalValue = obj[methodName];
+
+  obj[methodName] = spyObj;
+
+  \textcolor{keywordflow}{return} spyObj;
+\};
+
+jasmine.Spec.prototype.removeAllSpies = \textcolor{keyword}{function}() \{
+  \textcolor{keywordflow}{for} (var i = 0; i < this.spies\_.length; i++) \{
+    var spy = this.spies\_[i];
+    spy.baseObj[spy.methodName] = spy.originalValue;
+  \}
+  this.spies\_ = [];
+\};
+
+jasmine.Suite = \textcolor{keyword}{function}(env, description, specDefinitions, parentSuite) \{
+  var \textcolor{keyword}{self} = \textcolor{keyword}{this};
+  \textcolor{keyword}{self}.id = env.nextSuiteId ? env.nextSuiteId() : null;
+  \textcolor{keyword}{self}.description = description;
+  \textcolor{keyword}{self}.queue = \textcolor{keyword}{new} jasmine.Queue(env);
+  \textcolor{keyword}{self}.parentSuite = parentSuite;
+  \textcolor{keyword}{self}.env = env;
+  \textcolor{keyword}{self}.before\_ = [];
+  \textcolor{keyword}{self}.after\_ = [];
+  \textcolor{keyword}{self}.children\_ = [];
+  \textcolor{keyword}{self}.suites\_ = [];
+  \textcolor{keyword}{self}.specs\_ = [];
+\};
+
+jasmine.Suite.prototype.getFullName = \textcolor{keyword}{function}() \{
+  var fullName = this.description;
+  \textcolor{keywordflow}{for} (var parentSuite = this.parentSuite; parentSuite; parentSuite = parentSuite.parentSuite) \{
+    fullName = parentSuite.description + \textcolor{charliteral}{' '} + fullName;
+  \}
+  \textcolor{keywordflow}{return} fullName;
+\};
+
+jasmine.Suite.prototype.finish = \textcolor{keyword}{function}(onComplete) \{
+  this.env.reporter.reportSuiteResults(\textcolor{keyword}{this});
+  this.finished = \textcolor{keyword}{true};
+  \textcolor{keywordflow}{if} (typeof(onComplete) == \textcolor{stringliteral}{'function'}) \{
+    onComplete();
+  \}
+\};
+
+jasmine.Suite.prototype.beforeEach = \textcolor{keyword}{function}(beforeEachFunction) \{
+  beforeEachFunction.typeName = \textcolor{stringliteral}{'beforeEach'};
+  this.before\_.unshift(beforeEachFunction);
+\};
+
+jasmine.Suite.prototype.afterEach = \textcolor{keyword}{function}(afterEachFunction) \{
+  afterEachFunction.typeName = \textcolor{stringliteral}{'afterEach'};
+  this.after\_.unshift(afterEachFunction);
+\};
+
+jasmine.Suite.prototype.results = \textcolor{keyword}{function}() \{
+  \textcolor{keywordflow}{return} this.queue.results();
+\};
+
+jasmine.Suite.prototype.add = \textcolor{keyword}{function}(suiteOrSpec) \{
+  this.children\_.push(suiteOrSpec);
+  \textcolor{keywordflow}{if} (suiteOrSpec instanceof jasmine.Suite) \{
+    this.suites\_.push(suiteOrSpec);
+    this.env.currentRunner().addSuite(suiteOrSpec);
+  \} \textcolor{keywordflow}{else} \{
+    this.specs\_.push(suiteOrSpec);
+  \}
+  this.queue.add(suiteOrSpec);
+\};
+
+jasmine.Suite.prototype.specs = \textcolor{keyword}{function}() \{
+  \textcolor{keywordflow}{return} this.specs\_;
+\};
+
+jasmine.Suite.prototype.suites = \textcolor{keyword}{function}() \{
+  \textcolor{keywordflow}{return} this.suites\_;
+\};
+
+jasmine.Suite.prototype.children = \textcolor{keyword}{function}() \{
+  \textcolor{keywordflow}{return} this.children\_;
+\};
+
+jasmine.Suite.prototype.execute = \textcolor{keyword}{function}(onComplete) \{
+  var \textcolor{keyword}{self} = \textcolor{keyword}{this};
+  this.queue.start(\textcolor{keyword}{function} () \{
+    \textcolor{keyword}{self}.finish(onComplete);
+  \});
+\};
+jasmine.WaitsBlock = \textcolor{keyword}{function}(env, timeout, spec) \{
+  this.timeout = timeout;
+  jasmine.Block.call(\textcolor{keyword}{this}, env, null, spec);
+\};
+
+jasmine.util.inherit(jasmine.WaitsBlock, jasmine.Block);
+
+jasmine.WaitsBlock.prototype.execute = \textcolor{keyword}{function} (onComplete) \{
+  \textcolor{keywordflow}{if} (jasmine.VERBOSE) \{
+    this.env.reporter.log(\textcolor{stringliteral}{'>> Jasmine waiting for '} + this.timeout + \textcolor{stringliteral}{' ms...'});
+  \}
+  this.env.setTimeout(\textcolor{keyword}{function} () \{
+    onComplete();
+  \}, this.timeout);
+\};
+jasmine.WaitsForBlock = \textcolor{keyword}{function}(env, timeout, latchFunction, message, spec) \{
+  this.timeout = timeout || env.defaultTimeoutInterval;
+  this.latchFunction = latchFunction;
+  this.message = message;
+  this.totalTimeSpentWaitingForLatch = 0;
+  jasmine.Block.call(\textcolor{keyword}{this}, env, null, spec);
+\};
+jasmine.util.inherit(jasmine.WaitsForBlock, jasmine.Block);
+
+jasmine.WaitsForBlock.TIMEOUT\_INCREMENT = 10;
+
+jasmine.WaitsForBlock.prototype.execute = \textcolor{keyword}{function}(onComplete) \{
+  \textcolor{keywordflow}{if} (jasmine.VERBOSE) \{
+    this.env.reporter.log(\textcolor{stringliteral}{'>> Jasmine waiting for '} + (this.message || \textcolor{stringliteral}{'something to happen'}));
+  \}
+  var latchFunctionResult;
+  \textcolor{keywordflow}{try} \{
+    latchFunctionResult = this.latchFunction.apply(this.spec);
+  \} \textcolor{keywordflow}{catch} (e) \{
+    this.spec.fail(e);
+    onComplete();
+    \textcolor{keywordflow}{return};
+  \}
+
+  \textcolor{keywordflow}{if} (latchFunctionResult) \{
+    onComplete();
+  \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (this.totalTimeSpentWaitingForLatch >= this.timeout) \{
+    var message = \textcolor{stringliteral}{'timed out after '} + this.timeout + \textcolor{stringliteral}{' msec waiting for '} + (this.message || \textcolor{stringliteral}{'something to
+       happen'});
+    this.spec.fail(\{
+      name: \textcolor{stringliteral}{'timeout'},
+      message: message
+    \});
+
+    this.abort = \textcolor{keyword}{true};
+    onComplete();
+  \} \textcolor{keywordflow}{else} \{
+    this.totalTimeSpentWaitingForLatch += jasmine.WaitsForBlock.TIMEOUT\_INCREMENT;
+    var \textcolor{keyword}{self} = \textcolor{keyword}{this};
+    this.env.setTimeout(\textcolor{keyword}{function}() \{
+      \textcolor{keyword}{self}.execute(onComplete);
+    \}, jasmine.WaitsForBlock.TIMEOUT\_INCREMENT);
+  \}
+\};
+
+jasmine.version\_= \{
+  \textcolor{stringliteral}{"major"}: 1,
+  \textcolor{stringliteral}{"minor"}: 3,
+  \textcolor{stringliteral}{"build"}: 1,
+  \textcolor{stringliteral}{"revision"}: 1354556913
+\};
+
+\end{DoxyCodeInclude}
+ 

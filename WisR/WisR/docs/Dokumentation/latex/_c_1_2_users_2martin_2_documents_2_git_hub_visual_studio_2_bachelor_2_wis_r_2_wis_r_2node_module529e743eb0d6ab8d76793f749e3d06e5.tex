@@ -1,0 +1,18 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module529e743eb0d6ab8d76793f749e3d06e5}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/string/kebab\+Case.\+js}
+\+\_\+.\+kebab\+Case(\textquotesingle{}Foo Bar\textquotesingle{}); // =$>$ \textquotesingle{}foo-\/bar\textquotesingle{}
+
+\+\_\+.\+kebab\+Case(\textquotesingle{}foo\+Bar\textquotesingle{}); // =$>$ \textquotesingle{}foo-\/bar\textquotesingle{}
+
+\+\_\+.\+kebab\+Case(\textquotesingle{}{\bfseries foo\+\_\+bar}\textquotesingle{}); // =$>$ \textquotesingle{}foo-\/bar\textquotesingle{}
+
+
+\begin{DoxyCodeInclude}
+var createCompounder = require(\textcolor{stringliteral}{'../internal/createCompounder'});
+
+var kebabCase = createCompounder(\textcolor{keyword}{function}(result, word, index) \{
+  \textcolor{keywordflow}{return} result + (index ? \textcolor{charliteral}{'-'} : \textcolor{stringliteral}{''}) + word.toLowerCase();
+\});
+
+module.exports = kebabCase;
+\end{DoxyCodeInclude}
+ 

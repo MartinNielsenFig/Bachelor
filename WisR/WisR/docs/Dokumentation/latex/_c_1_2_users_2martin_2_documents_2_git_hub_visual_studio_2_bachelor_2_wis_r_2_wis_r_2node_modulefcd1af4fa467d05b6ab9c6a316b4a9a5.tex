@@ -1,0 +1,15 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_modulefcd1af4fa467d05b6ab9c6a316b4a9a5}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/string/capitalize.\+js}
+\+\_\+.\+capitalize(\textquotesingle{}fred\textquotesingle{}); // =$>$ \textquotesingle{}Fred\textquotesingle{}
+
+
+\begin{DoxyCodeInclude}
+var baseToString = require(\textcolor{stringliteral}{'../internal/baseToString'});
+
+\textcolor{keyword}{function} capitalize(\textcolor{keywordtype}{string}) \{
+  \textcolor{keywordtype}{string} = baseToString(\textcolor{keywordtype}{string});
+  \textcolor{keywordflow}{return} \textcolor{keywordtype}{string} && (\textcolor{keywordtype}{string}.charAt(0).toUpperCase() + \textcolor{keywordtype}{string}.slice(1));
+\}
+
+module.exports = capitalize;
+\end{DoxyCodeInclude}
+ 

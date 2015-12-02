@@ -1,0 +1,28 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module4fd1ddd143bee8aa509d850492959df0}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/array/xor.\+js}
+\+\_\+.\+xor(\mbox{[}1, 2\mbox{]}, \mbox{[}4, 2\mbox{]}); // =$>$ \mbox{[}1, 4\mbox{]}
+
+
+\begin{DoxyCodeInclude}
+var arrayPush = require(\textcolor{stringliteral}{'../internal/arrayPush'}),
+    baseDifference = require(\textcolor{stringliteral}{'../internal/baseDifference'}),
+    baseUniq = require(\textcolor{stringliteral}{'../internal/baseUniq'}),
+    isArrayLike = require(\textcolor{stringliteral}{'../internal/isArrayLike'});
+
+\textcolor{keyword}{function} xor() \{
+  var index = -1,
+      length = arguments.length;
+
+  \textcolor{keywordflow}{while} (++index < length) \{
+    var array = arguments[index];
+    \textcolor{keywordflow}{if} (isArrayLike(array)) \{
+      var result = result
+        ? arrayPush(baseDifference(result, array), baseDifference(array, result))
+        : array;
+    \}
+  \}
+  \textcolor{keywordflow}{return} result ? baseUniq(result) : [];
+\}
+
+module.exports = xor;
+\end{DoxyCodeInclude}
+ 

@@ -1,0 +1,21 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_modulee0df8010fa822c862753ec364e7809e3}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/lang/to\+Plain\+Object.\+js}
+function Foo() \{ this.\+b = 2; \}
+
+Foo.\+prototype.\+c = 3;
+
+\+\_\+.\+assign(\{ \textquotesingle{}a\textquotesingle{}\+: 1 \}, new Foo); // =$>$ \{ \textquotesingle{}a\textquotesingle{}\+: 1, \textquotesingle{}b\textquotesingle{}\+: 2 \}
+
+\+\_\+.\+assign(\{ \textquotesingle{}a\textquotesingle{}\+: 1 \}, \+\_\+.\+to\+Plain\+Object(new Foo)); // =$>$ \{ \textquotesingle{}a\textquotesingle{}\+: 1, \textquotesingle{}b\textquotesingle{}\+: 2, \textquotesingle{}c\textquotesingle{}\+: 3 \}
+
+
+\begin{DoxyCodeInclude}
+var baseCopy = require(\textcolor{stringliteral}{'../internal/baseCopy'}),
+    keysIn = require(\textcolor{stringliteral}{'../object/keysIn'});
+
+\textcolor{keyword}{function} toPlainObject(value) \{
+  \textcolor{keywordflow}{return} baseCopy(value, keysIn(value));
+\}
+
+module.exports = toPlainObject;
+\end{DoxyCodeInclude}
+ 

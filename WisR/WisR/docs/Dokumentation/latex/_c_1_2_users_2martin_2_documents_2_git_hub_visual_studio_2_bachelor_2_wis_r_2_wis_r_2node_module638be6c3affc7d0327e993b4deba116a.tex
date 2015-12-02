@@ -1,0 +1,35 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module638be6c3affc7d0327e993b4deba116a}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/array/uniq.\+js}
+\+\_\+.\+uniq(\mbox{[}2, 1, 2\mbox{]}); // =$>$ \mbox{[}2, 1\mbox{]}
+
+// using {\ttfamily is\+Sorted} \+\_\+.\+uniq(\mbox{[}1, 1, 2\mbox{]}, true); // =$>$ \mbox{[}1, 2\mbox{]}
+
+// using an iteratee function \+\_\+.\+uniq(\mbox{[}1, 2.\+5, 1.\+5, 2\mbox{]}, function(n) \{ return this.\+floor(n); \}, Math); // =$>$ \mbox{[}1, 2.\+5\mbox{]}
+
+// using the {\ttfamily \+\_\+.\+property} callback shorthand \+\_\+.\+uniq(\mbox{[}\{ \textquotesingle{}x\textquotesingle{}\+: 1 \}, \{ \textquotesingle{}x\textquotesingle{}\+: 2 \}, \{ \textquotesingle{}x\textquotesingle{}\+: 1 \}\mbox{]}, \textquotesingle{}x\textquotesingle{}); // =$>$ \mbox{[}\{ \textquotesingle{}x\textquotesingle{}\+: 1 \}, \{ \textquotesingle{}x\textquotesingle{}\+: 2 \}\mbox{]}
+
+
+\begin{DoxyCodeInclude}
+var baseCallback = require(\textcolor{stringliteral}{'../internal/baseCallback'}),
+    baseUniq = require(\textcolor{stringliteral}{'../internal/baseUniq'}),
+    isIterateeCall = require(\textcolor{stringliteral}{'../internal/isIterateeCall'}),
+    sortedUniq = require(\textcolor{stringliteral}{'../internal/sortedUniq'});
+
+\textcolor{keyword}{function} uniq(array, isSorted, iteratee, thisArg) \{
+  var length = array ? array.length : 0;
+  \textcolor{keywordflow}{if} (!length) \{
+    \textcolor{keywordflow}{return} [];
+  \}
+  \textcolor{keywordflow}{if} (isSorted != null && typeof isSorted != \textcolor{stringliteral}{'boolean'}) \{
+    thisArg = iteratee;
+    iteratee = isIterateeCall(array, isSorted, thisArg) ? undefined : isSorted;
+    isSorted = \textcolor{keyword}{false};
+  \}
+  iteratee = iteratee == null ? iteratee : baseCallback(iteratee, thisArg, 3);
+  \textcolor{keywordflow}{return} (isSorted)
+    ? sortedUniq(array, iteratee)
+    : baseUniq(array, iteratee);
+\}
+
+module.exports = uniq;
+\end{DoxyCodeInclude}
+ 

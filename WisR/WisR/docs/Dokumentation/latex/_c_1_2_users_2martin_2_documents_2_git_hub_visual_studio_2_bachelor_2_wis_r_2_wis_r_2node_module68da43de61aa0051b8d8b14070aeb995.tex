@@ -1,0 +1,38 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module68da43de61aa0051b8d8b14070aeb995}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/array/pull.\+js}
+var array = \mbox{[}1, 2, 3, 1, 2, 3\mbox{]};
+
+\+\_\+.\+pull(array, 2, 3); console.\+log(array); // =$>$ \mbox{[}1, 1\mbox{]}
+
+
+\begin{DoxyCodeInclude}
+var baseIndexOf = require(\textcolor{stringliteral}{'../internal/baseIndexOf'});
+
+var arrayProto = Array.prototype;
+
+var splice = arrayProto.splice;
+
+\textcolor{keyword}{function} pull() \{
+  var args = arguments,
+      array = args[0];
+
+  \textcolor{keywordflow}{if} (!(array && array.length)) \{
+    \textcolor{keywordflow}{return} array;
+  \}
+  var index = 0,
+      indexOf = baseIndexOf,
+      length = args.length;
+
+  \textcolor{keywordflow}{while} (++index < length) \{
+    var fromIndex = 0,
+        value = args[index];
+
+    \textcolor{keywordflow}{while} ((fromIndex = indexOf(array, value, fromIndex)) > -1) \{
+      splice.call(array, fromIndex, 1);
+    \}
+  \}
+  \textcolor{keywordflow}{return} array;
+\}
+
+module.exports = pull;
+\end{DoxyCodeInclude}
+ 

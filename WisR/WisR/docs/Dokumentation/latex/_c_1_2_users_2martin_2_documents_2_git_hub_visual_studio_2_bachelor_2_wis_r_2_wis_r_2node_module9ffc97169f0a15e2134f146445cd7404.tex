@@ -1,0 +1,17 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module9ffc97169f0a15e2134f146445cd7404}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/object/for\+In.\+js}
+function Foo() \{ this.\+a = 1; this.\+b = 2; \}
+
+Foo.\+prototype.\+c = 3;
+
+\+\_\+.\+for\+In(new Foo, function(value, key) \{ console.\+log(key); \}); // =$>$ logs \textquotesingle{}a\textquotesingle{}, \textquotesingle{}b\textquotesingle{}, and \textquotesingle{}c\textquotesingle{} (iteration order is not guaranteed)
+
+
+\begin{DoxyCodeInclude}
+var baseFor = require(\textcolor{stringliteral}{'../internal/baseFor'}),
+    createForIn = require(\textcolor{stringliteral}{'../internal/createForIn'});
+
+var forIn = createForIn(baseFor);
+
+module.exports = forIn;
+\end{DoxyCodeInclude}
+ 

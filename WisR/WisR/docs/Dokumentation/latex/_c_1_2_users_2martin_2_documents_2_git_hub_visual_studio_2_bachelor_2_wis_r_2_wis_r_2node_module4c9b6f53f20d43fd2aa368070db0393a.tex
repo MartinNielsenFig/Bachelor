@@ -1,0 +1,21 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module4c9b6f53f20d43fd2aa368070db0393a}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/object/find\+Last\+Key.\+js}
+var users = \{ \textquotesingle{}barney\textquotesingle{}\+: \{ \textquotesingle{}age\textquotesingle{}\+: 36, \textquotesingle{}active\textquotesingle{}\+: true \}, \textquotesingle{}fred\textquotesingle{}\+: \{ \textquotesingle{}age\textquotesingle{}\+: 40, \textquotesingle{}active\textquotesingle{}\+: false \}, \textquotesingle{}pebbles\textquotesingle{}\+: \{ \textquotesingle{}age\textquotesingle{}\+: 1, \textquotesingle{}active\textquotesingle{}\+: true \} \};
+
+\+\_\+.\+find\+Last\+Key(users, function(chr) \{ return chr.\+age $<$ 40; \}); // =$>$ returns {\ttfamily pebbles} assuming {\ttfamily \+\_\+.\+find\+Key} returns {\ttfamily barney}
+
+// using the {\ttfamily \+\_\+.\+matches} callback shorthand \+\_\+.\+find\+Last\+Key(users, \{ \textquotesingle{}age\textquotesingle{}\+: 36, \textquotesingle{}active\textquotesingle{}\+: true \}); // =$>$ \textquotesingle{}barney\textquotesingle{}
+
+// using the {\ttfamily \+\_\+.\+matches\+Property} callback shorthand \+\_\+.\+find\+Last\+Key(users, \textquotesingle{}active\textquotesingle{}, false); // =$>$ \textquotesingle{}fred\textquotesingle{}
+
+// using the {\ttfamily \+\_\+.\+property} callback shorthand \+\_\+.\+find\+Last\+Key(users, \textquotesingle{}active\textquotesingle{}); // =$>$ \textquotesingle{}pebbles\textquotesingle{}
+
+
+\begin{DoxyCodeInclude}
+var baseForOwnRight = require(\textcolor{stringliteral}{'../internal/baseForOwnRight'}),
+    createFindKey = require(\textcolor{stringliteral}{'../internal/createFindKey'});
+
+var findLastKey = createFindKey(baseForOwnRight);
+
+module.exports = findLastKey;
+\end{DoxyCodeInclude}
+ 

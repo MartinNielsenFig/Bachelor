@@ -1,0 +1,153 @@
+\hypertarget{class_wis_r_1_1_controllers_1_1_home_controller}{}\section{Wis\+R.\+Controllers.\+Home\+Controller Class Reference}
+\label{class_wis_r_1_1_controllers_1_1_home_controller}\index{Wis\+R.\+Controllers.\+Home\+Controller@{Wis\+R.\+Controllers.\+Home\+Controller}}
+
+
+Home controller is used by the homepage for, room and user json-\/nification  
+
+
+Inheritance diagram for Wis\+R.\+Controllers.\+Home\+Controller\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_wis_r_1_1_controllers_1_1_home_controller}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_wis_r_1_1_controllers_1_1_home_controller_a7eb560f712e3e661ca25ab0ee6bf6748}{}{\bfseries Home\+Controller} (\hyperlink{interface_wis_r_1_1_providers_1_1_i_rabbit_subscriber}{I\+Rabbit\+Subscriber} rabbit\+Handler)\label{class_wis_r_1_1_controllers_1_1_home_controller_a7eb560f712e3e661ca25ab0ee6bf6748}
+
+\item 
+\hypertarget{class_wis_r_1_1_controllers_1_1_home_controller_a6eb5805f5911ac9b7c672973081c0924}{}Action\+Result {\bfseries Index} ()\label{class_wis_r_1_1_controllers_1_1_home_controller_a6eb5805f5911ac9b7c672973081c0924}
+
+\item 
+string \hyperlink{class_wis_r_1_1_controllers_1_1_home_controller_ab0a0ecf5fdd7e41f55ee6a708c69b336}{to\+Json\+Room} (string Room\+Name, string Created\+By, int radius, string secret, string password, bool has\+Chat, bool user\+Can\+Ask, bool allow\+Anonymous, bool use\+Location, string location\+Timestamp, double location\+Latitude, double location\+Longitude, int location\+Accuracy\+Meters, string location\+Formatted\+Address)
+\begin{DoxyCompactList}\small\item\em Function that takes all room parameters and creates a room based on the parameters \end{DoxyCompactList}\item 
+string \hyperlink{class_wis_r_1_1_controllers_1_1_home_controller_ace9e6955340d205d2ce9945db09e8800}{to\+Json\+User} (string encrypted\+Password, string facebook\+Id, string l\+D\+A\+P\+User\+Name, string display\+Name, string email, string connected\+Room\+Ids)
+\begin{DoxyCompactList}\small\item\em Converts the user to json. \end{DoxyCompactList}\item 
+Action\+Result \hyperlink{class_wis_r_1_1_controllers_1_1_home_controller_af6ec83feda3ae50d7d86075c14fc2903}{Change\+Current\+Culture} (int id)
+\begin{DoxyCompactList}\small\item\em Changes the current culture. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Home controller is used by the homepage for, room and user json-\/nification 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_wis_r_1_1_controllers_1_1_home_controller_af6ec83feda3ae50d7d86075c14fc2903}{}\index{Wis\+R\+::\+Controllers\+::\+Home\+Controller@{Wis\+R\+::\+Controllers\+::\+Home\+Controller}!Change\+Current\+Culture@{Change\+Current\+Culture}}
+\index{Change\+Current\+Culture@{Change\+Current\+Culture}!Wis\+R\+::\+Controllers\+::\+Home\+Controller@{Wis\+R\+::\+Controllers\+::\+Home\+Controller}}
+\subsubsection[{Change\+Current\+Culture(int id)}]{\setlength{\rightskip}{0pt plus 5cm}Action\+Result Wis\+R.\+Controllers.\+Home\+Controller.\+Change\+Current\+Culture (
+\begin{DoxyParamCaption}
+\item[{int}]{id}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_wis_r_1_1_controllers_1_1_home_controller_af6ec83feda3ae50d7d86075c14fc2903}
+
+
+Changes the current culture. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & The identifier.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Returns you to the page the request came from
+\end{DoxyReturn}
+\hypertarget{class_wis_r_1_1_controllers_1_1_home_controller_ab0a0ecf5fdd7e41f55ee6a708c69b336}{}\index{Wis\+R\+::\+Controllers\+::\+Home\+Controller@{Wis\+R\+::\+Controllers\+::\+Home\+Controller}!to\+Json\+Room@{to\+Json\+Room}}
+\index{to\+Json\+Room@{to\+Json\+Room}!Wis\+R\+::\+Controllers\+::\+Home\+Controller@{Wis\+R\+::\+Controllers\+::\+Home\+Controller}}
+\subsubsection[{to\+Json\+Room(string Room\+Name, string Created\+By, int radius, string secret, string password, bool has\+Chat, bool user\+Can\+Ask, bool allow\+Anonymous, bool use\+Location, string location\+Timestamp, double location\+Latitude, double location\+Longitude, int location\+Accuracy\+Meters, string location\+Formatted\+Address)}]{\setlength{\rightskip}{0pt plus 5cm}string Wis\+R.\+Controllers.\+Home\+Controller.\+to\+Json\+Room (
+\begin{DoxyParamCaption}
+\item[{string}]{Room\+Name, }
+\item[{string}]{Created\+By, }
+\item[{int}]{radius, }
+\item[{string}]{secret, }
+\item[{string}]{password, }
+\item[{bool}]{has\+Chat, }
+\item[{bool}]{user\+Can\+Ask, }
+\item[{bool}]{allow\+Anonymous, }
+\item[{bool}]{use\+Location, }
+\item[{string}]{location\+Timestamp, }
+\item[{double}]{location\+Latitude, }
+\item[{double}]{location\+Longitude, }
+\item[{int}]{location\+Accuracy\+Meters, }
+\item[{string}]{location\+Formatted\+Address}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_wis_r_1_1_controllers_1_1_home_controller_ab0a0ecf5fdd7e41f55ee6a708c69b336}
+
+
+Function that takes all room parameters and creates a room based on the parameters 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Room\+Name} & Name of the room.\\
+\hline
+{\em Created\+By} & The created by.\\
+\hline
+{\em radius} & The radius.\\
+\hline
+{\em secret} & The secret.\\
+\hline
+{\em password} & The password.\\
+\hline
+{\em has\+Chat} & if set to {\ttfamily true} \mbox{[}has chat\mbox{]}.\\
+\hline
+{\em user\+Can\+Ask} & if set to {\ttfamily true} \mbox{[}user can ask\mbox{]}.\\
+\hline
+{\em allow\+Anonymous} & if set to {\ttfamily true} \mbox{[}allow anonymous\mbox{]}.\\
+\hline
+{\em use\+Location} & if set to {\ttfamily true} \mbox{[}use location\mbox{]}.\\
+\hline
+{\em location\+Timestamp} & The location timestamp.\\
+\hline
+{\em location\+Latitude} & The location latitude.\\
+\hline
+{\em location\+Longitude} & The location longitude.\\
+\hline
+{\em location\+Accuracy\+Meters} & The location accuracy meters.\\
+\hline
+{\em location\+Formatted\+Address} & The location formatted address.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The Room as Json string
+\end{DoxyReturn}
+\hypertarget{class_wis_r_1_1_controllers_1_1_home_controller_ace9e6955340d205d2ce9945db09e8800}{}\index{Wis\+R\+::\+Controllers\+::\+Home\+Controller@{Wis\+R\+::\+Controllers\+::\+Home\+Controller}!to\+Json\+User@{to\+Json\+User}}
+\index{to\+Json\+User@{to\+Json\+User}!Wis\+R\+::\+Controllers\+::\+Home\+Controller@{Wis\+R\+::\+Controllers\+::\+Home\+Controller}}
+\subsubsection[{to\+Json\+User(string encrypted\+Password, string facebook\+Id, string l\+D\+A\+P\+User\+Name, string display\+Name, string email, string connected\+Room\+Ids)}]{\setlength{\rightskip}{0pt plus 5cm}string Wis\+R.\+Controllers.\+Home\+Controller.\+to\+Json\+User (
+\begin{DoxyParamCaption}
+\item[{string}]{encrypted\+Password, }
+\item[{string}]{facebook\+Id, }
+\item[{string}]{l\+D\+A\+P\+User\+Name, }
+\item[{string}]{display\+Name, }
+\item[{string}]{email, }
+\item[{string}]{connected\+Room\+Ids}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_wis_r_1_1_controllers_1_1_home_controller_ace9e6955340d205d2ce9945db09e8800}
+
+
+Converts the user to json. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em encrypted\+Password} & The encrypted password.\\
+\hline
+{\em facebook\+Id} & The facebook identifier.\\
+\hline
+{\em l\+D\+A\+P\+User\+Name} & Name of the l dap user.\\
+\hline
+{\em display\+Name} & The display name.\\
+\hline
+{\em email} & The email.\\
+\hline
+{\em connected\+Room\+Ids} & The connected room ids.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The User as Json string
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/\+Controllers/Home\+Controller.\+cs\end{DoxyCompactItemize}

@@ -1,0 +1,22 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module21b4d96ed5a14c16f48c27b4539e4eef}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/function/negate.\+js}
+function is\+Even(n) \{ return n \% 2 == 0; \}
+
+\+\_\+.\+filter(\mbox{[}1, 2, 3, 4, 5, 6\mbox{]}, \+\_\+.\+negate(is\+Even)); // =$>$ \mbox{[}1, 3, 5\mbox{]}
+
+
+\begin{DoxyCodeInclude}
+
+var FUNC\_ERROR\_TEXT = \textcolor{stringliteral}{'Expected a function'};
+
+\textcolor{keyword}{function} negate(predicate) \{
+  \textcolor{keywordflow}{if} (typeof predicate != \textcolor{stringliteral}{'function'}) \{
+    \textcolor{keywordflow}{throw} \textcolor{keyword}{new} TypeError(FUNC\_ERROR\_TEXT);
+  \}
+  \textcolor{keywordflow}{return} \textcolor{keyword}{function}() \{
+    \textcolor{keywordflow}{return} !predicate.apply(\textcolor{keyword}{this}, arguments);
+  \};
+\}
+
+module.exports = negate;
+\end{DoxyCodeInclude}
+ 

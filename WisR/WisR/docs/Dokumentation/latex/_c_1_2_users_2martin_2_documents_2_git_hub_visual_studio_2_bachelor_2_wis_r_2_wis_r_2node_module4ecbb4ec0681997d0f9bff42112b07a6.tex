@@ -1,0 +1,19 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module4ecbb4ec0681997d0f9bff42112b07a6}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/utility/unique\+Id.\+js}
+\+\_\+.\+unique\+Id(\textquotesingle{}contact\+\_\+\textquotesingle{}); // =$>$ \textquotesingle{}contact\+\_\+104\textquotesingle{}
+
+\+\_\+.\+unique\+Id(); // =$>$ \textquotesingle{}105\textquotesingle{}
+
+
+\begin{DoxyCodeInclude}
+var baseToString = require(\textcolor{stringliteral}{'../internal/baseToString'});
+
+var idCounter = 0;
+
+\textcolor{keyword}{function} uniqueId(prefix) \{
+  var \textcolor{keywordtype}{id} = ++idCounter;
+  \textcolor{keywordflow}{return} baseToString(prefix) + id;
+\}
+
+module.exports = uniqueId;
+\end{DoxyCodeInclude}
+ 

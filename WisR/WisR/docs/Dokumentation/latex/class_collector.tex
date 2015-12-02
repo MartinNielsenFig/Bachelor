@@ -1,0 +1,42 @@
+\hypertarget{class_collector}{}\section{Collector Class Reference}
+\label{class_collector}\index{Collector@{Collector}}
+
+
+\subsection{Detailed Description}
+a mechanism to merge multiple coverage objects into one. Handles the use case of overlapping coverage information for the same files in multiple coverage objects and does not double-\/count in this situation. For example, if you pass the same coverage object multiple times, the final merged object will be no different that any of the objects passed in (except for execution counts).
+
+The {\ttfamily \hyperlink{class_collector}{Collector}} is built for scale to handle thousands of coverage objects. By default, all processing is done in memory since the common use-\/case is of one or a few coverage objects. You can work around memory issues by passing in a {\ttfamily \hyperlink{class_store}{Store}} implementation that stores temporary computations on disk (the {\ttfamily tmp} store, for example).
+
+The {\ttfamily get\+Final\+Coverage} method returns an object with merged coverage information and is provided as a convenience for implementors working with coverage information that can fit into memory. Reporters, in the interest of generality, should {\itshape not} use this method for creating reports.
+
+\subsubsection*{Usage }
+
+\begin{DoxyVerb} var collector = new require('istanbul').Collector();
+
+ files.forEach(function (f) {
+     //each coverage object can have overlapping information about multiple files
+     collector.add(JSON.parse(fs.readFileSync(f, 'utf8')));
+ });
+
+ collector.files().forEach(function(file) {
+     var fileCoverage = collector.fileCoverageFor(file);
+     console.log('Coverage for ' + file + ' is:' + JSON.stringify(fileCoverage));
+ });
+
+ // convenience method: do not use this when dealing with a large number of files
+ var finalCoverage = collector.getFinalCoverage();
+\end{DoxyVerb}
+
+
+main  
+\begin{DoxyParams}{Parameters}
+{\em \{\+Object\}} & options Optional. Configuration options. \\
+\hline
+{\em \{\+Store\}} & options.\+store -\/ an implementation of {\ttfamily \hyperlink{class_store}{Store}} to use for temporary calculations. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/lib/collector.\+js\end{DoxyCompactItemize}

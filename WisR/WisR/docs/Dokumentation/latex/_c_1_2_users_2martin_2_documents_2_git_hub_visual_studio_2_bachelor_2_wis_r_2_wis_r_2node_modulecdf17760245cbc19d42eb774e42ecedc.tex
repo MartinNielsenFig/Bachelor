@@ -1,0 +1,26 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_modulecdf17760245cbc19d42eb774e42ecedc}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/object/pairs.\+js}
+\+\_\+.\+pairs(\{ \textquotesingle{}barney\textquotesingle{}\+: 36, \textquotesingle{}fred\textquotesingle{}\+: 40 \}); // =$>$ \mbox{[}\mbox{[}\textquotesingle{}barney\textquotesingle{}, 36\mbox{]}, \mbox{[}\textquotesingle{}fred\textquotesingle{}, 40\mbox{]}\mbox{]} (iteration order is not guaranteed)
+
+
+\begin{DoxyCodeInclude}
+var keys = require(\textcolor{stringliteral}{'./keys'}),
+    toObject = require(\textcolor{stringliteral}{'../internal/toObject'});
+
+\textcolor{keyword}{function} pairs(\textcolor{keywordtype}{object}) \{
+  \textcolor{keywordtype}{object} = toObject(\textcolor{keywordtype}{object});
+
+  var index = -1,
+      props = keys(\textcolor{keywordtype}{object}),
+      length = props.length,
+      result = Array(length);
+
+  \textcolor{keywordflow}{while} (++index < length) \{
+    var key = props[index];
+    result[index] = [key, \textcolor{keywordtype}{object}[key]];
+  \}
+  \textcolor{keywordflow}{return} result;
+\}
+
+module.exports = pairs;
+\end{DoxyCodeInclude}
+ 

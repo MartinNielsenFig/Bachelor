@@ -1,0 +1,24 @@
+\hypertarget{class_lookup_store}{}\section{Lookup\+Store Class Reference}
+\label{class_lookup_store}\index{Lookup\+Store@{Lookup\+Store}}
+Inheritance diagram for Lookup\+Store\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_lookup_store}
+\end{center}
+\end{figure}
+
+
+\subsection{Detailed Description}
+a {\ttfamily \hyperlink{class_store}{Store}} implementation that doesn\textquotesingle{}t actually store anything. It assumes that keys are absolute file paths, and contents are contents of those files. Thus, {\ttfamily set} for this store is no-\/op, {\ttfamily get} returns the contents of the filename that the key represents, {\ttfamily has\+Key} returns true if the key supplied is a valid file path and {\ttfamily keys} always returns an empty array.
+
+\subsubsection*{Usage }
+
+\begin{DoxyVerb} var store = require('istanbul').Store.create('fslookup');
+\end{DoxyVerb}
+
+
+store  
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/lib/store/fslookup.\+js\end{DoxyCompactItemize}

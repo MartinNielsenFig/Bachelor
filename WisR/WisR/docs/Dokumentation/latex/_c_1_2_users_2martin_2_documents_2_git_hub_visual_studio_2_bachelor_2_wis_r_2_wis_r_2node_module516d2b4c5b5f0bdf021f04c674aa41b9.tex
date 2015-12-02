@@ -1,0 +1,26 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module516d2b4c5b5f0bdf021f04c674aa41b9}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/collection/partition.\+js}
+\+\_\+.\+partition(\mbox{[}1, 2, 3\mbox{]}, function(n) \{ return n \% 2; \}); // =$>$ \mbox{[}\mbox{[}1, 3\mbox{]}, \mbox{[}2\mbox{]}\mbox{]}
+
+\+\_\+.\+partition(\mbox{[}1.\+2, 2.\+3, 3.\+4\mbox{]}, function(n) \{ return this.\+floor(n) \% 2; \}, Math); // =$>$ \mbox{[}\mbox{[}1.\+2, 3.\+4\mbox{]}, \mbox{[}2.\+3\mbox{]}\mbox{]}
+
+var users = \mbox{[} \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}barney\textquotesingle{}, \textquotesingle{}age\textquotesingle{}\+: 36, \textquotesingle{}active\textquotesingle{}\+: false \}, \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}fred\textquotesingle{}, \textquotesingle{}age\textquotesingle{}\+: 40, \textquotesingle{}active\textquotesingle{}\+: true \}, \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}pebbles\textquotesingle{}, \textquotesingle{}age\textquotesingle{}\+: 1, \textquotesingle{}active\textquotesingle{}\+: false \} \mbox{]};
+
+var mapper = function(array) \{ return \+\_\+.\+pluck(array, \textquotesingle{}user\textquotesingle{}); \};
+
+// using the {\ttfamily \+\_\+.\+matches} callback shorthand \+\_\+.\+map(\+\_\+.\+partition(users, \{ \textquotesingle{}age\textquotesingle{}\+: 1, \textquotesingle{}active\textquotesingle{}\+: false \}), mapper); // =$>$ \mbox{[}\mbox{[}\textquotesingle{}pebbles\textquotesingle{}\mbox{]}, \mbox{[}\textquotesingle{}barney\textquotesingle{}, \textquotesingle{}fred\textquotesingle{}\mbox{]}\mbox{]}
+
+// using the {\ttfamily \+\_\+.\+matches\+Property} callback shorthand \+\_\+.\+map(\+\_\+.\+partition(users, \textquotesingle{}active\textquotesingle{}, false), mapper); // =$>$ \mbox{[}\mbox{[}\textquotesingle{}barney\textquotesingle{}, \textquotesingle{}pebbles\textquotesingle{}\mbox{]}, \mbox{[}\textquotesingle{}fred\textquotesingle{}\mbox{]}\mbox{]}
+
+// using the {\ttfamily \+\_\+.\+property} callback shorthand \+\_\+.\+map(\+\_\+.\+partition(users, \textquotesingle{}active\textquotesingle{}), mapper); // =$>$ \mbox{[}\mbox{[}\textquotesingle{}fred\textquotesingle{}\mbox{]}, \mbox{[}\textquotesingle{}barney\textquotesingle{}, \textquotesingle{}pebbles\textquotesingle{}\mbox{]}\mbox{]}
+
+
+\begin{DoxyCodeInclude}
+var createAggregator = require(\textcolor{stringliteral}{'../internal/createAggregator'});
+
+var partition = createAggregator(\textcolor{keyword}{function}(result, value, key) \{
+  result[key ? 0 : 1].push(value);
+\}, \textcolor{keyword}{function}() \{ \textcolor{keywordflow}{return} [[], []]; \});
+
+module.exports = partition;
+\end{DoxyCodeInclude}
+ 

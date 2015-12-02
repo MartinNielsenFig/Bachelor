@@ -1,0 +1,33 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module84271da04e2b06b523c5c3ca22a8a994}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/collection/every.\+js}
+\+\_\+.\+every(\mbox{[}true, 1, null, \textquotesingle{}yes\textquotesingle{}\mbox{]}, Boolean); // =$>$ false
+
+var users = \mbox{[} \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}barney\textquotesingle{}, \textquotesingle{}active\textquotesingle{}\+: false \}, \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}fred\textquotesingle{}, \textquotesingle{}active\textquotesingle{}\+: false \} \mbox{]};
+
+// using the {\ttfamily \+\_\+.\+matches} callback shorthand \+\_\+.\+every(users, \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}barney\textquotesingle{}, \textquotesingle{}active\textquotesingle{}\+: false \}); // =$>$ false
+
+// using the {\ttfamily \+\_\+.\+matches\+Property} callback shorthand \+\_\+.\+every(users, \textquotesingle{}active\textquotesingle{}, false); // =$>$ true
+
+// using the {\ttfamily \+\_\+.\+property} callback shorthand \+\_\+.\+every(users, \textquotesingle{}active\textquotesingle{}); // =$>$ false
+
+
+\begin{DoxyCodeInclude}
+var arrayEvery = require(\textcolor{stringliteral}{'../internal/arrayEvery'}),
+    baseCallback = require(\textcolor{stringliteral}{'../internal/baseCallback'}),
+    baseEvery = require(\textcolor{stringliteral}{'../internal/baseEvery'}),
+    isArray = require(\textcolor{stringliteral}{'../lang/isArray'}),
+    isIterateeCall = require(\textcolor{stringliteral}{'../internal/isIterateeCall'});
+
+\textcolor{keyword}{function} every(collection, predicate, thisArg) \{
+  var func = isArray(collection) ? arrayEvery : baseEvery;
+  \textcolor{keywordflow}{if} (thisArg && isIterateeCall(collection, predicate, thisArg)) \{
+    predicate = undefined;
+  \}
+  \textcolor{keywordflow}{if} (typeof predicate != \textcolor{stringliteral}{'function'} || thisArg !== undefined) \{
+    predicate = baseCallback(predicate, thisArg, 3);
+  \}
+  \textcolor{keywordflow}{return} func(collection, predicate);
+\}
+
+module.exports = every;
+\end{DoxyCodeInclude}
+ 

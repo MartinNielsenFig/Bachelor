@@ -1,0 +1,51 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_moduled6c8f8acb03d2be641773a33a65c7929}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/array/intersection.\+js}
+\+\_\+.\+intersection(\mbox{[}1, 2\mbox{]}, \mbox{[}4, 2\mbox{]}, \mbox{[}2, 1\mbox{]}); // =$>$ \mbox{[}2\mbox{]}
+
+
+\begin{DoxyCodeInclude}
+var baseIndexOf = require(\textcolor{stringliteral}{'../internal/baseIndexOf'}),
+    cacheIndexOf = require(\textcolor{stringliteral}{'../internal/cacheIndexOf'}),
+    createCache = require(\textcolor{stringliteral}{'../internal/createCache'}),
+    isArrayLike = require(\textcolor{stringliteral}{'../internal/isArrayLike'}),
+    restParam = require(\textcolor{stringliteral}{'../function/restParam'});
+
+var intersection = restParam(\textcolor{keyword}{function}(arrays) \{
+  var othLength = arrays.length,
+      othIndex = othLength,
+      caches = Array(length),
+      indexOf = baseIndexOf,
+      isCommon = \textcolor{keyword}{true},
+      result = [];
+
+  \textcolor{keywordflow}{while} (othIndex--) \{
+    var value = arrays[othIndex] = isArrayLike(value = arrays[othIndex]) ? value : [];
+    caches[othIndex] = (isCommon && value.length >= 120) ? createCache(othIndex && value) : null;
+  \}
+  var array = arrays[0],
+      index = -1,
+      length = array ? array.length : 0,
+      seen = caches[0];
+
+  outer:
+  \textcolor{keywordflow}{while} (++index < length) \{
+    value = array[index];
+    \textcolor{keywordflow}{if} ((seen ? cacheIndexOf(seen, value) : indexOf(result, value, 0)) < 0) \{
+      var othIndex = othLength;
+      \textcolor{keywordflow}{while} (--othIndex) \{
+        var cache = caches[othIndex];
+        \textcolor{keywordflow}{if} ((cache ? cacheIndexOf(cache, value) : indexOf(arrays[othIndex], value, 0)) < 0) \{
+          \textcolor{keywordflow}{continue} outer;
+        \}
+      \}
+      \textcolor{keywordflow}{if} (seen) \{
+        seen.push(value);
+      \}
+      result.push(value);
+    \}
+  \}
+  \textcolor{keywordflow}{return} result;
+\});
+
+module.exports = intersection;
+\end{DoxyCodeInclude}
+ 

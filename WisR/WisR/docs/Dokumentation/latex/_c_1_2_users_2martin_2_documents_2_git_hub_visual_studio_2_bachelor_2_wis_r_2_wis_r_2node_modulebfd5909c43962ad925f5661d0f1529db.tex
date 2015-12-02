@@ -1,0 +1,60 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_modulebfd5909c43962ad925f5661d0f1529db}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/lang/is\+Typed\+Array.\+js}
+\+\_\+.\+is\+Typed\+Array(new Uint8\+Array); // =$>$ true
+
+\+\_\+.\+is\+Typed\+Array(\mbox{[}$\,$\mbox{]}); // =$>$ false
+
+
+\begin{DoxyCodeInclude}
+var isLength = require(\textcolor{stringliteral}{'../internal/isLength'}),
+    isObjectLike = require(\textcolor{stringliteral}{'../internal/isObjectLike'});
+
+var argsTag = \textcolor{stringliteral}{'[object Arguments]'},
+    arrayTag = \textcolor{stringliteral}{'[object Array]'},
+    boolTag = \textcolor{stringliteral}{'[object Boolean]'},
+    dateTag = \textcolor{stringliteral}{'[object Date]'},
+    errorTag = \textcolor{stringliteral}{'[object Error]'},
+    funcTag = \textcolor{stringliteral}{'[object Function]'},
+    mapTag = \textcolor{stringliteral}{'[object Map]'},
+    numberTag = \textcolor{stringliteral}{'[object Number]'},
+    objectTag = \textcolor{stringliteral}{'[object Object]'},
+    regexpTag = \textcolor{stringliteral}{'[object RegExp]'},
+    setTag = \textcolor{stringliteral}{'[object Set]'},
+    stringTag = \textcolor{stringliteral}{'[object String]'},
+    weakMapTag = \textcolor{stringliteral}{'[object WeakMap]'};
+
+var arrayBufferTag = \textcolor{stringliteral}{'[object ArrayBuffer]'},
+    float32Tag = \textcolor{stringliteral}{'[object Float32Array]'},
+    float64Tag = \textcolor{stringliteral}{'[object Float64Array]'},
+    int8Tag = \textcolor{stringliteral}{'[object Int8Array]'},
+    int16Tag = \textcolor{stringliteral}{'[object Int16Array]'},
+    int32Tag = \textcolor{stringliteral}{'[object Int32Array]'},
+    uint8Tag = \textcolor{stringliteral}{'[object Uint8Array]'},
+    uint8ClampedTag = \textcolor{stringliteral}{'[object Uint8ClampedArray]'},
+    uint16Tag = \textcolor{stringliteral}{'[object Uint16Array]'},
+    uint32Tag = \textcolor{stringliteral}{'[object Uint32Array]'};
+
+var typedArrayTags = \{\};
+typedArrayTags[float32Tag] = typedArrayTags[float64Tag] =
+typedArrayTags[int8Tag] = typedArrayTags[int16Tag] =
+typedArrayTags[int32Tag] = typedArrayTags[uint8Tag] =
+typedArrayTags[uint8ClampedTag] = typedArrayTags[uint16Tag] =
+typedArrayTags[uint32Tag] = \textcolor{keyword}{true};
+typedArrayTags[argsTag] = typedArrayTags[arrayTag] =
+typedArrayTags[arrayBufferTag] = typedArrayTags[boolTag] =
+typedArrayTags[dateTag] = typedArrayTags[errorTag] =
+typedArrayTags[funcTag] = typedArrayTags[mapTag] =
+typedArrayTags[numberTag] = typedArrayTags[objectTag] =
+typedArrayTags[regexpTag] = typedArrayTags[setTag] =
+typedArrayTags[stringTag] = typedArrayTags[weakMapTag] = \textcolor{keyword}{false};
+
+var objectProto = Object.prototype;
+
+var objToString = objectProto.toString;
+
+\textcolor{keyword}{function} isTypedArray(value) \{
+  \textcolor{keywordflow}{return} isObjectLike(value) && isLength(value.length) && !!typedArrayTags[objToString.call(value)];
+\}
+
+module.exports = isTypedArray;
+\end{DoxyCodeInclude}
+ 

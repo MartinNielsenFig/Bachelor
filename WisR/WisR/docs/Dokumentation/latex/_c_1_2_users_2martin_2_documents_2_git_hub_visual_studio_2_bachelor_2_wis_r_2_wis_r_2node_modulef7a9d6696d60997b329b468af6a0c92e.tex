@@ -1,0 +1,27 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_modulef7a9d6696d60997b329b468af6a0c92e}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/string/trim\+Left.\+js}
+\+\_\+.\+trim\+Left(\textquotesingle{} abc \textquotesingle{}); // =$>$ \textquotesingle{}abc \textquotesingle{}
+
+\+\_\+.\+trim\+Left(\textquotesingle{}-\/\+\_\+-\/abc-\/\+\_\+-\/\textquotesingle{}, \textquotesingle{}\+\_\+-\/\textquotesingle{}); // =$>$ \textquotesingle{}abc-\/\+\_\+-\/\textquotesingle{}
+
+
+\begin{DoxyCodeInclude}
+var baseToString = require(\textcolor{stringliteral}{'../internal/baseToString'}),
+    charsLeftIndex = require(\textcolor{stringliteral}{'../internal/charsLeftIndex'}),
+    isIterateeCall = require(\textcolor{stringliteral}{'../internal/isIterateeCall'}),
+    trimmedLeftIndex = require(\textcolor{stringliteral}{'../internal/trimmedLeftIndex'});
+
+\textcolor{keyword}{function} trimLeft(\textcolor{keywordtype}{string}, chars, guard) \{
+  var value = string;
+  \textcolor{keywordtype}{string} = baseToString(\textcolor{keywordtype}{string});
+  \textcolor{keywordflow}{if} (!\textcolor{keywordtype}{string}) \{
+    \textcolor{keywordflow}{return} string;
+  \}
+  \textcolor{keywordflow}{if} (guard ? isIterateeCall(value, chars, guard) : chars == null) \{
+    \textcolor{keywordflow}{return} \textcolor{keywordtype}{string}.slice(trimmedLeftIndex(\textcolor{keywordtype}{string}));
+  \}
+  \textcolor{keywordflow}{return} \textcolor{keywordtype}{string}.slice(charsLeftIndex(\textcolor{keywordtype}{string}, (chars + \textcolor{stringliteral}{''})));
+\}
+
+module.exports = trimLeft;
+\end{DoxyCodeInclude}
+ 

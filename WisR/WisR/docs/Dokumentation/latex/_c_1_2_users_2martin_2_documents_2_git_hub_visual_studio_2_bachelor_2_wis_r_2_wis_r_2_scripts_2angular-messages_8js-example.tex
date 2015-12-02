@@ -1,0 +1,289 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2_scripts_2angular-messages_8js-example}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/\+Scripts/angular-\/messages.\+js}
+$<$file name=\char`\"{}index.\+html\char`\"{}$>$ $<$form name=\char`\"{}my\+Form\char`\"{}$>$ $<$label$>$ Enter your name\+: $<$input type=\char`\"{}text\char`\"{} name=\char`\"{}my\+Name\char`\"{} ng-\/model=\char`\"{}name\char`\"{} ng-\/minlength=\char`\"{}5\char`\"{} ng-\/maxlength=\char`\"{}20\char`\"{} required=\char`\"{}\char`\"{}$>$ $<$/label$>$ 
+\begin{DoxyPre}myForm.myName.$error = \{\{ myForm.myName.$error | json \}\}\end{DoxyPre}
+
+
+ You did not enter a field Your field is too short Your field is too long  $<$/form$>$ $<$/file$>$ $<$file name=\char`\"{}script.\+js\char`\"{}$>$ angular.\+module(\textquotesingle{}ng\+Messages\+Example\textquotesingle{}, \mbox{[}\textquotesingle{}ng\+Messages\textquotesingle{}\mbox{]}); $<$/file$>$ 
+
+
+\begin{DoxyCodeInclude}
+
+(\textcolor{keyword}{function}(window, angular, undefined) \{\textcolor{stringliteral}{'use strict'};
+
+\textcolor{comment}{/* jshint ignore:start */}
+\textcolor{comment}{// this code is in the core, but not in angular-messages.js}
+var isArray = angular.isArray;
+var forEach = angular.forEach;
+var isString = angular.isString;
+var jqLite = angular.element;
+\textcolor{comment}{/* jshint ignore:end */}
+
+angular.module(\textcolor{stringliteral}{'ngMessages'}, [])
+
+   .directive(\textcolor{stringliteral}{'ngMessages'}, [\textcolor{stringliteral}{'$animate'}, \textcolor{keyword}{function}($animate) \{
+     var ACTIVE\_CLASS = \textcolor{stringliteral}{'ng-active'};
+     var INACTIVE\_CLASS = \textcolor{stringliteral}{'ng-inactive'};
+
+     \textcolor{keywordflow}{return} \{
+       require: \textcolor{stringliteral}{'ngMessages'},
+       restrict: \textcolor{stringliteral}{'AE'},
+       controller: [\textcolor{stringliteral}{'$element'}, \textcolor{stringliteral}{'$scope'}, \textcolor{stringliteral}{'$attrs'}, \textcolor{keyword}{function}($element, $scope, $attrs) \{
+         var ctrl = \textcolor{keyword}{this};
+         var latestKey = 0;
+
+         var messages = this.messages = \{\};
+         var renderLater, cachedCollection;
+
+         this.render = \textcolor{keyword}{function}(collection) \{
+           collection = collection || \{\};
+
+           renderLater = \textcolor{keyword}{false};
+           cachedCollection = collection;
+
+           \textcolor{comment}{// this is true if the attribute is empty or if the attribute value is truthy}
+           var multiple = isAttrTruthy($scope, $attrs.ngMessagesMultiple) ||
+                          isAttrTruthy($scope, $attrs.multiple);
+
+           var unmatchedMessages = [];
+           var matchedKeys = \{\};
+           var messageItem = ctrl.head;
+           var messageFound = \textcolor{keyword}{false};
+           var totalMessages = 0;
+
+           \textcolor{comment}{// we use != instead of !== to allow for both undefined and null values}
+           \textcolor{keywordflow}{while} (messageItem != null) \{
+             totalMessages++;
+             var messageCtrl = messageItem.message;
+
+             var messageUsed = \textcolor{keyword}{false};
+             \textcolor{keywordflow}{if} (!messageFound) \{
+               forEach(collection, \textcolor{keyword}{function}(value, key) \{
+                 \textcolor{keywordflow}{if} (!messageUsed && truthy(value) && messageCtrl.test(key)) \{
+                   \textcolor{comment}{// this is to prevent the same error name from showing up twice}
+                   \textcolor{keywordflow}{if} (matchedKeys[key]) \textcolor{keywordflow}{return};
+                   matchedKeys[key] = \textcolor{keyword}{true};
+
+                   messageUsed = \textcolor{keyword}{true};
+                   messageCtrl.attach();
+                 \}
+               \});
+             \}
+
+             \textcolor{keywordflow}{if} (messageUsed) \{
+               \textcolor{comment}{// unless we want to display multiple messages then we should}
+               \textcolor{comment}{// set a flag here to avoid displaying the next message in the list}
+               messageFound = !multiple;
+             \} \textcolor{keywordflow}{else} \{
+               unmatchedMessages.push(messageCtrl);
+             \}
+
+             messageItem = messageItem.next;
+           \}
+
+           forEach(unmatchedMessages, \textcolor{keyword}{function}(messageCtrl) \{
+             messageCtrl.detach();
+           \});
+
+           unmatchedMessages.length !== totalMessages
+              ? $animate.setClass($element, ACTIVE\_CLASS, INACTIVE\_CLASS)
+              : $animate.setClass($element, INACTIVE\_CLASS, ACTIVE\_CLASS);
+         \};
+
+         $scope.$watchCollection($attrs.ngMessages || $attrs[\textcolor{stringliteral}{'for'}], ctrl.render);
+
+         this.reRender = \textcolor{keyword}{function}() \{
+           \textcolor{keywordflow}{if} (!renderLater) \{
+             renderLater = \textcolor{keyword}{true};
+             $scope.$evalAsync(\textcolor{keyword}{function}() \{
+               \textcolor{keywordflow}{if} (renderLater) \{
+                 cachedCollection && ctrl.render(cachedCollection);
+               \}
+             \});
+           \}
+         \};
+
+         this.\textcolor{keyword}{register} = \textcolor{keyword}{function}(comment, messageCtrl) \{
+           var nextKey = latestKey.toString();
+           messages[nextKey] = \{
+             message: messageCtrl
+           \};
+           insertMessageNode($element[0], comment, nextKey);
+           comment.$$ngMessageNode = nextKey;
+           latestKey++;
+
+           ctrl.reRender();
+         \};
+
+         this.deregister = \textcolor{keyword}{function}(comment) \{
+           var key = comment.$$ngMessageNode;
+           \textcolor{keyword}{delete} comment.$$ngMessageNode;
+           removeMessageNode($element[0], comment, key);
+           \textcolor{keyword}{delete} messages[key];
+           ctrl.reRender();
+         \};
+
+         \textcolor{keyword}{function} findPreviousMessage(parent, comment) \{
+           var prevNode = comment;
+           var parentLookup = [];
+           \textcolor{keywordflow}{while} (prevNode && prevNode !== parent) \{
+             var prevKey = prevNode.$$ngMessageNode;
+             \textcolor{keywordflow}{if} (prevKey && prevKey.length) \{
+               \textcolor{keywordflow}{return} messages[prevKey];
+             \}
+
+             \textcolor{comment}{// dive deeper into the DOM and examine its children for any ngMessage}
+             \textcolor{comment}{// comments that may be in an element that appears deeper in the list}
+             \textcolor{keywordflow}{if} (prevNode.childNodes.length && parentLookup.indexOf(prevNode) == -1) \{
+               parentLookup.push(prevNode);
+               prevNode = prevNode.childNodes[prevNode.childNodes.length - 1];
+             \} \textcolor{keywordflow}{else} \{
+               prevNode = prevNode.previousSibling || prevNode.parentNode;
+             \}
+           \}
+         \}
+
+         \textcolor{keyword}{function} insertMessageNode(parent, comment, key) \{
+           var messageNode = messages[key];
+           \textcolor{keywordflow}{if} (!ctrl.head) \{
+             ctrl.head = messageNode;
+           \} \textcolor{keywordflow}{else} \{
+             var match = findPreviousMessage(parent, comment);
+             \textcolor{keywordflow}{if} (match) \{
+               messageNode.next = match.next;
+               match.next = messageNode;
+             \} \textcolor{keywordflow}{else} \{
+               messageNode.next = ctrl.head;
+               ctrl.head = messageNode;
+             \}
+           \}
+         \}
+
+         \textcolor{keyword}{function} removeMessageNode(parent, comment, key) \{
+           var messageNode = messages[key];
+
+           var match = findPreviousMessage(parent, comment);
+           \textcolor{keywordflow}{if} (match) \{
+             match.next = messageNode.next;
+           \} \textcolor{keywordflow}{else} \{
+             ctrl.head = messageNode.next;
+           \}
+         \}
+       \}]
+     \};
+
+     \textcolor{keyword}{function} isAttrTruthy(scope, attr) \{
+      \textcolor{keywordflow}{return} (isString(attr) && attr.length === 0) || \textcolor{comment}{//empty attribute}
+             truthy(scope.$eval(attr));
+     \}
+
+     \textcolor{keyword}{function} truthy(val) \{
+       \textcolor{keywordflow}{return} isString(val) ? val.length : !!val;
+     \}
+   \}])
+
+   .directive(\textcolor{stringliteral}{'ngMessagesInclude'},
+     [\textcolor{stringliteral}{'$templateRequest'}, \textcolor{stringliteral}{'$document'}, \textcolor{stringliteral}{'$compile'}, \textcolor{keyword}{function}($templateRequest, $document, $compile) \{
+
+     \textcolor{keywordflow}{return} \{
+       restrict: \textcolor{stringliteral}{'AE'},
+       require: \textcolor{stringliteral}{'^^ngMessages'}, \textcolor{comment}{// we only require this for validation sake}
+       link: \textcolor{keyword}{function}($scope, element, attrs) \{
+         var src = attrs.ngMessagesInclude || attrs.src;
+         $templateRequest(src).then(\textcolor{keyword}{function}(html) \{
+           $compile(html)($scope, \textcolor{keyword}{function}(contents) \{
+             element.after(contents);
+
+             \textcolor{comment}{// the anchor is placed for debugging purposes}
+             var anchor = jqLite($document[0].createComment(\textcolor{stringliteral}{' ngMessagesInclude: '} + src + \textcolor{charliteral}{' '}));
+             element.after(anchor);
+
+             \textcolor{comment}{// we don't want to pollute the DOM anymore by keeping an empty directive element}
+             element.remove();
+           \});
+         \});
+       \}
+     \};
+   \}])
+
+  .directive(\textcolor{stringliteral}{'ngMessage'}, ngMessageDirectiveFactory(\textcolor{stringliteral}{'AE'}))
+
+
+  .directive(\textcolor{stringliteral}{'ngMessageExp'}, ngMessageDirectiveFactory(\textcolor{charliteral}{'A'}));
+
+\textcolor{keyword}{function} ngMessageDirectiveFactory(restrict) \{
+  \textcolor{keywordflow}{return} [\textcolor{stringliteral}{'$animate'}, \textcolor{keyword}{function}($animate) \{
+    \textcolor{keywordflow}{return} \{
+      restrict: \textcolor{stringliteral}{'AE'},
+      transclude: \textcolor{stringliteral}{'element'},
+      terminal: \textcolor{keyword}{true},
+      require: \textcolor{stringliteral}{'^^ngMessages'},
+      link: \textcolor{keyword}{function}(scope, element, attrs, ngMessagesCtrl, $transclude) \{
+        var commentNode = element[0];
+
+        var records;
+        var staticExp = attrs.ngMessage || attrs.when;
+        var dynamicExp = attrs.ngMessageExp || attrs.whenExp;
+        var assignRecords = \textcolor{keyword}{function}(items) \{
+          records = items
+              ? (isArray(items)
+                    ? items
+                    : items.split(/[\(\backslash\)s,]+/))
+              : null;
+          ngMessagesCtrl.reRender();
+        \};
+
+        \textcolor{keywordflow}{if} (dynamicExp) \{
+          assignRecords(scope.$eval(dynamicExp));
+          scope.$watchCollection(dynamicExp, assignRecords);
+        \} \textcolor{keywordflow}{else} \{
+          assignRecords(staticExp);
+        \}
+
+        var currentElement, messageCtrl;
+        ngMessagesCtrl.register(commentNode, messageCtrl = \{
+          test: \textcolor{keyword}{function}(name) \{
+            \textcolor{keywordflow}{return} contains(records, name);
+          \},
+          attach: \textcolor{keyword}{function}() \{
+            \textcolor{keywordflow}{if} (!currentElement) \{
+              $transclude(scope, \textcolor{keyword}{function}(elm) \{
+                $animate.enter(elm, null, element);
+                currentElement = elm;
+
+                \textcolor{comment}{// in the event that the parent element is destroyed}
+                \textcolor{comment}{// by any other structural directive then it's time}
+                \textcolor{comment}{// to deregister the message from the controller}
+                currentElement.on(\textcolor{stringliteral}{'$destroy'}, \textcolor{keyword}{function}() \{
+                  \textcolor{keywordflow}{if} (currentElement) \{
+                    ngMessagesCtrl.deregister(commentNode);
+                    messageCtrl.detach();
+                  \}
+                \});
+              \});
+            \}
+          \},
+          detach: \textcolor{keyword}{function}() \{
+            \textcolor{keywordflow}{if} (currentElement) \{
+              var elm = currentElement;
+              currentElement = null;
+              $animate.leave(elm);
+            \}
+          \}
+        \});
+      \}
+    \};
+  \}];
+
+  \textcolor{keyword}{function} contains(collection, key) \{
+    \textcolor{keywordflow}{if} (collection) \{
+      \textcolor{keywordflow}{return} isArray(collection)
+          ? collection.indexOf(key) >= 0
+          : collection.hasOwnProperty(key);
+    \}
+  \}
+\}
+
+
+\})(window, window.angular);
+\end{DoxyCodeInclude}
+ 

@@ -1,0 +1,17 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module079d43dbdd9255cd2792cdcc172e57f5}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/utility/matches\+Property.\+js}
+var users = \mbox{[} \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}barney\textquotesingle{} \}, \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}fred\textquotesingle{} \} \mbox{]};
+
+\+\_\+.\+find(users, \+\_\+.\+matches\+Property(\textquotesingle{}user\textquotesingle{}, \textquotesingle{}fred\textquotesingle{})); // =$>$ \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}fred\textquotesingle{} \}
+
+
+\begin{DoxyCodeInclude}
+var baseClone = require(\textcolor{stringliteral}{'../internal/baseClone'}),
+    baseMatchesProperty = require(\textcolor{stringliteral}{'../internal/baseMatchesProperty'});
+
+\textcolor{keyword}{function} matchesProperty(path, srcValue) \{
+  \textcolor{keywordflow}{return} baseMatchesProperty(path, baseClone(srcValue, \textcolor{keyword}{true}));
+\}
+
+module.exports = matchesProperty;
+\end{DoxyCodeInclude}
+ 

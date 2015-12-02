@@ -1,0 +1,16 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_moduleffaeb34ec877ee6de115b4c8ca4b5493}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/collection/for\+Each.\+js}
+\+\_\+(\mbox{[}1, 2\mbox{]}).for\+Each(function(n) \{ console.\+log(n); \}).value(); // =$>$ logs each value from left to right and returns the array
+
+\+\_\+.\+for\+Each(\{ \textquotesingle{}a\textquotesingle{}\+: 1, \textquotesingle{}b\textquotesingle{}\+: 2 \}, function(n, key) \{ console.\+log(n, key); \}); // =$>$ logs each value-\/key pair and returns the object (iteration order is not guaranteed)
+
+
+\begin{DoxyCodeInclude}
+var arrayEach = require(\textcolor{stringliteral}{'../internal/arrayEach'}),
+    baseEach = require(\textcolor{stringliteral}{'../internal/baseEach'}),
+    createForEach = require(\textcolor{stringliteral}{'../internal/createForEach'});
+
+var forEach = createForEach(arrayEach, baseEach);
+
+module.exports = forEach;
+\end{DoxyCodeInclude}
+ 

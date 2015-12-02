@@ -1,0 +1,26 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_modulea7f316474b757c43d9fdea0493cc8bee}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/function/spread.\+js}
+var say = \+\_\+.\+spread(function(who, what) \{ return who + \textquotesingle{} says \textquotesingle{} + what; \});
+
+say(\mbox{[}\textquotesingle{}fred\textquotesingle{}, \textquotesingle{}hello\textquotesingle{}\mbox{]}); // =$>$ \textquotesingle{}fred says hello\textquotesingle{}
+
+// with a Promise var numbers = Promise.\+all(\mbox{[} Promise.\+resolve(40), Promise.\+resolve(36) \mbox{]});
+
+numbers.\+then(\+\_\+.\+spread(function(x, y) \{ return x + y; \})); // =$>$ a Promise of 76
+
+
+\begin{DoxyCodeInclude}
+
+var FUNC\_ERROR\_TEXT = \textcolor{stringliteral}{'Expected a function'};
+
+\textcolor{keyword}{function} spread(func) \{
+  \textcolor{keywordflow}{if} (typeof func != \textcolor{stringliteral}{'function'}) \{
+    \textcolor{keywordflow}{throw} \textcolor{keyword}{new} TypeError(FUNC\_ERROR\_TEXT);
+  \}
+  \textcolor{keywordflow}{return} \textcolor{keyword}{function}(array) \{
+    \textcolor{keywordflow}{return} func.apply(\textcolor{keyword}{this}, array);
+  \};
+\}
+
+module.exports = spread;
+\end{DoxyCodeInclude}
+ 

@@ -1,0 +1,22 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module6c9c3bdf88c41a9145ee19b0c7a03f99}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/lang/is\+Reg\+Exp.\+js}
+\+\_\+.\+is\+Reg\+Exp(/abc/); // =$>$ true
+
+\+\_\+.\+is\+Reg\+Exp(\textquotesingle{}/abc/\textquotesingle{}); // =$>$ false
+
+
+\begin{DoxyCodeInclude}
+var isObject = require(\textcolor{stringliteral}{'./isObject'});
+
+var regexpTag = \textcolor{stringliteral}{'[object RegExp]'};
+
+var objectProto = Object.prototype;
+
+var objToString = objectProto.toString;
+
+\textcolor{keyword}{function} isRegExp(value) \{
+  \textcolor{keywordflow}{return} isObject(value) && objToString.call(value) == regexpTag;
+\}
+
+module.exports = isRegExp;
+\end{DoxyCodeInclude}
+ 

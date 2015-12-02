@@ -1,0 +1,18 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_modulec6e9fc73fee8187b5268b6f4349f5b18}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/chain/chain.\+js}
+var users = \mbox{[} \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}barney\textquotesingle{}, \textquotesingle{}age\textquotesingle{}\+: 36 \}, \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}fred\textquotesingle{}, \textquotesingle{}age\textquotesingle{}\+: 40 \}, \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}pebbles\textquotesingle{}, \textquotesingle{}age\textquotesingle{}\+: 1 \} \mbox{]};
+
+var youngest = \+\_\+.\+chain(users) .sort\+By(\textquotesingle{}age\textquotesingle{}) .map(function(chr) \{ return chr.\+user + \textquotesingle{} is \textquotesingle{} + chr.\+age; \}) .first() .value(); // =$>$ \textquotesingle{}pebbles is 1\textquotesingle{}
+
+
+\begin{DoxyCodeInclude}
+var lodash = require(\textcolor{stringliteral}{'./lodash'});
+
+\textcolor{keyword}{function} chain(value) \{
+  var result = lodash(value);
+  result.\_\_chain\_\_ = \textcolor{keyword}{true};
+  \textcolor{keywordflow}{return} result;
+\}
+
+module.exports = chain;
+\end{DoxyCodeInclude}
+ 

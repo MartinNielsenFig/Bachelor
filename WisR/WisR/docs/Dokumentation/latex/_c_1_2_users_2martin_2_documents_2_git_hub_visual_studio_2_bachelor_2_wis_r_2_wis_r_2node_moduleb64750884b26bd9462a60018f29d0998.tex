@@ -1,0 +1,22 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_moduleb64750884b26bd9462a60018f29d0998}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/collection/count\+By.\+js}
+\+\_\+.\+count\+By(\mbox{[}4.\+3, 6.\+1, 6.\+4\mbox{]}, function(n) \{ return Math.\+floor(n); \}); // =$>$ \{ \textquotesingle{}4\textquotesingle{}\+: 1, \textquotesingle{}6\textquotesingle{}\+: 2 \}
+
+\+\_\+.\+count\+By(\mbox{[}4.\+3, 6.\+1, 6.\+4\mbox{]}, function(n) \{ return this.\+floor(n); \}, Math); // =$>$ \{ \textquotesingle{}4\textquotesingle{}\+: 1, \textquotesingle{}6\textquotesingle{}\+: 2 \}
+
+\+\_\+.\+count\+By(\mbox{[}\textquotesingle{}one\textquotesingle{}, \textquotesingle{}two\textquotesingle{}, \textquotesingle{}three\textquotesingle{}\mbox{]}, \textquotesingle{}length\textquotesingle{}); // =$>$ \{ \textquotesingle{}3\textquotesingle{}\+: 2, \textquotesingle{}5\textquotesingle{}\+: 1 \}
+
+
+\begin{DoxyCodeInclude}
+var createAggregator = require(\textcolor{stringliteral}{'../internal/createAggregator'});
+
+var objectProto = Object.prototype;
+
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+var countBy = createAggregator(\textcolor{keyword}{function}(result, value, key) \{
+  hasOwnProperty.call(result, key) ? ++result[key] : (result[key] = 1);
+\});
+
+module.exports = countBy;
+\end{DoxyCodeInclude}
+ 

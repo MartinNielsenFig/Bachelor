@@ -1,0 +1,27 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_moduleb29754afc9a8fc336fe9ca722d60090f}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/lang/is\+Array.\+js}
+\+\_\+.\+is\+Array(\mbox{[}1, 2, 3\mbox{]}); // =$>$ true
+
+\+\_\+.\+is\+Array(function() \{ return arguments; \}()); // =$>$ false
+
+
+\begin{DoxyCodeInclude}
+var getNative = require(\textcolor{stringliteral}{'../internal/getNative'}),
+    isLength = require(\textcolor{stringliteral}{'../internal/isLength'}),
+    isObjectLike = require(\textcolor{stringliteral}{'../internal/isObjectLike'});
+
+var arrayTag = \textcolor{stringliteral}{'[object Array]'};
+
+var objectProto = Object.prototype;
+
+var objToString = objectProto.toString;
+
+\textcolor{comment}{/* Native method references for those with the same name as other `lodash` methods. */}
+var nativeIsArray = getNative(Array, \textcolor{stringliteral}{'isArray'});
+
+var isArray = nativeIsArray || \textcolor{keyword}{function}(value) \{
+  \textcolor{keywordflow}{return} isObjectLike(value) && isLength(value.length) && objToString.call(value) == arrayTag;
+\};
+
+module.exports = isArray;
+\end{DoxyCodeInclude}
+ 

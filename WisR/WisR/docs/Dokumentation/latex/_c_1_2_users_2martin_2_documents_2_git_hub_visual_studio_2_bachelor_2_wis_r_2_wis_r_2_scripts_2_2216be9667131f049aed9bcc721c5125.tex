@@ -1,0 +1,228 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2_scripts_2_2216be9667131f049aed9bcc721c5125}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/\+Scripts/\+Crypto\+J\+S/components/aes.\+js}
+Shortcut functions to the cipher\textquotesingle{}s object interface.
+
+\begin{DoxyVerb}var ciphertext = CryptoJS.AES.encrypt(message, key, cfg);
+var plaintext  = CryptoJS.AES.decrypt(ciphertext, key, cfg);\end{DoxyVerb}
+
+
+
+\begin{DoxyCodeInclude}
+\textcolor{comment}{/*}
+\textcolor{comment}{CryptoJS v3.1.2}
+\textcolor{comment}{code.google.com/p/crypto-js}
+\textcolor{comment}{(c) 2009-2013 by Jeff Mott. All rights reserved.}
+\textcolor{comment}{code.google.com/p/crypto-js/wiki/License}
+\textcolor{comment}{*/}
+(\textcolor{keyword}{function} () \{
+    \textcolor{comment}{// Shortcuts}
+    var C = CryptoJS;
+    var C\_lib = C.lib;
+    var BlockCipher = C\_lib.BlockCipher;
+    var C\_algo = C.algo;
+
+    \textcolor{comment}{// Lookup tables}
+    var SBOX = [];
+    var INV\_SBOX = [];
+    var SUB\_MIX\_0 = [];
+    var SUB\_MIX\_1 = [];
+    var SUB\_MIX\_2 = [];
+    var SUB\_MIX\_3 = [];
+    var INV\_SUB\_MIX\_0 = [];
+    var INV\_SUB\_MIX\_1 = [];
+    var INV\_SUB\_MIX\_2 = [];
+    var INV\_SUB\_MIX\_3 = [];
+
+    \textcolor{comment}{// Compute lookup tables}
+    (\textcolor{keyword}{function} () \{
+        \textcolor{comment}{// Compute double table}
+        var d = [];
+        \textcolor{keywordflow}{for} (var i = 0; i < 256; i++) \{
+            \textcolor{keywordflow}{if} (i < 128) \{
+                d[i] = i << 1;
+            \} \textcolor{keywordflow}{else} \{
+                d[i] = (i << 1) ^ 0x11b;
+            \}
+        \}
+
+        \textcolor{comment}{// Walk GF(2^8)}
+        var x = 0;
+        var xi = 0;
+        \textcolor{keywordflow}{for} (var i = 0; i < 256; i++) \{
+            \textcolor{comment}{// Compute sbox}
+            var sx = xi ^ (xi << 1) ^ (xi << 2) ^ (xi << 3) ^ (xi << 4);
+            sx = (sx >>> 8) ^ (sx & 0xff) ^ 0x63;
+            SBOX[x] = sx;
+            INV\_SBOX[sx] = x;
+
+            \textcolor{comment}{// Compute multiplication}
+            var x2 = d[x];
+            var x4 = d[x2];
+            var x8 = d[x4];
+
+            \textcolor{comment}{// Compute sub bytes, mix columns tables}
+            var t = (d[sx] * 0x101) ^ (sx * 0x1010100);
+            SUB\_MIX\_0[x] = (t << 24) | (t >>> 8);
+            SUB\_MIX\_1[x] = (t << 16) | (t >>> 16);
+            SUB\_MIX\_2[x] = (t << 8)  | (t >>> 24);
+            SUB\_MIX\_3[x] = t;
+
+            \textcolor{comment}{// Compute inv sub bytes, inv mix columns tables}
+            var t = (x8 * 0x1010101) ^ (x4 * 0x10001) ^ (x2 * 0x101) ^ (x * 0x1010100);
+            INV\_SUB\_MIX\_0[sx] = (t << 24) | (t >>> 8);
+            INV\_SUB\_MIX\_1[sx] = (t << 16) | (t >>> 16);
+            INV\_SUB\_MIX\_2[sx] = (t << 8)  | (t >>> 24);
+            INV\_SUB\_MIX\_3[sx] = t;
+
+            \textcolor{comment}{// Compute next counter}
+            \textcolor{keywordflow}{if} (!x) \{
+                x = xi = 1;
+            \} \textcolor{keywordflow}{else} \{
+                x = x2 ^ d[d[d[x8 ^ x2]]];
+                xi ^= d[d[xi]];
+            \}
+        \}
+    \}());
+
+    \textcolor{comment}{// Precomputed Rcon lookup}
+    var RCON = [0x00, 0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80, 0x1b, 0x36];
+
+    var AES = C\_algo.AES = BlockCipher.extend(\{
+        \_doReset: \textcolor{keyword}{function} () \{
+            \textcolor{comment}{// Shortcuts}
+            var key = this.\_key;
+            var keyWords = key.words;
+            var keySize = key.sigBytes / 4;
+
+            \textcolor{comment}{// Compute number of rounds}
+            var nRounds = this.\_nRounds = keySize + 6
+
+            \textcolor{comment}{// Compute number of key schedule rows}
+            var ksRows = (nRounds + 1) * 4;
+
+            \textcolor{comment}{// Compute key schedule}
+            var keySchedule = this.\_keySchedule = [];
+            \textcolor{keywordflow}{for} (var ksRow = 0; ksRow < ksRows; ksRow++) \{
+                \textcolor{keywordflow}{if} (ksRow < keySize) \{
+                    keySchedule[ksRow] = keyWords[ksRow];
+                \} \textcolor{keywordflow}{else} \{
+                    var t = keySchedule[ksRow - 1];
+
+                    \textcolor{keywordflow}{if} (!(ksRow % keySize)) \{
+                        \textcolor{comment}{// Rot word}
+                        t = (t << 8) | (t >>> 24);
+
+                        \textcolor{comment}{// Sub word}
+                        t = (SBOX[t >>> 24] << 24) | (SBOX[(t >>> 16) & 0xff] << 16) | (SBOX[(t >>> 8) & 
+      0xff] << 8) | SBOX[t & 0xff];
+
+                        \textcolor{comment}{// Mix Rcon}
+                        t ^= RCON[(ksRow / keySize) | 0] << 24;
+                    \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (keySize > 6 && ksRow % keySize == 4) \{
+                        \textcolor{comment}{// Sub word}
+                        t = (SBOX[t >>> 24] << 24) | (SBOX[(t >>> 16) & 0xff] << 16) | (SBOX[(t >>> 8) & 
+      0xff] << 8) | SBOX[t & 0xff];
+                    \}
+
+                    keySchedule[ksRow] = keySchedule[ksRow - keySize] ^ t;
+                \}
+            \}
+
+            \textcolor{comment}{// Compute inv key schedule}
+            var invKeySchedule = this.\_invKeySchedule = [];
+            \textcolor{keywordflow}{for} (var invKsRow = 0; invKsRow < ksRows; invKsRow++) \{
+                var ksRow = ksRows - invKsRow;
+
+                \textcolor{keywordflow}{if} (invKsRow % 4) \{
+                    var t = keySchedule[ksRow];
+                \} \textcolor{keywordflow}{else} \{
+                    var t = keySchedule[ksRow - 4];
+                \}
+
+                \textcolor{keywordflow}{if} (invKsRow < 4 || ksRow <= 4) \{
+                    invKeySchedule[invKsRow] = t;
+                \} \textcolor{keywordflow}{else} \{
+                    invKeySchedule[invKsRow] = INV\_SUB\_MIX\_0[SBOX[t >>> 24]] ^ INV\_SUB\_MIX\_1[SBOX[(t >>> 16
+      ) & 0xff]] ^
+                                               INV\_SUB\_MIX\_2[SBOX[(t >>> 8) & 0xff]] ^ INV\_SUB\_MIX\_3[SBOX[t
+       & 0xff]];
+                \}
+            \}
+        \},
+
+        encryptBlock: \textcolor{keyword}{function} (M, offset) \{
+            this.\_doCryptBlock(M, offset, this.\_keySchedule, SUB\_MIX\_0, SUB\_MIX\_1, SUB\_MIX\_2, SUB\_MIX\_3, 
+      SBOX);
+        \},
+
+        decryptBlock: \textcolor{keyword}{function} (M, offset) \{
+            \textcolor{comment}{// Swap 2nd and 4th rows}
+            var t = M[offset + 1];
+            M[offset + 1] = M[offset + 3];
+            M[offset + 3] = t;
+
+            this.\_doCryptBlock(M, offset, this.\_invKeySchedule, INV\_SUB\_MIX\_0, INV\_SUB\_MIX\_1, INV\_SUB\_MIX\_2
+      , INV\_SUB\_MIX\_3, INV\_SBOX);
+
+            \textcolor{comment}{// Inv swap 2nd and 4th rows}
+            var t = M[offset + 1];
+            M[offset + 1] = M[offset + 3];
+            M[offset + 3] = t;
+        \},
+
+        \_doCryptBlock: \textcolor{keyword}{function} (M, offset, keySchedule, SUB\_MIX\_0, SUB\_MIX\_1, SUB\_MIX\_2, SUB\_MIX\_3, SBOX) 
+      \{
+            \textcolor{comment}{// Shortcut}
+            var nRounds = this.\_nRounds;
+
+            \textcolor{comment}{// Get input, add round key}
+            var s0 = M[offset]     ^ keySchedule[0];
+            var s1 = M[offset + 1] ^ keySchedule[1];
+            var s2 = M[offset + 2] ^ keySchedule[2];
+            var s3 = M[offset + 3] ^ keySchedule[3];
+
+            \textcolor{comment}{// Key schedule row counter}
+            var ksRow = 4;
+
+            \textcolor{comment}{// Rounds}
+            \textcolor{keywordflow}{for} (var round = 1; round < nRounds; round++) \{
+                \textcolor{comment}{// Shift rows, sub bytes, mix columns, add round key}
+                var t0 = SUB\_MIX\_0[s0 >>> 24] ^ SUB\_MIX\_1[(s1 >>> 16) & 0xff] ^ SUB\_MIX\_2[(s2 >>> 8) & 0xff
+      ] ^ SUB\_MIX\_3[s3 & 0xff] ^ keySchedule[ksRow++];
+                var t1 = SUB\_MIX\_0[s1 >>> 24] ^ SUB\_MIX\_1[(s2 >>> 16) & 0xff] ^ SUB\_MIX\_2[(s3 >>> 8) & 0xff
+      ] ^ SUB\_MIX\_3[s0 & 0xff] ^ keySchedule[ksRow++];
+                var t2 = SUB\_MIX\_0[s2 >>> 24] ^ SUB\_MIX\_1[(s3 >>> 16) & 0xff] ^ SUB\_MIX\_2[(s0 >>> 8) & 0xff
+      ] ^ SUB\_MIX\_3[s1 & 0xff] ^ keySchedule[ksRow++];
+                var t3 = SUB\_MIX\_0[s3 >>> 24] ^ SUB\_MIX\_1[(s0 >>> 16) & 0xff] ^ SUB\_MIX\_2[(s1 >>> 8) & 0xff
+      ] ^ SUB\_MIX\_3[s2 & 0xff] ^ keySchedule[ksRow++];
+
+                \textcolor{comment}{// Update state}
+                s0 = t0;
+                s1 = t1;
+                s2 = t2;
+                s3 = t3;
+            \}
+
+            \textcolor{comment}{// Shift rows, sub bytes, add round key}
+            var t0 = ((SBOX[s0 >>> 24] << 24) | (SBOX[(s1 >>> 16) & 0xff] << 16) | (SBOX[(s2 >>> 8) & 0xff]
+       << 8) | SBOX[s3 & 0xff]) ^ keySchedule[ksRow++];
+            var t1 = ((SBOX[s1 >>> 24] << 24) | (SBOX[(s2 >>> 16) & 0xff] << 16) | (SBOX[(s3 >>> 8) & 0xff]
+       << 8) | SBOX[s0 & 0xff]) ^ keySchedule[ksRow++];
+            var t2 = ((SBOX[s2 >>> 24] << 24) | (SBOX[(s3 >>> 16) & 0xff] << 16) | (SBOX[(s0 >>> 8) & 0xff]
+       << 8) | SBOX[s1 & 0xff]) ^ keySchedule[ksRow++];
+            var t3 = ((SBOX[s3 >>> 24] << 24) | (SBOX[(s0 >>> 16) & 0xff] << 16) | (SBOX[(s1 >>> 8) & 0xff]
+       << 8) | SBOX[s2 & 0xff]) ^ keySchedule[ksRow++];
+
+            \textcolor{comment}{// Set output}
+            M[offset]     = t0;
+            M[offset + 1] = t1;
+            M[offset + 2] = t2;
+            M[offset + 3] = t3;
+        \},
+
+        keySize: 256/32
+    \});
+
+    C.AES = BlockCipher.\_createHelper(AES);
+\}());
+\end{DoxyCodeInclude}
+ 
