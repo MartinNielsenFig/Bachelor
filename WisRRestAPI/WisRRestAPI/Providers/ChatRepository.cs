@@ -35,10 +35,9 @@ namespace WisRRestAPI.Providers
             return chatMessage;
         }
 
-        public string AddChatMessage(ChatMessage item)
+        public void AddChatMessage(ChatMessage item)
         {
             _database.GetCollection<ChatMessage>("chatmessage").InsertOneAsync(item).Wait();
-            return item.Id.ToString();
         }
 
         public Task<DeleteResult> DeleteChatMessage(string id)

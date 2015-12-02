@@ -152,6 +152,17 @@ namespace WisRRestAPI.Controllers
             //Assign date to ChatMessage
             chatMsg.Timestamp = TimeHelper.timeSinceEpoch();
 
+            try
+            {
+                _cr.AddChatMessage(chatMsg);
+            }
+            catch (Exception)
+            {
+                errors.Add(ErrorCodes.CouldNotGetChatMessages);
+                return new Notification(null, ErrorTypes.Error, errors).ToJson();
+            }
+            
+
             //assign ID to room
             chatMsg.Id = ObjectId.GenerateNewId(DateTime.Now).ToString();
             try
@@ -164,7 +175,7 @@ namespace WisRRestAPI.Controllers
                errorType = ErrorTypes.Complicated;
             }
 
-            return new Notification(_cr.AddChatMessage(chatMsg), errorType, errors).ToJson(); 
+            return new Notification(null, errorType, errors).ToJson(); 
         }
 
         /// <summary>

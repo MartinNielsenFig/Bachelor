@@ -1223,7 +1223,7 @@ app.controller("RoomController", ['$scope', '$http', 'configs', '$window', '$int
 * @param {Question} question the question to put into a scope variable so that we can work with it
 */
     $scope.toggleModalWithQuestion = function (modal, question) {
-        $(modal).modal('toggle');
+        $scope.modalChanger(modal,'toggle');
         $scope.SpecificQuestion = question;
         if (modal === '#myModalCreate') {
             $scope.UpdateQuestionBool = true;// if called from here it is an update
