@@ -469,7 +469,7 @@ q = _qr.GetQuestionWithoutImage(id).Result;
         }
 
         /// <summary>
-        /// Gets the question by identifier.
+        /// Gets the question without image by identifier.
         /// </summary>
         /// <param name="id">The identifier.</param>
         /// <returns>Notification</returns>
