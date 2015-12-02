@@ -1,0 +1,21 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module9b78c9929b6e9e99dc81015a36994d10}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/collection/find.\+js}
+var users = \mbox{[} \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}barney\textquotesingle{}, \textquotesingle{}age\textquotesingle{}\+: 36, \textquotesingle{}active\textquotesingle{}\+: true \}, \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}fred\textquotesingle{}, \textquotesingle{}age\textquotesingle{}\+: 40, \textquotesingle{}active\textquotesingle{}\+: false \}, \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}pebbles\textquotesingle{}, \textquotesingle{}age\textquotesingle{}\+: 1, \textquotesingle{}active\textquotesingle{}\+: true \} \mbox{]};
+
+\+\_\+.\+result(\+\_\+.\+find(users, function(chr) \{ return chr.\+age $<$ 40; \}), \textquotesingle{}user\textquotesingle{}); // =$>$ \textquotesingle{}barney\textquotesingle{}
+
+// using the {\ttfamily \+\_\+.\+matches} callback shorthand \+\_\+.\+result(\+\_\+.\+find(users, \{ \textquotesingle{}age\textquotesingle{}\+: 1, \textquotesingle{}active\textquotesingle{}\+: true \}), \textquotesingle{}user\textquotesingle{}); // =$>$ \textquotesingle{}pebbles\textquotesingle{}
+
+// using the {\ttfamily \+\_\+.\+matches\+Property} callback shorthand \+\_\+.\+result(\+\_\+.\+find(users, \textquotesingle{}active\textquotesingle{}, false), \textquotesingle{}user\textquotesingle{}); // =$>$ \textquotesingle{}fred\textquotesingle{}
+
+// using the {\ttfamily \+\_\+.\+property} callback shorthand \+\_\+.\+result(\+\_\+.\+find(users, \textquotesingle{}active\textquotesingle{}), \textquotesingle{}user\textquotesingle{}); // =$>$ \textquotesingle{}barney\textquotesingle{}
+
+
+\begin{DoxyCodeInclude}
+var baseEach = require(\textcolor{stringliteral}{'../internal/baseEach'}),
+    createFind = require(\textcolor{stringliteral}{'../internal/createFind'});
+
+var find = createFind(baseEach);
+
+module.exports = find;
+\end{DoxyCodeInclude}
+ 

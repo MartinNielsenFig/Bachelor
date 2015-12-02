@@ -1,0 +1,31 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module6dbd024f9fd2eba691cde173f91c59bb}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/object/keys.\+js}
+function Foo() \{ this.\+a = 1; this.\+b = 2; \}
+
+Foo.\+prototype.\+c = 3;
+
+\+\_\+.\+keys(new Foo); // =$>$ \mbox{[}\textquotesingle{}a\textquotesingle{}, \textquotesingle{}b\textquotesingle{}\mbox{]} (iteration order is not guaranteed)
+
+\+\_\+.\+keys(\textquotesingle{}hi\textquotesingle{}); // =$>$ \mbox{[}\textquotesingle{}0\textquotesingle{}, \textquotesingle{}1\textquotesingle{}\mbox{]}
+
+
+\begin{DoxyCodeInclude}
+var getNative = require(\textcolor{stringliteral}{'../internal/getNative'}),
+    isArrayLike = require(\textcolor{stringliteral}{'../internal/isArrayLike'}),
+    isObject = require(\textcolor{stringliteral}{'../lang/isObject'}),
+    shimKeys = require(\textcolor{stringliteral}{'../internal/shimKeys'});
+
+\textcolor{comment}{/* Native method references for those with the same name as other `lodash` methods. */}
+var nativeKeys = getNative(Object, \textcolor{stringliteral}{'keys'});
+
+var keys = !nativeKeys ? shimKeys : \textcolor{keyword}{function}(object) \{
+  var Ctor = \textcolor{keywordtype}{object} == null ? undefined : \textcolor{keywordtype}{object}.constructor;
+  \textcolor{keywordflow}{if} ((typeof Ctor == \textcolor{stringliteral}{'function'} && Ctor.prototype === \textcolor{keywordtype}{object}) ||
+      (typeof \textcolor{keywordtype}{object} != \textcolor{stringliteral}{'function'} && isArrayLike(\textcolor{keywordtype}{object}))) \{
+    \textcolor{keywordflow}{return} shimKeys(\textcolor{keywordtype}{object});
+  \}
+  \textcolor{keywordflow}{return} isObject(\textcolor{keywordtype}{object}) ? nativeKeys(\textcolor{keywordtype}{object}) : [];
+\};
+
+module.exports = keys;
+\end{DoxyCodeInclude}
+ 

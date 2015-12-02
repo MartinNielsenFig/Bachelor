@@ -1,0 +1,15 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module3e59e70229684c451d857477f17417d2}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/array/flatten\+Deep.\+js}
+\+\_\+.\+flatten\+Deep(\mbox{[}1, \mbox{[}2, 3, \mbox{[}4\mbox{]}\mbox{]}\mbox{]}); // =$>$ \mbox{[}1, 2, 3, 4\mbox{]}
+
+
+\begin{DoxyCodeInclude}
+var baseFlatten = require(\textcolor{stringliteral}{'../internal/baseFlatten'});
+
+\textcolor{keyword}{function} flattenDeep(array) \{
+  var length = array ? array.length : 0;
+  \textcolor{keywordflow}{return} length ? baseFlatten(array, \textcolor{keyword}{true}) : [];
+\}
+
+module.exports = flattenDeep;
+\end{DoxyCodeInclude}
+ 

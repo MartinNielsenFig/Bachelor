@@ -1,0 +1,36 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module7060d93eed0cfff7c6ea6189eee42c7d}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/function/after.\+js}
+var saves = \mbox{[}\textquotesingle{}profile\textquotesingle{}, \textquotesingle{}settings\textquotesingle{}\mbox{]};
+
+var done = \+\_\+.\+after(saves.\+length, function() \{ console.\+log(\textquotesingle{}done saving!\textquotesingle{}); \});
+
+\+\_\+.\+for\+Each(saves, function(type) \{ async\+Save(\{ \textquotesingle{}type\textquotesingle{}\+: type, \textquotesingle{}complete\textquotesingle{}\+: done \}); \}); // =$>$ logs \textquotesingle{}done saving!\textquotesingle{} after the two async saves have completed
+
+
+\begin{DoxyCodeInclude}
+
+var FUNC\_ERROR\_TEXT = \textcolor{stringliteral}{'Expected a function'};
+
+\textcolor{comment}{/* Native method references for those with the same name as other `lodash` methods. */}
+var nativeIsFinite = global.isFinite;
+
+\textcolor{keyword}{function} after(n, func) \{
+  \textcolor{keywordflow}{if} (typeof func != \textcolor{stringliteral}{'function'}) \{
+    \textcolor{keywordflow}{if} (typeof n == \textcolor{stringliteral}{'function'}) \{
+      var temp = n;
+      n = func;
+      func = temp;
+    \} \textcolor{keywordflow}{else} \{
+      \textcolor{keywordflow}{throw} \textcolor{keyword}{new} TypeError(FUNC\_ERROR\_TEXT);
+    \}
+  \}
+  n = nativeIsFinite(n = +n) ? n : 0;
+  \textcolor{keywordflow}{return} \textcolor{keyword}{function}() \{
+    \textcolor{keywordflow}{if} (--n < 1) \{
+      \textcolor{keywordflow}{return} func.apply(\textcolor{keyword}{this}, arguments);
+    \}
+  \};
+\}
+
+module.exports = after;
+\end{DoxyCodeInclude}
+ 

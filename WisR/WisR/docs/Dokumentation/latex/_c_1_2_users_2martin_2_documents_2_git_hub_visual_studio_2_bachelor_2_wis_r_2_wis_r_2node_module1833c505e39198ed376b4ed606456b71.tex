@@ -1,0 +1,20 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module1833c505e39198ed376b4ed606456b71}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/array/find\+Index.\+js}
+var users = \mbox{[} \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}barney\textquotesingle{}, \textquotesingle{}active\textquotesingle{}\+: false \}, \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}fred\textquotesingle{}, \textquotesingle{}active\textquotesingle{}\+: false \}, \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}pebbles\textquotesingle{}, \textquotesingle{}active\textquotesingle{}\+: true \} \mbox{]};
+
+\+\_\+.\+find\+Index(users, function(chr) \{ return chr.\+user == \textquotesingle{}barney\textquotesingle{}; \}); // =$>$ 0
+
+// using the {\ttfamily \+\_\+.\+matches} callback shorthand \+\_\+.\+find\+Index(users, \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}fred\textquotesingle{}, \textquotesingle{}active\textquotesingle{}\+: false \}); // =$>$ 1
+
+// using the {\ttfamily \+\_\+.\+matches\+Property} callback shorthand \+\_\+.\+find\+Index(users, \textquotesingle{}active\textquotesingle{}, false); // =$>$ 0
+
+// using the {\ttfamily \+\_\+.\+property} callback shorthand \+\_\+.\+find\+Index(users, \textquotesingle{}active\textquotesingle{}); // =$>$ 2
+
+
+\begin{DoxyCodeInclude}
+var createFindIndex = require(\textcolor{stringliteral}{'../internal/createFindIndex'});
+
+var findIndex = createFindIndex();
+
+module.exports = findIndex;
+\end{DoxyCodeInclude}
+ 

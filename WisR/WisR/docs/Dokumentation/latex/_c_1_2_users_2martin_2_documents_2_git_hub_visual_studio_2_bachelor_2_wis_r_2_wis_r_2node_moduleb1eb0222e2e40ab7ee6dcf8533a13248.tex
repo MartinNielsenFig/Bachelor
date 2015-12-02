@@ -1,0 +1,35 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_moduleb1eb0222e2e40ab7ee6dcf8533a13248}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/lang/is\+Empty.\+js}
+\+\_\+.\+is\+Empty(null); // =$>$ true
+
+\+\_\+.\+is\+Empty(true); // =$>$ true
+
+\+\_\+.\+is\+Empty(1); // =$>$ true
+
+\+\_\+.\+is\+Empty(\mbox{[}1, 2, 3\mbox{]}); // =$>$ false
+
+\+\_\+.\+is\+Empty(\{ \textquotesingle{}a\textquotesingle{}\+: 1 \}); // =$>$ false
+
+
+\begin{DoxyCodeInclude}
+var isArguments = require(\textcolor{stringliteral}{'./isArguments'}),
+    isArray = require(\textcolor{stringliteral}{'./isArray'}),
+    isArrayLike = require(\textcolor{stringliteral}{'../internal/isArrayLike'}),
+    isFunction = require(\textcolor{stringliteral}{'./isFunction'}),
+    isObjectLike = require(\textcolor{stringliteral}{'../internal/isObjectLike'}),
+    isString = require(\textcolor{stringliteral}{'./isString'}),
+    keys = require(\textcolor{stringliteral}{'../object/keys'});
+
+\textcolor{keyword}{function} isEmpty(value) \{
+  \textcolor{keywordflow}{if} (value == null) \{
+    \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+  \}
+  \textcolor{keywordflow}{if} (isArrayLike(value) && (isArray(value) || isString(value) || isArguments(value) ||
+      (isObjectLike(value) && isFunction(value.splice)))) \{
+    \textcolor{keywordflow}{return} !value.length;
+  \}
+  \textcolor{keywordflow}{return} !keys(value).length;
+\}
+
+module.exports = isEmpty;
+\end{DoxyCodeInclude}
+ 

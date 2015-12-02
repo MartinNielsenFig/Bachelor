@@ -1,0 +1,17 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module5be4bf39274b197f3683583b482280e0}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/utility/constant.\+js}
+var object = \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}fred\textquotesingle{} \}; var getter = \+\_\+.\+constant(object);
+
+getter() === object; // =$>$ true
+
+
+\begin{DoxyCodeInclude}
+
+\textcolor{keyword}{function} constant(value) \{
+  \textcolor{keywordflow}{return} \textcolor{keyword}{function}() \{
+    \textcolor{keywordflow}{return} value;
+  \};
+\}
+
+module.exports = constant;
+\end{DoxyCodeInclude}
+ 

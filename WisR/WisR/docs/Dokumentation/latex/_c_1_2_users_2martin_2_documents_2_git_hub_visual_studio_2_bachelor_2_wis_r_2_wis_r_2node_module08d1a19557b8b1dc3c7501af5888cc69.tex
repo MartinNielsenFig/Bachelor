@@ -1,0 +1,26 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module08d1a19557b8b1dc3c7501af5888cc69}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/utility/callback.\+js}
+var users = \mbox{[} \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}barney\textquotesingle{}, \textquotesingle{}age\textquotesingle{}\+: 36 \}, \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}fred\textquotesingle{}, \textquotesingle{}age\textquotesingle{}\+: 40 \} \mbox{]};
+
+// wrap to create custom callback shorthands \+\_\+.\+callback = \+\_\+.\+wrap(\+\_\+.\+callback, function(callback, func, this\+Arg) \{ var match = /$^\wedge$(.+?)\+\_\+\+\_\+(\mbox{[}gl\mbox{]}t)(.+)\$/.exec(func); if (!match) \{ return callback(func, this\+Arg); \} return function(object) \{ return match\mbox{[}2\mbox{]} == \textquotesingle{}gt\textquotesingle{} ? object\mbox{[}match\mbox{[}1\mbox{]}\mbox{]} $>$ match\mbox{[}3\mbox{]} \+: object\mbox{[}match\mbox{[}1\mbox{]}\mbox{]} $<$ match\mbox{[}3\mbox{]}; \}; \});
+
+\+\_\+.\+filter(users, \textquotesingle{}age\+\_\+\+\_\+gt36\textquotesingle{}); // =$>$ \mbox{[}\{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}fred\textquotesingle{}, \textquotesingle{}age\textquotesingle{}\+: 40 \}\mbox{]}
+
+
+\begin{DoxyCodeInclude}
+var baseCallback = require(\textcolor{stringliteral}{'../internal/baseCallback'}),
+    isIterateeCall = require(\textcolor{stringliteral}{'../internal/isIterateeCall'}),
+    isObjectLike = require(\textcolor{stringliteral}{'../internal/isObjectLike'}),
+    matches = require(\textcolor{stringliteral}{'./matches'});
+
+\textcolor{keyword}{function} callback(func, thisArg, guard) \{
+  \textcolor{keywordflow}{if} (guard && isIterateeCall(func, thisArg, guard)) \{
+    thisArg = undefined;
+  \}
+  \textcolor{keywordflow}{return} isObjectLike(func)
+    ? matches(func)
+    : baseCallback(func, thisArg);
+\}
+
+module.exports = callback;
+\end{DoxyCodeInclude}
+ 

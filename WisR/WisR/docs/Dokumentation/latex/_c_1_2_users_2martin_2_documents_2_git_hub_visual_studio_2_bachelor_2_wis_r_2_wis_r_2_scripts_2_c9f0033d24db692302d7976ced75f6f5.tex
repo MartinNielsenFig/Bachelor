@@ -1,0 +1,105 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2_scripts_2_c9f0033d24db692302d7976ced75f6f5}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/\+Scripts/\+Crypto\+J\+S/components/pbkdf2.\+js}
+Computes the Password-\/\+Based Key Derivation Function 2.
+
+
+\begin{DoxyParams}{Parameters}
+{\em \{\+Word\+Array$\vert$string\}} & password The password. \\
+\hline
+{\em \{\+Word\+Array$\vert$string\}} & salt A salt. \\
+\hline
+{\em \{\+Object\}} & cfg (Optional) The configuration options to use for this computation.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\{Word\+Array\} The derived key.
+\end{DoxyReturn}
+\begin{DoxyVerb}var key = CryptoJS.PBKDF2(password, salt);
+var key = CryptoJS.PBKDF2(password, salt, { keySize: 8 });
+var key = CryptoJS.PBKDF2(password, salt, { keySize: 8, iterations: 1000 });\end{DoxyVerb}
+
+
+
+\begin{DoxyCodeInclude}
+\textcolor{comment}{/*}
+\textcolor{comment}{CryptoJS v3.1.2}
+\textcolor{comment}{code.google.com/p/crypto-js}
+\textcolor{comment}{(c) 2009-2013 by Jeff Mott. All rights reserved.}
+\textcolor{comment}{code.google.com/p/crypto-js/wiki/License}
+\textcolor{comment}{*/}
+(\textcolor{keyword}{function} () \{
+    \textcolor{comment}{// Shortcuts}
+    var C = CryptoJS;
+    var C\_lib = C.lib;
+    var Base = C\_lib.Base;
+    var WordArray = C\_lib.WordArray;
+    var C\_algo = C.algo;
+    var SHA1 = C\_algo.SHA1;
+    var HMAC = C\_algo.HMAC;
+
+    var PBKDF2 = C\_algo.PBKDF2 = Base.extend(\{
+        cfg: Base.extend(\{
+            keySize: 128/32,
+            hasher: SHA1,
+            iterations: 1
+        \}),
+
+        init: \textcolor{keyword}{function} (cfg) \{
+            this.cfg = this.cfg.extend(cfg);
+        \},
+
+        compute: \textcolor{keyword}{function} (password, salt) \{
+            \textcolor{comment}{// Shortcut}
+            var cfg = this.cfg;
+
+            \textcolor{comment}{// Init HMAC}
+            var hmac = HMAC.create(cfg.hasher, password);
+
+            \textcolor{comment}{// Initial values}
+            var derivedKey = WordArray.create();
+            var blockIndex = WordArray.create([0x00000001]);
+
+            \textcolor{comment}{// Shortcuts}
+            var derivedKeyWords = derivedKey.words;
+            var blockIndexWords = blockIndex.words;
+            var keySize = cfg.keySize;
+            var iterations = cfg.iterations;
+
+            \textcolor{comment}{// Generate key}
+            \textcolor{keywordflow}{while} (derivedKeyWords.length < keySize) \{
+                var block = hmac.update(salt).finalize(blockIndex);
+                hmac.reset();
+
+                \textcolor{comment}{// Shortcuts}
+                var blockWords = block.words;
+                var blockWordsLength = blockWords.length;
+
+                \textcolor{comment}{// Iterations}
+                var intermediate = block;
+                \textcolor{keywordflow}{for} (var i = 1; i < iterations; i++) \{
+                    intermediate = hmac.finalize(intermediate);
+                    hmac.reset();
+
+                    \textcolor{comment}{// Shortcut}
+                    var intermediateWords = intermediate.words;
+
+                    \textcolor{comment}{// XOR intermediate with block}
+                    \textcolor{keywordflow}{for} (var j = 0; j < blockWordsLength; j++) \{
+                        blockWords[j] ^= intermediateWords[j];
+                    \}
+                \}
+
+                derivedKey.concat(block);
+                blockIndexWords[0]++;
+            \}
+            derivedKey.sigBytes = keySize * 4;
+
+            \textcolor{keywordflow}{return} derivedKey;
+        \}
+    \});
+
+    C.PBKDF2 = \textcolor{keyword}{function} (password, salt, cfg) \{
+        \textcolor{keywordflow}{return} PBKDF2.create(cfg).compute(password, salt);
+    \};
+\}());
+\end{DoxyCodeInclude}
+ 

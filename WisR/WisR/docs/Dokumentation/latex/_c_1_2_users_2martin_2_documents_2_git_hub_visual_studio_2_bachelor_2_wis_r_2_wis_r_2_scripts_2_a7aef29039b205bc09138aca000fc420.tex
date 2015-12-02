@@ -1,0 +1,109 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2_scripts_2_a7aef29039b205bc09138aca000fc420}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/\+Scripts/\+Crypto\+J\+S/components/rc4.\+js}
+Shortcut functions to the cipher\textquotesingle{}s object interface.
+
+\begin{DoxyVerb}var ciphertext = CryptoJS.RC4.encrypt(message, key, cfg);
+var plaintext  = CryptoJS.RC4.decrypt(ciphertext, key, cfg);\end{DoxyVerb}
+
+
+
+\begin{DoxyCodeInclude}
+\textcolor{comment}{/*}
+\textcolor{comment}{CryptoJS v3.1.2}
+\textcolor{comment}{code.google.com/p/crypto-js}
+\textcolor{comment}{(c) 2009-2013 by Jeff Mott. All rights reserved.}
+\textcolor{comment}{code.google.com/p/crypto-js/wiki/License}
+\textcolor{comment}{*/}
+(\textcolor{keyword}{function} () \{
+    \textcolor{comment}{// Shortcuts}
+    var C = CryptoJS;
+    var C\_lib = C.lib;
+    var StreamCipher = C\_lib.StreamCipher;
+    var C\_algo = C.algo;
+
+    var RC4 = C\_algo.RC4 = StreamCipher.extend(\{
+        \_doReset: \textcolor{keyword}{function} () \{
+            \textcolor{comment}{// Shortcuts}
+            var key = this.\_key;
+            var keyWords = key.words;
+            var keySigBytes = key.sigBytes;
+
+            \textcolor{comment}{// Init sbox}
+            var S = this.\_S = [];
+            \textcolor{keywordflow}{for} (var i = 0; i < 256; i++) \{
+                S[i] = i;
+            \}
+
+            \textcolor{comment}{// Key setup}
+            \textcolor{keywordflow}{for} (var i = 0, j = 0; i < 256; i++) \{
+                var keyByteIndex = i % keySigBytes;
+                var keyByte = (keyWords[keyByteIndex >>> 2] >>> (24 - (keyByteIndex % 4) * 8)) & 0xff;
+
+                j = (j + S[i] + keyByte) % 256;
+
+                \textcolor{comment}{// Swap}
+                var t = S[i];
+                S[i] = S[j];
+                S[j] = t;
+            \}
+
+            \textcolor{comment}{// Counters}
+            this.\_i = this.\_j = 0;
+        \},
+
+        \_doProcessBlock: \textcolor{keyword}{function} (M, offset) \{
+            M[offset] ^= generateKeystreamWord.call(\textcolor{keyword}{this});
+        \},
+
+        keySize: 256/32,
+
+        ivSize: 0
+    \});
+
+    \textcolor{keyword}{function} generateKeystreamWord() \{
+        \textcolor{comment}{// Shortcuts}
+        var S = this.\_S;
+        var i = this.\_i;
+        var j = this.\_j;
+
+        \textcolor{comment}{// Generate keystream word}
+        var keystreamWord = 0;
+        \textcolor{keywordflow}{for} (var n = 0; n < 4; n++) \{
+            i = (i + 1) % 256;
+            j = (j + S[i]) % 256;
+
+            \textcolor{comment}{// Swap}
+            var t = S[i];
+            S[i] = S[j];
+            S[j] = t;
+
+            keystreamWord |= S[(S[i] + S[j]) % 256] << (24 - n * 8);
+        \}
+
+        \textcolor{comment}{// Update counters}
+        this.\_i = i;
+        this.\_j = j;
+
+        \textcolor{keywordflow}{return} keystreamWord;
+    \}
+
+    C.RC4 = StreamCipher.\_createHelper(RC4);
+
+    var RC4Drop = C\_algo.RC4Drop = RC4.extend(\{
+        cfg: RC4.cfg.extend(\{
+            drop: 192
+        \}),
+
+        \_doReset: \textcolor{keyword}{function} () \{
+            RC4.\_doReset.call(\textcolor{keyword}{this});
+
+            \textcolor{comment}{// Drop}
+            \textcolor{keywordflow}{for} (var i = this.cfg.drop; i > 0; i--) \{
+                generateKeystreamWord.call(\textcolor{keyword}{this});
+            \}
+        \}
+    \});
+
+    C.RC4Drop = StreamCipher.\_createHelper(RC4Drop);
+\}());
+\end{DoxyCodeInclude}
+ 

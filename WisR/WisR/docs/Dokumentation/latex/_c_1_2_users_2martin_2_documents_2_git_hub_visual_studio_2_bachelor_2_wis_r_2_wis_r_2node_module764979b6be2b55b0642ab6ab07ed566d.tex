@@ -1,0 +1,18 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module764979b6be2b55b0642ab6ab07ed566d}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/chain/wrapper\+Chain.\+js}
+var users = \mbox{[} \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}barney\textquotesingle{}, \textquotesingle{}age\textquotesingle{}\+: 36 \}, \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}fred\textquotesingle{}, \textquotesingle{}age\textquotesingle{}\+: 40 \} \mbox{]};
+
+// without explicit chaining \+\_\+(users).first(); // =$>$ \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}barney\textquotesingle{}, \textquotesingle{}age\textquotesingle{}\+: 36 \}
+
+// with explicit chaining \+\_\+(users).chain() .first() .pick(\textquotesingle{}user\textquotesingle{}) .value(); // =$>$ \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}barney\textquotesingle{} \}
+
+
+\begin{DoxyCodeInclude}
+var chain = require(\textcolor{stringliteral}{'./chain'});
+
+\textcolor{keyword}{function} wrapperChain() \{
+  \textcolor{keywordflow}{return} chain(\textcolor{keyword}{this});
+\}
+
+module.exports = wrapperChain;
+\end{DoxyCodeInclude}
+ 

@@ -1,0 +1,444 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2_scripts_2angular-route_8js-example}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/\+Scripts/angular-\/route.\+js}
+This example shows how changing the U\+R\+L hash causes the {\ttfamily \$route} to match a route against the U\+R\+L, and the {\ttfamily ng\+View} pulls in the partial.
+
+$<$file name=\char`\"{}index.\+html\char`\"{}$>$  Choose\+: \href{Book/Moby}{\tt Moby} $\vert$ \href{Book/Moby/ch/1}{\tt Moby\+: Ch1} $\vert$ \href{Book/Gatsby}{\tt Gatsby} $\vert$ \href{Book/Gatsby/ch/4?key=value}{\tt Gatsby\+: Ch4} $\vert$ \href{Book/Scarlet}{\tt Scarlet Letter}~\newline
+
+
+ 
+
+ 
+
+
+
+ 
+\begin{DoxyPre}$location.path() = \{\{$location.path()\}\}\end{DoxyPre}
+ 
+\begin{DoxyPre}$route.current.templateUrl = \{\{$route.current.templateUrl\}\}\end{DoxyPre}
+ 
+\begin{DoxyPre}$route.current.params = \{\{$route.current.params\}\}\end{DoxyPre}
+ 
+\begin{DoxyPre}$route.current.scope.name = \{\{$route.current.scope.name\}\}\end{DoxyPre}
+ 
+\begin{DoxyPre}$routeParams = \{\{$routeParams\}\}\end{DoxyPre}
+  $<$/file$>$
+
+$<$file name=\char`\"{}book.\+html\char`\"{}$>$ controller\+: \{\{name\}\}~\newline
+ Book Id\+: \{\{params.\+book\+Id\}\}~\newline
+ $<$/file$>$
+
+$<$file name=\char`\"{}chapter.\+html\char`\"{}$>$ controller\+: \{\{name\}\}~\newline
+ Book Id\+: \{\{params.\+book\+Id\}\}~\newline
+ Chapter Id\+: \{\{params.\+chapter\+Id\}\} $<$/file$>$
+
+$<$file name=\char`\"{}script.\+js\char`\"{}$>$ angular.\+module(\textquotesingle{}ng\+Route\+Example\textquotesingle{}, \mbox{[}\textquotesingle{}ng\+Route\textquotesingle{}\mbox{]})
+
+.controller(\textquotesingle{}Main\+Controller\textquotesingle{}, function(\$scope, \$route, \$route\+Params, \$location) \{ \$scope.\$route = \$route; \$scope.\$location = \$location; \$scope.\$route\+Params = \$route\+Params; \})
+
+.controller(\textquotesingle{}Book\+Controller\textquotesingle{}, function(\$scope, \$route\+Params) \{ \$scope.\+name = \char`\"{}\+Book\+Controller\char`\"{}; \$scope.\+params = \$route\+Params; \})
+
+.controller(\textquotesingle{}Chapter\+Controller\textquotesingle{}, function(\$scope, \$route\+Params) \{ \$scope.\+name = \char`\"{}\+Chapter\+Controller\char`\"{}; \$scope.\+params = \$route\+Params; \})
+
+.config(function(\$route\+Provider, \$location\+Provider) \{ \$route\+Provider .when(\textquotesingle{}/\+Book/\+:book\+Id\textquotesingle{}, \{ template\+Url\+: \textquotesingle{}book.\+html\textquotesingle{}, controller\+: \textquotesingle{}Book\+Controller\textquotesingle{}, resolve\+: \{ // I will cause a 1 second delay delay\+: function(\$q, \$timeout) \{ var delay = \$q.\+defer(); \$timeout(delay.\+resolve, 1000); return delay.\+promise; \} \} \}) .when(\textquotesingle{}/\+Book/\+:book\+Id/ch/\+:chapter\+Id\textquotesingle{}, \{ template\+Url\+: \textquotesingle{}chapter.\+html\textquotesingle{}, controller\+: \textquotesingle{}Chapter\+Controller\textquotesingle{} \});
+
+// configure html5 to get links working on jsfiddle \$location\+Provider.\+html5\+Mode(true); \});
+
+$<$/file$>$
+
+$<$file name=\char`\"{}protractor.\+js\char`\"{} type=\char`\"{}protractor\char`\"{}$>$ it(\textquotesingle{}should load and compile correct template\textquotesingle{}, function() \{ element(by.\+link\+Text(\textquotesingle{}Moby\+: Ch1\textquotesingle{})).click(); var content = element(by.\+css(\textquotesingle{}\mbox{[}ng-\/view\mbox{]}\textquotesingle{})).get\+Text(); expect(content).to\+Match(/controller\textbackslash{}\+: Chapter\+Controller/); expect(content).to\+Match(/\+Book Id\textbackslash{}\+: Moby/); expect(content).to\+Match(/\+Chapter Id\textbackslash{}\+: 1/);
+
+element(by.\+partial\+Link\+Text(\textquotesingle{}Scarlet\textquotesingle{})).click();
+
+content = element(by.\+css(\textquotesingle{}\mbox{[}ng-\/view\mbox{]}\textquotesingle{})).get\+Text(); expect(content).to\+Match(/controller\textbackslash{}\+: Book\+Controller/); expect(content).to\+Match(/\+Book Id\textbackslash{}\+: Scarlet/); \}); $<$/file$>$ 
+
+
+\begin{DoxyCodeInclude}
+
+(\textcolor{keyword}{function}(window, angular, undefined) \{\textcolor{stringliteral}{'use strict'};
+
+ \textcolor{comment}{/* global -ngRouteModule */}
+var ngRouteModule = angular.module(\textcolor{stringliteral}{'ngRoute'}, [\textcolor{stringliteral}{'ng'}]).
+                        provider(\textcolor{stringliteral}{'$route'}, $RouteProvider),
+    $routeMinErr = angular.$$minErr(\textcolor{stringliteral}{'ngRoute'});
+
+\textcolor{keyword}{function} $RouteProvider() \{
+  \textcolor{keyword}{function} inherit(parent, extra) \{
+    \textcolor{keywordflow}{return} angular.extend(Object.create(parent), extra);
+  \}
+
+  var routes = \{\};
+
+  this.when = \textcolor{keyword}{function}(path, route) \{
+    \textcolor{comment}{//copy original route object to preserve params inherited from proto chain}
+    var routeCopy = angular.copy(route);
+    \textcolor{keywordflow}{if} (angular.isUndefined(routeCopy.reloadOnSearch)) \{
+      routeCopy.reloadOnSearch = \textcolor{keyword}{true};
+    \}
+    \textcolor{keywordflow}{if} (angular.isUndefined(routeCopy.caseInsensitiveMatch)) \{
+      routeCopy.caseInsensitiveMatch = this.caseInsensitiveMatch;
+    \}
+    routes[path] = angular.extend(
+      routeCopy,
+      path && pathRegExp(path, routeCopy)
+    );
+
+    \textcolor{comment}{// create redirection for trailing slashes}
+    \textcolor{keywordflow}{if} (path) \{
+      var redirectPath = (path[path.length - 1] == \textcolor{charliteral}{'/'})
+            ? path.substr(0, path.length - 1)
+            : path + \textcolor{charliteral}{'/'};
+
+      routes[redirectPath] = angular.extend(
+        \{redirectTo: path\},
+        pathRegExp(redirectPath, routeCopy)
+      );
+    \}
+
+    \textcolor{keywordflow}{return} \textcolor{keyword}{this};
+  \};
+
+  this.caseInsensitiveMatch = \textcolor{keyword}{false};
+
+  \textcolor{keyword}{function} pathRegExp(path, opts) \{
+    var insensitive = opts.caseInsensitiveMatch,
+        ret = \{
+          originalPath: path,
+          regexp: path
+        \},
+        keys = ret.keys = [];
+
+    path = path
+      .replace(/([().])/g, \textcolor{stringliteral}{'\(\backslash\)\(\backslash\)$1'})
+      .replace(/(\(\backslash\)/)?:(\(\backslash\)w+)([\(\backslash\)?\(\backslash\)*])?/g, \textcolor{keyword}{function}(\_, slash, key, option) \{
+        var optional = option === \textcolor{charliteral}{'?'} ? option : null;
+        var star = option === \textcolor{charliteral}{'*'} ? option : null;
+        keys.push(\{ name: key, optional: !!optional \});
+        slash = slash || \textcolor{stringliteral}{''};
+        \textcolor{keywordflow}{return} \textcolor{stringliteral}{''}
+          + (optional ? \textcolor{stringliteral}{''} : slash)
+          + \textcolor{stringliteral}{'(?:'}
+          + (optional ? slash : \textcolor{stringliteral}{''})
+          + (star && \textcolor{stringliteral}{'(.+?)'} || \textcolor{stringliteral}{'([^/]+)'})
+          + (optional || \textcolor{stringliteral}{''})
+          + \textcolor{charliteral}{')'}
+          + (optional || \textcolor{stringliteral}{''});
+      \})
+      .replace(/([\(\backslash\)/$\(\backslash\)*])/g, \textcolor{stringliteral}{'\(\backslash\)\(\backslash\)$1'});
+
+    ret.regexp = \textcolor{keyword}{new} RegExp(\textcolor{charliteral}{'^'} + path + \textcolor{charliteral}{'$'}, insensitive ? \textcolor{charliteral}{'i'} : \textcolor{stringliteral}{''});
+    \textcolor{keywordflow}{return} ret;
+  \}
+
+  this.otherwise = \textcolor{keyword}{function}(params) \{
+    \textcolor{keywordflow}{if} (typeof params === \textcolor{stringliteral}{'string'}) \{
+      params = \{redirectTo: params\};
+    \}
+    this.when(null, params);
+    \textcolor{keywordflow}{return} \textcolor{keyword}{this};
+  \};
+
+
+  this.$get = [\textcolor{stringliteral}{'$rootScope'},
+               \textcolor{stringliteral}{'$location'},
+               \textcolor{stringliteral}{'$routeParams'},
+               \textcolor{stringliteral}{'$q'},
+               \textcolor{stringliteral}{'$injector'},
+               \textcolor{stringliteral}{'$templateRequest'},
+               \textcolor{stringliteral}{'$sce'},
+      \textcolor{keyword}{function}($rootScope, $location, $routeParams, $q, $injector, $templateRequest, $sce) \{
+
+    var forceReload = \textcolor{keyword}{false},
+        preparedRoute,
+        preparedRouteIsUpdateOnly,
+        $route = \{
+          routes: routes,
+
+          reload: \textcolor{keyword}{function}() \{
+            forceReload = \textcolor{keyword}{true};
+            $rootScope.$evalAsync(\textcolor{keyword}{function}() \{
+              \textcolor{comment}{// Don't support cancellation of a reload for now...}
+              prepareRoute();
+              commitRoute();
+            \});
+          \},
+
+          updateParams: \textcolor{keyword}{function}(newParams) \{
+            \textcolor{keywordflow}{if} (this.current && this.current.$$route) \{
+              newParams = angular.extend(\{\}, this.current.params, newParams);
+              $location.path(interpolate(this.current.$$route.originalPath, newParams));
+              \textcolor{comment}{// interpolate modifies newParams, only query params are left}
+              $location.search(newParams);
+            \} \textcolor{keywordflow}{else} \{
+              \textcolor{keywordflow}{throw} $routeMinErr(\textcolor{stringliteral}{'norout'}, \textcolor{stringliteral}{'Tried updating route when with no current route'});
+            \}
+          \}
+        \};
+
+    $rootScope.$on(\textcolor{stringliteral}{'$locationChangeStart'}, prepareRoute);
+    $rootScope.$on(\textcolor{stringliteral}{'$locationChangeSuccess'}, commitRoute);
+
+    \textcolor{keywordflow}{return} $route;
+
+
+    \textcolor{keyword}{function} switchRouteMatcher(on, route) \{
+      var keys = route.keys,
+          params = \{\};
+
+      \textcolor{keywordflow}{if} (!route.regexp) \textcolor{keywordflow}{return} null;
+
+      var m = route.regexp.exec(on);
+      \textcolor{keywordflow}{if} (!m) \textcolor{keywordflow}{return} null;
+
+      \textcolor{keywordflow}{for} (var i = 1, len = m.length; i < len; ++i) \{
+        var key = keys[i - 1];
+
+        var val = m[i];
+
+        \textcolor{keywordflow}{if} (key && val) \{
+          params[key.name] = val;
+        \}
+      \}
+      \textcolor{keywordflow}{return} params;
+    \}
+
+    \textcolor{keyword}{function} prepareRoute($locationEvent) \{
+      var lastRoute = $route.current;
+
+      preparedRoute = parseRoute();
+      preparedRouteIsUpdateOnly = preparedRoute && lastRoute && preparedRoute.$$route === lastRoute.$$route
+          && angular.equals(preparedRoute.pathParams, lastRoute.pathParams)
+          && !preparedRoute.reloadOnSearch && !forceReload;
+
+      \textcolor{keywordflow}{if} (!preparedRouteIsUpdateOnly && (lastRoute || preparedRoute)) \{
+        \textcolor{keywordflow}{if} ($rootScope.$broadcast(\textcolor{stringliteral}{'$routeChangeStart'}, preparedRoute, lastRoute).defaultPrevented) \{
+          \textcolor{keywordflow}{if} ($locationEvent) \{
+            $locationEvent.preventDefault();
+          \}
+        \}
+      \}
+    \}
+
+    \textcolor{keyword}{function} commitRoute() \{
+      var lastRoute = $route.current;
+      var nextRoute = preparedRoute;
+
+      \textcolor{keywordflow}{if} (preparedRouteIsUpdateOnly) \{
+        lastRoute.params = nextRoute.params;
+        angular.copy(lastRoute.params, $routeParams);
+        $rootScope.$broadcast(\textcolor{stringliteral}{'$routeUpdate'}, lastRoute);
+      \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (nextRoute || lastRoute) \{
+        forceReload = \textcolor{keyword}{false};
+        $route.current = nextRoute;
+        \textcolor{keywordflow}{if} (nextRoute) \{
+          \textcolor{keywordflow}{if} (nextRoute.redirectTo) \{
+            \textcolor{keywordflow}{if} (angular.isString(nextRoute.redirectTo)) \{
+              $location.path(interpolate(nextRoute.redirectTo, nextRoute.params)).search(nextRoute.params)
+                       .replace();
+            \} \textcolor{keywordflow}{else} \{
+              $location.url(nextRoute.redirectTo(nextRoute.pathParams, $location.path(), $location.search()
+      ))
+                       .replace();
+            \}
+          \}
+        \}
+
+        $q.when(nextRoute).
+          then(\textcolor{keyword}{function}() \{
+            \textcolor{keywordflow}{if} (nextRoute) \{
+              var locals = angular.extend(\{\}, nextRoute.resolve),
+                  \textcolor{keyword}{template}, templateUrl;
+
+              angular.forEach(locals, \textcolor{keyword}{function}(value, key) \{
+                locals[key] = angular.isString(value) ?
+                    $injector.get(value) : $injector.invoke(value, null, null, key);
+              \});
+
+              \textcolor{keywordflow}{if} (angular.isDefined(\textcolor{keyword}{template} = nextRoute.template)) \{
+                \textcolor{keywordflow}{if} (angular.isFunction(\textcolor{keyword}{template})) \{
+                  \textcolor{keyword}{template} = \textcolor{keyword}{template}(nextRoute.params);
+                \}
+              \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (angular.isDefined(templateUrl = nextRoute.templateUrl)) \{
+                \textcolor{keywordflow}{if} (angular.isFunction(templateUrl)) \{
+                  templateUrl = templateUrl(nextRoute.params);
+                \}
+                \textcolor{keywordflow}{if} (angular.isDefined(templateUrl)) \{
+                  nextRoute.loadedTemplateUrl = $sce.valueOf(templateUrl);
+                  \textcolor{keyword}{template} = $templateRequest(templateUrl);
+                \}
+              \}
+              \textcolor{keywordflow}{if} (angular.isDefined(\textcolor{keyword}{template})) \{
+                locals[\textcolor{stringliteral}{'$template'}] = \textcolor{keyword}{template};
+              \}
+              \textcolor{keywordflow}{return} $q.all(locals);
+            \}
+          \}).
+          then(\textcolor{keyword}{function}(locals) \{
+            \textcolor{comment}{// after route change}
+            \textcolor{keywordflow}{if} (nextRoute == $route.current) \{
+              \textcolor{keywordflow}{if} (nextRoute) \{
+                nextRoute.locals = locals;
+                angular.copy(nextRoute.params, $routeParams);
+              \}
+              $rootScope.$broadcast(\textcolor{stringliteral}{'$routeChangeSuccess'}, nextRoute, lastRoute);
+            \}
+          \}, \textcolor{keyword}{function}(error) \{
+            \textcolor{keywordflow}{if} (nextRoute == $route.current) \{
+              $rootScope.$broadcast(\textcolor{stringliteral}{'$routeChangeError'}, nextRoute, lastRoute, error);
+            \}
+          \});
+      \}
+    \}
+
+
+    \textcolor{keyword}{function} parseRoute() \{
+      \textcolor{comment}{// Match a route}
+      var params, match;
+      angular.forEach(routes, \textcolor{keyword}{function}(route, path) \{
+        \textcolor{keywordflow}{if} (!match && (params = switchRouteMatcher($location.path(), route))) \{
+          match = inherit(route, \{
+            params: angular.extend(\{\}, $location.search(), params),
+            pathParams: params\});
+          match.$$route = route;
+        \}
+      \});
+      \textcolor{comment}{// No route matched; fallback to "otherwise" route}
+      \textcolor{keywordflow}{return} match || routes[null] && inherit(routes[null], \{params: \{\}, pathParams:\{\}\});
+    \}
+
+    \textcolor{keyword}{function} interpolate(\textcolor{keywordtype}{string}, params) \{
+      var result = [];
+      angular.forEach((\textcolor{keywordtype}{string} || \textcolor{stringliteral}{''}).split(\textcolor{charliteral}{':'}), \textcolor{keyword}{function}(segment, i) \{
+        \textcolor{keywordflow}{if} (i === 0) \{
+          result.push(segment);
+        \} \textcolor{keywordflow}{else} \{
+          var segmentMatch = segment.match(/(\(\backslash\)w+)(?:[?*])?(.*)/);
+          var key = segmentMatch[1];
+          result.push(params[key]);
+          result.push(segmentMatch[2] || \textcolor{stringliteral}{''});
+          \textcolor{keyword}{delete} params[key];
+        \}
+      \});
+      \textcolor{keywordflow}{return} result.join(\textcolor{stringliteral}{''});
+    \}
+  \}];
+\}
+
+ngRouteModule.provider(\textcolor{stringliteral}{'$routeParams'}, $RouteParamsProvider);
+
+
+\textcolor{keyword}{function} $RouteParamsProvider() \{
+  this.$get = \textcolor{keyword}{function}() \{ \textcolor{keywordflow}{return} \{\}; \};
+\}
+
+ngRouteModule.directive(\textcolor{stringliteral}{'ngView'}, ngViewFactory);
+ngRouteModule.directive(\textcolor{stringliteral}{'ngView'}, ngViewFillContentFactory);
+
+
+ngViewFactory.$inject = [\textcolor{stringliteral}{'$route'}, \textcolor{stringliteral}{'$anchorScroll'}, \textcolor{stringliteral}{'$animate'}];
+\textcolor{keyword}{function} ngViewFactory($route, $anchorScroll, $animate) \{
+  \textcolor{keywordflow}{return} \{
+    restrict: \textcolor{stringliteral}{'ECA'},
+    terminal: \textcolor{keyword}{true},
+    priority: 400,
+    transclude: \textcolor{stringliteral}{'element'},
+    link: \textcolor{keyword}{function}(scope, $element, attr, ctrl, $transclude) \{
+        var currentScope,
+            currentElement,
+            previousLeaveAnimation,
+            autoScrollExp = attr.autoscroll,
+            onloadExp = attr.onload || \textcolor{stringliteral}{''};
+
+        scope.$on(\textcolor{stringliteral}{'$routeChangeSuccess'}, update);
+        update();
+
+        \textcolor{keyword}{function} cleanupLastView() \{
+          \textcolor{keywordflow}{if} (previousLeaveAnimation) \{
+            $animate.cancel(previousLeaveAnimation);
+            previousLeaveAnimation = null;
+          \}
+
+          \textcolor{keywordflow}{if} (currentScope) \{
+            currentScope.$destroy();
+            currentScope = null;
+          \}
+          \textcolor{keywordflow}{if} (currentElement) \{
+            previousLeaveAnimation = $animate.leave(currentElement);
+            previousLeaveAnimation.then(\textcolor{keyword}{function}() \{
+              previousLeaveAnimation = null;
+            \});
+            currentElement = null;
+          \}
+        \}
+
+        \textcolor{keyword}{function} update() \{
+          var locals = $route.current && $route.current.locals,
+              \textcolor{keyword}{template} = locals && locals.$template;
+
+          \textcolor{keywordflow}{if} (angular.isDefined(\textcolor{keyword}{template})) \{
+            var newScope = scope.$new();
+            var current = $route.current;
+
+            \textcolor{comment}{// Note: This will also link all children of ng-view that were contained in the original}
+            \textcolor{comment}{// html. If that content contains controllers, ... they could pollute/change the scope.}
+            \textcolor{comment}{// However, using ng-view on an element with additional content does not make sense...}
+            \textcolor{comment}{// Note: We can't remove them in the cloneAttchFn of $transclude as that}
+            \textcolor{comment}{// function is called before linking the content, which would apply child}
+            \textcolor{comment}{// directives to non existing elements.}
+            var clone = $transclude(newScope, \textcolor{keyword}{function}(clone) \{
+              $animate.enter(clone, null, currentElement || $element).then(\textcolor{keyword}{function} onNgViewEnter() \{
+                \textcolor{keywordflow}{if} (angular.isDefined(autoScrollExp)
+                  && (!autoScrollExp || scope.$eval(autoScrollExp))) \{
+                  $anchorScroll();
+                \}
+              \});
+              cleanupLastView();
+            \});
+
+            currentElement = clone;
+            currentScope = current.scope = newScope;
+            currentScope.$emit(\textcolor{stringliteral}{'$viewContentLoaded'});
+            currentScope.$eval(onloadExp);
+          \} \textcolor{keywordflow}{else} \{
+            cleanupLastView();
+          \}
+        \}
+    \}
+  \};
+\}
+
+\textcolor{comment}{// This directive is called during the $transclude call of the first `ngView` directive.}
+\textcolor{comment}{// It will replace and compile the content of the element with the loaded template.}
+\textcolor{comment}{// We need this directive so that the element content is already filled when}
+\textcolor{comment}{// the link function of another directive on the same element as ngView}
+\textcolor{comment}{// is called.}
+ngViewFillContentFactory.$inject = [\textcolor{stringliteral}{'$compile'}, \textcolor{stringliteral}{'$controller'}, \textcolor{stringliteral}{'$route'}];
+\textcolor{keyword}{function} ngViewFillContentFactory($compile, $controller, $route) \{
+  \textcolor{keywordflow}{return} \{
+    restrict: \textcolor{stringliteral}{'ECA'},
+    priority: -400,
+    link: \textcolor{keyword}{function}(scope, $element) \{
+      var current = $route.current,
+          locals = current.locals;
+
+      $element.html(locals.$template);
+
+      var link = $compile($element.contents());
+
+      \textcolor{keywordflow}{if} (current.controller) \{
+        locals.$scope = scope;
+        var controller = $controller(current.controller, locals);
+        \textcolor{keywordflow}{if} (current.controllerAs) \{
+          scope[current.controllerAs] = controller;
+        \}
+        $element.data(\textcolor{stringliteral}{'$ngControllerController'}, controller);
+        $element.children().data(\textcolor{stringliteral}{'$ngControllerController'}, controller);
+      \}
+
+      link(scope);
+    \}
+  \};
+\}
+
+
+\})(window, window.angular);
+\end{DoxyCodeInclude}
+ 

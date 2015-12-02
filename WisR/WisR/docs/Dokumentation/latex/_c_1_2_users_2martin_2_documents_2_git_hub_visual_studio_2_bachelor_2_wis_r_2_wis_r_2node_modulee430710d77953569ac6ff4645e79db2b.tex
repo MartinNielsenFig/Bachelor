@@ -1,0 +1,36 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_modulee430710d77953569ac6ff4645e79db2b}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/function/bind\+Key.\+js}
+var object = \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}fred\textquotesingle{}, \textquotesingle{}greet\textquotesingle{}\+: function(greeting, punctuation) \{ return greeting + \textquotesingle{} \textquotesingle{} + this.\+user + punctuation; \} \};
+
+var bound = \+\_\+.\+bind\+Key(object, \textquotesingle{}greet\textquotesingle{}, \textquotesingle{}hi\textquotesingle{}); bound(\textquotesingle{}!\textquotesingle{}); // =$>$ \textquotesingle{}hi fred!\textquotesingle{}
+
+object.\+greet = function(greeting, punctuation) \{ return greeting + \textquotesingle{}ya \textquotesingle{} + this.\+user + punctuation; \};
+
+bound(\textquotesingle{}!\textquotesingle{}); // =$>$ \textquotesingle{}hiya fred!\textquotesingle{}
+
+// using placeholders var bound = \+\_\+.\+bind\+Key(object, \textquotesingle{}greet\textquotesingle{}, \+\_\+, \textquotesingle{}!\textquotesingle{}); bound(\textquotesingle{}hi\textquotesingle{}); // =$>$ \textquotesingle{}hiya fred!\textquotesingle{}
+
+
+\begin{DoxyCodeInclude}
+var createWrapper = require(\textcolor{stringliteral}{'../internal/createWrapper'}),
+    replaceHolders = require(\textcolor{stringliteral}{'../internal/replaceHolders'}),
+    restParam = require(\textcolor{stringliteral}{'./restParam'});
+
+var BIND\_FLAG = 1,
+    BIND\_KEY\_FLAG = 2,
+    PARTIAL\_FLAG = 32;
+
+var bindKey = restParam(\textcolor{keyword}{function}(\textcolor{keywordtype}{object}, key, partials) \{
+  var bitmask = BIND\_FLAG | BIND\_KEY\_FLAG;
+  \textcolor{keywordflow}{if} (partials.length) \{
+    var holders = replaceHolders(partials, bindKey.placeholder);
+    bitmask |= PARTIAL\_FLAG;
+  \}
+  \textcolor{keywordflow}{return} createWrapper(key, bitmask, \textcolor{keywordtype}{object}, partials, holders);
+\});
+
+\textcolor{comment}{// Assign default placeholders.}
+bindKey.placeholder = \{\};
+
+module.exports = bindKey;
+\end{DoxyCodeInclude}
+ 

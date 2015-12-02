@@ -1,0 +1,54 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2_scripts_2_360301f8b63800a46bf88ed98ad6f540}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/\+Scripts/\+Crypto\+J\+S/components/sha224.\+js}
+Shortcut function to the hasher\textquotesingle{}s object interface.
+
+
+\begin{DoxyParams}{Parameters}
+{\em \{\+Word\+Array$\vert$string\}} & message The message to hash.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\{Word\+Array\} The hash.
+\end{DoxyReturn}
+\begin{DoxyVerb}var hash = CryptoJS.SHA224('message');
+var hash = CryptoJS.SHA224(wordArray);\end{DoxyVerb}
+
+
+
+\begin{DoxyCodeInclude}
+\textcolor{comment}{/*}
+\textcolor{comment}{CryptoJS v3.1.2}
+\textcolor{comment}{code.google.com/p/crypto-js}
+\textcolor{comment}{(c) 2009-2013 by Jeff Mott. All rights reserved.}
+\textcolor{comment}{code.google.com/p/crypto-js/wiki/License}
+\textcolor{comment}{*/}
+(\textcolor{keyword}{function} () \{
+    \textcolor{comment}{// Shortcuts}
+    var C = CryptoJS;
+    var C\_lib = C.lib;
+    var WordArray = C\_lib.WordArray;
+    var C\_algo = C.algo;
+    var SHA256 = C\_algo.SHA256;
+
+    var SHA224 = C\_algo.SHA224 = SHA256.extend(\{
+        \_doReset: \textcolor{keyword}{function} () \{
+            this.\_hash = \textcolor{keyword}{new} WordArray.init([
+                0xc1059ed8, 0x367cd507, 0x3070dd17, 0xf70e5939,
+                0xffc00b31, 0x68581511, 0x64f98fa7, 0xbefa4fa4
+            ]);
+        \},
+
+        \_doFinalize: \textcolor{keyword}{function} () \{
+            var hash = SHA256.\_doFinalize.call(\textcolor{keyword}{this});
+
+            hash.sigBytes -= 4;
+
+            \textcolor{keywordflow}{return} hash;
+        \}
+    \});
+
+    C.SHA224 = SHA256.\_createHelper(SHA224);
+
+    C.HmacSHA224 = SHA256.\_createHmacHelper(SHA224);
+\}());
+\end{DoxyCodeInclude}
+ 

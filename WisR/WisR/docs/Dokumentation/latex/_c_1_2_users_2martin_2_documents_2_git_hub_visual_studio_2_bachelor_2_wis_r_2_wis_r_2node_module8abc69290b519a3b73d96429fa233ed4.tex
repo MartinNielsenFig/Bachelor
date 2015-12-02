@@ -1,0 +1,35 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module8abc69290b519a3b73d96429fa233ed4}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/chain/wrapper\+Plant.\+js}
+var array = \mbox{[}1, 2\mbox{]}; var wrapped = \+\_\+(array).map(function(value) \{ return Math.\+pow(value, 2); \});
+
+var other = \mbox{[}3, 4\mbox{]}; var other\+Wrapped = wrapped.\+plant(other);
+
+other\+Wrapped.\+value(); // =$>$ \mbox{[}9, 16\mbox{]}
+
+wrapped.\+value(); // =$>$ \mbox{[}1, 4\mbox{]}
+
+
+\begin{DoxyCodeInclude}
+var baseLodash = require(\textcolor{stringliteral}{'../internal/baseLodash'}),
+    wrapperClone = require(\textcolor{stringliteral}{'../internal/wrapperClone'});
+
+\textcolor{keyword}{function} wrapperPlant(value) \{
+  var result,
+      parent = \textcolor{keyword}{this};
+
+  \textcolor{keywordflow}{while} (parent instanceof baseLodash) \{
+    var clone = wrapperClone(parent);
+    \textcolor{keywordflow}{if} (result) \{
+      previous.\_\_wrapped\_\_ = clone;
+    \} \textcolor{keywordflow}{else} \{
+      result = clone;
+    \}
+    var previous = clone;
+    parent = parent.\_\_wrapped\_\_;
+  \}
+  previous.\_\_wrapped\_\_ = value;
+  \textcolor{keywordflow}{return} result;
+\}
+
+module.exports = wrapperPlant;
+\end{DoxyCodeInclude}
+ 

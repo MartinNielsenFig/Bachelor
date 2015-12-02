@@ -1,0 +1,33 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module77594a2ce89c0de1dcc42b99895517ba}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/function/bind.\+js}
+var greet = function(greeting, punctuation) \{ return greeting + \textquotesingle{} \textquotesingle{} + this.\+user + punctuation; \};
+
+var object = \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}fred\textquotesingle{} \};
+
+var bound = \+\_\+.\+bind(greet, object, \textquotesingle{}hi\textquotesingle{}); bound(\textquotesingle{}!\textquotesingle{}); // =$>$ \textquotesingle{}hi fred!\textquotesingle{}
+
+// using placeholders var bound = \+\_\+.\+bind(greet, object, \+\_\+, \textquotesingle{}!\textquotesingle{}); bound(\textquotesingle{}hi\textquotesingle{}); // =$>$ \textquotesingle{}hi fred!\textquotesingle{}
+
+
+\begin{DoxyCodeInclude}
+var createWrapper = require(\textcolor{stringliteral}{'../internal/createWrapper'}),
+    replaceHolders = require(\textcolor{stringliteral}{'../internal/replaceHolders'}),
+    restParam = require(\textcolor{stringliteral}{'./restParam'});
+
+var BIND\_FLAG = 1,
+    PARTIAL\_FLAG = 32;
+
+var bind = restParam(\textcolor{keyword}{function}(func, thisArg, partials) \{
+  var bitmask = BIND\_FLAG;
+  \textcolor{keywordflow}{if} (partials.length) \{
+    var holders = replaceHolders(partials, bind.placeholder);
+    bitmask |= PARTIAL\_FLAG;
+  \}
+  \textcolor{keywordflow}{return} createWrapper(func, bitmask, thisArg, partials, holders);
+\});
+
+\textcolor{comment}{// Assign default placeholders.}
+bind.placeholder = \{\};
+
+module.exports = bind;
+\end{DoxyCodeInclude}
+ 

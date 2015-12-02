@@ -1,0 +1,36 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module9b36999384d934418c265def52fa8f7b}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/object/result.\+js}
+var object = \{ \textquotesingle{}a\textquotesingle{}\+: \mbox{[}\{ \textquotesingle{}b\textquotesingle{}\+: \{ \textquotesingle{}c1\textquotesingle{}\+: 3, \textquotesingle{}c2\textquotesingle{}\+: \+\_\+.\+constant(4) \} \}\mbox{]} \};
+
+\+\_\+.\+result(object, \textquotesingle{}a\mbox{[}0\mbox{]}.b.\+c1\textquotesingle{}); // =$>$ 3
+
+\+\_\+.\+result(object, \textquotesingle{}a\mbox{[}0\mbox{]}.b.\+c2\textquotesingle{}); // =$>$ 4
+
+\+\_\+.\+result(object, \textquotesingle{}a.\+b.\+c\textquotesingle{}, \textquotesingle{}default\textquotesingle{}); // =$>$ \textquotesingle{}default\textquotesingle{}
+
+\+\_\+.\+result(object, \textquotesingle{}a.\+b.\+c\textquotesingle{}, \+\_\+.\+constant(\textquotesingle{}default\textquotesingle{})); // =$>$ \textquotesingle{}default\textquotesingle{}
+
+
+\begin{DoxyCodeInclude}
+var baseGet = require(\textcolor{stringliteral}{'../internal/baseGet'}),
+    baseSlice = require(\textcolor{stringliteral}{'../internal/baseSlice'}),
+    isFunction = require(\textcolor{stringliteral}{'../lang/isFunction'}),
+    isKey = require(\textcolor{stringliteral}{'../internal/isKey'}),
+    last = require(\textcolor{stringliteral}{'../array/last'}),
+    toPath = require(\textcolor{stringliteral}{'../internal/toPath'});
+
+\textcolor{keyword}{function} result(\textcolor{keywordtype}{object}, path, defaultValue) \{
+  var result = \textcolor{keywordtype}{object} == null ? undefined : \textcolor{keywordtype}{object}[path];
+  \textcolor{keywordflow}{if} (result === undefined) \{
+    \textcolor{keywordflow}{if} (\textcolor{keywordtype}{object} != null && !isKey(path, \textcolor{keywordtype}{object})) \{
+      path = toPath(path);
+      \textcolor{keywordtype}{object} = path.length == 1 ? \textcolor{keywordtype}{object} : baseGet(\textcolor{keywordtype}{object}, baseSlice(path, 0, -1));
+      result = \textcolor{keywordtype}{object} == null ? undefined : \textcolor{keywordtype}{object}[last(path)];
+    \}
+    result = result === undefined ? defaultValue : result;
+  \}
+  \textcolor{keywordflow}{return} isFunction(result) ? result.call(\textcolor{keywordtype}{object}) : result;
+\}
+
+module.exports = result;
+\end{DoxyCodeInclude}
+ 

@@ -1,0 +1,16 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module1b58692789d2d8152ac823357bccfea3}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/array/union.\+js}
+\+\_\+.\+union(\mbox{[}1, 2\mbox{]}, \mbox{[}4, 2\mbox{]}, \mbox{[}2, 1\mbox{]}); // =$>$ \mbox{[}1, 2, 4\mbox{]}
+
+
+\begin{DoxyCodeInclude}
+var baseFlatten = require(\textcolor{stringliteral}{'../internal/baseFlatten'}),
+    baseUniq = require(\textcolor{stringliteral}{'../internal/baseUniq'}),
+    restParam = require(\textcolor{stringliteral}{'../function/restParam'});
+
+var \textcolor{keyword}{union }= restParam(function(arrays) \{
+  \textcolor{keywordflow}{return} baseUniq(baseFlatten(arrays, \textcolor{keyword}{false}, \textcolor{keyword}{true}));
+\});
+
+module.exports = \textcolor{keyword}{union};
+\end{DoxyCodeInclude}
+ 

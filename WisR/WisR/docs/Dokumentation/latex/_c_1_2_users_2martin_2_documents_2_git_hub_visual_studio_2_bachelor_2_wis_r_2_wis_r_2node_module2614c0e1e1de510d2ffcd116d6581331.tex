@@ -1,0 +1,43 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module2614c0e1e1de510d2ffcd116d6581331}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/utility/times.\+js}
+var dice\+Rolls = \+\_\+.\+times(3, \+\_\+.\+partial(\+\_\+.\+random, 1, 6, false)); // =$>$ \mbox{[}3, 6, 4\mbox{]}
+
+\+\_\+.\+times(3, function(n) \{ mage.\+cast\+Spell(n); \}); // =$>$ invokes {\ttfamily mage.\+cast\+Spell(n)} three times with {\ttfamily n} of {\ttfamily 0}, {\ttfamily 1}, and {\ttfamily 2}
+
+\+\_\+.\+times(3, function(n) \{ this.\+cast(n); \}, mage); // =$>$ also invokes {\ttfamily mage.\+cast\+Spell(n)} three times
+
+
+\begin{DoxyCodeInclude}
+var bindCallback = require(\textcolor{stringliteral}{'../internal/bindCallback'});
+
+\textcolor{comment}{/* Native method references for those with the same name as other `lodash` methods. */}
+var nativeFloor = Math.floor,
+    nativeIsFinite = global.isFinite,
+    nativeMin = Math.min;
+
+var MAX\_ARRAY\_LENGTH = 4294967295;
+
+\textcolor{keyword}{function} times(n, iteratee, thisArg) \{
+  n = nativeFloor(n);
+
+  \textcolor{comment}{// Exit early to avoid a JSC JIT bug in Safari 8}
+  \textcolor{comment}{// where `Array(0)` is treated as `Array(1)`.}
+  \textcolor{keywordflow}{if} (n < 1 || !nativeIsFinite(n)) \{
+    \textcolor{keywordflow}{return} [];
+  \}
+  var index = -1,
+      result = Array(nativeMin(n, MAX\_ARRAY\_LENGTH));
+
+  iteratee = bindCallback(iteratee, thisArg, 1);
+  \textcolor{keywordflow}{while} (++index < n) \{
+    \textcolor{keywordflow}{if} (index < MAX\_ARRAY\_LENGTH) \{
+      result[index] = iteratee(index);
+    \} \textcolor{keywordflow}{else} \{
+      iteratee(index);
+    \}
+  \}
+  \textcolor{keywordflow}{return} result;
+\}
+
+module.exports = times;
+\end{DoxyCodeInclude}
+ 

@@ -1,0 +1,78 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module80334f34be64a6bf5e7948bee54401ff}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/string/trunc.\+js}
+\+\_\+.\+trunc(\textquotesingle{}hi-\/diddly-\/ho there, neighborino\textquotesingle{}); // =$>$ \textquotesingle{}hi-\/diddly-\/ho there, neighbo...\textquotesingle{}
+
+\+\_\+.\+trunc(\textquotesingle{}hi-\/diddly-\/ho there, neighborino\textquotesingle{}, 24); // =$>$ \textquotesingle{}hi-\/diddly-\/ho there, n...\textquotesingle{}
+
+\+\_\+.\+trunc(\textquotesingle{}hi-\/diddly-\/ho there, neighborino\textquotesingle{}, \{ \textquotesingle{}length\textquotesingle{}\+: 24, \textquotesingle{}separator\textquotesingle{}\+: \textquotesingle{} \textquotesingle{} \}); // =$>$ \textquotesingle{}hi-\/diddly-\/ho there,...\textquotesingle{}
+
+\+\_\+.\+trunc(\textquotesingle{}hi-\/diddly-\/ho there, neighborino\textquotesingle{}, \{ \textquotesingle{}length\textquotesingle{}\+: 24, \textquotesingle{}separator\textquotesingle{}\+: /,? +/ \}); // =$>$ \textquotesingle{}hi-\/diddly-\/ho there...\textquotesingle{}
+
+\+\_\+.\+trunc(\textquotesingle{}hi-\/diddly-\/ho there, neighborino\textquotesingle{}, \{ \textquotesingle{}omission\textquotesingle{}\+: \textquotesingle{} \mbox{[}...\mbox{]}\textquotesingle{} \}); // =$>$ \textquotesingle{}hi-\/diddly-\/ho there, neig \mbox{[}...\mbox{]}\textquotesingle{}
+
+
+\begin{DoxyCodeInclude}
+var baseToString = require(\textcolor{stringliteral}{'../internal/baseToString'}),
+    isIterateeCall = require(\textcolor{stringliteral}{'../internal/isIterateeCall'}),
+    isObject = require(\textcolor{stringliteral}{'../lang/isObject'}),
+    isRegExp = require(\textcolor{stringliteral}{'../lang/isRegExp'});
+
+var DEFAULT\_TRUNC\_LENGTH = 30,
+    DEFAULT\_TRUNC\_OMISSION = \textcolor{stringliteral}{'...'};
+
+var reFlags = /\(\backslash\)w*$/;
+
+\textcolor{keyword}{function} trunc(\textcolor{keywordtype}{string}, options, guard) \{
+  \textcolor{keywordflow}{if} (guard && isIterateeCall(\textcolor{keywordtype}{string}, options, guard)) \{
+    options = undefined;
+  \}
+  var length = DEFAULT\_TRUNC\_LENGTH,
+      omission = DEFAULT\_TRUNC\_OMISSION;
+
+  \textcolor{keywordflow}{if} (options != null) \{
+    \textcolor{keywordflow}{if} (isObject(options)) \{
+      var separator = \textcolor{stringliteral}{'separator'} in options ? options.separator : separator;
+      length = \textcolor{stringliteral}{'length'} in options ? (+options.length || 0) : length;
+      omission = \textcolor{stringliteral}{'omission'} in options ? baseToString(options.omission) : omission;
+    \} \textcolor{keywordflow}{else} \{
+      length = +options || 0;
+    \}
+  \}
+  \textcolor{keywordtype}{string} = baseToString(\textcolor{keywordtype}{string});
+  \textcolor{keywordflow}{if} (length >= \textcolor{keywordtype}{string}.length) \{
+    \textcolor{keywordflow}{return} string;
+  \}
+  var end = length - omission.length;
+  \textcolor{keywordflow}{if} (end < 1) \{
+    \textcolor{keywordflow}{return} omission;
+  \}
+  var result = \textcolor{keywordtype}{string}.slice(0, end);
+  \textcolor{keywordflow}{if} (separator == null) \{
+    \textcolor{keywordflow}{return} result + omission;
+  \}
+  \textcolor{keywordflow}{if} (isRegExp(separator)) \{
+    \textcolor{keywordflow}{if} (\textcolor{keywordtype}{string}.slice(end).search(separator)) \{
+      var match,
+          newEnd,
+          substring = \textcolor{keywordtype}{string}.slice(0, end);
+
+      \textcolor{keywordflow}{if} (!separator.global) \{
+        separator = RegExp(separator.source, (reFlags.exec(separator) || \textcolor{stringliteral}{''}) + \textcolor{charliteral}{'g'});
+      \}
+      separator.lastIndex = 0;
+      \textcolor{keywordflow}{while} ((match = separator.exec(substring))) \{
+        newEnd = match.index;
+      \}
+      result = result.slice(0, newEnd == null ? end : newEnd);
+    \}
+  \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (\textcolor{keywordtype}{string}.indexOf(separator, end) != end) \{
+    var index = result.lastIndexOf(separator);
+    \textcolor{keywordflow}{if} (index > -1) \{
+      result = result.slice(0, index);
+    \}
+  \}
+  \textcolor{keywordflow}{return} result + omission;
+\}
+
+module.exports = trunc;
+\end{DoxyCodeInclude}
+ 

@@ -1,0 +1,32 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_moduleb121566d55e4aafe59056978181c8a8c}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/string/trim.\+js}
+\+\_\+.\+trim(\textquotesingle{} abc \textquotesingle{}); // =$>$ \textquotesingle{}abc\textquotesingle{}
+
+\+\_\+.\+trim(\textquotesingle{}-\/\+\_\+-\/abc-\/\+\_\+-\/\textquotesingle{}, \textquotesingle{}\+\_\+-\/\textquotesingle{}); // =$>$ \textquotesingle{}abc\textquotesingle{}
+
+\+\_\+.\+map(\mbox{[}\textquotesingle{} foo \textquotesingle{}, \textquotesingle{} bar \textquotesingle{}\mbox{]}, \+\_\+.\+trim); // =$>$ \mbox{[}\textquotesingle{}foo\textquotesingle{}, \textquotesingle{}bar\textquotesingle{}\mbox{]}
+
+
+\begin{DoxyCodeInclude}
+var baseToString = require(\textcolor{stringliteral}{'../internal/baseToString'}),
+    charsLeftIndex = require(\textcolor{stringliteral}{'../internal/charsLeftIndex'}),
+    charsRightIndex = require(\textcolor{stringliteral}{'../internal/charsRightIndex'}),
+    isIterateeCall = require(\textcolor{stringliteral}{'../internal/isIterateeCall'}),
+    trimmedLeftIndex = require(\textcolor{stringliteral}{'../internal/trimmedLeftIndex'}),
+    trimmedRightIndex = require(\textcolor{stringliteral}{'../internal/trimmedRightIndex'});
+
+\textcolor{keyword}{function} trim(\textcolor{keywordtype}{string}, chars, guard) \{
+  var value = string;
+  \textcolor{keywordtype}{string} = baseToString(\textcolor{keywordtype}{string});
+  \textcolor{keywordflow}{if} (!\textcolor{keywordtype}{string}) \{
+    \textcolor{keywordflow}{return} string;
+  \}
+  \textcolor{keywordflow}{if} (guard ? isIterateeCall(value, chars, guard) : chars == null) \{
+    \textcolor{keywordflow}{return} \textcolor{keywordtype}{string}.slice(trimmedLeftIndex(\textcolor{keywordtype}{string}), trimmedRightIndex(\textcolor{keywordtype}{string}) + 1);
+  \}
+  chars = (chars + \textcolor{stringliteral}{''});
+  \textcolor{keywordflow}{return} \textcolor{keywordtype}{string}.slice(charsLeftIndex(\textcolor{keywordtype}{string}, chars), charsRightIndex(\textcolor{keywordtype}{string}, chars) + 1);
+\}
+
+module.exports = trim;
+\end{DoxyCodeInclude}
+ 

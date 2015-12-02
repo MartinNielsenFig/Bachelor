@@ -1,0 +1,56 @@
+\hypertarget{class_instrumenter}{}\section{Instrumenter Class Reference}
+\label{class_instrumenter}\index{Instrumenter@{Instrumenter}}
+
+
+\subsection{Detailed Description}
+mechanism to instrument code for coverage. It uses the {\ttfamily esprima} and {\ttfamily escodegen} libraries for J\+S parsing and code generation respectively.
+
+Works on {\ttfamily node} as well as the browser.
+
+\subsubsection*{Usage on nodejs }
+
+\begin{DoxyVerb} var instrumenter = new require('istanbul').Instrumenter(),
+     changed = instrumenter.instrumentSync('function meaningOfLife() { return 42; }', 'filename.js');
+\end{DoxyVerb}
+
+
+\subsubsection*{Usage in a browser }
+
+Load {\ttfamily esprima.\+js}, {\ttfamily escodegen.\+js} and {\ttfamily instrumenter.\+js} (this file) using {\ttfamily script} tags or other means.
+
+Create an instrumenter object as\+: \begin{DoxyVerb} var instrumenter = new Instrumenter(),
+     changed = instrumenter.instrumentSync('function meaningOfLife() { return 42; }', 'filename.js');
+\end{DoxyVerb}
+
+
+Aside from demonstration purposes, it is unclear why you would want to instrument code in a browser.
+
+
+\begin{DoxyParams}{Parameters}
+{\em \{\+Object\}} & options Optional. Configuration options. \\
+\hline
+{\em \{\+String\}} & \mbox{[}options.\+coverage\+Variable\mbox{]} the global variable name to use for tracking coverage. Defaults to {\ttfamily \+\_\+\+\_\+coverage\+\_\+\+\_\+} \\
+\hline
+{\em \{\+Boolean\}} & \mbox{[}options.\+embed\+Source\mbox{]} whether to embed the source code of every file as an array in the file coverage object for that file. Defaults to {\ttfamily false} \\
+\hline
+{\em \{\+Boolean\}} & \mbox{[}options.\+preserve\+Comments\mbox{]} whether comments should be preserved in the output. Defaults to {\ttfamily false} \\
+\hline
+{\em \{\+Boolean\}} & \mbox{[}options.\+no\+Compact\mbox{]} emit readable code when set. Defaults to {\ttfamily false} \\
+\hline
+{\em \{\+Boolean\}} & \mbox{[}options.\+no\+Auto\+Wrap\mbox{]} do not automatically wrap the source in an anonymous function before covering it. By default, code is wrapped in an anonymous function before it is parsed. This is done because some nodejs libraries have {\ttfamily return} statements outside of a function which is technically invalid Javascript and causes the parser to fail. This construct, however, works correctly in node since module loading is done in the context of an anonymous function.\\
+\hline
+\end{DoxyParams}
+Note that the semantics of the code {\itshape returned} by the instrumenter does not change in any way. The function wrapper is \char`\"{}unwrapped\char`\"{} before the instrumented code is generated. 
+\begin{DoxyParams}{Parameters}
+{\em \{\+Object\}} & \mbox{[}options.\+code\+Generation\+Options\mbox{]} an object that is directly passed to the {\ttfamily escodegen} library as configuration for code generation. The {\ttfamily no\+Compact} setting is not honored when this option is specified \\
+\hline
+{\em \{\+Boolean\}} & \mbox{[}options.\+debug\mbox{]} assist in debugging. Currently, the only effect of setting this option is a pretty-\/print of the coverage variable. Defaults to {\ttfamily false} \\
+\hline
+{\em \{\+Boolean\}} & \mbox{[}options.\+walk\+Debug\mbox{]} assist in debugging of the A\+S\+T walker used by this class. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/lib/instrumenter.\+js\end{DoxyCompactItemize}

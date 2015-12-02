@@ -1,0 +1,22 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_modulec8ea313bd673a11b08a6e0dd9f6e966d}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/lang/is\+Na\+N.\+js}
+\+\_\+.\+is\+Na\+N(\+Na\+N); // =$>$ true
+
+\+\_\+.\+is\+Na\+N(new Number(\+Na\+N)); // =$>$ true
+
+is\+Na\+N(undefined); // =$>$ true
+
+\+\_\+.\+is\+Na\+N(undefined); // =$>$ false
+
+
+\begin{DoxyCodeInclude}
+var isNumber = require(\textcolor{stringliteral}{'./isNumber'});
+
+\textcolor{keyword}{function} isNaN(value) \{
+  \textcolor{comment}{// An `NaN` primitive is the only value that is not equal to itself.}
+  \textcolor{comment}{// Perform the `toStringTag` check first to avoid errors with some host objects in IE.}
+  \textcolor{keywordflow}{return} isNumber(value) && value != +value;
+\}
+
+module.exports = isNaN;
+\end{DoxyCodeInclude}
+ 

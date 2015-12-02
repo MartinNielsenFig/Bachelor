@@ -1,0 +1,20 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module52061ce0f65a6be4b1a27019a989efcb}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/array/sorted\+Index.\+js}
+\+\_\+.\+sorted\+Index(\mbox{[}30, 50\mbox{]}, 40); // =$>$ 1
+
+\+\_\+.\+sorted\+Index(\mbox{[}4, 4, 5, 5\mbox{]}, 5); // =$>$ 2
+
+var dict = \{ \textquotesingle{}data\textquotesingle{}\+: \{ \textquotesingle{}thirty\textquotesingle{}\+: 30, \textquotesingle{}forty\textquotesingle{}\+: 40, \textquotesingle{}fifty\textquotesingle{}\+: 50 \} \};
+
+// using an iteratee function \+\_\+.\+sorted\+Index(\mbox{[}\textquotesingle{}thirty\textquotesingle{}, \textquotesingle{}fifty\textquotesingle{}\mbox{]}, \textquotesingle{}forty\textquotesingle{}, function(word) \{ return this.\+data\mbox{[}word\mbox{]}; \}, dict); // =$>$ 1
+
+// using the {\ttfamily \+\_\+.\+property} callback shorthand \+\_\+.\+sorted\+Index(\mbox{[}\{ \textquotesingle{}x\textquotesingle{}\+: 30 \}, \{ \textquotesingle{}x\textquotesingle{}\+: 50 \}\mbox{]}, \{ \textquotesingle{}x\textquotesingle{}\+: 40 \}, \textquotesingle{}x\textquotesingle{}); // =$>$ 1
+
+
+\begin{DoxyCodeInclude}
+var createSortedIndex = require(\textcolor{stringliteral}{'../internal/createSortedIndex'});
+
+var sortedIndex = createSortedIndex();
+
+module.exports = sortedIndex;
+\end{DoxyCodeInclude}
+ 

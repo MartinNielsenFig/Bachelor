@@ -1,0 +1,22 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module41ed309dcf1e6170a580b88d676e2f00}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/object/get.\+js}
+var object = \{ \textquotesingle{}a\textquotesingle{}\+: \mbox{[}\{ \textquotesingle{}b\textquotesingle{}\+: \{ \textquotesingle{}c\textquotesingle{}\+: 3 \} \}\mbox{]} \};
+
+\+\_\+.\+get(object, \textquotesingle{}a\mbox{[}0\mbox{]}.b.\+c\textquotesingle{}); // =$>$ 3
+
+\+\_\+.\+get(object, \mbox{[}\textquotesingle{}a\textquotesingle{}, \textquotesingle{}0\textquotesingle{}, \textquotesingle{}b\textquotesingle{}, \textquotesingle{}c\textquotesingle{}\mbox{]}); // =$>$ 3
+
+\+\_\+.\+get(object, \textquotesingle{}a.\+b.\+c\textquotesingle{}, \textquotesingle{}default\textquotesingle{}); // =$>$ \textquotesingle{}default\textquotesingle{}
+
+
+\begin{DoxyCodeInclude}
+var baseGet = require(\textcolor{stringliteral}{'../internal/baseGet'}),
+    toPath = require(\textcolor{stringliteral}{'../internal/toPath'});
+
+\textcolor{keyword}{function} \textcolor{keyword}{get}(object, path, defaultValue) \{
+  var result = \textcolor{keywordtype}{object} == null ? undefined : baseGet(\textcolor{keywordtype}{object}, toPath(path), (path + \textcolor{stringliteral}{''}));
+  \textcolor{keywordflow}{return} result === undefined ? defaultValue : result;
+\}
+
+module.exports = \textcolor{keyword}{get};
+\end{DoxyCodeInclude}
+ 

@@ -1,0 +1,21 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_modulebcb679d9a0fbb16904d2931acf37a35a}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/array/flatten.\+js}
+\+\_\+.\+flatten(\mbox{[}1, \mbox{[}2, 3, \mbox{[}4\mbox{]}\mbox{]}\mbox{]}); // =$>$ \mbox{[}1, 2, 3, \mbox{[}4\mbox{]}\mbox{]}
+
+// using {\ttfamily is\+Deep} \+\_\+.\+flatten(\mbox{[}1, \mbox{[}2, 3, \mbox{[}4\mbox{]}\mbox{]}\mbox{]}, true); // =$>$ \mbox{[}1, 2, 3, 4\mbox{]}
+
+
+\begin{DoxyCodeInclude}
+var baseFlatten = require(\textcolor{stringliteral}{'../internal/baseFlatten'}),
+    isIterateeCall = require(\textcolor{stringliteral}{'../internal/isIterateeCall'});
+
+\textcolor{keyword}{function} flatten(array, isDeep, guard) \{
+  var length = array ? array.length : 0;
+  \textcolor{keywordflow}{if} (guard && isIterateeCall(array, isDeep, guard)) \{
+    isDeep = \textcolor{keyword}{false};
+  \}
+  \textcolor{keywordflow}{return} length ? baseFlatten(array, isDeep) : [];
+\}
+
+module.exports = flatten;
+\end{DoxyCodeInclude}
+ 

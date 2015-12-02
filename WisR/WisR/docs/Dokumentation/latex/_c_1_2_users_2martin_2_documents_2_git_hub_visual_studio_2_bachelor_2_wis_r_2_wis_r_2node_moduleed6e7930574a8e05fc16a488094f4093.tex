@@ -1,0 +1,18 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_moduleed6e7930574a8e05fc16a488094f4093}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/string/start\+Case.\+js}
+\+\_\+.\+start\+Case(\textquotesingle{}--foo-\/bar\textquotesingle{}); // =$>$ \textquotesingle{}Foo Bar\textquotesingle{}
+
+\+\_\+.\+start\+Case(\textquotesingle{}foo\+Bar\textquotesingle{}); // =$>$ \textquotesingle{}Foo Bar\textquotesingle{}
+
+\+\_\+.\+start\+Case(\textquotesingle{}{\bfseries foo\+\_\+bar}\textquotesingle{}); // =$>$ \textquotesingle{}Foo Bar\textquotesingle{}
+
+
+\begin{DoxyCodeInclude}
+var createCompounder = require(\textcolor{stringliteral}{'../internal/createCompounder'});
+
+var startCase = createCompounder(\textcolor{keyword}{function}(result, word, index) \{
+  \textcolor{keywordflow}{return} result + (index ? \textcolor{charliteral}{' '} : \textcolor{stringliteral}{''}) + (word.charAt(0).toUpperCase() + word.slice(1));
+\});
+
+module.exports = startCase;
+\end{DoxyCodeInclude}
+ 

@@ -1,0 +1,47 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_modulead9f024545131f9c5af2746b5f76e290}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/function/memoize.\+js}
+var upper\+Case = \+\_\+.\+memoize(function(string) \{ return string.\+to\+Upper\+Case(); \});
+
+upper\+Case(\textquotesingle{}fred\textquotesingle{}); // =$>$ \textquotesingle{}F\+R\+E\+D\textquotesingle{}
+
+// modifying the result cache upper\+Case.\+cache.\+set(\textquotesingle{}fred\textquotesingle{}, \textquotesingle{}B\+A\+R\+N\+E\+Y\textquotesingle{}); upper\+Case(\textquotesingle{}fred\textquotesingle{}); // =$>$ \textquotesingle{}B\+A\+R\+N\+E\+Y\textquotesingle{}
+
+// replacing {\ttfamily \+\_\+.\+memoize.\+Cache} var object = \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}fred\textquotesingle{} \}; var other = \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}barney\textquotesingle{} \}; var identity = \+\_\+.\+memoize(\+\_\+.\+identity);
+
+identity(object); // =$>$ \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}fred\textquotesingle{} \} identity(other); // =$>$ \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}fred\textquotesingle{} \}
+
+\+\_\+.\+memoize.\+Cache = Weak\+Map; var identity = \+\_\+.\+memoize(\+\_\+.\+identity);
+
+identity(object); // =$>$ \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}fred\textquotesingle{} \} identity(other); // =$>$ \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}barney\textquotesingle{} \}
+
+
+\begin{DoxyCodeInclude}
+var MapCache = require(\textcolor{stringliteral}{'../internal/MapCache'});
+
+var FUNC\_ERROR\_TEXT = \textcolor{stringliteral}{'Expected a function'};
+
+\textcolor{keyword}{function} memoize(func, resolver) \{
+  \textcolor{keywordflow}{if} (typeof func != \textcolor{stringliteral}{'function'} || (resolver && typeof resolver != \textcolor{stringliteral}{'function'})) \{
+    \textcolor{keywordflow}{throw} \textcolor{keyword}{new} TypeError(FUNC\_ERROR\_TEXT);
+  \}
+  var memoized = \textcolor{keyword}{function}() \{
+    var args = arguments,
+        key = resolver ? resolver.apply(\textcolor{keyword}{this}, args) : args[0],
+        cache = memoized.cache;
+
+    \textcolor{keywordflow}{if} (cache.has(key)) \{
+      \textcolor{keywordflow}{return} cache.get(key);
+    \}
+    var result = func.apply(\textcolor{keyword}{this}, args);
+    memoized.cache = cache.set(key, result);
+    \textcolor{keywordflow}{return} result;
+  \};
+  memoized.cache = \textcolor{keyword}{new} memoize.Cache;
+  \textcolor{keywordflow}{return} memoized;
+\}
+
+\textcolor{comment}{// Assign cache to `\_.memoize`.}
+memoize.Cache = MapCache;
+
+module.exports = memoize;
+\end{DoxyCodeInclude}
+ 

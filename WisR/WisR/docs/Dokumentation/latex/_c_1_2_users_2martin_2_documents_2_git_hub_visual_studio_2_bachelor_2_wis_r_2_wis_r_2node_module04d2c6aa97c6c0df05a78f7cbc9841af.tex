@@ -1,0 +1,19 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module04d2c6aa97c6c0df05a78f7cbc9841af}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/collection/pluck.\+js}
+var users = \mbox{[} \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}barney\textquotesingle{}, \textquotesingle{}age\textquotesingle{}\+: 36 \}, \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}fred\textquotesingle{}, \textquotesingle{}age\textquotesingle{}\+: 40 \} \mbox{]};
+
+\+\_\+.\+pluck(users, \textquotesingle{}user\textquotesingle{}); // =$>$ \mbox{[}\textquotesingle{}barney\textquotesingle{}, \textquotesingle{}fred\textquotesingle{}\mbox{]}
+
+var user\+Index = \+\_\+.\+index\+By(users, \textquotesingle{}user\textquotesingle{}); \+\_\+.\+pluck(user\+Index, \textquotesingle{}age\textquotesingle{}); // =$>$ \mbox{[}36, 40\mbox{]} (iteration order is not guaranteed)
+
+
+\begin{DoxyCodeInclude}
+var map = require(\textcolor{stringliteral}{'./map'}),
+    \textcolor{keyword}{property} = require(\textcolor{stringliteral}{'../utility/property'});
+
+\textcolor{keyword}{function} pluck(collection, path) \{
+  \textcolor{keywordflow}{return} map(collection, property(path));
+\}
+
+module.exports = pluck;
+\end{DoxyCodeInclude}
+ 

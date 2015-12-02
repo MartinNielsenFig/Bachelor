@@ -1,0 +1,24 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_modulee6c61a97fe4d621c4d4300870b3f639c}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/lang/is\+Number.\+js}
+\+\_\+.\+is\+Number(8.\+4); // =$>$ true
+
+\+\_\+.\+is\+Number(\+Na\+N); // =$>$ true
+
+\+\_\+.\+is\+Number(\textquotesingle{}8.\+4\textquotesingle{}); // =$>$ false
+
+
+\begin{DoxyCodeInclude}
+var isObjectLike = require(\textcolor{stringliteral}{'../internal/isObjectLike'});
+
+var numberTag = \textcolor{stringliteral}{'[object Number]'};
+
+var objectProto = Object.prototype;
+
+var objToString = objectProto.toString;
+
+\textcolor{keyword}{function} isNumber(value) \{
+  \textcolor{keywordflow}{return} typeof value == \textcolor{stringliteral}{'number'} || (isObjectLike(value) && objToString.call(value) == numberTag);
+\}
+
+module.exports = isNumber;
+\end{DoxyCodeInclude}
+ 

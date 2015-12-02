@@ -1,0 +1,39 @@
+\hypertarget{class_report}{}\section{Report Class Reference}
+\label{class_report}\index{Report@{Report}}
+Inheritance diagram for Report\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=12.000000cm]{class_report}
+\end{center}
+\end{figure}
+
+
+\subsection{Detailed Description}
+An abstraction for producing coverage reports. This class is both the base class as well as a factory for {\ttfamily \hyperlink{class_report}{Report}} implementations. All reports are event emitters and are expected to emit a {\ttfamily done} event when the report writing is complete.
+
+See also the {\ttfamily \hyperlink{class_reporter}{Reporter}} class for easily producing multiple coverage reports with a single call.
+
+\subsubsection*{Usage }
+
+\begin{DoxyVerb} var Report = require('istanbul').Report,
+     report = Report.create('html'),
+     collector = new require('istanbul').Collector;
+
+ collector.add(coverageObject);
+ report.on('done', function () { console.log('done'); });
+ report.writeReport(collector);
+\end{DoxyVerb}
+
+
+report  report 
+
+
+\begin{DoxyParams}{Parameters}
+{\em \{\+Object\}} & options Optional. The options supported by a specific store implementation. \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/lib/report/index.\+js\end{DoxyCompactItemize}

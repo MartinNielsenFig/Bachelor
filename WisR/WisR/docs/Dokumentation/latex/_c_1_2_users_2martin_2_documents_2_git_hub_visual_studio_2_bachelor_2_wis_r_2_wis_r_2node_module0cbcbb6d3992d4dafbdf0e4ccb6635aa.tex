@@ -1,0 +1,56 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module0cbcbb6d3992d4dafbdf0e4ccb6635aa}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/number/random.\+js}
+\+\_\+.\+random(0, 5); // =$>$ an integer between 0 and 5
+
+\+\_\+.\+random(5); // =$>$ also an integer between 0 and 5
+
+\+\_\+.\+random(5, true); // =$>$ a floating-\/point number between 0 and 5
+
+\+\_\+.\+random(1.\+2, 5.\+2); // =$>$ a floating-\/point number between 1.\+2 and 5.\+2
+
+
+\begin{DoxyCodeInclude}
+var baseRandom = require(\textcolor{stringliteral}{'../internal/baseRandom'}),
+    isIterateeCall = require(\textcolor{stringliteral}{'../internal/isIterateeCall'});
+
+\textcolor{comment}{/* Native method references for those with the same name as other `lodash` methods. */}
+var nativeMin = Math.min,
+    nativeRandom = Math.random;
+
+\textcolor{keyword}{function} random(min, max, floating) \{
+  \textcolor{keywordflow}{if} (floating && isIterateeCall(min, max, floating)) \{
+    max = floating = undefined;
+  \}
+  var noMin = min == null,
+      noMax = max == null;
+
+  \textcolor{keywordflow}{if} (floating == null) \{
+    \textcolor{keywordflow}{if} (noMax && typeof min == \textcolor{stringliteral}{'boolean'}) \{
+      floating = min;
+      min = 1;
+    \}
+    \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (typeof max == \textcolor{stringliteral}{'boolean'}) \{
+      floating = max;
+      noMax = \textcolor{keyword}{true};
+    \}
+  \}
+  \textcolor{keywordflow}{if} (noMin && noMax) \{
+    max = 1;
+    noMax = \textcolor{keyword}{false};
+  \}
+  min = +min || 0;
+  \textcolor{keywordflow}{if} (noMax) \{
+    max = min;
+    min = 0;
+  \} \textcolor{keywordflow}{else} \{
+    max = +max || 0;
+  \}
+  \textcolor{keywordflow}{if} (floating || min % 1 || max % 1) \{
+    var rand = nativeRandom();
+    \textcolor{keywordflow}{return} nativeMin(min + (rand * (max - min + parseFloat(\textcolor{stringliteral}{'1e-'} + ((rand + \textcolor{stringliteral}{''}).length - 1)))), max);
+  \}
+  \textcolor{keywordflow}{return} baseRandom(min, max);
+\}
+
+module.exports = random;
+\end{DoxyCodeInclude}
+ 

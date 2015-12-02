@@ -1,0 +1,41 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_moduleb821af34deb9efd729639cdaa46510d2}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/object/transform.\+js}
+\+\_\+.\+transform(\mbox{[}2, 3, 4\mbox{]}, function(result, n) \{ result.\+push(n $\ast$= n); return n \% 2 == 0; \}); // =$>$ \mbox{[}4, 9\mbox{]}
+
+\+\_\+.\+transform(\{ \textquotesingle{}a\textquotesingle{}\+: 1, \textquotesingle{}b\textquotesingle{}\+: 2 \}, function(result, n, key) \{ result\mbox{[}key\mbox{]} = n $\ast$ 3; \}); // =$>$ \{ \textquotesingle{}a\textquotesingle{}\+: 3, \textquotesingle{}b\textquotesingle{}\+: 6 \}
+
+
+\begin{DoxyCodeInclude}
+var arrayEach = require(\textcolor{stringliteral}{'../internal/arrayEach'}),
+    baseCallback = require(\textcolor{stringliteral}{'../internal/baseCallback'}),
+    baseCreate = require(\textcolor{stringliteral}{'../internal/baseCreate'}),
+    baseForOwn = require(\textcolor{stringliteral}{'../internal/baseForOwn'}),
+    isArray = require(\textcolor{stringliteral}{'../lang/isArray'}),
+    isFunction = require(\textcolor{stringliteral}{'../lang/isFunction'}),
+    isObject = require(\textcolor{stringliteral}{'../lang/isObject'}),
+    isTypedArray = require(\textcolor{stringliteral}{'../lang/isTypedArray'});
+
+\textcolor{keyword}{function} transform(\textcolor{keywordtype}{object}, iteratee, accumulator, thisArg) \{
+  var isArr = isArray(\textcolor{keywordtype}{object}) || isTypedArray(\textcolor{keywordtype}{object});
+  iteratee = baseCallback(iteratee, thisArg, 4);
+
+  \textcolor{keywordflow}{if} (accumulator == null) \{
+    \textcolor{keywordflow}{if} (isArr || isObject(\textcolor{keywordtype}{object})) \{
+      var Ctor = \textcolor{keywordtype}{object}.constructor;
+      \textcolor{keywordflow}{if} (isArr) \{
+        accumulator = isArray(\textcolor{keywordtype}{object}) ? \textcolor{keyword}{new} Ctor : [];
+      \} \textcolor{keywordflow}{else} \{
+        accumulator = baseCreate(isFunction(Ctor) ? Ctor.prototype : undefined);
+      \}
+    \} \textcolor{keywordflow}{else} \{
+      accumulator = \{\};
+    \}
+  \}
+  (isArr ? arrayEach : baseForOwn)(\textcolor{keywordtype}{object}, \textcolor{keyword}{function}(value, index, \textcolor{keywordtype}{object}) \{
+    \textcolor{keywordflow}{return} iteratee(accumulator, value, index, \textcolor{keywordtype}{object});
+  \});
+  \textcolor{keywordflow}{return} accumulator;
+\}
+
+module.exports = transform;
+\end{DoxyCodeInclude}
+ 

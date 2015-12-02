@@ -1,0 +1,25 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_modulef5404818e4fc043cb92f8be5b27dab4b}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/array/take\+While.\+js}
+\+\_\+.\+take\+While(\mbox{[}1, 2, 3\mbox{]}, function(n) \{ return n $<$ 3; \}); // =$>$ \mbox{[}1, 2\mbox{]}
+
+var users = \mbox{[} \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}barney\textquotesingle{}, \textquotesingle{}active\textquotesingle{}\+: false \}, \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}fred\textquotesingle{}, \textquotesingle{}active\textquotesingle{}\+: false\}, \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}pebbles\textquotesingle{}, \textquotesingle{}active\textquotesingle{}\+: true \} \mbox{]};
+
+// using the {\ttfamily \+\_\+.\+matches} callback shorthand \+\_\+.\+pluck(\+\_\+.\+take\+While(users, \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}barney\textquotesingle{}, \textquotesingle{}active\textquotesingle{}\+: false \}), \textquotesingle{}user\textquotesingle{}); // =$>$ \mbox{[}\textquotesingle{}barney\textquotesingle{}\mbox{]}
+
+// using the {\ttfamily \+\_\+.\+matches\+Property} callback shorthand \+\_\+.\+pluck(\+\_\+.\+take\+While(users, \textquotesingle{}active\textquotesingle{}, false), \textquotesingle{}user\textquotesingle{}); // =$>$ \mbox{[}\textquotesingle{}barney\textquotesingle{}, \textquotesingle{}fred\textquotesingle{}\mbox{]}
+
+// using the {\ttfamily \+\_\+.\+property} callback shorthand \+\_\+.\+pluck(\+\_\+.\+take\+While(users, \textquotesingle{}active\textquotesingle{}), \textquotesingle{}user\textquotesingle{}); // =$>$ \mbox{[}\mbox{]}
+
+
+\begin{DoxyCodeInclude}
+var baseCallback = require(\textcolor{stringliteral}{'../internal/baseCallback'}),
+    baseWhile = require(\textcolor{stringliteral}{'../internal/baseWhile'});
+
+\textcolor{keyword}{function} takeWhile(array, predicate, thisArg) \{
+  \textcolor{keywordflow}{return} (array && array.length)
+    ? baseWhile(array, baseCallback(predicate, thisArg, 3))
+    : [];
+\}
+
+module.exports = takeWhile;
+\end{DoxyCodeInclude}
+ 

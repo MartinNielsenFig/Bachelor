@@ -1,0 +1,25 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module138f7216aea26d7b458aa968f5ca14f5}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/lang/is\+Equal.\+js}
+var object = \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}fred\textquotesingle{} \}; var other = \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}fred\textquotesingle{} \};
+
+object == other; // =$>$ false
+
+\+\_\+.\+is\+Equal(object, other); // =$>$ true
+
+// using a customizer callback var array = \mbox{[}\textquotesingle{}hello\textquotesingle{}, \textquotesingle{}goodbye\textquotesingle{}\mbox{]}; var other = \mbox{[}\textquotesingle{}hi\textquotesingle{}, \textquotesingle{}goodbye\textquotesingle{}\mbox{]};
+
+\+\_\+.\+is\+Equal(array, other, function(value, other) \{ if (\+\_\+.\+every(\mbox{[}value, other\mbox{]}, Reg\+Exp.\+prototype.\+test, /$^\wedge$h(?\+:i$\vert$ello)\$/)) \{ return true; \} \}); // =$>$ true
+
+
+\begin{DoxyCodeInclude}
+var baseIsEqual = require(\textcolor{stringliteral}{'../internal/baseIsEqual'}),
+    bindCallback = require(\textcolor{stringliteral}{'../internal/bindCallback'});
+
+\textcolor{keyword}{function} isEqual(value, other, customizer, thisArg) \{
+  customizer = typeof customizer == \textcolor{stringliteral}{'function'} ? bindCallback(customizer, thisArg, 3) : undefined;
+  var result = customizer ? customizer(value, other) : undefined;
+  \textcolor{keywordflow}{return}  result === undefined ? baseIsEqual(value, other, customizer) : !!result;
+\}
+
+module.exports = isEqual;
+\end{DoxyCodeInclude}
+ 

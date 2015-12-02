@@ -1,0 +1,315 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module442882db47c09482797f86bb499e8b95}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/ngdocs/\+R\+E\+A\+D\+M\+E.\+md}
+$<$file name=\char`\"{}index.\+html\char`\"{}$>$ $<$textarea ng-\/model=\char`\"{}text\char`\"{}rx-\/autogrow class=\char`\"{}input-\/block-\/level\char`\"{}$>$$<$/textarea$>$ 
+\begin{DoxyPre}\{\{text\}\}\end{DoxyPre}
+ $<$/file$>$ 
+
+$\ast$/ angular.\+module(\textquotesingle{}rfx\textquotesingle{}, \mbox{[}\mbox{]}).directive(\textquotesingle{}r\+Autogrow\textquotesingle{}, function() \{ //some nice code \}); ```
+
+Check out the \href{https://github.com/angular/angular.js/wiki/Writing-AngularJS-Documentation}{\tt Writing Angular\+J\+S documentation wiki article} to see what\textquotesingle{}s possible, or take a look at the \href{https://github.com/angular/angular.js/tree/master/src/ng}{\tt Angular\+J\+S source code} for more examples.
+
+\subsubsection*{Batarang}
+
+If your examples are empty you maybe have batarang enabled for the docs site. This is the same issue as on \href{http://docs.angular.js}{\tt http\+://docs.\+angular.\+js} and the batarang team is informed about it \#68.
+
+\subsubsection*{License}
+
+M\+I\+T License
+
+
+\begin{DoxyCodeInclude}
+1 # grunt-ngdocs
+2 Grunt plugin to create a documentation like [AngularJS](http://docs.angularjs.org)
+3 NOTE: this plugin requires Grunt 0.4.x
+4 
+5 ATTENTION: grunt-ngdocs 0.2+ is for angularjs 1.2+
+6 grunt-ngdocs 0.2.5 supports angularjs 1.3+ too
+7 Please include angular.js and angular-animate.js with the scripts option
+8 
+9 ## Getting Started
+10 From the same directory as your project's Gruntfile and package.json, install this plugin with the
+       following command:
+11 
+12 `npm install grunt-ngdocs --save-dev`
+13 
+14 Once that's done, add this line to your project's Gruntfile:
+15 
+16 ```js
+17 grunt.loadNpmTasks('grunt-ngdocs');
+18 ```
+19 
+20 A full working example can be found at
+       [https://github.com/m7r/grunt-ngdocs-example](https://github.com/m7r/grunt-ngdocs-example)
+21 
+22 ## Config
+23 Inside your `Gruntfile.js` file, add a section named *ngdocs*.
+24 Here's a simple example:
+25 
+26 ```js
+27 ngdocs: \{
+28   all: ['src/**/*.js']
+29 \}
+30 ```
+31 
+32 And with many options:
+33 
+34 ```js
+35 ngdocs: \{
+36   options: \{
+37     dest: 'docs',
+38     scripts: ['../app.min.js'],
+39     html5Mode: true,
+40     startPage: '/api',
+41     title: "My Awesome Docs",
+42     image: "path/to/my/image.png",
+43     imageLink: "http://my-domain.com",
+44     titleLink: "/api",
+45     inlinePartials: true,
+46     bestMatch: true,
+47     analytics: \{
+48           account: 'UA-08150815-0'
+49     \},
+50     discussions: \{
+51           shortName: 'my',
+52           url: 'http://my-domain.com',
+53           dev: false
+54     \}
+55   \},
+56   tutorial: \{
+57     src: ['content/tutorial/*.ngdoc'],
+58     title: 'Tutorial'
+59   \},
+60   api: \{
+61     src: ['src/**/*.js', '!src/**/*.spec.js'],
+62     title: 'API Documentation'
+63   \}
+64 \}
+65 ```
+66 
+67 
+68 ### Targets
+69 Each grunt target creates a section in the documentation app.
+70 
+71 #### src
+72 [required] List of files to parse for documentation comments.
+73 
+74 #### title
+75 [default] 'API Documentation'
+76 
+77 Set the name for the section in the documentation app.
+78 
+79 #### api
+80 [default] true for target api
+81 
+82 Set the sidebar to advanced mode, with sections for modules, services, etc.
+83 
+84 
+85 ### Options
+86 
+87 #### dest
+88 [default] 'docs'
+89 
+90 Folder relative to your Gruntfile where the documentation should be built.
+91 
+92 #### scripts
+93 [default] ['angular.js']
+94 
+95 Set which angular.js file or addional custom js files are loaded to the app. This allows the live examples
+       to use custom directives, services, etc. The documentation app works with angular.js 1.2+ and 1.3+. If you
+       include your own angular.js include angular-animate.js too.
+96 
+97 Possible values:
+98 
+99   - ['angular.js'] use angular and angular-animate 1.2.16 delivered with grunt-ngdocs
+100   - ['path/to/file.js'] file will be copied into the docs, into a `grunt-scripts` folder
+101   - ['http://example.com/file.js', 'https://example.com/file.js', '//example.com/file.js'] reference remote
+       files (eg from a CDN)
+102   - ['../app.js'] reference file relative to the dest folder
+103 
+104 #### deferLoad
+105 [default] false
+106 
+107 If you want to use requirejs as loader set this to `true`.
+108 
+109 Include 'js/angular-bootstrap.js', 'js/angular-bootstrap-prettify.js', 'js/docs-setup.js', 'js/docs.js'
+       with requirejs and finally bootstrap the app `angular.bootstrap(document, ['docsApp']);`.
+110 
+111 #### styles
+112 [default] []
+113 
+114 Copy additional css files to the documentation app
+115 
+116 #### template
+117 [default] null
+118 
+119 Allow to use your own template. Use the default template at src/templates/index.tmpl as reference.
+120 
+121 #### startPage
+122 [default] '/api'
+123 
+124 Set first page to open.
+125 
+126 #### html5Mode
+127 [default] false
+128 
+129 Whether or not to enable `html5Mode` in the docs application.  If true, then links will be absolute.  If
+       false, they will be prefixed by `#/`.
+130 
+131 #### bestMatch
+132 [default] false
+133 
+134 The best matching page for a search query is highlighted and get selected on return.
+135 If this option is set to true the best match is shown below the search field in an dropdown menu. Use this
+       for long lists where the highlight is often not visible.
+136 
+137 
+138 #### title
+139 [default] "name" or "title" field in `pkg`
+140 
+141 Title to put on the navbar and the page's `title` attribute.  By default, tries to
+142 find the title in the `pkg`. If it can't find it, it will go to an empty string.
+143 
+144 #### titleLink
+145 [default] no anchor tag is used
+146 
+147 Wraps the title text in an anchor tag with the provided URL.
+148 
+149 #### image
+150 A URL or relative path to an image file to use in the top navbar.
+151 
+152 #### imageLink
+153 [default] no anchor tag is used
+154 
+155 Wraps the navbar image in an anchor tag with the provided URL.
+156 
+157 #### navTemplate
+158 [default] null
+159 
+160 Path to a template of a nav HTML template to include.  The css for it
+161 should be that of listitems inside a bootstrap navbar:
+162 
+163 ```html
+164 <header class="header">
+165   <div class="navbar">
+166     <ul class="nav">
+167       \{\{links to all the docs pages\}\}
+168     </ul>
+169     \{\{YOUR\_NAV\_TEMPLATE\_GOES\_HERE\}\}
+170   </div>
+171 </header>
+172 ```
+173 Example: 'templates/my-nav.html'
+174 
+175 The template, if specified, is pre-processed using
+       [grunt.template](https://github.com/gruntjs/grunt/wiki/grunt.template#grunttemplateprocess).
+176 
+177 
+178 #### sourceLink
+179 [default] true
+180 
+181 Display "View source" link.
+182 Possible values are
+183 
+184   - `true`: try to read repository from package.json (currently only github is supported)
+185   - `false`: don't display link
+186   - string: template string like `'https://internal.server/repo/blob/\{\{sha\}\}/\{\{file\}\}#L\{\{codeline\}\}'`
+187 
+188     available placeholders:
+189 
+190       - **file**: path and filename current file
+191       - **filename**: only filename of current file
+192       - **filepath**: directory of current file
+193       - **line**: first line of comment
+194       - **codeline**: first line *after* comment
+195       - **version**: version read from package.json
+196       - **sha**: first 7 characters of current git commit
+197 
+198 #### editLink
+199 [default] true
+200 
+201 Display "Improve this doc" link. Same options as for sourceLink.
+202 
+203 #### editExample
+204 [default] true
+205 
+206 Show Edit Button for examples.
+207 
+208 #### inlinePartials
+209 [default] false
+210 
+211 If set to true this option will turn all partials into angular inline templates and place them inside the
+       generated `index.html` file.
+212 The advantage over lazyloading with ajax is that the documentation will also work on the `file://` system.
+213 
+214 #### discussions
+215 Optional include [discussions](http://disqus.com) in the documentation app.
+216 
+217 ```js
+218 \{
+219   shortName: 'my',
+220   url: 'http://my-domain.com',
+221   dev: false
+222 \}
+223 ```
+224 
+225 #### analytics
+226 Optional include Google Analytics in the documentation app.
+227 
+228 ```js
+229 \{
+230   account: 'UA-08150815-0'
+231 \}
+232 ```
+233 
+234 
+235 ## How it works
+236 The task parses the specified files for doc comments and extracts them into partial html files for the
+       documentation app.
+237 
+238 At first run, all necessary files will be copied to the destination folder.
+239 After that, only index.html, js/docs-setup.js, and the partials will be overwritten.
+240 
+241 Partials that are no longer needed will not be deleted. Use, for example, the grunt-contrib-clean task to
+       clean the docs folder before creating a distribution build.
+242 
+243 After an update of grunt-ngdocs you should clean the docs folder too.
+244 
+245 A doc comment looks like this:
+246 
+247 ```js
+248 /**
+249  * @ngdoc directive
+250  * @name rfx.directive:rAutogrow
+251  * @element textarea
+252  * @function
+253  *
+254  * @description
+255  * Resize textarea automatically to the size of its text content.
+256  *
+257  * **Note:** ie<9 needs polyfill for window.getComputedStyle
+258  *
+259  * @example
+260    <example module="rfx">
+261      <file name="index.html">
+262          <textarea ng-model="text"rx-autogrow class="input-block-level"></textarea>
+263          <pre>\{\{text\}\}</pre>
+264      </file>
+265    </example>
+266  */
+267 angular.module('rfx', []).directive('rAutogrow', function() \{
+268   //some nice code
+269 \});
+270 ```
+271 
+272 Check out the [Writing AngularJS documentation wiki
+       article](https://github.com/angular/angular.js/wiki/Writing-AngularJS-Documentation) to see what's possible,
+273 or take a look at the [AngularJS source code](https://github.com/angular/angular.js/tree/master/src/ng) for
+       more examples.
+274 
+275 ## Batarang
+276 If your examples are empty you maybe have batarang enabled for the docs site.
+277 This is the same issue as on http://docs.angular.js and the batarang team is informed about it #68.
+278 
+279 ## License
+280 MIT License
+\end{DoxyCodeInclude}
+ 

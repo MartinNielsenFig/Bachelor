@@ -1,0 +1,31 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module1276245f39290faf8b455f7526cc9149}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/string/parse\+Int.\+js}
+\+\_\+.\+parse\+Int(\textquotesingle{}08\textquotesingle{}); // =$>$ 8
+
+\+\_\+.\+map(\mbox{[}\textquotesingle{}6\textquotesingle{}, \textquotesingle{}08\textquotesingle{}, \textquotesingle{}10\textquotesingle{}\mbox{]}, \+\_\+.\+parse\+Int); // =$>$ \mbox{[}6, 8, 10\mbox{]}
+
+
+\begin{DoxyCodeInclude}
+var isIterateeCall = require(\textcolor{stringliteral}{'../internal/isIterateeCall'}),
+    trim = require(\textcolor{stringliteral}{'./trim'});
+
+var reHasHexPrefix = /^0[xX]/;
+
+\textcolor{comment}{/* Native method references for those with the same name as other `lodash` methods. */}
+var nativeParseInt = global.parseInt;
+
+\textcolor{keyword}{function} parseInt(\textcolor{keywordtype}{string}, radix, guard) \{
+  \textcolor{comment}{// Firefox < 21 and Opera < 15 follow ES3 for `parseInt`.}
+  \textcolor{comment}{// Chrome fails to trim leading <BOM> whitespace characters.}
+  \textcolor{comment}{// See https://code.google.com/p/v8/issues/detail?id=3109 for more details.}
+  \textcolor{keywordflow}{if} (guard ? isIterateeCall(\textcolor{keywordtype}{string}, radix, guard) : radix == null) \{
+    radix = 0;
+  \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (radix) \{
+    radix = +radix;
+  \}
+  \textcolor{keywordtype}{string} = trim(\textcolor{keywordtype}{string});
+  \textcolor{keywordflow}{return} nativeParseInt(\textcolor{keywordtype}{string}, radix || (reHasHexPrefix.test(\textcolor{keywordtype}{string}) ? 16 : 10));
+\}
+
+module.exports = parseInt;
+\end{DoxyCodeInclude}
+ 

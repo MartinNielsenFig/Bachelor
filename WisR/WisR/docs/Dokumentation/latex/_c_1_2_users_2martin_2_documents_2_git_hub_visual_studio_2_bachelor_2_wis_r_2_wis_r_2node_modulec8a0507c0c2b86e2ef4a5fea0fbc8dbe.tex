@@ -1,0 +1,22 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_modulec8a0507c0c2b86e2ef4a5fea0fbc8dbe}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/lang/is\+Date.\+js}
+\+\_\+.\+is\+Date(new Date); // =$>$ true
+
+\+\_\+.\+is\+Date(\textquotesingle{}Mon April 23 2012\textquotesingle{}); // =$>$ false
+
+
+\begin{DoxyCodeInclude}
+var isObjectLike = require(\textcolor{stringliteral}{'../internal/isObjectLike'});
+
+var dateTag = \textcolor{stringliteral}{'[object Date]'};
+
+var objectProto = Object.prototype;
+
+var objToString = objectProto.toString;
+
+\textcolor{keyword}{function} isDate(value) \{
+  \textcolor{keywordflow}{return} isObjectLike(value) && objToString.call(value) == dateTag;
+\}
+
+module.exports = isDate;
+\end{DoxyCodeInclude}
+ 

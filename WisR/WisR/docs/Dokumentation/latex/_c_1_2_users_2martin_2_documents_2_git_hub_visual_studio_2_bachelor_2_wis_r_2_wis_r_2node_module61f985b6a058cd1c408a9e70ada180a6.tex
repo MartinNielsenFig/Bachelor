@@ -1,0 +1,24 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module61f985b6a058cd1c408a9e70ada180a6}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/array/compact.\+js}
+\+\_\+.\+compact(\mbox{[}0, 1, false, 2, \textquotesingle{}\textquotesingle{}, 3\mbox{]}); // =$>$ \mbox{[}1, 2, 3\mbox{]}
+
+
+\begin{DoxyCodeInclude}
+
+\textcolor{keyword}{function} compact(array) \{
+  var index = -1,
+      length = array ? array.length : 0,
+      resIndex = -1,
+      result = [];
+
+  \textcolor{keywordflow}{while} (++index < length) \{
+    var value = array[index];
+    \textcolor{keywordflow}{if} (value) \{
+      result[++resIndex] = value;
+    \}
+  \}
+  \textcolor{keywordflow}{return} result;
+\}
+
+module.exports = compact;
+\end{DoxyCodeInclude}
+ 

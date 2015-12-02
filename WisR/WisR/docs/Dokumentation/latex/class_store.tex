@@ -1,0 +1,47 @@
+\hypertarget{class_store}{}\section{Store Class Reference}
+\label{class_store}\index{Store@{Store}}
+Inheritance diagram for Store\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_store}
+\end{center}
+\end{figure}
+
+
+\subsection{Detailed Description}
+An abstraction for keeping track of content against some keys (e.\+g. original source, instrumented source, coverage objects against file names). This class is both the base class as well as a factory for {\ttfamily \hyperlink{class_store}{Store}} implementations.
+
+\subsubsection*{Usage }
+
+\begin{DoxyVerb} var Store = require('istanbul').Store,
+     store = Store.create('memory');
+
+ //basic use
+ store.set('foo', 'foo-content');
+ var content = store.get('foo');
+
+ //keys and values
+ store.keys().forEach(function (key) {
+     console.log(key + ':\n' + store.get(key);
+ });
+ if (store.hasKey('bar') { console.log(store.get('bar'); }
+
+
+ //syntactic sugar
+ store.setObject('foo', { foo: true });
+ console.log(store.getObject('foo').foo);
+
+ store.dispose();
+\end{DoxyVerb}
+
+
+store 
+\begin{DoxyParams}{Parameters}
+{\em \{\+Object\}} & options Optional. The options supported by a specific store implementation.  store \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/lib/store/index.\+js\end{DoxyCompactItemize}

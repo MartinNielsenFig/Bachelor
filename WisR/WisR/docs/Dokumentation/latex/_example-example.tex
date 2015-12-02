@@ -1,0 +1,74 @@
+\hypertarget{_example-example}{}\section{Example}
+that demonstrates basic bindings via ng\+Class directive. 
+
+$<$file name=\char`\"{}index.\+html\char`\"{}$>$ 
+
+Map Syntax Example
+
+$<$label$>$ $<$input type=\char`\"{}checkbox\char`\"{} ng-\/model=\char`\"{}deleted\char`\"{}$>$ deleted (apply \char`\"{}strike\char`\"{} class) $<$/label$>$~\newline
+ $<$label$>$ $<$input type=\char`\"{}checkbox\char`\"{} ng-\/model=\char`\"{}important\char`\"{}$>$ important (apply \char`\"{}bold\char`\"{} class) $<$/label$>$~\newline
+ $<$label$>$ $<$input type=\char`\"{}checkbox\char`\"{} ng-\/model=\char`\"{}error\char`\"{}$>$ error (apply \char`\"{}has-\/error\char`\"{} class) $<$/label$>$ 
+
+ 
+
+Using String Syntax
+
+$<$input type=\char`\"{}text\char`\"{} ng-\/model=\char`\"{}style\char`\"{} placeholder=\char`\"{}\+Type\+: bold strike red\char`\"{} aria-\/label=\char`\"{}\+Type\+: bold strike red\char`\"{}$>$ 
+
+ 
+
+Using Array Syntax
+
+$<$input ng-\/model=\char`\"{}style1\char`\"{} placeholder=\char`\"{}\+Type\+: bold, strike or red\char`\"{} aria-\/label=\char`\"{}\+Type\+: bold, strike or red\char`\"{}$>$~\newline
+ $<$input ng-\/model=\char`\"{}style2\char`\"{} placeholder=\char`\"{}\+Type\+: bold, strike or red\char`\"{} aria-\/label=\char`\"{}\+Type\+: bold, strike or red 2\char`\"{}$>$~\newline
+ $<$input ng-\/model=\char`\"{}style3\char`\"{} placeholder=\char`\"{}\+Type\+: bold, strike or red\char`\"{} aria-\/label=\char`\"{}\+Type\+: bold, strike or red 3\char`\"{}$>$~\newline
+ 
+
+ 
+
+Using Array and Map Syntax
+
+$<$input ng-\/model=\char`\"{}style4\char`\"{} placeholder=\char`\"{}\+Type\+: bold, strike\char`\"{} aria-\/label=\char`\"{}\+Type\+: bold, strike\char`\"{}$>$~\newline
+ $<$label$>$$<$input type=\char`\"{}checkbox\char`\"{} ng-\/model=\char`\"{}warning\char`\"{}$>$ warning (apply \char`\"{}orange\char`\"{} class)$<$/label$>$ $<$/file$>$ $<$file name=\char`\"{}style.\+css\char`\"{}$>$ .strike \{ text-\/decoration\+: line-\/through; \} .bold \{ font-\/weight\+: bold; \} .red \{ color\+: red; \} .has-\/error \{ color\+: red; background-\/color\+: yellow; \} .orange \{ color\+: orange; \} $<$/file$>$ $<$file name=\char`\"{}protractor.\+js\char`\"{} type=\char`\"{}protractor\char`\"{}$>$ var ps = element.\+all(by.\+css(\textquotesingle{}p\textquotesingle{}));
+
+it(\textquotesingle{}should let you toggle the class\textquotesingle{}, function() \{
+
+expect(ps.\+first().get\+Attribute(\textquotesingle{}class\textquotesingle{})).not.\+to\+Match(/bold/); expect(ps.\+first().get\+Attribute(\textquotesingle{}class\textquotesingle{})).not.\+to\+Match(/has-\/error/);
+
+element(by.\+model(\textquotesingle{}important\textquotesingle{})).click(); expect(ps.\+first().get\+Attribute(\textquotesingle{}class\textquotesingle{})).to\+Match(/bold/);
+
+element(by.\+model(\textquotesingle{}error\textquotesingle{})).click(); expect(ps.\+first().get\+Attribute(\textquotesingle{}class\textquotesingle{})).to\+Match(/has-\/error/); \});
+
+it(\textquotesingle{}should let you toggle string example\textquotesingle{}, function() \{ expect(ps.\+get(1).get\+Attribute(\textquotesingle{}class\textquotesingle{})).to\+Be(\textquotesingle{}\textquotesingle{}); element(by.\+model(\textquotesingle{}style\textquotesingle{})).clear(); element(by.\+model(\textquotesingle{}style\textquotesingle{})).send\+Keys(\textquotesingle{}red\textquotesingle{}); expect(ps.\+get(1).get\+Attribute(\textquotesingle{}class\textquotesingle{})).to\+Be(\textquotesingle{}red\textquotesingle{}); \});
+
+it(\textquotesingle{}array example should have 3 classes\textquotesingle{}, function() \{ expect(ps.\+get(2).get\+Attribute(\textquotesingle{}class\textquotesingle{})).to\+Be(\textquotesingle{}\textquotesingle{}); element(by.\+model(\textquotesingle{}style1\textquotesingle{})).send\+Keys(\textquotesingle{}bold\textquotesingle{}); element(by.\+model(\textquotesingle{}style2\textquotesingle{})).send\+Keys(\textquotesingle{}strike\textquotesingle{}); element(by.\+model(\textquotesingle{}style3\textquotesingle{})).send\+Keys(\textquotesingle{}red\textquotesingle{}); expect(ps.\+get(2).get\+Attribute(\textquotesingle{}class\textquotesingle{})).to\+Be(\textquotesingle{}bold strike red\textquotesingle{}); \});
+
+it(\textquotesingle{}array with map example should have 2 classes\textquotesingle{}, function() \{ expect(ps.\+last().get\+Attribute(\textquotesingle{}class\textquotesingle{})).to\+Be(\textquotesingle{}\textquotesingle{}); element(by.\+model(\textquotesingle{}style4\textquotesingle{})).send\+Keys(\textquotesingle{}bold\textquotesingle{}); element(by.\+model(\textquotesingle{}warning\textquotesingle{})).click(); expect(ps.\+last().get\+Attribute(\textquotesingle{}class\textquotesingle{})).to\+Be(\textquotesingle{}bold orange\textquotesingle{}); \}); $<$/file$>$ 
+
+\subsubsection*{Animations}
+
+The example below demonstrates how to perform animations using ng\+Class.
+
+$<$file name=\char`\"{}index.\+html\char`\"{}$>$ $<$input id=\char`\"{}setbtn\char`\"{} type=\char`\"{}button\char`\"{} value=\char`\"{}set\char`\"{} ng-\/click=\char`\"{}my\+Var=\textquotesingle{}my-\/class\textquotesingle{}\char`\"{}$>$ $<$input id=\char`\"{}clearbtn\char`\"{} type=\char`\"{}button\char`\"{} value=\char`\"{}clear\char`\"{} ng-\/click=\char`\"{}my\+Var=\textquotesingle{}\textquotesingle{}\char`\"{}$>$ ~\newline
+ Sample Text $<$/file$>$ $<$file name=\char`\"{}style.\+css\char`\"{}$>$ .base-\/class \{ -\/webkit-\/transition\+:all cubic-\/bezier(0.\+250, 0.\+460, 0.\+450, 0.\+940) 0.\+5s; transition\+:all cubic-\/bezier(0.\+250, 0.\+460, 0.\+450, 0.\+940) 0.\+5s; \}
+
+.base-\/class.\+my-\/class \{ color\+: red; font-\/size\+:3em; \} $<$/file$>$ $<$file name=\char`\"{}protractor.\+js\char`\"{} type=\char`\"{}protractor\char`\"{}$>$ it(\textquotesingle{}should check ng-\/class\textquotesingle{}, function() \{ expect(element(by.\+css(\textquotesingle{}.base-\/class\textquotesingle{})).get\+Attribute(\textquotesingle{}class\textquotesingle{})).not. to\+Match(/my-\/class/);
+
+element(by.\+id(\textquotesingle{}setbtn\textquotesingle{})).click();
+
+expect(element(by.\+css(\textquotesingle{}.base-\/class\textquotesingle{})).get\+Attribute(\textquotesingle{}class\textquotesingle{})). to\+Match(/my-\/class/);
+
+element(by.\+id(\textquotesingle{}clearbtn\textquotesingle{})).click();
+
+expect(element(by.\+css(\textquotesingle{}.base-\/class\textquotesingle{})).get\+Attribute(\textquotesingle{}class\textquotesingle{})).not. to\+Match(/my-\/class/); \}); $<$/file$>$ 
+
+\subsubsection*{ng\+Class and pre-\/existing C\+S\+S3 Transitions/\+Animations}
+
+The ng\+Class directive still supports C\+S\+S3 Transitions/\+Animations even if they do not follow the ng\+Animate C\+S\+S naming structure. Upon animation ng\+Animate will apply supplementary C\+S\+S classes to track the start and end of an animation, but this will not hinder any pre-\/existing C\+S\+S transitions already on the element. To get an idea of what happens during a class-\/based animation, be sure to view the step by step details of \hyperlink{}{\$animate.\+add\+Class} and \hyperlink{}{\$animate.\+remove\+Class}. $\ast$/ var ng\+Class\+Directive = class\+Directive(\textquotesingle{}\textquotesingle{}, true);
+
+/$\ast$$\ast$  directive
+
+
+\begin{DoxyCodeInclude}
+\end{DoxyCodeInclude}
+ 

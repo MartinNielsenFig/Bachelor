@@ -1,0 +1,1200 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2_scripts_2angular-mocks_8js-example}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/\+Scripts/angular-\/mocks.\+js}
+!!!! W\+A\+R\+N\+I\+N\+G !!!!! This is not a complete Date object so only methods that were implemented can be called safely. To make matters worse, Tz\+Date instances inherit stuff from Date via a prototype.
+
+We do our best to intercept calls to \char`\"{}unimplemented\char`\"{} methods, but since the list of methods is incomplete we might be missing some non-\/standard methods. This can result in errors like\+: \char`\"{}\+Date.\+prototype.\+foo called on incompatible Object\char`\"{}.
+
+
+\begin{DoxyItemize}
+\item ```js var new\+Year\+In\+Bratislava = new Tz\+Date(-\/1, \textquotesingle{}2009-\/12-\/31\+T23\+:00\+:00\+Z\textquotesingle{}); new\+Year\+In\+Bratislava.\+get\+Timezone\+Offset() =$>$ -\/60; new\+Year\+In\+Bratislava.\+get\+Full\+Year() =$>$ 2010; new\+Year\+In\+Bratislava.\+get\+Month() =$>$ 0; new\+Year\+In\+Bratislava.\+get\+Date() =$>$ 1; new\+Year\+In\+Bratislava.\+get\+Hours() =$>$ 0; new\+Year\+In\+Bratislava.\+get\+Minutes() =$>$ 0; new\+Year\+In\+Bratislava.\+get\+Seconds() =$>$ 0;
+\item ```
+\end{DoxyItemize}
+
+
+\begin{DoxyCodeInclude}
+
+(\textcolor{keyword}{function}(window, angular, undefined) \{
+
+\textcolor{stringliteral}{'use strict'};
+
+angular.mock = \{\};
+
+angular.mock.$BrowserProvider = \textcolor{keyword}{function}() \{
+  this.$get = \textcolor{keyword}{function}() \{
+    \textcolor{keywordflow}{return} \textcolor{keyword}{new} angular.mock.$Browser();
+  \};
+\};
+
+angular.mock.$Browser = \textcolor{keyword}{function}() \{
+  var \textcolor{keyword}{self} = \textcolor{keyword}{this};
+
+  this.isMock = \textcolor{keyword}{true};
+  \textcolor{keyword}{self}.$$url = \textcolor{stringliteral}{"http://server/"};
+  \textcolor{keyword}{self}.$$lastUrl = \textcolor{keyword}{self}.$$url; \textcolor{comment}{// used by url polling fn}
+  \textcolor{keyword}{self}.pollFns = [];
+
+  \textcolor{comment}{// TODO(vojta): remove this temporary api}
+  \textcolor{keyword}{self}.$$completeOutstandingRequest = angular.noop;
+  \textcolor{keyword}{self}.$$incOutstandingRequestCount = angular.noop;
+
+
+  \textcolor{comment}{// register url polling fn}
+
+  \textcolor{keyword}{self}.onUrlChange = \textcolor{keyword}{function}(listener) \{
+    \textcolor{keyword}{self}.pollFns.push(
+      \textcolor{keyword}{function}() \{
+        \textcolor{keywordflow}{if} (\textcolor{keyword}{self}.$$lastUrl !== \textcolor{keyword}{self}.$$url || \textcolor{keyword}{self}.$$state !== \textcolor{keyword}{self}.$$lastState) \{
+          \textcolor{keyword}{self}.$$lastUrl = \textcolor{keyword}{self}.$$url;
+          \textcolor{keyword}{self}.$$lastState = \textcolor{keyword}{self}.$$state;
+          listener(\textcolor{keyword}{self}.$$url, \textcolor{keyword}{self}.$$state);
+        \}
+      \}
+    );
+
+    \textcolor{keywordflow}{return} listener;
+  \};
+
+  \textcolor{keyword}{self}.$$applicationDestroyed = angular.noop;
+  \textcolor{keyword}{self}.$$checkUrlChange = angular.noop;
+
+  \textcolor{keyword}{self}.deferredFns = [];
+  \textcolor{keyword}{self}.deferredNextId = 0;
+
+  \textcolor{keyword}{self}.defer = \textcolor{keyword}{function}(fn, delay) \{
+    delay = delay || 0;
+    \textcolor{keyword}{self}.deferredFns.push(\{time:(\textcolor{keyword}{self}.defer.now + delay), fn:fn, \textcolor{keywordtype}{id}: \textcolor{keyword}{self}.deferredNextId\});
+    \textcolor{keyword}{self}.deferredFns.sort(\textcolor{keyword}{function}(a, b) \{ \textcolor{keywordflow}{return} a.time - b.time;\});
+    \textcolor{keywordflow}{return} \textcolor{keyword}{self}.deferredNextId++;
+  \};
+
+
+  \textcolor{keyword}{self}.defer.now = 0;
+
+
+  \textcolor{keyword}{self}.defer.cancel = \textcolor{keyword}{function}(deferId) \{
+    var fnIndex;
+
+    angular.forEach(\textcolor{keyword}{self}.deferredFns, \textcolor{keyword}{function}(fn, index) \{
+      \textcolor{keywordflow}{if} (fn.id === deferId) fnIndex = index;
+    \});
+
+    \textcolor{keywordflow}{if} (fnIndex !== undefined) \{
+      \textcolor{keyword}{self}.deferredFns.splice(fnIndex, 1);
+      \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+    \}
+
+    \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+  \};
+
+
+  \textcolor{keyword}{self}.defer.flush = \textcolor{keyword}{function}(delay) \{
+    \textcolor{keywordflow}{if} (angular.isDefined(delay)) \{
+      \textcolor{keyword}{self}.defer.now += delay;
+    \} \textcolor{keywordflow}{else} \{
+      \textcolor{keywordflow}{if} (\textcolor{keyword}{self}.deferredFns.length) \{
+        \textcolor{keyword}{self}.defer.now = \textcolor{keyword}{self}.deferredFns[\textcolor{keyword}{self}.deferredFns.length - 1].time;
+      \} \textcolor{keywordflow}{else} \{
+        \textcolor{keywordflow}{throw} \textcolor{keyword}{new} Error(\textcolor{stringliteral}{'No deferred tasks to be flushed'});
+      \}
+    \}
+
+    \textcolor{keywordflow}{while} (\textcolor{keyword}{self}.deferredFns.length && \textcolor{keyword}{self}.deferredFns[0].time <= \textcolor{keyword}{self}.defer.now) \{
+      \textcolor{keyword}{self}.deferredFns.shift().fn();
+    \}
+  \};
+
+  \textcolor{keyword}{self}.$$baseHref = \textcolor{charliteral}{'/'};
+  \textcolor{keyword}{self}.baseHref = \textcolor{keyword}{function}() \{
+    \textcolor{keywordflow}{return} this.$$baseHref;
+  \};
+\};
+angular.mock.$Browser.prototype = \{
+
+  poll: \textcolor{keyword}{function} poll() \{
+    angular.forEach(this.pollFns, \textcolor{keyword}{function}(pollFn) \{
+      pollFn();
+    \});
+  \},
+
+  url: \textcolor{keyword}{function}(url, replace, state) \{
+    \textcolor{keywordflow}{if} (angular.isUndefined(state)) \{
+      state = null;
+    \}
+    \textcolor{keywordflow}{if} (url) \{
+      this.$$url = url;
+      \textcolor{comment}{// Native pushState serializes & copies the object; simulate it.}
+      this.$$state = angular.copy(state);
+      \textcolor{keywordflow}{return} \textcolor{keyword}{this};
+    \}
+
+    \textcolor{keywordflow}{return} this.$$url;
+  \},
+
+  state: \textcolor{keyword}{function}() \{
+    \textcolor{keywordflow}{return} this.$$state;
+  \},
+
+  notifyWhenNoOutstandingRequests: \textcolor{keyword}{function}(fn) \{
+    fn();
+  \}
+\};
+
+
+angular.mock.$ExceptionHandlerProvider = \textcolor{keyword}{function}() \{
+  var handler;
+
+  this.mode = \textcolor{keyword}{function}(mode) \{
+
+    \textcolor{keywordflow}{switch} (mode) \{
+      \textcolor{keywordflow}{case} \textcolor{stringliteral}{'log'}:
+      \textcolor{keywordflow}{case} \textcolor{stringliteral}{'rethrow'}:
+        var errors = [];
+        handler = \textcolor{keyword}{function}(e) \{
+          \textcolor{keywordflow}{if} (arguments.length == 1) \{
+            errors.push(e);
+          \} \textcolor{keywordflow}{else} \{
+            errors.push([].slice.call(arguments, 0));
+          \}
+          \textcolor{keywordflow}{if} (mode === \textcolor{stringliteral}{"rethrow"}) \{
+            \textcolor{keywordflow}{throw} e;
+          \}
+        \};
+        handler.errors = errors;
+        \textcolor{keywordflow}{break};
+      \textcolor{keywordflow}{default}:
+        \textcolor{keywordflow}{throw} \textcolor{keyword}{new} Error(\textcolor{stringliteral}{"Unknown mode '"} + mode + \textcolor{stringliteral}{"', only 'log'/'rethrow' modes are allowed!"});
+    \}
+  \};
+
+  this.$get = \textcolor{keyword}{function}() \{
+    \textcolor{keywordflow}{return} handler;
+  \};
+
+  this.mode(\textcolor{stringliteral}{'rethrow'});
+\};
+
+
+angular.mock.$LogProvider = \textcolor{keyword}{function}() \{
+  var debug = \textcolor{keyword}{true};
+
+  \textcolor{keyword}{function} concat(array1, array2, index) \{
+    \textcolor{keywordflow}{return} array1.concat(Array.prototype.slice.call(array2, index));
+  \}
+
+  this.debugEnabled = \textcolor{keyword}{function}(flag) \{
+    \textcolor{keywordflow}{if} (angular.isDefined(flag)) \{
+      debug = flag;
+      \textcolor{keywordflow}{return} \textcolor{keyword}{this};
+    \} \textcolor{keywordflow}{else} \{
+      \textcolor{keywordflow}{return} debug;
+    \}
+  \};
+
+  this.$get = \textcolor{keyword}{function}() \{
+    var $log = \{
+      log: \textcolor{keyword}{function}() \{ $log.log.logs.push(concat([], arguments, 0)); \},
+      warn: \textcolor{keyword}{function}() \{ $log.warn.logs.push(concat([], arguments, 0)); \},
+      info: \textcolor{keyword}{function}() \{ $log.info.logs.push(concat([], arguments, 0)); \},
+      error: \textcolor{keyword}{function}() \{ $log.error.logs.push(concat([], arguments, 0)); \},
+      debug: \textcolor{keyword}{function}() \{
+        \textcolor{keywordflow}{if} (debug) \{
+          $log.debug.logs.push(concat([], arguments, 0));
+        \}
+      \}
+    \};
+
+    $log.reset = \textcolor{keyword}{function}() \{
+      $log.log.logs = [];
+      $log.info.logs = [];
+      $log.warn.logs = [];
+      $log.error.logs = [];
+      $log.debug.logs = [];
+    \};
+
+    $log.assertEmpty = \textcolor{keyword}{function}() \{
+      var errors = [];
+      angular.forEach([\textcolor{stringliteral}{'error'}, \textcolor{stringliteral}{'warn'}, \textcolor{stringliteral}{'info'}, \textcolor{stringliteral}{'log'}, \textcolor{stringliteral}{'debug'}], \textcolor{keyword}{function}(logLevel) \{
+        angular.forEach($log[logLevel].logs, \textcolor{keyword}{function}(log) \{
+          angular.forEach(log, \textcolor{keyword}{function}(logItem) \{
+            errors.push(\textcolor{stringliteral}{'MOCK $log ('} + logLevel + \textcolor{stringliteral}{'): '} + String(logItem) + \textcolor{charliteral}{'\(\backslash\)n'} +
+                        (logItem.stack || \textcolor{stringliteral}{''}));
+          \});
+        \});
+      \});
+      \textcolor{keywordflow}{if} (errors.length) \{
+        errors.unshift(\textcolor{stringliteral}{"Expected $log to be empty! Either a message was logged unexpectedly, or "} +
+          \textcolor{stringliteral}{"an expected log message was not checked and removed:"});
+        errors.push(\textcolor{stringliteral}{''});
+        \textcolor{keywordflow}{throw} \textcolor{keyword}{new} Error(errors.join(\textcolor{stringliteral}{'\(\backslash\)n---------\(\backslash\)n'}));
+      \}
+    \};
+
+    $log.reset();
+    \textcolor{keywordflow}{return} $log;
+  \};
+\};
+
+
+angular.mock.$IntervalProvider = \textcolor{keyword}{function}() \{
+  this.$get = [\textcolor{stringliteral}{'$browser'}, \textcolor{stringliteral}{'$rootScope'}, \textcolor{stringliteral}{'$q'}, \textcolor{stringliteral}{'$$q'},
+       \textcolor{keyword}{function}($browser,   $rootScope,   $q,   $$q) \{
+    var repeatFns = [],
+        nextRepeatId = 0,
+        now = 0;
+
+    var $interval = \textcolor{keyword}{function}(fn, delay, count, invokeApply) \{
+      var hasParams = arguments.length > 4,
+          args = hasParams ? Array.prototype.slice.call(arguments, 4) : [],
+          iteration = 0,
+          skipApply = (angular.isDefined(invokeApply) && !invokeApply),
+          deferred = (skipApply ? $$q : $q).defer(),
+          promise = deferred.promise;
+
+      count = (angular.isDefined(count)) ? count : 0;
+      promise.then(null, null, (!hasParams) ? fn : \textcolor{keyword}{function}() \{
+        fn.apply(null, args);
+      \});
+
+      promise.$$intervalId = nextRepeatId;
+
+      \textcolor{keyword}{function} tick() \{
+        deferred.notify(iteration++);
+
+        \textcolor{keywordflow}{if} (count > 0 && iteration >= count) \{
+          var fnIndex;
+          deferred.resolve(iteration);
+
+          angular.forEach(repeatFns, \textcolor{keyword}{function}(fn, index) \{
+            \textcolor{keywordflow}{if} (fn.id === promise.$$intervalId) fnIndex = index;
+          \});
+
+          \textcolor{keywordflow}{if} (fnIndex !== undefined) \{
+            repeatFns.splice(fnIndex, 1);
+          \}
+        \}
+
+        \textcolor{keywordflow}{if} (skipApply) \{
+          $browser.defer.flush();
+        \} \textcolor{keywordflow}{else} \{
+          $rootScope.$apply();
+        \}
+      \}
+
+      repeatFns.push(\{
+        nextTime:(now + delay),
+        delay: delay,
+        fn: tick,
+        \textcolor{keywordtype}{id}: nextRepeatId,
+        deferred: deferred
+      \});
+      repeatFns.sort(\textcolor{keyword}{function}(a, b) \{ \textcolor{keywordflow}{return} a.nextTime - b.nextTime;\});
+
+      nextRepeatId++;
+      \textcolor{keywordflow}{return} promise;
+    \};
+    $interval.cancel = \textcolor{keyword}{function}(promise) \{
+      \textcolor{keywordflow}{if} (!promise) \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+      var fnIndex;
+
+      angular.forEach(repeatFns, \textcolor{keyword}{function}(fn, index) \{
+        \textcolor{keywordflow}{if} (fn.id === promise.$$intervalId) fnIndex = index;
+      \});
+
+      \textcolor{keywordflow}{if} (fnIndex !== undefined) \{
+        repeatFns[fnIndex].deferred.reject(\textcolor{stringliteral}{'canceled'});
+        repeatFns.splice(fnIndex, 1);
+        \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+      \}
+
+      \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+    \};
+
+    $interval.flush = \textcolor{keyword}{function}(millis) \{
+      now += millis;
+      \textcolor{keywordflow}{while} (repeatFns.length && repeatFns[0].nextTime <= now) \{
+        var task = repeatFns[0];
+        task.fn();
+        task.nextTime += task.delay;
+        repeatFns.sort(\textcolor{keyword}{function}(a, b) \{ \textcolor{keywordflow}{return} a.nextTime - b.nextTime;\});
+      \}
+      \textcolor{keywordflow}{return} millis;
+    \};
+
+    \textcolor{keywordflow}{return} $interval;
+  \}];
+\};
+
+
+\textcolor{comment}{/* jshint -W101 */}
+\textcolor{comment}{/* The R\_ISO8061\_STR regex is never going to fit into the 100 char limit!}
+\textcolor{comment}{ * This directive should go inside the anonymous function but a bug in JSHint means that it would}
+\textcolor{comment}{ * not be enacted early enough to prevent the warning.}
+\textcolor{comment}{ */}
+var R\_ISO8061\_STR = /^(\(\backslash\)d\{4\})-?(\(\backslash\)d\(\backslash\)d)-?(\(\backslash\)d\(\backslash\)d)(?:T(\(\backslash\)d\(\backslash\)d)(?:\(\backslash\):?(\(\backslash\)d\(\backslash\)d)(?:\(\backslash\):?(\(\backslash\)d\(\backslash\)d)(?:\(\backslash\).(\(\backslash\)d\{3\}))?)?)?(Z|([+-])(
+      \(\backslash\)d\(\backslash\)d):?(\(\backslash\)d\(\backslash\)d)))?$/;
+
+\textcolor{keyword}{function} jsonStringToDate(\textcolor{keywordtype}{string}) \{
+  var match;
+  \textcolor{keywordflow}{if} (match = \textcolor{keywordtype}{string}.match(R\_ISO8061\_STR)) \{
+    var date = \textcolor{keyword}{new} Date(0),
+        tzHour = 0,
+        tzMin  = 0;
+    \textcolor{keywordflow}{if} (match[9]) \{
+      tzHour = toInt(match[9] + match[10]);
+      tzMin = toInt(match[9] + match[11]);
+    \}
+    date.setUTCFullYear(toInt(match[1]), toInt(match[2]) - 1, toInt(match[3]));
+    date.setUTCHours(toInt(match[4] || 0) - tzHour,
+                     toInt(match[5] || 0) - tzMin,
+                     toInt(match[6] || 0),
+                     toInt(match[7] || 0));
+    \textcolor{keywordflow}{return} date;
+  \}
+  \textcolor{keywordflow}{return} string;
+\}
+
+\textcolor{keyword}{function} toInt(str) \{
+  \textcolor{keywordflow}{return} parseInt(str, 10);
+\}
+
+\textcolor{keyword}{function} padNumber(num, digits, trim) \{
+  var neg = \textcolor{stringliteral}{''};
+  \textcolor{keywordflow}{if} (num < 0) \{
+    neg =  \textcolor{charliteral}{'-'};
+    num = -num;
+  \}
+  num = \textcolor{stringliteral}{''} + num;
+  \textcolor{keywordflow}{while} (num.length < digits) num = \textcolor{charliteral}{'0'} + num;
+  \textcolor{keywordflow}{if} (trim) \{
+    num = num.substr(num.length - digits);
+  \}
+  \textcolor{keywordflow}{return} neg + num;
+\}
+
+
+angular.mock.TzDate = \textcolor{keyword}{function}(offset, timestamp) \{
+  var \textcolor{keyword}{self} = \textcolor{keyword}{new} Date(0);
+  \textcolor{keywordflow}{if} (angular.isString(timestamp)) \{
+    var tsStr = timestamp;
+
+    \textcolor{keyword}{self}.origDate = jsonStringToDate(timestamp);
+
+    timestamp = \textcolor{keyword}{self}.origDate.getTime();
+    \textcolor{keywordflow}{if} (isNaN(timestamp)) \{
+      \textcolor{keywordflow}{throw} \{
+        name: \textcolor{stringliteral}{"Illegal Argument"},
+        message: \textcolor{stringliteral}{"Arg '"} + tsStr + \textcolor{stringliteral}{"' passed into TzDate constructor is not a valid date string"}
+      \};
+    \}
+  \} \textcolor{keywordflow}{else} \{
+    \textcolor{keyword}{self}.origDate = \textcolor{keyword}{new} Date(timestamp);
+  \}
+
+  var localOffset = \textcolor{keyword}{new} Date(timestamp).getTimezoneOffset();
+  \textcolor{keyword}{self}.offsetDiff = localOffset * 60 * 1000 - offset * 1000 * 60 * 60;
+  \textcolor{keyword}{self}.date = \textcolor{keyword}{new} Date(timestamp + \textcolor{keyword}{self}.offsetDiff);
+
+  \textcolor{keyword}{self}.getTime = \textcolor{keyword}{function}() \{
+    \textcolor{keywordflow}{return} \textcolor{keyword}{self}.date.getTime() - \textcolor{keyword}{self}.offsetDiff;
+  \};
+
+  \textcolor{keyword}{self}.toLocaleDateString = \textcolor{keyword}{function}() \{
+    \textcolor{keywordflow}{return} \textcolor{keyword}{self}.date.toLocaleDateString();
+  \};
+
+  \textcolor{keyword}{self}.getFullYear = \textcolor{keyword}{function}() \{
+    \textcolor{keywordflow}{return} \textcolor{keyword}{self}.date.getFullYear();
+  \};
+
+  \textcolor{keyword}{self}.getMonth = \textcolor{keyword}{function}() \{
+    \textcolor{keywordflow}{return} \textcolor{keyword}{self}.date.getMonth();
+  \};
+
+  \textcolor{keyword}{self}.getDate = \textcolor{keyword}{function}() \{
+    \textcolor{keywordflow}{return} \textcolor{keyword}{self}.date.getDate();
+  \};
+
+  \textcolor{keyword}{self}.getHours = \textcolor{keyword}{function}() \{
+    \textcolor{keywordflow}{return} \textcolor{keyword}{self}.date.getHours();
+  \};
+
+  \textcolor{keyword}{self}.getMinutes = \textcolor{keyword}{function}() \{
+    \textcolor{keywordflow}{return} \textcolor{keyword}{self}.date.getMinutes();
+  \};
+
+  \textcolor{keyword}{self}.getSeconds = \textcolor{keyword}{function}() \{
+    \textcolor{keywordflow}{return} \textcolor{keyword}{self}.date.getSeconds();
+  \};
+
+  \textcolor{keyword}{self}.getMilliseconds = \textcolor{keyword}{function}() \{
+    \textcolor{keywordflow}{return} \textcolor{keyword}{self}.date.getMilliseconds();
+  \};
+
+  \textcolor{keyword}{self}.getTimezoneOffset = \textcolor{keyword}{function}() \{
+    \textcolor{keywordflow}{return} offset * 60;
+  \};
+
+  \textcolor{keyword}{self}.getUTCFullYear = \textcolor{keyword}{function}() \{
+    \textcolor{keywordflow}{return} \textcolor{keyword}{self}.origDate.getUTCFullYear();
+  \};
+
+  \textcolor{keyword}{self}.getUTCMonth = \textcolor{keyword}{function}() \{
+    \textcolor{keywordflow}{return} \textcolor{keyword}{self}.origDate.getUTCMonth();
+  \};
+
+  \textcolor{keyword}{self}.getUTCDate = \textcolor{keyword}{function}() \{
+    \textcolor{keywordflow}{return} \textcolor{keyword}{self}.origDate.getUTCDate();
+  \};
+
+  \textcolor{keyword}{self}.getUTCHours = \textcolor{keyword}{function}() \{
+    \textcolor{keywordflow}{return} \textcolor{keyword}{self}.origDate.getUTCHours();
+  \};
+
+  \textcolor{keyword}{self}.getUTCMinutes = \textcolor{keyword}{function}() \{
+    \textcolor{keywordflow}{return} \textcolor{keyword}{self}.origDate.getUTCMinutes();
+  \};
+
+  \textcolor{keyword}{self}.getUTCSeconds = \textcolor{keyword}{function}() \{
+    \textcolor{keywordflow}{return} \textcolor{keyword}{self}.origDate.getUTCSeconds();
+  \};
+
+  \textcolor{keyword}{self}.getUTCMilliseconds = \textcolor{keyword}{function}() \{
+    \textcolor{keywordflow}{return} \textcolor{keyword}{self}.origDate.getUTCMilliseconds();
+  \};
+
+  \textcolor{keyword}{self}.getDay = \textcolor{keyword}{function}() \{
+    \textcolor{keywordflow}{return} \textcolor{keyword}{self}.date.getDay();
+  \};
+
+  \textcolor{comment}{// provide this method only on browsers that already have it}
+  \textcolor{keywordflow}{if} (\textcolor{keyword}{self}.toISOString) \{
+    \textcolor{keyword}{self}.toISOString = \textcolor{keyword}{function}() \{
+      \textcolor{keywordflow}{return} padNumber(\textcolor{keyword}{self}.origDate.getUTCFullYear(), 4) + \textcolor{charliteral}{'-'} +
+            padNumber(\textcolor{keyword}{self}.origDate.getUTCMonth() + 1, 2) + \textcolor{charliteral}{'-'} +
+            padNumber(\textcolor{keyword}{self}.origDate.getUTCDate(), 2) + \textcolor{charliteral}{'T'} +
+            padNumber(\textcolor{keyword}{self}.origDate.getUTCHours(), 2) + \textcolor{charliteral}{':'} +
+            padNumber(\textcolor{keyword}{self}.origDate.getUTCMinutes(), 2) + \textcolor{charliteral}{':'} +
+            padNumber(\textcolor{keyword}{self}.origDate.getUTCSeconds(), 2) + \textcolor{charliteral}{'.'} +
+            padNumber(\textcolor{keyword}{self}.origDate.getUTCMilliseconds(), 3) + \textcolor{charliteral}{'Z'};
+    \};
+  \}
+
+  \textcolor{comment}{//hide all methods not implemented in this mock that the Date prototype exposes}
+  var unimplementedMethods = [\textcolor{stringliteral}{'getUTCDay'},
+      \textcolor{stringliteral}{'getYear'}, \textcolor{stringliteral}{'setDate'}, \textcolor{stringliteral}{'setFullYear'}, \textcolor{stringliteral}{'setHours'}, \textcolor{stringliteral}{'setMilliseconds'},
+      \textcolor{stringliteral}{'setMinutes'}, \textcolor{stringliteral}{'setMonth'}, \textcolor{stringliteral}{'setSeconds'}, \textcolor{stringliteral}{'setTime'}, \textcolor{stringliteral}{'setUTCDate'}, \textcolor{stringliteral}{'setUTCFullYear'},
+      \textcolor{stringliteral}{'setUTCHours'}, \textcolor{stringliteral}{'setUTCMilliseconds'}, \textcolor{stringliteral}{'setUTCMinutes'}, \textcolor{stringliteral}{'setUTCMonth'}, \textcolor{stringliteral}{'setUTCSeconds'},
+      \textcolor{stringliteral}{'setYear'}, \textcolor{stringliteral}{'toDateString'}, \textcolor{stringliteral}{'toGMTString'}, \textcolor{stringliteral}{'toJSON'}, \textcolor{stringliteral}{'toLocaleFormat'}, \textcolor{stringliteral}{'toLocaleString'},
+      \textcolor{stringliteral}{'toLocaleTimeString'}, \textcolor{stringliteral}{'toSource'}, \textcolor{stringliteral}{'toString'}, \textcolor{stringliteral}{'toTimeString'}, \textcolor{stringliteral}{'toUTCString'}, \textcolor{stringliteral}{'valueOf'}];
+
+  angular.forEach(unimplementedMethods, \textcolor{keyword}{function}(methodName) \{
+    \textcolor{keyword}{self}[methodName] = \textcolor{keyword}{function}() \{
+      \textcolor{keywordflow}{throw} \textcolor{keyword}{new} Error(\textcolor{stringliteral}{"Method '"} + methodName + \textcolor{stringliteral}{"' is not implemented in the TzDate mock"});
+    \};
+  \});
+
+  \textcolor{keywordflow}{return} \textcolor{keyword}{self};
+\};
+
+\textcolor{comment}{//make "tzDateInstance instanceof Date" return true}
+angular.mock.TzDate.prototype = Date.prototype;
+\textcolor{comment}{/* jshint +W101 */}
+
+angular.mock.animate = angular.module(\textcolor{stringliteral}{'ngAnimateMock'}, [\textcolor{stringliteral}{'ng'}])
+
+  .config([\textcolor{stringliteral}{'$provide'}, \textcolor{keyword}{function}($provide) \{
+
+    $provide.factory(\textcolor{stringliteral}{'$$forceReflow'}, \textcolor{keyword}{function}() \{
+      \textcolor{keyword}{function} reflowFn() \{
+        reflowFn.totalReflows++;
+      \}
+      reflowFn.totalReflows = 0;
+      \textcolor{keywordflow}{return} reflowFn;
+    \});
+
+    $provide.decorator(\textcolor{stringliteral}{'$animate'}, [\textcolor{stringliteral}{'$delegate'}, \textcolor{stringliteral}{'$timeout'}, \textcolor{stringliteral}{'$browser'}, \textcolor{stringliteral}{'$$rAF'}, \textcolor{stringliteral}{'$$forceReflow'},
+                            \textcolor{keyword}{function}($delegate,   $timeout,   $browser,   $$rAF,   $$forceReflow) \{
+
+      var animate = \{
+        queue: [],
+        cancel: $delegate.cancel,
+        \textcolor{keyword}{get} reflows() \{
+          \textcolor{keywordflow}{return} $$forceReflow.totalReflows;
+        \},
+        enabled: $delegate.enabled,
+        triggerCallbackEvents: \textcolor{keyword}{function}() \{
+          $$rAF.flush();
+        \},
+        triggerCallbackPromise: \textcolor{keyword}{function}() \{
+          $timeout.flush(0);
+        \},
+        triggerCallbacks: \textcolor{keyword}{function}() \{
+          this.triggerCallbackEvents();
+          this.triggerCallbackPromise();
+        \}
+      \};
+
+      angular.forEach(
+        [\textcolor{stringliteral}{'animate'},\textcolor{stringliteral}{'enter'},\textcolor{stringliteral}{'leave'},\textcolor{stringliteral}{'move'},\textcolor{stringliteral}{'addClass'},\textcolor{stringliteral}{'removeClass'},\textcolor{stringliteral}{'setClass'}], \textcolor{keyword}{function}(method) \{
+        animate[method] = \textcolor{keyword}{function}() \{
+          animate.queue.push(\{
+            \textcolor{keyword}{event}: method,
+            element: arguments[0],
+            options: arguments[arguments.length - 1],
+            args: arguments
+          \});
+          \textcolor{keywordflow}{return} $delegate[method].apply($delegate, arguments);
+        \};
+      \});
+
+      \textcolor{keywordflow}{return} animate;
+    \}]);
+
+  \}]);
+
+
+angular.mock.dump = \textcolor{keyword}{function}(object) \{
+  \textcolor{keywordflow}{return} serialize(\textcolor{keywordtype}{object});
+
+  \textcolor{keyword}{function} serialize(\textcolor{keywordtype}{object}) \{
+    var out;
+
+    \textcolor{keywordflow}{if} (angular.isElement(\textcolor{keywordtype}{object})) \{
+      \textcolor{keywordtype}{object} = angular.element(\textcolor{keywordtype}{object});
+      out = angular.element(\textcolor{stringliteral}{'<div></div>'});
+      angular.forEach(\textcolor{keywordtype}{object}, \textcolor{keyword}{function}(element) \{
+        out.append(angular.element(element).clone());
+      \});
+      out = out.html();
+    \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (angular.isArray(\textcolor{keywordtype}{object})) \{
+      out = [];
+      angular.forEach(\textcolor{keywordtype}{object}, \textcolor{keyword}{function}(o) \{
+        out.push(serialize(o));
+      \});
+      out = \textcolor{stringliteral}{'[ '} + out.join(\textcolor{stringliteral}{', '}) + \textcolor{stringliteral}{' ]'};
+    \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (angular.isObject(\textcolor{keywordtype}{object})) \{
+      \textcolor{keywordflow}{if} (angular.isFunction(\textcolor{keywordtype}{object}.$eval) && angular.isFunction(\textcolor{keywordtype}{object}.$apply)) \{
+        out = serializeScope(\textcolor{keywordtype}{object});
+      \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (\textcolor{keywordtype}{object} instanceof Error) \{
+        out = \textcolor{keywordtype}{object}.stack || (\textcolor{stringliteral}{''} + \textcolor{keywordtype}{object}.name + \textcolor{stringliteral}{': '} + \textcolor{keywordtype}{object}.message);
+      \} \textcolor{keywordflow}{else} \{
+        \textcolor{comment}{// TODO(i): this prevents methods being logged,}
+        \textcolor{comment}{// we should have a better way to serialize objects}
+        out = angular.toJson(\textcolor{keywordtype}{object}, \textcolor{keyword}{true});
+      \}
+    \} \textcolor{keywordflow}{else} \{
+      out = String(\textcolor{keywordtype}{object});
+    \}
+
+    \textcolor{keywordflow}{return} out;
+  \}
+
+  \textcolor{keyword}{function} serializeScope(scope, offset) \{
+    offset = offset ||  \textcolor{stringliteral}{'  '};
+    var log = [offset + \textcolor{stringliteral}{'Scope('} + scope.$id + \textcolor{stringliteral}{'): \{'}];
+    \textcolor{keywordflow}{for} (var key in scope) \{
+      \textcolor{keywordflow}{if} (Object.prototype.hasOwnProperty.call(scope, key) && !key.match(/^(\(\backslash\)$|\textcolor{keyword}{this})/)) \{
+        log.push(\textcolor{stringliteral}{'  '} + key + \textcolor{stringliteral}{': '} + angular.toJson(scope[key]));
+      \}
+    \}
+    var child = scope.$$childHead;
+    \textcolor{keywordflow}{while} (child) \{
+      log.push(serializeScope(child, offset + \textcolor{stringliteral}{'  '}));
+      child = child.$$nextSibling;
+    \}
+    log.push(\textcolor{charliteral}{'\}'});
+    \textcolor{keywordflow}{return} log.join(\textcolor{charliteral}{'\(\backslash\)n'} + offset);
+  \}
+\};
+
+angular.mock.$HttpBackendProvider = \textcolor{keyword}{function}() \{
+  this.$get = [\textcolor{stringliteral}{'$rootScope'}, \textcolor{stringliteral}{'$timeout'}, createHttpBackendMock];
+\};
+
+\textcolor{keyword}{function} createHttpBackendMock($rootScope, $timeout, $delegate, $browser) \{
+  var definitions = [],
+      expectations = [],
+      responses = [],
+      responsesPush = angular.bind(responses, responses.push),
+      copy = angular.copy;
+
+  \textcolor{keyword}{function} createResponse(status, data, headers, statusText) \{
+    \textcolor{keywordflow}{if} (angular.isFunction(status)) \textcolor{keywordflow}{return} status;
+
+    \textcolor{keywordflow}{return} \textcolor{keyword}{function}() \{
+      \textcolor{keywordflow}{return} angular.isNumber(status)
+          ? [status, data, headers, statusText]
+          : [200, status, data, headers];
+    \};
+  \}
+
+  \textcolor{comment}{// TODO(vojta): change params to: method, url, data, headers, callback}
+  \textcolor{keyword}{function} $httpBackend(method, url, data, callback, headers, timeout, withCredentials) \{
+    var xhr = \textcolor{keyword}{new} MockXhr(),
+        expectation = expectations[0],
+        wasExpected = \textcolor{keyword}{false};
+
+    \textcolor{keyword}{function} prettyPrint(data) \{
+      \textcolor{keywordflow}{return} (angular.isString(data) || angular.isFunction(data) || data instanceof RegExp)
+          ? data
+          : angular.toJson(data);
+    \}
+
+    \textcolor{keyword}{function} wrapResponse(wrapped) \{
+      \textcolor{keywordflow}{if} (!$browser && timeout) \{
+        timeout.then ? timeout.then(handleTimeout) : $timeout(handleTimeout, timeout);
+      \}
+
+      \textcolor{keywordflow}{return} handleResponse;
+
+      \textcolor{keyword}{function} handleResponse() \{
+        var response = wrapped.response(method, url, data, headers);
+        xhr.$$respHeaders = response[2];
+        callback(copy(response[0]), copy(response[1]), xhr.getAllResponseHeaders(),
+                 copy(response[3] || \textcolor{stringliteral}{''}));
+      \}
+
+      \textcolor{keyword}{function} handleTimeout() \{
+        \textcolor{keywordflow}{for} (var i = 0, ii = responses.length; i < ii; i++) \{
+          \textcolor{keywordflow}{if} (responses[i] === handleResponse) \{
+            responses.splice(i, 1);
+            callback(-1, undefined, \textcolor{stringliteral}{''});
+            \textcolor{keywordflow}{break};
+          \}
+        \}
+      \}
+    \}
+
+    \textcolor{keywordflow}{if} (expectation && expectation.match(method, url)) \{
+      \textcolor{keywordflow}{if} (!expectation.matchData(data)) \{
+        \textcolor{keywordflow}{throw} \textcolor{keyword}{new} Error(\textcolor{stringliteral}{'Expected '} + expectation + \textcolor{stringliteral}{' with different data\(\backslash\)n'} +
+            \textcolor{stringliteral}{'EXPECTED: '} + prettyPrint(expectation.data) + \textcolor{stringliteral}{'\(\backslash\)nGOT:      '} + data);
+      \}
+
+      \textcolor{keywordflow}{if} (!expectation.matchHeaders(headers)) \{
+        \textcolor{keywordflow}{throw} \textcolor{keyword}{new} Error(\textcolor{stringliteral}{'Expected '} + expectation + \textcolor{stringliteral}{' with different headers\(\backslash\)n'} +
+                        \textcolor{stringliteral}{'EXPECTED: '} + prettyPrint(expectation.headers) + \textcolor{stringliteral}{'\(\backslash\)nGOT:      '} +
+                        prettyPrint(headers));
+      \}
+
+      expectations.shift();
+
+      \textcolor{keywordflow}{if} (expectation.response) \{
+        responses.push(wrapResponse(expectation));
+        \textcolor{keywordflow}{return};
+      \}
+      wasExpected = \textcolor{keyword}{true};
+    \}
+
+    var i = -1, definition;
+    \textcolor{keywordflow}{while} ((definition = definitions[++i])) \{
+      \textcolor{keywordflow}{if} (definition.match(method, url, data, headers || \{\})) \{
+        \textcolor{keywordflow}{if} (definition.response) \{
+          \textcolor{comment}{// if $browser specified, we do auto flush all requests}
+          ($browser ? $browser.defer : responsesPush)(wrapResponse(definition));
+        \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (definition.passThrough) \{
+          $delegate(method, url, data, callback, headers, timeout, withCredentials);
+        \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{throw} \textcolor{keyword}{new} Error(\textcolor{stringliteral}{'No response defined !'});
+        \textcolor{keywordflow}{return};
+      \}
+    \}
+    \textcolor{keywordflow}{throw} wasExpected ?
+        \textcolor{keyword}{new} Error(\textcolor{stringliteral}{'No response defined !'}) :
+        \textcolor{keyword}{new} Error(\textcolor{stringliteral}{'Unexpected request: '} + method + \textcolor{charliteral}{' '} + url + \textcolor{charliteral}{'\(\backslash\)n'} +
+                  (expectation ? \textcolor{stringliteral}{'Expected '} + expectation : \textcolor{stringliteral}{'No more request expected'}));
+  \}
+
+  $httpBackend.when = \textcolor{keyword}{function}(method, url, data, headers) \{
+    var definition = \textcolor{keyword}{new} MockHttpExpectation(method, url, data, headers),
+        chain = \{
+          respond: \textcolor{keyword}{function}(status, data, headers, statusText) \{
+            definition.passThrough = undefined;
+            definition.response = createResponse(status, data, headers, statusText);
+            \textcolor{keywordflow}{return} chain;
+          \}
+        \};
+
+    \textcolor{keywordflow}{if} ($browser) \{
+      chain.passThrough = \textcolor{keyword}{function}() \{
+        definition.response = undefined;
+        definition.passThrough = \textcolor{keyword}{true};
+        \textcolor{keywordflow}{return} chain;
+      \};
+    \}
+
+    definitions.push(definition);
+    \textcolor{keywordflow}{return} chain;
+  \};
+
+  createShortMethods(\textcolor{stringliteral}{'when'});
+
+
+  $httpBackend.expect = \textcolor{keyword}{function}(method, url, data, headers) \{
+    var expectation = \textcolor{keyword}{new} MockHttpExpectation(method, url, data, headers),
+        chain = \{
+          respond: \textcolor{keyword}{function}(status, data, headers, statusText) \{
+            expectation.response = createResponse(status, data, headers, statusText);
+            \textcolor{keywordflow}{return} chain;
+          \}
+        \};
+
+    expectations.push(expectation);
+    \textcolor{keywordflow}{return} chain;
+  \};
+
+
+  createShortMethods(\textcolor{stringliteral}{'expect'});
+
+
+  $httpBackend.flush = \textcolor{keyword}{function}(count, digest) \{
+    \textcolor{keywordflow}{if} (digest !== \textcolor{keyword}{false}) $rootScope.$digest();
+    \textcolor{keywordflow}{if} (!responses.length) \textcolor{keywordflow}{throw} \textcolor{keyword}{new} Error(\textcolor{stringliteral}{'No pending request to flush !'});
+
+    \textcolor{keywordflow}{if} (angular.isDefined(count) && count !== null) \{
+      \textcolor{keywordflow}{while} (count--) \{
+        \textcolor{keywordflow}{if} (!responses.length) \textcolor{keywordflow}{throw} \textcolor{keyword}{new} Error(\textcolor{stringliteral}{'No more pending request to flush !'});
+        responses.shift()();
+      \}
+    \} \textcolor{keywordflow}{else} \{
+      \textcolor{keywordflow}{while} (responses.length) \{
+        responses.shift()();
+      \}
+    \}
+    $httpBackend.verifyNoOutstandingExpectation(digest);
+  \};
+
+
+  $httpBackend.verifyNoOutstandingExpectation = \textcolor{keyword}{function}(digest) \{
+    \textcolor{keywordflow}{if} (digest !== \textcolor{keyword}{false}) $rootScope.$digest();
+    \textcolor{keywordflow}{if} (expectations.length) \{
+      \textcolor{keywordflow}{throw} \textcolor{keyword}{new} Error(\textcolor{stringliteral}{'Unsatisfied requests: '} + expectations.join(\textcolor{stringliteral}{', '}));
+    \}
+  \};
+
+
+  $httpBackend.verifyNoOutstandingRequest = \textcolor{keyword}{function}() \{
+    \textcolor{keywordflow}{if} (responses.length) \{
+      \textcolor{keywordflow}{throw} \textcolor{keyword}{new} Error(\textcolor{stringliteral}{'Unflushed requests: '} + responses.length);
+    \}
+  \};
+
+
+  $httpBackend.resetExpectations = \textcolor{keyword}{function}() \{
+    expectations.length = 0;
+    responses.length = 0;
+  \};
+
+  \textcolor{keywordflow}{return} $httpBackend;
+
+
+  \textcolor{keyword}{function} createShortMethods(prefix) \{
+    angular.forEach([\textcolor{stringliteral}{'GET'}, \textcolor{stringliteral}{'DELETE'}, \textcolor{stringliteral}{'JSONP'}, \textcolor{stringliteral}{'HEAD'}], \textcolor{keyword}{function}(method) \{
+     $httpBackend[prefix + method] = \textcolor{keyword}{function}(url, headers) \{
+       \textcolor{keywordflow}{return} $httpBackend[prefix](method, url, undefined, headers);
+     \};
+    \});
+
+    angular.forEach([\textcolor{stringliteral}{'PUT'}, \textcolor{stringliteral}{'POST'}, \textcolor{stringliteral}{'PATCH'}], \textcolor{keyword}{function}(method) \{
+      $httpBackend[prefix + method] = \textcolor{keyword}{function}(url, data, headers) \{
+        \textcolor{keywordflow}{return} $httpBackend[prefix](method, url, data, headers);
+      \};
+    \});
+  \}
+\}
+
+\textcolor{keyword}{function} MockHttpExpectation(method, url, data, headers) \{
+
+  this.data = data;
+  this.headers = headers;
+
+  this.match = \textcolor{keyword}{function}(m, u, d, h) \{
+    \textcolor{keywordflow}{if} (method != m) \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+    \textcolor{keywordflow}{if} (!this.matchUrl(u)) \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+    \textcolor{keywordflow}{if} (angular.isDefined(d) && !this.matchData(d)) \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+    \textcolor{keywordflow}{if} (angular.isDefined(h) && !this.matchHeaders(h)) \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+    \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+  \};
+
+  this.matchUrl = \textcolor{keyword}{function}(u) \{
+    \textcolor{keywordflow}{if} (!url) \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+    \textcolor{keywordflow}{if} (angular.isFunction(url.test)) \textcolor{keywordflow}{return} url.test(u);
+    \textcolor{keywordflow}{if} (angular.isFunction(url)) \textcolor{keywordflow}{return} url(u);
+    \textcolor{keywordflow}{return} url == u;
+  \};
+
+  this.matchHeaders = \textcolor{keyword}{function}(h) \{
+    \textcolor{keywordflow}{if} (angular.isUndefined(headers)) \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+    \textcolor{keywordflow}{if} (angular.isFunction(headers)) \textcolor{keywordflow}{return} headers(h);
+    \textcolor{keywordflow}{return} angular.equals(headers, h);
+  \};
+
+  this.matchData = \textcolor{keyword}{function}(d) \{
+    \textcolor{keywordflow}{if} (angular.isUndefined(data)) \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+    \textcolor{keywordflow}{if} (data && angular.isFunction(data.test)) \textcolor{keywordflow}{return} data.test(d);
+    \textcolor{keywordflow}{if} (data && angular.isFunction(data)) \textcolor{keywordflow}{return} data(d);
+    \textcolor{keywordflow}{if} (data && !angular.isString(data)) \{
+      \textcolor{keywordflow}{return} angular.equals(angular.fromJson(angular.toJson(data)), angular.fromJson(d));
+    \}
+    \textcolor{keywordflow}{return} data == d;
+  \};
+
+  this.toString = \textcolor{keyword}{function}() \{
+    \textcolor{keywordflow}{return} method + \textcolor{charliteral}{' '} + url;
+  \};
+\}
+
+\textcolor{keyword}{function} createMockXhr() \{
+  \textcolor{keywordflow}{return} \textcolor{keyword}{new} MockXhr();
+\}
+
+\textcolor{keyword}{function} MockXhr() \{
+
+  \textcolor{comment}{// hack for testing $http, $httpBackend}
+  MockXhr.$$lastInstance = \textcolor{keyword}{this};
+
+  this.open = \textcolor{keyword}{function}(method, url, async) \{
+    this.$$method = method;
+    this.$$url = url;
+    this.$$async = async;
+    this.$$reqHeaders = \{\};
+    this.$$respHeaders = \{\};
+  \};
+
+  this.send = \textcolor{keyword}{function}(data) \{
+    this.$$data = data;
+  \};
+
+  this.setRequestHeader = \textcolor{keyword}{function}(key, value) \{
+    this.$$reqHeaders[key] = value;
+  \};
+
+  this.getResponseHeader = \textcolor{keyword}{function}(name) \{
+    \textcolor{comment}{// the lookup must be case insensitive,}
+    \textcolor{comment}{// that's why we try two quick lookups first and full scan last}
+    var header = this.$$respHeaders[name];
+    \textcolor{keywordflow}{if} (header) \textcolor{keywordflow}{return} header;
+
+    name = angular.lowercase(name);
+    header = this.$$respHeaders[name];
+    \textcolor{keywordflow}{if} (header) \textcolor{keywordflow}{return} header;
+
+    header = undefined;
+    angular.forEach(this.$$respHeaders, \textcolor{keyword}{function}(headerVal, headerName) \{
+      \textcolor{keywordflow}{if} (!header && angular.lowercase(headerName) == name) header = headerVal;
+    \});
+    \textcolor{keywordflow}{return} header;
+  \};
+
+  this.getAllResponseHeaders = \textcolor{keyword}{function}() \{
+    var lines = [];
+
+    angular.forEach(this.$$respHeaders, \textcolor{keyword}{function}(value, key) \{
+      lines.push(key + \textcolor{stringliteral}{': '} + value);
+    \});
+    \textcolor{keywordflow}{return} lines.join(\textcolor{charliteral}{'\(\backslash\)n'});
+  \};
+
+  this.abort = angular.noop;
+\}
+
+
+angular.mock.$TimeoutDecorator = [\textcolor{stringliteral}{'$delegate'}, \textcolor{stringliteral}{'$browser'}, \textcolor{keyword}{function}($delegate, $browser) \{
+
+  $delegate.flush = \textcolor{keyword}{function}(delay) \{
+    $browser.defer.flush(delay);
+  \};
+
+  $delegate.verifyNoPendingTasks = \textcolor{keyword}{function}() \{
+    \textcolor{keywordflow}{if} ($browser.deferredFns.length) \{
+      \textcolor{keywordflow}{throw} \textcolor{keyword}{new} Error(\textcolor{stringliteral}{'Deferred tasks to flush ('} + $browser.deferredFns.length + \textcolor{stringliteral}{'): '} +
+          formatPendingTasksAsString($browser.deferredFns));
+    \}
+  \};
+
+  \textcolor{keyword}{function} formatPendingTasksAsString(tasks) \{
+    var result = [];
+    angular.forEach(tasks, \textcolor{keyword}{function}(task) \{
+      result.push(\textcolor{stringliteral}{'\{id: '} + task.id + \textcolor{stringliteral}{', '} + \textcolor{stringliteral}{'time: '} + task.time + \textcolor{charliteral}{'\}'});
+    \});
+
+    \textcolor{keywordflow}{return} result.join(\textcolor{stringliteral}{', '});
+  \}
+
+  \textcolor{keywordflow}{return} $delegate;
+\}];
+
+angular.mock.$RAFDecorator = [\textcolor{stringliteral}{'$delegate'}, \textcolor{keyword}{function}($delegate) \{
+  var queue = [];
+  var rafFn = \textcolor{keyword}{function}(fn) \{
+    var index = queue.length;
+    queue.push(fn);
+    \textcolor{keywordflow}{return} \textcolor{keyword}{function}() \{
+      queue.splice(index, 1);
+    \};
+  \};
+
+  rafFn.supported = $delegate.supported;
+
+  rafFn.flush = \textcolor{keyword}{function}() \{
+    \textcolor{keywordflow}{if} (queue.length === 0) \{
+      \textcolor{keywordflow}{throw} \textcolor{keyword}{new} Error(\textcolor{stringliteral}{'No rAF callbacks present'});
+    \}
+
+    var length = queue.length;
+    \textcolor{keywordflow}{for} (var i = 0; i < length; i++) \{
+      queue[i]();
+    \}
+
+    queue = queue.slice(i);
+  \};
+
+  \textcolor{keywordflow}{return} rafFn;
+\}];
+
+angular.mock.$RootElementProvider = \textcolor{keyword}{function}() \{
+  this.$get = \textcolor{keyword}{function}() \{
+    \textcolor{keywordflow}{return} angular.element(\textcolor{stringliteral}{'<div ng-app></div>'});
+  \};
+\};
+
+angular.mock.$ControllerDecorator = [\textcolor{stringliteral}{'$delegate'}, \textcolor{keyword}{function}($delegate) \{
+  \textcolor{keywordflow}{return} \textcolor{keyword}{function}(expression, locals, later, ident) \{
+    \textcolor{keywordflow}{if} (later && typeof later === \textcolor{stringliteral}{'object'}) \{
+      var create = $delegate(expression, locals, \textcolor{keyword}{true}, ident);
+      angular.extend(create.instance, later);
+      \textcolor{keywordflow}{return} create();
+    \}
+    \textcolor{keywordflow}{return} $delegate(expression, locals, later, ident);
+  \};
+\}];
+
+
+angular.module(\textcolor{stringliteral}{'ngMock'}, [\textcolor{stringliteral}{'ng'}]).provider(\{
+  $browser: angular.mock.$BrowserProvider,
+  $exceptionHandler: angular.mock.$ExceptionHandlerProvider,
+  $log: angular.mock.$LogProvider,
+  $interval: angular.mock.$IntervalProvider,
+  $httpBackend: angular.mock.$HttpBackendProvider,
+  $rootElement: angular.mock.$RootElementProvider
+\}).config([\textcolor{stringliteral}{'$provide'}, \textcolor{keyword}{function}($provide) \{
+  $provide.decorator(\textcolor{stringliteral}{'$timeout'}, angular.mock.$TimeoutDecorator);
+  $provide.decorator(\textcolor{stringliteral}{'$$rAF'}, angular.mock.$RAFDecorator);
+  $provide.decorator(\textcolor{stringliteral}{'$rootScope'}, angular.mock.$RootScopeDecorator);
+  $provide.decorator(\textcolor{stringliteral}{'$controller'}, angular.mock.$ControllerDecorator);
+\}]);
+
+angular.module(\textcolor{stringliteral}{'ngMockE2E'}, [\textcolor{stringliteral}{'ng'}]).config([\textcolor{stringliteral}{'$provide'}, \textcolor{keyword}{function}($provide) \{
+  $provide.decorator(\textcolor{stringliteral}{'$httpBackend'}, angular.mock.e2e.$httpBackendDecorator);
+\}]);
+
+angular.mock.e2e = \{\};
+angular.mock.e2e.$httpBackendDecorator =
+  [\textcolor{stringliteral}{'$rootScope'}, \textcolor{stringliteral}{'$timeout'}, \textcolor{stringliteral}{'$delegate'}, \textcolor{stringliteral}{'$browser'}, createHttpBackendMock];
+
+
+angular.mock.$RootScopeDecorator = [\textcolor{stringliteral}{'$delegate'}, \textcolor{keyword}{function}($delegate) \{
+
+  var $rootScopePrototype = Object.getPrototypeOf($delegate);
+
+  $rootScopePrototype.$countChildScopes = countChildScopes;
+  $rootScopePrototype.$countWatchers = countWatchers;
+
+  \textcolor{keywordflow}{return} $delegate;
+
+  \textcolor{comment}{// ------------------------------------------------------------------------------------------ //}
+
+  \textcolor{keyword}{function} countChildScopes() \{
+    \textcolor{comment}{// jshint validthis: true}
+    var count = 0; \textcolor{comment}{// exclude the current scope}
+    var pendingChildHeads = [this.$$childHead];
+    var currentScope;
+
+    \textcolor{keywordflow}{while} (pendingChildHeads.length) \{
+      currentScope = pendingChildHeads.shift();
+
+      \textcolor{keywordflow}{while} (currentScope) \{
+        count += 1;
+        pendingChildHeads.push(currentScope.$$childHead);
+        currentScope = currentScope.$$nextSibling;
+      \}
+    \}
+
+    \textcolor{keywordflow}{return} count;
+  \}
+
+
+  \textcolor{keyword}{function} countWatchers() \{
+    \textcolor{comment}{// jshint validthis: true}
+    var count = this.$$watchers ? this.$$watchers.length : 0; \textcolor{comment}{// include the current scope}
+    var pendingChildHeads = [this.$$childHead];
+    var currentScope;
+
+    \textcolor{keywordflow}{while} (pendingChildHeads.length) \{
+      currentScope = pendingChildHeads.shift();
+
+      \textcolor{keywordflow}{while} (currentScope) \{
+        count += currentScope.$$watchers ? currentScope.$$watchers.length : 0;
+        pendingChildHeads.push(currentScope.$$childHead);
+        currentScope = currentScope.$$nextSibling;
+      \}
+    \}
+
+    \textcolor{keywordflow}{return} count;
+  \}
+\}];
+
+
+\textcolor{keywordflow}{if} (window.jasmine || window.mocha) \{
+
+  var currentSpec = null,
+      annotatedFunctions = [],
+      isSpecRunning = \textcolor{keyword}{function}() \{
+        \textcolor{keywordflow}{return} !!currentSpec;
+      \};
+
+  angular.mock.$$annotate = angular.injector.$$annotate;
+  angular.injector.$$annotate = \textcolor{keyword}{function}(fn) \{
+    \textcolor{keywordflow}{if} (typeof fn === \textcolor{stringliteral}{'function'} && !fn.$inject) \{
+      annotatedFunctions.push(fn);
+    \}
+    \textcolor{keywordflow}{return} angular.mock.$$annotate.apply(\textcolor{keyword}{this}, arguments);
+  \};
+
+
+  (window.beforeEach || window.setup)(\textcolor{keyword}{function}() \{
+    annotatedFunctions = [];
+    currentSpec = \textcolor{keyword}{this};
+  \});
+
+  (window.afterEach || window.teardown)(\textcolor{keyword}{function}() \{
+    var injector = currentSpec.$injector;
+
+    annotatedFunctions.forEach(\textcolor{keyword}{function}(fn) \{
+      \textcolor{keyword}{delete} fn.$inject;
+    \});
+
+    angular.forEach(currentSpec.$modules, \textcolor{keyword}{function}(module) \{
+      if (module && module.$$hashKey) \{
+        module.$$hashKey = undefined;
+      \}
+    \});
+
+    currentSpec.$injector = null;
+    currentSpec.$modules = null;
+    currentSpec = null;
+
+    \textcolor{keywordflow}{if} (injector) \{
+      injector.get(\textcolor{stringliteral}{'$rootElement'}).off();
+    \}
+
+    \textcolor{comment}{// clean up jquery's fragment cache}
+    angular.forEach(angular.element.fragments, \textcolor{keyword}{function}(val, key) \{
+      delete angular.element.fragments[key];
+    \});
+
+    MockXhr.$$lastInstance = null;
+
+    angular.forEach(angular.callbacks, \textcolor{keyword}{function}(val, key) \{
+      delete angular.callbacks[key];
+    \});
+    angular.callbacks.counter = 0;
+  \});
+
+  window.module = angular.mock.module = \textcolor{keyword}{function}() \{
+    var moduleFns = Array.prototype.slice.call(arguments, 0);
+    \textcolor{keywordflow}{return} isSpecRunning() ? workFn() : workFn;
+    \textcolor{keyword}{function} workFn() \{
+      \textcolor{keywordflow}{if} (currentSpec.$injector) \{
+        \textcolor{keywordflow}{throw} \textcolor{keyword}{new} Error(\textcolor{stringliteral}{'Injector already created, can not register a module!'});
+      \} \textcolor{keywordflow}{else} \{
+        var modules = currentSpec.$modules || (currentSpec.$modules = []);
+        angular.forEach(moduleFns, \textcolor{keyword}{function}(module) \{
+          \textcolor{keywordflow}{if} (angular.isObject(module) && !angular.isArray(module)) \{
+            modules.push(\textcolor{keyword}{function}($provide) \{
+              angular.forEach(module, \textcolor{keyword}{function}(value, key) \{
+                $provide.value(key, value);
+              \});
+            \});
+          \} \textcolor{keywordflow}{else} \{
+            modules.push(module);
+          \}
+        \});
+      \}
+    \}
+  \};
+
+  var ErrorAddingDeclarationLocationStack = \textcolor{keyword}{function}(e, errorForStack) \{
+    this.message = e.message;
+    this.name = e.name;
+    \textcolor{keywordflow}{if} (e.line) this.line = e.line;
+    \textcolor{keywordflow}{if} (e.sourceId) this.sourceId = e.sourceId;
+    \textcolor{keywordflow}{if} (e.stack && errorForStack)
+      this.stack = e.stack + \textcolor{charliteral}{'\(\backslash\)n'} + errorForStack.stack;
+    \textcolor{keywordflow}{if} (e.stackArray) this.stackArray = e.stackArray;
+  \};
+  ErrorAddingDeclarationLocationStack.prototype.toString = Error.prototype.toString;
+
+  window.inject = angular.mock.inject = \textcolor{keyword}{function}() \{
+    var blockFns = Array.prototype.slice.call(arguments, 0);
+    var errorForStack = \textcolor{keyword}{new} Error(\textcolor{stringliteral}{'Declaration Location'});
+    \textcolor{keywordflow}{return} isSpecRunning() ? workFn.call(currentSpec) : workFn;
+    \textcolor{keyword}{function} workFn() \{
+      var modules = currentSpec.$modules || [];
+      var strictDi = !!currentSpec.$injectorStrict;
+      modules.unshift(\textcolor{stringliteral}{'ngMock'});
+      modules.unshift(\textcolor{stringliteral}{'ng'});
+      var injector = currentSpec.$injector;
+      \textcolor{keywordflow}{if} (!injector) \{
+        \textcolor{keywordflow}{if} (strictDi) \{
+          \textcolor{comment}{// If strictDi is enabled, annotate the providerInjector blocks}
+          angular.forEach(modules, \textcolor{keyword}{function}(moduleFn) \{
+            \textcolor{keywordflow}{if} (typeof moduleFn === \textcolor{stringliteral}{"function"}) \{
+              angular.injector.$$annotate(moduleFn);
+            \}
+          \});
+        \}
+        injector = currentSpec.$injector = angular.injector(modules, strictDi);
+        currentSpec.$injectorStrict = strictDi;
+      \}
+      \textcolor{keywordflow}{for} (var i = 0, ii = blockFns.length; i < ii; i++) \{
+        \textcolor{keywordflow}{if} (currentSpec.$injectorStrict) \{
+          \textcolor{comment}{// If the injector is strict / strictDi, and the spec wants to inject using automatic}
+          \textcolor{comment}{// annotation, then annotate the function here.}
+          injector.annotate(blockFns[i]);
+        \}
+        \textcolor{keywordflow}{try} \{
+          \textcolor{comment}{/* jshint -W040 */}\textcolor{comment}{/* Jasmine explicitly provides a `this` object when calling functions */}
+          injector.invoke(blockFns[i] || angular.noop, \textcolor{keyword}{this});
+          \textcolor{comment}{/* jshint +W040 */}
+        \} \textcolor{keywordflow}{catch} (e) \{
+          \textcolor{keywordflow}{if} (e.stack && errorForStack) \{
+            \textcolor{keywordflow}{throw} \textcolor{keyword}{new} ErrorAddingDeclarationLocationStack(e, errorForStack);
+          \}
+          \textcolor{keywordflow}{throw} e;
+        \} \textcolor{keywordflow}{finally} \{
+          errorForStack = null;
+        \}
+      \}
+    \}
+  \};
+
+
+  angular.mock.inject.strictDi = \textcolor{keyword}{function}(value) \{
+    value = arguments.length ? !!value : \textcolor{keyword}{true};
+    \textcolor{keywordflow}{return} isSpecRunning() ? workFn() : workFn;
+
+    \textcolor{keyword}{function} workFn() \{
+      \textcolor{keywordflow}{if} (value !== currentSpec.$injectorStrict) \{
+        \textcolor{keywordflow}{if} (currentSpec.$injector) \{
+          \textcolor{keywordflow}{throw} \textcolor{keyword}{new} Error(\textcolor{stringliteral}{'Injector already created, can not modify strict annotations'});
+        \} \textcolor{keywordflow}{else} \{
+          currentSpec.$injectorStrict = value;
+        \}
+      \}
+    \}
+  \};
+\}
+
+
+\})(window, window.angular);
+\end{DoxyCodeInclude}
+ 

@@ -1,0 +1,483 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2_scripts_2angular-sanitize_8js-example}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/\+Scripts/angular-\/sanitize.\+js}
+$<$file name=\char`\"{}index.\+html\char`\"{}$>$ $<$script$>$ angular.\+module(\textquotesingle{}sanitize\+Example\textquotesingle{}, \mbox{[}\textquotesingle{}ng\+Sanitize\textquotesingle{}\mbox{]}) .controller(\textquotesingle{}Example\+Controller\textquotesingle{}, \mbox{[}\textquotesingle{}\$scope\textquotesingle{}, \textquotesingle{}\$sce\textquotesingle{}, function(\$scope, \$sce) \{ \$scope.\+snippet = \textquotesingle{}
+
+an html~\newline
+\textquotesingle{} + \textquotesingle{}{\itshape click here}~\newline
+\textquotesingle{} + \textquotesingle{}snippet
+
+\textquotesingle{}; \$scope.\+deliberately\+Trust\+Dangerous\+Snippet = function() \{ return \$sce.\+trust\+As\+Html(\$scope.\+snippet); \}; \}\mbox{]}); $<$/script$>$  Snippet\+: $<$textarea ng-\/model=\char`\"{}snippet\char`\"{} cols=\char`\"{}60\char`\"{} rows=\char`\"{}3\char`\"{}$>$$<$/textarea$>$ \begin{TabularC}{4}
+\hline
+Directive &How &Source &Rendered  \\\cline{1-4}
+ng-\/bind-\/html &Automatically uses \$sanitize &
+\begin{DoxyPre}<div ng-bind-html="snippet">~\newline
+</div>\end{DoxyPre}
+ &  \\\cline{1-4}
+ng-\/bind-\/html &Bypass \$sanitize by explicitly trusting the dangerous value &
+\begin{DoxyPre}<div ng-bind-html="deliberatelyTrustDangerousSnippet()">
+</div>\end{DoxyPre}
+  &  \\\cline{1-4}
+ng-\/bind &Automatically escapes &
+\begin{DoxyPre}<div ng-bind="snippet">~\newline
+</div>\end{DoxyPre}
+ &  \\\cline{1-4}
+\end{TabularC}
+ $<$/file$>$ $<$file name=\char`\"{}protractor.\+js\char`\"{} type=\char`\"{}protractor\char`\"{}$>$ it(\textquotesingle{}should sanitize the html snippet by default\textquotesingle{}, function() \{ expect(element(by.\+css(\textquotesingle{}\#bind-\/html-\/with-\/sanitize div\textquotesingle{})).get\+Inner\+Html()). to\+Be(\textquotesingle{}
+
+an html~\newline
+{\itshape click here}
+
+\textquotesingle{}); \});
+
+it(\textquotesingle{}should inline raw snippet if bound to a trusted value\textquotesingle{}, function() \{ expect(element(by.\+css(\textquotesingle{}\#bind-\/html-\/with-\/trust div\textquotesingle{})).get\+Inner\+Html()). to\+Be(\char`\"{}$<$p style=\textbackslash{}\char`\"{}color\+:blue"$>$an html~\newline
+\char`\"{} +
+              \char`\"{}$<$em onmouseover="this.\+text\+Content=\textquotesingle{}P\+W\+N3\+D!\textquotesingle{}"$>$click here~\newline
+\char`\"{} +
+              \char`\"{}snippet
+
+"); \});
+
+it(\textquotesingle{}should escape snippet without any filter\textquotesingle{}, function() \{ expect(element(by.\+css(\textquotesingle{}\#bind-\/default div\textquotesingle{})).get\+Inner\+Html()). to\+Be(\char`\"{}<p style=\textbackslash{}\char`\"{}color\+:blue"$>$an html~\newline
+\char`\"{} +
+              \char`\"{}$<$em onmouseover="this.\+text\+Content=\textquotesingle{}P\+W\+N3\+D!\textquotesingle{}"$>$click here$<$/em$>$~\newline
+\char`\"{} +
+              \char`\"{}snippet$<$/p$>$"); \});
+
+it(\textquotesingle{}should update\textquotesingle{}, function() \{ element(by.\+model(\textquotesingle{}snippet\textquotesingle{})).clear(); element(by.\+model(\textquotesingle{}snippet\textquotesingle{})).send\+Keys(\textquotesingle{}new {\bfseries text}\textquotesingle{}); expect(element(by.\+css(\textquotesingle{}\#bind-\/html-\/with-\/sanitize div\textquotesingle{})).get\+Inner\+Html()). to\+Be(\textquotesingle{}new {\bfseries text}\textquotesingle{}); expect(element(by.\+css(\textquotesingle{}\#bind-\/html-\/with-\/trust div\textquotesingle{})).get\+Inner\+Html()).to\+Be( \textquotesingle{}new {\bfseries text}\textquotesingle{}); expect(element(by.\+css(\textquotesingle{}\#bind-\/default div\textquotesingle{})).get\+Inner\+Html()).to\+Be( \char`\"{}new <b onclick=\textbackslash{}\char`\"{}alert(1)"$>$text$<$/b$>$"); \}); $<$/file$>$ 
+
+
+\begin{DoxyCodeInclude}
+
+(\textcolor{keyword}{function}(window, angular, undefined) \{\textcolor{stringliteral}{'use strict'};
+
+\textcolor{comment}{/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *}
+\textcolor{comment}{ *     Any commits to this file should be reviewed with security in mind.  *}
+\textcolor{comment}{ *   Changes to this file can potentially create security vulnerabilities. *}
+\textcolor{comment}{ *          An approval from 2 Core members with history of modifying      *}
+\textcolor{comment}{ *                         this file is required.                          *}
+\textcolor{comment}{ *                                                                         *}
+\textcolor{comment}{ *  Does the change somehow allow for arbitrary javascript to be executed? *}
+\textcolor{comment}{ *    Or allows for someone to change the prototype of built-in objects?   *}
+\textcolor{comment}{ *     Or gives undesired access to variables likes document or window?    *}
+\textcolor{comment}{ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */}
+
+var $sanitizeMinErr = angular.$$minErr(\textcolor{stringliteral}{'$sanitize'});
+
+\textcolor{comment}{/*}
+\textcolor{comment}{ * HTML Parser By Misko Hevery (misko@hevery.com)}
+\textcolor{comment}{ * based on:  HTML Parser By John Resig (ejohn.org)}
+\textcolor{comment}{ * Original code by Erik Arvidsson, Mozilla Public License}
+\textcolor{comment}{ * http://erik.eae.net/simplehtmlparser/simplehtmlparser.js}
+\textcolor{comment}{ *}
+\textcolor{comment}{ * // Use like so:}
+\textcolor{comment}{ * htmlParser(htmlString, \{}
+\textcolor{comment}{ *     start: function(tag, attrs, unary) \{\},}
+\textcolor{comment}{ *     end: function(tag) \{\},}
+\textcolor{comment}{ *     chars: function(text) \{\},}
+\textcolor{comment}{ *     comment: function(text) \{\}}
+\textcolor{comment}{ * \});}
+\textcolor{comment}{ *}
+\textcolor{comment}{ */}
+
+
+\textcolor{keyword}{function} $SanitizeProvider() \{
+  this.$get = [\textcolor{stringliteral}{'$$sanitizeUri'}, \textcolor{keyword}{function}($$sanitizeUri) \{
+    \textcolor{keywordflow}{return} \textcolor{keyword}{function}(html) \{
+      var buf = [];
+      htmlParser(html, htmlSanitizeWriter(buf, \textcolor{keyword}{function}(uri, isImage) \{
+        \textcolor{keywordflow}{return} !/^unsafe/.test($$sanitizeUri(uri, isImage));
+      \}));
+      \textcolor{keywordflow}{return} buf.join(\textcolor{stringliteral}{''});
+    \};
+  \}];
+\}
+
+\textcolor{keyword}{function} sanitizeText(chars) \{
+  var buf = [];
+  var writer = htmlSanitizeWriter(buf, angular.noop);
+  writer.chars(chars);
+  \textcolor{keywordflow}{return} buf.join(\textcolor{stringliteral}{''});
+\}
+
+
+\textcolor{comment}{// Regular Expressions for parsing tags and attributes}
+var START\_TAG\_REGEXP =
+       /^<((?:[a-zA-Z])[\(\backslash\)w:-]*)((?:\(\backslash\)s+[\(\backslash\)w:-]+(?:\(\backslash\)s*=\(\backslash\)s*(?:(?:\textcolor{stringliteral}{"[^"}]*\textcolor{stringliteral}{")|(?:'[^']*')|[^>\(\backslash\)s]+))?)*)\(\backslash\)s*(\(\backslash\)/?)\(\backslash\)s
+      *(>?)/,}
+\textcolor{stringliteral}{  END\_TAG\_REGEXP = /^<\(\backslash\)/\(\backslash\)s*([\(\backslash\)w:-]+)[^>]*>/,}
+\textcolor{stringliteral}{  ATTR\_REGEXP = /([\(\backslash\)w:-]+)(?:\(\backslash\)s*=\(\backslash\)s*(?:(?:"}((?:[^\textcolor{stringliteral}{"])*)"})|(?:\textcolor{stringliteral}{'((?:[^'}])*)\textcolor{stringliteral}{')|([^>\(\backslash\)s]+)))?/g,}
+\textcolor{stringliteral}{  BEGIN\_TAG\_REGEXP = /^</,}
+\textcolor{stringliteral}{  BEGING\_END\_TAGE\_REGEXP = /^<\(\backslash\)//,}
+\textcolor{stringliteral}{  COMMENT\_REGEXP = /<!--(.*?)-->/g,}
+\textcolor{stringliteral}{  DOCTYPE\_REGEXP = /<!DOCTYPE([^>]*?)>/i,}
+\textcolor{stringliteral}{  CDATA\_REGEXP = /<!\(\backslash\)[CDATA\(\backslash\)[(.*?)]]>/g,}
+\textcolor{stringliteral}{  SURROGATE\_PAIR\_REGEXP = /[\(\backslash\)uD800-\(\backslash\)uDBFF][\(\backslash\)uDC00-\(\backslash\)uDFFF]/g,}
+\textcolor{stringliteral}{  // Match everything outside of normal chars and " (quote character)}
+\textcolor{stringliteral}{  NON\_ALPHANUMERIC\_REGEXP = /([^\(\backslash\)#-~| |!])/g;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{// Good source of info about elements and attributes}
+\textcolor{stringliteral}{// http://dev.w3.org/html5/spec/Overview.html#semantics}
+\textcolor{stringliteral}{// http://simon.html5.org/html-elements}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{// Safe Void Elements - HTML5}
+\textcolor{stringliteral}{// http://dev.w3.org/html5/spec/Overview.html#void-elements}
+\textcolor{stringliteral}{var voidElements = makeMap("area,br,col,hr,img,wbr");}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{// Elements that you can, intentionally, leave open (and which close themselves)}
+\textcolor{stringliteral}{// http://dev.w3.org/html5/spec/Overview.html#optional-tags}
+\textcolor{stringliteral}{var optionalEndTagBlockElements = makeMap("colgroup,dd,dt,li,p,tbody,td,tfoot,th,thead,tr"),}
+\textcolor{stringliteral}{    optionalEndTagInlineElements = makeMap("rp,rt"),}
+\textcolor{stringliteral}{    optionalEndTagElements = angular.extend(\{\},}
+\textcolor{stringliteral}{                                            optionalEndTagInlineElements,}
+\textcolor{stringliteral}{                                            optionalEndTagBlockElements);}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{// Safe Block Elements - HTML5}
+\textcolor{stringliteral}{var blockElements = angular.extend(\{\}, optionalEndTagBlockElements, makeMap("address,article," +}
+\textcolor{stringliteral}{        "aside,blockquote,caption,center,del,dir,div,dl,figure,figcaption,footer,h1,h2,h3,h4,h5," +}
+\textcolor{stringliteral}{        "h6,header,hgroup,hr,ins,map,menu,nav,ol,pre,script,section,table,ul"));}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{// Inline Elements - HTML5}
+\textcolor{stringliteral}{var inlineElements = angular.extend(\{\}, optionalEndTagInlineElements, makeMap("a,abbr,acronym,b," +}
+\textcolor{stringliteral}{        "bdi,bdo,big,br,cite,code,del,dfn,em,font,i,img,ins,kbd,label,map,mark,q,ruby,rp,rt,s," +}
+\textcolor{stringliteral}{        "samp,small,span,strike,strong,sub,sup,time,tt,u,var"));}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{// SVG Elements}
+\textcolor{stringliteral}{// https://wiki.whatwg.org/wiki/Sanitization\_rules#svg\_Elements}
+\textcolor{stringliteral}{// Note: the elements animate,animateColor,animateMotion,animateTransform,set are intentionally omitted.}
+\textcolor{stringliteral}{// They can potentially allow for arbitrary javascript to be executed. See #11290}
+\textcolor{stringliteral}{var svgElements = makeMap("circle,defs,desc,ellipse,font-face,font-face-name,font-face-src,g,glyph," +}
+\textcolor{stringliteral}{        "hkern,image,linearGradient,line,marker,metadata,missing-glyph,mpath,path,polygon,polyline," +}
+\textcolor{stringliteral}{        "radialGradient,rect,stop,svg,switch,text,title,tspan,use");}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{// Special Elements (can contain anything)}
+\textcolor{stringliteral}{var specialElements = makeMap("script,style");}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{var validElements = angular.extend(\{\},}
+\textcolor{stringliteral}{                                   voidElements,}
+\textcolor{stringliteral}{                                   blockElements,}
+\textcolor{stringliteral}{                                   inlineElements,}
+\textcolor{stringliteral}{                                   optionalEndTagElements,}
+\textcolor{stringliteral}{                                   svgElements);}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{//Attributes that have href and hence need to be sanitized}
+\textcolor{stringliteral}{var uriAttrs = makeMap("background,cite,href,longdesc,src,usemap,xlink:href");}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{var htmlAttrs = makeMap('}abbr,align,alt,axis,bgcolor,border,cellpadding,cellspacing,\textcolor{keyword}{class},clear,\textcolor{stringliteral}{' +}
+\textcolor{stringliteral}{    '}color,cols,colspan,compact,coords,dir,face,headers,height,hreflang,hspace,\textcolor{stringliteral}{' +}
+\textcolor{stringliteral}{    '}ismap,lang,language,nohref,nowrap,rel,rev,rows,rowspan,rules,\textcolor{stringliteral}{' +}
+\textcolor{stringliteral}{    '}scope,scrolling,shape,size,span,start,summary,tabindex,target,title,type,\textcolor{stringliteral}{' +}
+\textcolor{stringliteral}{    '}valign,value,vspace,width\textcolor{stringliteral}{');}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{// SVG attributes (without "id" and "name" attributes)}
+\textcolor{stringliteral}{// https://wiki.whatwg.org/wiki/Sanitization\_rules#svg\_Attributes}
+\textcolor{stringliteral}{var svgAttrs = makeMap('}accent-height,accumulate,additive,alphabetic,arabic-form,ascent,\textcolor{stringliteral}{' +}
+\textcolor{stringliteral}{    '}baseProfile,bbox,begin,by,calcMode,cap-height,\textcolor{keyword}{class},color,color-rendering,content,\textcolor{stringliteral}{' +}
+\textcolor{stringliteral}{    '}cx,cy,d,dx,dy,descent,display,dur,end,fill,fill-rule,font-family,font-size,font-stretch,\textcolor{stringliteral}{' +}
+\textcolor{stringliteral}{    '}font-style,font-variant,font-weight,from,fx,fy,g1,g2,glyph-name,gradientUnits,hanging,\textcolor{stringliteral}{' +}
+\textcolor{stringliteral}{    '}height,horiz-adv-x,horiz-origin-x,ideographic,k,keyPoints,keySplines,keyTimes,lang,\textcolor{stringliteral}{' +}
+\textcolor{stringliteral}{    '}marker-end,marker-mid,marker-start,markerHeight,markerUnits,markerWidth,mathematical,\textcolor{stringliteral}{' +}
+\textcolor{stringliteral}{    '}max,min,offset,opacity,orient,origin,overline-position,overline-thickness,panose-1,\textcolor{stringliteral}{' +}
+\textcolor{stringliteral}{    '}path,pathLength,points,preserveAspectRatio,r,refX,refY,repeatCount,repeatDur,\textcolor{stringliteral}{' +}
+\textcolor{stringliteral}{    '}requiredExtensions,requiredFeatures,restart,rotate,rx,ry,slope,stemh,stemv,stop-color,\textcolor{stringliteral}{' +}
+\textcolor{stringliteral}{    '}stop-opacity,strikethrough-position,strikethrough-thickness,stroke,stroke-dasharray,\textcolor{stringliteral}{' +}
+\textcolor{stringliteral}{    '}stroke-dashoffset,stroke-linecap,stroke-linejoin,stroke-miterlimit,stroke-opacity,\textcolor{stringliteral}{' +}
+\textcolor{stringliteral}{    '}stroke-width,systemLanguage,target,text-anchor,to,transform,type,u1,u2,underline-position,\textcolor{stringliteral}{' +}
+\textcolor{stringliteral}{    '}underline-thickness,unicode,unicode-range,units-per-em,values,version,viewBox,visibility,\textcolor{stringliteral}{' +}
+\textcolor{stringliteral}{    '}width,widths,x,x-height,x1,x2,xlink:actuate,xlink:arcrole,xlink:role,xlink:show,xlink:title,\textcolor{stringliteral}{' +}
+\textcolor{stringliteral}{    '}xlink:type,xml:base,xml:lang,xml:space,xmlns,xmlns:xlink,y,y1,y2,zoomAndPan\textcolor{stringliteral}{', true);}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{var validAttrs = angular.extend(\{\},}
+\textcolor{stringliteral}{                                uriAttrs,}
+\textcolor{stringliteral}{                                svgAttrs,}
+\textcolor{stringliteral}{                                htmlAttrs);}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{function makeMap(str, lowercaseKeys) \{}
+\textcolor{stringliteral}{  var obj = \{\}, items = str.split('},\textcolor{stringliteral}{'), i;}
+\textcolor{stringliteral}{  for (i = 0; i < items.length; i++) \{}
+\textcolor{stringliteral}{    obj[lowercaseKeys ? angular.lowercase(items[i]) : items[i]] = true;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{  return obj;}
+\textcolor{stringliteral}{\}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{function htmlParser(html, handler) \{}
+\textcolor{stringliteral}{  if (typeof html !== '}\textcolor{keywordtype}{string}\textcolor{stringliteral}{') \{}
+\textcolor{stringliteral}{    if (html === null || typeof html === '}undefined\textcolor{stringliteral}{') \{}
+\textcolor{stringliteral}{      html = '}\textcolor{stringliteral}{';}
+\textcolor{stringliteral}{    \} else \{}
+\textcolor{stringliteral}{      html = '}\textcolor{stringliteral}{' + html;}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{  var index, chars, match, stack = [], last = html, text;}
+\textcolor{stringliteral}{  stack.last = function() \{ return stack[stack.length - 1]; \};}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  while (html) \{}
+\textcolor{stringliteral}{    text = '}\textcolor{stringliteral}{';}
+\textcolor{stringliteral}{    chars = true;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    // Make sure we'}re not in a script or style element
+    \textcolor{keywordflow}{if} (!stack.last() || !specialElements[stack.last()]) \{
+
+      \textcolor{comment}{// Comment}
+      \textcolor{keywordflow}{if} (html.indexOf(\textcolor{stringliteral}{"<!--"}) === 0) \{
+        \textcolor{comment}{// comments containing -- are not allowed unless they terminate the comment}
+        index = html.indexOf(\textcolor{stringliteral}{"--"}, 4);
+
+        \textcolor{keywordflow}{if} (index >= 0 && html.lastIndexOf(\textcolor{stringliteral}{"-->"}, index) === index) \{
+          \textcolor{keywordflow}{if} (handler.comment) handler.comment(html.substring(4, index));
+          html = html.substring(index + 3);
+          chars = \textcolor{keyword}{false};
+        \}
+      \textcolor{comment}{// DOCTYPE}
+      \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (DOCTYPE\_REGEXP.test(html)) \{
+        match = html.match(DOCTYPE\_REGEXP);
+
+        \textcolor{keywordflow}{if} (match) \{
+          html = html.replace(match[0], \textcolor{stringliteral}{''});
+          chars = \textcolor{keyword}{false};
+        \}
+      \textcolor{comment}{// end tag}
+      \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (BEGING\_END\_TAGE\_REGEXP.test(html)) \{
+        match = html.match(END\_TAG\_REGEXP);
+
+        \textcolor{keywordflow}{if} (match) \{
+          html = html.substring(match[0].length);
+          match[0].replace(END\_TAG\_REGEXP, parseEndTag);
+          chars = \textcolor{keyword}{false};
+        \}
+
+      \textcolor{comment}{// start tag}
+      \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (BEGIN\_TAG\_REGEXP.test(html)) \{
+        match = html.match(START\_TAG\_REGEXP);
+
+        \textcolor{keywordflow}{if} (match) \{
+          \textcolor{comment}{// We only have a valid start-tag if there is a '>'.}
+          \textcolor{keywordflow}{if} (match[4]) \{
+            html = html.substring(match[0].length);
+            match[0].replace(START\_TAG\_REGEXP, parseStartTag);
+          \}
+          chars = \textcolor{keyword}{false};
+        \} \textcolor{keywordflow}{else} \{
+          \textcolor{comment}{// no ending tag found --- this piece should be encoded as an entity.}
+          text += \textcolor{charliteral}{'<'};
+          html = html.substring(1);
+        \}
+      \}
+
+      \textcolor{keywordflow}{if} (chars) \{
+        index = html.indexOf(\textcolor{stringliteral}{"<"});
+
+        text += index < 0 ? html : html.substring(0, index);
+        html = index < 0 ? \textcolor{stringliteral}{""} : html.substring(index);
+
+        \textcolor{keywordflow}{if} (handler.chars) handler.chars(decodeEntities(text));
+      \}
+
+    \} \textcolor{keywordflow}{else} \{
+      \textcolor{comment}{// IE versions 9 and 10 do not understand the regex '[^]', so using a workaround with [\(\backslash\)W\(\backslash\)w].}
+      html = html.replace(\textcolor{keyword}{new} RegExp(\textcolor{stringliteral}{"([\(\backslash\)\(\backslash\)W\(\backslash\)\(\backslash\)w]*)<\(\backslash\)\(\backslash\)s*\(\backslash\)\(\backslash\)/\(\backslash\)\(\backslash\)s*"} + stack.last() + \textcolor{stringliteral}{"[^>]*>"}, \textcolor{charliteral}{'i'}),
+        \textcolor{keyword}{function}(all, text) \{
+          text = text.replace(COMMENT\_REGEXP, \textcolor{stringliteral}{"$1"}).replace(CDATA\_REGEXP, \textcolor{stringliteral}{"$1"});
+
+          \textcolor{keywordflow}{if} (handler.chars) handler.chars(decodeEntities(text));
+
+          \textcolor{keywordflow}{return} \textcolor{stringliteral}{""};
+      \});
+
+      parseEndTag(\textcolor{stringliteral}{""}, stack.last());
+    \}
+
+    \textcolor{keywordflow}{if} (html == last) \{
+      \textcolor{keywordflow}{throw} $sanitizeMinErr(\textcolor{stringliteral}{'badparse'}, \textcolor{stringliteral}{"The sanitizer was unable to parse the following block "} +
+                                        \textcolor{stringliteral}{"of html: \{0\}"}, html);
+    \}
+    last = html;
+  \}
+
+  \textcolor{comment}{// Clean up any remaining tags}
+  parseEndTag();
+
+  \textcolor{keyword}{function} parseStartTag(tag, tagName, rest, unary) \{
+    tagName = angular.lowercase(tagName);
+    \textcolor{keywordflow}{if} (blockElements[tagName]) \{
+      \textcolor{keywordflow}{while} (stack.last() && inlineElements[stack.last()]) \{
+        parseEndTag(\textcolor{stringliteral}{""}, stack.last());
+      \}
+    \}
+
+    \textcolor{keywordflow}{if} (optionalEndTagElements[tagName] && stack.last() == tagName) \{
+      parseEndTag(\textcolor{stringliteral}{""}, tagName);
+    \}
+
+    unary = voidElements[tagName] || !!unary;
+
+    \textcolor{keywordflow}{if} (!unary) \{
+      stack.push(tagName);
+    \}
+
+    var attrs = \{\};
+
+    rest.replace(ATTR\_REGEXP,
+      \textcolor{keyword}{function}(match, name, doubleQuotedValue, singleQuotedValue, unquotedValue) \{
+        var value = doubleQuotedValue
+          || singleQuotedValue
+          || unquotedValue
+          || \textcolor{stringliteral}{''};
+
+        attrs[name] = decodeEntities(value);
+    \});
+    \textcolor{keywordflow}{if} (handler.start) handler.start(tagName, attrs, unary);
+  \}
+
+  \textcolor{keyword}{function} parseEndTag(tag, tagName) \{
+    var pos = 0, i;
+    tagName = angular.lowercase(tagName);
+    \textcolor{keywordflow}{if} (tagName) \{
+      \textcolor{comment}{// Find the closest opened tag of the same type}
+      \textcolor{keywordflow}{for} (pos = stack.length - 1; pos >= 0; pos--) \{
+        \textcolor{keywordflow}{if} (stack[pos] == tagName) \textcolor{keywordflow}{break};
+      \}
+    \}
+
+    \textcolor{keywordflow}{if} (pos >= 0) \{
+      \textcolor{comment}{// Close all the open elements, up the stack}
+      \textcolor{keywordflow}{for} (i = stack.length - 1; i >= pos; i--)
+        \textcolor{keywordflow}{if} (handler.end) handler.end(stack[i]);
+
+      \textcolor{comment}{// Remove the open elements from the stack}
+      stack.length = pos;
+    \}
+  \}
+\}
+
+var hiddenPre=document.createElement(\textcolor{stringliteral}{"pre"});
+\textcolor{keyword}{function} decodeEntities(value) \{
+  \textcolor{keywordflow}{if} (!value) \{ \textcolor{keywordflow}{return} \textcolor{stringliteral}{''}; \}
+
+  hiddenPre.innerHTML = value.replace(/</g,\textcolor{stringliteral}{"&lt;"});
+  \textcolor{comment}{// innerText depends on styling as it doesn't display hidden elements.}
+  \textcolor{comment}{// Therefore, it's better to use textContent not to cause unnecessary reflows.}
+  \textcolor{keywordflow}{return} hiddenPre.textContent;
+\}
+
+\textcolor{keyword}{function} encodeEntities(value) \{
+  \textcolor{keywordflow}{return} value.
+    replace(/&/g, \textcolor{stringliteral}{'&amp;'}).
+    replace(SURROGATE\_PAIR\_REGEXP, \textcolor{keyword}{function}(value) \{
+      var hi = value.charCodeAt(0);
+      var low = value.charCodeAt(1);
+      \textcolor{keywordflow}{return} \textcolor{stringliteral}{'&#'} + (((hi - 0xD800) * 0x400) + (low - 0xDC00) + 0x10000) + \textcolor{charliteral}{';'};
+    \}).
+    replace(NON\_ALPHANUMERIC\_REGEXP, \textcolor{keyword}{function}(value) \{
+      \textcolor{keywordflow}{return} \textcolor{stringliteral}{'&#'} + value.charCodeAt(0) + \textcolor{charliteral}{';'};
+    \}).
+    replace(/</g, \textcolor{stringliteral}{'&lt;'}).
+    replace(/>/g, \textcolor{stringliteral}{'&gt;'});
+\}
+
+\textcolor{keyword}{function} htmlSanitizeWriter(buf, uriValidator) \{
+  var ignore = \textcolor{keyword}{false};
+  var out = angular.bind(buf, buf.push);
+  \textcolor{keywordflow}{return} \{
+    start: \textcolor{keyword}{function}(tag, attrs, unary) \{
+      tag = angular.lowercase(tag);
+      \textcolor{keywordflow}{if} (!ignore && specialElements[tag]) \{
+        ignore = tag;
+      \}
+      \textcolor{keywordflow}{if} (!ignore && validElements[tag] === \textcolor{keyword}{true}) \{
+        out(\textcolor{charliteral}{'<'});
+        out(tag);
+        angular.forEach(attrs, \textcolor{keyword}{function}(value, key) \{
+          var lkey=angular.lowercase(key);
+          var isImage = (tag === \textcolor{stringliteral}{'img'} && lkey === \textcolor{stringliteral}{'src'}) || (lkey === \textcolor{stringliteral}{'background'});
+          \textcolor{keywordflow}{if} (validAttrs[lkey] === \textcolor{keyword}{true} &&
+            (uriAttrs[lkey] !== \textcolor{keyword}{true} || uriValidator(value, isImage))) \{
+            out(\textcolor{charliteral}{' '});
+            out(key);
+            out(\textcolor{stringliteral}{'="'});
+            out(encodeEntities(value));
+            out(\textcolor{charliteral}{'"'});
+          \}
+        \});
+        out(unary ? \textcolor{stringliteral}{'/>'} : \textcolor{charliteral}{'>'});
+      \}
+    \},
+    end: \textcolor{keyword}{function}(tag) \{
+        tag = angular.lowercase(tag);
+        \textcolor{keywordflow}{if} (!ignore && validElements[tag] === \textcolor{keyword}{true}) \{
+          out(\textcolor{stringliteral}{'</'});
+          out(tag);
+          out(\textcolor{charliteral}{'>'});
+        \}
+        \textcolor{keywordflow}{if} (tag == ignore) \{
+          ignore = \textcolor{keyword}{false};
+        \}
+      \},
+    chars: \textcolor{keyword}{function}(chars) \{
+        \textcolor{keywordflow}{if} (!ignore) \{
+          out(encodeEntities(chars));
+        \}
+      \}
+  \};
+\}
+
+
+\textcolor{comment}{// define ngSanitize module and register $sanitize service}
+angular.module(\textcolor{stringliteral}{'ngSanitize'}, []).provider(\textcolor{stringliteral}{'$sanitize'}, $SanitizeProvider);
+
+\textcolor{comment}{/* global sanitizeText: false */}
+
+angular.module(\textcolor{stringliteral}{'ngSanitize'}).filter(\textcolor{stringliteral}{'linky'}, [\textcolor{stringliteral}{'$sanitize'}, \textcolor{keyword}{function}($sanitize) \{
+  var LINKY\_URL\_REGEXP =
+        /((ftp|https?):\(\backslash\)/\(\backslash\)/|(www\(\backslash\).)|(mailto:)?[A-Za-z0-9.\_%+-]+@)\(\backslash\)S*[^\(\backslash\)s.;,()\{\}<>\textcolor{stringliteral}{"\(\backslash\)u201d\(\backslash\)u2019]/i,}
+\textcolor{stringliteral}{      MAILTO\_REGEXP = /^mailto:/i;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  return function(text, target) \{}
+\textcolor{stringliteral}{    if (!text) return text;}
+\textcolor{stringliteral}{    var match;}
+\textcolor{stringliteral}{    var raw = text;}
+\textcolor{stringliteral}{    var html = [];}
+\textcolor{stringliteral}{    var url;}
+\textcolor{stringliteral}{    var i;}
+\textcolor{stringliteral}{    while ((match = raw.match(LINKY\_URL\_REGEXP))) \{}
+\textcolor{stringliteral}{      // We can not end in these as they are sometimes found at the end of the sentence}
+\textcolor{stringliteral}{      url = match[0];}
+\textcolor{stringliteral}{      // if we did not match ftp/http/www/mailto then assume mailto}
+\textcolor{stringliteral}{      if (!match[2] && !match[4]) \{}
+\textcolor{stringliteral}{        url = (match[3] ? 'http://' : 'mailto:') + url;}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{      i = match.index;}
+\textcolor{stringliteral}{      addText(raw.substr(0, i));}
+\textcolor{stringliteral}{      addLink(url, match[0].replace(MAILTO\_REGEXP, ''));}
+\textcolor{stringliteral}{      raw = raw.substring(i + match[0].length);}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    addText(raw);}
+\textcolor{stringliteral}{    return $sanitize(html.join(''));}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    function addText(text) \{}
+\textcolor{stringliteral}{      if (!text) \{}
+\textcolor{stringliteral}{        return;}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{      html.push(sanitizeText(text));}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    function addLink(url, text) \{}
+\textcolor{stringliteral}{      html.push('<a ');}
+\textcolor{stringliteral}{      if (angular.isDefined(target)) \{}
+\textcolor{stringliteral}{        html.push('target="}\textcolor{stringliteral}{',}
+\textcolor{stringliteral}{                  target,}
+\textcolor{stringliteral}{                  '}\textcolor{stringliteral}{" ');}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{      html.push('href="}\textcolor{stringliteral}{',}
+\textcolor{stringliteral}{                url.replace(/"/g, '}&quot;\textcolor{stringliteral}{'),}
+\textcolor{stringliteral}{                '}\textcolor{stringliteral}{">');}
+\textcolor{stringliteral}{      addText(text);}
+\textcolor{stringliteral}{      html.push('</a>');}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{  \};}
+\textcolor{stringliteral}{\}]);}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{\})(window, window.angular);}
+\end{DoxyCodeInclude}
+ 

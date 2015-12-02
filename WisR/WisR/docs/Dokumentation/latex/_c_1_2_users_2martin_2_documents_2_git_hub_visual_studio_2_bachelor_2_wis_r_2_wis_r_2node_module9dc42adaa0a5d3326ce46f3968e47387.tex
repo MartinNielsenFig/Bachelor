@@ -1,0 +1,20 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module9dc42adaa0a5d3326ce46f3968e47387}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/array/difference.\+js}
+\+\_\+.\+difference(\mbox{[}1, 2, 3\mbox{]}, \mbox{[}4, 2\mbox{]}); // =$>$ \mbox{[}1, 3\mbox{]}
+
+
+\begin{DoxyCodeInclude}
+var baseDifference = require(\textcolor{stringliteral}{'../internal/baseDifference'}),
+    baseFlatten = require(\textcolor{stringliteral}{'../internal/baseFlatten'}),
+    isArrayLike = require(\textcolor{stringliteral}{'../internal/isArrayLike'}),
+    isObjectLike = require(\textcolor{stringliteral}{'../internal/isObjectLike'}),
+    restParam = require(\textcolor{stringliteral}{'../function/restParam'});
+
+var difference = restParam(\textcolor{keyword}{function}(array, values) \{
+  \textcolor{keywordflow}{return} (isObjectLike(array) && isArrayLike(array))
+    ? baseDifference(array, baseFlatten(values, \textcolor{keyword}{false}, \textcolor{keyword}{true}))
+    : [];
+\});
+
+module.exports = difference;
+\end{DoxyCodeInclude}
+ 

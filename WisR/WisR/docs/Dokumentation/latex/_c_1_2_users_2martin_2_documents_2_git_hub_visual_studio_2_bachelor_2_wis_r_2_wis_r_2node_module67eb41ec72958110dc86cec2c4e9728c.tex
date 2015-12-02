@@ -1,0 +1,23 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module67eb41ec72958110dc86cec2c4e9728c}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/math/max.\+js}
+\+\_\+.\+max(\mbox{[}4, 2, 8, 6\mbox{]}); // =$>$ 8
+
+\+\_\+.\+max(\mbox{[}$\,$\mbox{]}); // =$>$ -\/\+Infinity
+
+var users = \mbox{[} \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}barney\textquotesingle{}, \textquotesingle{}age\textquotesingle{}\+: 36 \}, \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}fred\textquotesingle{}, \textquotesingle{}age\textquotesingle{}\+: 40 \} \mbox{]};
+
+\+\_\+.\+max(users, function(chr) \{ return chr.\+age; \}); // =$>$ \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}fred\textquotesingle{}, \textquotesingle{}age\textquotesingle{}\+: 40 \}
+
+// using the {\ttfamily \+\_\+.\+property} callback shorthand \+\_\+.\+max(users, \textquotesingle{}age\textquotesingle{}); // =$>$ \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}fred\textquotesingle{}, \textquotesingle{}age\textquotesingle{}\+: 40 \}
+
+
+\begin{DoxyCodeInclude}
+var createExtremum = require(\textcolor{stringliteral}{'../internal/createExtremum'}),
+    gt = require(\textcolor{stringliteral}{'../lang/gt'});
+
+var NEGATIVE\_INFINITY = Number.NEGATIVE\_INFINITY;
+
+var max = createExtremum(gt, NEGATIVE\_INFINITY);
+
+module.exports = max;
+\end{DoxyCodeInclude}
+ 

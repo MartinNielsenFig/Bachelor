@@ -1,0 +1,29 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module227f301c932f3412e1933931142dc2bf}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/array/take\+Right.\+js}
+\+\_\+.\+take\+Right(\mbox{[}1, 2, 3\mbox{]}); // =$>$ \mbox{[}3\mbox{]}
+
+\+\_\+.\+take\+Right(\mbox{[}1, 2, 3\mbox{]}, 2); // =$>$ \mbox{[}2, 3\mbox{]}
+
+\+\_\+.\+take\+Right(\mbox{[}1, 2, 3\mbox{]}, 5); // =$>$ \mbox{[}1, 2, 3\mbox{]}
+
+\+\_\+.\+take\+Right(\mbox{[}1, 2, 3\mbox{]}, 0); // =$>$ \mbox{[}\mbox{]}
+
+
+\begin{DoxyCodeInclude}
+var baseSlice = require(\textcolor{stringliteral}{'../internal/baseSlice'}),
+    isIterateeCall = require(\textcolor{stringliteral}{'../internal/isIterateeCall'});
+
+\textcolor{keyword}{function} takeRight(array, n, guard) \{
+  var length = array ? array.length : 0;
+  \textcolor{keywordflow}{if} (!length) \{
+    \textcolor{keywordflow}{return} [];
+  \}
+  \textcolor{keywordflow}{if} (guard ? isIterateeCall(array, n, guard) : n == null) \{
+    n = 1;
+  \}
+  n = length - (+n || 0);
+  \textcolor{keywordflow}{return} baseSlice(array, n < 0 ? 0 : n);
+\}
+
+module.exports = takeRight;
+\end{DoxyCodeInclude}
+ 

@@ -1,0 +1,25 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module0730f8db17ce5e6deda20881f6a9d0fc}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/lang/is\+Match.\+js}
+var object = \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}fred\textquotesingle{}, \textquotesingle{}age\textquotesingle{}\+: 40 \};
+
+\+\_\+.\+is\+Match(object, \{ \textquotesingle{}age\textquotesingle{}\+: 40 \}); // =$>$ true
+
+\+\_\+.\+is\+Match(object, \{ \textquotesingle{}age\textquotesingle{}\+: 36 \}); // =$>$ false
+
+// using a customizer callback var object = \{ \textquotesingle{}greeting\textquotesingle{}\+: \textquotesingle{}hello\textquotesingle{} \}; var source = \{ \textquotesingle{}greeting\textquotesingle{}\+: \textquotesingle{}hi\textquotesingle{} \};
+
+\+\_\+.\+is\+Match(object, source, function(value, other) \{ return \+\_\+.\+every(\mbox{[}value, other\mbox{]}, Reg\+Exp.\+prototype.\+test, /$^\wedge$h(?\+:i$\vert$ello)\$/) $\vert$$\vert$ undefined; \}); // =$>$ true
+
+
+\begin{DoxyCodeInclude}
+var baseIsMatch = require(\textcolor{stringliteral}{'../internal/baseIsMatch'}),
+    bindCallback = require(\textcolor{stringliteral}{'../internal/bindCallback'}),
+    getMatchData = require(\textcolor{stringliteral}{'../internal/getMatchData'});
+
+\textcolor{keyword}{function} isMatch(\textcolor{keywordtype}{object}, source, customizer, thisArg) \{
+  customizer = typeof customizer == \textcolor{stringliteral}{'function'} ? bindCallback(customizer, thisArg, 3) : undefined;
+  \textcolor{keywordflow}{return} baseIsMatch(\textcolor{keywordtype}{object}, getMatchData(source), customizer);
+\}
+
+module.exports = isMatch;
+\end{DoxyCodeInclude}
+ 

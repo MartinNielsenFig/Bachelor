@@ -1,0 +1,42 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_moduleea2ca8f6e294c2cc90bf5b12039478ee}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/chain/lodash.\+js}
+var wrapped = \+\_\+(\mbox{[}1, 2, 3\mbox{]});
+
+// returns an unwrapped value wrapped.\+reduce(function(total, n) \{ return total + n; \}); // =$>$ 6
+
+// returns a wrapped value var squares = wrapped.\+map(function(n) \{ return n $\ast$ n; \});
+
+\+\_\+.\+is\+Array(squares); // =$>$ false
+
+\+\_\+.\+is\+Array(squares.\+value()); // =$>$ true
+
+
+\begin{DoxyCodeInclude}
+var LazyWrapper = require(\textcolor{stringliteral}{'../internal/LazyWrapper'}),
+    LodashWrapper = require(\textcolor{stringliteral}{'../internal/LodashWrapper'}),
+    baseLodash = require(\textcolor{stringliteral}{'../internal/baseLodash'}),
+    isArray = require(\textcolor{stringliteral}{'../lang/isArray'}),
+    isObjectLike = require(\textcolor{stringliteral}{'../internal/isObjectLike'}),
+    wrapperClone = require(\textcolor{stringliteral}{'../internal/wrapperClone'});
+
+var objectProto = Object.prototype;
+
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+\textcolor{keyword}{function} lodash(value) \{
+  \textcolor{keywordflow}{if} (isObjectLike(value) && !isArray(value) && !(value instanceof LazyWrapper)) \{
+    \textcolor{keywordflow}{if} (value instanceof LodashWrapper) \{
+      \textcolor{keywordflow}{return} value;
+    \}
+    \textcolor{keywordflow}{if} (hasOwnProperty.call(value, \textcolor{stringliteral}{'\_\_chain\_\_'}) && hasOwnProperty.call(value, \textcolor{stringliteral}{'\_\_wrapped\_\_'})) \{
+      \textcolor{keywordflow}{return} wrapperClone(value);
+    \}
+  \}
+  \textcolor{keywordflow}{return} \textcolor{keyword}{new} LodashWrapper(value);
+\}
+
+\textcolor{comment}{// Ensure wrappers are instances of `baseLodash`.}
+lodash.prototype = baseLodash.prototype;
+
+module.exports = lodash;
+\end{DoxyCodeInclude}
+ 

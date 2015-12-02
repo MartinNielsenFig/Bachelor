@@ -1,0 +1,38 @@
+\hypertarget{class_file_writer}{}\section{File\+Writer Class Reference}
+\label{class_file_writer}\index{File\+Writer@{File\+Writer}}
+Inheritance diagram for File\+Writer\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_file_writer}
+\end{center}
+\end{figure}
+
+
+\subsection{Detailed Description}
+a concrete writer implementation that can write files synchronously or asynchronously based on the constructor argument passed to it.
+
+\subsubsection*{Usage }
+
+\begin{DoxyVerb} var sync = true,
+     fileWriter = new require('istanbul').FileWriter(sync);
+
+ fileWriter.on('done', function () { console.log('done'); });
+ fileWriter.copyFile('/foo/bar.jpg', '/baz/bar.jpg');
+ fileWriter.writeFile('/foo/index.html', function (contentWriter) {
+     contentWriter.println('<html>');
+     contentWriter.println('</html>');
+ });
+ fileWriter.done(); // will emit the `done` event when all files are written
+\end{DoxyVerb}
+
+
+io 
+\begin{DoxyParams}{Parameters}
+{\em sync} & \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/lib/util/file-\/writer.\+js\end{DoxyCompactItemize}

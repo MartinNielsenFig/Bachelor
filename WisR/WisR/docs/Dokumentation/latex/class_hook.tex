@@ -1,0 +1,30 @@
+\hypertarget{class_hook}{}\section{Hook Class Reference}
+\label{class_hook}\index{Hook@{Hook}}
+
+
+\subsection{Detailed Description}
+provides a mechanism to transform code in the scope of {\ttfamily require} or {\ttfamily vm.\+create\+Script}. This mechanism is general and relies on a user-\/supplied {\ttfamily matcher} function that determines when transformations should be performed and a user-\/supplied {\ttfamily transformer} function that performs the actual transform. Instrumenting code for coverage is one specific example of useful hooking.
+
+Note that both the {\ttfamily matcher} and {\ttfamily transformer} must execute synchronously.
+
+For the common case of matching filesystem paths based on inclusion/ exclusion patterns, use the {\ttfamily matcher\+For} function in the istanbul A\+P\+I to get a matcher.
+
+It is up to the transformer to perform processing with side-\/effects, such as caching, storing the original source code to disk in case of dynamically generated scripts etc. The {\ttfamily \hyperlink{class_store}{Store}} class can help you with this.
+
+\subsubsection*{Usage }
+
+\begin{DoxyVerb} var hook = require('istanbul').hook,
+     myMatcher = function (file) { return file.match(/foo/); },
+     myTransformer = function (code, file) { return 'console.log("' + file + '");' + code; };
+
+ hook.hookRequire(myMatcher, myTransformer);
+
+ var foo = require('foo'); //will now print foo's module path to console
+\end{DoxyVerb}
+
+
+main 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/lib/hook.\+js\end{DoxyCompactItemize}

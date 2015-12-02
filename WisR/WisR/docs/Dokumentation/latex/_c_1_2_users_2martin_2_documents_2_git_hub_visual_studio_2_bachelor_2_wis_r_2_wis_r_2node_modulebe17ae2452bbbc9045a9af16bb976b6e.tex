@@ -1,0 +1,29 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_modulebe17ae2452bbbc9045a9af16bb976b6e}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/array/fill.\+js}
+var array = \mbox{[}1, 2, 3\mbox{]};
+
+\+\_\+.\+fill(array, \textquotesingle{}a\textquotesingle{}); console.\+log(array); // =$>$ \mbox{[}\textquotesingle{}a\textquotesingle{}, \textquotesingle{}a\textquotesingle{}, \textquotesingle{}a\textquotesingle{}\mbox{]}
+
+\+\_\+.\+fill(\+Array(3), 2); // =$>$ \mbox{[}2, 2, 2\mbox{]}
+
+\+\_\+.\+fill(\mbox{[}4, 6, 8\mbox{]}, \textquotesingle{}$\ast$\textquotesingle{}, 1, 2); // =$>$ \mbox{[}4, \textquotesingle{}$\ast$\textquotesingle{}, 8\mbox{]}
+
+
+\begin{DoxyCodeInclude}
+var baseFill = require(\textcolor{stringliteral}{'../internal/baseFill'}),
+    isIterateeCall = require(\textcolor{stringliteral}{'../internal/isIterateeCall'});
+
+\textcolor{keyword}{function} fill(array, value, start, end) \{
+  var length = array ? array.length : 0;
+  \textcolor{keywordflow}{if} (!length) \{
+    \textcolor{keywordflow}{return} [];
+  \}
+  \textcolor{keywordflow}{if} (start && typeof start != \textcolor{stringliteral}{'number'} && isIterateeCall(array, value, start)) \{
+    start = 0;
+    end = length;
+  \}
+  \textcolor{keywordflow}{return} baseFill(array, value, start, end);
+\}
+
+module.exports = fill;
+\end{DoxyCodeInclude}
+ 

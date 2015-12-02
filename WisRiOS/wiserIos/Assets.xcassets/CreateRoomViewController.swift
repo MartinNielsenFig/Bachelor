@@ -165,6 +165,10 @@ class CreateRoomViewController: UITableViewController {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    /**
+     Enables or disables the password input field based upon the UISwitchs tate
+     - parameter uiSwitch:	The UI Switch
+     */
     func enablePwSwitchChanged(uiSwitch: UISwitch) {
         pwInputCell?.inputField.enabled = uiSwitch.on
         pwLabel?.enabled = uiSwitch.on
@@ -245,6 +249,7 @@ class CreateRoomViewController: UITableViewController {
                     print("did not receive ID for the created room")
                 }
             } else if notification.Errors.contains(ErrorCode.RoomSecretAlreadyInUse) {
+                
                 print("secret already in use")
                 let alert = UIAlertController(title: NSLocalizedString("Secret in use", comment: ""), message: NSLocalizedString("Secret is already in use, choose another.", comment: ""), preferredStyle: .Alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { action in
@@ -254,6 +259,7 @@ class CreateRoomViewController: UITableViewController {
                     self.presentViewController(alert, animated: true, completion: nil)
                 }
             } else {
+                
                 print("error in creating room")
                 print(notification.Errors)
             }

@@ -1,0 +1,23 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_modulecb4db7444c470be3223ba35735193956}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/object/merge.\+js}
+var users = \{ \textquotesingle{}data\textquotesingle{}\+: \mbox{[}\{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}barney\textquotesingle{} \}, \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}fred\textquotesingle{} \}\mbox{]} \};
+
+var ages = \{ \textquotesingle{}data\textquotesingle{}\+: \mbox{[}\{ \textquotesingle{}age\textquotesingle{}\+: 36 \}, \{ \textquotesingle{}age\textquotesingle{}\+: 40 \}\mbox{]} \};
+
+\+\_\+.\+merge(users, ages); // =$>$ \{ \textquotesingle{}data\textquotesingle{}\+: \mbox{[}\{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}barney\textquotesingle{}, \textquotesingle{}age\textquotesingle{}\+: 36 \}, \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}fred\textquotesingle{}, \textquotesingle{}age\textquotesingle{}\+: 40 \}\mbox{]} \}
+
+// using a customizer callback var object = \{ \textquotesingle{}fruits\textquotesingle{}\+: \mbox{[}\textquotesingle{}apple\textquotesingle{}\mbox{]}, \textquotesingle{}vegetables\textquotesingle{}\+: \mbox{[}\textquotesingle{}beet\textquotesingle{}\mbox{]} \};
+
+var other = \{ \textquotesingle{}fruits\textquotesingle{}\+: \mbox{[}\textquotesingle{}banana\textquotesingle{}\mbox{]}, \textquotesingle{}vegetables\textquotesingle{}\+: \mbox{[}\textquotesingle{}carrot\textquotesingle{}\mbox{]} \};
+
+\+\_\+.\+merge(object, other, function(a, b) \{ if (\+\_\+.\+is\+Array(a)) \{ return a.\+concat(b); \} \}); // =$>$ \{ \textquotesingle{}fruits\textquotesingle{}\+: \mbox{[}\textquotesingle{}apple\textquotesingle{}, \textquotesingle{}banana\textquotesingle{}\mbox{]}, \textquotesingle{}vegetables\textquotesingle{}\+: \mbox{[}\textquotesingle{}beet\textquotesingle{}, \textquotesingle{}carrot\textquotesingle{}\mbox{]} \}
+
+
+\begin{DoxyCodeInclude}
+var baseMerge = require(\textcolor{stringliteral}{'../internal/baseMerge'}),
+    createAssigner = require(\textcolor{stringliteral}{'../internal/createAssigner'});
+
+var merge = createAssigner(baseMerge);
+
+module.exports = merge;
+\end{DoxyCodeInclude}
+ 

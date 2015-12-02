@@ -1,0 +1,46 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_modulea712a55f8f1df407f18c03cb57735643}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/object/has.\+js}
+var object = \{ \textquotesingle{}a\textquotesingle{}\+: \{ \textquotesingle{}b\textquotesingle{}\+: \{ \textquotesingle{}c\textquotesingle{}\+: 3 \} \} \};
+
+\+\_\+.\+has(object, \textquotesingle{}a\textquotesingle{}); // =$>$ true
+
+\+\_\+.\+has(object, \textquotesingle{}a.\+b.\+c\textquotesingle{}); // =$>$ true
+
+\+\_\+.\+has(object, \mbox{[}\textquotesingle{}a\textquotesingle{}, \textquotesingle{}b\textquotesingle{}, \textquotesingle{}c\textquotesingle{}\mbox{]}); // =$>$ true
+
+
+\begin{DoxyCodeInclude}
+var baseGet = require(\textcolor{stringliteral}{'../internal/baseGet'}),
+    baseSlice = require(\textcolor{stringliteral}{'../internal/baseSlice'}),
+    isArguments = require(\textcolor{stringliteral}{'../lang/isArguments'}),
+    isArray = require(\textcolor{stringliteral}{'../lang/isArray'}),
+    isIndex = require(\textcolor{stringliteral}{'../internal/isIndex'}),
+    isKey = require(\textcolor{stringliteral}{'../internal/isKey'}),
+    isLength = require(\textcolor{stringliteral}{'../internal/isLength'}),
+    last = require(\textcolor{stringliteral}{'../array/last'}),
+    toPath = require(\textcolor{stringliteral}{'../internal/toPath'});
+
+var objectProto = Object.prototype;
+
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+\textcolor{keyword}{function} has(\textcolor{keywordtype}{object}, path) \{
+  \textcolor{keywordflow}{if} (\textcolor{keywordtype}{object} == null) \{
+    \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+  \}
+  var result = hasOwnProperty.call(\textcolor{keywordtype}{object}, path);
+  \textcolor{keywordflow}{if} (!result && !isKey(path)) \{
+    path = toPath(path);
+    \textcolor{keywordtype}{object} = path.length == 1 ? \textcolor{keywordtype}{object} : baseGet(\textcolor{keywordtype}{object}, baseSlice(path, 0, -1));
+    \textcolor{keywordflow}{if} (\textcolor{keywordtype}{object} == null) \{
+      \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+    \}
+    path = last(path);
+    result = hasOwnProperty.call(\textcolor{keywordtype}{object}, path);
+  \}
+  \textcolor{keywordflow}{return} result || (isLength(\textcolor{keywordtype}{object}.length) && isIndex(path, \textcolor{keywordtype}{object}.length) &&
+    (isArray(\textcolor{keywordtype}{object}) || isArguments(\textcolor{keywordtype}{object})));
+\}
+
+module.exports = has;
+\end{DoxyCodeInclude}
+ 

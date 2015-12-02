@@ -1,0 +1,24 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module66fe72e857b9641b1528efb1aa1726d3}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/function/ary.\+js}
+\+\_\+.\+map(\mbox{[}\textquotesingle{}6\textquotesingle{}, \textquotesingle{}8\textquotesingle{}, \textquotesingle{}10\textquotesingle{}\mbox{]}, \+\_\+.\+ary(parse\+Int, 1)); // =$>$ \mbox{[}6, 8, 10\mbox{]}
+
+
+\begin{DoxyCodeInclude}
+var createWrapper = require(\textcolor{stringliteral}{'../internal/createWrapper'}),
+    isIterateeCall = require(\textcolor{stringliteral}{'../internal/isIterateeCall'});
+
+var ARY\_FLAG = 128;
+
+\textcolor{comment}{/* Native method references for those with the same name as other `lodash` methods. */}
+var nativeMax = Math.max;
+
+\textcolor{keyword}{function} ary(func, n, guard) \{
+  \textcolor{keywordflow}{if} (guard && isIterateeCall(func, n, guard)) \{
+    n = undefined;
+  \}
+  n = (func && n == null) ? func.length : nativeMax(+n || 0, 0);
+  \textcolor{keywordflow}{return} createWrapper(func, ARY\_FLAG, undefined, undefined, undefined, undefined, n);
+\}
+
+module.exports = ary;
+\end{DoxyCodeInclude}
+ 

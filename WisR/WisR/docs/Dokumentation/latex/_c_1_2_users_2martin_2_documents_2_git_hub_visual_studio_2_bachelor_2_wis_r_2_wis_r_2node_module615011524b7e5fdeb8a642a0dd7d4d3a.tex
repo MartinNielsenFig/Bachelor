@@ -1,0 +1,18 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module615011524b7e5fdeb8a642a0dd7d4d3a}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/array/without.\+js}
+\+\_\+.\+without(\mbox{[}1, 2, 1, 3\mbox{]}, 1, 2); // =$>$ \mbox{[}3\mbox{]}
+
+
+\begin{DoxyCodeInclude}
+var baseDifference = require(\textcolor{stringliteral}{'../internal/baseDifference'}),
+    isArrayLike = require(\textcolor{stringliteral}{'../internal/isArrayLike'}),
+    restParam = require(\textcolor{stringliteral}{'../function/restParam'});
+
+var without = restParam(\textcolor{keyword}{function}(array, values) \{
+  \textcolor{keywordflow}{return} isArrayLike(array)
+    ? baseDifference(array, values)
+    : [];
+\});
+
+module.exports = without;
+\end{DoxyCodeInclude}
+ 

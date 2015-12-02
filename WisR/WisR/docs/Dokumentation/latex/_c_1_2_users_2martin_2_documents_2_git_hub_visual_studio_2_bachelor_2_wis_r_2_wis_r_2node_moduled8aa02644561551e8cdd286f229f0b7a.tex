@@ -1,0 +1,27 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_moduled8aa02644561551e8cdd286f229f0b7a}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/collection/map.\+js}
+function times\+Three(n) \{ return n $\ast$ 3; \}
+
+\+\_\+.\+map(\mbox{[}1, 2\mbox{]}, times\+Three); // =$>$ \mbox{[}3, 6\mbox{]}
+
+\+\_\+.\+map(\{ \textquotesingle{}a\textquotesingle{}\+: 1, \textquotesingle{}b\textquotesingle{}\+: 2 \}, times\+Three); // =$>$ \mbox{[}3, 6\mbox{]} (iteration order is not guaranteed)
+
+var users = \mbox{[} \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}barney\textquotesingle{} \}, \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}fred\textquotesingle{} \} \mbox{]};
+
+// using the {\ttfamily \+\_\+.\+property} callback shorthand \+\_\+.\+map(users, \textquotesingle{}user\textquotesingle{}); // =$>$ \mbox{[}\textquotesingle{}barney\textquotesingle{}, \textquotesingle{}fred\textquotesingle{}\mbox{]}
+
+
+\begin{DoxyCodeInclude}
+var arrayMap = require(\textcolor{stringliteral}{'../internal/arrayMap'}),
+    baseCallback = require(\textcolor{stringliteral}{'../internal/baseCallback'}),
+    baseMap = require(\textcolor{stringliteral}{'../internal/baseMap'}),
+    isArray = require(\textcolor{stringliteral}{'../lang/isArray'});
+
+\textcolor{keyword}{function} map(collection, iteratee, thisArg) \{
+  var func = isArray(collection) ? arrayMap : baseMap;
+  iteratee = baseCallback(iteratee, thisArg, 3);
+  \textcolor{keywordflow}{return} func(collection, iteratee);
+\}
+
+module.exports = map;
+\end{DoxyCodeInclude}
+ 

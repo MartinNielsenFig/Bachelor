@@ -1,0 +1,33 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module84204292335ee661378a8223fdda174d}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/number/in\+Range.\+js}
+\+\_\+.\+in\+Range(3, 2, 4); // =$>$ true
+
+\+\_\+.\+in\+Range(4, 8); // =$>$ true
+
+\+\_\+.\+in\+Range(4, 2); // =$>$ false
+
+\+\_\+.\+in\+Range(2, 2); // =$>$ false
+
+\+\_\+.\+in\+Range(1.\+2, 2); // =$>$ true
+
+\+\_\+.\+in\+Range(5.\+2, 4); // =$>$ false
+
+
+\begin{DoxyCodeInclude}
+\textcolor{comment}{/* Native method references for those with the same name as other `lodash` methods. */}
+var nativeMax = Math.max,
+    nativeMin = Math.min;
+
+\textcolor{keyword}{function} inRange(value, start, end) \{
+  start = +start || 0;
+  \textcolor{keywordflow}{if} (end === undefined) \{
+    end = start;
+    start = 0;
+  \} \textcolor{keywordflow}{else} \{
+    end = +end || 0;
+  \}
+  \textcolor{keywordflow}{return} value >= nativeMin(start, end) && value < nativeMax(start, end);
+\}
+
+module.exports = inRange;
+\end{DoxyCodeInclude}
+ 

@@ -1,0 +1,45 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_modulea407bb2d16a3bdc9d6de2061f81bfc00}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/function/rest\+Param.\+js}
+var say = \+\_\+.\+rest\+Param(function(what, names) \{ return what + \textquotesingle{} \textquotesingle{} + \+\_\+.\+initial(names).join(\textquotesingle{}, \textquotesingle{}) + (\+\_\+.\+size(names) $>$ 1 ? \textquotesingle{}, \& \textquotesingle{} \+: \textquotesingle{}\textquotesingle{}) + \+\_\+.\+last(names); \});
+
+say(\textquotesingle{}hello\textquotesingle{}, \textquotesingle{}fred\textquotesingle{}, \textquotesingle{}barney\textquotesingle{}, \textquotesingle{}pebbles\textquotesingle{}); // =$>$ \textquotesingle{}hello fred, barney, \& pebbles\textquotesingle{}
+
+
+\begin{DoxyCodeInclude}
+
+var FUNC\_ERROR\_TEXT = \textcolor{stringliteral}{'Expected a function'};
+
+\textcolor{comment}{/* Native method references for those with the same name as other `lodash` methods. */}
+var nativeMax = Math.max;
+
+\textcolor{keyword}{function} restParam(func, start) \{
+  \textcolor{keywordflow}{if} (typeof func != \textcolor{stringliteral}{'function'}) \{
+    \textcolor{keywordflow}{throw} \textcolor{keyword}{new} TypeError(FUNC\_ERROR\_TEXT);
+  \}
+  start = nativeMax(start === undefined ? (func.length - 1) : (+start || 0), 0);
+  \textcolor{keywordflow}{return} \textcolor{keyword}{function}() \{
+    var args = arguments,
+        index = -1,
+        length = nativeMax(args.length - start, 0),
+        rest = Array(length);
+
+    \textcolor{keywordflow}{while} (++index < length) \{
+      rest[index] = args[start + index];
+    \}
+    \textcolor{keywordflow}{switch} (start) \{
+      \textcolor{keywordflow}{case} 0: \textcolor{keywordflow}{return} func.call(\textcolor{keyword}{this}, rest);
+      \textcolor{keywordflow}{case} 1: \textcolor{keywordflow}{return} func.call(\textcolor{keyword}{this}, args[0], rest);
+      \textcolor{keywordflow}{case} 2: \textcolor{keywordflow}{return} func.call(\textcolor{keyword}{this}, args[0], args[1], rest);
+    \}
+    var otherArgs = Array(start + 1);
+    index = -1;
+    \textcolor{keywordflow}{while} (++index < start) \{
+      otherArgs[index] = args[index];
+    \}
+    otherArgs[start] = rest;
+    \textcolor{keywordflow}{return} func.apply(\textcolor{keyword}{this}, otherArgs);
+  \};
+\}
+
+module.exports = restParam;
+\end{DoxyCodeInclude}
+ 

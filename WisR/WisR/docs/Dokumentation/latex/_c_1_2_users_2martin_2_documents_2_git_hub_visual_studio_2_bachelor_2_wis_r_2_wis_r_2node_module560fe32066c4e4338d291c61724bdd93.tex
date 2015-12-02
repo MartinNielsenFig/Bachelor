@@ -1,0 +1,41 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module560fe32066c4e4338d291c61724bdd93}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/function/mod\+Args.\+js}
+function doubled(n) \{ return n $\ast$ 2; \}
+
+function square(n) \{ return n $\ast$ n; \}
+
+var modded = \+\_\+.\+mod\+Args(function(x, y) \{ return \mbox{[}x, y\mbox{]}; \}, square, doubled);
+
+modded(1, 2); // =$>$ \mbox{[}1, 4\mbox{]}
+
+modded(5, 10); // =$>$ \mbox{[}25, 20\mbox{]}
+
+
+\begin{DoxyCodeInclude}
+var arrayEvery = require(\textcolor{stringliteral}{'../internal/arrayEvery'}),
+    baseFlatten = require(\textcolor{stringliteral}{'../internal/baseFlatten'}),
+    baseIsFunction = require(\textcolor{stringliteral}{'../internal/baseIsFunction'}),
+    restParam = require(\textcolor{stringliteral}{'./restParam'});
+
+var FUNC\_ERROR\_TEXT = \textcolor{stringliteral}{'Expected a function'};
+
+\textcolor{comment}{/* Native method references for those with the same name as other `lodash` methods. */}
+var nativeMin = Math.min;
+
+var modArgs = restParam(\textcolor{keyword}{function}(func, transforms) \{
+  transforms = baseFlatten(transforms);
+  \textcolor{keywordflow}{if} (typeof func != \textcolor{stringliteral}{'function'} || !arrayEvery(transforms, baseIsFunction)) \{
+    \textcolor{keywordflow}{throw} \textcolor{keyword}{new} TypeError(FUNC\_ERROR\_TEXT);
+  \}
+  var length = transforms.length;
+  \textcolor{keywordflow}{return} restParam(\textcolor{keyword}{function}(args) \{
+    var index = nativeMin(args.length, length);
+    \textcolor{keywordflow}{while} (index--) \{
+      args[index] = transforms[index](args[index]);
+    \}
+    \textcolor{keywordflow}{return} func.apply(\textcolor{keyword}{this}, args);
+  \});
+\});
+
+module.exports = modArgs;
+\end{DoxyCodeInclude}
+ 

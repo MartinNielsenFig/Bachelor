@@ -1,0 +1,21 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_moduleed708995e0a1fa347055d2e9540bc903}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/collection/size.\+js}
+\+\_\+.\+size(\mbox{[}1, 2, 3\mbox{]}); // =$>$ 3
+
+\+\_\+.\+size(\{ \textquotesingle{}a\textquotesingle{}\+: 1, \textquotesingle{}b\textquotesingle{}\+: 2 \}); // =$>$ 2
+
+\+\_\+.\+size(\textquotesingle{}pebbles\textquotesingle{}); // =$>$ 7
+
+
+\begin{DoxyCodeInclude}
+var getLength = require(\textcolor{stringliteral}{'../internal/getLength'}),
+    isLength = require(\textcolor{stringliteral}{'../internal/isLength'}),
+    keys = require(\textcolor{stringliteral}{'../object/keys'});
+
+\textcolor{keyword}{function} size(collection) \{
+  var length = collection ? getLength(collection) : 0;
+  \textcolor{keywordflow}{return} isLength(length) ? length : keys(collection).length;
+\}
+
+module.exports = size;
+\end{DoxyCodeInclude}
+ 

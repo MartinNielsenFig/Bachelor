@@ -1,0 +1,55 @@
+\hypertarget{interface_wis_r_rest_a_p_i_1_1_domain_model_1_1_i_question_repository}{}\section{Wis\+R\+Rest\+A\+P\+I.\+Domain\+Model.\+I\+Question\+Repository Interface Reference}
+\label{interface_wis_r_rest_a_p_i_1_1_domain_model_1_1_i_question_repository}\index{Wis\+R\+Rest\+A\+P\+I.\+Domain\+Model.\+I\+Question\+Repository@{Wis\+R\+Rest\+A\+P\+I.\+Domain\+Model.\+I\+Question\+Repository}}
+Inheritance diagram for Wis\+R\+Rest\+A\+P\+I.\+Domain\+Model.\+I\+Question\+Repository\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{interface_wis_r_rest_a_p_i_1_1_domain_model_1_1_i_question_repository}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{interface_wis_r_rest_a_p_i_1_1_domain_model_1_1_i_question_repository_a65db604342ba23367a3f2d1ccbac77fd}{}Task$<$ List$<$ \hyperlink{class_wis_r_1_1_domain_models_1_1_question}{Question} $>$ $>$ {\bfseries Get\+All\+Questions} ()\label{interface_wis_r_rest_a_p_i_1_1_domain_model_1_1_i_question_repository_a65db604342ba23367a3f2d1ccbac77fd}
+
+\item 
+\hypertarget{interface_wis_r_rest_a_p_i_1_1_domain_model_1_1_i_question_repository_ad04ed0d17f879ebaf4d4bd9400daa50d}{}Task$<$ \hyperlink{class_wis_r_1_1_domain_models_1_1_question}{Question} $>$ {\bfseries Get\+Question} (string id)\label{interface_wis_r_rest_a_p_i_1_1_domain_model_1_1_i_question_repository_ad04ed0d17f879ebaf4d4bd9400daa50d}
+
+\item 
+\hypertarget{interface_wis_r_rest_a_p_i_1_1_domain_model_1_1_i_question_repository_a3d4ce93af5f351b9ab83b00b2d708276}{}Task$<$ \hyperlink{class_wis_r_1_1_domain_models_1_1_question}{Question} $>$ {\bfseries Get\+Question\+Without\+Image} (string id)\label{interface_wis_r_rest_a_p_i_1_1_domain_model_1_1_i_question_repository_a3d4ce93af5f351b9ab83b00b2d708276}
+
+\item 
+\hypertarget{interface_wis_r_rest_a_p_i_1_1_domain_model_1_1_i_question_repository_aedeeacc4e378fc6a3a6b659b75714d4e}{}Task$<$ List$<$ \hyperlink{class_wis_r_1_1_domain_models_1_1_question}{Question} $>$ $>$ {\bfseries Get\+Questions\+For\+Room} (string room\+Id)\label{interface_wis_r_rest_a_p_i_1_1_domain_model_1_1_i_question_repository_aedeeacc4e378fc6a3a6b659b75714d4e}
+
+\item 
+\hypertarget{interface_wis_r_rest_a_p_i_1_1_domain_model_1_1_i_question_repository_ad52877c4e29c52a60ff2e027b386f772}{}Task$<$ List$<$ \hyperlink{class_wis_r_1_1_domain_models_1_1_question}{Question} $>$ $>$ {\bfseries Get\+Questions\+For\+Room\+Without\+Images} (string room\+Id)\label{interface_wis_r_rest_a_p_i_1_1_domain_model_1_1_i_question_repository_ad52877c4e29c52a60ff2e027b386f772}
+
+\item 
+\hypertarget{interface_wis_r_rest_a_p_i_1_1_domain_model_1_1_i_question_repository_a449c4fa8024ccb27e3ccbba8d690c28e}{}Task$<$ \hyperlink{class_wis_r_1_1_domain_models_1_1_question}{Question} $>$ {\bfseries Get\+Image\+By\+Question\+Id} (string question\+Id)\label{interface_wis_r_rest_a_p_i_1_1_domain_model_1_1_i_question_repository_a449c4fa8024ccb27e3ccbba8d690c28e}
+
+\item 
+\hypertarget{interface_wis_r_rest_a_p_i_1_1_domain_model_1_1_i_question_repository_a132167fe8437961b4ca5b5fcb94356d5}{}void {\bfseries Add\+Question} (\hyperlink{class_wis_r_1_1_domain_models_1_1_question}{Question} item)\label{interface_wis_r_rest_a_p_i_1_1_domain_model_1_1_i_question_repository_a132167fe8437961b4ca5b5fcb94356d5}
+
+\item 
+\hypertarget{interface_wis_r_rest_a_p_i_1_1_domain_model_1_1_i_question_repository_af294c70f00170a0d597dacbfec82411c}{}void {\bfseries Add\+Question\+Object} (object item)\label{interface_wis_r_rest_a_p_i_1_1_domain_model_1_1_i_question_repository_af294c70f00170a0d597dacbfec82411c}
+
+\item 
+\hypertarget{interface_wis_r_rest_a_p_i_1_1_domain_model_1_1_i_question_repository_a22d728d6fdd17c17062e55763e0a8950}{}Task$<$ Delete\+Result $>$ {\bfseries Delete\+Question} (string id)\label{interface_wis_r_rest_a_p_i_1_1_domain_model_1_1_i_question_repository_a22d728d6fdd17c17062e55763e0a8950}
+
+\item 
+\hypertarget{interface_wis_r_rest_a_p_i_1_1_domain_model_1_1_i_question_repository_a031a4986b12e249c9aca6d6af9ba7eb4}{}Task$<$ Delete\+Result $>$ {\bfseries Delete\+All\+Questions\+For\+Room\+With\+Room\+Id} (string room\+Id)\label{interface_wis_r_rest_a_p_i_1_1_domain_model_1_1_i_question_repository_a031a4986b12e249c9aca6d6af9ba7eb4}
+
+\item 
+\hypertarget{interface_wis_r_rest_a_p_i_1_1_domain_model_1_1_i_question_repository_ada8c1709314a20abaf365f99352e5d52}{}Task$<$ \hyperlink{class_wis_r_1_1_domain_models_1_1_question}{Question} $>$ {\bfseries Update\+Question} (string id, \hyperlink{class_wis_r_1_1_domain_models_1_1_question}{Question} item)\label{interface_wis_r_rest_a_p_i_1_1_domain_model_1_1_i_question_repository_ada8c1709314a20abaf365f99352e5d52}
+
+\item 
+\hypertarget{interface_wis_r_rest_a_p_i_1_1_domain_model_1_1_i_question_repository_af0d9d8483f2116a41b581fbcff7912a8}{}Update\+Result {\bfseries Update\+Question\+Results} (string id, \hyperlink{class_wis_r_1_1_domain_models_1_1_question}{Question} item)\label{interface_wis_r_rest_a_p_i_1_1_domain_model_1_1_i_question_repository_af0d9d8483f2116a41b581fbcff7912a8}
+
+\item 
+\hypertarget{interface_wis_r_rest_a_p_i_1_1_domain_model_1_1_i_question_repository_a4c5679dc2787ff87a3a64ab879aa8355}{}Update\+Result {\bfseries Update\+Question\+Votes} (string id, \hyperlink{class_wis_r_1_1_domain_models_1_1_question}{Question} item)\label{interface_wis_r_rest_a_p_i_1_1_domain_model_1_1_i_question_repository_a4c5679dc2787ff87a3a64ab879aa8355}
+
+\end{DoxyCompactItemize}
+
+
+The documentation for this interface was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Wis\+R\+Rest\+A\+P\+I/\+Providers/I\+Question\+Repository.\+cs\end{DoxyCompactItemize}

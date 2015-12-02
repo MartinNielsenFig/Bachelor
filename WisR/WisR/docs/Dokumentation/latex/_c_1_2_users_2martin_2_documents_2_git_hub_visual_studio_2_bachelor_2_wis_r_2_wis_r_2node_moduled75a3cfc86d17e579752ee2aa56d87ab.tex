@@ -1,0 +1,38 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_moduled75a3cfc86d17e579752ee2aa56d87ab}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/string/repeat.\+js}
+\+\_\+.\+repeat(\textquotesingle{}$\ast$\textquotesingle{}, 3); // =$>$ \textquotesingle{}$\ast$$\ast$$\ast$\textquotesingle{}
+
+\+\_\+.\+repeat(\textquotesingle{}abc\textquotesingle{}, 2); // =$>$ \textquotesingle{}abcabc\textquotesingle{}
+
+\+\_\+.\+repeat(\textquotesingle{}abc\textquotesingle{}, 0); // =$>$ \textquotesingle{}\textquotesingle{}
+
+
+\begin{DoxyCodeInclude}
+var baseToString = require(\textcolor{stringliteral}{'../internal/baseToString'});
+
+\textcolor{comment}{/* Native method references for those with the same name as other `lodash` methods. */}
+var nativeFloor = Math.floor,
+    nativeIsFinite = global.isFinite;
+
+\textcolor{keyword}{function} repeat(\textcolor{keywordtype}{string}, n) \{
+  var result = \textcolor{stringliteral}{''};
+  \textcolor{keywordtype}{string} = baseToString(\textcolor{keywordtype}{string});
+  n = +n;
+  \textcolor{keywordflow}{if} (n < 1 || !\textcolor{keywordtype}{string} || !nativeIsFinite(n)) \{
+    \textcolor{keywordflow}{return} result;
+  \}
+  \textcolor{comment}{// Leverage the exponentiation by squaring algorithm for a faster repeat.}
+  \textcolor{comment}{// See https://en.wikipedia.org/wiki/Exponentiation\_by\_squaring for more details.}
+  \textcolor{keywordflow}{do} \{
+    \textcolor{keywordflow}{if} (n % 2) \{
+      result += string;
+    \}
+    n = nativeFloor(n / 2);
+    \textcolor{keywordtype}{string} += string;
+  \} \textcolor{keywordflow}{while} (n);
+
+  \textcolor{keywordflow}{return} result;
+\}
+
+module.exports = repeat;
+\end{DoxyCodeInclude}
+ 

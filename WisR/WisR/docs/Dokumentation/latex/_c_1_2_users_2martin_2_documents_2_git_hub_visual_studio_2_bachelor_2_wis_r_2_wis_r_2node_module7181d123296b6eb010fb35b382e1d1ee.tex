@@ -1,0 +1,21 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module7181d123296b6eb010fb35b382e1d1ee}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/utility/method\+Of.\+js}
+var array = \+\_\+.\+times(3, \+\_\+.\+constant), object = \{ \textquotesingle{}a\textquotesingle{}\+: array, \textquotesingle{}b\textquotesingle{}\+: array, \textquotesingle{}c\textquotesingle{}\+: array \};
+
+\+\_\+.\+map(\mbox{[}\textquotesingle{}a\mbox{[}2\mbox{]}\textquotesingle{}, \textquotesingle{}c\mbox{[}0\mbox{]}\textquotesingle{}\mbox{]}, \+\_\+.\+method\+Of(object)); // =$>$ \mbox{[}2, 0\mbox{]}
+
+\+\_\+.\+map(\mbox{[}\mbox{[}\textquotesingle{}a\textquotesingle{}, \textquotesingle{}2\textquotesingle{}\mbox{]}, \mbox{[}\textquotesingle{}c\textquotesingle{}, \textquotesingle{}0\textquotesingle{}\mbox{]}\mbox{]}, \+\_\+.\+method\+Of(object)); // =$>$ \mbox{[}2, 0\mbox{]}
+
+
+\begin{DoxyCodeInclude}
+var invokePath = require(\textcolor{stringliteral}{'../internal/invokePath'}),
+    restParam = require(\textcolor{stringliteral}{'../function/restParam'});
+
+var methodOf = restParam(\textcolor{keyword}{function}(\textcolor{keywordtype}{object}, args) \{
+  \textcolor{keywordflow}{return} \textcolor{keyword}{function}(path) \{
+    \textcolor{keywordflow}{return} invokePath(\textcolor{keywordtype}{object}, path, args);
+  \};
+\});
+
+module.exports = methodOf;
+\end{DoxyCodeInclude}
+ 

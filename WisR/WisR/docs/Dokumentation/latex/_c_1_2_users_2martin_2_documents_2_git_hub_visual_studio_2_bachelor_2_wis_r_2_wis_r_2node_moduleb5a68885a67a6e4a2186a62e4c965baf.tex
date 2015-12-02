@@ -1,0 +1,20 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_moduleb5a68885a67a6e4a2186a62e4c965baf}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/collection/index\+By.\+js}
+var key\+Data = \mbox{[} \{ \textquotesingle{}dir\textquotesingle{}\+: \textquotesingle{}left\textquotesingle{}, \textquotesingle{}code\textquotesingle{}\+: 97 \}, \{ \textquotesingle{}dir\textquotesingle{}\+: \textquotesingle{}right\textquotesingle{}, \textquotesingle{}code\textquotesingle{}\+: 100 \} \mbox{]};
+
+\+\_\+.\+index\+By(key\+Data, \textquotesingle{}dir\textquotesingle{}); // =$>$ \{ \textquotesingle{}left\textquotesingle{}\+: \{ \textquotesingle{}dir\textquotesingle{}\+: \textquotesingle{}left\textquotesingle{}, \textquotesingle{}code\textquotesingle{}\+: 97 \}, \textquotesingle{}right\textquotesingle{}\+: \{ \textquotesingle{}dir\textquotesingle{}\+: \textquotesingle{}right\textquotesingle{}, \textquotesingle{}code\textquotesingle{}\+: 100 \} \}
+
+\+\_\+.\+index\+By(key\+Data, function(object) \{ return String.\+from\+Char\+Code(object.\+code); \}); // =$>$ \{ \textquotesingle{}a\textquotesingle{}\+: \{ \textquotesingle{}dir\textquotesingle{}\+: \textquotesingle{}left\textquotesingle{}, \textquotesingle{}code\textquotesingle{}\+: 97 \}, \textquotesingle{}d\textquotesingle{}\+: \{ \textquotesingle{}dir\textquotesingle{}\+: \textquotesingle{}right\textquotesingle{}, \textquotesingle{}code\textquotesingle{}\+: 100 \} \}
+
+\+\_\+.\+index\+By(key\+Data, function(object) \{ return this.\+from\+Char\+Code(object.\+code); \}, String); // =$>$ \{ \textquotesingle{}a\textquotesingle{}\+: \{ \textquotesingle{}dir\textquotesingle{}\+: \textquotesingle{}left\textquotesingle{}, \textquotesingle{}code\textquotesingle{}\+: 97 \}, \textquotesingle{}d\textquotesingle{}\+: \{ \textquotesingle{}dir\textquotesingle{}\+: \textquotesingle{}right\textquotesingle{}, \textquotesingle{}code\textquotesingle{}\+: 100 \} \}
+
+
+\begin{DoxyCodeInclude}
+var createAggregator = require(\textcolor{stringliteral}{'../internal/createAggregator'});
+
+var indexBy = createAggregator(\textcolor{keyword}{function}(result, value, key) \{
+  result[key] = value;
+\});
+
+module.exports = indexBy;
+\end{DoxyCodeInclude}
+ 

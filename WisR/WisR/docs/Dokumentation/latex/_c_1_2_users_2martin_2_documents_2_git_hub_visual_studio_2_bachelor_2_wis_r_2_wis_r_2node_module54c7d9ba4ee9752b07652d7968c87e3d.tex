@@ -1,0 +1,36 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module54c7d9ba4ee9752b07652d7968c87e3d}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/array/index\+Of.\+js}
+\+\_\+.\+index\+Of(\mbox{[}1, 2, 1, 2\mbox{]}, 2); // =$>$ 1
+
+// using {\ttfamily from\+Index} \+\_\+.\+index\+Of(\mbox{[}1, 2, 1, 2\mbox{]}, 2, 2); // =$>$ 3
+
+// performing a binary search \+\_\+.\+index\+Of(\mbox{[}1, 1, 2, 2\mbox{]}, 2, true); // =$>$ 2
+
+
+\begin{DoxyCodeInclude}
+var baseIndexOf = require(\textcolor{stringliteral}{'../internal/baseIndexOf'}),
+    binaryIndex = require(\textcolor{stringliteral}{'../internal/binaryIndex'});
+
+\textcolor{comment}{/* Native method references for those with the same name as other `lodash` methods. */}
+var nativeMax = Math.max;
+
+\textcolor{keyword}{function} indexOf(array, value, fromIndex) \{
+  var length = array ? array.length : 0;
+  \textcolor{keywordflow}{if} (!length) \{
+    \textcolor{keywordflow}{return} -1;
+  \}
+  \textcolor{keywordflow}{if} (typeof fromIndex == \textcolor{stringliteral}{'number'}) \{
+    fromIndex = fromIndex < 0 ? nativeMax(length + fromIndex, 0) : fromIndex;
+  \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (fromIndex) \{
+    var index = binaryIndex(array, value);
+    \textcolor{keywordflow}{if} (index < length &&
+        (value === value ? (value === array[index]) : (array[index] !== array[index]))) \{
+      \textcolor{keywordflow}{return} index;
+    \}
+    \textcolor{keywordflow}{return} -1;
+  \}
+  \textcolor{keywordflow}{return} baseIndexOf(array, value, fromIndex || 0);
+\}
+
+module.exports = indexOf;
+\end{DoxyCodeInclude}
+ 

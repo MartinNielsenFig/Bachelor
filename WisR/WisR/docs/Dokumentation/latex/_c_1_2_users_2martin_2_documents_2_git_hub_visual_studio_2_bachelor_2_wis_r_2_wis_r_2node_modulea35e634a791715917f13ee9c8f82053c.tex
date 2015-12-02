@@ -1,0 +1,30 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_modulea35e634a791715917f13ee9c8f82053c}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/function/bind\+All.\+js}
+var view = \{ \textquotesingle{}label\textquotesingle{}\+: \textquotesingle{}docs\textquotesingle{}, \textquotesingle{}on\+Click\textquotesingle{}\+: function() \{ console.\+log(\textquotesingle{}clicked \textquotesingle{} + this.\+label); \} \};
+
+\+\_\+.\+bind\+All(view); j\+Query(\textquotesingle{}\#docs\textquotesingle{}).on(\textquotesingle{}click\textquotesingle{}, view.\+on\+Click); // =$>$ logs \textquotesingle{}clicked docs\textquotesingle{} when the element is clicked
+
+
+\begin{DoxyCodeInclude}
+var baseFlatten = require(\textcolor{stringliteral}{'../internal/baseFlatten'}),
+    createWrapper = require(\textcolor{stringliteral}{'../internal/createWrapper'}),
+    functions = require(\textcolor{stringliteral}{'../object/functions'}),
+    restParam = require(\textcolor{stringliteral}{'./restParam'});
+
+var BIND\_FLAG = 1;
+
+var bindAll = restParam(\textcolor{keyword}{function}(\textcolor{keywordtype}{object}, methodNames) \{
+  methodNames = methodNames.length ? baseFlatten(methodNames) : functions(object);
+
+  var index = -1,
+      length = methodNames.length;
+
+  \textcolor{keywordflow}{while} (++index < length) \{
+    var key = methodNames[index];
+    \textcolor{keywordtype}{object}[key] = createWrapper(\textcolor{keywordtype}{object}[key], BIND\_FLAG, \textcolor{keywordtype}{object});
+  \}
+  \textcolor{keywordflow}{return} object;
+\});
+
+module.exports = bindAll;
+\end{DoxyCodeInclude}
+ 

@@ -1,0 +1,20 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module6bdff6f01818cd25e196d2a7907fa69b}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/utility/property.\+js}
+var objects = \mbox{[} \{ \textquotesingle{}a\textquotesingle{}\+: \{ \textquotesingle{}b\textquotesingle{}\+: \{ \textquotesingle{}c\textquotesingle{}\+: 2 \} \} \}, \{ \textquotesingle{}a\textquotesingle{}\+: \{ \textquotesingle{}b\textquotesingle{}\+: \{ \textquotesingle{}c\textquotesingle{}\+: 1 \} \} \} \mbox{]};
+
+\+\_\+.\+map(objects, \+\_\+.\+property(\textquotesingle{}a.\+b.\+c\textquotesingle{})); // =$>$ \mbox{[}2, 1\mbox{]}
+
+\+\_\+.\+pluck(\+\_\+.\+sort\+By(objects, \+\_\+.\+property(\mbox{[}\textquotesingle{}a\textquotesingle{}, \textquotesingle{}b\textquotesingle{}, \textquotesingle{}c\textquotesingle{}\mbox{]})), \textquotesingle{}a.\+b.\+c\textquotesingle{}); // =$>$ \mbox{[}1, 2\mbox{]}
+
+
+\begin{DoxyCodeInclude}
+var baseProperty = require(\textcolor{stringliteral}{'../internal/baseProperty'}),
+    basePropertyDeep = require(\textcolor{stringliteral}{'../internal/basePropertyDeep'}),
+    isKey = require(\textcolor{stringliteral}{'../internal/isKey'});
+
+\textcolor{keyword}{function} property(path) \{
+  \textcolor{keywordflow}{return} isKey(path) ? baseProperty(path) : basePropertyDeep(path);
+\}
+
+module.exports = property;
+\end{DoxyCodeInclude}
+ 

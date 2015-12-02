@@ -12,8 +12,8 @@ import JsonSerializerSwift
 /// Handles the Http-Calls from the client to the WisRApi
 class HttpHandler {
     
-    //static let mainUrl = "http://192.168.198.169:1337/"
-    static let mainUrl = "http://wisrrestapi.azurewebsites.net/"
+    static let mainUrl = "http://172.16.126.133:1337/"
+    //static let mainUrl = "http://wisrrestapi.azurewebsites.net/"
     //static let mainUrl = "http://wisrrestapi.aceipse.dk/"
     
     static func log(data data: NSData?, response: NSURLResponse?, error: NSError?) {
@@ -43,7 +43,6 @@ class HttpHandler {
             request.HTTPBody = body.stringByReplacingOccurrencesOfString("+", withString: "%2b").dataUsingEncoding(NSUTF8StringEncoding)
     
             //let started = NSDate()
-            
             let task = session.dataTaskWithRequest(request) {
                 data, response, error in
                 //print("time for \(__FUNCTION__) mainUrl: \(mainUrl) action: \(action) http call \(NSDate().timeIntervalSinceDate(started)) seconds")

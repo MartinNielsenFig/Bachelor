@@ -1,0 +1,27 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_modulef10b01c2c3a1b23766156fddf7b93eb3}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/function/curry.\+js}
+var abc = function(a, b, c) \{ return \mbox{[}a, b, c\mbox{]}; \};
+
+var curried = \+\_\+.\+curry(abc);
+
+curried(1)(2)(3); // =$>$ \mbox{[}1, 2, 3\mbox{]}
+
+curried(1, 2)(3); // =$>$ \mbox{[}1, 2, 3\mbox{]}
+
+curried(1, 2, 3); // =$>$ \mbox{[}1, 2, 3\mbox{]}
+
+// using placeholders curried(1)(\+\_\+, 3)(2); // =$>$ \mbox{[}1, 2, 3\mbox{]}
+
+
+\begin{DoxyCodeInclude}
+var createCurry = require(\textcolor{stringliteral}{'../internal/createCurry'});
+
+var CURRY\_FLAG = 8;
+
+var curry = createCurry(CURRY\_FLAG);
+
+\textcolor{comment}{// Assign default placeholders.}
+curry.placeholder = \{\};
+
+module.exports = curry;
+\end{DoxyCodeInclude}
+ 

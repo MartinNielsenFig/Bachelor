@@ -1,0 +1,30 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module632f58d855bd69b741808971828f40a0}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/collection/sort\+By\+Order.\+js}
+var users = \mbox{[} \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}fred\textquotesingle{}, \textquotesingle{}age\textquotesingle{}\+: 48 \}, \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}barney\textquotesingle{}, \textquotesingle{}age\textquotesingle{}\+: 34 \}, \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}fred\textquotesingle{}, \textquotesingle{}age\textquotesingle{}\+: 42 \}, \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}barney\textquotesingle{}, \textquotesingle{}age\textquotesingle{}\+: 36 \} \mbox{]};
+
+// sort by {\ttfamily user} in ascending order and by {\ttfamily age} in descending order \+\_\+.\+map(\+\_\+.\+sort\+By\+Order(users, \mbox{[}\textquotesingle{}user\textquotesingle{}, \textquotesingle{}age\textquotesingle{}\mbox{]}, \mbox{[}\textquotesingle{}asc\textquotesingle{}, \textquotesingle{}desc\textquotesingle{}\mbox{]}), \+\_\+.\+values); // =$>$ \mbox{[}\mbox{[}\textquotesingle{}barney\textquotesingle{}, 36\mbox{]}, \mbox{[}\textquotesingle{}barney\textquotesingle{}, 34\mbox{]}, \mbox{[}\textquotesingle{}fred\textquotesingle{}, 48\mbox{]}, \mbox{[}\textquotesingle{}fred\textquotesingle{}, 42\mbox{]}\mbox{]}
+
+
+\begin{DoxyCodeInclude}
+var baseSortByOrder = require(\textcolor{stringliteral}{'../internal/baseSortByOrder'}),
+    isArray = require(\textcolor{stringliteral}{'../lang/isArray'}),
+    isIterateeCall = require(\textcolor{stringliteral}{'../internal/isIterateeCall'});
+
+\textcolor{keyword}{function} sortByOrder(collection, iteratees, orders, guard) \{
+  \textcolor{keywordflow}{if} (collection == null) \{
+    \textcolor{keywordflow}{return} [];
+  \}
+  \textcolor{keywordflow}{if} (guard && isIterateeCall(iteratees, orders, guard)) \{
+    orders = undefined;
+  \}
+  \textcolor{keywordflow}{if} (!isArray(iteratees)) \{
+    iteratees = iteratees == null ? [] : [iteratees];
+  \}
+  \textcolor{keywordflow}{if} (!isArray(orders)) \{
+    orders = orders == null ? [] : [orders];
+  \}
+  \textcolor{keywordflow}{return} baseSortByOrder(collection, iteratees, orders);
+\}
+
+module.exports = sortByOrder;
+\end{DoxyCodeInclude}
+ 

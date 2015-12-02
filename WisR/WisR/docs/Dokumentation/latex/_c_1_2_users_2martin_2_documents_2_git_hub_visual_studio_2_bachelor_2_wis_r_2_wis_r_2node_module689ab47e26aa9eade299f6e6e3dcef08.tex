@@ -1,0 +1,17 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module689ab47e26aa9eade299f6e6e3dcef08}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/date/now.\+js}
+\+\_\+.\+defer(function(stamp) \{ console.\+log(\+\_\+.\+now() -\/ stamp); \}, \+\_\+.\+now()); // =$>$ logs the number of milliseconds it took for the deferred function to be invoked
+
+
+\begin{DoxyCodeInclude}
+var getNative = require(\textcolor{stringliteral}{'../internal/getNative'});
+
+\textcolor{comment}{/* Native method references for those with the same name as other `lodash` methods. */}
+var nativeNow = getNative(Date, \textcolor{stringliteral}{'now'});
+
+var now = nativeNow || \textcolor{keyword}{function}() \{
+  \textcolor{keywordflow}{return} \textcolor{keyword}{new} Date().getTime();
+\};
+
+module.exports = now;
+\end{DoxyCodeInclude}
+ 

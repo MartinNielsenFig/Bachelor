@@ -1,0 +1,31 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module4d2efefa184cd5623f6f2e30a4641b2f}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/array/zip\+Object.\+js}
+\+\_\+.\+zip\+Object(\mbox{[}\mbox{[}\textquotesingle{}fred\textquotesingle{}, 30\mbox{]}, \mbox{[}\textquotesingle{}barney\textquotesingle{}, 40\mbox{]}\mbox{]}); // =$>$ \{ \textquotesingle{}fred\textquotesingle{}\+: 30, \textquotesingle{}barney\textquotesingle{}\+: 40 \}
+
+\+\_\+.\+zip\+Object(\mbox{[}\textquotesingle{}fred\textquotesingle{}, \textquotesingle{}barney\textquotesingle{}\mbox{]}, \mbox{[}30, 40\mbox{]}); // =$>$ \{ \textquotesingle{}fred\textquotesingle{}\+: 30, \textquotesingle{}barney\textquotesingle{}\+: 40 \}
+
+
+\begin{DoxyCodeInclude}
+var isArray = require(\textcolor{stringliteral}{'../lang/isArray'});
+
+\textcolor{keyword}{function} zipObject(props, values) \{
+  var index = -1,
+      length = props ? props.length : 0,
+      result = \{\};
+
+  \textcolor{keywordflow}{if} (length && !values && !isArray(props[0])) \{
+    values = [];
+  \}
+  \textcolor{keywordflow}{while} (++index < length) \{
+    var key = props[index];
+    \textcolor{keywordflow}{if} (values) \{
+      result[key] = values[index];
+    \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (key) \{
+      result[key[0]] = key[1];
+    \}
+  \}
+  \textcolor{keywordflow}{return} result;
+\}
+
+module.exports = zipObject;
+\end{DoxyCodeInclude}
+ 

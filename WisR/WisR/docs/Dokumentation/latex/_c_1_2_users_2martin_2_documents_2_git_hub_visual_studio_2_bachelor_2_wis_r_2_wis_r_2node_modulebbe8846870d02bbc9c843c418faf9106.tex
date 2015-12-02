@@ -1,0 +1,21 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_modulebbe8846870d02bbc9c843c418faf9106}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/string/escape\+Reg\+Exp.\+js}
+\+\_\+.\+escape\+Reg\+Exp(\textquotesingle{}\href{https://lodash.com/}{\tt lodash}\textquotesingle{}); // =$>$ \textquotesingle{}\mbox{[}lodash\mbox{]}(https\+:\textbackslash{}/\textbackslash{}/lodash.com\textbackslash{}/)\textquotesingle{}
+
+
+\begin{DoxyCodeInclude}
+var baseToString = require(\textcolor{stringliteral}{'../internal/baseToString'}),
+    escapeRegExpChar = require(\textcolor{stringliteral}{'../internal/escapeRegExpChar'});
+
+var reRegExpChars = /^[:!,]|[\(\backslash\)\(\backslash\)^$.*+?()[\(\backslash\)]\{\}|\(\backslash\)/]|(^[0-9a-fA-Fnrtuvx])|([\(\backslash\)n\(\backslash\)r\(\backslash\)u2028\(\backslash\)u2029])/g,
+    reHasRegExpChars = RegExp(reRegExpChars.source);
+
+\textcolor{keyword}{function} escapeRegExp(\textcolor{keywordtype}{string}) \{
+  \textcolor{keywordtype}{string} = baseToString(\textcolor{keywordtype}{string});
+  \textcolor{keywordflow}{return} (\textcolor{keywordtype}{string} && reHasRegExpChars.test(\textcolor{keywordtype}{string}))
+    ? \textcolor{keywordtype}{string}.replace(reRegExpChars, escapeRegExpChar)
+    : (\textcolor{keywordtype}{string} || \textcolor{stringliteral}{'(?:)'});
+\}
+
+module.exports = escapeRegExp;
+\end{DoxyCodeInclude}
+ 

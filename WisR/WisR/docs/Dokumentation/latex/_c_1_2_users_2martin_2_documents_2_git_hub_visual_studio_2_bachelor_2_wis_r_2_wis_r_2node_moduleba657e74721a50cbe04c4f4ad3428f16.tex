@@ -1,0 +1,33 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_moduleba657e74721a50cbe04c4f4ad3428f16}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/function/throttle.\+js}
+// avoid excessively updating the position while scrolling j\+Query(window).on(\textquotesingle{}scroll\textquotesingle{}, \+\_\+.\+throttle(update\+Position, 100));
+
+// invoke {\ttfamily renew\+Token} when the click event is fired, but not more than once every 5 minutes j\+Query(\textquotesingle{}.interactive\textquotesingle{}).on(\textquotesingle{}click\textquotesingle{}, \+\_\+.\+throttle(renew\+Token, 300000, \{ \textquotesingle{}trailing\textquotesingle{}\+: false \}));
+
+// cancel a trailing throttled call j\+Query(window).on(\textquotesingle{}popstate\textquotesingle{}, throttled.\+cancel);
+
+
+\begin{DoxyCodeInclude}
+var debounce = require(\textcolor{stringliteral}{'./debounce'}),
+    isObject = require(\textcolor{stringliteral}{'../lang/isObject'});
+
+var FUNC\_ERROR\_TEXT = \textcolor{stringliteral}{'Expected a function'};
+
+\textcolor{keyword}{function} throttle(func, wait, options) \{
+  var leading = \textcolor{keyword}{true},
+      trailing = \textcolor{keyword}{true};
+
+  \textcolor{keywordflow}{if} (typeof func != \textcolor{stringliteral}{'function'}) \{
+    \textcolor{keywordflow}{throw} \textcolor{keyword}{new} TypeError(FUNC\_ERROR\_TEXT);
+  \}
+  \textcolor{keywordflow}{if} (options === \textcolor{keyword}{false}) \{
+    leading = \textcolor{keyword}{false};
+  \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (isObject(options)) \{
+    leading = \textcolor{stringliteral}{'leading'} in options ? !!options.leading : leading;
+    trailing = \textcolor{stringliteral}{'trailing'} in options ? !!options.trailing : trailing;
+  \}
+  \textcolor{keywordflow}{return} debounce(func, wait, \{ \textcolor{stringliteral}{'leading'}: leading, \textcolor{stringliteral}{'maxWait'}: +wait, \textcolor{stringliteral}{'trailing'}: trailing \});
+\}
+
+module.exports = throttle;
+\end{DoxyCodeInclude}
+ 

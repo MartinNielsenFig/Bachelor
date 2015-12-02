@@ -1,0 +1,34 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_modulebd4a8145bed9da1f1f4712507570fd4c}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/lang/clone.\+js}
+var users = \mbox{[} \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}barney\textquotesingle{} \}, \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}fred\textquotesingle{} \} \mbox{]};
+
+var shallow = \+\_\+.\+clone(users); shallow\mbox{[}0\mbox{]} === users\mbox{[}0\mbox{]}; // =$>$ true
+
+var deep = \+\_\+.\+clone(users, true); deep\mbox{[}0\mbox{]} === users\mbox{[}0\mbox{]}; // =$>$ false
+
+// using a customizer callback var el = \+\_\+.\+clone(document.\+body, function(value) \{ if (\+\_\+.\+is\+Element(value)) \{ return value.\+clone\+Node(false); \} \});
+
+el === document.\+body // =$>$ false el.\+node\+Name // =$>$ B\+O\+D\+Y el.\+child\+Nodes.\+length; // =$>$ 0
+
+
+\begin{DoxyCodeInclude}
+var baseClone = require(\textcolor{stringliteral}{'../internal/baseClone'}),
+    bindCallback = require(\textcolor{stringliteral}{'../internal/bindCallback'}),
+    isIterateeCall = require(\textcolor{stringliteral}{'../internal/isIterateeCall'});
+
+\textcolor{keyword}{function} clone(value, isDeep, customizer, thisArg) \{
+  \textcolor{keywordflow}{if} (isDeep && typeof isDeep != \textcolor{stringliteral}{'boolean'} && isIterateeCall(value, isDeep, customizer)) \{
+    isDeep = \textcolor{keyword}{false};
+  \}
+  \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (typeof isDeep == \textcolor{stringliteral}{'function'}) \{
+    thisArg = customizer;
+    customizer = isDeep;
+    isDeep = \textcolor{keyword}{false};
+  \}
+  \textcolor{keywordflow}{return} typeof customizer == \textcolor{stringliteral}{'function'}
+    ? baseClone(value, isDeep, bindCallback(customizer, thisArg, 3))
+    : baseClone(value, isDeep);
+\}
+
+module.exports = clone;
+\end{DoxyCodeInclude}
+ 

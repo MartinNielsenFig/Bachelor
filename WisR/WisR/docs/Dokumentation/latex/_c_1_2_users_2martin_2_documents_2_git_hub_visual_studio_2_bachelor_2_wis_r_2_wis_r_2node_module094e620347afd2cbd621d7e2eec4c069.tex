@@ -1,0 +1,23 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module094e620347afd2cbd621d7e2eec4c069}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/lang/clone\+Deep.\+js}
+var users = \mbox{[} \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}barney\textquotesingle{} \}, \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}fred\textquotesingle{} \} \mbox{]};
+
+var deep = \+\_\+.\+clone\+Deep(users); deep\mbox{[}0\mbox{]} === users\mbox{[}0\mbox{]}; // =$>$ false
+
+// using a customizer callback var el = \+\_\+.\+clone\+Deep(document.\+body, function(value) \{ if (\+\_\+.\+is\+Element(value)) \{ return value.\+clone\+Node(true); \} \});
+
+el === document.\+body // =$>$ false el.\+node\+Name // =$>$ B\+O\+D\+Y el.\+child\+Nodes.\+length; // =$>$ 20
+
+
+\begin{DoxyCodeInclude}
+var baseClone = require(\textcolor{stringliteral}{'../internal/baseClone'}),
+    bindCallback = require(\textcolor{stringliteral}{'../internal/bindCallback'});
+
+\textcolor{keyword}{function} cloneDeep(value, customizer, thisArg) \{
+  \textcolor{keywordflow}{return} typeof customizer == \textcolor{stringliteral}{'function'}
+    ? baseClone(value, \textcolor{keyword}{true}, bindCallback(customizer, thisArg, 3))
+    : baseClone(value, true);
+\}
+
+module.exports = cloneDeep;
+\end{DoxyCodeInclude}
+ 

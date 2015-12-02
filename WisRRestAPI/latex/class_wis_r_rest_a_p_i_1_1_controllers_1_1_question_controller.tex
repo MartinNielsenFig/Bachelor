@@ -1,0 +1,279 @@
+\hypertarget{class_wis_r_rest_a_p_i_1_1_controllers_1_1_question_controller}{}\section{Wis\+R\+Rest\+A\+P\+I.\+Controllers.\+Question\+Controller Class Reference}
+\label{class_wis_r_rest_a_p_i_1_1_controllers_1_1_question_controller}\index{Wis\+R\+Rest\+A\+P\+I.\+Controllers.\+Question\+Controller@{Wis\+R\+Rest\+A\+P\+I.\+Controllers.\+Question\+Controller}}
+
+
+The question controller is used to handle the question C\+R\+U\+D\textquotesingle{}s  
+
+
+Inheritance diagram for Wis\+R\+Rest\+A\+P\+I.\+Controllers.\+Question\+Controller\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_wis_r_rest_a_p_i_1_1_controllers_1_1_question_controller}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_wis_r_rest_a_p_i_1_1_controllers_1_1_question_controller_ad0ccb16874196a628858ef0ad7776744}{Question\+Controller} (\hyperlink{interface_wis_r_rest_a_p_i_1_1_domain_model_1_1_i_question_repository}{I\+Question\+Repository} qr, \hyperlink{interface_wis_r_rest_a_p_i_1_1_providers_1_1_i_rabbit_publisher}{I\+Rabbit\+Publisher} irabbit\+Publisher, \hyperlink{interface_wis_r_rest_a_p_i_1_1_domain_model_1_1_i_room_repository}{I\+Room\+Repository} rr)
+\begin{DoxyCompactList}\small\item\em Initializes a new instance of the \hyperlink{class_wis_r_rest_a_p_i_1_1_controllers_1_1_question_controller}{Question\+Controller} class. \end{DoxyCompactList}\item 
+string \hyperlink{class_wis_r_rest_a_p_i_1_1_controllers_1_1_question_controller_a87513af13495ffd09f937fcbaa335e78}{Get\+All} ()
+\begin{DoxyCompactList}\small\item\em Gets all. \end{DoxyCompactList}\item 
+string \hyperlink{class_wis_r_rest_a_p_i_1_1_controllers_1_1_question_controller_aa65a886c1945b384fdd5c771f3ba955e}{Get\+Questions\+For\+Room} (string room\+Id)
+\begin{DoxyCompactList}\small\item\em Gets the questions from room identifier. \end{DoxyCompactList}\item 
+string \hyperlink{class_wis_r_rest_a_p_i_1_1_controllers_1_1_question_controller_a5c4f6d6873b051a178ad11c4d000f677}{Get\+Questions\+For\+Room\+Without\+Images} (string room\+Id)
+\begin{DoxyCompactList}\small\item\em Gets the questions without images from room identifier. \end{DoxyCompactList}\item 
+string \hyperlink{class_wis_r_rest_a_p_i_1_1_controllers_1_1_question_controller_ac0725a562f4f3e7e61cc4b6f07ab9da1}{Get\+Image\+By\+Question\+Id} (string question\+Id)
+\begin{DoxyCompactList}\small\item\em Gets the image by question identifier. \end{DoxyCompactList}\item 
+string \hyperlink{class_wis_r_rest_a_p_i_1_1_controllers_1_1_question_controller_a4e553fb1e4040e703ff4cefa46da6bd2}{Create\+Question} (string question, string type)
+\begin{DoxyCompactList}\small\item\em Creates the question. \end{DoxyCompactList}\item 
+string \hyperlink{class_wis_r_rest_a_p_i_1_1_controllers_1_1_question_controller_ac1332265d75ba4f66bb550e1518e376a}{Update\+Question} (string question, string type, string id)
+\begin{DoxyCompactList}\small\item\em Updates the question. \end{DoxyCompactList}\item 
+string \hyperlink{class_wis_r_rest_a_p_i_1_1_controllers_1_1_question_controller_ad6b9d79b93fc80432671e9930c394e45}{Add\+Question\+Response} (string response, string question\+Id)
+\begin{DoxyCompactList}\small\item\em Adds the question response. \end{DoxyCompactList}\item 
+string \hyperlink{class_wis_r_rest_a_p_i_1_1_controllers_1_1_question_controller_aad873552a4b0152687297c20c0daa9f0}{Add\+Vote} (string vote, string type, string id)
+\begin{DoxyCompactList}\small\item\em Adds the vote. \end{DoxyCompactList}\item 
+string \hyperlink{class_wis_r_rest_a_p_i_1_1_controllers_1_1_question_controller_a69d471ec8ea120bc5f499a87531e4695}{Get\+By\+Id} (string id)
+\begin{DoxyCompactList}\small\item\em Gets the question by identifier. \end{DoxyCompactList}\item 
+string \hyperlink{class_wis_r_rest_a_p_i_1_1_controllers_1_1_question_controller_ae1f099aeee3398760a719c767b4f7b6b}{Delete\+Question} (string id)
+\begin{DoxyCompactList}\small\item\em Deletes the question. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The question controller is used to handle the question C\+R\+U\+D\textquotesingle{}s 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_wis_r_rest_a_p_i_1_1_controllers_1_1_question_controller_ad0ccb16874196a628858ef0ad7776744}{}\index{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Question\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Question\+Controller}!Question\+Controller@{Question\+Controller}}
+\index{Question\+Controller@{Question\+Controller}!Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Question\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Question\+Controller}}
+\subsubsection[{Question\+Controller(\+I\+Question\+Repository qr, I\+Rabbit\+Publisher irabbit\+Publisher, I\+Room\+Repository rr)}]{\setlength{\rightskip}{0pt plus 5cm}Wis\+R\+Rest\+A\+P\+I.\+Controllers.\+Question\+Controller.\+Question\+Controller (
+\begin{DoxyParamCaption}
+\item[{{\bf I\+Question\+Repository}}]{qr, }
+\item[{{\bf I\+Rabbit\+Publisher}}]{irabbit\+Publisher, }
+\item[{{\bf I\+Room\+Repository}}]{rr}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_wis_r_rest_a_p_i_1_1_controllers_1_1_question_controller_ad0ccb16874196a628858ef0ad7776744}
+
+
+Initializes a new instance of the \hyperlink{class_wis_r_rest_a_p_i_1_1_controllers_1_1_question_controller}{Question\+Controller} class. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em qr} & The question repository.\\
+\hline
+{\em irabbit\+Publisher} & The rabbit\+M\+Q publisher.\\
+\hline
+{\em rr} & The room repository.\\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_wis_r_rest_a_p_i_1_1_controllers_1_1_question_controller_ad6b9d79b93fc80432671e9930c394e45}{}\index{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Question\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Question\+Controller}!Add\+Question\+Response@{Add\+Question\+Response}}
+\index{Add\+Question\+Response@{Add\+Question\+Response}!Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Question\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Question\+Controller}}
+\subsubsection[{Add\+Question\+Response(string response, string question\+Id)}]{\setlength{\rightskip}{0pt plus 5cm}string Wis\+R\+Rest\+A\+P\+I.\+Controllers.\+Question\+Controller.\+Add\+Question\+Response (
+\begin{DoxyParamCaption}
+\item[{string}]{response, }
+\item[{string}]{question\+Id}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_wis_r_rest_a_p_i_1_1_controllers_1_1_question_controller_ad6b9d79b93fc80432671e9930c394e45}
+
+
+Adds the question response. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em response} & The response.\\
+\hline
+{\em question\+Id} & The question identifier.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Notification
+\end{DoxyReturn}
+\hypertarget{class_wis_r_rest_a_p_i_1_1_controllers_1_1_question_controller_aad873552a4b0152687297c20c0daa9f0}{}\index{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Question\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Question\+Controller}!Add\+Vote@{Add\+Vote}}
+\index{Add\+Vote@{Add\+Vote}!Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Question\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Question\+Controller}}
+\subsubsection[{Add\+Vote(string vote, string type, string id)}]{\setlength{\rightskip}{0pt plus 5cm}string Wis\+R\+Rest\+A\+P\+I.\+Controllers.\+Question\+Controller.\+Add\+Vote (
+\begin{DoxyParamCaption}
+\item[{string}]{vote, }
+\item[{string}]{type, }
+\item[{string}]{id}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_wis_r_rest_a_p_i_1_1_controllers_1_1_question_controller_aad873552a4b0152687297c20c0daa9f0}
+
+
+Adds the vote. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em vote} & The vote.\\
+\hline
+{\em type} & The type.\\
+\hline
+{\em id} & The identifier.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Notification
+\end{DoxyReturn}
+\hypertarget{class_wis_r_rest_a_p_i_1_1_controllers_1_1_question_controller_a4e553fb1e4040e703ff4cefa46da6bd2}{}\index{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Question\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Question\+Controller}!Create\+Question@{Create\+Question}}
+\index{Create\+Question@{Create\+Question}!Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Question\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Question\+Controller}}
+\subsubsection[{Create\+Question(string question, string type)}]{\setlength{\rightskip}{0pt plus 5cm}string Wis\+R\+Rest\+A\+P\+I.\+Controllers.\+Question\+Controller.\+Create\+Question (
+\begin{DoxyParamCaption}
+\item[{string}]{question, }
+\item[{string}]{type}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_wis_r_rest_a_p_i_1_1_controllers_1_1_question_controller_a4e553fb1e4040e703ff4cefa46da6bd2}
+
+
+Creates the question. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em question} & The question.\\
+\hline
+{\em type} & The type.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Notification
+\end{DoxyReturn}
+\hypertarget{class_wis_r_rest_a_p_i_1_1_controllers_1_1_question_controller_ae1f099aeee3398760a719c767b4f7b6b}{}\index{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Question\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Question\+Controller}!Delete\+Question@{Delete\+Question}}
+\index{Delete\+Question@{Delete\+Question}!Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Question\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Question\+Controller}}
+\subsubsection[{Delete\+Question(string id)}]{\setlength{\rightskip}{0pt plus 5cm}string Wis\+R\+Rest\+A\+P\+I.\+Controllers.\+Question\+Controller.\+Delete\+Question (
+\begin{DoxyParamCaption}
+\item[{string}]{id}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_wis_r_rest_a_p_i_1_1_controllers_1_1_question_controller_ae1f099aeee3398760a719c767b4f7b6b}
+
+
+Deletes the question. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & The identifier.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Notification
+\end{DoxyReturn}
+\hypertarget{class_wis_r_rest_a_p_i_1_1_controllers_1_1_question_controller_a87513af13495ffd09f937fcbaa335e78}{}\index{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Question\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Question\+Controller}!Get\+All@{Get\+All}}
+\index{Get\+All@{Get\+All}!Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Question\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Question\+Controller}}
+\subsubsection[{Get\+All()}]{\setlength{\rightskip}{0pt plus 5cm}string Wis\+R\+Rest\+A\+P\+I.\+Controllers.\+Question\+Controller.\+Get\+All (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_wis_r_rest_a_p_i_1_1_controllers_1_1_question_controller_a87513af13495ffd09f937fcbaa335e78}
+
+
+Gets all. 
+
+\begin{DoxyReturn}{Returns}
+Notification
+\end{DoxyReturn}
+\hypertarget{class_wis_r_rest_a_p_i_1_1_controllers_1_1_question_controller_a69d471ec8ea120bc5f499a87531e4695}{}\index{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Question\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Question\+Controller}!Get\+By\+Id@{Get\+By\+Id}}
+\index{Get\+By\+Id@{Get\+By\+Id}!Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Question\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Question\+Controller}}
+\subsubsection[{Get\+By\+Id(string id)}]{\setlength{\rightskip}{0pt plus 5cm}string Wis\+R\+Rest\+A\+P\+I.\+Controllers.\+Question\+Controller.\+Get\+By\+Id (
+\begin{DoxyParamCaption}
+\item[{string}]{id}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_wis_r_rest_a_p_i_1_1_controllers_1_1_question_controller_a69d471ec8ea120bc5f499a87531e4695}
+
+
+Gets the question by identifier. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & The identifier.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Notification
+\end{DoxyReturn}
+\hypertarget{class_wis_r_rest_a_p_i_1_1_controllers_1_1_question_controller_ac0725a562f4f3e7e61cc4b6f07ab9da1}{}\index{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Question\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Question\+Controller}!Get\+Image\+By\+Question\+Id@{Get\+Image\+By\+Question\+Id}}
+\index{Get\+Image\+By\+Question\+Id@{Get\+Image\+By\+Question\+Id}!Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Question\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Question\+Controller}}
+\subsubsection[{Get\+Image\+By\+Question\+Id(string question\+Id)}]{\setlength{\rightskip}{0pt plus 5cm}string Wis\+R\+Rest\+A\+P\+I.\+Controllers.\+Question\+Controller.\+Get\+Image\+By\+Question\+Id (
+\begin{DoxyParamCaption}
+\item[{string}]{question\+Id}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_wis_r_rest_a_p_i_1_1_controllers_1_1_question_controller_ac0725a562f4f3e7e61cc4b6f07ab9da1}
+
+
+Gets the image by question identifier. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em question\+Id} & The question identifier.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Notification
+\end{DoxyReturn}
+\hypertarget{class_wis_r_rest_a_p_i_1_1_controllers_1_1_question_controller_aa65a886c1945b384fdd5c771f3ba955e}{}\index{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Question\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Question\+Controller}!Get\+Questions\+For\+Room@{Get\+Questions\+For\+Room}}
+\index{Get\+Questions\+For\+Room@{Get\+Questions\+For\+Room}!Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Question\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Question\+Controller}}
+\subsubsection[{Get\+Questions\+For\+Room(string room\+Id)}]{\setlength{\rightskip}{0pt plus 5cm}string Wis\+R\+Rest\+A\+P\+I.\+Controllers.\+Question\+Controller.\+Get\+Questions\+For\+Room (
+\begin{DoxyParamCaption}
+\item[{string}]{room\+Id}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_wis_r_rest_a_p_i_1_1_controllers_1_1_question_controller_aa65a886c1945b384fdd5c771f3ba955e}
+
+
+Gets the questions from room identifier. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em room\+Id} & The room identifier.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Notification
+\end{DoxyReturn}
+\hypertarget{class_wis_r_rest_a_p_i_1_1_controllers_1_1_question_controller_a5c4f6d6873b051a178ad11c4d000f677}{}\index{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Question\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Question\+Controller}!Get\+Questions\+For\+Room\+Without\+Images@{Get\+Questions\+For\+Room\+Without\+Images}}
+\index{Get\+Questions\+For\+Room\+Without\+Images@{Get\+Questions\+For\+Room\+Without\+Images}!Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Question\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Question\+Controller}}
+\subsubsection[{Get\+Questions\+For\+Room\+Without\+Images(string room\+Id)}]{\setlength{\rightskip}{0pt plus 5cm}string Wis\+R\+Rest\+A\+P\+I.\+Controllers.\+Question\+Controller.\+Get\+Questions\+For\+Room\+Without\+Images (
+\begin{DoxyParamCaption}
+\item[{string}]{room\+Id}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_wis_r_rest_a_p_i_1_1_controllers_1_1_question_controller_a5c4f6d6873b051a178ad11c4d000f677}
+
+
+Gets the questions without images from room identifier. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em room\+Id} & The room identifier.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Notification
+\end{DoxyReturn}
+\hypertarget{class_wis_r_rest_a_p_i_1_1_controllers_1_1_question_controller_ac1332265d75ba4f66bb550e1518e376a}{}\index{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Question\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Question\+Controller}!Update\+Question@{Update\+Question}}
+\index{Update\+Question@{Update\+Question}!Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Question\+Controller@{Wis\+R\+Rest\+A\+P\+I\+::\+Controllers\+::\+Question\+Controller}}
+\subsubsection[{Update\+Question(string question, string type, string id)}]{\setlength{\rightskip}{0pt plus 5cm}string Wis\+R\+Rest\+A\+P\+I.\+Controllers.\+Question\+Controller.\+Update\+Question (
+\begin{DoxyParamCaption}
+\item[{string}]{question, }
+\item[{string}]{type, }
+\item[{string}]{id}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_wis_r_rest_a_p_i_1_1_controllers_1_1_question_controller_ac1332265d75ba4f66bb550e1518e376a}
+
+
+Updates the question. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em question} & The question.\\
+\hline
+{\em type} & The type.\\
+\hline
+{\em id} & The identifier.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Notification
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Wis\+R\+Rest\+A\+P\+I/\+Controllers/Question\+Controller.\+cs\end{DoxyCompactItemize}

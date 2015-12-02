@@ -1,0 +1,19 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_moduleee5736b67f8fbe13950fbe49f80772c8}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/collection/where.\+js}
+var users = \mbox{[} \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}barney\textquotesingle{}, \textquotesingle{}age\textquotesingle{}\+: 36, \textquotesingle{}active\textquotesingle{}\+: false, \textquotesingle{}pets\textquotesingle{}\+: \mbox{[}\textquotesingle{}hoppy\textquotesingle{}\mbox{]} \}, \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}fred\textquotesingle{}, \textquotesingle{}age\textquotesingle{}\+: 40, \textquotesingle{}active\textquotesingle{}\+: true, \textquotesingle{}pets\textquotesingle{}\+: \mbox{[}\textquotesingle{}baby puss\textquotesingle{}, \textquotesingle{}dino\textquotesingle{}\mbox{]} \} \mbox{]};
+
+\+\_\+.\+pluck(\+\_\+.\+where(users, \{ \textquotesingle{}age\textquotesingle{}\+: 36, \textquotesingle{}active\textquotesingle{}\+: false \}), \textquotesingle{}user\textquotesingle{}); // =$>$ \mbox{[}\textquotesingle{}barney\textquotesingle{}\mbox{]}
+
+\+\_\+.\+pluck(\+\_\+.\+where(users, \{ \textquotesingle{}pets\textquotesingle{}\+: \mbox{[}\textquotesingle{}dino\textquotesingle{}\mbox{]} \}), \textquotesingle{}user\textquotesingle{}); // =$>$ \mbox{[}\textquotesingle{}fred\textquotesingle{}\mbox{]}
+
+
+\begin{DoxyCodeInclude}
+var baseMatches = require(\textcolor{stringliteral}{'../internal/baseMatches'}),
+    filter = require(\textcolor{stringliteral}{'./filter'});
+
+\textcolor{keyword}{function} where(collection, source) \{
+  \textcolor{keywordflow}{return} filter(collection, baseMatches(source));
+\}
+
+module.exports = where;
+\end{DoxyCodeInclude}
+ 

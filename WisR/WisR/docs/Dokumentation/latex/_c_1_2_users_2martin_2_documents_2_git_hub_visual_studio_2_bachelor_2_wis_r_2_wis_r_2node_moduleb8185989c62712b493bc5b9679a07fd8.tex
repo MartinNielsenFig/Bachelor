@@ -1,0 +1,21 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_moduleb8185989c62712b493bc5b9679a07fd8}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/object/find\+Key.\+js}
+var users = \{ \textquotesingle{}barney\textquotesingle{}\+: \{ \textquotesingle{}age\textquotesingle{}\+: 36, \textquotesingle{}active\textquotesingle{}\+: true \}, \textquotesingle{}fred\textquotesingle{}\+: \{ \textquotesingle{}age\textquotesingle{}\+: 40, \textquotesingle{}active\textquotesingle{}\+: false \}, \textquotesingle{}pebbles\textquotesingle{}\+: \{ \textquotesingle{}age\textquotesingle{}\+: 1, \textquotesingle{}active\textquotesingle{}\+: true \} \};
+
+\+\_\+.\+find\+Key(users, function(chr) \{ return chr.\+age $<$ 40; \}); // =$>$ \textquotesingle{}barney\textquotesingle{} (iteration order is not guaranteed)
+
+// using the {\ttfamily \+\_\+.\+matches} callback shorthand \+\_\+.\+find\+Key(users, \{ \textquotesingle{}age\textquotesingle{}\+: 1, \textquotesingle{}active\textquotesingle{}\+: true \}); // =$>$ \textquotesingle{}pebbles\textquotesingle{}
+
+// using the {\ttfamily \+\_\+.\+matches\+Property} callback shorthand \+\_\+.\+find\+Key(users, \textquotesingle{}active\textquotesingle{}, false); // =$>$ \textquotesingle{}fred\textquotesingle{}
+
+// using the {\ttfamily \+\_\+.\+property} callback shorthand \+\_\+.\+find\+Key(users, \textquotesingle{}active\textquotesingle{}); // =$>$ \textquotesingle{}barney\textquotesingle{}
+
+
+\begin{DoxyCodeInclude}
+var baseForOwn = require(\textcolor{stringliteral}{'../internal/baseForOwn'}),
+    createFindKey = require(\textcolor{stringliteral}{'../internal/createFindKey'});
+
+var findKey = createFindKey(baseForOwn);
+
+module.exports = findKey;
+\end{DoxyCodeInclude}
+ 

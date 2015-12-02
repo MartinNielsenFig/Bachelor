@@ -1,0 +1,33 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_modulea6786fe362c0e01292f7d68481d1aec0}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/function/before.\+js}
+j\+Query(\textquotesingle{}\#add\textquotesingle{}).on(\textquotesingle{}click\textquotesingle{}, \+\_\+.\+before(5, add\+Contact\+To\+List)); // =$>$ allows adding up to 4 contacts to the list
+
+
+\begin{DoxyCodeInclude}
+
+var FUNC\_ERROR\_TEXT = \textcolor{stringliteral}{'Expected a function'};
+
+\textcolor{keyword}{function} before(n, func) \{
+  var result;
+  \textcolor{keywordflow}{if} (typeof func != \textcolor{stringliteral}{'function'}) \{
+    \textcolor{keywordflow}{if} (typeof n == \textcolor{stringliteral}{'function'}) \{
+      var temp = n;
+      n = func;
+      func = temp;
+    \} \textcolor{keywordflow}{else} \{
+      \textcolor{keywordflow}{throw} \textcolor{keyword}{new} TypeError(FUNC\_ERROR\_TEXT);
+    \}
+  \}
+  \textcolor{keywordflow}{return} \textcolor{keyword}{function}() \{
+    \textcolor{keywordflow}{if} (--n > 0) \{
+      result = func.apply(\textcolor{keyword}{this}, arguments);
+    \}
+    \textcolor{keywordflow}{if} (n <= 1) \{
+      func = undefined;
+    \}
+    \textcolor{keywordflow}{return} result;
+  \};
+\}
+
+module.exports = before;
+\end{DoxyCodeInclude}
+ 

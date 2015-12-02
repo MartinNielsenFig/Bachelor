@@ -1,0 +1,30 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_moduleaad19f3147e59a1ddb303eb614a390f2}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/string/ends\+With.\+js}
+\+\_\+.\+ends\+With(\textquotesingle{}abc\textquotesingle{}, \textquotesingle{}c\textquotesingle{}); // =$>$ true
+
+\+\_\+.\+ends\+With(\textquotesingle{}abc\textquotesingle{}, \textquotesingle{}b\textquotesingle{}); // =$>$ false
+
+\+\_\+.\+ends\+With(\textquotesingle{}abc\textquotesingle{}, \textquotesingle{}b\textquotesingle{}, 2); // =$>$ true
+
+
+\begin{DoxyCodeInclude}
+var baseToString = require(\textcolor{stringliteral}{'../internal/baseToString'});
+
+\textcolor{comment}{/* Native method references for those with the same name as other `lodash` methods. */}
+var nativeMin = Math.min;
+
+\textcolor{keyword}{function} endsWith(\textcolor{keywordtype}{string}, target, position) \{
+  \textcolor{keywordtype}{string} = baseToString(\textcolor{keywordtype}{string});
+  target = (target + \textcolor{stringliteral}{''});
+
+  var length = \textcolor{keywordtype}{string}.length;
+  position = position === undefined
+    ? length
+    : nativeMin(position < 0 ? 0 : (+position || 0), length);
+
+  position -= target.length;
+  \textcolor{keywordflow}{return} position >= 0 && \textcolor{keywordtype}{string}.indexOf(target, position) == position;
+\}
+
+module.exports = endsWith;
+\end{DoxyCodeInclude}
+ 

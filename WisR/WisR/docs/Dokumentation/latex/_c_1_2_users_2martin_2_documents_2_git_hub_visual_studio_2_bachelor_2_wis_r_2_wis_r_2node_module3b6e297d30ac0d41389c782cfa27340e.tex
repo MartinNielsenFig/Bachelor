@@ -1,0 +1,20 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module3b6e297d30ac0d41389c782cfa27340e}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/array/find\+Last\+Index.\+js}
+var users = \mbox{[} \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}barney\textquotesingle{}, \textquotesingle{}active\textquotesingle{}\+: true \}, \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}fred\textquotesingle{}, \textquotesingle{}active\textquotesingle{}\+: false \}, \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}pebbles\textquotesingle{}, \textquotesingle{}active\textquotesingle{}\+: false \} \mbox{]};
+
+\+\_\+.\+find\+Last\+Index(users, function(chr) \{ return chr.\+user == \textquotesingle{}pebbles\textquotesingle{}; \}); // =$>$ 2
+
+// using the {\ttfamily \+\_\+.\+matches} callback shorthand \+\_\+.\+find\+Last\+Index(users, \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}barney\textquotesingle{}, \textquotesingle{}active\textquotesingle{}\+: true \}); // =$>$ 0
+
+// using the {\ttfamily \+\_\+.\+matches\+Property} callback shorthand \+\_\+.\+find\+Last\+Index(users, \textquotesingle{}active\textquotesingle{}, false); // =$>$ 2
+
+// using the {\ttfamily \+\_\+.\+property} callback shorthand \+\_\+.\+find\+Last\+Index(users, \textquotesingle{}active\textquotesingle{}); // =$>$ 0
+
+
+\begin{DoxyCodeInclude}
+var createFindIndex = require(\textcolor{stringliteral}{'../internal/createFindIndex'});
+
+var findLastIndex = createFindIndex(\textcolor{keyword}{true});
+
+module.exports = findLastIndex;
+\end{DoxyCodeInclude}
+ 

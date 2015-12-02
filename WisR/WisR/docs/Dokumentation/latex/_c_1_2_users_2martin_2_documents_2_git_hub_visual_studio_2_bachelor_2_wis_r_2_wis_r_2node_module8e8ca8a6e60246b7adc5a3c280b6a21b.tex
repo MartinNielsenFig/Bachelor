@@ -1,0 +1,27 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module8e8ca8a6e60246b7adc5a3c280b6a21b}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/object/pick.\+js}
+var object = \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}fred\textquotesingle{}, \textquotesingle{}age\textquotesingle{}\+: 40 \};
+
+\+\_\+.\+pick(object, \textquotesingle{}user\textquotesingle{}); // =$>$ \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}fred\textquotesingle{} \}
+
+\+\_\+.\+pick(object, \+\_\+.\+is\+String); // =$>$ \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}fred\textquotesingle{} \}
+
+
+\begin{DoxyCodeInclude}
+var baseFlatten = require(\textcolor{stringliteral}{'../internal/baseFlatten'}),
+    bindCallback = require(\textcolor{stringliteral}{'../internal/bindCallback'}),
+    pickByArray = require(\textcolor{stringliteral}{'../internal/pickByArray'}),
+    pickByCallback = require(\textcolor{stringliteral}{'../internal/pickByCallback'}),
+    restParam = require(\textcolor{stringliteral}{'../function/restParam'});
+
+var pick = restParam(\textcolor{keyword}{function}(\textcolor{keywordtype}{object}, props) \{
+  \textcolor{keywordflow}{if} (\textcolor{keywordtype}{object} == null) \{
+    \textcolor{keywordflow}{return} \{\};
+  \}
+  \textcolor{keywordflow}{return} typeof props[0] == \textcolor{stringliteral}{'function'}
+    ? pickByCallback(\textcolor{keywordtype}{object}, bindCallback(props[0], props[1], 3))
+    : pickByArray(object, baseFlatten(props));
+\});
+
+module.exports = pick;
+\end{DoxyCodeInclude}
+ 

@@ -1,0 +1,21 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_moduled58ad10f3245c8c0342d5b27a8732b3a}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/string/unescape.\+js}
+\+\_\+.\+unescape(\textquotesingle{}fred, barney, \& pebbles\textquotesingle{}); // =$>$ \textquotesingle{}fred, barney, \& pebbles\textquotesingle{}
+
+
+\begin{DoxyCodeInclude}
+var baseToString = require(\textcolor{stringliteral}{'../internal/baseToString'}),
+    unescapeHtmlChar = require(\textcolor{stringliteral}{'../internal/unescapeHtmlChar'});
+
+var reEscapedHtml = /&(?:amp|lt|gt|quot|#39|#96);/g,
+    reHasEscapedHtml = RegExp(reEscapedHtml.source);
+
+\textcolor{keyword}{function} unescape(\textcolor{keywordtype}{string}) \{
+  \textcolor{keywordtype}{string} = baseToString(\textcolor{keywordtype}{string});
+  \textcolor{keywordflow}{return} (\textcolor{keywordtype}{string} && reHasEscapedHtml.test(\textcolor{keywordtype}{string}))
+    ? \textcolor{keywordtype}{string}.replace(reEscapedHtml, unescapeHtmlChar)
+    : string;
+\}
+
+module.exports = unescape;
+\end{DoxyCodeInclude}
+ 

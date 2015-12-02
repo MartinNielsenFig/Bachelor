@@ -1,0 +1,3359 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module80d7d57e13ed3ee128fa5049a6daaf67}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt/node\+\_\+modules/grunt-\/legacy-\/log/node\+\_\+modules/lodash/dist/lodash.\+compat.\+js}
+var wrapped = \+\_\+(\mbox{[}1, 2, 3\mbox{]});
+
+// returns an unwrapped value wrapped.\+reduce(function(sum, num) \{ return sum + num; \}); // =$>$ 6
+
+// returns a wrapped value var squares = wrapped.\+map(function(num) \{ return num $\ast$ num; \});
+
+\+\_\+.\+is\+Array(squares); // =$>$ false
+
+\+\_\+.\+is\+Array(squares.\+value()); // =$>$ true
+
+
+\begin{DoxyCodeInclude}
+
+;(\textcolor{keyword}{function}() \{
+
+  var undefined;
+
+  var arrayPool = [],
+      objectPool = [];
+
+  var idCounter = 0;
+
+  var indicatorObject = \{\};
+
+  var keyPrefix = +\textcolor{keyword}{new} Date + \textcolor{stringliteral}{''};
+
+  var largeArraySize = 75;
+
+  var maxPoolSize = 40;
+
+  var whitespace = (
+    \textcolor{comment}{// whitespace}
+    \textcolor{stringliteral}{' \(\backslash\)t\(\backslash\)x0B\(\backslash\)f\(\backslash\)xA0\(\backslash\)ufeff'} +
+
+    \textcolor{comment}{// line terminators}
+    \textcolor{stringliteral}{'\(\backslash\)n\(\backslash\)r\(\backslash\)u2028\(\backslash\)u2029'} +
+
+    \textcolor{comment}{// unicode category "Zs" space separators}
+    \textcolor{stringliteral}{'\(\backslash\)u1680\(\backslash\)u180e\(\backslash\)u2000\(\backslash\)u2001\(\backslash\)u2002\(\backslash\)u2003\(\backslash\)u2004\(\backslash\)u2005\(\backslash\)u2006\(\backslash\)u2007\(\backslash\)u2008\(\backslash\)u2009\(\backslash\)u200a\(\backslash\)u202f\(\backslash\)u205f\(\backslash\)u3000'}
+  );
+
+  var reEmptyStringLeading = /\(\backslash\)b\_\_p \(\backslash\)+= \textcolor{stringliteral}{''};/g,
+      reEmptyStringMiddle = /\(\backslash\)b(\_\_p \(\backslash\)+=) \textcolor{stringliteral}{''} \(\backslash\)+/g,
+      reEmptyStringTrailing = /(\_\_e\(\backslash\)(.*?\(\backslash\))|\(\backslash\)b\_\_t\(\backslash\))) \(\backslash\)+\(\backslash\)n\textcolor{stringliteral}{''};/g;
+
+  var reEsTemplate = /\(\backslash\)$\(\backslash\)\{([^\(\backslash\)\(\backslash\)\}]*(?:\(\backslash\)\(\backslash\).[^\(\backslash\)\(\backslash\)\}]*)*)\(\backslash\)\}/g;
+
+  var reFlags = /\(\backslash\)w*$/;
+
+  var reFuncName = /^\(\backslash\)s*\textcolor{keyword}{function}[ \(\backslash\)n\(\backslash\)r\(\backslash\)t]+\(\backslash\)w/;
+
+  var reInterpolate = /<%=([\(\backslash\)s\(\backslash\)S]+?)%>/g;
+
+  var reLeadingSpacesAndZeros = RegExp(\textcolor{stringliteral}{'^['} + whitespace + \textcolor{stringliteral}{']*0+(?=.$)'});
+
+  var reNoMatch = /($^)/;
+
+  var reThis = /\(\backslash\)bthis\(\backslash\)b/;
+
+  var reUnescapedString = /[\textcolor{stringliteral}{'\(\backslash\)n\(\backslash\)r\(\backslash\)t\(\backslash\)u2028\(\backslash\)u2029\(\backslash\)\(\backslash\)]/g;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  var contextProps = [}
+\textcolor{stringliteral}{    '}Array\textcolor{stringliteral}{', '}Boolean\textcolor{stringliteral}{', '}Date\textcolor{stringliteral}{', '}Error\textcolor{stringliteral}{', '}Function\textcolor{stringliteral}{', '}Math\textcolor{stringliteral}{', '}Number\textcolor{stringliteral}{', '}Object\textcolor{stringliteral}{',}
+\textcolor{stringliteral}{    '}RegExp\textcolor{stringliteral}{', '}String\textcolor{stringliteral}{', '}\_\textcolor{stringliteral}{', '}attachEvent\textcolor{stringliteral}{', '}clearTimeout\textcolor{stringliteral}{', '}isFinite\textcolor{stringliteral}{', '}isNaN\textcolor{stringliteral}{',}
+\textcolor{stringliteral}{    '}parseInt\textcolor{stringliteral}{', '}setTimeout\textcolor{stringliteral}{'}
+\textcolor{stringliteral}{  ];}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  var shadowedProps = [}
+\textcolor{stringliteral}{    '}constructor\textcolor{stringliteral}{', '}hasOwnProperty\textcolor{stringliteral}{', '}isPrototypeOf\textcolor{stringliteral}{', '}propertyIsEnumerable\textcolor{stringliteral}{',}
+\textcolor{stringliteral}{    '}toLocaleString\textcolor{stringliteral}{', '}toString\textcolor{stringliteral}{', '}valueOf\textcolor{stringliteral}{'}
+\textcolor{stringliteral}{  ];}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  var templateCounter = 0;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  var argsClass = '}[\textcolor{keywordtype}{object} Arguments]\textcolor{stringliteral}{',}
+\textcolor{stringliteral}{      arrayClass = '}[\textcolor{keywordtype}{object} Array]\textcolor{stringliteral}{',}
+\textcolor{stringliteral}{      boolClass = '}[\textcolor{keywordtype}{object} Boolean]\textcolor{stringliteral}{',}
+\textcolor{stringliteral}{      dateClass = '}[\textcolor{keywordtype}{object} Date]\textcolor{stringliteral}{',}
+\textcolor{stringliteral}{      errorClass = '}[\textcolor{keywordtype}{object} Error]\textcolor{stringliteral}{',}
+\textcolor{stringliteral}{      funcClass = '}[\textcolor{keywordtype}{object} Function]\textcolor{stringliteral}{',}
+\textcolor{stringliteral}{      numberClass = '}[\textcolor{keywordtype}{object} Number]\textcolor{stringliteral}{',}
+\textcolor{stringliteral}{      objectClass = '}[\textcolor{keywordtype}{object} Object]\textcolor{stringliteral}{',}
+\textcolor{stringliteral}{      regexpClass = '}[\textcolor{keywordtype}{object} RegExp]\textcolor{stringliteral}{',}
+\textcolor{stringliteral}{      stringClass = '}[\textcolor{keywordtype}{object} String]\textcolor{stringliteral}{';}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  var cloneableClasses = \{\};}
+\textcolor{stringliteral}{  cloneableClasses[funcClass] = false;}
+\textcolor{stringliteral}{  cloneableClasses[argsClass] = cloneableClasses[arrayClass] =}
+\textcolor{stringliteral}{  cloneableClasses[boolClass] = cloneableClasses[dateClass] =}
+\textcolor{stringliteral}{  cloneableClasses[numberClass] = cloneableClasses[objectClass] =}
+\textcolor{stringliteral}{  cloneableClasses[regexpClass] = cloneableClasses[stringClass] = true;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  var debounceOptions = \{}
+\textcolor{stringliteral}{    '}leading\textcolor{stringliteral}{': false,}
+\textcolor{stringliteral}{    '}maxWait\textcolor{stringliteral}{': 0,}
+\textcolor{stringliteral}{    '}trailing\textcolor{stringliteral}{': false}
+\textcolor{stringliteral}{  \};}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  var descriptor = \{}
+\textcolor{stringliteral}{    '}configurable\textcolor{stringliteral}{': false,}
+\textcolor{stringliteral}{    '}enumerable\textcolor{stringliteral}{': false,}
+\textcolor{stringliteral}{    '}value\textcolor{stringliteral}{': null,}
+\textcolor{stringliteral}{    '}writable\textcolor{stringliteral}{': false}
+\textcolor{stringliteral}{  \};}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  var iteratorData = \{}
+\textcolor{stringliteral}{    '}args\textcolor{stringliteral}{': '}\textcolor{stringliteral}{',}
+\textcolor{stringliteral}{    '}array\textcolor{stringliteral}{': null,}
+\textcolor{stringliteral}{    '}bottom\textcolor{stringliteral}{': '}\textcolor{stringliteral}{',}
+\textcolor{stringliteral}{    '}firstArg\textcolor{stringliteral}{': '}\textcolor{stringliteral}{',}
+\textcolor{stringliteral}{    '}init\textcolor{stringliteral}{': '}\textcolor{stringliteral}{',}
+\textcolor{stringliteral}{    '}keys\textcolor{stringliteral}{': null,}
+\textcolor{stringliteral}{    '}loop\textcolor{stringliteral}{': '}\textcolor{stringliteral}{',}
+\textcolor{stringliteral}{    '}shadowedProps\textcolor{stringliteral}{': null,}
+\textcolor{stringliteral}{    '}support\textcolor{stringliteral}{': null,}
+\textcolor{stringliteral}{    '}top\textcolor{stringliteral}{': '}\textcolor{stringliteral}{',}
+\textcolor{stringliteral}{    '}useHas\textcolor{stringliteral}{': false}
+\textcolor{stringliteral}{  \};}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  var objectTypes = \{}
+\textcolor{stringliteral}{    '}\textcolor{keywordtype}{boolean}\textcolor{stringliteral}{': false,}
+\textcolor{stringliteral}{    '}\textcolor{keyword}{function}\textcolor{stringliteral}{': true,}
+\textcolor{stringliteral}{    '}\textcolor{keywordtype}{object}\textcolor{stringliteral}{': true,}
+\textcolor{stringliteral}{    '}number\textcolor{stringliteral}{': false,}
+\textcolor{stringliteral}{    '}\textcolor{keywordtype}{string}\textcolor{stringliteral}{': false,}
+\textcolor{stringliteral}{    '}undefined\textcolor{stringliteral}{': false}
+\textcolor{stringliteral}{  \};}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  var stringEscapes = \{}
+\textcolor{stringliteral}{    '}\(\backslash\)\(\backslash\)\textcolor{stringliteral}{': '}\(\backslash\)\(\backslash\)\textcolor{stringliteral}{',}
+\textcolor{stringliteral}{    "'}\textcolor{stringliteral}{": "}\textcolor{stringliteral}{'",}
+\textcolor{stringliteral}{    '}\(\backslash\)n\textcolor{stringliteral}{': '}n\textcolor{stringliteral}{',}
+\textcolor{stringliteral}{    '}\(\backslash\)r\textcolor{stringliteral}{': '}r\textcolor{stringliteral}{',}
+\textcolor{stringliteral}{    '}\(\backslash\)t\textcolor{stringliteral}{': '}t\textcolor{stringliteral}{',}
+\textcolor{stringliteral}{    '}\(\backslash\)u2028\textcolor{stringliteral}{': '}u2028\textcolor{stringliteral}{',}
+\textcolor{stringliteral}{    '}\(\backslash\)u2029\textcolor{stringliteral}{': '}u2029\textcolor{stringliteral}{'}
+\textcolor{stringliteral}{  \};}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  var root = (objectTypes[typeof window] && window) || this;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  var freeExports = objectTypes[typeof exports] && exports && !exports.nodeType && exports;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  var freeModule = objectTypes[typeof module] && module && !module.nodeType && module;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  var moduleExports = freeModule && freeModule.exports === freeExports && freeExports;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  var freeGlobal = objectTypes[typeof global] && global;}
+\textcolor{stringliteral}{  if (freeGlobal && (freeGlobal.global === freeGlobal || freeGlobal.window === freeGlobal)) \{}
+\textcolor{stringliteral}{    root = freeGlobal;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  /*--------------------------------------------------------------------------*/}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function baseIndexOf(array, value, fromIndex) \{}
+\textcolor{stringliteral}{    var index = (fromIndex || 0) - 1,}
+\textcolor{stringliteral}{        length = array ? array.length : 0;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    while (++index < length) \{}
+\textcolor{stringliteral}{      if (array[index] === value) \{}
+\textcolor{stringliteral}{        return index;}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    return -1;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function cacheIndexOf(cache, value) \{}
+\textcolor{stringliteral}{    var type = typeof value;}
+\textcolor{stringliteral}{    cache = cache.cache;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    if (type == '}\textcolor{keywordtype}{boolean}\textcolor{stringliteral}{' || value == null) \{}
+\textcolor{stringliteral}{      return cache[value] ? 0 : -1;}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    if (type != '}number\textcolor{stringliteral}{' && type != '}\textcolor{keywordtype}{string}\textcolor{stringliteral}{') \{}
+\textcolor{stringliteral}{      type = '}\textcolor{keywordtype}{object}\textcolor{stringliteral}{';}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    var key = type == '}number\textcolor{stringliteral}{' ? value : keyPrefix + value;}
+\textcolor{stringliteral}{    cache = (cache = cache[type]) && cache[key];}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    return type == '}\textcolor{keywordtype}{object}\textcolor{stringliteral}{'}
+\textcolor{stringliteral}{      ? (cache && baseIndexOf(cache, value) > -1 ? 0 : -1)}
+\textcolor{stringliteral}{      : (cache ? 0 : -1);}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function cachePush(value) \{}
+\textcolor{stringliteral}{    var cache = this.cache,}
+\textcolor{stringliteral}{        type = typeof value;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    if (type == '}\textcolor{keywordtype}{boolean}\textcolor{stringliteral}{' || value == null) \{}
+\textcolor{stringliteral}{      cache[value] = true;}
+\textcolor{stringliteral}{    \} else \{}
+\textcolor{stringliteral}{      if (type != '}number\textcolor{stringliteral}{' && type != '}\textcolor{keywordtype}{string}\textcolor{stringliteral}{') \{}
+\textcolor{stringliteral}{        type = '}\textcolor{keywordtype}{object}\textcolor{stringliteral}{';}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{      var key = type == '}number\textcolor{stringliteral}{' ? value : keyPrefix + value,}
+\textcolor{stringliteral}{          typeCache = cache[type] || (cache[type] = \{\});}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{      if (type == '}\textcolor{keywordtype}{object}\textcolor{stringliteral}{') \{}
+\textcolor{stringliteral}{        (typeCache[key] || (typeCache[key] = [])).push(value);}
+\textcolor{stringliteral}{      \} else \{}
+\textcolor{stringliteral}{        typeCache[key] = true;}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function charAtCallback(value) \{}
+\textcolor{stringliteral}{    return value.charCodeAt(0);}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function compareAscending(a, b) \{}
+\textcolor{stringliteral}{    var ac = a.criteria,}
+\textcolor{stringliteral}{        bc = b.criteria,}
+\textcolor{stringliteral}{        index = -1,}
+\textcolor{stringliteral}{        length = ac.length;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    while (++index < length) \{}
+\textcolor{stringliteral}{      var value = ac[index],}
+\textcolor{stringliteral}{          other = bc[index];}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{      if (value !== other) \{}
+\textcolor{stringliteral}{        if (value > other || typeof value == '}undefined\textcolor{stringliteral}{') \{}
+\textcolor{stringliteral}{          return 1;}
+\textcolor{stringliteral}{        \}}
+\textcolor{stringliteral}{        if (value < other || typeof other == '}undefined\textcolor{stringliteral}{') \{}
+\textcolor{stringliteral}{          return -1;}
+\textcolor{stringliteral}{        \}}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    // Fixes an `Array#sort` bug in the JS engine embedded in Adobe applications}
+\textcolor{stringliteral}{    // that causes it, under certain circumstances, to return the same value for}
+\textcolor{stringliteral}{    // `a` and `b`. See https://github.com/jashkenas/underscore/pull/1247}
+\textcolor{stringliteral}{    //}
+\textcolor{stringliteral}{    // This also ensures a stable sort in V8 and other engines.}
+\textcolor{stringliteral}{    // See http://code.google.com/p/v8/issues/detail?id=90}
+\textcolor{stringliteral}{    return a.index - b.index;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function createCache(array) \{}
+\textcolor{stringliteral}{    var index = -1,}
+\textcolor{stringliteral}{        length = array.length,}
+\textcolor{stringliteral}{        first = array[0],}
+\textcolor{stringliteral}{        mid = array[(length / 2) | 0],}
+\textcolor{stringliteral}{        last = array[length - 1];}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    if (first && typeof first == '}\textcolor{keywordtype}{object}\textcolor{stringliteral}{' &&}
+\textcolor{stringliteral}{        mid && typeof mid == '}\textcolor{keywordtype}{object}\textcolor{stringliteral}{' && last && typeof last == '}\textcolor{keywordtype}{object}\textcolor{stringliteral}{') \{}
+\textcolor{stringliteral}{      return false;}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    var cache = getObject();}
+\textcolor{stringliteral}{    cache['}\textcolor{keyword}{false}\textcolor{stringliteral}{'] = cache['}null\textcolor{stringliteral}{'] = cache['}\textcolor{keyword}{true}\textcolor{stringliteral}{'] = cache['}undefined\textcolor{stringliteral}{'] = false;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    var result = getObject();}
+\textcolor{stringliteral}{    result.array = array;}
+\textcolor{stringliteral}{    result.cache = cache;}
+\textcolor{stringliteral}{    result.push = cachePush;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    while (++index < length) \{}
+\textcolor{stringliteral}{      result.push(array[index]);}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    return result;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function escapeStringChar(match) \{}
+\textcolor{stringliteral}{    return '}\(\backslash\)\(\backslash\)\textcolor{stringliteral}{' + stringEscapes[match];}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function getArray() \{}
+\textcolor{stringliteral}{    return arrayPool.pop() || [];}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function getObject() \{}
+\textcolor{stringliteral}{    return objectPool.pop() || \{}
+\textcolor{stringliteral}{      '}array\textcolor{stringliteral}{': null,}
+\textcolor{stringliteral}{      '}cache\textcolor{stringliteral}{': null,}
+\textcolor{stringliteral}{      '}criteria\textcolor{stringliteral}{': null,}
+\textcolor{stringliteral}{      '}\textcolor{keyword}{false}\textcolor{stringliteral}{': false,}
+\textcolor{stringliteral}{      '}index\textcolor{stringliteral}{': 0,}
+\textcolor{stringliteral}{      '}null\textcolor{stringliteral}{': false,}
+\textcolor{stringliteral}{      '}number\textcolor{stringliteral}{': null,}
+\textcolor{stringliteral}{      '}\textcolor{keywordtype}{object}\textcolor{stringliteral}{': null,}
+\textcolor{stringliteral}{      '}push\textcolor{stringliteral}{': null,}
+\textcolor{stringliteral}{      '}\textcolor{keywordtype}{string}\textcolor{stringliteral}{': null,}
+\textcolor{stringliteral}{      '}\textcolor{keyword}{true}\textcolor{stringliteral}{': false,}
+\textcolor{stringliteral}{      '}undefined\textcolor{stringliteral}{': false,}
+\textcolor{stringliteral}{      '}value\textcolor{stringliteral}{': null}
+\textcolor{stringliteral}{    \};}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function isNode(value) \{}
+\textcolor{stringliteral}{    // IE < 9 presents DOM nodes as `Object` objects except they have `toString`}
+\textcolor{stringliteral}{    // methods that are `typeof` "string" and still can coerce nodes to strings}
+\textcolor{stringliteral}{    return typeof value.toString != '}\textcolor{keyword}{function}\textcolor{stringliteral}{' && typeof (value + '}\textcolor{stringliteral}{') == '}\textcolor{keywordtype}{string}\textcolor{stringliteral}{';}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function releaseArray(array) \{}
+\textcolor{stringliteral}{    array.length = 0;}
+\textcolor{stringliteral}{    if (arrayPool.length < maxPoolSize) \{}
+\textcolor{stringliteral}{      arrayPool.push(array);}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function releaseObject(object) \{}
+\textcolor{stringliteral}{    var cache = object.cache;}
+\textcolor{stringliteral}{    if (cache) \{}
+\textcolor{stringliteral}{      releaseObject(cache);}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    object.array = object.cache = object.criteria = object.object = object.number = object.string =
+       object.value = null;}
+\textcolor{stringliteral}{    if (objectPool.length < maxPoolSize) \{}
+\textcolor{stringliteral}{      objectPool.push(object);}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function slice(array, start, end) \{}
+\textcolor{stringliteral}{    start || (start = 0);}
+\textcolor{stringliteral}{    if (typeof end == '}undefined\textcolor{stringliteral}{') \{}
+\textcolor{stringliteral}{      end = array ? array.length : 0;}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    var index = -1,}
+\textcolor{stringliteral}{        length = end - start || 0,}
+\textcolor{stringliteral}{        result = Array(length < 0 ? 0 : length);}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    while (++index < length) \{}
+\textcolor{stringliteral}{      result[index] = array[start + index];}
+\textcolor{stringliteral}{    \}}
+\textcolor{stringliteral}{    return result;}
+\textcolor{stringliteral}{  \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  /*--------------------------------------------------------------------------*/}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{  function runInContext(context) \{}
+\textcolor{stringliteral}{    // Avoid issues with some ES3 environments that attempt to use values, named}
+\textcolor{stringliteral}{    // after built-in constructors like `Object`, for the creation of literals.}
+\textcolor{stringliteral}{    // ES5 clears this up by stating that literals must use built-in constructors.}
+\textcolor{stringliteral}{    // See http://es5.github.io/#x11.1.5.}
+\textcolor{stringliteral}{    context = context ? \_.defaults(root.Object(), context, \_.pick(root, contextProps)) : root;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    var Array = context.Array,}
+\textcolor{stringliteral}{        Boolean = context.Boolean,}
+\textcolor{stringliteral}{        Date = context.Date,}
+\textcolor{stringliteral}{        Error = context.Error,}
+\textcolor{stringliteral}{        Function = context.Function,}
+\textcolor{stringliteral}{        Math = context.Math,}
+\textcolor{stringliteral}{        Number = context.Number,}
+\textcolor{stringliteral}{        Object = context.Object,}
+\textcolor{stringliteral}{        RegExp = context.RegExp,}
+\textcolor{stringliteral}{        String = context.String,}
+\textcolor{stringliteral}{        TypeError = context.TypeError;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    var arrayRef = [];}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    var errorProto = Error.prototype,}
+\textcolor{stringliteral}{        objectProto = Object.prototype,}
+\textcolor{stringliteral}{        stringProto = String.prototype;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    var oldDash = context.\_;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    var toString = objectProto.toString;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    var reNative = RegExp('}^\textcolor{stringliteral}{' +}
+\textcolor{stringliteral}{      String(toString)}
+\textcolor{stringliteral}{        .replace(/[.*+?^$\{\}()|[\(\backslash\)]\(\backslash\)\(\backslash\)]/g, '}\(\backslash\)\(\backslash\)$&\textcolor{stringliteral}{')}
+\textcolor{stringliteral}{        .replace(/toString| for [^\(\backslash\)]]+/g, '}.*?\textcolor{stringliteral}{') + '}$\textcolor{stringliteral}{'}
+\textcolor{stringliteral}{    );}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    var ceil = Math.ceil,}
+\textcolor{stringliteral}{        clearTimeout = context.clearTimeout,}
+\textcolor{stringliteral}{        floor = Math.floor,}
+\textcolor{stringliteral}{        fnToString = Function.prototype.toString,}
+\textcolor{stringliteral}{        getPrototypeOf = isNative(getPrototypeOf = Object.getPrototypeOf) && getPrototypeOf,}
+\textcolor{stringliteral}{        hasOwnProperty = objectProto.hasOwnProperty,}
+\textcolor{stringliteral}{        push = arrayRef.push,}
+\textcolor{stringliteral}{        propertyIsEnumerable = objectProto.propertyIsEnumerable,}
+\textcolor{stringliteral}{        setTimeout = context.setTimeout,}
+\textcolor{stringliteral}{        splice = arrayRef.splice,}
+\textcolor{stringliteral}{        unshift = arrayRef.unshift;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    var defineProperty = (function() \{}
+\textcolor{stringliteral}{      // IE 8 only accepts DOM elements}
+\textcolor{stringliteral}{      try \{}
+\textcolor{stringliteral}{        var o = \{\},}
+\textcolor{stringliteral}{            func = isNative(func = Object.defineProperty) && func,}
+\textcolor{stringliteral}{            result = func(o, o, o) && func;}
+\textcolor{stringliteral}{      \} catch(e) \{ \}}
+\textcolor{stringliteral}{      return result;}
+\textcolor{stringliteral}{    \}());}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    /* Native method shortcuts for methods with the same name as other `lodash` methods */}
+\textcolor{stringliteral}{    var nativeCreate = isNative(nativeCreate = Object.create) && nativeCreate,}
+\textcolor{stringliteral}{        nativeIsArray = isNative(nativeIsArray = Array.isArray) && nativeIsArray,}
+\textcolor{stringliteral}{        nativeIsFinite = context.isFinite,}
+\textcolor{stringliteral}{        nativeIsNaN = context.isNaN,}
+\textcolor{stringliteral}{        nativeKeys = isNative(nativeKeys = Object.keys) && nativeKeys,}
+\textcolor{stringliteral}{        nativeMax = Math.max,}
+\textcolor{stringliteral}{        nativeMin = Math.min,}
+\textcolor{stringliteral}{        nativeParseInt = context.parseInt,}
+\textcolor{stringliteral}{        nativeRandom = Math.random;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    var ctorByClass = \{\};}
+\textcolor{stringliteral}{    ctorByClass[arrayClass] = Array;}
+\textcolor{stringliteral}{    ctorByClass[boolClass] = Boolean;}
+\textcolor{stringliteral}{    ctorByClass[dateClass] = Date;}
+\textcolor{stringliteral}{    ctorByClass[funcClass] = Function;}
+\textcolor{stringliteral}{    ctorByClass[objectClass] = Object;}
+\textcolor{stringliteral}{    ctorByClass[numberClass] = Number;}
+\textcolor{stringliteral}{    ctorByClass[regexpClass] = RegExp;}
+\textcolor{stringliteral}{    ctorByClass[stringClass] = String;}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    var nonEnumProps = \{\};}
+\textcolor{stringliteral}{    nonEnumProps[arrayClass] = nonEnumProps[dateClass] = nonEnumProps[numberClass] = \{ '}constructor\textcolor{stringliteral}{': true,
+       '}toLocaleString\textcolor{stringliteral}{': true, '}toString\textcolor{stringliteral}{': true, '}valueOf\textcolor{stringliteral}{': true \};}
+\textcolor{stringliteral}{    nonEnumProps[boolClass] = nonEnumProps[stringClass] = \{ '}constructor\textcolor{stringliteral}{': true, '}toString\textcolor{stringliteral}{': true, '}valueOf\textcolor{stringliteral}{
+      ': true \};}
+\textcolor{stringliteral}{    nonEnumProps[errorClass] = nonEnumProps[funcClass] = nonEnumProps[regexpClass] = \{ '}constructor\textcolor{stringliteral}{': true,
+       '}toString\textcolor{stringliteral}{': true \};}
+\textcolor{stringliteral}{    nonEnumProps[objectClass] = \{ '}constructor\textcolor{stringliteral}{': true \};}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    (function() \{}
+\textcolor{stringliteral}{      var length = shadowedProps.length;}
+\textcolor{stringliteral}{      while (length--) \{}
+\textcolor{stringliteral}{        var key = shadowedProps[length];}
+\textcolor{stringliteral}{        for (var className in nonEnumProps) \{}
+\textcolor{stringliteral}{          if (hasOwnProperty.call(nonEnumProps, className) && !hasOwnProperty.call(nonEnumProps[className],
+       key)) \{}
+\textcolor{stringliteral}{            nonEnumProps[className][key] = false;}
+\textcolor{stringliteral}{          \}}
+\textcolor{stringliteral}{        \}}
+\textcolor{stringliteral}{      \}}
+\textcolor{stringliteral}{    \}());}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    /*--------------------------------------------------------------------------*/}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    function lodash(value) \{}
+\textcolor{stringliteral}{      // don'}t wrap \textcolor{keywordflow}{if} already wrapped, even \textcolor{keywordflow}{if} wrapped by a different `lodash` constructor
+      \textcolor{keywordflow}{return} (value && typeof value == \textcolor{stringliteral}{'object'} && !isArray(value) && hasOwnProperty.call(value, \textcolor{stringliteral}{'
+      \_\_wrapped\_\_'}))
+       ? value
+       : \textcolor{keyword}{new} lodashWrapper(value);
+    \}
+
+    \textcolor{keyword}{function} lodashWrapper(value, chainAll) \{
+      this.\_\_chain\_\_ = !!chainAll;
+      this.\_\_wrapped\_\_ = value;
+    \}
+    \textcolor{comment}{// ensure `new lodashWrapper` is an instance of `lodash`}
+    lodashWrapper.prototype = lodash.prototype;
+
+    var support = lodash.support = \{\};
+
+    (\textcolor{keyword}{function}() \{
+      var ctor = \textcolor{keyword}{function}() \{ this.x = 1; \},
+          \textcolor{keywordtype}{object} = \{ \textcolor{charliteral}{'0'}: 1, \textcolor{stringliteral}{'length'}: 1 \},
+          props = [];
+
+      ctor.prototype = \{ \textcolor{stringliteral}{'valueOf'}: 1, \textcolor{charliteral}{'y'}: 1 \};
+      \textcolor{keywordflow}{for} (var key in \textcolor{keyword}{new} ctor) \{ props.push(key); \}
+      \textcolor{keywordflow}{for} (key in arguments) \{ \}
+
+      support.argsClass = toString.call(arguments) == argsClass;
+
+      support.argsObject = arguments.constructor == Object && !(arguments instanceof Array);
+
+      support.enumErrorProps = propertyIsEnumerable.call(errorProto, \textcolor{stringliteral}{'message'}) || propertyIsEnumerable.
+      call(errorProto, \textcolor{stringliteral}{'name'});
+
+      support.enumPrototypes = propertyIsEnumerable.call(ctor, \textcolor{stringliteral}{'prototype'});
+
+      support.funcDecomp = !isNative(context.WinRTError) && reThis.test(runInContext);
+
+      support.funcNames = typeof Function.name == \textcolor{stringliteral}{'string'};
+
+      support.nonEnumArgs = key != 0;
+
+      support.nonEnumShadows = !/valueOf/.test(props);
+
+      support.ownLast = props[0] != \textcolor{charliteral}{'x'};
+
+      support.spliceObjects = (arrayRef.splice.call(\textcolor{keywordtype}{object}, 0, 1), !\textcolor{keywordtype}{object}[0]);
+
+      support.unindexedChars = (\textcolor{charliteral}{'x'}[0] + Object(\textcolor{charliteral}{'x'})[0]) != \textcolor{stringliteral}{'xx'};
+
+      \textcolor{keywordflow}{try} \{
+        support.nodeClass = !(toString.call(document) == objectClass && !(\{ \textcolor{stringliteral}{'toString'}: 0 \} + \textcolor{stringliteral}{''}));
+      \} \textcolor{keywordflow}{catch}(e) \{
+        support.nodeClass = \textcolor{keyword}{true};
+      \}
+    \}(1));
+
+    lodash.templateSettings = \{
+
+      \textcolor{stringliteral}{'escape'}: /<%-([\(\backslash\)s\(\backslash\)S]+?)%>/g,
+
+      \textcolor{stringliteral}{'evaluate'}: /<%([\(\backslash\)s\(\backslash\)S]+?)%>/g,
+
+      \textcolor{stringliteral}{'interpolate'}: reInterpolate,
+
+      \textcolor{stringliteral}{'variable'}: \textcolor{stringliteral}{''},
+
+      \textcolor{stringliteral}{'imports'}: \{
+
+        \textcolor{charliteral}{'\_'}: lodash
+      \}
+    \};
+
+    \textcolor{comment}{/*--------------------------------------------------------------------------*/}
+
+    var iteratorTemplate = \textcolor{keyword}{function}(obj) \{
+
+      var \_\_p = \textcolor{stringliteral}{'var index, iterable = '} +
+      (obj.firstArg) +
+      \textcolor{stringliteral}{', result = '} +
+      (obj.init) +
+      \textcolor{stringliteral}{';\(\backslash\)nif (!iterable) return result;\(\backslash\)n'} +
+      (obj.top) +
+      \textcolor{charliteral}{';'};
+       \textcolor{keywordflow}{if} (obj.array) \{
+      \_\_p += \textcolor{stringliteral}{'\(\backslash\)nvar length = iterable.length; index = -1;\(\backslash\)nif ('} +
+      (obj.array) +
+      \textcolor{stringliteral}{') \{  '};
+       \textcolor{keywordflow}{if} (support.unindexedChars) \{
+      \_\_p += \textcolor{stringliteral}{'\(\backslash\)n  if (isString(iterable)) \{\(\backslash\)n    iterable = iterable.split(\(\backslash\)'\(\backslash\)')\(\backslash\)n  \}  '};
+       \}
+      \_\_p += \textcolor{stringliteral}{'\(\backslash\)n  while (++index < length) \{\(\backslash\)n    '} +
+      (obj.loop) +
+      \textcolor{stringliteral}{';\(\backslash\)n  \}\(\backslash\)n\}\(\backslash\)nelse \{  '};
+       \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (support.nonEnumArgs) \{
+      \_\_p += \textcolor{stringliteral}{'\(\backslash\)n  var length = iterable.length; index = -1;\(\backslash\)n  if (length && isArguments(iterable)) \{\(\backslash\)n   
+       while (++index < length) \{\(\backslash\)n      index += \(\backslash\)'\(\backslash\)';\(\backslash\)n      '} +
+      (obj.loop) +
+      \textcolor{stringliteral}{';\(\backslash\)n    \}\(\backslash\)n  \} else \{  '};
+       \}
+
+       \textcolor{keywordflow}{if} (support.enumPrototypes) \{
+      \_\_p += \textcolor{stringliteral}{'\(\backslash\)n  var skipProto = typeof iterable == \(\backslash\)'function\(\backslash\)';\(\backslash\)n  '};
+       \}
+
+       \textcolor{keywordflow}{if} (support.enumErrorProps) \{
+      \_\_p += \textcolor{stringliteral}{'\(\backslash\)n  var skipErrorProps = iterable === errorProto || iterable instanceof Error;\(\backslash\)n  '};
+       \}
+
+          var conditions = [];    \textcolor{keywordflow}{if} (support.enumPrototypes) \{ conditions.push(\textcolor{stringliteral}{'!(skipProto && index ==
+       "prototype")'}); \}    \textcolor{keywordflow}{if} (support.enumErrorProps)  \{ conditions.push(\textcolor{stringliteral}{'!(skipErrorProps && (index == "message"
+       || index == "name"))'}); \}
+
+       \textcolor{keywordflow}{if} (obj.useHas && obj.keys) \{
+      \_\_p += \textcolor{stringliteral}{'\(\backslash\)n  var ownIndex = -1,\(\backslash\)n      ownProps = objectTypes[typeof iterable] && keys(iterable),\(\backslash\)n   
+         length = ownProps ? ownProps.length : 0;\(\backslash\)n\(\backslash\)n  while (++ownIndex < length) \{\(\backslash\)n    index =
+       ownProps[ownIndex];\(\backslash\)n'};
+          \textcolor{keywordflow}{if} (conditions.length) \{
+      \_\_p += \textcolor{stringliteral}{'    if ('} +
+      (conditions.join(\textcolor{stringliteral}{' && '})) +
+      \textcolor{stringliteral}{') \{\(\backslash\)n  '};
+       \}
+      \_\_p +=
+      (obj.loop) +
+      \textcolor{stringliteral}{';    '};
+       \textcolor{keywordflow}{if} (conditions.length) \{
+      \_\_p += \textcolor{stringliteral}{'\(\backslash\)n    \}'};
+       \}
+      \_\_p += \textcolor{stringliteral}{'\(\backslash\)n  \}  '};
+       \} \textcolor{keywordflow}{else} \{
+      \_\_p += \textcolor{stringliteral}{'\(\backslash\)n  for (index in iterable) \{\(\backslash\)n'};
+          \textcolor{keywordflow}{if} (obj.useHas) \{ conditions.push(\textcolor{stringliteral}{"hasOwnProperty.call(iterable, index)"}); \}    \textcolor{keywordflow}{if} (conditions.
+      length) \{
+      \_\_p += \textcolor{stringliteral}{'    if ('} +
+      (conditions.join(\textcolor{stringliteral}{' && '})) +
+      \textcolor{stringliteral}{') \{\(\backslash\)n  '};
+       \}
+      \_\_p +=
+      (obj.loop) +
+      \textcolor{stringliteral}{';    '};
+       \textcolor{keywordflow}{if} (conditions.length) \{
+      \_\_p += \textcolor{stringliteral}{'\(\backslash\)n    \}'};
+       \}
+      \_\_p += \textcolor{stringliteral}{'\(\backslash\)n  \}    '};
+       \textcolor{keywordflow}{if} (support.nonEnumShadows) \{
+      \_\_p += \textcolor{stringliteral}{'\(\backslash\)n\(\backslash\)n  if (iterable !== objectProto) \{\(\backslash\)n    var ctor = iterable.constructor,\(\backslash\)n        isProto
+       = iterable === (ctor && ctor.prototype),\(\backslash\)n        className = iterable === stringProto ? stringClass :
+       iterable === errorProto ? errorClass : toString.call(iterable),\(\backslash\)n        nonEnum = nonEnumProps[className];\(\backslash\)n    
+        '};
+       \textcolor{keywordflow}{for} (k = 0; k < 7; k++) \{
+      \_\_p += \textcolor{stringliteral}{'\(\backslash\)n    index = \(\backslash\)''} +
+      (obj.shadowedProps[k]) +
+      \textcolor{charliteral}{'\(\backslash\)'};\(\backslash\)n    \textcolor{keywordflow}{if} ((!(isProto && nonEnum[index]) && hasOwnProperty.call(iterable, index))\textcolor{stringliteral}{';}
+\textcolor{stringliteral}{              if (!obj.useHas) \{}
+\textcolor{stringliteral}{      \_\_p += '} || (!nonEnum[index] && iterable[index] !== objectProto[index])\textcolor{stringliteral}{';}
+\textcolor{stringliteral}{       \}}
+\textcolor{stringliteral}{      \_\_p += '}) \{\(\backslash\)n      \textcolor{stringliteral}{' +}
+\textcolor{stringliteral}{      (obj.loop) +}
+\textcolor{stringliteral}{      '};\(\backslash\)n    \}      \textcolor{stringliteral}{';}
+\textcolor{stringliteral}{       \}}
+\textcolor{stringliteral}{      \_\_p += '}\(\backslash\)n  \}    \textcolor{stringliteral}{';}
+\textcolor{stringliteral}{       \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{       \}}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{       if (obj.array || support.nonEnumArgs) \{}
+\textcolor{stringliteral}{      \_\_p += '}\(\backslash\)n\}\textcolor{stringliteral}{';}
+\textcolor{stringliteral}{       \}}
+\textcolor{stringliteral}{      \_\_p +=}
+\textcolor{stringliteral}{      (obj.bottom) +}
+\textcolor{stringliteral}{      '};\(\backslash\)nreturn result\textcolor{stringliteral}{';}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{      return \_\_p}
+\textcolor{stringliteral}{    \};}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    /*--------------------------------------------------------------------------*/}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{    function baseBind(bindData) \{}
+\textcolor{stringliteral}{      var func = bindData[0],}
+\textcolor{stringliteral}{          partialArgs = bindData[2],}
+\textcolor{stringliteral}{          thisArg = bindData[4];}
+\textcolor{stringliteral}{}
+\textcolor{stringliteral}{      function bound() \{}
+\textcolor{stringliteral}{        // `Function#bind` spec}
+\textcolor{stringliteral}{        // http://es5.github.io/#x15.3.4.5}
+\textcolor{stringliteral}{        if (partialArgs) \{}
+\textcolor{stringliteral}{          // avoid `arguments` object deoptimizations by using `slice` instead}
+\textcolor{stringliteral}{          // of `Array.prototype.slice.call` and not assigning `arguments` to a}
+\textcolor{stringliteral}{          // variable as a ternary expression}
+\textcolor{stringliteral}{          var args = slice(partialArgs);}
+\textcolor{stringliteral}{          push.apply(args, arguments);}
+\textcolor{stringliteral}{        \}}
+\textcolor{stringliteral}{        // mimic the constructor'}s `\textcolor{keywordflow}{return}` behavior
+        \textcolor{comment}{// http://es5.github.io/#x13.2.2}
+        \textcolor{keywordflow}{if} (\textcolor{keyword}{this} instanceof bound) \{
+          \textcolor{comment}{// ensure `new bound` is an instance of `func`}
+          var thisBinding = baseCreate(func.prototype),
+              result = func.apply(thisBinding, args || arguments);
+          \textcolor{keywordflow}{return} isObject(result) ? result : thisBinding;
+        \}
+        \textcolor{keywordflow}{return} func.apply(thisArg, args || arguments);
+      \}
+      setBindData(bound, bindData);
+      \textcolor{keywordflow}{return} bound;
+    \}
+
+    \textcolor{keyword}{function} baseClone(value, isDeep, callback, stackA, stackB) \{
+      \textcolor{keywordflow}{if} (callback) \{
+        var result = callback(value);
+        \textcolor{keywordflow}{if} (typeof result != \textcolor{stringliteral}{'undefined'}) \{
+          \textcolor{keywordflow}{return} result;
+        \}
+      \}
+      \textcolor{comment}{// inspect [[Class]]}
+      var isObj = isObject(value);
+      \textcolor{keywordflow}{if} (isObj) \{
+        var className = toString.call(value);
+        \textcolor{keywordflow}{if} (!cloneableClasses[className] || (!support.nodeClass && isNode(value))) \{
+          \textcolor{keywordflow}{return} value;
+        \}
+        var ctor = ctorByClass[className];
+        \textcolor{keywordflow}{switch} (className) \{
+          \textcolor{keywordflow}{case} boolClass:
+          \textcolor{keywordflow}{case} dateClass:
+            \textcolor{keywordflow}{return} \textcolor{keyword}{new} ctor(+value);
+
+          \textcolor{keywordflow}{case} numberClass:
+          \textcolor{keywordflow}{case} stringClass:
+            \textcolor{keywordflow}{return} \textcolor{keyword}{new} ctor(value);
+
+          \textcolor{keywordflow}{case} regexpClass:
+            result = ctor(value.source, reFlags.exec(value));
+            result.lastIndex = value.lastIndex;
+            \textcolor{keywordflow}{return} result;
+        \}
+      \} \textcolor{keywordflow}{else} \{
+        \textcolor{keywordflow}{return} value;
+      \}
+      var isArr = isArray(value);
+      \textcolor{keywordflow}{if} (isDeep) \{
+        \textcolor{comment}{// check for circular references and return corresponding clone}
+        var initedStack = !stackA;
+        stackA || (stackA = getArray());
+        stackB || (stackB = getArray());
+
+        var length = stackA.length;
+        \textcolor{keywordflow}{while} (length--) \{
+          \textcolor{keywordflow}{if} (stackA[length] == value) \{
+            \textcolor{keywordflow}{return} stackB[length];
+          \}
+        \}
+        result = isArr ? ctor(value.length) : \{\};
+      \}
+      \textcolor{keywordflow}{else} \{
+        result = isArr ? slice(value) : assign(\{\}, value);
+      \}
+      \textcolor{comment}{// add array properties assigned by `RegExp#exec`}
+      \textcolor{keywordflow}{if} (isArr) \{
+        \textcolor{keywordflow}{if} (hasOwnProperty.call(value, \textcolor{stringliteral}{'index'})) \{
+          result.index = value.index;
+        \}
+        \textcolor{keywordflow}{if} (hasOwnProperty.call(value, \textcolor{stringliteral}{'input'})) \{
+          result.input = value.input;
+        \}
+      \}
+      \textcolor{comment}{// exit for shallow clone}
+      \textcolor{keywordflow}{if} (!isDeep) \{
+        \textcolor{keywordflow}{return} result;
+      \}
+      \textcolor{comment}{// add the source value to the stack of traversed objects}
+      \textcolor{comment}{// and associate it with its clone}
+      stackA.push(value);
+      stackB.push(result);
+
+      \textcolor{comment}{// recursively populate clone (susceptible to call stack limits)}
+      (isArr ? baseEach : forOwn)(value, \textcolor{keyword}{function}(objValue, key) \{
+        result[key] = baseClone(objValue, isDeep, callback, stackA, stackB);
+      \});
+
+      \textcolor{keywordflow}{if} (initedStack) \{
+        releaseArray(stackA);
+        releaseArray(stackB);
+      \}
+      \textcolor{keywordflow}{return} result;
+    \}
+
+    \textcolor{keyword}{function} baseCreate(prototype, properties) \{
+      \textcolor{keywordflow}{return} isObject(prototype) ? nativeCreate(prototype) : \{\};
+    \}
+    \textcolor{comment}{// fallback for browsers without `Object.create`}
+    \textcolor{keywordflow}{if} (!nativeCreate) \{
+      baseCreate = (\textcolor{keyword}{function}() \{
+        \textcolor{keyword}{function} Object() \{\}
+        \textcolor{keywordflow}{return} \textcolor{keyword}{function}(prototype) \{
+          \textcolor{keywordflow}{if} (isObject(prototype)) \{
+            Object.prototype = prototype;
+            var result = \textcolor{keyword}{new} Object;
+            Object.prototype = null;
+          \}
+          \textcolor{keywordflow}{return} result || context.Object();
+        \};
+      \}());
+    \}
+
+    \textcolor{keyword}{function} baseCreateCallback(func, thisArg, argCount) \{
+      \textcolor{keywordflow}{if} (typeof func != \textcolor{stringliteral}{'function'}) \{
+        \textcolor{keywordflow}{return} identity;
+      \}
+      \textcolor{comment}{// exit early for no `thisArg` or already bound by `Function#bind`}
+      \textcolor{keywordflow}{if} (typeof thisArg == \textcolor{stringliteral}{'undefined'} || !(\textcolor{stringliteral}{'prototype'} in func)) \{
+        \textcolor{keywordflow}{return} func;
+      \}
+      var bindData = func.\_\_bindData\_\_;
+      \textcolor{keywordflow}{if} (typeof bindData == \textcolor{stringliteral}{'undefined'}) \{
+        \textcolor{keywordflow}{if} (support.funcNames) \{
+          bindData = !func.name;
+        \}
+        bindData = bindData || !support.funcDecomp;
+        \textcolor{keywordflow}{if} (!bindData) \{
+          var source = fnToString.call(func);
+          \textcolor{keywordflow}{if} (!support.funcNames) \{
+            bindData = !reFuncName.test(source);
+          \}
+          \textcolor{keywordflow}{if} (!bindData) \{
+            \textcolor{comment}{// checks if `func` references the `this` keyword and stores the result}
+            bindData = reThis.test(source);
+            setBindData(func, bindData);
+          \}
+        \}
+      \}
+      \textcolor{comment}{// exit early if there are no `this` references or `func` is bound}
+      \textcolor{keywordflow}{if} (bindData === \textcolor{keyword}{false} || (bindData !== \textcolor{keyword}{true} && bindData[1] & 1)) \{
+        \textcolor{keywordflow}{return} func;
+      \}
+      \textcolor{keywordflow}{switch} (argCount) \{
+        \textcolor{keywordflow}{case} 1: \textcolor{keywordflow}{return} \textcolor{keyword}{function}(value) \{
+          \textcolor{keywordflow}{return} func.call(thisArg, value);
+        \};
+        \textcolor{keywordflow}{case} 2: \textcolor{keywordflow}{return} \textcolor{keyword}{function}(a, b) \{
+          \textcolor{keywordflow}{return} func.call(thisArg, a, b);
+        \};
+        \textcolor{keywordflow}{case} 3: \textcolor{keywordflow}{return} \textcolor{keyword}{function}(value, index, collection) \{
+          \textcolor{keywordflow}{return} func.call(thisArg, value, index, collection);
+        \};
+        \textcolor{keywordflow}{case} 4: \textcolor{keywordflow}{return} \textcolor{keyword}{function}(accumulator, value, index, collection) \{
+          \textcolor{keywordflow}{return} func.call(thisArg, accumulator, value, index, collection);
+        \};
+      \}
+      \textcolor{keywordflow}{return} bind(func, thisArg);
+    \}
+
+    \textcolor{keyword}{function} baseCreateWrapper(bindData) \{
+      var func = bindData[0],
+          bitmask = bindData[1],
+          partialArgs = bindData[2],
+          partialRightArgs = bindData[3],
+          thisArg = bindData[4],
+          arity = bindData[5];
+
+      var isBind = bitmask & 1,
+          isBindKey = bitmask & 2,
+          isCurry = bitmask & 4,
+          isCurryBound = bitmask & 8,
+          key = func;
+
+      \textcolor{keyword}{function} bound() \{
+        var thisBinding = isBind ? thisArg : \textcolor{keyword}{this};
+        \textcolor{keywordflow}{if} (partialArgs) \{
+          var args = slice(partialArgs);
+          push.apply(args, arguments);
+        \}
+        \textcolor{keywordflow}{if} (partialRightArgs || isCurry) \{
+          args || (args = slice(arguments));
+          \textcolor{keywordflow}{if} (partialRightArgs) \{
+            push.apply(args, partialRightArgs);
+          \}
+          \textcolor{keywordflow}{if} (isCurry && args.length < arity) \{
+            bitmask |= 16 & ~32;
+            \textcolor{keywordflow}{return} baseCreateWrapper([func, (isCurryBound ? bitmask : bitmask & ~3), args, null, thisArg, 
+      arity]);
+          \}
+        \}
+        args || (args = arguments);
+        \textcolor{keywordflow}{if} (isBindKey) \{
+          func = thisBinding[key];
+        \}
+        \textcolor{keywordflow}{if} (\textcolor{keyword}{this} instanceof bound) \{
+          thisBinding = baseCreate(func.prototype);
+          var result = func.apply(thisBinding, args);
+          \textcolor{keywordflow}{return} isObject(result) ? result : thisBinding;
+        \}
+        \textcolor{keywordflow}{return} func.apply(thisBinding, args);
+      \}
+      setBindData(bound, bindData);
+      \textcolor{keywordflow}{return} bound;
+    \}
+
+    \textcolor{keyword}{function} baseDifference(array, values) \{
+      var index = -1,
+          indexOf = getIndexOf(),
+          length = array ? array.length : 0,
+          isLarge = length >= largeArraySize && indexOf === baseIndexOf,
+          result = [];
+
+      \textcolor{keywordflow}{if} (isLarge) \{
+        var cache = createCache(values);
+        \textcolor{keywordflow}{if} (cache) \{
+          indexOf = cacheIndexOf;
+          values = cache;
+        \} \textcolor{keywordflow}{else} \{
+          isLarge = \textcolor{keyword}{false};
+        \}
+      \}
+      \textcolor{keywordflow}{while} (++index < length) \{
+        var value = array[index];
+        \textcolor{keywordflow}{if} (indexOf(values, value) < 0) \{
+          result.push(value);
+        \}
+      \}
+      \textcolor{keywordflow}{if} (isLarge) \{
+        releaseObject(values);
+      \}
+      \textcolor{keywordflow}{return} result;
+    \}
+
+    \textcolor{keyword}{function} baseFlatten(array, isShallow, isStrict, fromIndex) \{
+      var index = (fromIndex || 0) - 1,
+          length = array ? array.length : 0,
+          result = [];
+
+      while (++index < length) \{
+        var value = array[index];
+
+        \textcolor{keywordflow}{if} (value && typeof value == \textcolor{stringliteral}{'object'} && typeof value.length == \textcolor{stringliteral}{'number'}
+            && (isArray(value) || isArguments(value))) \{
+          \textcolor{comment}{// recursively flatten arrays (susceptible to call stack limits)}
+          \textcolor{keywordflow}{if} (!isShallow) \{
+            value = baseFlatten(value, isShallow, isStrict);
+          \}
+          var valIndex = -1,
+              valLength = value.length,
+              resIndex = result.length;
+
+          result.length += valLength;
+          \textcolor{keywordflow}{while} (++valIndex < valLength) \{
+            result[resIndex++] = value[valIndex];
+          \}
+        \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (!isStrict) \{
+          result.push(value);
+        \}
+      \}
+      \textcolor{keywordflow}{return} result;
+    \}
+
+    \textcolor{keyword}{function} baseIsEqual(a, b, callback, isWhere, stackA, stackB) \{
+      \textcolor{comment}{// used to indicate that when comparing objects, `a` has at least the properties of `b`}
+      \textcolor{keywordflow}{if} (callback) \{
+        var result = callback(a, b);
+        \textcolor{keywordflow}{if} (typeof result != \textcolor{stringliteral}{'undefined'}) \{
+          \textcolor{keywordflow}{return} !!result;
+        \}
+      \}
+      \textcolor{comment}{// exit early for identical values}
+      \textcolor{keywordflow}{if} (a === b) \{
+        \textcolor{comment}{// treat `+0` vs. `-0` as not equal}
+        \textcolor{keywordflow}{return} a !== 0 || (1 / a == 1 / b);
+      \}
+      var type = typeof a,
+          otherType = typeof b;
+
+      \textcolor{comment}{// exit early for unlike primitive values}
+      \textcolor{keywordflow}{if} (a === a &&
+          !(a && objectTypes[type]) &&
+          !(b && objectTypes[otherType])) \{
+        \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+      \}
+      \textcolor{comment}{// exit early for `null` and `undefined` avoiding ES3's Function#call behavior}
+      \textcolor{comment}{// http://es5.github.io/#x15.3.4.4}
+      \textcolor{keywordflow}{if} (a == null || b == null) \{
+        \textcolor{keywordflow}{return} a === b;
+      \}
+      \textcolor{comment}{// compare [[Class]] names}
+      var className = toString.call(a),
+          otherClass = toString.call(b);
+
+      \textcolor{keywordflow}{if} (className == argsClass) \{
+        className = objectClass;
+      \}
+      \textcolor{keywordflow}{if} (otherClass == argsClass) \{
+        otherClass = objectClass;
+      \}
+      \textcolor{keywordflow}{if} (className != otherClass) \{
+        \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+      \}
+      \textcolor{keywordflow}{switch} (className) \{
+        \textcolor{keywordflow}{case} boolClass:
+        \textcolor{keywordflow}{case} dateClass:
+          \textcolor{comment}{// coerce dates and booleans to numbers, dates to milliseconds and booleans}
+          \textcolor{comment}{// to `1` or `0` treating invalid dates coerced to `NaN` as not equal}
+          \textcolor{keywordflow}{return} +a == +b;
+
+        \textcolor{keywordflow}{case} numberClass:
+          \textcolor{comment}{// treat `NaN` vs. `NaN` as equal}
+          \textcolor{keywordflow}{return} (a != +a)
+            ? b != +b
+            \textcolor{comment}{// but treat `+0` vs. `-0` as not equal}
+            : (a == 0 ? (1 / a == 1 / b) : a == +b);
+
+        \textcolor{keywordflow}{case} regexpClass:
+        \textcolor{keywordflow}{case} stringClass:
+          \textcolor{comment}{// coerce regexes to strings (http://es5.github.io/#x15.10.6.4)}
+          \textcolor{comment}{// treat string primitives and their corresponding object instances as equal}
+          \textcolor{keywordflow}{return} a == String(b);
+      \}
+      var isArr = className == arrayClass;
+      \textcolor{keywordflow}{if} (!isArr) \{
+        \textcolor{comment}{// unwrap any `lodash` wrapped values}
+        var aWrapped = hasOwnProperty.call(a, \textcolor{stringliteral}{'\_\_wrapped\_\_'}),
+            bWrapped = hasOwnProperty.call(b, \textcolor{stringliteral}{'\_\_wrapped\_\_'});
+
+        \textcolor{keywordflow}{if} (aWrapped || bWrapped) \{
+          \textcolor{keywordflow}{return} baseIsEqual(aWrapped ? a.\_\_wrapped\_\_ : a, bWrapped ? b.\_\_wrapped\_\_ : b, callback, isWhere,
+       stackA, stackB);
+        \}
+        \textcolor{comment}{// exit for functions and DOM nodes}
+        \textcolor{keywordflow}{if} (className != objectClass || (!support.nodeClass && (isNode(a) || isNode(b)))) \{
+          \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+        \}
+        \textcolor{comment}{// in older versions of Opera, `arguments` objects have `Array` constructors}
+        var ctorA = !support.argsObject && isArguments(a) ? Object : a.constructor,
+            ctorB = !support.argsObject && isArguments(b) ? Object : b.constructor;
+
+        \textcolor{comment}{// non `Object` object instances with different constructors are not equal}
+        \textcolor{keywordflow}{if} (ctorA != ctorB &&
+              !(isFunction(ctorA) && ctorA instanceof ctorA && isFunction(ctorB) && ctorB instanceof ctorB)
+       &&
+              (\textcolor{stringliteral}{'constructor'} in a && \textcolor{stringliteral}{'constructor'} in b)
+            ) \{
+          \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+        \}
+      \}
+      \textcolor{comment}{// assume cyclic structures are equal}
+      \textcolor{comment}{// the algorithm for detecting cyclic structures is adapted from ES 5.1}
+      \textcolor{comment}{// section 15.12.3, abstract operation `JO` (http://es5.github.io/#x15.12.3)}
+      var initedStack = !stackA;
+      stackA || (stackA = getArray());
+      stackB || (stackB = getArray());
+
+      var length = stackA.length;
+      \textcolor{keywordflow}{while} (length--) \{
+        \textcolor{keywordflow}{if} (stackA[length] == a) \{
+          \textcolor{keywordflow}{return} stackB[length] == b;
+        \}
+      \}
+      var size = 0;
+      result = \textcolor{keyword}{true};
+
+      \textcolor{comment}{// add `a` and `b` to the stack of traversed objects}
+      stackA.push(a);
+      stackB.push(b);
+
+      \textcolor{comment}{// recursively compare objects and arrays (susceptible to call stack limits)}
+      \textcolor{keywordflow}{if} (isArr) \{
+        \textcolor{comment}{// compare lengths to determine if a deep comparison is necessary}
+        length = a.length;
+        size = b.length;
+        result = size == length;
+
+        \textcolor{keywordflow}{if} (result || isWhere) \{
+          \textcolor{comment}{// deep compare the contents, ignoring non-numeric properties}
+          \textcolor{keywordflow}{while} (size--) \{
+            var index = length,
+                value = b[size];
+
+            \textcolor{keywordflow}{if} (isWhere) \{
+              \textcolor{keywordflow}{while} (index--) \{
+                \textcolor{keywordflow}{if} ((result = baseIsEqual(a[index], value, callback, isWhere, stackA, stackB))) \{
+                  \textcolor{keywordflow}{break};
+                \}
+              \}
+            \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (!(result = baseIsEqual(a[size], value, callback, isWhere, stackA, stackB))) \{
+              \textcolor{keywordflow}{break};
+            \}
+          \}
+        \}
+      \}
+      \textcolor{keywordflow}{else} \{
+        \textcolor{comment}{// deep compare objects using `forIn`, instead of `forOwn`, to avoid `Object.keys`}
+        \textcolor{comment}{// which, in this case, is more costly}
+        forIn(b, \textcolor{keyword}{function}(value, key, b) \{
+          \textcolor{keywordflow}{if} (hasOwnProperty.call(b, key)) \{
+            \textcolor{comment}{// count the number of properties.}
+            size++;
+            \textcolor{comment}{// deep compare each property value.}
+            \textcolor{keywordflow}{return} (result = hasOwnProperty.call(a, key) && baseIsEqual(a[key], value, callback, isWhere, 
+      stackA, stackB));
+          \}
+        \});
+
+        \textcolor{keywordflow}{if} (result && !isWhere) \{
+          \textcolor{comment}{// ensure both objects have the same number of properties}
+          forIn(a, \textcolor{keyword}{function}(value, key, a) \{
+            \textcolor{keywordflow}{if} (hasOwnProperty.call(a, key)) \{
+              \textcolor{comment}{// `size` will be `-1` if `a` has more properties than `b`}
+              \textcolor{keywordflow}{return} (result = --size > -1);
+            \}
+          \});
+        \}
+      \}
+      stackA.pop();
+      stackB.pop();
+
+      \textcolor{keywordflow}{if} (initedStack) \{
+        releaseArray(stackA);
+        releaseArray(stackB);
+      \}
+      \textcolor{keywordflow}{return} result;
+    \}
+
+    \textcolor{keyword}{function} baseMerge(\textcolor{keywordtype}{object}, source, callback, stackA, stackB) \{
+      (isArray(source) ? forEach : forOwn)(source, \textcolor{keyword}{function}(source, key) \{
+        var found,
+            isArr,
+            result = source,
+            value = \textcolor{keywordtype}{object}[key];
+
+        \textcolor{keywordflow}{if} (source && ((isArr = isArray(source)) || isPlainObject(source))) \{
+          \textcolor{comment}{// avoid merging previously merged cyclic sources}
+          var stackLength = stackA.length;
+          \textcolor{keywordflow}{while} (stackLength--) \{
+            \textcolor{keywordflow}{if} ((found = stackA[stackLength] == source)) \{
+              value = stackB[stackLength];
+              \textcolor{keywordflow}{break};
+            \}
+          \}
+          \textcolor{keywordflow}{if} (!found) \{
+            var isShallow;
+            \textcolor{keywordflow}{if} (callback) \{
+              result = callback(value, source);
+              \textcolor{keywordflow}{if} ((isShallow = typeof result != \textcolor{stringliteral}{'undefined'})) \{
+                value = result;
+              \}
+            \}
+            \textcolor{keywordflow}{if} (!isShallow) \{
+              value = isArr
+                ? (isArray(value) ? value : [])
+                : (isPlainObject(value) ? value : \{\});
+            \}
+            \textcolor{comment}{// add `source` and associated `value` to the stack of traversed objects}
+            stackA.push(source);
+            stackB.push(value);
+
+            \textcolor{comment}{// recursively merge objects and arrays (susceptible to call stack limits)}
+            \textcolor{keywordflow}{if} (!isShallow) \{
+              baseMerge(value, source, callback, stackA, stackB);
+            \}
+          \}
+        \}
+        \textcolor{keywordflow}{else} \{
+          \textcolor{keywordflow}{if} (callback) \{
+            result = callback(value, source);
+            \textcolor{keywordflow}{if} (typeof result == \textcolor{stringliteral}{'undefined'}) \{
+              result = source;
+            \}
+          \}
+          \textcolor{keywordflow}{if} (typeof result != \textcolor{stringliteral}{'undefined'}) \{
+            value = result;
+          \}
+        \}
+        \textcolor{keywordtype}{object}[key] = value;
+      \});
+    \}
+
+    \textcolor{keyword}{function} baseRandom(min, max) \{
+      \textcolor{keywordflow}{return} min + floor(nativeRandom() * (max - min + 1));
+    \}
+
+    \textcolor{keyword}{function} baseUniq(array, isSorted, callback) \{
+      var index = -1,
+          indexOf = getIndexOf(),
+          length = array ? array.length : 0,
+          result = [];
+
+      var isLarge = !isSorted && length >= largeArraySize && indexOf === baseIndexOf,
+          seen = (callback || isLarge) ? getArray() : result;
+
+      \textcolor{keywordflow}{if} (isLarge) \{
+        var cache = createCache(seen);
+        indexOf = cacheIndexOf;
+        seen = cache;
+      \}
+      \textcolor{keywordflow}{while} (++index < length) \{
+        var value = array[index],
+            computed = callback ? callback(value, index, array) : value;
+
+        \textcolor{keywordflow}{if} (isSorted
+              ? !index || seen[seen.length - 1] !== computed
+              : indexOf(seen, computed) < 0
+            ) \{
+          \textcolor{keywordflow}{if} (callback || isLarge) \{
+            seen.push(computed);
+          \}
+          result.push(value);
+        \}
+      \}
+      \textcolor{keywordflow}{if} (isLarge) \{
+        releaseArray(seen.array);
+        releaseObject(seen);
+      \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (callback) \{
+        releaseArray(seen);
+      \}
+      \textcolor{keywordflow}{return} result;
+    \}
+
+    \textcolor{keyword}{function} createAggregator(setter) \{
+      \textcolor{keywordflow}{return} \textcolor{keyword}{function}(collection, callback, thisArg) \{
+        var result = \{\};
+        callback = lodash.createCallback(callback, thisArg, 3);
+
+        \textcolor{keywordflow}{if} (isArray(collection)) \{
+          var index = -1,
+              length = collection.length;
+
+          \textcolor{keywordflow}{while} (++index < length) \{
+            var value = collection[index];
+            setter(result, value, callback(value, index, collection), collection);
+          \}
+        \} \textcolor{keywordflow}{else} \{
+          baseEach(collection, \textcolor{keyword}{function}(value, key, collection) \{
+            setter(result, value, callback(value, key, collection), collection);
+          \});
+        \}
+        \textcolor{keywordflow}{return} result;
+      \};
+    \}
+
+    \textcolor{keyword}{function} createWrapper(func, bitmask, partialArgs, partialRightArgs, thisArg, arity) \{
+      var isBind = bitmask & 1,
+          isBindKey = bitmask & 2,
+          isCurry = bitmask & 4,
+          isCurryBound = bitmask & 8,
+          isPartial = bitmask & 16,
+          isPartialRight = bitmask & 32;
+
+      \textcolor{keywordflow}{if} (!isBindKey && !isFunction(func)) \{
+        \textcolor{keywordflow}{throw} \textcolor{keyword}{new} TypeError;
+      \}
+      \textcolor{keywordflow}{if} (isPartial && !partialArgs.length) \{
+        bitmask &= ~16;
+        isPartial = partialArgs = \textcolor{keyword}{false};
+      \}
+      \textcolor{keywordflow}{if} (isPartialRight && !partialRightArgs.length) \{
+        bitmask &= ~32;
+        isPartialRight = partialRightArgs = \textcolor{keyword}{false};
+      \}
+      var bindData = func && func.\_\_bindData\_\_;
+      \textcolor{keywordflow}{if} (bindData && bindData !== \textcolor{keyword}{true}) \{
+        \textcolor{comment}{// clone `bindData`}
+        bindData = slice(bindData);
+        \textcolor{keywordflow}{if} (bindData[2]) \{
+          bindData[2] = slice(bindData[2]);
+        \}
+        \textcolor{keywordflow}{if} (bindData[3]) \{
+          bindData[3] = slice(bindData[3]);
+        \}
+        \textcolor{comment}{// set `thisBinding` is not previously bound}
+        \textcolor{keywordflow}{if} (isBind && !(bindData[1] & 1)) \{
+          bindData[4] = thisArg;
+        \}
+        \textcolor{comment}{// set if previously bound but not currently (subsequent curried functions)}
+        \textcolor{keywordflow}{if} (!isBind && bindData[1] & 1) \{
+          bitmask |= 8;
+        \}
+        \textcolor{comment}{// set curried arity if not yet set}
+        \textcolor{keywordflow}{if} (isCurry && !(bindData[1] & 4)) \{
+          bindData[5] = arity;
+        \}
+        \textcolor{comment}{// append partial left arguments}
+        \textcolor{keywordflow}{if} (isPartial) \{
+          push.apply(bindData[2] || (bindData[2] = []), partialArgs);
+        \}
+        \textcolor{comment}{// append partial right arguments}
+        \textcolor{keywordflow}{if} (isPartialRight) \{
+          unshift.apply(bindData[3] || (bindData[3] = []), partialRightArgs);
+        \}
+        \textcolor{comment}{// merge flags}
+        bindData[1] |= bitmask;
+        \textcolor{keywordflow}{return} createWrapper.apply(null, bindData);
+      \}
+      \textcolor{comment}{// fast path for `\_.bind`}
+      var creater = (bitmask == 1 || bitmask === 17) ? baseBind : baseCreateWrapper;
+      \textcolor{keywordflow}{return} creater([func, bitmask, partialArgs, partialRightArgs, thisArg, arity]);
+    \}
+
+    \textcolor{keyword}{function} createIterator() \{
+      \textcolor{comment}{// data properties}
+      iteratorData.shadowedProps = shadowedProps;
+
+      \textcolor{comment}{// iterator options}
+      iteratorData.array = iteratorData.bottom = iteratorData.loop = iteratorData.top = \textcolor{stringliteral}{''};
+      iteratorData.init = \textcolor{stringliteral}{'iterable'};
+      iteratorData.useHas = \textcolor{keyword}{true};
+
+      \textcolor{comment}{// merge options into a template data object}
+      \textcolor{keywordflow}{for} (var \textcolor{keywordtype}{object}, index = 0; \textcolor{keywordtype}{object} = arguments[index]; index++) \{
+        \textcolor{keywordflow}{for} (var key in \textcolor{keywordtype}{object}) \{
+          iteratorData[key] = \textcolor{keywordtype}{object}[key];
+        \}
+      \}
+      var args = iteratorData.args;
+      iteratorData.firstArg = /^[^,]+/.exec(args)[0];
+
+      \textcolor{comment}{// create the function factory}
+      var factory = Function(
+          \textcolor{stringliteral}{'baseCreateCallback, errorClass, errorProto, hasOwnProperty, '} +
+          \textcolor{stringliteral}{'indicatorObject, isArguments, isArray, isString, keys, objectProto, '} +
+          \textcolor{stringliteral}{'objectTypes, nonEnumProps, stringClass, stringProto, toString'},
+        \textcolor{stringliteral}{'return function('} + args + \textcolor{stringliteral}{') \{\(\backslash\)n'} + iteratorTemplate(iteratorData) + \textcolor{stringliteral}{'\(\backslash\)n\}'}
+      );
+
+      \textcolor{comment}{// return the compiled function}
+      \textcolor{keywordflow}{return} factory(
+        baseCreateCallback, errorClass, errorProto, hasOwnProperty,
+        indicatorObject, isArguments, isArray, isString, iteratorData.keys, objectProto,
+        objectTypes, nonEnumProps, stringClass, stringProto, toString
+      );
+    \}
+
+    \textcolor{keyword}{function} escapeHtmlChar(match) \{
+      \textcolor{keywordflow}{return} htmlEscapes[match];
+    \}
+
+    \textcolor{keyword}{function} getIndexOf() \{
+      var result = (result = lodash.indexOf) === indexOf ? baseIndexOf : result;
+      \textcolor{keywordflow}{return} result;
+    \}
+
+    \textcolor{keyword}{function} isNative(value) \{
+      \textcolor{keywordflow}{return} typeof value == \textcolor{stringliteral}{'function'} && reNative.test(value);
+    \}
+
+    var setBindData = !defineProperty ? noop : \textcolor{keyword}{function}(func, value) \{
+      descriptor.value = value;
+      defineProperty(func, \textcolor{stringliteral}{'\_\_bindData\_\_'}, descriptor);
+      descriptor.value = null;
+    \};
+
+    \textcolor{keyword}{function} shimIsPlainObject(value) \{
+      var ctor,
+          result;
+
+      \textcolor{comment}{// avoid non Object objects, `arguments` objects, and DOM elements}
+      \textcolor{keywordflow}{if} (!(value && toString.call(value) == objectClass) ||
+          (ctor = value.constructor, isFunction(ctor) && !(ctor instanceof ctor)) ||
+          (!support.argsClass && isArguments(value)) ||
+          (!support.nodeClass && isNode(value))) \{
+        \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+      \}
+      \textcolor{comment}{// IE < 9 iterates inherited properties before own properties. If the first}
+      \textcolor{comment}{// iterated property is an object's own property then there are no inherited}
+      \textcolor{comment}{// enumerable properties.}
+      \textcolor{keywordflow}{if} (support.ownLast) \{
+        forIn(value, \textcolor{keyword}{function}(value, key, \textcolor{keywordtype}{object}) \{
+          result = hasOwnProperty.call(\textcolor{keywordtype}{object}, key);
+          \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+        \});
+        \textcolor{keywordflow}{return} result !== \textcolor{keyword}{false};
+      \}
+      \textcolor{comment}{// In most environments an object's own properties are iterated before}
+      \textcolor{comment}{// its inherited properties. If the last iterated property is an object's}
+      \textcolor{comment}{// own property then there are no inherited enumerable properties.}
+      forIn(value, \textcolor{keyword}{function}(value, key) \{
+        result = key;
+      \});
+      \textcolor{keywordflow}{return} typeof result == \textcolor{stringliteral}{'undefined'} || hasOwnProperty.call(value, result);
+    \}
+
+    \textcolor{keyword}{function} unescapeHtmlChar(match) \{
+      \textcolor{keywordflow}{return} htmlUnescapes[match];
+    \}
+
+    \textcolor{comment}{/*--------------------------------------------------------------------------*/}
+
+    \textcolor{keyword}{function} isArguments(value) \{
+      \textcolor{keywordflow}{return} value && typeof value == \textcolor{stringliteral}{'object'} && typeof value.length == \textcolor{stringliteral}{'number'} &&
+        toString.call(value) == argsClass || \textcolor{keyword}{false};
+    \}
+    \textcolor{comment}{// fallback for browsers that can't detect `arguments` objects by [[Class]]}
+    \textcolor{keywordflow}{if} (!support.argsClass) \{
+      isArguments = \textcolor{keyword}{function}(value) \{
+        \textcolor{keywordflow}{return} value && typeof value == \textcolor{stringliteral}{'object'} && typeof value.length == \textcolor{stringliteral}{'number'} &&
+          hasOwnProperty.call(value, \textcolor{stringliteral}{'callee'}) && !propertyIsEnumerable.call(value, \textcolor{stringliteral}{'callee'}) || \textcolor{keyword}{false};
+      \};
+    \}
+
+    var isArray = nativeIsArray || \textcolor{keyword}{function}(value) \{
+      \textcolor{keywordflow}{return} value && typeof value == \textcolor{stringliteral}{'object'} && typeof value.length == \textcolor{stringliteral}{'number'} &&
+        toString.call(value) == arrayClass || \textcolor{keyword}{false};
+    \};
+
+    var shimKeys = createIterator(\{
+      \textcolor{stringliteral}{'args'}: \textcolor{stringliteral}{'object'},
+      \textcolor{stringliteral}{'init'}: \textcolor{stringliteral}{'[]'},
+      \textcolor{stringliteral}{'top'}: \textcolor{stringliteral}{'if (!(objectTypes[typeof object])) return result'},
+      \textcolor{stringliteral}{'loop'}: \textcolor{stringliteral}{'result.push(index)'}
+    \});
+
+    var keys = !nativeKeys ? shimKeys : \textcolor{keyword}{function}(object) \{
+      \textcolor{keywordflow}{if} (!isObject(\textcolor{keywordtype}{object})) \{
+        \textcolor{keywordflow}{return} [];
+      \}
+      \textcolor{keywordflow}{if} ((support.enumPrototypes && typeof \textcolor{keywordtype}{object} == \textcolor{stringliteral}{'function'}) ||
+          (support.nonEnumArgs && \textcolor{keywordtype}{object}.length && isArguments(\textcolor{keywordtype}{object}))) \{
+        \textcolor{keywordflow}{return} shimKeys(\textcolor{keywordtype}{object});
+      \}
+      \textcolor{keywordflow}{return} nativeKeys(\textcolor{keywordtype}{object});
+    \};
+
+    var eachIteratorOptions = \{
+      \textcolor{stringliteral}{'args'}: \textcolor{stringliteral}{'collection, callback, thisArg'},
+      \textcolor{stringliteral}{'top'}: \textcolor{stringliteral}{"callback = callback && typeof thisArg == 'undefined' ? callback :
+       baseCreateCallback(callback, thisArg, 3)"},
+      \textcolor{stringliteral}{'array'}: \textcolor{stringliteral}{"typeof length == 'number'"},
+      \textcolor{stringliteral}{'keys'}: keys,
+      \textcolor{stringliteral}{'loop'}: \textcolor{stringliteral}{'if (callback(iterable[index], index, collection) === false) return result'}
+    \};
+
+    var defaultsIteratorOptions = \{
+      \textcolor{stringliteral}{'args'}: \textcolor{stringliteral}{'object, source, guard'},
+      \textcolor{stringliteral}{'top'}:
+        \textcolor{stringliteral}{'var args = arguments,\(\backslash\)n'} +
+        \textcolor{stringliteral}{'    argsIndex = 0,\(\backslash\)n'} +
+        \textcolor{stringliteral}{"    argsLength = typeof guard == 'number' ? 2 : args.length;\(\backslash\)n"} +
+        \textcolor{stringliteral}{'while (++argsIndex < argsLength) \{\(\backslash\)n'} +
+        \textcolor{stringliteral}{'  iterable = args[argsIndex];\(\backslash\)n'} +
+        \textcolor{stringliteral}{'  if (iterable && objectTypes[typeof iterable]) \{'},
+      \textcolor{stringliteral}{'keys'}: keys,
+      \textcolor{stringliteral}{'loop'}: \textcolor{stringliteral}{"if (typeof result[index] == 'undefined') result[index] = iterable[index]"},
+      \textcolor{stringliteral}{'bottom'}: \textcolor{stringliteral}{'  \}\(\backslash\)n\}'}
+    \};
+
+    var forOwnIteratorOptions = \{
+      \textcolor{stringliteral}{'top'}: \textcolor{stringliteral}{'if (!objectTypes[typeof iterable]) return result;\(\backslash\)n'} + eachIteratorOptions.top,
+      \textcolor{stringliteral}{'array'}: \textcolor{keyword}{false}
+    \};
+
+    var htmlEscapes = \{
+      \textcolor{charliteral}{'&'}: \textcolor{stringliteral}{'&amp;'},
+      \textcolor{charliteral}{'<'}: \textcolor{stringliteral}{'&lt;'},
+      \textcolor{charliteral}{'>'}: \textcolor{stringliteral}{'&gt;'},
+      \textcolor{charliteral}{'"'}: \textcolor{stringliteral}{'&quot;'},
+      \textcolor{stringliteral}{"'"}: \textcolor{stringliteral}{'&#39;'}
+    \};
+
+    var htmlUnescapes = invert(htmlEscapes);
+
+    var reEscapedHtml = RegExp(\textcolor{charliteral}{'('} + keys(htmlUnescapes).join(\textcolor{charliteral}{'|'}) + \textcolor{charliteral}{')'}, \textcolor{charliteral}{'g'}),
+        reUnescapedHtml = RegExp(\textcolor{charliteral}{'['} + keys(htmlEscapes).join(\textcolor{stringliteral}{''}) + \textcolor{charliteral}{']'}, \textcolor{charliteral}{'g'});
+
+    var baseEach = createIterator(eachIteratorOptions);
+
+    \textcolor{comment}{/*--------------------------------------------------------------------------*/}
+
+    var assign = createIterator(defaultsIteratorOptions, \{
+      \textcolor{stringliteral}{'top'}:
+        defaultsIteratorOptions.top.replace(\textcolor{charliteral}{';'},
+          \textcolor{stringliteral}{';\(\backslash\)n'} +
+          \textcolor{stringliteral}{"if (argsLength > 3 && typeof args[argsLength - 2] == 'function') \{\(\backslash\)n"} +
+          \textcolor{stringliteral}{'  var callback = baseCreateCallback(args[--argsLength - 1], args[argsLength--], 2);\(\backslash\)n'} +
+          \textcolor{stringliteral}{"\} else if (argsLength > 2 && typeof args[argsLength - 1] == 'function') \{\(\backslash\)n"} +
+          \textcolor{stringliteral}{'  callback = args[--argsLength];\(\backslash\)n'} +
+          \textcolor{charliteral}{'\}'}
+        ),
+      \textcolor{stringliteral}{'loop'}: \textcolor{stringliteral}{'result[index] = callback ? callback(result[index], iterable[index]) : iterable[index]'}
+    \});
+
+    \textcolor{keyword}{function} clone(value, isDeep, callback, thisArg) \{
+      \textcolor{comment}{// allows working with "Collections" methods without using their `index`}
+      \textcolor{comment}{// and `collection` arguments for `isDeep` and `callback`}
+      \textcolor{keywordflow}{if} (typeof isDeep != \textcolor{stringliteral}{'boolean'} && isDeep != null) \{
+        thisArg = callback;
+        callback = isDeep;
+        isDeep = \textcolor{keyword}{false};
+      \}
+      \textcolor{keywordflow}{return} baseClone(value, isDeep, typeof callback == \textcolor{stringliteral}{'function'} && baseCreateCallback(callback, thisArg
+      , 1));
+    \}
+
+    \textcolor{keyword}{function} cloneDeep(value, callback, thisArg) \{
+      \textcolor{keywordflow}{return} baseClone(value, \textcolor{keyword}{true}, typeof callback == \textcolor{stringliteral}{'function'} && baseCreateCallback(callback, thisArg, 
+      1));
+    \}
+
+    \textcolor{keyword}{function} create(prototype, properties) \{
+      var result = baseCreate(prototype);
+      \textcolor{keywordflow}{return} properties ? assign(result, properties) : result;
+    \}
+
+    var defaults = createIterator(defaultsIteratorOptions);
+
+    \textcolor{keyword}{function} findKey(\textcolor{keywordtype}{object}, callback, thisArg) \{
+      var result;
+      callback = lodash.createCallback(callback, thisArg, 3);
+      forOwn(\textcolor{keywordtype}{object}, \textcolor{keyword}{function}(value, key, \textcolor{keywordtype}{object}) \{
+        \textcolor{keywordflow}{if} (callback(value, key, \textcolor{keywordtype}{object})) \{
+          result = key;
+          \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+        \}
+      \});
+      \textcolor{keywordflow}{return} result;
+    \}
+
+    \textcolor{keyword}{function} findLastKey(\textcolor{keywordtype}{object}, callback, thisArg) \{
+      var result;
+      callback = lodash.createCallback(callback, thisArg, 3);
+      forOwnRight(\textcolor{keywordtype}{object}, \textcolor{keyword}{function}(value, key, \textcolor{keywordtype}{object}) \{
+        \textcolor{keywordflow}{if} (callback(value, key, \textcolor{keywordtype}{object})) \{
+          result = key;
+          \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+        \}
+      \});
+      \textcolor{keywordflow}{return} result;
+    \}
+
+    var forIn = createIterator(eachIteratorOptions, forOwnIteratorOptions, \{
+      \textcolor{stringliteral}{'useHas'}: \textcolor{keyword}{false}
+    \});
+
+    \textcolor{keyword}{function} forInRight(\textcolor{keywordtype}{object}, callback, thisArg) \{
+      var pairs = [];
+
+      forIn(\textcolor{keywordtype}{object}, \textcolor{keyword}{function}(value, key) \{
+        pairs.push(key, value);
+      \});
+
+      var length = pairs.length;
+      callback = baseCreateCallback(callback, thisArg, 3);
+      \textcolor{keywordflow}{while} (length--) \{
+        \textcolor{keywordflow}{if} (callback(pairs[length--], pairs[length], \textcolor{keywordtype}{object}) === \textcolor{keyword}{false}) \{
+          \textcolor{keywordflow}{break};
+        \}
+      \}
+      \textcolor{keywordflow}{return} object;
+    \}
+
+    var forOwn = createIterator(eachIteratorOptions, forOwnIteratorOptions);
+
+    \textcolor{keyword}{function} forOwnRight(\textcolor{keywordtype}{object}, callback, thisArg) \{
+      var props = keys(\textcolor{keywordtype}{object}),
+          length = props.length;
+
+      callback = baseCreateCallback(callback, thisArg, 3);
+      \textcolor{keywordflow}{while} (length--) \{
+        var key = props[length];
+        \textcolor{keywordflow}{if} (callback(\textcolor{keywordtype}{object}[key], key, \textcolor{keywordtype}{object}) === \textcolor{keyword}{false}) \{
+          \textcolor{keywordflow}{break};
+        \}
+      \}
+      \textcolor{keywordflow}{return} object;
+    \}
+
+    \textcolor{keyword}{function} functions(\textcolor{keywordtype}{object}) \{
+      var result = [];
+      forIn(\textcolor{keywordtype}{object}, \textcolor{keyword}{function}(value, key) \{
+        \textcolor{keywordflow}{if} (isFunction(value)) \{
+          result.push(key);
+        \}
+      \});
+      \textcolor{keywordflow}{return} result.sort();
+    \}
+
+    \textcolor{keyword}{function} has(\textcolor{keywordtype}{object}, key) \{
+      \textcolor{keywordflow}{return} \textcolor{keywordtype}{object} ? hasOwnProperty.call(\textcolor{keywordtype}{object}, key) : \textcolor{keyword}{false};
+    \}
+
+    \textcolor{keyword}{function} invert(\textcolor{keywordtype}{object}) \{
+      var index = -1,
+          props = keys(\textcolor{keywordtype}{object}),
+          length = props.length,
+          result = \{\};
+
+      \textcolor{keywordflow}{while} (++index < length) \{
+        var key = props[index];
+        result[\textcolor{keywordtype}{object}[key]] = key;
+      \}
+      \textcolor{keywordflow}{return} result;
+    \}
+
+    \textcolor{keyword}{function} isBoolean(value) \{
+      \textcolor{keywordflow}{return} value === \textcolor{keyword}{true} || value === \textcolor{keyword}{false} ||
+        value && typeof value == \textcolor{stringliteral}{'object'} && toString.call(value) == boolClass || \textcolor{keyword}{false};
+    \}
+
+    \textcolor{keyword}{function} isDate(value) \{
+      \textcolor{keywordflow}{return} value && typeof value == \textcolor{stringliteral}{'object'} && toString.call(value) == dateClass || \textcolor{keyword}{false};
+    \}
+
+    \textcolor{keyword}{function} isElement(value) \{
+      \textcolor{keywordflow}{return} value && value.nodeType === 1 || \textcolor{keyword}{false};
+    \}
+
+    \textcolor{keyword}{function} isEmpty(value) \{
+      var result = \textcolor{keyword}{true};
+      \textcolor{keywordflow}{if} (!value) \{
+        \textcolor{keywordflow}{return} result;
+      \}
+      var className = toString.call(value),
+          length = value.length;
+
+      \textcolor{keywordflow}{if} ((className == arrayClass || className == stringClass ||
+          (support.argsClass ? className == argsClass : isArguments(value))) ||
+          (className == objectClass && typeof length == \textcolor{stringliteral}{'number'} && isFunction(value.splice))) \{
+        \textcolor{keywordflow}{return} !length;
+      \}
+      forOwn(value, \textcolor{keyword}{function}() \{
+        \textcolor{keywordflow}{return} (result = \textcolor{keyword}{false});
+      \});
+      \textcolor{keywordflow}{return} result;
+    \}
+
+    \textcolor{keyword}{function} isEqual(a, b, callback, thisArg) \{
+      \textcolor{keywordflow}{return} baseIsEqual(a, b, typeof callback == \textcolor{stringliteral}{'function'} && baseCreateCallback(callback, thisArg, 2));
+    \}
+
+    \textcolor{keyword}{function} isFinite(value) \{
+      \textcolor{keywordflow}{return} nativeIsFinite(value) && !nativeIsNaN(parseFloat(value));
+    \}
+
+    \textcolor{keyword}{function} isFunction(value) \{
+      \textcolor{keywordflow}{return} typeof value == \textcolor{stringliteral}{'function'};
+    \}
+    \textcolor{comment}{// fallback for older versions of Chrome and Safari}
+    \textcolor{keywordflow}{if} (isFunction(/x/)) \{
+      isFunction = \textcolor{keyword}{function}(value) \{
+        \textcolor{keywordflow}{return} typeof value == \textcolor{stringliteral}{'function'} && toString.call(value) == funcClass;
+      \};
+    \}
+
+    \textcolor{keyword}{function} isObject(value) \{
+      \textcolor{comment}{// check if the value is the ECMAScript language type of Object}
+      \textcolor{comment}{// http://es5.github.io/#x8}
+      \textcolor{comment}{// and avoid a V8 bug}
+      \textcolor{comment}{// http://code.google.com/p/v8/issues/detail?id=2291}
+      \textcolor{keywordflow}{return} !!(value && objectTypes[typeof value]);
+    \}
+
+    \textcolor{keyword}{function} isNaN(value) \{
+      \textcolor{comment}{// `NaN` as a primitive is the only value that is not equal to itself}
+      \textcolor{comment}{// (perform the [[Class]] check first to avoid errors with some host objects in IE)}
+      \textcolor{keywordflow}{return} isNumber(value) && value != +value;
+    \}
+
+    \textcolor{keyword}{function} isNull(value) \{
+      \textcolor{keywordflow}{return} value === null;
+    \}
+
+    \textcolor{keyword}{function} isNumber(value) \{
+      \textcolor{keywordflow}{return} typeof value == \textcolor{stringliteral}{'number'} ||
+        value && typeof value == \textcolor{stringliteral}{'object'} && toString.call(value) == numberClass || \textcolor{keyword}{false};
+    \}
+
+    var isPlainObject = !getPrototypeOf ? shimIsPlainObject : \textcolor{keyword}{function}(value) \{
+      \textcolor{keywordflow}{if} (!(value && toString.call(value) == objectClass) || (!support.argsClass && isArguments(value))) \{
+        \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+      \}
+      var valueOf = value.valueOf,
+          objProto = isNative(valueOf) && (objProto = getPrototypeOf(valueOf)) && getPrototypeOf(objProto);
+
+      \textcolor{keywordflow}{return} objProto
+        ? (value == objProto || getPrototypeOf(value) == objProto)
+        : shimIsPlainObject(value);
+    \};
+
+    \textcolor{keyword}{function} isRegExp(value) \{
+      \textcolor{keywordflow}{return} value && objectTypes[typeof value] && toString.call(value) == regexpClass || \textcolor{keyword}{false};
+    \}
+
+    \textcolor{keyword}{function} isString(value) \{
+      \textcolor{keywordflow}{return} typeof value == \textcolor{stringliteral}{'string'} ||
+        value && typeof value == \textcolor{stringliteral}{'object'} && toString.call(value) == stringClass || \textcolor{keyword}{false};
+    \}
+
+    \textcolor{keyword}{function} isUndefined(value) \{
+      \textcolor{keywordflow}{return} typeof value == \textcolor{stringliteral}{'undefined'};
+    \}
+
+    \textcolor{keyword}{function} mapValues(\textcolor{keywordtype}{object}, callback, thisArg) \{
+      var result = \{\};
+      callback = lodash.createCallback(callback, thisArg, 3);
+
+      forOwn(\textcolor{keywordtype}{object}, \textcolor{keyword}{function}(value, key, \textcolor{keywordtype}{object}) \{
+        result[key] = callback(value, key, \textcolor{keywordtype}{object});
+      \});
+      \textcolor{keywordflow}{return} result;
+    \}
+
+    \textcolor{keyword}{function} merge(\textcolor{keywordtype}{object}) \{
+      var args = arguments,
+          length = 2;
+
+      \textcolor{keywordflow}{if} (!isObject(\textcolor{keywordtype}{object})) \{
+        \textcolor{keywordflow}{return} object;
+      \}
+      \textcolor{comment}{// allows working with `\_.reduce` and `\_.reduceRight` without using}
+      \textcolor{comment}{// their `index` and `collection` arguments}
+      \textcolor{keywordflow}{if} (typeof args[2] != \textcolor{stringliteral}{'number'}) \{
+        length = args.length;
+      \}
+      \textcolor{keywordflow}{if} (length > 3 && typeof args[length - 2] == \textcolor{stringliteral}{'function'}) \{
+        var callback = baseCreateCallback(args[--length - 1], args[length--], 2);
+      \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (length > 2 && typeof args[length - 1] == \textcolor{stringliteral}{'function'}) \{
+        callback = args[--length];
+      \}
+      var sources = slice(arguments, 1, length),
+          index = -1,
+          stackA = getArray(),
+          stackB = getArray();
+
+      \textcolor{keywordflow}{while} (++index < length) \{
+        baseMerge(\textcolor{keywordtype}{object}, sources[index], callback, stackA, stackB);
+      \}
+      releaseArray(stackA);
+      releaseArray(stackB);
+      \textcolor{keywordflow}{return} object;
+    \}
+
+    \textcolor{keyword}{function} omit(\textcolor{keywordtype}{object}, callback, thisArg) \{
+      var result = \{\};
+      \textcolor{keywordflow}{if} (typeof callback != \textcolor{stringliteral}{'function'}) \{
+        var props = [];
+        forIn(\textcolor{keywordtype}{object}, \textcolor{keyword}{function}(value, key) \{
+          props.push(key);
+        \});
+        props = baseDifference(props, baseFlatten(arguments, \textcolor{keyword}{true}, \textcolor{keyword}{false}, 1));
+
+        var index = -1,
+            length = props.length;
+
+        \textcolor{keywordflow}{while} (++index < length) \{
+          var key = props[index];
+          result[key] = \textcolor{keywordtype}{object}[key];
+        \}
+      \} \textcolor{keywordflow}{else} \{
+        callback = lodash.createCallback(callback, thisArg, 3);
+        forIn(\textcolor{keywordtype}{object}, \textcolor{keyword}{function}(value, key, \textcolor{keywordtype}{object}) \{
+          \textcolor{keywordflow}{if} (!callback(value, key, \textcolor{keywordtype}{object})) \{
+            result[key] = value;
+          \}
+        \});
+      \}
+      \textcolor{keywordflow}{return} result;
+    \}
+
+    \textcolor{keyword}{function} pairs(\textcolor{keywordtype}{object}) \{
+      var index = -1,
+          props = keys(\textcolor{keywordtype}{object}),
+          length = props.length,
+          result = Array(length);
+
+      \textcolor{keywordflow}{while} (++index < length) \{
+        var key = props[index];
+        result[index] = [key, \textcolor{keywordtype}{object}[key]];
+      \}
+      \textcolor{keywordflow}{return} result;
+    \}
+
+    \textcolor{keyword}{function} pick(\textcolor{keywordtype}{object}, callback, thisArg) \{
+      var result = \{\};
+      \textcolor{keywordflow}{if} (typeof callback != \textcolor{stringliteral}{'function'}) \{
+        var index = -1,
+            props = baseFlatten(arguments, \textcolor{keyword}{true}, \textcolor{keyword}{false}, 1),
+            length = isObject(\textcolor{keywordtype}{object}) ? props.length : 0;
+
+        \textcolor{keywordflow}{while} (++index < length) \{
+          var key = props[index];
+          \textcolor{keywordflow}{if} (key in \textcolor{keywordtype}{object}) \{
+            result[key] = \textcolor{keywordtype}{object}[key];
+          \}
+        \}
+      \} \textcolor{keywordflow}{else} \{
+        callback = lodash.createCallback(callback, thisArg, 3);
+        forIn(\textcolor{keywordtype}{object}, \textcolor{keyword}{function}(value, key, \textcolor{keywordtype}{object}) \{
+          \textcolor{keywordflow}{if} (callback(value, key, \textcolor{keywordtype}{object})) \{
+            result[key] = value;
+          \}
+        \});
+      \}
+      \textcolor{keywordflow}{return} result;
+    \}
+
+    \textcolor{keyword}{function} transform(\textcolor{keywordtype}{object}, callback, accumulator, thisArg) \{
+      var isArr = isArray(\textcolor{keywordtype}{object});
+      \textcolor{keywordflow}{if} (accumulator == null) \{
+        \textcolor{keywordflow}{if} (isArr) \{
+          accumulator = [];
+        \} \textcolor{keywordflow}{else} \{
+          var ctor = \textcolor{keywordtype}{object} && \textcolor{keywordtype}{object}.constructor,
+              proto = ctor && ctor.prototype;
+
+          accumulator = baseCreate(proto);
+        \}
+      \}
+      \textcolor{keywordflow}{if} (callback) \{
+        callback = lodash.createCallback(callback, thisArg, 4);
+        (isArr ? baseEach : forOwn)(\textcolor{keywordtype}{object}, \textcolor{keyword}{function}(value, index, \textcolor{keywordtype}{object}) \{
+          \textcolor{keywordflow}{return} callback(accumulator, value, index, \textcolor{keywordtype}{object});
+        \});
+      \}
+      \textcolor{keywordflow}{return} accumulator;
+    \}
+
+    \textcolor{keyword}{function} values(\textcolor{keywordtype}{object}) \{
+      var index = -1,
+          props = keys(\textcolor{keywordtype}{object}),
+          length = props.length,
+          result = Array(length);
+
+      \textcolor{keywordflow}{while} (++index < length) \{
+        result[index] = \textcolor{keywordtype}{object}[props[index]];
+      \}
+      \textcolor{keywordflow}{return} result;
+    \}
+
+    \textcolor{comment}{/*--------------------------------------------------------------------------*/}
+
+    \textcolor{keyword}{function} at(collection) \{
+      var args = arguments,
+          index = -1,
+          props = baseFlatten(args, \textcolor{keyword}{true}, \textcolor{keyword}{false}, 1),
+          length = (args[2] && args[2][args[1]] === collection) ? 1 : props.length,
+          result = Array(length);
+
+      \textcolor{keywordflow}{if} (support.unindexedChars && isString(collection)) \{
+        collection = collection.split(\textcolor{stringliteral}{''});
+      \}
+      \textcolor{keywordflow}{while}(++index < length) \{
+        result[index] = collection[props[index]];
+      \}
+      \textcolor{keywordflow}{return} result;
+    \}
+
+    \textcolor{keyword}{function} contains(collection, target, fromIndex) \{
+      var index = -1,
+          indexOf = getIndexOf(),
+          length = collection ? collection.length : 0,
+          result = \textcolor{keyword}{false};
+
+      fromIndex = (fromIndex < 0 ? nativeMax(0, length + fromIndex) : fromIndex) || 0;
+      \textcolor{keywordflow}{if} (isArray(collection)) \{
+        result = indexOf(collection, target, fromIndex) > -1;
+      \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (typeof length == \textcolor{stringliteral}{'number'}) \{
+        result = (isString(collection) ? collection.indexOf(target, fromIndex) : indexOf(collection, target
+      , fromIndex)) > -1;
+      \} \textcolor{keywordflow}{else} \{
+        baseEach(collection, \textcolor{keyword}{function}(value) \{
+          \textcolor{keywordflow}{if} (++index >= fromIndex) \{
+            \textcolor{keywordflow}{return} !(result = value === target);
+          \}
+        \});
+      \}
+      \textcolor{keywordflow}{return} result;
+    \}
+
+    var countBy = createAggregator(\textcolor{keyword}{function}(result, value, key) \{
+      (hasOwnProperty.call(result, key) ? result[key]++ : result[key] = 1);
+    \});
+
+    \textcolor{keyword}{function} every(collection, callback, thisArg) \{
+      var result = \textcolor{keyword}{true};
+      callback = lodash.createCallback(callback, thisArg, 3);
+
+      \textcolor{keywordflow}{if} (isArray(collection)) \{
+        var index = -1,
+            length = collection.length;
+
+        \textcolor{keywordflow}{while} (++index < length) \{
+          \textcolor{keywordflow}{if} (!(result = !!callback(collection[index], index, collection))) \{
+            \textcolor{keywordflow}{break};
+          \}
+        \}
+      \} \textcolor{keywordflow}{else} \{
+        baseEach(collection, \textcolor{keyword}{function}(value, index, collection) \{
+          \textcolor{keywordflow}{return} (result = !!callback(value, index, collection));
+        \});
+      \}
+      \textcolor{keywordflow}{return} result;
+    \}
+
+    \textcolor{keyword}{function} filter(collection, callback, thisArg) \{
+      var result = [];
+      callback = lodash.createCallback(callback, thisArg, 3);
+
+      \textcolor{keywordflow}{if} (isArray(collection)) \{
+        var index = -1,
+            length = collection.length;
+
+        \textcolor{keywordflow}{while} (++index < length) \{
+          var value = collection[index];
+          \textcolor{keywordflow}{if} (callback(value, index, collection)) \{
+            result.push(value);
+          \}
+        \}
+      \} \textcolor{keywordflow}{else} \{
+        baseEach(collection, \textcolor{keyword}{function}(value, index, collection) \{
+          \textcolor{keywordflow}{if} (callback(value, index, collection)) \{
+            result.push(value);
+          \}
+        \});
+      \}
+      \textcolor{keywordflow}{return} result;
+    \}
+
+    \textcolor{keyword}{function} find(collection, callback, thisArg) \{
+      callback = lodash.createCallback(callback, thisArg, 3);
+
+      \textcolor{keywordflow}{if} (isArray(collection)) \{
+        var index = -1,
+            length = collection.length;
+
+        \textcolor{keywordflow}{while} (++index < length) \{
+          var value = collection[index];
+          \textcolor{keywordflow}{if} (callback(value, index, collection)) \{
+            \textcolor{keywordflow}{return} value;
+          \}
+        \}
+      \} \textcolor{keywordflow}{else} \{
+        var result;
+        baseEach(collection, \textcolor{keyword}{function}(value, index, collection) \{
+          \textcolor{keywordflow}{if} (callback(value, index, collection)) \{
+            result = value;
+            \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+          \}
+        \});
+        \textcolor{keywordflow}{return} result;
+      \}
+    \}
+
+    \textcolor{keyword}{function} findLast(collection, callback, thisArg) \{
+      var result;
+      callback = lodash.createCallback(callback, thisArg, 3);
+      forEachRight(collection, \textcolor{keyword}{function}(value, index, collection) \{
+        \textcolor{keywordflow}{if} (callback(value, index, collection)) \{
+          result = value;
+          \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+        \}
+      \});
+      \textcolor{keywordflow}{return} result;
+    \}
+
+    \textcolor{keyword}{function} forEach(collection, callback, thisArg) \{
+      \textcolor{keywordflow}{if} (callback && typeof thisArg == \textcolor{stringliteral}{'undefined'} && isArray(collection)) \{
+        var index = -1,
+            length = collection.length;
+
+        \textcolor{keywordflow}{while} (++index < length) \{
+          \textcolor{keywordflow}{if} (callback(collection[index], index, collection) === \textcolor{keyword}{false}) \{
+            \textcolor{keywordflow}{break};
+          \}
+        \}
+      \} \textcolor{keywordflow}{else} \{
+        baseEach(collection, callback, thisArg);
+      \}
+      \textcolor{keywordflow}{return} collection;
+    \}
+
+    \textcolor{keyword}{function} forEachRight(collection, callback, thisArg) \{
+      var iterable = collection,
+          length = collection ? collection.length : 0;
+
+      callback = callback && typeof thisArg == \textcolor{stringliteral}{'undefined'} ? callback : baseCreateCallback(callback, 
+      thisArg, 3);
+      \textcolor{keywordflow}{if} (isArray(collection)) \{
+        \textcolor{keywordflow}{while} (length--) \{
+          \textcolor{keywordflow}{if} (callback(collection[length], length, collection) === \textcolor{keyword}{false}) \{
+            \textcolor{keywordflow}{break};
+          \}
+        \}
+      \} \textcolor{keywordflow}{else} \{
+        \textcolor{keywordflow}{if} (typeof length != \textcolor{stringliteral}{'number'}) \{
+          var props = keys(collection);
+          length = props.length;
+        \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (support.unindexedChars && isString(collection)) \{
+          iterable = collection.split(\textcolor{stringliteral}{''});
+        \}
+        baseEach(collection, \textcolor{keyword}{function}(value, key, collection) \{
+          key = props ? props[--length] : --length;
+          \textcolor{keywordflow}{return} callback(iterable[key], key, collection);
+        \});
+      \}
+      \textcolor{keywordflow}{return} collection;
+    \}
+
+    var groupBy = createAggregator(\textcolor{keyword}{function}(result, value, key) \{
+      (hasOwnProperty.call(result, key) ? result[key] : result[key] = []).push(value);
+    \});
+
+    var indexBy = createAggregator(\textcolor{keyword}{function}(result, value, key) \{
+      result[key] = value;
+    \});
+
+    \textcolor{keyword}{function} invoke(collection, methodName) \{
+      var args = slice(arguments, 2),
+          index = -1,
+          isFunc = typeof methodName == \textcolor{stringliteral}{'function'},
+          length = collection ? collection.length : 0,
+          result = Array(typeof length == \textcolor{stringliteral}{'number'} ? length : 0);
+
+      forEach(collection, \textcolor{keyword}{function}(value) \{
+        result[++index] = (isFunc ? methodName : value[methodName]).apply(value, args);
+      \});
+      \textcolor{keywordflow}{return} result;
+    \}
+
+    \textcolor{keyword}{function} map(collection, callback, thisArg) \{
+      var index = -1,
+          length = collection ? collection.length : 0,
+          result = Array(typeof length == \textcolor{stringliteral}{'number'} ? length : 0);
+
+      callback = lodash.createCallback(callback, thisArg, 3);
+      \textcolor{keywordflow}{if} (isArray(collection)) \{
+        \textcolor{keywordflow}{while} (++index < length) \{
+          result[index] = callback(collection[index], index, collection);
+        \}
+      \} \textcolor{keywordflow}{else} \{
+        baseEach(collection, \textcolor{keyword}{function}(value, key, collection) \{
+          result[++index] = callback(value, key, collection);
+        \});
+      \}
+      \textcolor{keywordflow}{return} result;
+    \}
+
+    \textcolor{keyword}{function} max(collection, callback, thisArg) \{
+      var computed = -Infinity,
+          result = computed;
+
+      \textcolor{comment}{// allows working with functions like `\_.map` without using}
+      \textcolor{comment}{// their `index` argument as a callback}
+      \textcolor{keywordflow}{if} (typeof callback != \textcolor{stringliteral}{'function'} && thisArg && thisArg[callback] === collection) \{
+        callback = null;
+      \}
+      \textcolor{keywordflow}{if} (callback == null && isArray(collection)) \{
+        var index = -1,
+            length = collection.length;
+
+        \textcolor{keywordflow}{while} (++index < length) \{
+          var value = collection[index];
+          \textcolor{keywordflow}{if} (value > result) \{
+            result = value;
+          \}
+        \}
+      \} \textcolor{keywordflow}{else} \{
+        callback = (callback == null && isString(collection))
+          ? charAtCallback
+          : lodash.createCallback(callback, thisArg, 3);
+
+        baseEach(collection, \textcolor{keyword}{function}(value, index, collection) \{
+          var current = callback(value, index, collection);
+          \textcolor{keywordflow}{if} (current > computed) \{
+            computed = current;
+            result = value;
+          \}
+        \});
+      \}
+      \textcolor{keywordflow}{return} result;
+    \}
+
+    \textcolor{keyword}{function} min(collection, callback, thisArg) \{
+      var computed = Infinity,
+          result = computed;
+
+      \textcolor{comment}{// allows working with functions like `\_.map` without using}
+      \textcolor{comment}{// their `index` argument as a callback}
+      \textcolor{keywordflow}{if} (typeof callback != \textcolor{stringliteral}{'function'} && thisArg && thisArg[callback] === collection) \{
+        callback = null;
+      \}
+      \textcolor{keywordflow}{if} (callback == null && isArray(collection)) \{
+        var index = -1,
+            length = collection.length;
+
+        \textcolor{keywordflow}{while} (++index < length) \{
+          var value = collection[index];
+          \textcolor{keywordflow}{if} (value < result) \{
+            result = value;
+          \}
+        \}
+      \} \textcolor{keywordflow}{else} \{
+        callback = (callback == null && isString(collection))
+          ? charAtCallback
+          : lodash.createCallback(callback, thisArg, 3);
+
+        baseEach(collection, \textcolor{keyword}{function}(value, index, collection) \{
+          var current = callback(value, index, collection);
+          \textcolor{keywordflow}{if} (current < computed) \{
+            computed = current;
+            result = value;
+          \}
+        \});
+      \}
+      \textcolor{keywordflow}{return} result;
+    \}
+
+    var pluck = map;
+
+    \textcolor{keyword}{function} reduce(collection, callback, accumulator, thisArg) \{
+      var noaccum = arguments.length < 3;
+      callback = lodash.createCallback(callback, thisArg, 4);
+
+      \textcolor{keywordflow}{if} (isArray(collection)) \{
+        var index = -1,
+            length = collection.length;
+
+        \textcolor{keywordflow}{if} (noaccum) \{
+          accumulator = collection[++index];
+        \}
+        \textcolor{keywordflow}{while} (++index < length) \{
+          accumulator = callback(accumulator, collection[index], index, collection);
+        \}
+      \} \textcolor{keywordflow}{else} \{
+        baseEach(collection, \textcolor{keyword}{function}(value, index, collection) \{
+          accumulator = noaccum
+            ? (noaccum = \textcolor{keyword}{false}, value)
+            : callback(accumulator, value, index, collection)
+        \});
+      \}
+      \textcolor{keywordflow}{return} accumulator;
+    \}
+
+    \textcolor{keyword}{function} reduceRight(collection, callback, accumulator, thisArg) \{
+      var noaccum = arguments.length < 3;
+      callback = lodash.createCallback(callback, thisArg, 4);
+      forEachRight(collection, \textcolor{keyword}{function}(value, index, collection) \{
+        accumulator = noaccum
+          ? (noaccum = \textcolor{keyword}{false}, value)
+          : callback(accumulator, value, index, collection);
+      \});
+      \textcolor{keywordflow}{return} accumulator;
+    \}
+
+    \textcolor{keyword}{function} reject(collection, callback, thisArg) \{
+      callback = lodash.createCallback(callback, thisArg, 3);
+      \textcolor{keywordflow}{return} filter(collection, \textcolor{keyword}{function}(value, index, collection) \{
+        \textcolor{keywordflow}{return} !callback(value, index, collection);
+      \});
+    \}
+
+    \textcolor{keyword}{function} sample(collection, n, guard) \{
+      \textcolor{keywordflow}{if} (collection && typeof collection.length != \textcolor{stringliteral}{'number'}) \{
+        collection = values(collection);
+      \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (support.unindexedChars && isString(collection)) \{
+        collection = collection.split(\textcolor{stringliteral}{''});
+      \}
+      \textcolor{keywordflow}{if} (n == null || guard) \{
+        \textcolor{keywordflow}{return} collection ? collection[baseRandom(0, collection.length - 1)] : undefined;
+      \}
+      var result = shuffle(collection);
+      result.length = nativeMin(nativeMax(0, n), result.length);
+      \textcolor{keywordflow}{return} result;
+    \}
+
+    \textcolor{keyword}{function} shuffle(collection) \{
+      var index = -1,
+          length = collection ? collection.length : 0,
+          result = Array(typeof length == \textcolor{stringliteral}{'number'} ? length : 0);
+
+      forEach(collection, \textcolor{keyword}{function}(value) \{
+        var rand = baseRandom(0, ++index);
+        result[index] = result[rand];
+        result[rand] = value;
+      \});
+      \textcolor{keywordflow}{return} result;
+    \}
+
+    \textcolor{keyword}{function} size(collection) \{
+      var length = collection ? collection.length : 0;
+      \textcolor{keywordflow}{return} typeof length == \textcolor{stringliteral}{'number'} ? length : keys(collection).length;
+    \}
+
+    \textcolor{keyword}{function} some(collection, callback, thisArg) \{
+      var result;
+      callback = lodash.createCallback(callback, thisArg, 3);
+
+      \textcolor{keywordflow}{if} (isArray(collection)) \{
+        var index = -1,
+            length = collection.length;
+
+        \textcolor{keywordflow}{while} (++index < length) \{
+          \textcolor{keywordflow}{if} ((result = callback(collection[index], index, collection))) \{
+            \textcolor{keywordflow}{break};
+          \}
+        \}
+      \} \textcolor{keywordflow}{else} \{
+        baseEach(collection, \textcolor{keyword}{function}(value, index, collection) \{
+          \textcolor{keywordflow}{return} !(result = callback(value, index, collection));
+        \});
+      \}
+      \textcolor{keywordflow}{return} !!result;
+    \}
+
+    \textcolor{keyword}{function} sortBy(collection, callback, thisArg) \{
+      var index = -1,
+          isArr = isArray(callback),
+          length = collection ? collection.length : 0,
+          result = Array(typeof length == \textcolor{stringliteral}{'number'} ? length : 0);
+
+      \textcolor{keywordflow}{if} (!isArr) \{
+        callback = lodash.createCallback(callback, thisArg, 3);
+      \}
+      forEach(collection, \textcolor{keyword}{function}(value, key, collection) \{
+        var \textcolor{keywordtype}{object} = result[++index] = getObject();
+        \textcolor{keywordflow}{if} (isArr) \{
+          \textcolor{keywordtype}{object}.criteria = map(callback, \textcolor{keyword}{function}(key) \{ \textcolor{keywordflow}{return} value[key]; \});
+        \} \textcolor{keywordflow}{else} \{
+          (\textcolor{keywordtype}{object}.criteria = getArray())[0] = callback(value, key, collection);
+        \}
+        \textcolor{keywordtype}{object}.index = index;
+        \textcolor{keywordtype}{object}.value = value;
+      \});
+
+      length = result.length;
+      result.sort(compareAscending);
+      \textcolor{keywordflow}{while} (length--) \{
+        var \textcolor{keywordtype}{object} = result[length];
+        result[length] = \textcolor{keywordtype}{object}.value;
+        \textcolor{keywordflow}{if} (!isArr) \{
+          releaseArray(\textcolor{keywordtype}{object}.criteria);
+        \}
+        releaseObject(\textcolor{keywordtype}{object});
+      \}
+      \textcolor{keywordflow}{return} result;
+    \}
+
+    \textcolor{keyword}{function} toArray(collection) \{
+      \textcolor{keywordflow}{if} (collection && typeof collection.length == \textcolor{stringliteral}{'number'}) \{
+        \textcolor{keywordflow}{return} (support.unindexedChars && isString(collection))
+          ? collection.split(\textcolor{stringliteral}{''})
+          : slice(collection);
+      \}
+      \textcolor{keywordflow}{return} values(collection);
+    \}
+
+    var where = filter;
+
+    \textcolor{comment}{/*--------------------------------------------------------------------------*/}
+
+    \textcolor{keyword}{function} compact(array) \{
+      var index = -1,
+          length = array ? array.length : 0,
+          result = [];
+
+      \textcolor{keywordflow}{while} (++index < length) \{
+        var value = array[index];
+        \textcolor{keywordflow}{if} (value) \{
+          result.push(value);
+        \}
+      \}
+      \textcolor{keywordflow}{return} result;
+    \}
+
+    \textcolor{keyword}{function} difference(array) \{
+      \textcolor{keywordflow}{return} baseDifference(array, baseFlatten(arguments, \textcolor{keyword}{true}, \textcolor{keyword}{true}, 1));
+    \}
+
+    \textcolor{keyword}{function} findIndex(array, callback, thisArg) \{
+      var index = -1,
+          length = array ? array.length : 0;
+
+      callback = lodash.createCallback(callback, thisArg, 3);
+      \textcolor{keywordflow}{while} (++index < length) \{
+        \textcolor{keywordflow}{if} (callback(array[index], index, array)) \{
+          \textcolor{keywordflow}{return} index;
+        \}
+      \}
+      \textcolor{keywordflow}{return} -1;
+    \}
+
+    \textcolor{keyword}{function} findLastIndex(array, callback, thisArg) \{
+      var length = array ? array.length : 0;
+      callback = lodash.createCallback(callback, thisArg, 3);
+      \textcolor{keywordflow}{while} (length--) \{
+        \textcolor{keywordflow}{if} (callback(array[length], length, array)) \{
+          \textcolor{keywordflow}{return} length;
+        \}
+      \}
+      \textcolor{keywordflow}{return} -1;
+    \}
+
+    \textcolor{keyword}{function} first(array, callback, thisArg) \{
+      var n = 0,
+          length = array ? array.length : 0;
+
+      \textcolor{keywordflow}{if} (typeof callback != \textcolor{stringliteral}{'number'} && callback != null) \{
+        var index = -1;
+        callback = lodash.createCallback(callback, thisArg, 3);
+        \textcolor{keywordflow}{while} (++index < length && callback(array[index], index, array)) \{
+          n++;
+        \}
+      \} \textcolor{keywordflow}{else} \{
+        n = callback;
+        \textcolor{keywordflow}{if} (n == null || thisArg) \{
+          \textcolor{keywordflow}{return} array ? array[0] : undefined;
+        \}
+      \}
+      \textcolor{keywordflow}{return} slice(array, 0, nativeMin(nativeMax(0, n), length));
+    \}
+
+    \textcolor{keyword}{function} flatten(array, isShallow, callback, thisArg) \{
+      \textcolor{comment}{// juggle arguments}
+      \textcolor{keywordflow}{if} (typeof isShallow != \textcolor{stringliteral}{'boolean'} && isShallow != null) \{
+        thisArg = callback;
+        callback = (typeof isShallow != \textcolor{stringliteral}{'function'} && thisArg && thisArg[isShallow] === array) ? null : 
+      isShallow;
+        isShallow = \textcolor{keyword}{false};
+      \}
+      \textcolor{keywordflow}{if} (callback != null) \{
+        array = map(array, callback, thisArg);
+      \}
+      \textcolor{keywordflow}{return} baseFlatten(array, isShallow);
+    \}
+
+    \textcolor{keyword}{function} indexOf(array, value, fromIndex) \{
+      \textcolor{keywordflow}{if} (typeof fromIndex == \textcolor{stringliteral}{'number'}) \{
+        var length = array ? array.length : 0;
+        fromIndex = (fromIndex < 0 ? nativeMax(0, length + fromIndex) : fromIndex || 0);
+      \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (fromIndex) \{
+        var index = sortedIndex(array, value);
+        \textcolor{keywordflow}{return} array[index] === value ? index : -1;
+      \}
+      \textcolor{keywordflow}{return} baseIndexOf(array, value, fromIndex);
+    \}
+
+    \textcolor{keyword}{function} initial(array, callback, thisArg) \{
+      var n = 0,
+          length = array ? array.length : 0;
+
+      \textcolor{keywordflow}{if} (typeof callback != \textcolor{stringliteral}{'number'} && callback != null) \{
+        var index = length;
+        callback = lodash.createCallback(callback, thisArg, 3);
+        \textcolor{keywordflow}{while} (index-- && callback(array[index], index, array)) \{
+          n++;
+        \}
+      \} \textcolor{keywordflow}{else} \{
+        n = (callback == null || thisArg) ? 1 : callback || n;
+      \}
+      \textcolor{keywordflow}{return} slice(array, 0, nativeMin(nativeMax(0, length - n), length));
+    \}
+
+    \textcolor{keyword}{function} intersection() \{
+      var args = [],
+          argsIndex = -1,
+          argsLength = arguments.length,
+          caches = getArray(),
+          indexOf = getIndexOf(),
+          trustIndexOf = indexOf === baseIndexOf,
+          seen = getArray();
+
+      \textcolor{keywordflow}{while} (++argsIndex < argsLength) \{
+        var value = arguments[argsIndex];
+        \textcolor{keywordflow}{if} (isArray(value) || isArguments(value)) \{
+          args.push(value);
+          caches.push(trustIndexOf && value.length >= largeArraySize &&
+            createCache(argsIndex ? args[argsIndex] : seen));
+        \}
+      \}
+      var array = args[0],
+          index = -1,
+          length = array ? array.length : 0,
+          result = [];
+
+      outer:
+      \textcolor{keywordflow}{while} (++index < length) \{
+        var cache = caches[0];
+        value = array[index];
+
+        \textcolor{keywordflow}{if} ((cache ? cacheIndexOf(cache, value) : indexOf(seen, value)) < 0) \{
+          argsIndex = argsLength;
+          (cache || seen).push(value);
+          \textcolor{keywordflow}{while} (--argsIndex) \{
+            cache = caches[argsIndex];
+            \textcolor{keywordflow}{if} ((cache ? cacheIndexOf(cache, value) : indexOf(args[argsIndex], value)) < 0) \{
+              \textcolor{keywordflow}{continue} outer;
+            \}
+          \}
+          result.push(value);
+        \}
+      \}
+      \textcolor{keywordflow}{while} (argsLength--) \{
+        cache = caches[argsLength];
+        \textcolor{keywordflow}{if} (cache) \{
+          releaseObject(cache);
+        \}
+      \}
+      releaseArray(caches);
+      releaseArray(seen);
+      \textcolor{keywordflow}{return} result;
+    \}
+
+    \textcolor{keyword}{function} last(array, callback, thisArg) \{
+      var n = 0,
+          length = array ? array.length : 0;
+
+      \textcolor{keywordflow}{if} (typeof callback != \textcolor{stringliteral}{'number'} && callback != null) \{
+        var index = length;
+        callback = lodash.createCallback(callback, thisArg, 3);
+        \textcolor{keywordflow}{while} (index-- && callback(array[index], index, array)) \{
+          n++;
+        \}
+      \} \textcolor{keywordflow}{else} \{
+        n = callback;
+        \textcolor{keywordflow}{if} (n == null || thisArg) \{
+          \textcolor{keywordflow}{return} array ? array[length - 1] : undefined;
+        \}
+      \}
+      \textcolor{keywordflow}{return} slice(array, nativeMax(0, length - n));
+    \}
+
+    \textcolor{keyword}{function} lastIndexOf(array, value, fromIndex) \{
+      var index = array ? array.length : 0;
+      \textcolor{keywordflow}{if} (typeof fromIndex == \textcolor{stringliteral}{'number'}) \{
+        index = (fromIndex < 0 ? nativeMax(0, index + fromIndex) : nativeMin(fromIndex, index - 1)) + 1;
+      \}
+      \textcolor{keywordflow}{while} (index--) \{
+        \textcolor{keywordflow}{if} (array[index] === value) \{
+          \textcolor{keywordflow}{return} index;
+        \}
+      \}
+      \textcolor{keywordflow}{return} -1;
+    \}
+
+    \textcolor{keyword}{function} pull(array) \{
+      var args = arguments,
+          argsIndex = 0,
+          argsLength = args.length,
+          length = array ? array.length : 0;
+
+      \textcolor{keywordflow}{while} (++argsIndex < argsLength) \{
+        var index = -1,
+            value = args[argsIndex];
+        \textcolor{keywordflow}{while} (++index < length) \{
+          \textcolor{keywordflow}{if} (array[index] === value) \{
+            splice.call(array, index--, 1);
+            length--;
+          \}
+        \}
+      \}
+      \textcolor{keywordflow}{return} array;
+    \}
+
+    \textcolor{keyword}{function} range(start, end, step) \{
+      start = +start || 0;
+      step = typeof step == \textcolor{stringliteral}{'number'} ? step : (+step || 1);
+
+      \textcolor{keywordflow}{if} (end == null) \{
+        end = start;
+        start = 0;
+      \}
+      \textcolor{comment}{// use `Array(length)` so engines like Chakra and V8 avoid slower modes}
+      \textcolor{comment}{// http://youtu.be/XAqIpGU8ZZk#t=17m25s}
+      var index = -1,
+          length = nativeMax(0, ceil((end - start) / (step || 1))),
+          result = Array(length);
+
+      \textcolor{keywordflow}{while} (++index < length) \{
+        result[index] = start;
+        start += step;
+      \}
+      \textcolor{keywordflow}{return} result;
+    \}
+
+    \textcolor{keyword}{function} \textcolor{keyword}{remove}(array, callback, thisArg) \{
+      var index = -1,
+          length = array ? array.length : 0,
+          result = [];
+
+      callback = lodash.createCallback(callback, thisArg, 3);
+      \textcolor{keywordflow}{while} (++index < length) \{
+        var value = array[index];
+        \textcolor{keywordflow}{if} (callback(value, index, array)) \{
+          result.push(value);
+          splice.call(array, index--, 1);
+          length--;
+        \}
+      \}
+      \textcolor{keywordflow}{return} result;
+    \}
+
+    \textcolor{keyword}{function} rest(array, callback, thisArg) \{
+      \textcolor{keywordflow}{if} (typeof callback != \textcolor{stringliteral}{'number'} && callback != null) \{
+        var n = 0,
+            index = -1,
+            length = array ? array.length : 0;
+
+        callback = lodash.createCallback(callback, thisArg, 3);
+        \textcolor{keywordflow}{while} (++index < length && callback(array[index], index, array)) \{
+          n++;
+        \}
+      \} \textcolor{keywordflow}{else} \{
+        n = (callback == null || thisArg) ? 1 : nativeMax(0, callback);
+      \}
+      \textcolor{keywordflow}{return} slice(array, n);
+    \}
+
+    \textcolor{keyword}{function} sortedIndex(array, value, callback, thisArg) \{
+      var low = 0,
+          high = array ? array.length : low;
+
+      \textcolor{comment}{// explicitly reference `identity` for better inlining in Firefox}
+      callback = callback ? lodash.createCallback(callback, thisArg, 1) : identity;
+      value = callback(value);
+
+      \textcolor{keywordflow}{while} (low < high) \{
+        var mid = (low + high) >>> 1;
+        (callback(array[mid]) < value)
+          ? low = mid + 1
+          : high = mid;
+      \}
+      \textcolor{keywordflow}{return} low;
+    \}
+
+    \textcolor{keyword}{function} \textcolor{keyword}{union}() \{
+      \textcolor{keywordflow}{return} baseUniq(baseFlatten(arguments, \textcolor{keyword}{true}, \textcolor{keyword}{true}));
+    \}
+
+    \textcolor{keyword}{function} uniq(array, isSorted, callback, thisArg) \{
+      \textcolor{comment}{// juggle arguments}
+      \textcolor{keywordflow}{if} (typeof isSorted != \textcolor{stringliteral}{'boolean'} && isSorted != null) \{
+        thisArg = callback;
+        callback = (typeof isSorted != \textcolor{stringliteral}{'function'} && thisArg && thisArg[isSorted] === array) ? null : 
+      isSorted;
+        isSorted = \textcolor{keyword}{false};
+      \}
+      \textcolor{keywordflow}{if} (callback != null) \{
+        callback = lodash.createCallback(callback, thisArg, 3);
+      \}
+      \textcolor{keywordflow}{return} baseUniq(array, isSorted, callback);
+    \}
+
+    \textcolor{keyword}{function} without(array) \{
+      \textcolor{keywordflow}{return} baseDifference(array, slice(arguments, 1));
+    \}
+
+    \textcolor{keyword}{function} xor() \{
+      var index = -1,
+          length = arguments.length;
+
+      \textcolor{keywordflow}{while} (++index < length) \{
+        var array = arguments[index];
+        \textcolor{keywordflow}{if} (isArray(array) || isArguments(array)) \{
+          var result = result
+            ? baseUniq(baseDifference(result, array).concat(baseDifference(array, result)))
+            : array;
+        \}
+      \}
+      \textcolor{keywordflow}{return} result || [];
+    \}
+
+    \textcolor{keyword}{function} zip() \{
+      var array = arguments.length > 1 ? arguments : arguments[0],
+          index = -1,
+          length = array ? max(pluck(array, \textcolor{stringliteral}{'length'})) : 0,
+          result = Array(length < 0 ? 0 : length);
+
+      \textcolor{keywordflow}{while} (++index < length) \{
+        result[index] = pluck(array, index);
+      \}
+      \textcolor{keywordflow}{return} result;
+    \}
+
+    \textcolor{keyword}{function} zipObject(keys, values) \{
+      var index = -1,
+          length = keys ? keys.length : 0,
+          result = \{\};
+
+      \textcolor{keywordflow}{if} (!values && length && !isArray(keys[0])) \{
+        values = [];
+      \}
+      \textcolor{keywordflow}{while} (++index < length) \{
+        var key = keys[index];
+        \textcolor{keywordflow}{if} (values) \{
+          result[key] = values[index];
+        \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (key) \{
+          result[key[0]] = key[1];
+        \}
+      \}
+      \textcolor{keywordflow}{return} result;
+    \}
+
+    \textcolor{comment}{/*--------------------------------------------------------------------------*/}
+
+    \textcolor{keyword}{function} after(n, func) \{
+      \textcolor{keywordflow}{if} (!isFunction(func)) \{
+        \textcolor{keywordflow}{throw} \textcolor{keyword}{new} TypeError;
+      \}
+      \textcolor{keywordflow}{return} \textcolor{keyword}{function}() \{
+        \textcolor{keywordflow}{if} (--n < 1) \{
+          \textcolor{keywordflow}{return} func.apply(\textcolor{keyword}{this}, arguments);
+        \}
+      \};
+    \}
+
+    \textcolor{keyword}{function} bind(func, thisArg) \{
+      \textcolor{keywordflow}{return} arguments.length > 2
+        ? createWrapper(func, 17, slice(arguments, 2), null, thisArg)
+        : createWrapper(func, 1, null, null, thisArg);
+    \}
+
+    \textcolor{keyword}{function} bindAll(\textcolor{keywordtype}{object}) \{
+      var funcs = arguments.length > 1 ? baseFlatten(arguments, \textcolor{keyword}{true}, \textcolor{keyword}{false}, 1) : functions(object),
+          index = -1,
+          length = funcs.length;
+
+      \textcolor{keywordflow}{while} (++index < length) \{
+        var key = funcs[index];
+        \textcolor{keywordtype}{object}[key] = createWrapper(\textcolor{keywordtype}{object}[key], 1, null, null, \textcolor{keywordtype}{object});
+      \}
+      \textcolor{keywordflow}{return} object;
+    \}
+
+    \textcolor{keyword}{function} bindKey(\textcolor{keywordtype}{object}, key) \{
+      \textcolor{keywordflow}{return} arguments.length > 2
+        ? createWrapper(key, 19, slice(arguments, 2), null, \textcolor{keywordtype}{object})
+        : createWrapper(key, 3, null, null, object);
+    \}
+
+    \textcolor{keyword}{function} compose() \{
+      var funcs = arguments,
+          length = funcs.length;
+
+      \textcolor{keywordflow}{while} (length--) \{
+        \textcolor{keywordflow}{if} (!isFunction(funcs[length])) \{
+          \textcolor{keywordflow}{throw} \textcolor{keyword}{new} TypeError;
+        \}
+      \}
+      \textcolor{keywordflow}{return} \textcolor{keyword}{function}() \{
+        var args = arguments,
+            length = funcs.length;
+
+        \textcolor{keywordflow}{while} (length--) \{
+          args = [funcs[length].apply(\textcolor{keyword}{this}, args)];
+        \}
+        \textcolor{keywordflow}{return} args[0];
+      \};
+    \}
+
+    \textcolor{keyword}{function} curry(func, arity) \{
+      arity = typeof arity == \textcolor{stringliteral}{'number'} ? arity : (+arity || func.length);
+      \textcolor{keywordflow}{return} createWrapper(func, 4, null, null, null, arity);
+    \}
+
+    \textcolor{keyword}{function} debounce(func, wait, options) \{
+      var args,
+          maxTimeoutId,
+          result,
+          stamp,
+          thisArg,
+          timeoutId,
+          trailingCall,
+          lastCalled = 0,
+          maxWait = \textcolor{keyword}{false},
+          trailing = \textcolor{keyword}{true};
+
+      \textcolor{keywordflow}{if} (!isFunction(func)) \{
+        \textcolor{keywordflow}{throw} \textcolor{keyword}{new} TypeError;
+      \}
+      wait = nativeMax(0, wait) || 0;
+      \textcolor{keywordflow}{if} (options === \textcolor{keyword}{true}) \{
+        var leading = \textcolor{keyword}{true};
+        trailing = \textcolor{keyword}{false};
+      \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (isObject(options)) \{
+        leading = options.leading;
+        maxWait = \textcolor{stringliteral}{'maxWait'} in options && (nativeMax(wait, options.maxWait) || 0);
+        trailing = \textcolor{stringliteral}{'trailing'} in options ? options.trailing : trailing;
+      \}
+      var delayed = \textcolor{keyword}{function}() \{
+        var remaining = wait - (now() - stamp);
+        \textcolor{keywordflow}{if} (remaining <= 0) \{
+          \textcolor{keywordflow}{if} (maxTimeoutId) \{
+            clearTimeout(maxTimeoutId);
+          \}
+          var isCalled = trailingCall;
+          maxTimeoutId = timeoutId = trailingCall = undefined;
+          \textcolor{keywordflow}{if} (isCalled) \{
+            lastCalled = now();
+            result = func.apply(thisArg, args);
+            \textcolor{keywordflow}{if} (!timeoutId && !maxTimeoutId) \{
+              args = thisArg = null;
+            \}
+          \}
+        \} \textcolor{keywordflow}{else} \{
+          timeoutId = setTimeout(delayed, remaining);
+        \}
+      \};
+
+      var maxDelayed = \textcolor{keyword}{function}() \{
+        \textcolor{keywordflow}{if} (timeoutId) \{
+          clearTimeout(timeoutId);
+        \}
+        maxTimeoutId = timeoutId = trailingCall = undefined;
+        \textcolor{keywordflow}{if} (trailing || (maxWait !== wait)) \{
+          lastCalled = now();
+          result = func.apply(thisArg, args);
+          \textcolor{keywordflow}{if} (!timeoutId && !maxTimeoutId) \{
+            args = thisArg = null;
+          \}
+        \}
+      \};
+
+      \textcolor{keywordflow}{return} \textcolor{keyword}{function}() \{
+        args = arguments;
+        stamp = now();
+        thisArg = \textcolor{keyword}{this};
+        trailingCall = trailing && (timeoutId || !leading);
+
+        \textcolor{keywordflow}{if} (maxWait === \textcolor{keyword}{false}) \{
+          var leadingCall = leading && !timeoutId;
+        \} \textcolor{keywordflow}{else} \{
+          \textcolor{keywordflow}{if} (!maxTimeoutId && !leading) \{
+            lastCalled = stamp;
+          \}
+          var remaining = maxWait - (stamp - lastCalled),
+              isCalled = remaining <= 0;
+
+          \textcolor{keywordflow}{if} (isCalled) \{
+            \textcolor{keywordflow}{if} (maxTimeoutId) \{
+              maxTimeoutId = clearTimeout(maxTimeoutId);
+            \}
+            lastCalled = stamp;
+            result = func.apply(thisArg, args);
+          \}
+          \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (!maxTimeoutId) \{
+            maxTimeoutId = setTimeout(maxDelayed, remaining);
+          \}
+        \}
+        \textcolor{keywordflow}{if} (isCalled && timeoutId) \{
+          timeoutId = clearTimeout(timeoutId);
+        \}
+        \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (!timeoutId && wait !== maxWait) \{
+          timeoutId = setTimeout(delayed, wait);
+        \}
+        \textcolor{keywordflow}{if} (leadingCall) \{
+          isCalled = \textcolor{keyword}{true};
+          result = func.apply(thisArg, args);
+        \}
+        \textcolor{keywordflow}{if} (isCalled && !timeoutId && !maxTimeoutId) \{
+          args = thisArg = null;
+        \}
+        \textcolor{keywordflow}{return} result;
+      \};
+    \}
+
+    \textcolor{keyword}{function} defer(func) \{
+      \textcolor{keywordflow}{if} (!isFunction(func)) \{
+        \textcolor{keywordflow}{throw} \textcolor{keyword}{new} TypeError;
+      \}
+      var args = slice(arguments, 1);
+      \textcolor{keywordflow}{return} setTimeout(\textcolor{keyword}{function}() \{ func.apply(undefined, args); \}, 1);
+    \}
+
+    \textcolor{keyword}{function} delay(func, wait) \{
+      \textcolor{keywordflow}{if} (!isFunction(func)) \{
+        \textcolor{keywordflow}{throw} \textcolor{keyword}{new} TypeError;
+      \}
+      var args = slice(arguments, 2);
+      \textcolor{keywordflow}{return} setTimeout(\textcolor{keyword}{function}() \{ func.apply(undefined, args); \}, wait);
+    \}
+
+    \textcolor{keyword}{function} memoize(func, resolver) \{
+      \textcolor{keywordflow}{if} (!isFunction(func)) \{
+        \textcolor{keywordflow}{throw} \textcolor{keyword}{new} TypeError;
+      \}
+      var memoized = \textcolor{keyword}{function}() \{
+        var cache = memoized.cache,
+            key = resolver ? resolver.apply(\textcolor{keyword}{this}, arguments) : keyPrefix + arguments[0];
+
+        \textcolor{keywordflow}{return} hasOwnProperty.call(cache, key)
+          ? cache[key]
+          : (cache[key] = func.apply(\textcolor{keyword}{this}, arguments));
+      \}
+      memoized.cache = \{\};
+      \textcolor{keywordflow}{return} memoized;
+    \}
+
+    \textcolor{keyword}{function} once(func) \{
+      var ran,
+          result;
+
+      \textcolor{keywordflow}{if} (!isFunction(func)) \{
+        \textcolor{keywordflow}{throw} \textcolor{keyword}{new} TypeError;
+      \}
+      \textcolor{keywordflow}{return} \textcolor{keyword}{function}() \{
+        \textcolor{keywordflow}{if} (ran) \{
+          \textcolor{keywordflow}{return} result;
+        \}
+        ran = \textcolor{keyword}{true};
+        result = func.apply(\textcolor{keyword}{this}, arguments);
+
+        \textcolor{comment}{// clear the `func` variable so the function may be garbage collected}
+        func = null;
+        \textcolor{keywordflow}{return} result;
+      \};
+    \}
+
+    \textcolor{keyword}{function} partial(func) \{
+      \textcolor{keywordflow}{return} createWrapper(func, 16, slice(arguments, 1));
+    \}
+
+    \textcolor{keyword}{function} partialRight(func) \{
+      \textcolor{keywordflow}{return} createWrapper(func, 32, null, slice(arguments, 1));
+    \}
+
+    \textcolor{keyword}{function} throttle(func, wait, options) \{
+      var leading = \textcolor{keyword}{true},
+          trailing = \textcolor{keyword}{true};
+
+      \textcolor{keywordflow}{if} (!isFunction(func)) \{
+        \textcolor{keywordflow}{throw} \textcolor{keyword}{new} TypeError;
+      \}
+      \textcolor{keywordflow}{if} (options === \textcolor{keyword}{false}) \{
+        leading = \textcolor{keyword}{false};
+      \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (isObject(options)) \{
+        leading = \textcolor{stringliteral}{'leading'} in options ? options.leading : leading;
+        trailing = \textcolor{stringliteral}{'trailing'} in options ? options.trailing : trailing;
+      \}
+      debounceOptions.leading = leading;
+      debounceOptions.maxWait = wait;
+      debounceOptions.trailing = trailing;
+
+      \textcolor{keywordflow}{return} debounce(func, wait, debounceOptions);
+    \}
+
+    \textcolor{keyword}{function} wrap(value, wrapper) \{
+      \textcolor{keywordflow}{return} createWrapper(wrapper, 16, [value]);
+    \}
+
+    \textcolor{comment}{/*--------------------------------------------------------------------------*/}
+
+    \textcolor{keyword}{function} constant(value) \{
+      \textcolor{keywordflow}{return} \textcolor{keyword}{function}() \{
+        \textcolor{keywordflow}{return} value;
+      \};
+    \}
+
+    \textcolor{keyword}{function} createCallback(func, thisArg, argCount) \{
+      var type = typeof func;
+      \textcolor{keywordflow}{if} (func == null || type == \textcolor{stringliteral}{'function'}) \{
+        \textcolor{keywordflow}{return} baseCreateCallback(func, thisArg, argCount);
+      \}
+      \textcolor{comment}{// handle "\_.pluck" style callback shorthands}
+      \textcolor{keywordflow}{if} (type != \textcolor{stringliteral}{'object'}) \{
+        \textcolor{keywordflow}{return} property(func);
+      \}
+      var props = keys(func),
+          key = props[0],
+          a = func[key];
+
+      \textcolor{comment}{// handle "\_.where" style callback shorthands}
+      \textcolor{keywordflow}{if} (props.length == 1 && a === a && !isObject(a)) \{
+        \textcolor{comment}{// fast path the common case of providing an object with a single}
+        \textcolor{comment}{// property containing a primitive value}
+        \textcolor{keywordflow}{return} \textcolor{keyword}{function}(object) \{
+          var b = \textcolor{keywordtype}{object}[key];
+          \textcolor{keywordflow}{return} a === b && (a !== 0 || (1 / a == 1 / b));
+        \};
+      \}
+      \textcolor{keywordflow}{return} \textcolor{keyword}{function}(object) \{
+        var length = props.length,
+            result = \textcolor{keyword}{false};
+
+        \textcolor{keywordflow}{while} (length--) \{
+          \textcolor{keywordflow}{if} (!(result = baseIsEqual(\textcolor{keywordtype}{object}[props[length]], func[props[length]], null, \textcolor{keyword}{true}))) \{
+            \textcolor{keywordflow}{break};
+          \}
+        \}
+        \textcolor{keywordflow}{return} result;
+      \};
+    \}
+
+    \textcolor{keyword}{function} escape(\textcolor{keywordtype}{string}) \{
+      \textcolor{keywordflow}{return} \textcolor{keywordtype}{string} == null ? \textcolor{stringliteral}{''} : String(\textcolor{keywordtype}{string}).replace(reUnescapedHtml, escapeHtmlChar);
+    \}
+
+    \textcolor{keyword}{function} identity(value) \{
+      \textcolor{keywordflow}{return} value;
+    \}
+
+    \textcolor{keyword}{function} mixin(\textcolor{keywordtype}{object}, source, options) \{
+      var chain = \textcolor{keyword}{true},
+          methodNames = source && functions(source);
+
+      \textcolor{keywordflow}{if} (!source || (!options && !methodNames.length)) \{
+        \textcolor{keywordflow}{if} (options == null) \{
+          options = source;
+        \}
+        ctor = lodashWrapper;
+        source = object;
+        \textcolor{keywordtype}{object} = lodash;
+        methodNames = functions(source);
+      \}
+      \textcolor{keywordflow}{if} (options === \textcolor{keyword}{false}) \{
+        chain = \textcolor{keyword}{false};
+      \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (isObject(options) && \textcolor{stringliteral}{'chain'} in options) \{
+        chain = options.chain;
+      \}
+      var ctor = object,
+          isFunc = isFunction(ctor);
+
+      forEach(methodNames, \textcolor{keyword}{function}(methodName) \{
+        var func = \textcolor{keywordtype}{object}[methodName] = source[methodName];
+        \textcolor{keywordflow}{if} (isFunc) \{
+          ctor.prototype[methodName] = \textcolor{keyword}{function}() \{
+            var chainAll = this.\_\_chain\_\_,
+                value = this.\_\_wrapped\_\_,
+                args = [value];
+
+            push.apply(args, arguments);
+            var result = func.apply(\textcolor{keywordtype}{object}, args);
+            \textcolor{keywordflow}{if} (chain || chainAll) \{
+              \textcolor{keywordflow}{if} (value === result && isObject(result)) \{
+                \textcolor{keywordflow}{return} \textcolor{keyword}{this};
+              \}
+              result = \textcolor{keyword}{new} ctor(result);
+              result.\_\_chain\_\_ = chainAll;
+            \}
+            \textcolor{keywordflow}{return} result;
+          \};
+        \}
+      \});
+    \}
+
+    \textcolor{keyword}{function} noConflict() \{
+      context.\_ = oldDash;
+      \textcolor{keywordflow}{return} \textcolor{keyword}{this};
+    \}
+
+    \textcolor{keyword}{function} noop() \{
+      \textcolor{comment}{// no operation performed}
+    \}
+
+    var now = isNative(now = Date.now) && now || \textcolor{keyword}{function}() \{
+      \textcolor{keywordflow}{return} \textcolor{keyword}{new} Date().getTime();
+    \};
+
+    var parseInt = nativeParseInt(whitespace + \textcolor{stringliteral}{'08'}) == 8 ? nativeParseInt : \textcolor{keyword}{function}(value, radix) \{
+      \textcolor{comment}{// Firefox < 21 and Opera < 15 follow the ES3 specified implementation of `parseInt`}
+      \textcolor{keywordflow}{return} nativeParseInt(isString(value) ? value.replace(reLeadingSpacesAndZeros, \textcolor{stringliteral}{''}) : value, radix || 
+      0);
+    \};
+
+    \textcolor{keyword}{function} property(key) \{
+      \textcolor{keywordflow}{return} \textcolor{keyword}{function}(object) \{
+        \textcolor{keywordflow}{return} \textcolor{keywordtype}{object}[key];
+      \};
+    \}
+
+    \textcolor{keyword}{function} random(min, max, floating) \{
+      var noMin = min == null,
+          noMax = max == null;
+
+      \textcolor{keywordflow}{if} (floating == null) \{
+        \textcolor{keywordflow}{if} (typeof min == \textcolor{stringliteral}{'boolean'} && noMax) \{
+          floating = min;
+          min = 1;
+        \}
+        \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (!noMax && typeof max == \textcolor{stringliteral}{'boolean'}) \{
+          floating = max;
+          noMax = \textcolor{keyword}{true};
+        \}
+      \}
+      \textcolor{keywordflow}{if} (noMin && noMax) \{
+        max = 1;
+      \}
+      min = +min || 0;
+      \textcolor{keywordflow}{if} (noMax) \{
+        max = min;
+        min = 0;
+      \} \textcolor{keywordflow}{else} \{
+        max = +max || 0;
+      \}
+      \textcolor{keywordflow}{if} (floating || min % 1 || max % 1) \{
+        var rand = nativeRandom();
+        \textcolor{keywordflow}{return} nativeMin(min + (rand * (max - min + parseFloat(\textcolor{stringliteral}{'1e-'} + ((rand +\textcolor{stringliteral}{''}).length - 1)))), max);
+      \}
+      \textcolor{keywordflow}{return} baseRandom(min, max);
+    \}
+
+    \textcolor{keyword}{function} result(\textcolor{keywordtype}{object}, key) \{
+      \textcolor{keywordflow}{if} (\textcolor{keywordtype}{object}) \{
+        var value = \textcolor{keywordtype}{object}[key];
+        \textcolor{keywordflow}{return} isFunction(value) ? \textcolor{keywordtype}{object}[key]() : value;
+      \}
+    \}
+
+    \textcolor{keyword}{function} \textcolor{keyword}{template}(text, data, options) \{
+      \textcolor{comment}{// based on John Resig's `tmpl` implementation}
+      \textcolor{comment}{// http://ejohn.org/blog/javascript-micro-templating/}
+      \textcolor{comment}{// and Laura Doktorova's doT.js}
+      \textcolor{comment}{// https://github.com/olado/doT}
+      var settings = lodash.templateSettings;
+      text = String(text || \textcolor{stringliteral}{''});
+
+      \textcolor{comment}{// avoid missing dependencies when `iteratorTemplate` is not defined}
+      options = defaults(\{\}, options, settings);
+
+      var imports = defaults(\{\}, options.imports, settings.imports),
+          importsKeys = keys(imports),
+          importsValues = values(imports);
+
+      var isEvaluating,
+          index = 0,
+          interpolate = options.interpolate || reNoMatch,
+          source = \textcolor{stringliteral}{"\_\_p += '"};
+
+      \textcolor{comment}{// compile the regexp to match each delimiter}
+      var reDelimiters = RegExp(
+        (options.escape || reNoMatch).source + \textcolor{charliteral}{'|'} +
+        interpolate.source + \textcolor{charliteral}{'|'} +
+        (interpolate === reInterpolate ? reEsTemplate : reNoMatch).source + \textcolor{charliteral}{'|'} +
+        (options.evaluate || reNoMatch).source + \textcolor{stringliteral}{'|$'}
+      , \textcolor{charliteral}{'g'});
+
+      text.replace(reDelimiters, \textcolor{keyword}{function}(match, escapeValue, interpolateValue, esTemplateValue, 
+      evaluateValue, offset) \{
+        interpolateValue || (interpolateValue = esTemplateValue);
+
+        \textcolor{comment}{// escape characters that cannot be included in string literals}
+        source += text.slice(index, offset).replace(reUnescapedString, escapeStringChar);
+
+        \textcolor{comment}{// replace delimiters with snippets}
+        \textcolor{keywordflow}{if} (escapeValue) \{
+          source += \textcolor{stringliteral}{"' +\(\backslash\)n\_\_e("} + escapeValue + \textcolor{stringliteral}{") +\(\backslash\)n'"};
+        \}
+        \textcolor{keywordflow}{if} (evaluateValue) \{
+          isEvaluating = \textcolor{keyword}{true};
+          source += \textcolor{stringliteral}{"';\(\backslash\)n"} + evaluateValue + \textcolor{stringliteral}{";\(\backslash\)n\_\_p += '"};
+        \}
+        \textcolor{keywordflow}{if} (interpolateValue) \{
+          source += \textcolor{stringliteral}{"' +\(\backslash\)n((\_\_t = ("} + interpolateValue + \textcolor{stringliteral}{")) == null ? '' : \_\_t) +\(\backslash\)n'"};
+        \}
+        index = offset + match.length;
+
+        \textcolor{comment}{// the JS engine embedded in Adobe products requires returning the `match`}
+        \textcolor{comment}{// string in order to produce the correct `offset` value}
+        \textcolor{keywordflow}{return} match;
+      \});
+
+      source += \textcolor{stringliteral}{"';\(\backslash\)n"};
+
+      \textcolor{comment}{// if `variable` is not specified, wrap a with-statement around the generated}
+      \textcolor{comment}{// code to add the data object to the top of the scope chain}
+      var variable = options.variable,
+          hasVariable = variable;
+
+      \textcolor{keywordflow}{if} (!hasVariable) \{
+        variable = \textcolor{stringliteral}{'obj'};
+        source = \textcolor{stringliteral}{'with ('} + variable + \textcolor{stringliteral}{') \{\(\backslash\)n'} + source + \textcolor{stringliteral}{'\(\backslash\)n\}\(\backslash\)n'};
+      \}
+      \textcolor{comment}{// cleanup code by stripping empty strings}
+      source = (isEvaluating ? source.replace(reEmptyStringLeading, \textcolor{stringliteral}{''}) : source)
+        .replace(reEmptyStringMiddle, \textcolor{stringliteral}{'$1'})
+        .replace(reEmptyStringTrailing, \textcolor{stringliteral}{'$1;'});
+
+      \textcolor{comment}{// frame code as the function body}
+      source = \textcolor{stringliteral}{'function('} + variable + \textcolor{stringliteral}{') \{\(\backslash\)n'} +
+        (hasVariable ? \textcolor{stringliteral}{''} : variable + \textcolor{stringliteral}{' || ('} + variable + \textcolor{stringliteral}{' = \{\});\(\backslash\)n'}) +
+        \textcolor{stringliteral}{"var \_\_t, \_\_p = '', \_\_e = \_.escape"} +
+        (isEvaluating
+          ? \textcolor{stringliteral}{', \_\_j = Array.prototype.join;\(\backslash\)n'} +
+            \textcolor{stringliteral}{"function print() \{ \_\_p += \_\_j.call(arguments, '') \}\(\backslash\)n"}
+          : \textcolor{stringliteral}{';\(\backslash\)n'}
+        ) +
+        source +
+        \textcolor{stringliteral}{'return \_\_p\(\backslash\)n\}'};
+
+      \textcolor{comment}{// Use a sourceURL for easier debugging.}
+      \textcolor{comment}{// http://www.html5rocks.com/en/tutorials/developertools/sourcemaps/#toc-sourceurl}
+      var sourceURL = \textcolor{stringliteral}{'\(\backslash\)n/*\(\backslash\)n//# sourceURL='} + (options.sourceURL || \textcolor{stringliteral}{'/lodash/template/source['} + (
+      templateCounter++) + \textcolor{charliteral}{']'}) + \textcolor{stringliteral}{'\(\backslash\)n*/'};
+
+      \textcolor{keywordflow}{try} \{
+        var result = Function(importsKeys, \textcolor{stringliteral}{'return '} + source + sourceURL).apply(undefined, importsValues);
+      \} \textcolor{keywordflow}{catch}(e) \{
+        e.source = source;
+        \textcolor{keywordflow}{throw} e;
+      \}
+      \textcolor{keywordflow}{if} (data) \{
+        \textcolor{keywordflow}{return} result(data);
+      \}
+      \textcolor{comment}{// provide the compiled function's source by its `toString` method, in}
+      \textcolor{comment}{// supported environments, or the `source` property as a convenience for}
+      \textcolor{comment}{// inlining compiled templates during the build process}
+      result.source = source;
+      \textcolor{keywordflow}{return} result;
+    \}
+
+    \textcolor{keyword}{function} times(n, callback, thisArg) \{
+      n = (n = +n) > -1 ? n : 0;
+      var index = -1,
+          result = Array(n);
+
+      callback = baseCreateCallback(callback, thisArg, 1);
+      \textcolor{keywordflow}{while} (++index < n) \{
+        result[index] = callback(index);
+      \}
+      \textcolor{keywordflow}{return} result;
+    \}
+
+    \textcolor{keyword}{function} unescape(\textcolor{keywordtype}{string}) \{
+      \textcolor{keywordflow}{return} \textcolor{keywordtype}{string} == null ? \textcolor{stringliteral}{''} : String(\textcolor{keywordtype}{string}).replace(reEscapedHtml, unescapeHtmlChar);
+    \}
+
+    \textcolor{keyword}{function} uniqueId(prefix) \{
+      var \textcolor{keywordtype}{id} = ++idCounter;
+      \textcolor{keywordflow}{return} String(prefix == null ? \textcolor{stringliteral}{''} : prefix) + id;
+    \}
+
+    \textcolor{comment}{/*--------------------------------------------------------------------------*/}
+
+    \textcolor{keyword}{function} chain(value) \{
+      value = \textcolor{keyword}{new} lodashWrapper(value);
+      value.\_\_chain\_\_ = \textcolor{keyword}{true};
+      \textcolor{keywordflow}{return} value;
+    \}
+
+    \textcolor{keyword}{function} tap(value, interceptor) \{
+      interceptor(value);
+      \textcolor{keywordflow}{return} value;
+    \}
+
+    \textcolor{keyword}{function} wrapperChain() \{
+      this.\_\_chain\_\_ = \textcolor{keyword}{true};
+      \textcolor{keywordflow}{return} \textcolor{keyword}{this};
+    \}
+
+    \textcolor{keyword}{function} wrapperToString() \{
+      \textcolor{keywordflow}{return} String(this.\_\_wrapped\_\_);
+    \}
+
+    \textcolor{keyword}{function} wrapperValueOf() \{
+      \textcolor{keywordflow}{return} this.\_\_wrapped\_\_;
+    \}
+
+    \textcolor{comment}{/*--------------------------------------------------------------------------*/}
+
+    \textcolor{comment}{// add functions that return wrapped values when chaining}
+    lodash.after = after;
+    lodash.assign = assign;
+    lodash.at = at;
+    lodash.bind = bind;
+    lodash.bindAll = bindAll;
+    lodash.bindKey = bindKey;
+    lodash.chain = chain;
+    lodash.compact = compact;
+    lodash.compose = compose;
+    lodash.constant = constant;
+    lodash.countBy = countBy;
+    lodash.create = create;
+    lodash.createCallback = createCallback;
+    lodash.curry = curry;
+    lodash.debounce = debounce;
+    lodash.defaults = defaults;
+    lodash.defer = defer;
+    lodash.delay = delay;
+    lodash.difference = difference;
+    lodash.filter = filter;
+    lodash.flatten = flatten;
+    lodash.forEach = forEach;
+    lodash.forEachRight = forEachRight;
+    lodash.forIn = forIn;
+    lodash.forInRight = forInRight;
+    lodash.forOwn = forOwn;
+    lodash.forOwnRight = forOwnRight;
+    lodash.functions = functions;
+    lodash.groupBy = groupBy;
+    lodash.indexBy = indexBy;
+    lodash.initial = initial;
+    lodash.intersection = intersection;
+    lodash.invert = invert;
+    lodash.invoke = invoke;
+    lodash.keys = keys;
+    lodash.map = map;
+    lodash.mapValues = mapValues;
+    lodash.max = max;
+    lodash.memoize = memoize;
+    lodash.merge = merge;
+    lodash.min = min;
+    lodash.omit = omit;
+    lodash.once = once;
+    lodash.pairs = pairs;
+    lodash.partial = partial;
+    lodash.partialRight = partialRight;
+    lodash.pick = pick;
+    lodash.pluck = pluck;
+    lodash.property = property;
+    lodash.pull = pull;
+    lodash.range = range;
+    lodash.reject = reject;
+    lodash.remove = \textcolor{keyword}{remove};
+    lodash.rest = rest;
+    lodash.shuffle = shuffle;
+    lodash.sortBy = sortBy;
+    lodash.tap = tap;
+    lodash.throttle = throttle;
+    lodash.times = times;
+    lodash.toArray = toArray;
+    lodash.transform = transform;
+    lodash.union = \textcolor{keyword}{union};
+    lodash.uniq = uniq;
+    lodash.values = values;
+    lodash.where = where;
+    lodash.without = without;
+    lodash.wrap = wrap;
+    lodash.xor = xor;
+    lodash.zip = zip;
+    lodash.zipObject = zipObject;
+
+    \textcolor{comment}{// add aliases}
+    lodash.collect = map;
+    lodash.drop = rest;
+    lodash.each = forEach;
+    lodash.eachRight = forEachRight;
+    lodash.extend = assign;
+    lodash.methods = functions;
+    lodash.object = zipObject;
+    lodash.select = filter;
+    lodash.tail = rest;
+    lodash.unique = uniq;
+    lodash.unzip = zip;
+
+    \textcolor{comment}{// add functions to `lodash.prototype`}
+    mixin(lodash);
+
+    \textcolor{comment}{/*--------------------------------------------------------------------------*/}
+
+    \textcolor{comment}{// add functions that return unwrapped values when chaining}
+    lodash.clone = clone;
+    lodash.cloneDeep = cloneDeep;
+    lodash.contains = contains;
+    lodash.escape = escape;
+    lodash.every = every;
+    lodash.find = find;
+    lodash.findIndex = findIndex;
+    lodash.findKey = findKey;
+    lodash.findLast = findLast;
+    lodash.findLastIndex = findLastIndex;
+    lodash.findLastKey = findLastKey;
+    lodash.has = has;
+    lodash.identity = identity;
+    lodash.indexOf = indexOf;
+    lodash.isArguments = isArguments;
+    lodash.isArray = isArray;
+    lodash.isBoolean = isBoolean;
+    lodash.isDate = isDate;
+    lodash.isElement = isElement;
+    lodash.isEmpty = isEmpty;
+    lodash.isEqual = isEqual;
+    lodash.isFinite = isFinite;
+    lodash.isFunction = isFunction;
+    lodash.isNaN = isNaN;
+    lodash.isNull = isNull;
+    lodash.isNumber = isNumber;
+    lodash.isObject = isObject;
+    lodash.isPlainObject = isPlainObject;
+    lodash.isRegExp = isRegExp;
+    lodash.isString = isString;
+    lodash.isUndefined = isUndefined;
+    lodash.lastIndexOf = lastIndexOf;
+    lodash.mixin = mixin;
+    lodash.noConflict = noConflict;
+    lodash.noop = noop;
+    lodash.now = now;
+    lodash.parseInt = parseInt;
+    lodash.random = random;
+    lodash.reduce = reduce;
+    lodash.reduceRight = reduceRight;
+    lodash.result = result;
+    lodash.runInContext = runInContext;
+    lodash.size = size;
+    lodash.some = some;
+    lodash.sortedIndex = sortedIndex;
+    lodash.template = \textcolor{keyword}{template};
+    lodash.unescape = unescape;
+    lodash.uniqueId = uniqueId;
+
+    \textcolor{comment}{// add aliases}
+    lodash.all = every;
+    lodash.any = some;
+    lodash.detect = find;
+    lodash.findWhere = find;
+    lodash.foldl = reduce;
+    lodash.foldr = reduceRight;
+    lodash.include = contains;
+    lodash.inject = reduce;
+
+    mixin(\textcolor{keyword}{function}() \{
+      var source = \{\}
+      forOwn(lodash, \textcolor{keyword}{function}(func, methodName) \{
+        \textcolor{keywordflow}{if} (!lodash.prototype[methodName]) \{
+          source[methodName] = func;
+        \}
+      \});
+      \textcolor{keywordflow}{return} source;
+    \}(), \textcolor{keyword}{false});
+
+    \textcolor{comment}{/*--------------------------------------------------------------------------*/}
+
+    \textcolor{comment}{// add functions capable of returning wrapped and unwrapped values when chaining}
+    lodash.first = first;
+    lodash.last = last;
+    lodash.sample = sample;
+
+    \textcolor{comment}{// add aliases}
+    lodash.take = first;
+    lodash.head = first;
+
+    forOwn(lodash, \textcolor{keyword}{function}(func, methodName) \{
+      var callbackable = methodName !== \textcolor{stringliteral}{'sample'};
+      \textcolor{keywordflow}{if} (!lodash.prototype[methodName]) \{
+        lodash.prototype[methodName]= function(n, guard) \{
+          var chainAll = this.\_\_chain\_\_,
+              result = func(this.\_\_wrapped\_\_, n, guard);
+
+          return !chainAll && (n == null || (guard && !(callbackable && typeof n == \textcolor{stringliteral}{'function'})))
+            ? result
+            : new lodashWrapper(result, chainAll);
+        \};
+      \}
+    \});
+
+    \textcolor{comment}{/*--------------------------------------------------------------------------*/}
+
+    lodash.VERSION = \textcolor{stringliteral}{'2.4.2'};
+
+    \textcolor{comment}{// add "Chaining" functions to the wrapper}
+    lodash.prototype.chain = wrapperChain;
+    lodash.prototype.toString = wrapperToString;
+    lodash.prototype.value = wrapperValueOf;
+    lodash.prototype.valueOf = wrapperValueOf;
+
+    \textcolor{comment}{// add `Array` functions that return unwrapped values}
+    baseEach([\textcolor{stringliteral}{'join'}, \textcolor{stringliteral}{'pop'}, \textcolor{stringliteral}{'shift'}], \textcolor{keyword}{function}(methodName) \{
+      var func = arrayRef[methodName];
+      lodash.prototype[methodName] = \textcolor{keyword}{function}() \{
+        var chainAll = this.\_\_chain\_\_,
+            result = func.apply(this.\_\_wrapped\_\_, arguments);
+
+        \textcolor{keywordflow}{return} chainAll
+          ? \textcolor{keyword}{new} lodashWrapper(result, chainAll)
+          : result;
+      \};
+    \});
+
+    \textcolor{comment}{// add `Array` functions that return the existing wrapped value}
+    baseEach([\textcolor{stringliteral}{'push'}, \textcolor{stringliteral}{'reverse'}, \textcolor{stringliteral}{'sort'}, \textcolor{stringliteral}{'unshift'}], \textcolor{keyword}{function}(methodName) \{
+      var func = arrayRef[methodName];
+      lodash.prototype[methodName] = \textcolor{keyword}{function}() \{
+        func.apply(this.\_\_wrapped\_\_, arguments);
+        \textcolor{keywordflow}{return} \textcolor{keyword}{this};
+      \};
+    \});
+
+    \textcolor{comment}{// add `Array` functions that return new wrapped values}
+    baseEach([\textcolor{stringliteral}{'concat'}, \textcolor{stringliteral}{'slice'}, \textcolor{stringliteral}{'splice'}], \textcolor{keyword}{function}(methodName) \{
+      var func = arrayRef[methodName];
+      lodash.prototype[methodName] = \textcolor{keyword}{function}() \{
+        \textcolor{keywordflow}{return} \textcolor{keyword}{new} lodashWrapper(func.apply(\textcolor{keyword}{this}.\_\_wrapped\_\_, arguments), this.\_\_chain\_\_);
+      \};
+    \});
+
+    \textcolor{comment}{// avoid array-like object bugs with `Array#shift` and `Array#splice`}
+    \textcolor{comment}{// in IE < 9, Firefox < 10, Narwhal, and RingoJS}
+    \textcolor{keywordflow}{if} (!support.spliceObjects) \{
+      baseEach([\textcolor{stringliteral}{'pop'}, \textcolor{stringliteral}{'shift'}, \textcolor{stringliteral}{'splice'}], \textcolor{keyword}{function}(methodName) \{
+        var func = arrayRef[methodName],
+            isSplice = methodName == \textcolor{stringliteral}{'splice'};
+
+        lodash.prototype[methodName] = \textcolor{keyword}{function}() \{
+          var chainAll = this.\_\_chain\_\_,
+              value = this.\_\_wrapped\_\_,
+              result = func.apply(value, arguments);
+
+          \textcolor{keywordflow}{if} (value.length === 0) \{
+            \textcolor{keyword}{delete} value[0];
+          \}
+          \textcolor{keywordflow}{return} (chainAll || isSplice)
+            ? \textcolor{keyword}{new} lodashWrapper(result, chainAll)
+            : result;
+        \};
+      \});
+    \}
+
+    \textcolor{keywordflow}{return} lodash;
+  \}
+
+  \textcolor{comment}{/*--------------------------------------------------------------------------*/}
+
+  \textcolor{comment}{// expose Lo-Dash}
+  var \_ = runInContext();
+
+  \textcolor{comment}{// some AMD build optimizers like r.js check for condition patterns like the following:}
+  \textcolor{keywordflow}{if} (typeof define == \textcolor{stringliteral}{'function'} && typeof define.amd == \textcolor{stringliteral}{'object'} && define.amd) \{
+    \textcolor{comment}{// Expose Lo-Dash to the global object even when an AMD loader is present in}
+    \textcolor{comment}{// case Lo-Dash is loaded with a RequireJS shim config.}
+    \textcolor{comment}{// See http://requirejs.org/docs/api.html#config-shim}
+    root.\_ = \_;
+
+    \textcolor{comment}{// define as an anonymous module so, through path mapping, it can be}
+    \textcolor{comment}{// referenced as the "underscore" module}
+    define(\textcolor{keyword}{function}() \{
+      \textcolor{keywordflow}{return} \_;
+    \});
+  \}
+  \textcolor{comment}{// check for `exports` after `define` in case a build optimizer adds an `exports` object}
+  \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (freeExports && freeModule) \{
+    \textcolor{comment}{// in Node.js or RingoJS}
+    \textcolor{keywordflow}{if} (moduleExports) \{
+      (freeModule.exports = \_).\_ = \_;
+    \}
+    \textcolor{comment}{// in Narwhal or Rhino -require}
+    \textcolor{keywordflow}{else} \{
+      freeExports.\_ = \_;
+    \}
+  \}
+  \textcolor{keywordflow}{else} \{
+    \textcolor{comment}{// in a browser or Rhino}
+    root.\_ = \_;
+  \}
+\}.call(\textcolor{keyword}{this}));
+\end{DoxyCodeInclude}
+ 

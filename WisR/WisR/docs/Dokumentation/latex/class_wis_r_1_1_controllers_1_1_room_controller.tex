@@ -1,0 +1,117 @@
+\hypertarget{class_wis_r_1_1_controllers_1_1_room_controller}{}\section{Wis\+R.\+Controllers.\+Room\+Controller Class Reference}
+\label{class_wis_r_1_1_controllers_1_1_room_controller}\index{Wis\+R.\+Controllers.\+Room\+Controller@{Wis\+R.\+Controllers.\+Room\+Controller}}
+
+
+Romm controller is used by the room page for, question and chatmessage json-\/nification  
+
+
+Inheritance diagram for Wis\+R.\+Controllers.\+Room\+Controller\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{class_wis_r_1_1_controllers_1_1_room_controller}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{class_wis_r_1_1_controllers_1_1_room_controller_aebb6819de16a51bb636d5d058a9fbf3e}{}{\bfseries Room\+Controller} (\hyperlink{interface_wis_r_1_1_providers_1_1_i_rabbit_subscriber}{I\+Rabbit\+Subscriber} rabbit\+Subscriber)\label{class_wis_r_1_1_controllers_1_1_room_controller_aebb6819de16a51bb636d5d058a9fbf3e}
+
+\item 
+\hypertarget{class_wis_r_1_1_controllers_1_1_room_controller_a1eb8928cebd666c6b984c85b6fd0a5fa}{}Action\+Result {\bfseries Index} (string room\+Id)\label{class_wis_r_1_1_controllers_1_1_room_controller_a1eb8928cebd666c6b984c85b6fd0a5fa}
+
+\item 
+string \hyperlink{class_wis_r_1_1_controllers_1_1_room_controller_af3386a8cccb0b9828edc5c995dc6e7b2}{to\+Json\+Question} (string Created\+By, string Created\+By\+User\+Name, string Room\+Id, string Image, string Question\+Text, string Response\+Options, string Question\+Result, string Creation\+Timestamp, string Expire\+Timestamp, string Quetions\+Type, string Votes)
+\begin{DoxyCompactList}\small\item\em To json question convertion. \end{DoxyCompactList}\item 
+string \hyperlink{class_wis_r_1_1_controllers_1_1_room_controller_ab2268139644f3293b3a0192e0dd4eed5}{to\+Json\+Chat\+Message} (string user\+Id, string user\+Display\+Name, string room\+Id, string text)
+\begin{DoxyCompactList}\small\item\em To json chat message conversion. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Romm controller is used by the room page for, question and chatmessage json-\/nification 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_wis_r_1_1_controllers_1_1_room_controller_ab2268139644f3293b3a0192e0dd4eed5}{}\index{Wis\+R\+::\+Controllers\+::\+Room\+Controller@{Wis\+R\+::\+Controllers\+::\+Room\+Controller}!to\+Json\+Chat\+Message@{to\+Json\+Chat\+Message}}
+\index{to\+Json\+Chat\+Message@{to\+Json\+Chat\+Message}!Wis\+R\+::\+Controllers\+::\+Room\+Controller@{Wis\+R\+::\+Controllers\+::\+Room\+Controller}}
+\subsubsection[{to\+Json\+Chat\+Message(string user\+Id, string user\+Display\+Name, string room\+Id, string text)}]{\setlength{\rightskip}{0pt plus 5cm}string Wis\+R.\+Controllers.\+Room\+Controller.\+to\+Json\+Chat\+Message (
+\begin{DoxyParamCaption}
+\item[{string}]{user\+Id, }
+\item[{string}]{user\+Display\+Name, }
+\item[{string}]{room\+Id, }
+\item[{string}]{text}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_wis_r_1_1_controllers_1_1_room_controller_ab2268139644f3293b3a0192e0dd4eed5}
+
+
+To json chat message conversion. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em user\+Id} & The user identifier.\\
+\hline
+{\em user\+Display\+Name} & Name of the user.\\
+\hline
+{\em room\+Id} & The room identifier.\\
+\hline
+{\em text} & The text.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\hypertarget{class_wis_r_1_1_controllers_1_1_room_controller_af3386a8cccb0b9828edc5c995dc6e7b2}{}\index{Wis\+R\+::\+Controllers\+::\+Room\+Controller@{Wis\+R\+::\+Controllers\+::\+Room\+Controller}!to\+Json\+Question@{to\+Json\+Question}}
+\index{to\+Json\+Question@{to\+Json\+Question}!Wis\+R\+::\+Controllers\+::\+Room\+Controller@{Wis\+R\+::\+Controllers\+::\+Room\+Controller}}
+\subsubsection[{to\+Json\+Question(string Created\+By, string Created\+By\+User\+Name, string Room\+Id, string Image, string Question\+Text, string Response\+Options, string Question\+Result, string Creation\+Timestamp, string Expire\+Timestamp, string Quetions\+Type, string Votes)}]{\setlength{\rightskip}{0pt plus 5cm}string Wis\+R.\+Controllers.\+Room\+Controller.\+to\+Json\+Question (
+\begin{DoxyParamCaption}
+\item[{string}]{Created\+By, }
+\item[{string}]{Created\+By\+User\+Name, }
+\item[{string}]{Room\+Id, }
+\item[{string}]{Image, }
+\item[{string}]{Question\+Text, }
+\item[{string}]{Response\+Options, }
+\item[{string}]{Question\+Result, }
+\item[{string}]{Creation\+Timestamp, }
+\item[{string}]{Expire\+Timestamp, }
+\item[{string}]{Quetions\+Type, }
+\item[{string}]{Votes}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_wis_r_1_1_controllers_1_1_room_controller_af3386a8cccb0b9828edc5c995dc6e7b2}
+
+
+To json question convertion. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em Created\+By} & Created by.\\
+\hline
+{\em Created\+By\+User\+Name} & Name of the user.\\
+\hline
+{\em Room\+Id} & The room identifier.\\
+\hline
+{\em Image} & The image.\\
+\hline
+{\em Question\+Text} & The question text.\\
+\hline
+{\em Response\+Options} & The response options.\\
+\hline
+{\em Question\+Result} & The question result.\\
+\hline
+{\em Creation\+Timestamp} & The creation timestamp.\\
+\hline
+{\em Expire\+Timestamp} & The expire timestamp.\\
+\hline
+{\em Quetions\+Type} & Type of the quetions.\\
+\hline
+{\em Votes} & The votes.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/\+Controllers/Room\+Controller.\+cs\end{DoxyCompactItemize}

@@ -1,0 +1,26 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module155eac53aebd772a5511d6f6811ca304}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/collection/group\+By.\+js}
+\+\_\+.\+group\+By(\mbox{[}4.\+2, 6.\+1, 6.\+4\mbox{]}, function(n) \{ return Math.\+floor(n); \}); // =$>$ \{ \textquotesingle{}4\textquotesingle{}\+: \mbox{[}4.\+2\mbox{]}, \textquotesingle{}6\textquotesingle{}\+: \mbox{[}6.\+1, 6.\+4\mbox{]} \}
+
+\+\_\+.\+group\+By(\mbox{[}4.\+2, 6.\+1, 6.\+4\mbox{]}, function(n) \{ return this.\+floor(n); \}, Math); // =$>$ \{ \textquotesingle{}4\textquotesingle{}\+: \mbox{[}4.\+2\mbox{]}, \textquotesingle{}6\textquotesingle{}\+: \mbox{[}6.\+1, 6.\+4\mbox{]} \}
+
+// using the {\ttfamily \+\_\+.\+property} callback shorthand \+\_\+.\+group\+By(\mbox{[}\textquotesingle{}one\textquotesingle{}, \textquotesingle{}two\textquotesingle{}, \textquotesingle{}three\textquotesingle{}\mbox{]}, \textquotesingle{}length\textquotesingle{}); // =$>$ \{ \textquotesingle{}3\textquotesingle{}\+: \mbox{[}\textquotesingle{}one\textquotesingle{}, \textquotesingle{}two\textquotesingle{}\mbox{]}, \textquotesingle{}5\textquotesingle{}\+: \mbox{[}\textquotesingle{}three\textquotesingle{}\mbox{]} \}
+
+
+\begin{DoxyCodeInclude}
+var createAggregator = require(\textcolor{stringliteral}{'../internal/createAggregator'});
+
+var objectProto = Object.prototype;
+
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+var groupBy = createAggregator(\textcolor{keyword}{function}(result, value, key) \{
+  \textcolor{keywordflow}{if} (hasOwnProperty.call(result, key)) \{
+    result[key].push(value);
+  \} \textcolor{keywordflow}{else} \{
+    result[key] = [value];
+  \}
+\});
+
+module.exports = groupBy;
+\end{DoxyCodeInclude}
+ 

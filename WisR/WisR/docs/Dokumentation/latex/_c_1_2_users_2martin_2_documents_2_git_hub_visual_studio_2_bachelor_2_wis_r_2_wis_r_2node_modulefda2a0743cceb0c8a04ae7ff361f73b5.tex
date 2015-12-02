@@ -1,0 +1,30 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_modulefda2a0743cceb0c8a04ae7ff361f73b5}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/array/unzip\+With.\+js}
+var zipped = \+\_\+.\+zip(\mbox{[}1, 2\mbox{]}, \mbox{[}10, 20\mbox{]}, \mbox{[}100, 200\mbox{]}); // =$>$ \mbox{[}\mbox{[}1, 10, 100\mbox{]}, \mbox{[}2, 20, 200\mbox{]}\mbox{]}
+
+\+\_\+.\+unzip\+With(zipped, \+\_\+.\+add); // =$>$ \mbox{[}3, 30, 300\mbox{]}
+
+
+\begin{DoxyCodeInclude}
+var arrayMap = require(\textcolor{stringliteral}{'../internal/arrayMap'}),
+    arrayReduce = require(\textcolor{stringliteral}{'../internal/arrayReduce'}),
+    bindCallback = require(\textcolor{stringliteral}{'../internal/bindCallback'}),
+    unzip = require(\textcolor{stringliteral}{'./unzip'});
+
+\textcolor{keyword}{function} unzipWith(array, iteratee, thisArg) \{
+  var length = array ? array.length : 0;
+  \textcolor{keywordflow}{if} (!length) \{
+    \textcolor{keywordflow}{return} [];
+  \}
+  var result = unzip(array);
+  \textcolor{keywordflow}{if} (iteratee == null) \{
+    \textcolor{keywordflow}{return} result;
+  \}
+  iteratee = bindCallback(iteratee, thisArg, 4);
+  \textcolor{keywordflow}{return} arrayMap(result, \textcolor{keyword}{function}(group) \{
+    \textcolor{keywordflow}{return} arrayReduce(group, iteratee, undefined, \textcolor{keyword}{true});
+  \});
+\}
+
+module.exports = unzipWith;
+\end{DoxyCodeInclude}
+ 

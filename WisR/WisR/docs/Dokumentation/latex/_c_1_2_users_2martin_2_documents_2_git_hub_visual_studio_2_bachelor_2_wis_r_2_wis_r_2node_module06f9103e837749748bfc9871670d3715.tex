@@ -1,0 +1,35 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module06f9103e837749748bfc9871670d3715}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/object/omit.\+js}
+var object = \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}fred\textquotesingle{}, \textquotesingle{}age\textquotesingle{}\+: 40 \};
+
+\+\_\+.\+omit(object, \textquotesingle{}age\textquotesingle{}); // =$>$ \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}fred\textquotesingle{} \}
+
+\+\_\+.\+omit(object, \+\_\+.\+is\+Number); // =$>$ \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}fred\textquotesingle{} \}
+
+
+\begin{DoxyCodeInclude}
+var arrayMap = require(\textcolor{stringliteral}{'../internal/arrayMap'}),
+    baseDifference = require(\textcolor{stringliteral}{'../internal/baseDifference'}),
+    baseFlatten = require(\textcolor{stringliteral}{'../internal/baseFlatten'}),
+    bindCallback = require(\textcolor{stringliteral}{'../internal/bindCallback'}),
+    keysIn = require(\textcolor{stringliteral}{'./keysIn'}),
+    pickByArray = require(\textcolor{stringliteral}{'../internal/pickByArray'}),
+    pickByCallback = require(\textcolor{stringliteral}{'../internal/pickByCallback'}),
+    restParam = require(\textcolor{stringliteral}{'../function/restParam'});
+
+var omit = restParam(\textcolor{keyword}{function}(\textcolor{keywordtype}{object}, props) \{
+  \textcolor{keywordflow}{if} (\textcolor{keywordtype}{object} == null) \{
+    \textcolor{keywordflow}{return} \{\};
+  \}
+  \textcolor{keywordflow}{if} (typeof props[0] != \textcolor{stringliteral}{'function'}) \{
+    var props = arrayMap(baseFlatten(props), String);
+    \textcolor{keywordflow}{return} pickByArray(\textcolor{keywordtype}{object}, baseDifference(keysIn(\textcolor{keywordtype}{object}), props));
+  \}
+  var predicate = bindCallback(props[0], props[1], 3);
+  \textcolor{keywordflow}{return} pickByCallback(\textcolor{keywordtype}{object}, \textcolor{keyword}{function}(value, key, \textcolor{keywordtype}{object}) \{
+    \textcolor{keywordflow}{return} !predicate(value, key, \textcolor{keywordtype}{object});
+  \});
+\});
+
+module.exports = omit;
+\end{DoxyCodeInclude}
+ 

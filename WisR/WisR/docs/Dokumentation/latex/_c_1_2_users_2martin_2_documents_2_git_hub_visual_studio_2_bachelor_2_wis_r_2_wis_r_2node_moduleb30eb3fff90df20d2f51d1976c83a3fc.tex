@@ -1,0 +1,23 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_moduleb30eb3fff90df20d2f51d1976c83a3fc}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/lang/is\+Finite.\+js}
+\+\_\+.\+is\+Finite(10); // =$>$ true
+
+\+\_\+.\+is\+Finite(\textquotesingle{}10\textquotesingle{}); // =$>$ false
+
+\+\_\+.\+is\+Finite(true); // =$>$ false
+
+\+\_\+.\+is\+Finite(\+Object(10)); // =$>$ false
+
+\+\_\+.\+is\+Finite(\+Infinity); // =$>$ false
+
+
+\begin{DoxyCodeInclude}
+\textcolor{comment}{/* Native method references for those with the same name as other `lodash` methods. */}
+var nativeIsFinite = global.isFinite;
+
+\textcolor{keyword}{function} isFinite(value) \{
+  \textcolor{keywordflow}{return} typeof value == \textcolor{stringliteral}{'number'} && nativeIsFinite(value);
+\}
+
+module.exports = isFinite;
+\end{DoxyCodeInclude}
+ 

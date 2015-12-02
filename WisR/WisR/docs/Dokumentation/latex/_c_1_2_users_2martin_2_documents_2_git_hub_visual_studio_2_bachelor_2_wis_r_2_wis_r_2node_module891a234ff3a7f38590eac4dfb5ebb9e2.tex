@@ -1,0 +1,51 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module891a234ff3a7f38590eac4dfb5ebb9e2}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/object/keys\+In.\+js}
+function Foo() \{ this.\+a = 1; this.\+b = 2; \}
+
+Foo.\+prototype.\+c = 3;
+
+\+\_\+.\+keys\+In(new Foo); // =$>$ \mbox{[}\textquotesingle{}a\textquotesingle{}, \textquotesingle{}b\textquotesingle{}, \textquotesingle{}c\textquotesingle{}\mbox{]} (iteration order is not guaranteed)
+
+
+\begin{DoxyCodeInclude}
+var isArguments = require(\textcolor{stringliteral}{'../lang/isArguments'}),
+    isArray = require(\textcolor{stringliteral}{'../lang/isArray'}),
+    isIndex = require(\textcolor{stringliteral}{'../internal/isIndex'}),
+    isLength = require(\textcolor{stringliteral}{'../internal/isLength'}),
+    isObject = require(\textcolor{stringliteral}{'../lang/isObject'});
+
+var objectProto = Object.prototype;
+
+var hasOwnProperty = objectProto.hasOwnProperty;
+
+\textcolor{keyword}{function} keysIn(\textcolor{keywordtype}{object}) \{
+  \textcolor{keywordflow}{if} (\textcolor{keywordtype}{object} == null) \{
+    \textcolor{keywordflow}{return} [];
+  \}
+  \textcolor{keywordflow}{if} (!isObject(\textcolor{keywordtype}{object})) \{
+    \textcolor{keywordtype}{object} = Object(\textcolor{keywordtype}{object});
+  \}
+  var length = \textcolor{keywordtype}{object}.length;
+  length = (length && isLength(length) &&
+    (isArray(\textcolor{keywordtype}{object}) || isArguments(\textcolor{keywordtype}{object})) && length) || 0;
+
+  var Ctor = \textcolor{keywordtype}{object}.constructor,
+      index = -1,
+      isProto = typeof Ctor == \textcolor{stringliteral}{'function'} && Ctor.prototype === object,
+      result = Array(length),
+      skipIndexes = length > 0;
+
+  \textcolor{keywordflow}{while} (++index < length) \{
+    result[index] = (index + \textcolor{stringliteral}{''});
+  \}
+  \textcolor{keywordflow}{for} (var key in \textcolor{keywordtype}{object}) \{
+    \textcolor{keywordflow}{if} (!(skipIndexes && isIndex(key, length)) &&
+        !(key == \textcolor{stringliteral}{'constructor'} && (isProto || !hasOwnProperty.call(\textcolor{keywordtype}{object}, key)))) \{
+      result.push(key);
+    \}
+  \}
+  \textcolor{keywordflow}{return} result;
+\}
+
+module.exports = keysIn;
+\end{DoxyCodeInclude}
+ 

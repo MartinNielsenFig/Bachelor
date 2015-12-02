@@ -1,0 +1,38 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module5e1e4a53e0917e59e06895f35bf4cbbf}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/array/unzip.\+js}
+var zipped = \+\_\+.\+zip(\mbox{[}\textquotesingle{}fred\textquotesingle{}, \textquotesingle{}barney\textquotesingle{}\mbox{]}, \mbox{[}30, 40\mbox{]}, \mbox{[}true, false\mbox{]}); // =$>$ \mbox{[}\mbox{[}\textquotesingle{}fred\textquotesingle{}, 30, true\mbox{]}, \mbox{[}\textquotesingle{}barney\textquotesingle{}, 40, false\mbox{]}\mbox{]}
+
+\+\_\+.\+unzip(zipped); // =$>$ \mbox{[}\mbox{[}\textquotesingle{}fred\textquotesingle{}, \textquotesingle{}barney\textquotesingle{}\mbox{]}, \mbox{[}30, 40\mbox{]}, \mbox{[}true, false\mbox{]}\mbox{]}
+
+
+\begin{DoxyCodeInclude}
+var arrayFilter = require(\textcolor{stringliteral}{'../internal/arrayFilter'}),
+    arrayMap = require(\textcolor{stringliteral}{'../internal/arrayMap'}),
+    baseProperty = require(\textcolor{stringliteral}{'../internal/baseProperty'}),
+    isArrayLike = require(\textcolor{stringliteral}{'../internal/isArrayLike'});
+
+\textcolor{comment}{/* Native method references for those with the same name as other `lodash` methods. */}
+var nativeMax = Math.max;
+
+\textcolor{keyword}{function} unzip(array) \{
+  \textcolor{keywordflow}{if} (!(array && array.length)) \{
+    \textcolor{keywordflow}{return} [];
+  \}
+  var index = -1,
+      length = 0;
+
+  array = arrayFilter(array, \textcolor{keyword}{function}(group) \{
+    \textcolor{keywordflow}{if} (isArrayLike(group)) \{
+      length = nativeMax(group.length, length);
+      \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+    \}
+  \});
+  var result = Array(length);
+  \textcolor{keywordflow}{while} (++index < length) \{
+    result[index] = arrayMap(array, baseProperty(index));
+  \}
+  \textcolor{keywordflow}{return} result;
+\}
+
+module.exports = unzip;
+\end{DoxyCodeInclude}
+ 

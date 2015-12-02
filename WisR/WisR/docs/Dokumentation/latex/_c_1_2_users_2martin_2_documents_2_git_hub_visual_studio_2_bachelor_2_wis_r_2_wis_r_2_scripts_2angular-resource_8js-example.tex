@@ -1,0 +1,416 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2_scripts_2angular-resource_8js-example}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/\+Scripts/angular-\/resource.\+js}
+\subsection*{Credit card resource}
+
+
+\begin{DoxyItemize}
+\item ```js // Define Credit\+Card class var Credit\+Card = \$resource(\textquotesingle{}/user/\+:user\+Id/card/\+:card\+Id\textquotesingle{}, \{user\+Id\+:123, card\+Id\+:\textquotesingle{}\textquotesingle{}\}, \{ charge\+: \{method\+:\textquotesingle{}P\+O\+S\+T\textquotesingle{}, params\+:\{charge\+:true\}\} \});
+
+// We can retrieve a collection from the server var cards = Credit\+Card.\+query(function() \{ // G\+E\+T\+: /user/123/card // server returns\+: \mbox{[} \{id\+:456, number\+:\textquotesingle{}1234\textquotesingle{}, name\+:\textquotesingle{}Smith\textquotesingle{}\} \mbox{]};
+
+var card = cards\mbox{[}0\mbox{]}; // each item is an instance of Credit\+Card expect(card instanceof Credit\+Card).to\+Equal(true); card.\+name = \char`\"{}\+J. Smith\char`\"{}; // non G\+E\+T methods are mapped onto the instances card.\$save(); // P\+O\+S\+T\+: /user/123/card/456 \{id\+:456, number\+:\textquotesingle{}1234\textquotesingle{}, name\+:\textquotesingle{}J. Smith\textquotesingle{}\} // server returns\+: \{id\+:456, number\+:\textquotesingle{}1234\textquotesingle{}, name\+: \textquotesingle{}J. Smith\textquotesingle{}\};
+
+// our custom method is mapped as well. card.\$charge(\{amount\+:9.\+99\}); // P\+O\+S\+T\+: /user/123/card/456?amount=9.\+99\&charge=true \{id\+:456, number\+:\textquotesingle{}1234\textquotesingle{}, name\+:\textquotesingle{}J. Smith\textquotesingle{}\} \});
+
+// we can create an instance as well var new\+Card = new Credit\+Card(\{number\+:\textquotesingle{}0123\textquotesingle{}\}); new\+Card.\+name = \char`\"{}\+Mike Smith\char`\"{}; new\+Card.\$save(); // P\+O\+S\+T\+: /user/123/card \{number\+:\textquotesingle{}0123\textquotesingle{}, name\+:\textquotesingle{}Mike Smith\textquotesingle{}\} // server returns\+: \{id\+:789, number\+:\textquotesingle{}0123\textquotesingle{}, name\+: \textquotesingle{}Mike Smith\textquotesingle{}\}; expect(new\+Card.\+id).to\+Equal(789);
+\item ```
+
+The object returned from this function execution is a resource \char`\"{}class\char`\"{} which has \char`\"{}static\char`\"{} method for each action in the definition.
+
+Calling these methods invoke {\ttfamily \$http} on the {\ttfamily url} template with the given {\ttfamily method}, {\ttfamily params} and {\ttfamily headers}. When the data is returned from the server then the object is an instance of the resource type and all of the non-\/\+G\+E\+T methods are available with {\ttfamily \$} prefix. This allows you to easily support C\+R\+U\+D operations (create, read, update, delete) on server-\/side data.
+\end{DoxyItemize}
+
+
+\begin{DoxyCode}
+var User = $resource(\textcolor{stringliteral}{'/user/:userId'}, \{userId:\textcolor{stringliteral}{'@id'}\});
+User.get(\{userId:123\}, \textcolor{keyword}{function}(user) \{
+  user.abc = \textcolor{keyword}{true};
+  user.$save();
+\});
+\end{DoxyCode}
+
+
+It\textquotesingle{}s worth noting that the success callback for {\ttfamily get}, {\ttfamily query} and other methods gets passed in the response that came from the server as well as \$http header getter function, so one could rewrite the above example and get access to http headers as\+:
+
+
+\begin{DoxyCode}
+var User = $resource(\textcolor{stringliteral}{'/user/:userId'}, \{userId:\textcolor{stringliteral}{'@id'}\});
+User.get(\{userId:123\}, \textcolor{keyword}{function}(u, getResponseHeaders)\{
+  u.abc = \textcolor{keyword}{true};
+  u.$save(\textcolor{keyword}{function}(u, putResponseHeaders) \{
+    \textcolor{comment}{//u => saved user object}
+    \textcolor{comment}{//putResponseHeaders => $http header getter}
+  \});
+\});
+\end{DoxyCode}
+
+
+You can also access the raw {\ttfamily \$http} promise via the {\ttfamily \$promise} property on the object returned
+
+
+\begin{DoxyCode}
+var User = $resource(\textcolor{stringliteral}{'/user/:userId'}, \{userId:\textcolor{stringliteral}{'@id'}\});
+User.get(\{userId:123\})
+    .$promise.then(\textcolor{keyword}{function}(user) \{
+      $scope.user = user;
+    \});
+\end{DoxyCode}
+
+
+\subsection*{Creating a custom \textquotesingle{}P\+U\+T\textquotesingle{} request}
+
+In this example we create a custom method on our resource to make a P\+U\+T request
+\begin{DoxyItemize}
+\item ```js var app = angular.\+module(\textquotesingle{}app\textquotesingle{}, \mbox{[}\textquotesingle{}ng\+Resource\textquotesingle{}, \textquotesingle{}ng\+Route\textquotesingle{}\mbox{]});
+
+// Some A\+P\+Is expect a P\+U\+T request in the format U\+R\+L/object/\+I\+D // Here we are creating an \textquotesingle{}update\textquotesingle{} method app.\+factory(\textquotesingle{}Notes\textquotesingle{}, \mbox{[}\textquotesingle{}\$resource\textquotesingle{}, function(\$resource) \{ return \$resource(\textquotesingle{}/notes/\+:id\textquotesingle{}, null, \{ \textquotesingle{}update\textquotesingle{}\+: \{ method\+:\textquotesingle{}P\+U\+T\textquotesingle{} \} \}); \}\mbox{]});
+
+// In our controller we get the I\+D from the U\+R\+L using ng\+Route and \$route\+Params // We pass in \$route\+Params and our Notes factory along with \$scope app.\+controller(\textquotesingle{}Notes\+Ctrl\textquotesingle{}, \mbox{[}\textquotesingle{}\$scope\textquotesingle{}, \textquotesingle{}\$route\+Params\textquotesingle{}, \textquotesingle{}Notes\textquotesingle{}, function(\$scope, \$route\+Params, Notes) \{ // First get a note object from the factory var note = Notes.\+get(\{ id\+:\$route\+Params.\+id \}); \$id = note.\+id;
+
+// Now call update passing in the I\+D first then the object you are updating Notes.\+update(\{ id\+:\$id \}, note);
+
+// This will P\+U\+T /notes/\+I\+D with the note object in the request payload \}\mbox{]});
+\item ```
+\end{DoxyItemize}
+
+
+\begin{DoxyCodeInclude}
+
+(\textcolor{keyword}{function}(window, angular, undefined) \{\textcolor{stringliteral}{'use strict'};
+
+var $resourceMinErr = angular.$$minErr(\textcolor{stringliteral}{'$resource'});
+
+\textcolor{comment}{// Helper functions and regex to lookup a dotted path on an object}
+\textcolor{comment}{// stopping at undefined/null.  The path must be composed of ASCII}
+\textcolor{comment}{// identifiers (just like $parse)}
+var MEMBER\_NAME\_REGEX = /^(\(\backslash\).[a-zA-Z\_$@][0-9a-zA-Z\_$@]*)+$/;
+
+\textcolor{keyword}{function} isValidDottedPath(path) \{
+  \textcolor{keywordflow}{return} (path != null && path !== \textcolor{stringliteral}{''} && path !== \textcolor{stringliteral}{'hasOwnProperty'} &&
+      MEMBER\_NAME\_REGEX.test(\textcolor{charliteral}{'.'} + path));
+\}
+
+\textcolor{keyword}{function} lookupDottedPath(obj, path) \{
+  \textcolor{keywordflow}{if} (!isValidDottedPath(path)) \{
+    \textcolor{keywordflow}{throw} $resourceMinErr(\textcolor{stringliteral}{'badmember'}, \textcolor{stringliteral}{'Dotted member path "@\{0\}" is invalid.'}, path);
+  \}
+  var keys = path.split(\textcolor{charliteral}{'.'});
+  \textcolor{keywordflow}{for} (var i = 0, ii = keys.length; i < ii && obj !== undefined; i++) \{
+    var key = keys[i];
+    obj = (obj !== null) ? obj[key] : undefined;
+  \}
+  \textcolor{keywordflow}{return} obj;
+\}
+
+\textcolor{keyword}{function} shallowClearAndCopy(src, dst) \{
+  dst = dst || \{\};
+
+  angular.forEach(dst, \textcolor{keyword}{function}(value, key) \{
+    \textcolor{keyword}{delete} dst[key];
+  \});
+
+  \textcolor{keywordflow}{for} (var key in src) \{
+    \textcolor{keywordflow}{if} (src.hasOwnProperty(key) && !(key.charAt(0) === \textcolor{charliteral}{'$'} && key.charAt(1) === \textcolor{charliteral}{'$'})) \{
+      dst[key] = src[key];
+    \}
+  \}
+
+  \textcolor{keywordflow}{return} dst;
+\}
+
+angular.module(\textcolor{stringliteral}{'ngResource'}, [\textcolor{stringliteral}{'ng'}]).
+  provider(\textcolor{stringliteral}{'$resource'}, \textcolor{keyword}{function}() \{
+    var provider = \textcolor{keyword}{this};
+
+    this.defaults = \{
+      \textcolor{comment}{// Strip slashes by default}
+      stripTrailingSlashes: \textcolor{keyword}{true},
+
+      \textcolor{comment}{// Default actions configuration}
+      actions: \{
+        \textcolor{stringliteral}{'get'}: \{method: \textcolor{stringliteral}{'GET'}\},
+        \textcolor{stringliteral}{'save'}: \{method: \textcolor{stringliteral}{'POST'}\},
+        \textcolor{stringliteral}{'query'}: \{method: \textcolor{stringliteral}{'GET'}, isArray: \textcolor{keyword}{true}\},
+        \textcolor{stringliteral}{'remove'}: \{method: \textcolor{stringliteral}{'DELETE'}\},
+        \textcolor{stringliteral}{'delete'}: \{method: \textcolor{stringliteral}{'DELETE'}\}
+      \}
+    \};
+
+    this.$get = [\textcolor{stringliteral}{'$http'}, \textcolor{stringliteral}{'$q'}, \textcolor{keyword}{function}($http, $q) \{
+
+      var noop = angular.noop,
+        forEach = angular.forEach,
+        extend = angular.extend,
+        copy = angular.copy,
+        isFunction = angular.isFunction;
+
+      \textcolor{keyword}{function} encodeUriSegment(val) \{
+        \textcolor{keywordflow}{return} encodeUriQuery(val, \textcolor{keyword}{true}).
+          replace(/%26/gi, \textcolor{charliteral}{'&'}).
+          replace(/%3D/gi, \textcolor{charliteral}{'='}).
+          replace(/%2B/gi, \textcolor{charliteral}{'+'});
+      \}
+
+
+      \textcolor{keyword}{function} encodeUriQuery(val, pctEncodeSpaces) \{
+        \textcolor{keywordflow}{return} encodeURIComponent(val).
+          replace(/%40/gi, \textcolor{charliteral}{'@'}).
+          replace(/%3A/gi, \textcolor{charliteral}{':'}).
+          replace(/%24/g, \textcolor{charliteral}{'$'}).
+          replace(/%2C/gi, \textcolor{charliteral}{','}).
+          replace(/%20/g, (pctEncodeSpaces ? \textcolor{stringliteral}{'%20'} : \textcolor{charliteral}{'+'}));
+      \}
+
+      \textcolor{keyword}{function} Route(\textcolor{keyword}{template}, defaults) \{
+        this.\textcolor{keyword}{template} = \textcolor{keyword}{template};
+        this.defaults = extend(\{\}, provider.defaults, defaults);
+        this.urlParams = \{\};
+      \}
+
+      Route.prototype = \{
+        setUrlParams: \textcolor{keyword}{function}(config, params, actionUrl) \{
+          var \textcolor{keyword}{self} = \textcolor{keyword}{this},
+            url = actionUrl || \textcolor{keyword}{self}.template,
+            val,
+            encodedVal;
+
+          var urlParams = \textcolor{keyword}{self}.urlParams = \{\};
+          forEach(url.split(/\(\backslash\)W/), \textcolor{keyword}{function}(param) \{
+            \textcolor{keywordflow}{if} (param === \textcolor{stringliteral}{'hasOwnProperty'}) \{
+              \textcolor{keywordflow}{throw} $resourceMinErr(\textcolor{stringliteral}{'badname'}, \textcolor{stringliteral}{"hasOwnProperty is not a valid parameter name."});
+            \}
+            \textcolor{keywordflow}{if} (!(\textcolor{keyword}{new} RegExp(\textcolor{stringliteral}{"^\(\backslash\)\(\backslash\)d+$"}).test(param)) && param &&
+              (\textcolor{keyword}{new} RegExp(\textcolor{stringliteral}{"(^|[^\(\backslash\)\(\backslash\)\(\backslash\)\(\backslash\)]):"} + param + \textcolor{stringliteral}{"(\(\backslash\)\(\backslash\)W|$)"}).test(url))) \{
+              urlParams[param] = \textcolor{keyword}{true};
+            \}
+          \});
+          url = url.replace(/\(\backslash\)\(\backslash\):/g, \textcolor{charliteral}{':'});
+
+          params = params || \{\};
+          forEach(\textcolor{keyword}{self}.urlParams, \textcolor{keyword}{function}(\_, urlParam) \{
+            val = params.hasOwnProperty(urlParam) ? params[urlParam] : \textcolor{keyword}{self}.defaults[urlParam];
+            \textcolor{keywordflow}{if} (angular.isDefined(val) && val !== null) \{
+              encodedVal = encodeUriSegment(val);
+              url = url.replace(\textcolor{keyword}{new} RegExp(\textcolor{stringliteral}{":"} + urlParam + \textcolor{stringliteral}{"(\(\backslash\)\(\backslash\)W|$)"}, \textcolor{stringliteral}{"g"}), \textcolor{keyword}{function}(match, p1) \{
+                \textcolor{keywordflow}{return} encodedVal + p1;
+              \});
+            \} \textcolor{keywordflow}{else} \{
+              url = url.replace(\textcolor{keyword}{new} RegExp(\textcolor{stringliteral}{"(\(\backslash\)/?):"} + urlParam + \textcolor{stringliteral}{"(\(\backslash\)\(\backslash\)W|$)"}, \textcolor{stringliteral}{"g"}), \textcolor{keyword}{function}(match,
+                  leadingSlashes, tail) \{
+                \textcolor{keywordflow}{if} (tail.charAt(0) == \textcolor{charliteral}{'/'}) \{
+                  \textcolor{keywordflow}{return} tail;
+                \} \textcolor{keywordflow}{else} \{
+                  \textcolor{keywordflow}{return} leadingSlashes + tail;
+                \}
+              \});
+            \}
+          \});
+
+          \textcolor{comment}{// strip trailing slashes and set the url (unless this behavior is specifically disabled)}
+          \textcolor{keywordflow}{if} (\textcolor{keyword}{self}.defaults.stripTrailingSlashes) \{
+            url = url.replace(/\(\backslash\)/+$/, \textcolor{stringliteral}{''}) || \textcolor{charliteral}{'/'};
+          \}
+
+          \textcolor{comment}{// then replace collapse `/.` if found in the last URL path segment before the query}
+          \textcolor{comment}{// E.g. `http://url.com/id./format?q=x` becomes `http://url.com/id.format?q=x`}
+          url = url.replace(/\(\backslash\)/\(\backslash\).(?=\(\backslash\)w+($|\(\backslash\)?))/, \textcolor{charliteral}{'.'});
+          \textcolor{comment}{// replace escaped `/\(\backslash\).` with `/.`}
+          config.url = url.replace(/\(\backslash\)/\(\backslash\)\(\backslash\)\(\backslash\)./, \textcolor{stringliteral}{'/.'});
+
+
+          \textcolor{comment}{// set params - delegate param encoding to $http}
+          forEach(params, \textcolor{keyword}{function}(value, key) \{
+            \textcolor{keywordflow}{if} (!\textcolor{keyword}{self}.urlParams[key]) \{
+              config.params = config.params || \{\};
+              config.params[key] = value;
+            \}
+          \});
+        \}
+      \};
+
+
+      \textcolor{keyword}{function} resourceFactory(url, paramDefaults, actions, options) \{
+        var route = \textcolor{keyword}{new} Route(url, options);
+
+        actions = extend(\{\}, provider.defaults.actions, actions);
+
+        \textcolor{keyword}{function} extractParams(data, actionParams) \{
+          var ids = \{\};
+          actionParams = extend(\{\}, paramDefaults, actionParams);
+          forEach(actionParams, \textcolor{keyword}{function}(value, key) \{
+            \textcolor{keywordflow}{if} (isFunction(value)) \{ value = value(); \}
+            ids[key] = value && value.charAt && value.charAt(0) == \textcolor{charliteral}{'@'} ?
+              lookupDottedPath(data, value.substr(1)) : value;
+          \});
+          \textcolor{keywordflow}{return} ids;
+        \}
+
+        \textcolor{keyword}{function} defaultResponseInterceptor(response) \{
+          \textcolor{keywordflow}{return} response.resource;
+        \}
+
+        \textcolor{keyword}{function} Resource(value) \{
+          shallowClearAndCopy(value || \{\}, \textcolor{keyword}{this});
+        \}
+
+        Resource.prototype.toJSON = \textcolor{keyword}{function}() \{
+          var data = extend(\{\}, \textcolor{keyword}{this});
+          \textcolor{keyword}{delete} data.$promise;
+          \textcolor{keyword}{delete} data.$resolved;
+          \textcolor{keywordflow}{return} data;
+        \};
+
+        forEach(actions, \textcolor{keyword}{function}(action, name) \{
+          var hasBody = /^(POST|PUT|PATCH)$/i.test(action.method);
+
+          Resource[name] = \textcolor{keyword}{function}(a1, a2, a3, a4) \{
+            var params = \{\}, data, success, error;
+
+            \textcolor{comment}{/* jshint -W086 */} \textcolor{comment}{/* (purposefully fall through case statements) */}
+            \textcolor{keywordflow}{switch} (arguments.length) \{
+              \textcolor{keywordflow}{case} 4:
+                error = a4;
+                success = a3;
+              \textcolor{comment}{//fallthrough}
+              \textcolor{keywordflow}{case} 3:
+              \textcolor{keywordflow}{case} 2:
+                \textcolor{keywordflow}{if} (isFunction(a2)) \{
+                  \textcolor{keywordflow}{if} (isFunction(a1)) \{
+                    success = a1;
+                    error = a2;
+                    \textcolor{keywordflow}{break};
+                  \}
+
+                  success = a2;
+                  error = a3;
+                  \textcolor{comment}{//fallthrough}
+                \} \textcolor{keywordflow}{else} \{
+                  params = a1;
+                  data = a2;
+                  success = a3;
+                  \textcolor{keywordflow}{break};
+                \}
+              \textcolor{keywordflow}{case} 1:
+                \textcolor{keywordflow}{if} (isFunction(a1)) success = a1;
+                \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (hasBody) data = a1;
+                \textcolor{keywordflow}{else} params = a1;
+                \textcolor{keywordflow}{break};
+              \textcolor{keywordflow}{case} 0: \textcolor{keywordflow}{break};
+              \textcolor{keywordflow}{default}:
+                \textcolor{keywordflow}{throw} $resourceMinErr(\textcolor{stringliteral}{'badargs'},
+                  \textcolor{stringliteral}{"Expected up to 4 arguments [params, data, success, error], got \{0\} arguments"},
+                  arguments.length);
+            \}
+            \textcolor{comment}{/* jshint +W086 */} \textcolor{comment}{/* (purposefully fall through case statements) */}
+
+            var isInstanceCall = \textcolor{keyword}{this} instanceof Resource;
+            var value = isInstanceCall ? data : (action.isArray ? [] : \textcolor{keyword}{new} Resource(data));
+            var httpConfig = \{\};
+            var responseInterceptor = action.interceptor && action.interceptor.response ||
+              defaultResponseInterceptor;
+            var responseErrorInterceptor = action.interceptor && action.interceptor.responseError ||
+              undefined;
+
+            forEach(action, \textcolor{keyword}{function}(value, key) \{
+              \textcolor{keywordflow}{if} (key != \textcolor{stringliteral}{'params'} && key != \textcolor{stringliteral}{'isArray'} && key != \textcolor{stringliteral}{'interceptor'}) \{
+                httpConfig[key] = copy(value);
+              \}
+            \});
+
+            \textcolor{keywordflow}{if} (hasBody) httpConfig.data = data;
+            route.setUrlParams(httpConfig,
+              extend(\{\}, extractParams(data, action.params || \{\}), params),
+              action.url);
+
+            var promise = $http(httpConfig).then(\textcolor{keyword}{function}(response) \{
+              var data = response.data,
+                promise = value.$promise;
+
+              \textcolor{keywordflow}{if} (data) \{
+                \textcolor{comment}{// Need to convert action.isArray to boolean in case it is undefined}
+                \textcolor{comment}{// jshint -W018}
+                \textcolor{keywordflow}{if} (angular.isArray(data) !== (!!action.isArray)) \{
+                  \textcolor{keywordflow}{throw} $resourceMinErr(\textcolor{stringliteral}{'badcfg'},
+                      \textcolor{stringliteral}{'Error in resource configuration for action `\{0\}`. Expected response to '} +
+                      \textcolor{stringliteral}{'contain an \{1\} but got an \{2\} (Request: \{3\} \{4\})'}, name, action.isArray ? \textcolor{stringliteral}{'array'} : \textcolor{stringliteral}{
+      'object'},
+                    angular.isArray(data) ? \textcolor{stringliteral}{'array'} : \textcolor{stringliteral}{'object'}, httpConfig.method, httpConfig.url);
+                \}
+                \textcolor{comment}{// jshint +W018}
+                \textcolor{keywordflow}{if} (action.isArray) \{
+                  value.length = 0;
+                  forEach(data, \textcolor{keyword}{function}(item) \{
+                    \textcolor{keywordflow}{if} (typeof item === \textcolor{stringliteral}{"object"}) \{
+                      value.push(\textcolor{keyword}{new} Resource(item));
+                    \} \textcolor{keywordflow}{else} \{
+                      \textcolor{comment}{// Valid JSON values may be string literals, and these should not be converted}
+                      \textcolor{comment}{// into objects. These items will not have access to the Resource prototype}
+                      \textcolor{comment}{// methods, but unfortunately there}
+                      value.push(item);
+                    \}
+                  \});
+                \} \textcolor{keywordflow}{else} \{
+                  shallowClearAndCopy(data, value);
+                  value.$promise = promise;
+                \}
+              \}
+
+              value.$resolved = \textcolor{keyword}{true};
+
+              response.resource = value;
+
+              \textcolor{keywordflow}{return} response;
+            \}, \textcolor{keyword}{function}(response) \{
+              value.$resolved = \textcolor{keyword}{true};
+
+              (error || noop)(response);
+
+              \textcolor{keywordflow}{return} $q.reject(response);
+            \});
+
+            promise = promise.then(
+              \textcolor{keyword}{function}(response) \{
+                var value = responseInterceptor(response);
+                (success || noop)(value, response.headers);
+                \textcolor{keywordflow}{return} value;
+              \},
+              responseErrorInterceptor);
+
+            \textcolor{keywordflow}{if} (!isInstanceCall) \{
+              \textcolor{comment}{// we are creating instance / collection}
+              \textcolor{comment}{// - set the initial promise}
+              \textcolor{comment}{// - return the instance / collection}
+              value.$promise = promise;
+              value.$resolved = \textcolor{keyword}{false};
+
+              \textcolor{keywordflow}{return} value;
+            \}
+
+            \textcolor{comment}{// instance call}
+            \textcolor{keywordflow}{return} promise;
+          \};
+
+
+          Resource.prototype[\textcolor{charliteral}{'$'} + name] = \textcolor{keyword}{function}(params, success, error) \{
+            \textcolor{keywordflow}{if} (isFunction(params)) \{
+              error = success; success = params; params = \{\};
+            \}
+            var result = Resource[name].call(\textcolor{keyword}{this}, params, \textcolor{keyword}{this}, success, error);
+            \textcolor{keywordflow}{return} result.$promise || result;
+          \};
+        \});
+
+        Resource.bind = \textcolor{keyword}{function}(additionalParamDefaults) \{
+          \textcolor{keywordflow}{return} resourceFactory(url, extend(\{\}, paramDefaults, additionalParamDefaults), actions);
+        \};
+
+        \textcolor{keywordflow}{return} Resource;
+      \}
+
+      \textcolor{keywordflow}{return} resourceFactory;
+    \}];
+  \});
+
+
+\})(window, window.angular);
+\end{DoxyCodeInclude}
+ 

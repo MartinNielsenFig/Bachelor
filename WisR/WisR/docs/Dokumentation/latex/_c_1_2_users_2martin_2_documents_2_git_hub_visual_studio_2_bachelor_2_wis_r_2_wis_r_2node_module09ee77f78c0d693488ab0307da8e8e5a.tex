@@ -1,0 +1,28 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module09ee77f78c0d693488ab0307da8e8e5a}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/object/create.\+js}
+function Shape() \{ this.\+x = 0; this.\+y = 0; \}
+
+function Circle() \{ Shape.\+call(this); \}
+
+Circle.\+prototype = \+\_\+.\+create(Shape.\+prototype, \{ \textquotesingle{}constructor\textquotesingle{}\+: Circle \});
+
+var circle = new Circle; circle instanceof Circle; // =$>$ true
+
+circle instanceof Shape; // =$>$ true
+
+
+\begin{DoxyCodeInclude}
+var baseAssign = require(\textcolor{stringliteral}{'../internal/baseAssign'}),
+    baseCreate = require(\textcolor{stringliteral}{'../internal/baseCreate'}),
+    isIterateeCall = require(\textcolor{stringliteral}{'../internal/isIterateeCall'});
+
+\textcolor{keyword}{function} create(prototype, properties, guard) \{
+  var result = baseCreate(prototype);
+  \textcolor{keywordflow}{if} (guard && isIterateeCall(prototype, properties, guard)) \{
+    properties = undefined;
+  \}
+  \textcolor{keywordflow}{return} properties ? baseAssign(result, properties) : result;
+\}
+
+module.exports = create;
+\end{DoxyCodeInclude}
+ 

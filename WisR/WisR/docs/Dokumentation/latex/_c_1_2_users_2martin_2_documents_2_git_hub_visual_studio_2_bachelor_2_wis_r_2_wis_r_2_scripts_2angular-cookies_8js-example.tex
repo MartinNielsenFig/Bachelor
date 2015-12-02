@@ -1,0 +1,121 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2_scripts_2angular-cookies_8js-example}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/\+Scripts/angular-\/cookies.\+js}
+
+\begin{DoxyItemize}
+\item ```js angular.\+module(\textquotesingle{}cookie\+Store\+Example\textquotesingle{}, \mbox{[}\textquotesingle{}ng\+Cookies\textquotesingle{}\mbox{]}) .controller(\textquotesingle{}Example\+Controller\textquotesingle{}, \mbox{[}\textquotesingle{}\$cookie\+Store\textquotesingle{}, function(\$cookie\+Store) \{ // Put cookie \$cookie\+Store.\+put(\textquotesingle{}my\+Favorite\textquotesingle{},\textquotesingle{}oatmeal\textquotesingle{}); // Get cookie var favorite\+Cookie = \$cookie\+Store.\+get(\textquotesingle{}my\+Favorite\textquotesingle{}); // Removing a cookie \$cookie\+Store.\+remove(\textquotesingle{}my\+Favorite\textquotesingle{}); \}\mbox{]});
+\item ```
+\end{DoxyItemize}
+
+
+\begin{DoxyCodeInclude}
+
+(\textcolor{keyword}{function}(window, angular, undefined) \{\textcolor{stringliteral}{'use strict'};
+
+angular.module(\textcolor{stringliteral}{'ngCookies'}, [\textcolor{stringliteral}{'ng'}]).
+   provider(\textcolor{stringliteral}{'$cookies'}, [\textcolor{keyword}{function} $CookiesProvider() \{
+    var defaults = this.defaults = \{\};
+
+    \textcolor{keyword}{function} calcOptions(options) \{
+      \textcolor{keywordflow}{return} options ? angular.extend(\{\}, defaults, options) : defaults;
+    \}
+
+    this.$get = [\textcolor{stringliteral}{'$$cookieReader'}, \textcolor{stringliteral}{'$$cookieWriter'}, \textcolor{keyword}{function}($$cookieReader, $$cookieWriter) \{
+      \textcolor{keywordflow}{return} \{
+        \textcolor{keyword}{get}: \textcolor{keyword}{function}(key) \{
+          \textcolor{keywordflow}{return} $$cookieReader()[key];
+        \},
+
+        getObject: \textcolor{keyword}{function}(key) \{
+          var value = this.\textcolor{keyword}{get}(key);
+          \textcolor{keywordflow}{return} value ? angular.fromJson(value) : value;
+        \},
+
+        getAll: \textcolor{keyword}{function}() \{
+          \textcolor{keywordflow}{return} $$cookieReader();
+        \},
+
+        put: \textcolor{keyword}{function}(key, value, options) \{
+          $$cookieWriter(key, value, calcOptions(options));
+        \},
+
+        putObject: \textcolor{keyword}{function}(key, value, options) \{
+          this.put(key, angular.toJson(value), options);
+        \},
+
+        \textcolor{keyword}{remove}: \textcolor{keyword}{function}(key, options) \{
+          $$cookieWriter(key, undefined, calcOptions(options));
+        \}
+      \};
+    \}];
+  \}]);
+
+angular.module(\textcolor{stringliteral}{'ngCookies'}).
+ factory(\textcolor{stringliteral}{'$cookieStore'}, [\textcolor{stringliteral}{'$cookies'}, \textcolor{keyword}{function}($cookies) \{
+
+    \textcolor{keywordflow}{return} \{
+      \textcolor{keyword}{get}: \textcolor{keyword}{function}(key) \{
+        \textcolor{keywordflow}{return} $cookies.getObject(key);
+      \},
+
+      put: \textcolor{keyword}{function}(key, value) \{
+        $cookies.putObject(key, value);
+      \},
+
+      \textcolor{keyword}{remove}: \textcolor{keyword}{function}(key) \{
+        $cookies.remove(key);
+      \}
+    \};
+
+  \}]);
+
+\textcolor{keyword}{function} $$CookieWriter($document, $log, $browser) \{
+  var cookiePath = $browser.baseHref();
+  var rawDocument = $document[0];
+
+  \textcolor{keyword}{function} buildCookieString(name, value, options) \{
+    var path, expires;
+    options = options || \{\};
+    expires = options.expires;
+    path = angular.isDefined(options.path) ? options.path : cookiePath;
+    \textcolor{keywordflow}{if} (value === undefined) \{
+      expires = \textcolor{stringliteral}{'Thu, 01 Jan 1970 00:00:00 GMT'};
+      value = \textcolor{stringliteral}{''};
+    \}
+    \textcolor{keywordflow}{if} (angular.isString(expires)) \{
+      expires = \textcolor{keyword}{new} Date(expires);
+    \}
+
+    var str = encodeURIComponent(name) + \textcolor{charliteral}{'='} + encodeURIComponent(value);
+    str += path ? \textcolor{stringliteral}{';path='} + path : \textcolor{stringliteral}{''};
+    str += options.domain ? \textcolor{stringliteral}{';domain='} + options.domain : \textcolor{stringliteral}{''};
+    str += expires ? \textcolor{stringliteral}{';expires='} + expires.toUTCString() : \textcolor{stringliteral}{''};
+    str += options.secure ? \textcolor{stringliteral}{';secure'} : \textcolor{stringliteral}{''};
+
+    \textcolor{comment}{// per http://www.ietf.org/rfc/rfc2109.txt browser must allow at minimum:}
+    \textcolor{comment}{// - 300 cookies}
+    \textcolor{comment}{// - 20 cookies per unique domain}
+    \textcolor{comment}{// - 4096 bytes per cookie}
+    var cookieLength = str.length + 1;
+    \textcolor{keywordflow}{if} (cookieLength > 4096) \{
+      $log.warn(\textcolor{stringliteral}{"Cookie '"} + name +
+        \textcolor{stringliteral}{"' possibly not set or overflowed because it was too large ("} +
+        cookieLength + \textcolor{stringliteral}{" > 4096 bytes)!"});
+    \}
+
+    \textcolor{keywordflow}{return} str;
+  \}
+
+  \textcolor{keywordflow}{return} \textcolor{keyword}{function}(name, value, options) \{
+    rawDocument.cookie = buildCookieString(name, value, options);
+  \};
+\}
+
+$$CookieWriter.$inject = [\textcolor{stringliteral}{'$document'}, \textcolor{stringliteral}{'$log'}, \textcolor{stringliteral}{'$browser'}];
+
+angular.module(\textcolor{stringliteral}{'ngCookies'}).provider(\textcolor{stringliteral}{'$$cookieWriter'}, \textcolor{keyword}{function} $$CookieWriterProvider() \{
+  this.$get = $$CookieWriter;
+\});
+
+
+\})(window, window.angular);
+\end{DoxyCodeInclude}
+ 

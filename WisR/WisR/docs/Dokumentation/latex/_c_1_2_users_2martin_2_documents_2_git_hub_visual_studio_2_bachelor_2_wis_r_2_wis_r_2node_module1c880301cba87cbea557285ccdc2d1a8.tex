@@ -1,0 +1,28 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module1c880301cba87cbea557285ccdc2d1a8}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/collection/sort\+By\+All.\+js}
+var users = \mbox{[} \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}fred\textquotesingle{}, \textquotesingle{}age\textquotesingle{}\+: 48 \}, \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}barney\textquotesingle{}, \textquotesingle{}age\textquotesingle{}\+: 36 \}, \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}fred\textquotesingle{}, \textquotesingle{}age\textquotesingle{}\+: 42 \}, \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}barney\textquotesingle{}, \textquotesingle{}age\textquotesingle{}\+: 34 \} \mbox{]};
+
+\+\_\+.\+map(\+\_\+.\+sort\+By\+All(users, \mbox{[}\textquotesingle{}user\textquotesingle{}, \textquotesingle{}age\textquotesingle{}\mbox{]}), \+\_\+.\+values); // =$>$ \mbox{[}\mbox{[}\textquotesingle{}barney\textquotesingle{}, 34\mbox{]}, \mbox{[}\textquotesingle{}barney\textquotesingle{}, 36\mbox{]}, \mbox{[}\textquotesingle{}fred\textquotesingle{}, 42\mbox{]}, \mbox{[}\textquotesingle{}fred\textquotesingle{}, 48\mbox{]}\mbox{]}
+
+\+\_\+.\+map(\+\_\+.\+sort\+By\+All(users, \textquotesingle{}user\textquotesingle{}, function(chr) \{ return Math.\+floor(chr.\+age / 10); \}), \+\_\+.\+values); // =$>$ \mbox{[}\mbox{[}\textquotesingle{}barney\textquotesingle{}, 36\mbox{]}, \mbox{[}\textquotesingle{}barney\textquotesingle{}, 34\mbox{]}, \mbox{[}\textquotesingle{}fred\textquotesingle{}, 48\mbox{]}, \mbox{[}\textquotesingle{}fred\textquotesingle{}, 42\mbox{]}\mbox{]}
+
+
+\begin{DoxyCodeInclude}
+var baseFlatten = require(\textcolor{stringliteral}{'../internal/baseFlatten'}),
+    baseSortByOrder = require(\textcolor{stringliteral}{'../internal/baseSortByOrder'}),
+    isIterateeCall = require(\textcolor{stringliteral}{'../internal/isIterateeCall'}),
+    restParam = require(\textcolor{stringliteral}{'../function/restParam'});
+
+var sortByAll = restParam(\textcolor{keyword}{function}(collection, iteratees) \{
+  \textcolor{keywordflow}{if} (collection == null) \{
+    \textcolor{keywordflow}{return} [];
+  \}
+  var guard = iteratees[2];
+  \textcolor{keywordflow}{if} (guard && isIterateeCall(iteratees[0], iteratees[1], guard)) \{
+    iteratees.length = 1;
+  \}
+  \textcolor{keywordflow}{return} baseSortByOrder(collection, baseFlatten(iteratees), []);
+\});
+
+module.exports = sortByAll;
+\end{DoxyCodeInclude}
+ 

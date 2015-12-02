@@ -1,0 +1,14 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module5b111c407d0cda69564a2989500dd9fe}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/object/defaults\+Deep.\+js}
+\+\_\+.\+defaults\+Deep(\{ \textquotesingle{}user\textquotesingle{}\+: \{ \textquotesingle{}name\textquotesingle{}\+: \textquotesingle{}barney\textquotesingle{} \} \}, \{ \textquotesingle{}user\textquotesingle{}\+: \{ \textquotesingle{}name\textquotesingle{}\+: \textquotesingle{}fred\textquotesingle{}, \textquotesingle{}age\textquotesingle{}\+: 36 \} \}); // =$>$ \{ \textquotesingle{}user\textquotesingle{}\+: \{ \textquotesingle{}name\textquotesingle{}\+: \textquotesingle{}barney\textquotesingle{}, \textquotesingle{}age\textquotesingle{}\+: 36 \} \}
+
+
+\begin{DoxyCodeInclude}
+var createDefaults = require(\textcolor{stringliteral}{'../internal/createDefaults'}),
+    merge = require(\textcolor{stringliteral}{'./merge'}),
+    mergeDefaults = require(\textcolor{stringliteral}{'../internal/mergeDefaults'});
+
+var defaultsDeep = createDefaults(merge, mergeDefaults);
+
+module.exports = defaultsDeep;
+\end{DoxyCodeInclude}
+ 

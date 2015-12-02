@@ -1,0 +1,21 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_moduled141d89d3d57ba8a79ede188f0c0e75a}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/object/values.\+js}
+function Foo() \{ this.\+a = 1; this.\+b = 2; \}
+
+Foo.\+prototype.\+c = 3;
+
+\+\_\+.\+values(new Foo); // =$>$ \mbox{[}1, 2\mbox{]} (iteration order is not guaranteed)
+
+\+\_\+.\+values(\textquotesingle{}hi\textquotesingle{}); // =$>$ \mbox{[}\textquotesingle{}h\textquotesingle{}, \textquotesingle{}i\textquotesingle{}\mbox{]}
+
+
+\begin{DoxyCodeInclude}
+var baseValues = require(\textcolor{stringliteral}{'../internal/baseValues'}),
+    keys = require(\textcolor{stringliteral}{'./keys'});
+
+\textcolor{keyword}{function} values(\textcolor{keywordtype}{object}) \{
+  \textcolor{keywordflow}{return} baseValues(\textcolor{keywordtype}{object}, keys(\textcolor{keywordtype}{object}));
+\}
+
+module.exports = values;
+\end{DoxyCodeInclude}
+ 

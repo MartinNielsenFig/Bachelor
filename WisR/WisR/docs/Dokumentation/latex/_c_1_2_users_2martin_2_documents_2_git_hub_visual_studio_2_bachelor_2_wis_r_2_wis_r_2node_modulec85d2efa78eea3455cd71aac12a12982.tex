@@ -1,0 +1,21 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_modulec85d2efa78eea3455cd71aac12a12982}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/istanbul/node\+\_\+modules/js-\/yaml/node\+\_\+modules/argparse/node\+\_\+modules/lodash/utility/method.\+js}
+var objects = \mbox{[} \{ \textquotesingle{}a\textquotesingle{}\+: \{ \textquotesingle{}b\textquotesingle{}\+: \{ \textquotesingle{}c\textquotesingle{}\+: \+\_\+.\+constant(2) \} \} \}, \{ \textquotesingle{}a\textquotesingle{}\+: \{ \textquotesingle{}b\textquotesingle{}\+: \{ \textquotesingle{}c\textquotesingle{}\+: \+\_\+.\+constant(1) \} \} \} \mbox{]};
+
+\+\_\+.\+map(objects, \+\_\+.\+method(\textquotesingle{}a.\+b.\+c\textquotesingle{})); // =$>$ \mbox{[}2, 1\mbox{]}
+
+\+\_\+.\+invoke(\+\_\+.\+sort\+By(objects, \+\_\+.\+method(\mbox{[}\textquotesingle{}a\textquotesingle{}, \textquotesingle{}b\textquotesingle{}, \textquotesingle{}c\textquotesingle{}\mbox{]})), \textquotesingle{}a.\+b.\+c\textquotesingle{}); // =$>$ \mbox{[}1, 2\mbox{]}
+
+
+\begin{DoxyCodeInclude}
+var invokePath = require(\textcolor{stringliteral}{'../internal/invokePath'}),
+    restParam = require(\textcolor{stringliteral}{'../function/restParam'});
+
+var method = restParam(\textcolor{keyword}{function}(path, args) \{
+  \textcolor{keywordflow}{return} \textcolor{keyword}{function}(object) \{
+    \textcolor{keywordflow}{return} invokePath(\textcolor{keywordtype}{object}, path, args);
+  \};
+\});
+
+module.exports = method;
+\end{DoxyCodeInclude}
+ 

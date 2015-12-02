@@ -1,0 +1,299 @@
+\hypertarget{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator}{}\section{Wis\+R\+Rest\+A\+P\+I.\+Areas.\+Help\+Page.\+Help\+Page\+Sample\+Generator Class Reference}
+\label{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator}\index{Wis\+R\+Rest\+A\+P\+I.\+Areas.\+Help\+Page.\+Help\+Page\+Sample\+Generator@{Wis\+R\+Rest\+A\+P\+I.\+Areas.\+Help\+Page.\+Help\+Page\+Sample\+Generator}}
+
+
+This class will generate the samples for the help page.  
+
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator_a8aa29d0f2a2aa06367c1a3202b72c03a}{Help\+Page\+Sample\+Generator} ()
+\begin{DoxyCompactList}\small\item\em Initializes a new instance of the \hyperlink{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator}{Help\+Page\+Sample\+Generator} class. \end{DoxyCompactList}\item 
+I\+Dictionary$<$ Media\+Type\+Header\+Value, object $>$ \hyperlink{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator_a1b403c02a34558d3123349b6696d1f7d}{Get\+Sample\+Requests} (Api\+Description api)
+\begin{DoxyCompactList}\small\item\em Gets the request body samples for a given Api\+Description. \end{DoxyCompactList}\item 
+I\+Dictionary$<$ Media\+Type\+Header\+Value, object $>$ \hyperlink{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator_aacbe2c3aa43cd5bd5df52ecf7117cb4a}{Get\+Sample\+Responses} (Api\+Description api)
+\begin{DoxyCompactList}\small\item\em Gets the response body samples for a given Api\+Description. \end{DoxyCompactList}\item 
+virtual I\+Dictionary$<$ Media\+Type\+Header\+Value, object $>$ \hyperlink{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator_a65d589995ac92621d86f64cf2350506b}{Get\+Sample} (Api\+Description api, \hyperlink{namespace_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_a5e9118cc1fa882599364690b402f67c7}{Sample\+Direction} sample\+Direction)
+\begin{DoxyCompactList}\small\item\em Gets the request or response body samples. \end{DoxyCompactList}\item 
+virtual object \hyperlink{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator_ad9b6e01eedc672ac484d145e03184a8c}{Get\+Action\+Sample} (string controller\+Name, string action\+Name, I\+Enumerable$<$ string $>$ parameter\+Names, Type type, Media\+Type\+Formatter formatter, Media\+Type\+Header\+Value media\+Type, \hyperlink{namespace_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_a5e9118cc1fa882599364690b402f67c7}{Sample\+Direction} sample\+Direction)
+\begin{DoxyCompactList}\small\item\em Search for samples that are provided directly through \hyperlink{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator_a000300de06fc1393173cb1872fb916ae}{Action\+Samples}. \end{DoxyCompactList}\item 
+virtual object \hyperlink{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator_a46c92fcd3e90a082237eb4a98d57e85d}{Get\+Sample\+Object} (Type type)
+\begin{DoxyCompactList}\small\item\em Gets the sample object that will be serialized by the formatters. First, it will look at the \hyperlink{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator_a424a1eefe17744f2b186f13de239de76}{Sample\+Objects}. If no sample object is found, it will try to create one using Default\+Sample\+Object\+Factory (which wraps an \hyperlink{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_object_generator}{Object\+Generator}) and other factories in \hyperlink{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator_a1b2dbd19fb879825109b777e58cc89fe}{Sample\+Object\+Factories}. \end{DoxyCompactList}\item 
+virtual Type \hyperlink{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator_a7b65addecd33a6bc84e955adbaa81d8e}{Resolve\+Http\+Request\+Message\+Type} (Api\+Description api)
+\begin{DoxyCompactList}\small\item\em Resolves the actual type of System.\+Net.\+Http.\+Object\+Content$<$\+T$>$ passed to the System.\+Net.\+Http.\+Http\+Request\+Message in an action. \end{DoxyCompactList}\item 
+virtual Type \hyperlink{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator_ac6a143b3a4e25f49b585a71d21466c89}{Resolve\+Type} (Api\+Description api, string controller\+Name, string action\+Name, I\+Enumerable$<$ string $>$ parameter\+Names, \hyperlink{namespace_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_a5e9118cc1fa882599364690b402f67c7}{Sample\+Direction} sample\+Direction, out Collection$<$ Media\+Type\+Formatter $>$ formatters)
+\begin{DoxyCompactList}\small\item\em Resolves the type of the action parameter or return value when Http\+Request\+Message or Http\+Response\+Message is used. \end{DoxyCompactList}\item 
+virtual object \hyperlink{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator_a708ea1e3710f22893508c3ff5d164f03}{Write\+Sample\+Object\+Using\+Formatter} (Media\+Type\+Formatter formatter, object value, Type type, Media\+Type\+Header\+Value media\+Type)
+\begin{DoxyCompactList}\small\item\em Writes the sample object using formatter. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+I\+Dictionary$<$ \hyperlink{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_key}{Help\+Page\+Sample\+Key}, Type $>$ \hyperlink{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator_a00b811b0b4e6e0b530cc3bd254b6427a}{Actual\+Http\+Message\+Types}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets C\+L\+R types that are used as the content of Http\+Request\+Message or Http\+Response\+Message. \end{DoxyCompactList}\item 
+I\+Dictionary$<$ \hyperlink{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_key}{Help\+Page\+Sample\+Key}, object $>$ \hyperlink{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator_a000300de06fc1393173cb1872fb916ae}{Action\+Samples}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets the objects that are used directly as samples for certain actions. \end{DoxyCompactList}\item 
+I\+Dictionary$<$ Type, object $>$ \hyperlink{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator_a424a1eefe17744f2b186f13de239de76}{Sample\+Objects}\hspace{0.3cm}{\ttfamily  \mbox{[}get, set\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets the objects that are serialized as samples by the supported formatters. \end{DoxyCompactList}\item 
+I\+List$<$ Func$<$ \hyperlink{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator}{Help\+Page\+Sample\+Generator}, Type, object $>$ $>$ \hyperlink{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator_a1b2dbd19fb879825109b777e58cc89fe}{Sample\+Object\+Factories}\hspace{0.3cm}{\ttfamily  \mbox{[}get\mbox{]}}
+\begin{DoxyCompactList}\small\item\em Gets factories for the objects that the supported formatters will serialize as samples. Processed in order, stopping when the factory successfully returns a non-\/ object. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class will generate the samples for the help page. 
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator_a8aa29d0f2a2aa06367c1a3202b72c03a}{}\index{Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator@{Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator}!Help\+Page\+Sample\+Generator@{Help\+Page\+Sample\+Generator}}
+\index{Help\+Page\+Sample\+Generator@{Help\+Page\+Sample\+Generator}!Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator@{Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator}}
+\subsubsection[{Help\+Page\+Sample\+Generator()}]{\setlength{\rightskip}{0pt plus 5cm}Wis\+R\+Rest\+A\+P\+I.\+Areas.\+Help\+Page.\+Help\+Page\+Sample\+Generator.\+Help\+Page\+Sample\+Generator (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator_a8aa29d0f2a2aa06367c1a3202b72c03a}
+
+
+Initializes a new instance of the \hyperlink{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator}{Help\+Page\+Sample\+Generator} class. 
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator_ad9b6e01eedc672ac484d145e03184a8c}{}\index{Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator@{Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator}!Get\+Action\+Sample@{Get\+Action\+Sample}}
+\index{Get\+Action\+Sample@{Get\+Action\+Sample}!Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator@{Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator}}
+\subsubsection[{Get\+Action\+Sample(string controller\+Name, string action\+Name, I\+Enumerable$<$ string $>$ parameter\+Names, Type type, Media\+Type\+Formatter formatter, Media\+Type\+Header\+Value media\+Type, Sample\+Direction sample\+Direction)}]{\setlength{\rightskip}{0pt plus 5cm}virtual object Wis\+R\+Rest\+A\+P\+I.\+Areas.\+Help\+Page.\+Help\+Page\+Sample\+Generator.\+Get\+Action\+Sample (
+\begin{DoxyParamCaption}
+\item[{string}]{controller\+Name, }
+\item[{string}]{action\+Name, }
+\item[{I\+Enumerable$<$ string $>$}]{parameter\+Names, }
+\item[{Type}]{type, }
+\item[{Media\+Type\+Formatter}]{formatter, }
+\item[{Media\+Type\+Header\+Value}]{media\+Type, }
+\item[{{\bf Sample\+Direction}}]{sample\+Direction}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\label{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator_ad9b6e01eedc672ac484d145e03184a8c}
+
+
+Search for samples that are provided directly through \hyperlink{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator_a000300de06fc1393173cb1872fb916ae}{Action\+Samples}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em controller\+Name} & Name of the controller.\\
+\hline
+{\em action\+Name} & Name of the action.\\
+\hline
+{\em parameter\+Names} & The parameter names.\\
+\hline
+{\em type} & The C\+L\+R type.\\
+\hline
+{\em formatter} & The formatter.\\
+\hline
+{\em media\+Type} & The media type.\\
+\hline
+{\em sample\+Direction} & The value indicating whether the sample is for a request or for a response.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The sample that matches the parameters.
+\end{DoxyReturn}
+\hypertarget{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator_a65d589995ac92621d86f64cf2350506b}{}\index{Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator@{Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator}!Get\+Sample@{Get\+Sample}}
+\index{Get\+Sample@{Get\+Sample}!Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator@{Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator}}
+\subsubsection[{Get\+Sample(\+Api\+Description api, Sample\+Direction sample\+Direction)}]{\setlength{\rightskip}{0pt plus 5cm}virtual I\+Dictionary$<$Media\+Type\+Header\+Value, object$>$ Wis\+R\+Rest\+A\+P\+I.\+Areas.\+Help\+Page.\+Help\+Page\+Sample\+Generator.\+Get\+Sample (
+\begin{DoxyParamCaption}
+\item[{Api\+Description}]{api, }
+\item[{{\bf Sample\+Direction}}]{sample\+Direction}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\label{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator_a65d589995ac92621d86f64cf2350506b}
+
+
+Gets the request or response body samples. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em api} & The Api\+Description.\\
+\hline
+{\em sample\+Direction} & The value indicating whether the sample is for a request or for a response.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The samples keyed by media type.
+\end{DoxyReturn}
+\hypertarget{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator_a46c92fcd3e90a082237eb4a98d57e85d}{}\index{Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator@{Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator}!Get\+Sample\+Object@{Get\+Sample\+Object}}
+\index{Get\+Sample\+Object@{Get\+Sample\+Object}!Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator@{Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator}}
+\subsubsection[{Get\+Sample\+Object(\+Type type)}]{\setlength{\rightskip}{0pt plus 5cm}virtual object Wis\+R\+Rest\+A\+P\+I.\+Areas.\+Help\+Page.\+Help\+Page\+Sample\+Generator.\+Get\+Sample\+Object (
+\begin{DoxyParamCaption}
+\item[{Type}]{type}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\label{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator_a46c92fcd3e90a082237eb4a98d57e85d}
+
+
+Gets the sample object that will be serialized by the formatters. First, it will look at the \hyperlink{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator_a424a1eefe17744f2b186f13de239de76}{Sample\+Objects}. If no sample object is found, it will try to create one using Default\+Sample\+Object\+Factory (which wraps an \hyperlink{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_object_generator}{Object\+Generator}) and other factories in \hyperlink{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator_a1b2dbd19fb879825109b777e58cc89fe}{Sample\+Object\+Factories}. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em type} & The type.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The sample object.
+\end{DoxyReturn}
+\hypertarget{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator_a1b403c02a34558d3123349b6696d1f7d}{}\index{Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator@{Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator}!Get\+Sample\+Requests@{Get\+Sample\+Requests}}
+\index{Get\+Sample\+Requests@{Get\+Sample\+Requests}!Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator@{Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator}}
+\subsubsection[{Get\+Sample\+Requests(\+Api\+Description api)}]{\setlength{\rightskip}{0pt plus 5cm}I\+Dictionary$<$Media\+Type\+Header\+Value, object$>$ Wis\+R\+Rest\+A\+P\+I.\+Areas.\+Help\+Page.\+Help\+Page\+Sample\+Generator.\+Get\+Sample\+Requests (
+\begin{DoxyParamCaption}
+\item[{Api\+Description}]{api}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator_a1b403c02a34558d3123349b6696d1f7d}
+
+
+Gets the request body samples for a given Api\+Description. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em api} & The Api\+Description.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The samples keyed by media type.
+\end{DoxyReturn}
+\hypertarget{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator_aacbe2c3aa43cd5bd5df52ecf7117cb4a}{}\index{Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator@{Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator}!Get\+Sample\+Responses@{Get\+Sample\+Responses}}
+\index{Get\+Sample\+Responses@{Get\+Sample\+Responses}!Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator@{Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator}}
+\subsubsection[{Get\+Sample\+Responses(\+Api\+Description api)}]{\setlength{\rightskip}{0pt plus 5cm}I\+Dictionary$<$Media\+Type\+Header\+Value, object$>$ Wis\+R\+Rest\+A\+P\+I.\+Areas.\+Help\+Page.\+Help\+Page\+Sample\+Generator.\+Get\+Sample\+Responses (
+\begin{DoxyParamCaption}
+\item[{Api\+Description}]{api}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}\label{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator_aacbe2c3aa43cd5bd5df52ecf7117cb4a}
+
+
+Gets the response body samples for a given Api\+Description. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em api} & The Api\+Description.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The samples keyed by media type.
+\end{DoxyReturn}
+\hypertarget{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator_a7b65addecd33a6bc84e955adbaa81d8e}{}\index{Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator@{Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator}!Resolve\+Http\+Request\+Message\+Type@{Resolve\+Http\+Request\+Message\+Type}}
+\index{Resolve\+Http\+Request\+Message\+Type@{Resolve\+Http\+Request\+Message\+Type}!Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator@{Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator}}
+\subsubsection[{Resolve\+Http\+Request\+Message\+Type(\+Api\+Description api)}]{\setlength{\rightskip}{0pt plus 5cm}virtual Type Wis\+R\+Rest\+A\+P\+I.\+Areas.\+Help\+Page.\+Help\+Page\+Sample\+Generator.\+Resolve\+Http\+Request\+Message\+Type (
+\begin{DoxyParamCaption}
+\item[{Api\+Description}]{api}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\label{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator_a7b65addecd33a6bc84e955adbaa81d8e}
+
+
+Resolves the actual type of System.\+Net.\+Http.\+Object\+Content$<$\+T$>$ passed to the System.\+Net.\+Http.\+Http\+Request\+Message in an action. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em api} & The Api\+Description.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The type.
+\end{DoxyReturn}
+\hypertarget{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator_ac6a143b3a4e25f49b585a71d21466c89}{}\index{Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator@{Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator}!Resolve\+Type@{Resolve\+Type}}
+\index{Resolve\+Type@{Resolve\+Type}!Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator@{Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator}}
+\subsubsection[{Resolve\+Type(\+Api\+Description api, string controller\+Name, string action\+Name, I\+Enumerable$<$ string $>$ parameter\+Names, Sample\+Direction sample\+Direction, out Collection$<$ Media\+Type\+Formatter $>$ formatters)}]{\setlength{\rightskip}{0pt plus 5cm}virtual Type Wis\+R\+Rest\+A\+P\+I.\+Areas.\+Help\+Page.\+Help\+Page\+Sample\+Generator.\+Resolve\+Type (
+\begin{DoxyParamCaption}
+\item[{Api\+Description}]{api, }
+\item[{string}]{controller\+Name, }
+\item[{string}]{action\+Name, }
+\item[{I\+Enumerable$<$ string $>$}]{parameter\+Names, }
+\item[{{\bf Sample\+Direction}}]{sample\+Direction, }
+\item[{out Collection$<$ Media\+Type\+Formatter $>$}]{formatters}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\label{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator_ac6a143b3a4e25f49b585a71d21466c89}
+
+
+Resolves the type of the action parameter or return value when Http\+Request\+Message or Http\+Response\+Message is used. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em api} & The Api\+Description.\\
+\hline
+{\em controller\+Name} & Name of the controller.\\
+\hline
+{\em action\+Name} & Name of the action.\\
+\hline
+{\em parameter\+Names} & The parameter names.\\
+\hline
+{\em sample\+Direction} & The value indicating whether the sample is for a request or a response.\\
+\hline
+{\em formatters} & The formatters.\\
+\hline
+\end{DoxyParams}
+\hypertarget{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator_a708ea1e3710f22893508c3ff5d164f03}{}\index{Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator@{Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator}!Write\+Sample\+Object\+Using\+Formatter@{Write\+Sample\+Object\+Using\+Formatter}}
+\index{Write\+Sample\+Object\+Using\+Formatter@{Write\+Sample\+Object\+Using\+Formatter}!Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator@{Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator}}
+\subsubsection[{Write\+Sample\+Object\+Using\+Formatter(\+Media\+Type\+Formatter formatter, object value, Type type, Media\+Type\+Header\+Value media\+Type)}]{\setlength{\rightskip}{0pt plus 5cm}virtual object Wis\+R\+Rest\+A\+P\+I.\+Areas.\+Help\+Page.\+Help\+Page\+Sample\+Generator.\+Write\+Sample\+Object\+Using\+Formatter (
+\begin{DoxyParamCaption}
+\item[{Media\+Type\+Formatter}]{formatter, }
+\item[{object}]{value, }
+\item[{Type}]{type, }
+\item[{Media\+Type\+Header\+Value}]{media\+Type}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}\label{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator_a708ea1e3710f22893508c3ff5d164f03}
+
+
+Writes the sample object using formatter. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em formatter} & The formatter.\\
+\hline
+{\em value} & The value.\\
+\hline
+{\em type} & The type.\\
+\hline
+{\em media\+Type} & Type of the media.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+
+
+\subsection{Property Documentation}
+\hypertarget{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator_a000300de06fc1393173cb1872fb916ae}{}\index{Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator@{Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator}!Action\+Samples@{Action\+Samples}}
+\index{Action\+Samples@{Action\+Samples}!Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator@{Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator}}
+\subsubsection[{Action\+Samples}]{\setlength{\rightskip}{0pt plus 5cm}I\+Dictionary$<${\bf Help\+Page\+Sample\+Key}, object$>$ Wis\+R\+Rest\+A\+P\+I.\+Areas.\+Help\+Page.\+Help\+Page\+Sample\+Generator.\+Action\+Samples\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}\label{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator_a000300de06fc1393173cb1872fb916ae}
+
+
+Gets the objects that are used directly as samples for certain actions. 
+
+\hypertarget{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator_a00b811b0b4e6e0b530cc3bd254b6427a}{}\index{Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator@{Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator}!Actual\+Http\+Message\+Types@{Actual\+Http\+Message\+Types}}
+\index{Actual\+Http\+Message\+Types@{Actual\+Http\+Message\+Types}!Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator@{Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator}}
+\subsubsection[{Actual\+Http\+Message\+Types}]{\setlength{\rightskip}{0pt plus 5cm}I\+Dictionary$<${\bf Help\+Page\+Sample\+Key}, Type$>$ Wis\+R\+Rest\+A\+P\+I.\+Areas.\+Help\+Page.\+Help\+Page\+Sample\+Generator.\+Actual\+Http\+Message\+Types\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}\label{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator_a00b811b0b4e6e0b530cc3bd254b6427a}
+
+
+Gets C\+L\+R types that are used as the content of Http\+Request\+Message or Http\+Response\+Message. 
+
+\hypertarget{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator_a1b2dbd19fb879825109b777e58cc89fe}{}\index{Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator@{Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator}!Sample\+Object\+Factories@{Sample\+Object\+Factories}}
+\index{Sample\+Object\+Factories@{Sample\+Object\+Factories}!Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator@{Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator}}
+\subsubsection[{Sample\+Object\+Factories}]{\setlength{\rightskip}{0pt plus 5cm}I\+List$<$Func$<${\bf Help\+Page\+Sample\+Generator}, Type, object$>$ $>$ Wis\+R\+Rest\+A\+P\+I.\+Areas.\+Help\+Page.\+Help\+Page\+Sample\+Generator.\+Sample\+Object\+Factories\hspace{0.3cm}{\ttfamily [get]}}\label{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator_a1b2dbd19fb879825109b777e58cc89fe}
+
+
+Gets factories for the objects that the supported formatters will serialize as samples. Processed in order, stopping when the factory successfully returns a non-\/ object. 
+
+Collection includes just \hyperlink{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_object_generator_a33b690209a8997bfb43ca29676c03b70}{Object\+Generator.\+Generate\+Object(\+Type)} initially. Use 
+\begin{DoxyCode}
+\hyperlink{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator_a1b2dbd19fb879825109b777e58cc89fe}{SampleObjectFactories}.Insert(0, func)
+\end{DoxyCode}
+ to provide an override and 
+\begin{DoxyCode}
+\hyperlink{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator_a1b2dbd19fb879825109b777e58cc89fe}{SampleObjectFactories}.Add(func)
+\end{DoxyCode}
+ to provide a fallback.\hypertarget{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator_a424a1eefe17744f2b186f13de239de76}{}\index{Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator@{Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator}!Sample\+Objects@{Sample\+Objects}}
+\index{Sample\+Objects@{Sample\+Objects}!Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator@{Wis\+R\+Rest\+A\+P\+I\+::\+Areas\+::\+Help\+Page\+::\+Help\+Page\+Sample\+Generator}}
+\subsubsection[{Sample\+Objects}]{\setlength{\rightskip}{0pt plus 5cm}I\+Dictionary$<$Type, object$>$ Wis\+R\+Rest\+A\+P\+I.\+Areas.\+Help\+Page.\+Help\+Page\+Sample\+Generator.\+Sample\+Objects\hspace{0.3cm}{\ttfamily [get]}, {\ttfamily [set]}}\label{class_wis_r_rest_a_p_i_1_1_areas_1_1_help_page_1_1_help_page_sample_generator_a424a1eefe17744f2b186f13de239de76}
+
+
+Gets the objects that are serialized as samples by the supported formatters. 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Wis\+R\+Rest\+A\+P\+I/\+Areas/\+Help\+Page/\+Sample\+Generation/Help\+Page\+Sample\+Generator.\+cs\end{DoxyCompactItemize}

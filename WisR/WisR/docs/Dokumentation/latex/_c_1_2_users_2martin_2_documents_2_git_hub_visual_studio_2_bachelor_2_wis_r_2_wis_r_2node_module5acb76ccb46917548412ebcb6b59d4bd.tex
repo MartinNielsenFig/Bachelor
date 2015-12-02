@@ -1,0 +1,17 @@
+\hypertarget{_c_1_2_users_2martin_2_documents_2_git_hub_visual_studio_2_bachelor_2_wis_r_2_wis_r_2node_module5acb76ccb46917548412ebcb6b59d4bd}{}\section{C\+:/\+Users/martin/\+Documents/\+Git\+Hub\+Visual\+Studio/\+Bachelor/\+Wis\+R/\+Wis\+R/node\+\_\+modules/grunt-\/template-\/jasmine-\/istanbul/node\+\_\+modules/lodash/utility/matches.\+js}
+var users = \mbox{[} \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}barney\textquotesingle{}, \textquotesingle{}age\textquotesingle{}\+: 36, \textquotesingle{}active\textquotesingle{}\+: true \}, \{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}fred\textquotesingle{}, \textquotesingle{}age\textquotesingle{}\+: 40, \textquotesingle{}active\textquotesingle{}\+: false \} \mbox{]};
+
+\+\_\+.\+filter(users, \+\_\+.\+matches(\{ \textquotesingle{}age\textquotesingle{}\+: 40, \textquotesingle{}active\textquotesingle{}\+: false \})); // =$>$ \mbox{[}\{ \textquotesingle{}user\textquotesingle{}\+: \textquotesingle{}fred\textquotesingle{}, \textquotesingle{}age\textquotesingle{}\+: 40, \textquotesingle{}active\textquotesingle{}\+: false \}\mbox{]}
+
+
+\begin{DoxyCodeInclude}
+var baseClone = require(\textcolor{stringliteral}{'../internal/baseClone'}),
+    baseMatches = require(\textcolor{stringliteral}{'../internal/baseMatches'});
+
+\textcolor{keyword}{function} matches(source) \{
+  \textcolor{keywordflow}{return} baseMatches(baseClone(source, \textcolor{keyword}{true}));
+\}
+
+module.exports = matches;
+\end{DoxyCodeInclude}
+ 
