@@ -27,52 +27,14 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var chatUpdater: Updater?
     /// A boolean that indicates whether it's the first time loading the chat. Used to scroll to the bottom.
     var firstLoad = true
+    /// Manually keep track of keyboard shown
+    var kbShown = false
+
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var textMessageInput: UITextField!
     @IBOutlet weak var messageInputStack: UIStackView!
     @IBOutlet weak var messageInputStackContainerView: UIView!
-    
-    //MARK: Actions
-    
-    @IBAction func sendPressed(sender: AnyObject) {
-        let inputText = textMessageInput.text
-        textMessageInput.text = ""
-        
-        chatUpdater?.stop()
-        if let text = inputText where text.isEmpty {
-            print("empty message not allowed in chat")
-            return
-        }
-        
-        let msg = ChatMessage()
-        msg.ByUserId = CurrentUser.sharedInstance._id
-        msg.RoomId = roomId
-        msg.ByUserDisplayName = CurrentUser.sharedInstance.DisplayName
-        //message timestamp gets created on WisRApi
-        msg.Value = inputText
-        
-        let msgJson = JSONSerializer.toJson(msg)
-        let body = "ChatMessage=\(msgJson)"
-        HttpHandler.requestWithResponse(action: "Chat/CreateChatMessage", type: "POST", body: body) {
-            (notification, response, error) in
-            
-            if notification.ErrorType == .Ok || notification.ErrorType == .OkWithError {
-                dispatch_async(dispatch_get_main_queue()) {
-                    
-                    //If the last message is not visible, scroll to bottom
-                    if self.stickToBottom() {
-                        self.scrollToBottom()
-                    }
-                    self.chatUpdater?.start()
-                    self.chatUpdater?.execute()
-                }
-            } else {
-                print("Could not create chat message")
-                print(notification.Errors)
-            }
-        }
-    }
     
     //MARK: Lifecycle
     
@@ -118,6 +80,49 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationWillResignActiveNotification, object: nil)
         
         chatUpdater?.stop()
+        kbShown = false
+    }
+
+    
+    //MARK: Actions
+    
+    @IBAction func sendPressed(sender: AnyObject) {
+        let inputText = textMessageInput.text
+        textMessageInput.text = ""
+        
+        if let text = inputText where text.isEmpty {
+            print("empty message not allowed in chat")
+            return
+        }
+        chatUpdater?.stop()
+        
+        let msg = ChatMessage()
+        msg.ByUserId = CurrentUser.sharedInstance._id
+        msg.RoomId = roomId
+        msg.ByUserDisplayName = CurrentUser.sharedInstance.DisplayName
+        //message timestamp gets created on WisRApi
+        msg.Value = inputText
+        
+        let msgJson = JSONSerializer.toJson(msg)
+        let body = "ChatMessage=\(msgJson)"
+        HttpHandler.requestWithResponse(action: "Chat/CreateChatMessage", type: "POST", body: body) {
+            (notification, response, error) in
+            
+            if notification.ErrorType == .Ok || notification.ErrorType == .OkWithError {
+                dispatch_async(dispatch_get_main_queue()) {
+                    
+                    //If the last message is not visible, scroll to bottom
+                    if self.stickToBottom() {
+                        self.scrollToBottom()
+                    }
+                    self.chatUpdater?.start()
+                    self.chatUpdater?.execute()
+                }
+            } else {
+                print("Could not create chat message")
+                print(notification.Errors)
+            }
+        }
     }
     
     //MARK: Utilities
@@ -206,7 +211,8 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func isMessageShown(row: Int) -> Bool {
         var visible = false
         if messages.count > 0 {
-            self.tableView.indexPathsForVisibleRows?.forEach({ (indexPath) -> () in
+            self.tableView.indexPathsForVisibleRows?.forEach({
+                (indexPath) -> () in
                 if indexPath.row == row {
                     visible = true
                 }
@@ -221,7 +227,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
      Looks through the downloaded messages and looks for the newest message. Then returns its timestamp. Could probably just look at the message last in the array.
      - returns: Timestamp as seconds since 1-1-1970.
      */
-    func oldestMessageEpochByIteration() -> Double {
+    func newestMessageByIteration() -> Double {
         var oldestTime = 0.0
         for m in self.messages {
             if let timeStamp = m.Timestamp {
@@ -248,7 +254,6 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
             return noMsgs
         }
     }
-    
     
     //MARK: UITableViewController
     
@@ -321,9 +326,15 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIApplicationWillResignActiveNotification, object: nil)
     }
     
+    
     //Keyboard hide/show based upon https://github.com/Lightstreamer/Lightstreamer-example-Chat-client-ios-swift with modifications
     func keyboardWillShow(notification: NSNotification) {
         print("\(__FUNCTION__) has been called")
+        
+        /*if kbShown {
+            return
+        }
+        kbShown = true*/
         
         // Reducing size of table
         let baseView = self.view
@@ -351,6 +362,11 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func keyboardWillHide(notification: NSNotification) {
         print("\(__FUNCTION__) has been called")
+        
+        /*if !kbShown {
+            return
+        }
+        kbShown = false*/
         
         // Expanding size of table
         let baseView = self.view

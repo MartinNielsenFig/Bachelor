@@ -84,6 +84,7 @@ class RoomTableViewController: UITableViewController {
         cell.textLabel?.text = room.Name
         
         if room._id == "system" {
+            cell.textLabel?.text = NSLocalizedString("No rooms nearby", comment: "")
             cell.detailTextLabel?.text = ""
         } else {
             cell.detailTextLabel?.text = ""
@@ -132,6 +133,14 @@ class RoomTableViewController: UITableViewController {
                 
                 self.allRooms = tmpRooms
                 self.rooms = RoomFilterHelper.filterRoomsByLocation(self.allRooms)
+                
+                if self.rooms.count <= 0 {
+                    let noRooms = Room()
+                    noRooms._id = "system"
+                    noRooms.Name = NSLocalizedString("No rooms nearby", comment: "")
+                    self.rooms += [noRooms]
+                }
+                
                 refreshControl?.endRefreshing()
                 
                 dispatch_async(dispatch_get_main_queue()) {
@@ -198,6 +207,7 @@ class RoomTableViewController: UITableViewController {
             return false
         }
         
+        //Check for password
         if let room = selectedRoom, hasPw = room.HasPassword where hasPw {
             print("ROOM HAS PW")
             var pwTextField: UITextField?
