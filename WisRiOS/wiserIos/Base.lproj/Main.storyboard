@@ -790,10 +790,10 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ULl-c1-bGP">
                                         <rect key="frame" x="0.0" y="556" width="600" height="44"/>
                                         <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="duI-xg-kz9" userLabel="MessageInputStack">
+                                            <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" distribution="fillProportionally" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="duI-xg-kz9" userLabel="MessageInputStack">
                                                 <rect key="frame" x="0.0" y="7" width="595" height="33"/>
                                                 <subviews>
-                                                    <textField opaque="NO" clipsSubviews="YES" tag="102" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter your textmessage" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tuD-VA-PhF">
+                                                    <textField opaque="NO" clipsSubviews="YES" tag="102" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter your textmessage" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tuD-VA-PhF">
                                                         <rect key="frame" x="0.0" y="0.0" width="550" height="33"/>
                                                         <animations/>
                                                         <fontDescription key="fontDescription" style="UICTFontTextStyleCallout"/>
@@ -805,10 +805,23 @@
                                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X0D-To-bsu">
                                                         <rect key="frame" x="555" y="0.0" width="40" height="33"/>
                                                         <animations/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="44" id="Z66-8D-WQJ"/>
+                                                        </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <state key="normal" title="Send">
                                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                         </state>
+                                                        <variation key="default">
+                                                            <mask key="constraints">
+                                                                <exclude reference="Z66-8D-WQJ"/>
+                                                            </mask>
+                                                        </variation>
+                                                        <variation key="heightClass=compact">
+                                                            <mask key="constraints">
+                                                                <include reference="Z66-8D-WQJ"/>
+                                                            </mask>
+                                                        </variation>
                                                         <variation key="widthClass=regular" ambiguous="YES">
                                                             <rect key="frame" x="755" y="0.0" width="40" height="33"/>
                                                         </variation>

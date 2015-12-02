@@ -10,7 +10,10 @@ import Foundation
 
 /// A singleton class that contains the current user information
 class CurrentUser: User {
+    
+ /// The location of the application user. Set in ChoseRoleViewController and used throughout the application
     var location = Coordinate()
     
+ /// Getting the shared singleton
     static let sharedInstance = CurrentUser()
 }

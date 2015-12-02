@@ -17,6 +17,7 @@
 		CB2A2E371BE0DC9000BA54F0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CB2A2E391BE0DC9000BA54F0 /* InfoPlist.strings */; };
 		CB2AD54E1BDF8FE600E50ACF /* Toast.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2AD54D1BDF8FE600E50ACF /* Toast.swift */; };
 		CB2EF9C31B8DE7260098871B /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB2EF9C21B8DE7260098871B /* Room.swift */; };
+		CB360BA01C0EF5D000BEC2B3 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CB360BA21C0EF5D000BEC2B3 /* InfoPlist.strings */; };
 		CB39A97B1B986B7F0014F818 /* StringExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB39A97A1B986B7F0014F818 /* StringExtractor.swift */; };
 		CB3C37721B8DBF5000897344 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3C37711B8DBF5000897344 /* AppDelegate.swift */; };
 		CB3C37741B8DBF5000897344 /* ChooseRoleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3C37731B8DBF5000897344 /* ChooseRoleViewController.swift */; };
@@ -89,6 +90,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 75DF77721BC8EB59006E9520;
 			remoteInfo = "CryptoSwift OSX";
+		};
+		CB360B931C0EF5D000BEC2B3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CBCD3F421BB96EF800E53F76 /* Charts.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 06AEE7A21BDC3F8B009875AE;
+			remoteInfo = ChartsTests;
 		};
 		CB3C37831B8DBF5000897344 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -210,6 +218,7 @@
 		CB2A2E381BE0DC9000BA54F0 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CB2AD54D1BDF8FE600E50ACF /* Toast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Toast.swift; sourceTree = "<group>"; };
 		CB2EF9C21B8DE7260098871B /* Room.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
+		CB360BA11C0EF5D000BEC2B3 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CB39A97A1B986B7F0014F818 /* StringExtractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringExtractor.swift; sourceTree = "<group>"; };
 		CB3C376E1B8DBF5000897344 /* wiserIos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = wiserIos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB3C37711B8DBF5000897344 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -330,6 +339,7 @@
 		CB3C37701B8DBF5000897344 /* wiserIos */ = {
 			isa = PBXGroup;
 			children = (
+				CB360BA21C0EF5D000BEC2B3 /* InfoPlist.strings */,
 				CB785FA21BE23F8C001DA19E /* Interfaces */,
 				CB57059B1B98342700A4E17C /* Cells */,
 				CB0218221B947B9E00DFC9DD /* ViewControllers */,
@@ -453,7 +463,8 @@
 			isa = PBXGroup;
 			children = (
 				CBCD3F471BB96EF800E53F76 /* Charts.framework */,
-				CB0D255F1BC400F100825945 /* ChartsTV.framework */,
+				CB0D255F1BC400F100825945 /* Charts.framework */,
+				CB360B941C0EF5D000BEC2B3 /* ChartsTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -575,10 +586,10 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		CB0D255F1BC400F100825945 /* ChartsTV.framework */ = {
+		CB0D255F1BC400F100825945 /* Charts.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = ChartsTV.framework;
+			path = Charts.framework;
 			remoteRef = CB0D255E1BC400F100825945 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -601,6 +612,13 @@
 			fileType = wrapper.framework;
 			path = CryptoSwift.framework;
 			remoteRef = CB2AD5581BDF8FE700E50ACF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CB360B941C0EF5D000BEC2B3 /* ChartsTests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = ChartsTests.xctest;
+			remoteRef = CB360B931C0EF5D000BEC2B3 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		CB4D73441BCD1FDE0004A896 /* JsonSerializerSwift.framework */ = {
@@ -677,6 +695,7 @@
 				CBECDCC31BE0D8720023EDF0 /* Localizable.strings in Resources */,
 				CB3C377C1B8DBF5000897344 /* LaunchScreen.storyboard in Resources */,
 				CB3C37791B8DBF5000897344 /* Assets.xcassets in Resources */,
+				CB360BA01C0EF5D000BEC2B3 /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -772,6 +791,14 @@
 			isa = PBXVariantGroup;
 			children = (
 				CB2A2E381BE0DC9000BA54F0 /* da */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		CB360BA21C0EF5D000BEC2B3 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CB360BA11C0EF5D000BEC2B3 /* da */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";

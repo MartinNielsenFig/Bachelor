@@ -10,6 +10,9 @@
 /* No comment provided by engineer. */
 "An error has occurred" = "Der er sket en fejl";
 
+/* No comment provided by engineer. */
+"Anonymous users are not allowed in this room. Please log in." = "Anonyme brugere er ikke tilladt i dette rum. Log venligst ind.";
+
 /* Question to confirm logging out message */
 "Are you sure?" = "Er du sikker?";
 
@@ -95,13 +98,19 @@
 "Enter room secret" = "Indtast rummets hemmelighed";
 
 /* No comment provided by engineer. */
+"Error" = "Fejl";
+
+/* No comment provided by engineer. */
+"Error in creating question." = "Fejl ved at oprette spørgsmål.";
+
+/* No comment provided by engineer. */
 "Leaving Room" = "Forlader Rum";
 
 /* No comment provided by engineer. */
 "Let others join with secret" = "Lad andre forbinde med hemmelighed";
 
 /* No comment provided by engineer. */
-"Location updated" = "Lokation opdateret";
+"Location updated." = "Lokation opdateret.";
 
 /* Log in button */
 "Log in" = "Log ind";
@@ -119,6 +128,9 @@
 "Missing information" = "Manglende information";
 
 /* No comment provided by engineer. */
+"Must be logged in to up or downvote" = "Skal være logget ind for at up- eller downvote";
+
+/* No comment provided by engineer. */
 "Name" = "Navn";
 
 /* No comment provided by engineer. */
@@ -130,7 +142,10 @@ Rummets hemmelighed: %2$@";
 "Name of the room" = "Rummets navn";
 
 /* No comment provided by engineer. */
-"Need at least one response option." = "Angiv mindst en svarmulighed";
+"Need at least one response option. " = "Har brug for mindst én svarmulighed";
+
+/* No comment provided by engineer. */
+"No anonymous users" = "Ingen anonyme brugere";
 
 /* No comment provided by engineer. */
 "No questions for room" = "Ingen spørgsmål for rummet";
@@ -181,6 +196,9 @@ Rummets hemmelighed: %2$@";
 "Room secret cannot be empty. " = "Rummets hemmelighed må ikke være tomt. ";
 
 /* No comment provided by engineer. */
+"Rooms nearby" = "Rum i nærheden";
+
+/* No comment provided by engineer. */
 "Secret" = "Hemmelighed";
 
 /* No comment provided by engineer. */
@@ -208,11 +226,26 @@ Rummets hemmelighed: %2$@";
 "Update Location" = "Opdater Lokation";
 
 /* No comment provided by engineer. */
-"Use Secret" = "Benyt hemmelighed";
+"Use Secret" = "Hemmelighed";
 
 /* No comment provided by engineer. */
 "Use location" = "Brug lokation";
 
 /* No comment provided by engineer. */
 "Wrong password" = "Forkert adgangskode";
+
+/* No comment provided by engineer. */
+"You must be logged in to add a room. " = "Do skal være logget ind for at oprette et rum.";
+
+/* No comment provided by engineer. */
+"You must be logged in to respond to a question" = "Du skal være logget ind for at svare på et spørgsmål";
+
+/* No comment provided by engineer. */
+"You need to be logged in to add a question. " = "Du skal være logget ind for at tilføje et spørgsmål.";
+
+/* No comment provided by engineer. */
+"You voted" = "Du stemte";
+
+/* No comment provided by engineer. */
+"Your room is location enabled, but the app couldn't get your position. " = "Dit rum benytter sig af lokation, men applikationen kan ikke finde din position.";
 
