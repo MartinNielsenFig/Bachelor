@@ -200,6 +200,7 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
         if let location = manager.location {
             
             print("updated location")
+            print(location.horizontalAccuracy)
             
             //Save position
             let currentAccuracy = location.horizontalAccuracy

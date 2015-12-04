@@ -160,8 +160,9 @@ class RoomTableViewController: UITableViewController {
     func useSecret() {
         var secretInput: UITextField?
         
-        let alert = UIAlertController(title: NSLocalizedString("Connect with secret", comment: ""), message: "", preferredStyle: .Alert)
-        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .Cancel, handler: { (action) -> Void in
+        let alert = UIAlertController(title: NSLocalizedString("Connect with secret", comment: ""), message: NSLocalizedString("You can connect to any room in the world if you know the secret.", comment: ""), preferredStyle: .Alert)
+        
+        alert.addAction(UIAlertAction(title: NSLocalizedString("Cancel", comment: ""), style: .Cancel, handler: {(action) -> Void in
             //Nothing
         }))
         

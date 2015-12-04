@@ -12,8 +12,8 @@ import JsonSerializerSwift
 /// Handles the Http-Calls from the client to the WisRApi
 class HttpHandler {
     
-    static let mainUrl = "http://172.16.126.133:1337/"
-    //static let mainUrl = "http://wisrrestapi.azurewebsites.net/"
+    //static let mainUrl = "http://172.16.126.130:1337/"
+    static let mainUrl = "http://wisrrestapi.azurewebsites.net/"
     //static let mainUrl = "http://wisrrestapi.aceipse.dk/"
     
     static func log(data data: NSData?, response: NSURLResponse?, error: NSError?) {
