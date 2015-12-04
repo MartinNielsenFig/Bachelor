@@ -12,7 +12,7 @@ class RoomFilterHelper {
     /**
      Returns a new array of Room containing only the rooms that are within a specified radius of the current user that is logged on. Required that CurrentUser.sharedInstance.location is set.
      - parameter rooms:				An array of Room to be filtered.
-     - parameter metersRadius:	The radius in which the room has to be in proximity to the user. Adds the accuracy of the room location and user location to this. Should be 0 if not testing.
+     - parameter metersRadius:	The radius in which the room has to be in proximity to the user. Adds the accuracy of the room location and user location to this. Should be 0 if not testing or drawing rooms on map.
      - returns: New array of filtered rooms.
      */
     static func filterRoomsByLocation(rooms: [Room], metersRadius: Double = 0) -> [Room] {

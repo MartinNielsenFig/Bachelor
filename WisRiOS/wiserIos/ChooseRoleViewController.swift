@@ -112,7 +112,7 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
                     for room in jsonArray {
                         tmpRooms += [Room(jsonDictionary: room as! NSDictionary)]
                     }
-                    let filteredRooms = RoomFilterHelper.filterRoomsByLocation(tmpRooms, metersRadius: 1000)
+                    let filteredRooms = RoomFilterHelper.filterRoomsByLocation(tmpRooms, metersRadius: 5000)
                     if filteredRooms.count <= 0 {
                         let noRooms = Room()
                         noRooms._id = "system"
@@ -143,10 +143,10 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
     
     func showRoomsOnMapAsCircles() {
         
-        if self.rooms.count > 100 {
+        /*if self.rooms.count > 100 {
             print("many rooms detected nearby, not drawing circles to conserve power")
             return
-        }
+        }*/
         
         //Show on map
         self.mapView.removeOverlays(self.mapView.overlays)
@@ -226,8 +226,6 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
             let annotation = MKPointAnnotation()
             annotation.coordinate = coordinate
             mapView.addAnnotation(annotation)
-            
-            showRoomsOnMapAsCircles()
         }
         
         //Get rooms first time to show on map
