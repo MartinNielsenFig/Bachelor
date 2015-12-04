@@ -118,7 +118,8 @@ class RoomTableViewController: UITableViewController {
         let start = NSDate()
         HttpHandler.requestWithResponse(action: "Room/GetAll", type: "GET", body: "") {
             (notification, response, error) in
-            
+            print("duration of \(__FUNCTION__) took \(NSDate().timeIntervalSinceDate(start))")
+
             if notification.ErrorType == .Ok || notification.ErrorType == .OkWithError {
                 var tmpRooms = [Room]()
                 
@@ -146,7 +147,6 @@ class RoomTableViewController: UITableViewController {
                 dispatch_async(dispatch_get_main_queue()) {
                     self.tableView.reloadData()
                 }
-                print("duration of \(__FUNCTION__) took \(NSDate().timeIntervalSinceDate(start))")
             } else {
                 print("could not get all rooms")
                 print(notification.Errors)
@@ -200,6 +200,11 @@ class RoomTableViewController: UITableViewController {
         }
         else if let room = sender as? Room {
             selectedRoom = room
+        }
+        
+        //Check for system room
+        if selectedRoom?._id == "system" {
+            return false
         }
         
         //Check for anonymous user
