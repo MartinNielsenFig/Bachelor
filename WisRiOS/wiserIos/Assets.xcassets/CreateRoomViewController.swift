@@ -223,11 +223,9 @@ class CreateRoomViewController: UITableViewController {
         room.Location.AccuracyMeters = CurrentUser.sharedInstance.location.AccuracyMeters ?? 20
         
         let seg = radiusInputCell?.segment
-        let metersStr = seg?.titleForSegmentAtIndex(seg!.selectedSegmentIndex)
-        if metersStr != nil {
-            let meters = StringExtractor.highestNumberInString(metersStr!)
-            room.Radius = meters
-        }
+        let metersStr = seg?.titleForSegmentAtIndex(seg!.selectedSegmentIndex) ?? "20"
+        let meters = StringExtractor.highestNumberInString(metersStr)
+        room.Radius = meters
         
         room.Secret = roomSecretInputCell?.inputField.text
         room.UsersCanAsk = userQuestionInputCell?.uiSwitch.on ?? onDefault

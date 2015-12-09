@@ -42,7 +42,6 @@ class RoomFilterHelper {
         return filteredRooms
     }
     
-    
     /**
      Calculation based upon http://www.movable-type.co.uk/scripts/latlong.html Calculates the distance between to latitude-longitude pairs.
      - parameter lat1:	latitude of the first coordinate

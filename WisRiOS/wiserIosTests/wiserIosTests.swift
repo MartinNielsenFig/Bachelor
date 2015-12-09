@@ -32,4 +32,42 @@ class wiserIosTests: XCTestCase {
             // Put the code you want to measure the time of here.
         }
     }
+    
+    func testCreateRoom() {
+        
+        //Arrange
+        let vc = CreateRoomViewController()
+        
+        vc.roomNameInputCell = TextInputCell()
+        vc.roomNameInputCell?.inputField = UITextField()
+        vc.roomSecretInputCell = TextInputCell()
+        vc.roomSecretInputCell?.inputField = UITextField()
+        vc.pwInputCell = TextInputCell()
+        vc.pwInputCell?.inputField = UITextField()
+        vc.pwInputCell?.inputField.enabled = false
+
+        vc.roomNameInputCell?.inputField.text = "testRoom" + NSUUID().UUIDString
+        vc.roomSecretInputCell?.inputField.text = "testSecret" + NSUUID().UUIDString
+        
+        CurrentUser.sharedInstance._id = "system"
+        CurrentUser.sharedInstance.location.Longitude = Double.random(10.188355, 10.188355)
+        CurrentUser.sharedInstance.location.Latitude = Double.random(56.171898, 56.171898)
+        
+        //Act
+        vc.addRoomBtn(UIBarButtonItem())
+        
+        usleep(1000*100)
+        
+        //Assert
+        XCTAssert(true)
+    }
+    
+    func testCreateManyRooms() {
+        for _ in 0..<1 {
+            testCreateRoom()
+        }
+        sleep(180)
+        XCTAssert(true)
+    }
+    
 }
