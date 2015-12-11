@@ -10,11 +10,17 @@ import Foundation
 
 /// A Chatmessage to be represented in the Chatroom
 class ChatMessage {
+    /// MongoID
     var _id: String?
+    /// ID of the user who created this message
     var ByUserId: String?
+    /// "Foreign key" to the room which this ChatMessage belongs to
     var RoomId: String?
+    /// The text the user wrote
     var Value: String?
+    /// Timestamp for when the message was sent
     var Timestamp: String?
+    /// Display name of the user who sent this message
     var ByUserDisplayName: String?
     
     init(){}

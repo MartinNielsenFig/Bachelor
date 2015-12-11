@@ -10,12 +10,19 @@ import Foundation
 
 /// Any user of the system
 class User {
+    /// MongoID
     var _id: String?
+    /// FacebookID of the user
     var FacebookId: String?
+    /// An array of IDs for the rooms this user has been connected to. Not used by iOS
     var ConnectedRoomIds: [Int]?
+    /// LDAP user name
     var LDAPUserName: String?
+    /// Display name for this user. It's acquired by Facebook in iOS
     var DisplayName: String?
+    /// The email for this user. It's acquired by Facebook in iOS
     var Email: String?
+    /// A password for this user. To be used if this user was a WisR user. But currently not used by iOS
     var EncryptedPassword: String?
     
     init(){}

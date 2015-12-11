@@ -66,6 +66,9 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
     
     //MARK: Utility
     
+    /**
+    Handles whehether the button should show "log in" or "log out" then renders that button.
+    */
     func addLoginLogoutButtons() {
         if CurrentUser.sharedInstance.FacebookId != nil {
             let logoutTitle = NSLocalizedString("Log out", comment: "Log out button")
@@ -100,6 +103,9 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
         self.presentViewController(alert, animated: true, completion: nil)
     }
     
+    /**
+     Loads all rooms from the WisR web api and filters them by user location. Then shows these rooms on the map as circles. See showRoomsOnMapAsCircles
+     */
     func loadRoomsBasedOnLocation() {
         //Show nearby rooms
         HttpHandler.requestWithResponse(action: "Room/GetAll", type: "GET", body: "") {
@@ -142,6 +148,9 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
         }
     }
     
+    /**
+     Renders the rooms as circles on the map with the room radius + room location accuracy as the radius of the circle.
+     */
     func showRoomsOnMapAsCircles() {
         
         /*if self.rooms.count > 100 {
@@ -235,7 +244,6 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
             loadRoomsBasedOnLocation()
         }
     }
-    
     
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         NSLog("Error while updating location \(error.localizedDescription)")

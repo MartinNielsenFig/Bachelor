@@ -10,17 +10,29 @@ import Foundation
 
 /// The room is a digital representation of a room/place in the world. The room is the hub of Questions and Chat.
 class Room {
+    /// MongoID
     var _id: String?
+    /// Name of the room
     var Name: String?
+    /// The MongoID of the user that created the room
     var CreatedById: String?
+    /// The location of the room
     var Location = Coordinate()
+    /// The radius of the room in meters
     var Radius: Int?
+    /// The secret string that a user can use to connect to this room, even without the user being near the room.
     var Secret: String?
+    /// Whether the room has password
     var HasPassword: Bool?
+    /// The password for the room encrypted
     var EncryptedPassword: String?
+    /// Whether the room has a chat
     var HasChat: Bool?
+    /// Whether users joining the room can ask questions
     var UsersCanAsk: Bool?
+    /// Whether anonymous users can log into the room
     var AllowAnonymous: Bool?
+    /// Whether this room uses location or if it only can be connected to with the secret
     var UseLocation: Bool?
     
     convenience init(jsonDictionary: NSDictionary) {

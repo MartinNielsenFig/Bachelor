@@ -10,16 +10,27 @@ import Foundation
 
 /// Question for a room.
 class Question {
+    /// MongoID of the room
     var _id: String?
+    /// A "foreign key" to the room this questions belongs to
     var RoomId: String?
+    /// ID of the user who created this question
     var CreatedById: String?
+    /// Array of up/downvotes this question has received
     var Votes = [Vote]()
+    /// Image as base64 for this question
     var Img: String?
+    /// The question text
     var QuestionText: String?
+    /// Array of the response options for this question
     var ResponseOptions = [ResponseOption]()
+    /// Array of the answers from users to this question
     var Result = [Answer]()
+    /// Timestamp for creation of this question. As seconds since 1-1-1970
     var CreationTimestamp: String?
+    /// Timestamp for expiration of this question. As seconds since 1-1-1970
     var ExpireTimestamp: String?
+    /// Display name of the user who created this Question
     var CreatedByUserDisplayName: String?
     
     init() {}

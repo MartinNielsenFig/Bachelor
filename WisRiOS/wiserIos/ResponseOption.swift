@@ -10,7 +10,9 @@ import Foundation
 
 /// ResponseOption is a part of a Question. A Question can have one or more ResponseOptions.
 class ResponseOption {
+    /// The text shown as this response options
     var Value: String
+    /// If the weight is 1 it's the correct answer. If the weight is -1 it's the wrong answer.
     var Weight: Int
     
     init(value: String, weight: Int) {

@@ -10,8 +10,11 @@ import Foundation
 
 /// A user's answer to a Question
 class Answer {
+    /// The value of the answer, corresponds to the value of the ResponseOption
     var Value: String
+    /// The ID of the user who created this answer
     var UserId: String
+    /// The display name of the user who created this answer
     var UserDisplayName: String
     
     init(value: String, userId: String, userDisplayName: String) {
