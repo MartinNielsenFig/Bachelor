@@ -137,6 +137,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     
     /**
     Sends a response to the Question to the WisRApi. The answer has the users ID to ensure that he can only respond once (handled by WisRApi)
+    
     - parameter sender:	The button pressed
     */
     @IBAction func sendResponse(sender: AnyObject) {
@@ -187,6 +188,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     /**
      Highlights the selected answer in the Answer Picker.
+     
      - parameter index:	The index on the selected answer from the user. If it's nil, this function will find it.
      */
     func highlightSelectedAnswer(index: Int? = nil) {
@@ -220,6 +222,7 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     
     /**
      Up- or downvotes the current showing question.
+     
      - parameter up:	If true upvotes, if false downvotes.
      */
     func vote(up: Bool, button: UIButton) {

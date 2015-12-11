@@ -204,6 +204,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     /**
      Determines whether the cell with index.row is shown on the UI
+     
      - parameter row:	The row of the cell to check if is visible
      - returns: True if the cell with given row is shown on GUI. Else false.
      */
@@ -315,6 +316,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     /**
     Called when the app goes to the background e.g. from user pressing home button or opening the multi task switcher. The purpose is to disable the keyboard from being pushed beyond the window bounds, as keyboardWillShow is called twice in a row if the observer is not removed.
+    
     - parameter notification:	The notification bound to this event.
     */
     func appGoesToBackground(notification: NSNotification) {
@@ -326,6 +328,7 @@ class ChatViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     /**
      Called on keyboard notification events. Handles moving the chat window screen up/down upon keyboard show/hide. Code is from http://stackoverflow.com/questions/25693130/move-textfield-when-keyboard-appears-swift
+     
      - parameter notification:	The keyboard notification
      */
     func keyboardNotification(notification: NSNotification) {

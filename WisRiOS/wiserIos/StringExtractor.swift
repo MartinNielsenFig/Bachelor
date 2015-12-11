@@ -13,6 +13,7 @@ class StringExtractor {
     
     /**
      Extracts the name and the initials from a full name.
+     
      - parameter fullNameSpaceSeparated:	The full name separated by space e.g. "Peter Helstrup Jensen"
      - returns: First name and initals e.g. Peter HJ
      */
@@ -39,6 +40,7 @@ class StringExtractor {
     }
     /**
      Extracts the highest number in a string
+     
      - parameter aString:	string with e.g. text and numbers
      - returns: The highest number represented in aString
      */
@@ -69,6 +71,7 @@ class StringExtractor {
     
     /**
      Shortens a string.
+     
      - parameter aString:		The string to be shortened
      - parameter maxLength:	Max length of the string
      - returns: The shortened string.

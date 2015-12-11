@@ -167,6 +167,7 @@ class CreateRoomViewController: UITableViewController {
     
     /**
      Enables or disables the password input field based upon the UISwitchs tate
+     
      - parameter uiSwitch:	The UI Switch
      */
     func enablePwSwitchChanged(uiSwitch: UISwitch) {
@@ -176,6 +177,7 @@ class CreateRoomViewController: UITableViewController {
     
     /**
      Method triggered by add room button. Fetches the data from the UI and instantiates the Room field. Then sends the room as JSON to the WisRApi which handles creation.
+     
      - parameter button:	The button that initated the function call.
      */
     func addRoomBtn(button: UIBarButtonItem) {

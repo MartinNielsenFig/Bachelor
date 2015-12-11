@@ -77,6 +77,7 @@ class ResultViewController: UIViewController {
     
     /**
     Updates the chart on the ui
+     
     - parameter dataPoints:	The datapoints to be represented
     - parameter values:			The values to be represented.
     */

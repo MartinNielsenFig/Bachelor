@@ -107,6 +107,7 @@ class RoomTableViewController: UITableViewController {
     
     /**
     Removes current loaded rooms both in self.rooms and self.allRooms and loads new rooms from the database.
+    
     - parameter refreshControl:	An optional refreshcontrol indicating loading.
     */
     func fetchRooms(refreshControl: UIRefreshControl? = nil) {

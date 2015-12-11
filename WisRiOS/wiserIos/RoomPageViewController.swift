@@ -119,6 +119,7 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     
     /**
      Makes sure there's room enough for the navigation bar when presenting the sub-views. Needs a little offset when in landscape mode, and is dependent on Device type (phone vs pad).
+     
      - parameter orientationIsLandscape:	Indicates the orientation of the device.
      */
     func makeRoomForNavigationBar(orientationIsLandscape orientationIsLandscape: Bool) {
@@ -148,6 +149,7 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     
     /**
     Log out of the room.
+     
     - parameter forced:	If forced is true, the logout will be forced and the user will not be able to cancel.
     */
     func logoutRoom(forced: Bool = false) {
@@ -238,6 +240,7 @@ class RoomPageViewController: UIViewController, UIPageViewControllerDataSource {
     
     /**
     Helper function for UIPageViewControllerDataSource. Returns the ViewController at a specific index. Initiates the roomId parameter.
+     
     - parameter index:	The index of the viewcontroller.
     - returns: Returns the UIViewController at a specific location on the UIPageViewController
     */

@@ -44,6 +44,7 @@ class LogonViewController: UIViewController, FBSDKLoginButtonDelegate {
     
     /**
     Function called when clicking the logon button
+    
     - parameter loginButton:	The logon button pressed
     - parameter result:			See Facebook FBSDKLoginManagerLoginResult documentation
     - parameter error:				Error regarding contact with Facebook
@@ -61,6 +62,7 @@ class LogonViewController: UIViewController, FBSDKLoginButtonDelegate {
     
     /**
      Called when logged out
+     
      - parameter loginButton:	Button used to log in
      */
     func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {

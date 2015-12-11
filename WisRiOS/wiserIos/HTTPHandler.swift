@@ -24,6 +24,7 @@ class HttpHandler {
     
     /**
      Sends a HTTP request to the WisRApi with the specified action and body. Then runs a callback-function with the received data as parameters.
+     
      - parameter action:						Is the HTTP call to invoke on the WisRApi. Follows the "/Controller/Action" pattern.
      - parameter type:							Type of call: POST or GET.
      - parameter body:							The body of the POST, empty if GET.

@@ -67,6 +67,7 @@ class CreateQuestionViewController: UITableViewController, UIImagePickerControll
     
     /**
     Loads an old question to be represented on the GUI if the user wanted to replace an already created question.
+    
     - parameter oldQuestion:	The old question to be represented. Is injected into CreateQuestionViewController before showing it if it should edit.
     */
     func loadOldQuestion(oldQuestion: Question?) {

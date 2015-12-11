@@ -27,6 +27,7 @@ class FacebookHelper {
     
     /**
      Given the Facebook id, requests the wisr ID from the wisr database
+     
      - parameter facebookId:	The Facebook ID associated with the user.
      */
     static func requestWisrUserFrom(facebookId facebookId: String) {
@@ -46,6 +47,7 @@ class FacebookHelper {
     
     /**
      Requests user information from Facebook
+     
      - parameter createUser:	Determines whether to create the user on the WisR database and give the user a WisR ID
      */
     static func requestCurrentUserInformation(createUser createUser: Bool) {

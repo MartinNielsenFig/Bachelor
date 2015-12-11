@@ -61,6 +61,7 @@ class QuestionListViewController: UITableViewController, Paged {
     
     /**
     //Inspired by http://stackoverflow.com/questions/3924446/long-press-on-uitableview handles long press on a Question for either edit or deletion.
+    
     - parameter gesture:	The gesture recognizer
     */
     func handleLongPress(gesture: UILongPressGestureRecognizer) {
@@ -128,6 +129,7 @@ class QuestionListViewController: UITableViewController, Paged {
     
     /**
      Filters the questions in the room by concatenated up-/downvotes. So that upvotes are positive, and downvotes are negative.
+     
      - parameter questions:	The questions array to be filtered in-place.
      */
     func filter(inout questions: [Question]) {
@@ -147,6 +149,7 @@ class QuestionListViewController: UITableViewController, Paged {
     
     /**
      Determines the number of up- and down-votes for a specific question.
+     
      - parameter question:	The question to count the down-upvotes for.
      - returns: A tuple with down and upvotes.
      */
@@ -164,6 +167,7 @@ class QuestionListViewController: UITableViewController, Paged {
     
     /**
      Redownloads the questions for the curret room without the images from the database to display on the list.
+     
      - parameter refreshControl:	An optional refreshcontrol to show loading
      - parameter manualRefresh:	If called with manual refresh true, it means it was called by the user swiping down. In this case the UI is already responding to it. But if it's called by code, manualRefresh should be false to scroll down the view to show the UIRefreshControl
      */

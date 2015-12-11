@@ -13,6 +13,7 @@ class Toast {
     
     /**
      Shows toast for user with ok button for confirmation that they read the message.
+     
      - parameter title:			Title for alert
      - parameter message:		Message for alert
      - parameter presenter:	The presenter to show the alert
@@ -28,6 +29,7 @@ class Toast {
     
     /**
      Shows a Toast android style for the user without ok button that dismisses itself after a specified time.
+     
      - parameter message:		Message for alert
      - parameter durationMs:	Duration before dismissing itself
      - parameter presenter:	The presenter to show the alert

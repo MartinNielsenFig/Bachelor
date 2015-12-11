@@ -52,6 +52,7 @@ class ChooseRoleViewController: UIViewController, CLLocationManagerDelegate, MKM
     //Actions
     /**
     Navigates to CreateRoom if logged in. Else navigate to Login screen.
+    
     - parameter sender:	The button pressed
     */
     @IBAction func clickCreateRoomBtn(sender: AnyObject) {

@@ -13,6 +13,7 @@ class DateTimeHelper {
     
     /**
      Returns a human readable string of the time from a epoch string.
+     
      - parameter secSince1970:	Seconds since 1970. Aka Epoch.
      - returns: A string representing the time specificed by the dateformat eg. "HH:mm:ss" will e.g. 10:33:52
      */
@@ -35,6 +36,7 @@ class DateTimeHelper {
     
     /**
      Given a duration in seconds, calculates the components of that time duration from a given set of wished components. E.g. 86400 seconds in a day could be represented as 1 days 0 minutes 0 seconds, or 0 days, 1440 minutes, 0 seconds etc.
+     
      - parameter durationSec:	Duration in seconds.
      - parameter flags:				Describes which kind of components you wish you distribute the seconds into.
      - returns: NSDateComponent representation of the duration with the specified components available
