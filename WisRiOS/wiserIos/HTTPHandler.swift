@@ -13,9 +13,14 @@ import JsonSerializerSwift
 class HttpHandler {
     
     //static let mainUrl = "http://172.16.126.130:1337/"
-    static let mainUrl = "http://wisrrestapi.azurewebsites.net/"
     //static let mainUrl = "http://wisrrestapi.aceipse.dk/"
     
+    /// The url to the WisR web api endpoint
+    static let mainUrl = "http://wisrrestapi.azurewebsites.net/"
+    
+    /**
+     Helper function to log the http requests
+     */
     static func log(data data: NSData?, response: NSURLResponse?, error: NSError?) {
         NSLog("data \(data)")
         NSLog("response \(response)")
