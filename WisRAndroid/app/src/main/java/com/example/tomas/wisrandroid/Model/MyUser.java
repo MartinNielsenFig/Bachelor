@@ -4,25 +4,19 @@ package com.example.tomas.wisrandroid.Model;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class MyUser extends User {
-
-//    private static boolean isLoggedIn;
+public class MyUser extends User {
 
     private static MyUser myUser = null;
 
-    private MyUser()
-    {
-    }
+    private MyUser() {  }
 
-    static public User getMyuser()
+    static public MyUser getMyuser()
     {
         if(myUser == null)
             myUser = new MyUser();
         return myUser;
     }
 
-//    public static boolean get_isLoggedIn(){return isLoggedIn;}
-//    public static void set_isLoggedIn( boolean isLoggedIn){isLoggedIn = isLoggedIn;}
 
     @Override
     public String get_FacebookId() {

@@ -71,10 +71,12 @@ public class SelectRoomActivity extends AppCompatActivity {
         mGsonBuilder.registerTypeAdapter(ErrorCodes.class,new ErrorCodesDeserializer());
         mGson = mGsonBuilder.create();
 
-        Bundle mTEmpBundle = getIntent().getBundleExtra("Bundle");
+        Bundle mTempBundle = getIntent().getBundleExtra("Bundle");
 
-        mCurrentCoordinate.set_Latitude(getIntent().getBundleExtra("Bundle").getDouble("Lat"));
-        mCurrentCoordinate.set_Longitude(getIntent().getBundleExtra("Bundle").getDouble("Long"));
+        if(mTempBundle != null) {
+            mCurrentCoordinate.set_Latitude(getIntent().getBundleExtra("Bundle").getDouble("Lat"));
+            mCurrentCoordinate.set_Longitude(getIntent().getBundleExtra("Bundle").getDouble("Long"));
+        }
 
         mButton = (Button) findViewById(R.id.use_secret_button_select_room_activity);
         mButton.setOnClickListener(new View.OnClickListener() {
@@ -98,7 +100,7 @@ public class SelectRoomActivity extends AppCompatActivity {
                         final Response.Listener<String> mListener = new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
-                                Toast.makeText(getApplicationContext(), "In Listener", Toast.LENGTH_LONG).show();
+                                //Toast.makeText(getApplicationContext(), "In Listener", Toast.LENGTH_LONG).show();
 
                                 try {
 
@@ -110,7 +112,8 @@ public class SelectRoomActivity extends AppCompatActivity {
                                             if (mRoom.get_HasPassword()) {
                                                 final AlertDialog.Builder mPasswordAlertDialog = new AlertDialog.Builder(mContext);
                                                 final EditText input = new EditText(getApplicationContext());
-                                                input.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                                                //input.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                                                input.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD|InputType.TYPE_CLASS_TEXT);
                                                 input.setBackgroundColor(Color.WHITE);
                                                 input.setTextColor(Color.BLACK);
                                                 input.setHint("Enter room password");
@@ -200,7 +203,7 @@ public class SelectRoomActivity extends AppCompatActivity {
                         Response.ErrorListener mErrorListener = new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError volleyError) {
-                                Toast.makeText(getApplicationContext(), "In ErrorListener" + volleyError.getMessage(), Toast.LENGTH_LONG).show();
+                                //Toast.makeText(getApplicationContext(), "In ErrorListener" + volleyError.getMessage(), Toast.LENGTH_LONG).show();
                             }
                         };
 
@@ -237,8 +240,8 @@ public class SelectRoomActivity extends AppCompatActivity {
                 {
                     final AlertDialog.Builder mPasswordAlertDialog = new AlertDialog.Builder(mContext);
                     final EditText input = new EditText(getApplicationContext());
-                    input.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                    //input.setInputType(input.getInputType() | EditorInfo.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+                    //input.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    input.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD | InputType.TYPE_CLASS_TEXT);
                     input.setBackgroundColor(Color.WHITE);
                     input.setTextColor(Color.BLACK);
                     input.setHint("Enter room password");
@@ -320,7 +323,7 @@ public class SelectRoomActivity extends AppCompatActivity {
                 if (mNotification.get_ErrorType() == ErrorTypes.Ok || mNotification.get_ErrorType() == ErrorTypes.Complicated) {
                     Room[] mRooms = mGson.fromJson(mNotification.get_Data(), Room[].class);
                     for (Room room : mRooms) {
-                        if (distanceBetweenTwoCoordinatesMeters(mCurrentCoordinate.get_Latitude(), mCurrentCoordinate.get_Longitude(), room.get_Location().get_Latitude(), room.get_Location().get_Longitude()) < room.get_Radius())
+                        if (distanceBetweenTwoCoordinatesMeters(mCurrentCoordinate.get_Latitude(), mCurrentCoordinate.get_Longitude(), room.get_Location().get_Latitude(), room.get_Location().get_Longitude()) < (room.get_Radius() + mCurrentCoordinate.get_AccuracyMeters()))
                             mRoomList.add(room);
                     }
                     CustomRoomAdapter temp = (CustomRoomAdapter) mListView.getAdapter();
@@ -363,7 +366,7 @@ public class SelectRoomActivity extends AppCompatActivity {
     static Double distanceBetweenTwoCoordinatesMeters( Double lat1,  Double long1, Double lat2, Double long2) {
         Double r = 6371000.0;
         Double dLat = Math.toRadians(lat2-lat1);
-        Double dLong = Math.toRadians(long2 - long1);
+        Double dLong = Math.toRadians(long2-long1);
 
         Double a = Math.sin(dLat / 2)*Math.sin(dLat / 2) + Math.cos(Math.toRadians(lat1))*Math.cos(Math.toRadians(lat2)) * Math.sin(dLong / 2)*Math.sin(dLong / 2);
         Double c = 2*Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));

@@ -62,14 +62,12 @@ public class LoginActivity extends AppCompatActivity {
         mGsonBuilder.registerTypeAdapter(ErrorCodes.class,new ErrorCodesDeserializer());
         gson = mGsonBuilder.create();
 
-        Resources.Theme mtheme = getTheme();
-
         cbm = CallbackManager.Factory.create();
 
         final Response.Listener<String> mListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Toast.makeText(getApplicationContext(), "In Listener", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "In Listener", Toast.LENGTH_LONG).show();
 
                 Notification mNotification = gson.fromJson(response, Notification.class);
 
@@ -82,7 +80,7 @@ public class LoginActivity extends AppCompatActivity {
         final Response.ErrorListener mErrorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Toast.makeText(getApplicationContext(),"In ErrorListener" + volleyError.getMessage(),Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(),"In ErrorListener" + volleyError.getMessage(),Toast.LENGTH_LONG).show();
             }
         };
 
@@ -135,7 +133,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onError(FacebookException e) {
 
-                Toast.makeText(getParent(), e.toString(), Toast.LENGTH_LONG).show();
+                //Toast.makeText(getParent(), e.toString(), Toast.LENGTH_LONG).show();
             }
         });
     }

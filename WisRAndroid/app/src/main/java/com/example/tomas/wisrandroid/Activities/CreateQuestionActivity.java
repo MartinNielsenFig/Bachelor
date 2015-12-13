@@ -63,6 +63,7 @@ public class CreateQuestionActivity extends AppCompatActivity {
     private ImageView mImageView;
     private EditText mResponseEditText;
     private EditText mQuestionTextEditText;
+    private EditText mQuestionExpirationTimeEditText;
     private ListView mListView;
     private CustomResponseOptionAdapter mListViewAdapter;
     private Button mCreateQuestionButton;
@@ -146,6 +147,7 @@ public class CreateQuestionActivity extends AppCompatActivity {
         });
 
         mQuestionTextEditText = (EditText) findViewById(R.id.createquestion_activity_questiontext_edittext);
+        mQuestionExpirationTimeEditText = (EditText) findViewById(R.id.createquestion_activity_expirationtime_edittext);
 
         mCreateQuestionButton = (Button) findViewById(R.id.create_question_button);
         mCreateQuestionButton.setOnClickListener(new View.OnClickListener() {
@@ -170,6 +172,7 @@ public class CreateQuestionActivity extends AppCompatActivity {
                     mQuestion.set_RoomId(mRoomId);
                     mQuestion.set_Votes(new ArrayList<Vote>());
                     mQuestion.set_Result(new ArrayList<Answer>());
+                    mQuestion.set_ExpireTimestamp(mQuestionExpirationTimeEditText.getText().toString());
 
                     Map<String, String> mParams = new HashMap<String, String>();
                     mParams.put("question", gson.toJson(mQuestion));
@@ -193,7 +196,7 @@ public class CreateQuestionActivity extends AppCompatActivity {
                     Response.ErrorListener mErrorListener = new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError volleyError) {
-                            Toast.makeText(getApplicationContext(), String.valueOf(volleyError.networkResponse.statusCode), Toast.LENGTH_LONG).show();
+                            //Toast.makeText(getApplicationContext(), String.valueOf(volleyError.networkResponse.statusCode), Toast.LENGTH_LONG).show();
                         }
                     };
 

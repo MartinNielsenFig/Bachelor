@@ -8,63 +8,62 @@
     android:background="@android:color/darker_gray"
     android:orientation="vertical">
 
-    <TextView
-        android:textColor="@color/primary_material_light"
-        android:layout_marginTop="30dp"
-        android:text="Username:"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_width="fill_parent"
-        android:layout_height="30dp" />
+    <!--<TextView-->
+        <!--android:textColor="@color/primary_material_light"-->
+        <!--android:layout_marginTop="30dp"-->
+        <!--android:text="Username:"-->
+        <!--android:textSize="20sp"-->
+        <!--android:textStyle="bold"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="30dp" />-->
 
-    <EditText
-        android:textColorHint="@color/primary_material_light"
-        android:textColor="@color/primary_material_light"
-        android:hint="name@email.domain"
-        android:layout_width="fill_parent"
-        android:layout_height="50dp" />
+    <!--<EditText-->
+        <!--android:textColorHint="@color/primary_material_light"-->
+        <!--android:textColor="@color/primary_material_light"-->
+        <!--android:hint="name@email.domain"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="50dp" />-->
 
-    <TextView
-        android:textColor="@color/primary_material_light"
-        android:textSize="20sp"
-        android:text="Password:"
-        android:textStyle="bold"
-        android:layout_width="fill_parent"
-        android:layout_height="30dp" />
+    <!--<TextView-->
+        <!--android:textColor="@color/primary_material_light"-->
+        <!--android:textSize="20sp"-->
+        <!--android:text="Password:"-->
+        <!--android:textStyle="bold"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="30dp" />-->
 
-    <EditText
-        android:textColorHint="@color/primary_material_light"
-        android:textColor="@color/primary_material_light"
-        android:hint="Enter password here"
-        android:layout_width="fill_parent"
-        android:layout_height="50dp" />
+    <!--<EditText-->
+        <!--android:textColorHint="@color/primary_material_light"-->
+        <!--android:textColor="@color/primary_material_light"-->
+        <!--android:hint="Enter password here"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="50dp" />-->
 
-    <Button
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:layout_gravity="center"
-        android:textColor="@color/primary_material_light"
-        android:id="@+id/create_room_button"
-        android:padding="5dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/button_style"
-        android:text="@string/wisr_login_button_text" />
+    <!--<Button-->
+        <!--android:layout_marginTop="16dp"-->
+        <!--android:layout_marginBottom="16dp"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:textColor="@color/primary_material_light"-->
+        <!--android:id="@+id/create_room_button"-->
+        <!--android:padding="5dp"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="@drawable/button_style"-->
+        <!--android:text="@string/wisr_login_button_text" />-->
 
-    <TextView
-        android:textColor="@color/primary_material_light"
-        android:gravity="center_horizontal"
-        android:textSize="30sp"
-        android:text="OR"
-        android:layout_width="fill_parent"
-        android:layout_height="30dp" />
+    <!--<TextView-->
+        <!--android:textColor="@color/primary_material_light"-->
+        <!--android:gravity="center_horizontal"-->
+        <!--android:textSize="30sp"-->
+        <!--android:text="OR"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="30dp" />-->
 
     <com.facebook.login.widget.LoginButton
         android:id="@+id/authButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="30dp"
+        android:layout_gravity="center"
         />
 
 </LinearLayout>

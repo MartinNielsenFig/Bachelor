@@ -28,6 +28,7 @@ import com.example.tomas.wisrandroid.Helpers.HttpHelper;
 import com.example.tomas.wisrandroid.Model.ErrorCodes;
 import com.example.tomas.wisrandroid.Model.ErrorTypes;
 import com.example.tomas.wisrandroid.Model.MultipleChoiceQuestion;
+import com.example.tomas.wisrandroid.Model.MyUser;
 import com.example.tomas.wisrandroid.Model.Notification;
 import com.example.tomas.wisrandroid.Model.Question;
 import com.example.tomas.wisrandroid.Model.Room;
@@ -93,11 +94,17 @@ public class QuestionListFragment extends android.support.v4.app.Fragment {
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent mIntent = new Intent(getActivity(), CreateQuestionActivity.class);
-                Bundle mBundle = new Bundle();
-                mBundle.putString("RoomId",mRoom.get_id());
-                mIntent.putExtra("Bundle", mBundle);
-                getActivity().startActivity(mIntent);
+                if(MyUser.getMyuser().get_Id() != null)
+                {
+                    Intent mIntent = new Intent(getActivity(), CreateQuestionActivity.class);
+                    Bundle mBundle = new Bundle();
+                    mBundle.putString("RoomId",mRoom.get_id());
+                    mIntent.putExtra("Bundle", mBundle);
+                    getActivity().startActivity(mIntent);
+                } else {
+                    Toast.makeText(getContext(),"You have to log in to ask questions",Toast.LENGTH_LONG).show();
+                }
+
             }
         });
         mAdapter = new CustomQuestionAdapter(getContext(), mQuestions);
@@ -166,7 +173,7 @@ public class QuestionListFragment extends android.support.v4.app.Fragment {
         Response.ErrorListener mErrorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Toast.makeText(getContext(),String.valueOf(volleyError.networkResponse.statusCode),Toast.LENGTH_LONG).show();
+                //Toast.makeText(getContext(),String.valueOf(volleyError.networkResponse.statusCode),Toast.LENGTH_LONG).show();
             }
         };
 

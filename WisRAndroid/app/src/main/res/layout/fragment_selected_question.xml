@@ -10,7 +10,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="12">
+    android:weightSum="14">
 
     <TextView
         android:textColor="@color/primary_material_light"
@@ -101,13 +101,12 @@
             android:text="See Result" />
     </LinearLayout>
 
-    <!--android:theme="@style/Base.V11.Theme.AppCompat.Light.Dialog"-->
-
-    <!-- Debugging textview -->
-    <!--<TextView-->
-        <!--android:id="@+id/selected_fragment_debugtextview"-->
-        <!--android:layout_width="fill_parent"-->
-        <!--android:layout_height="300dp" />-->
+    <ProgressBar
+        android:id="@+id/selected_fragment_progressbar"
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:layout_weight="2"
+        style="?android:attr/progressBarStyleHorizontal"/>
 
 </LinearLayout>
 </ScrollView>

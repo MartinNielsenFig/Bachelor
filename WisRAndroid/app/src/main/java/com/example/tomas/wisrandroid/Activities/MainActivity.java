@@ -3,13 +3,8 @@ package com.example.tomas.wisrandroid.Activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Color;
-import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -17,7 +12,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -34,14 +28,12 @@ import com.example.tomas.wisrandroid.Model.ErrorTypes;
 import com.example.tomas.wisrandroid.Model.MyUser;
 import com.example.tomas.wisrandroid.Model.Notification;
 import com.example.tomas.wisrandroid.Model.User;
-import com.example.tomas.wisrandroid.Model.Vote;
 import com.example.tomas.wisrandroid.R;
 import com.facebook.AccessToken;
 import com.facebook.FacebookSdk;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.FusedLocationProviderApi;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.*;
@@ -49,7 +41,6 @@ import com.google.android.gms.maps.model.*;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.lang.reflect.InvocationHandler;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -65,13 +56,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     private Button mCreateRoomButton;
     private Button mSelectRoomButton;
 
+    private Boolean ifFirst = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_main);
-        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        //getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         if(getSupportActionBar() != null)
             getSupportActionBar().hide();
 
@@ -100,7 +91,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
                     mBackPressedAlertDialog.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            ((AlertDialog) dialogInterface).cancel();
+                            dialogInterface.cancel();
                         }
                     });
                     mBackPressedAlertDialog.show();
@@ -112,22 +103,13 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         mSelectRoomButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //LocationManager mLocationManager = (LocationManager) getApplicationContext().getSystemService(LOCATION_SERVICE);
-                LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, LocationRequest.create().setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY), new com.google.android.gms.location.LocationListener() {
-                    @Override
-                    public void onLocationChanged(Location location) {
-                        mLastLocation = location;
-                        if (mLastLocation != null) {
-                            mMap.clear();
-                            setUpMap();
-                        }
-                    }
-                });
-                Bundle mBundle = new Bundle();
-                mBundle.putDouble("Lat", mLastLocation.getLatitude());
-                mBundle.putDouble("Long", mLastLocation.getLongitude());
                 Intent mIntent = new Intent(MainActivity.this, SelectRoomActivity.class);
-                mIntent.putExtra("Bundle", mBundle);
+                if(mLastLocation != null) {
+                    Bundle mBundle = new Bundle();
+                    mBundle.putDouble("Lat", mLastLocation.getLatitude());
+                    mBundle.putDouble("Long", mLastLocation.getLongitude());
+                    mIntent.putExtra("Bundle", mBundle);
+                }
                 startActivity(mIntent);
             }
         });
@@ -137,9 +119,6 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     protected void onStart() {
         super.onStart();
         mGoogleApiClient.connect();
-        if(AccessToken.getCurrentAccessToken() != null) {
-            //Toast.makeText(this,AccessToken.getCurrentAccessToken().getUserId(),Toast.LENGTH_LONG).show();
-        }
     }
 
     @Override
@@ -198,16 +177,25 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
 
     @Override
     public void onConnected(Bundle bundle) {
-        mMap.clear();
-            LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, LocationRequest.create().setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY), new com.google.android.gms.location.LocationListener() {
-                @Override
-                public void onLocationChanged(Location location) {
-                    mLastLocation = location;
-                    if (mLastLocation != null) {
-                        setUpMap();
-                    }
+
+        LocationRequest mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(3000);
+        mLocationRequest.setFastestInterval(1500);
+        mLocationRequest.setExpirationDuration(15000);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, new com.google.android.gms.location.LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                mMap.clear();
+                mLastLocation = location;
+
+                if (mLastLocation != null) {
+                    setUpMap();
                 }
-            });
+            }
+        });
+
     }
 
     @Override
@@ -229,8 +217,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         // Do a null check to confirm that we have not already instantiated the map.
         if (mMap == null) {
             // Try to obtain the map from the SupportMapFragment.
-            mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
-                    .getMap();
+            mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map)).getMap();
             // Check if we were successful in obtaining the map.
             if (mMap != null) {
                 setUpMap();
@@ -242,9 +229,11 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         if(mLastLocation != null) {
             mMap.addMarker(new MarkerOptions().position(new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude())).title("Marker"));
             mMap.addCircle(new CircleOptions().center(new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude())).radius(mLastLocation.getAccuracy()).strokeColor(Color.RED).strokeWidth(3));
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude()), 17));
-
+            if(ifFirst) {
+                ifFirst = false;
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(mLastLocation.getLatitude(), mLastLocation.getLongitude()), 17));}
         }
+
     }
 
     protected synchronized void buildGoogleApiClient() {
@@ -264,7 +253,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         Response.Listener<String> mListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
 
                 Notification mNotification = gson.fromJson(response,Notification.class);
 
@@ -278,7 +267,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         Response.ErrorListener mErrorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Toast.makeText(getApplicationContext(),String.valueOf(volleyError.networkResponse.statusCode),Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(),String.valueOf(volleyError.networkResponse.statusCode),Toast.LENGTH_LONG).show();
             }
         };
 
@@ -301,7 +290,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         Response.Listener<String> mListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
 
                 Notification mNotification = gson.fromJson(response,Notification.class);
 
@@ -326,7 +315,7 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
         Response.ErrorListener mErrorListener = new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                Toast.makeText(getApplicationContext(),String.valueOf(volleyError.networkResponse.statusCode),Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(),String.valueOf(volleyError.networkResponse.statusCode),Toast.LENGTH_LONG).show();
             }
         };
 

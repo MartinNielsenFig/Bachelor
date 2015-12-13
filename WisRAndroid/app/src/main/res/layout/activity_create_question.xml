@@ -39,9 +39,38 @@
             android:id="@+id/createquestion_activity_questiontext_edittext"
             android:layout_weight="5"
             android:textColorHint="@color/material_grey_50"
+            android:textColor="@color/primary_material_light"
             android:hint="Enter question text"
             android:layout_width="0dp"
             android:layout_height="fill_parent" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_margin="5dp"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:weightSum="10">
+
+        <TextView
+            android:gravity="center_vertical"
+            android:layout_weight="5"
+            android:textSize="18sp"
+            android:textColor="@color/primary_material_light"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:text="Expiration Time"/>
+
+        <EditText
+            android:id="@+id/createquestion_activity_expirationtime_edittext"
+            android:layout_weight="5"
+            android:textColorHint="@color/material_grey_50"
+            android:textColor="@color/primary_material_light"
+            android:hint="Enter expiration time"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:inputType="number"/>
 
     </LinearLayout>
 
@@ -87,6 +116,7 @@
             android:id="@+id/create_question_add_response_option_edittext"
             android:layout_weight="5"
             android:textColorHint="@color/material_grey_50"
+            android:textColor="@color/primary_material_light"
             android:hint="Enter Response"
             android:layout_width="0dp"
             android:layout_height="fill_parent"

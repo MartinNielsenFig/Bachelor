@@ -217,7 +217,7 @@ public class CreateRoomActivity extends AppCompatActivity implements GoogleApiCl
                 Response.Listener<String> mListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(getApplicationContext(), "In Listener", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(), "In Listener", Toast.LENGTH_LONG).show();
 
                         Notification mNotification = gson.fromJson(response, Notification.class);
 
@@ -230,14 +230,16 @@ public class CreateRoomActivity extends AppCompatActivity implements GoogleApiCl
                             Intent mIntent = new Intent(getApplicationContext(), RoomActivity.class);
                             mIntent.putExtra("CurrentRoom", mBundle);
                             startActivity(mIntent, mBundle);
-                        } else {Toast.makeText(getApplicationContext(), ErrorTypes.Error.toString(), Toast.LENGTH_LONG).show();}
+                        } else {
+                            //Toast.makeText(getApplicationContext(), ErrorTypes.Error.toString(), Toast.LENGTH_LONG).show();
+                        }
                     }
                 };
 
                 Response.ErrorListener mErrorListener = new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError volleyError) {
-                        Toast.makeText(getApplicationContext(),"In ErrorListener" + volleyError.getMessage(),Toast.LENGTH_LONG).show();
+                        //Toast.makeText(getApplicationContext(),"In ErrorListener" + volleyError.getMessage(),Toast.LENGTH_LONG).show();
                     }
                 };
 
@@ -318,8 +320,7 @@ public class CreateRoomActivity extends AppCompatActivity implements GoogleApiCl
 
     private void CheckPasswordSwitchState()
     {
-        if(mEnablePasswordSwitch.isChecked())
-        {
+        if(mEnablePasswordSwitch.isChecked()) {
             mPasswordEditText.setEnabled(true);
         }else {
             mPasswordEditText.setEnabled(false);

@@ -1,15 +1,11 @@
 package com.example.tomas.wisrandroid.Activities;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 
@@ -32,7 +28,11 @@ public class RoomActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_room);
-        HideUI();
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
+
         if (savedInstanceState == null)
         {
             // Getting Room From Intent
@@ -104,27 +104,18 @@ public class RoomActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-
-        //Intent mIntent = new Intent(this,SelectRoomActivity.class);
-        //startActivity(mIntent);
+        if(mViewPager.getCurrentItem() == 0)
+        {
+            super.onBackPressed();
+        }else{
+            mViewPager.setCurrentItem(mViewPager.getCurrentItem()-1);
+        }
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString("Room",gson.toJson(mRoom));
-    }
-
-    public void HideUI() {
-        //getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        //getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
-    }
-
-    public void CreateQuestion() {
-
     }
 
     public void TransferCurrentQuestion(Question curQuestion)

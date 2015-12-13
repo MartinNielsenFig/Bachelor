@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.tomas.wisrandroid" >
+    package="com.example.tomas.wisrandroid" android:largeHeap="true">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -79,3 +79,5 @@
     </application>
 
 </manifest>
+<!-- Google Maps Meta Data
+com.google.android.geo.API_KEY  com.google.android.maps.v2.API_KEY-->
