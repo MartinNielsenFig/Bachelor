@@ -236,6 +236,7 @@ xcuserdata
 *.moved-aside
 *.xcuserstate
 
+WisRiOS/iOS reference hjemmeside
 wisrios/docs/
 wiserIos/.DS_Store
 WisRRestAPI/WisRRestAPI/Properties/PublishProfiles/wisrrestapi - FTP (2).pubxml

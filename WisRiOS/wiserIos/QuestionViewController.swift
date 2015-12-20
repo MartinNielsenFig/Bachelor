@@ -338,8 +338,8 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
                     self.questionImageView.image = questionImage
                     self.imageScrollView.contentSize = questionImage.size
                     
-                    //let portrait = UIApplication.sharedApplication().statusBarOrientation == .Portrait
-                    let minimumZoomLevel = self.imageScrollView.frame.size.width/questionImage.size.width
+                    let portrait = UIApplication.sharedApplication().statusBarOrientation == .Portrait
+                    let minimumZoomLevel = portrait ? (self.imageScrollView.frame.size.width/questionImage.size.width) : 1
                     
                     self.imageScrollView.minimumZoomScale = minimumZoomLevel
                     self.imageScrollView.zoomScale = minimumZoomLevel
