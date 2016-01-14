@@ -5,9 +5,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
-/**
- * Created by Tomas on 01-09-2015.
- */
+
 public class ActivityLayoutHelper {
 
     public static void HideLayout(Window myWindow, ActionBar actionbar)

@@ -316,14 +316,14 @@ public class SelectRoomActivity extends AppCompatActivity {
         final Response.Listener<String> mListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Toast.makeText(getApplicationContext(), "In Listener", Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(), "In Listener", Toast.LENGTH_LONG).show();
 
                 Notification mNotification = mGson.fromJson(response,Notification.class);
 
                 if (mNotification.get_ErrorType() == ErrorTypes.Ok || mNotification.get_ErrorType() == ErrorTypes.Complicated) {
                     Room[] mRooms = mGson.fromJson(mNotification.get_Data(), Room[].class);
                     for (Room room : mRooms) {
-                        if (distanceBetweenTwoCoordinatesMeters(mCurrentCoordinate.get_Latitude(), mCurrentCoordinate.get_Longitude(), room.get_Location().get_Latitude(), room.get_Location().get_Longitude()) < (room.get_Radius() + mCurrentCoordinate.get_AccuracyMeters()))
+                        if (distanceBetweenTwoCoordinatesMeters(mCurrentCoordinate.get_Latitude(), mCurrentCoordinate.get_Longitude(), room.get_Location().get_Latitude(), room.get_Location().get_Longitude()) < (room.get_Radius() + room.get_Location().get_AccuracyMeters() + mCurrentCoordinate.get_AccuracyMeters()))
                             mRoomList.add(room);
                     }
                     CustomRoomAdapter temp = (CustomRoomAdapter) mListView.getAdapter();

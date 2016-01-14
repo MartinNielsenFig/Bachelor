@@ -27,12 +27,12 @@ public class CustomRoomAdapter extends ArrayAdapter<Room> {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.roomrowlayout, parent, false);
         TextView textView = (TextView) rowView.findViewById(R.id.custom_name);
-        TextView textView2 = (TextView) rowView.findViewById(R.id.custom_tag);
-        TextView textView3 = (TextView) rowView.findViewById(R.id.custom_anonymous);
+        //TextView textView2 = (TextView) rowView.findViewById(R.id.custom_tag);
+        //TextView textView3 = (TextView) rowView.findViewById(R.id.custom_anonymous);
         TextView textView4 = (TextView) rowView.findViewById(R.id.custom_radius);
         textView.setText(values.get(position).get_Name());
-        textView2.setText(values.get(position).get_Secret());
-        textView3.setText(values.get(position).get_AllowAnonymous() ? "Anonymous: Yes" : "Anonymous: No");
+        //textView2.setText(values.get(position).get_Secret());
+        //textView3.setText(values.get(position).get_AllowAnonymous() ? "Anonymous: Yes" : "Anonymous: No");
         textView4.setText(String.valueOf(values.get(position).get_Radius()) + " meters");
 
         return rowView;

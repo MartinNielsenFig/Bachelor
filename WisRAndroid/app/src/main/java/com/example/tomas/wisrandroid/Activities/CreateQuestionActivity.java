@@ -122,9 +122,9 @@ public class CreateQuestionActivity extends AppCompatActivity {
         mResponseEditText.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View view, int i, KeyEvent keyEvent) {
-                if(keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER && keyEvent.getAction() == keyEvent.ACTION_DOWN)
+                if((keyEvent.getKeyCode() == KeyEvent.KEYCODE_ENTER || keyEvent.getKeyCode() == KeyEvent.KEYCODE_NAVIGATE_NEXT) && keyEvent.getAction() == keyEvent.ACTION_DOWN )
                 {
-                    mResponseOptions.add(new ResponseOption(((EditText)view).getText().toString(), 0));
+                    mResponseOptions.add(new ResponseOption(((EditText) view).getText().toString(), 0));
                     ((EditText)view).setText("");
 
                     // Measuring the individual children of the listview
@@ -138,6 +138,9 @@ public class CreateQuestionActivity extends AppCompatActivity {
                     mView.height = height*children;
                     mListView.setLayoutParams(mView);
                     mListView.requestLayout();
+
+                    ViewGroup.LayoutParams mView2 = getWindow().getDecorView().getRootView().getLayoutParams();
+                    mView2.height = (mView2.height + height*children);
                     return true;
 
                 }

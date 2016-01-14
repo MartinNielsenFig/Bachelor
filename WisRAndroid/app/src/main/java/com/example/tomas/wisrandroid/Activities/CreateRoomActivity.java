@@ -8,6 +8,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
+import android.os.Message;
 import android.preference.DialogPreference;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -37,6 +38,7 @@ import com.example.tomas.wisrandroid.Helpers.HttpHelper;
 import com.example.tomas.wisrandroid.Model.Coordinate;
 import com.example.tomas.wisrandroid.Model.ErrorCodes;
 import com.example.tomas.wisrandroid.Model.ErrorTypes;
+import com.example.tomas.wisrandroid.Model.MyUser;
 import com.example.tomas.wisrandroid.Model.Notification;
 import com.example.tomas.wisrandroid.Model.Room;
 import com.example.tomas.wisrandroid.R;
@@ -48,6 +50,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -172,13 +176,28 @@ public class CreateRoomActivity extends AppCompatActivity implements GoogleApiCl
             public void onClick(View v) {
 
                 Map<String,String> mParams = new HashMap<String, String>();
+                String encryptedPassword = mPasswordEditText.getText().toString();
+                MessageDigest md;
+                try {
+                    md = MessageDigest.getInstance("SHA-512");
+                    md.update(encryptedPassword.getBytes());
+                    byte byteData[] = md.digest();
+
+                    StringBuffer hashCodeBuffer = new StringBuffer();
+                    for (int index = 0; index < byteData.length; index++) {
+                        hashCodeBuffer.append(Integer.toString((byteData[index] & 0xff) + 0x100, 16).substring(1));
+                    }
+                    encryptedPassword = hashCodeBuffer.toString();
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                }
 
                 final Room mRoom = new Room();
                 //mRoom.set_CreatedById(MyUser.getMyuser().get_Id());
                 mRoom.set_Name(mRoomNameEditText.getText().toString());
                 mRoom.set_AllowAnonymous(mEnableAnonymousSwitch.isChecked());
                 mRoom.set_HasPassword(mEnablePasswordSwitch.isChecked());
-                mRoom.set_EncryptedPassword(mPasswordEditText.getText().toString());
+                mRoom.set_EncryptedPassword(encryptedPassword);
                 mRoom.set_HasChat(mEnableChatSwitch.isChecked());
                 mRoom.set_id(null);
                 if (mFirstRadiusToggleButton.isChecked())
