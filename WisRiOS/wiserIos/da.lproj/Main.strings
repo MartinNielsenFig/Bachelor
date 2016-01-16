@@ -11,13 +11,13 @@
 "6FR-RU-hBX.text" = "Mærke";
 
 /* Class = "UISegmentedControl"; 8UD-o4-2mj.segmentTitles[0] = "50 m"; ObjectID = "8UD-o4-2mj"; */
-"8UD-o4-2mj.segmentTitles[0]" = "10 m";
+"8UD-o4-2mj.segmentTitles[0]" = "50 m";
 
 /* Class = "UISegmentedControl"; 8UD-o4-2mj.segmentTitles[1] = "100 m"; ObjectID = "8UD-o4-2mj"; */
-"8UD-o4-2mj.segmentTitles[1]" = "40 m";
+"8UD-o4-2mj.segmentTitles[1]" = "100 m";
 
 /* Class = "UISegmentedControl"; 8UD-o4-2mj.segmentTitles[2] = "20000 m"; ObjectID = "8UD-o4-2mj"; */
-"8UD-o4-2mj.segmentTitles[2]" = "80 m";
+"8UD-o4-2mj.segmentTitles[2]" = "200 m";
 
 /* Class = "UILabel"; text = "Label"; ObjectID = "A7D-Ha-dtg"; */
 "A7D-Ha-dtg.text" = "Mærke";
