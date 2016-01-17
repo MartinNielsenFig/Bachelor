@@ -214,6 +214,9 @@ Rummets hemmelighed: %2$@";
 "Select image or take photo" = "Vælg billede eller tag billede";
 
 /* No comment provided by engineer. */
+"Something went wrong in updating the result view. Maybe the question was deleted?" = "Der gik noget galt i opdateringen af resultaterne. Måske blev spørgsmålet slettet.";
+
+/* No comment provided by engineer. */
 "The room was deleted" = "Rummet blev slettet";
 
 /* No comment provided by engineer. */
@@ -233,6 +236,9 @@ Rummets hemmelighed: %2$@";
 
 /* No comment provided by engineer. */
 "Wrong password" = "Forkert adgangskode";
+
+/* No comment provided by engineer. */
+"You can connect to any room in the world if you know the secret." = "Du kan forbinde til et hvilket som helst rum i verden, hvis du kender dets hemmelighed.";
 
 /* No comment provided by engineer. */
 "You must be logged in to add a room. " = "Do skal være logget ind for at oprette et rum.";
